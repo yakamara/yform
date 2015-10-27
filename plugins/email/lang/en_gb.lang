@@ -1,0 +1,21 @@
+yform_email_templates = e-mail templates
+
+yform_email_key = Key - please do not change
+yform_email_from = E-Mail [f.e.info@redaxo.de]
+yform_email_from_name = E-Mail-Name [f.e. REDAXO Server]
+yform_email_subject = subject
+yform_email_body = body
+yform_email_body_html = body (Html)
+yform_email_add_template = add e-mail template
+yform_email_header_template_description = description
+yform_email_header_template_mail_from = sender mail
+yform_email_header_template_mail_from_name = sender name
+yform_email_header_template_subject = subject
+yform_email_create_template = create template
+yform_email_header_template_functions = functions
+yform_email_templates_not_found = no templates found
+yform_email_delete_template = delete
+yform_email_info_template_deleted = template got deleted
+yform_email_attachments = attachements
+
+yform_delete_template = delete

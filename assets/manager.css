@@ -1,0 +1,71 @@
+
+#rex-yform .rex-widget-field {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+#rex-yform div.rex-widget {
+    clear:none;
+    float:left;
+    display:block;
+    margin:0px;
+    width:390px;
+    /*margin-left:245px;*/
+    }
+#rex-yform div.rex-widget input.text {
+    padding: 2px;
+    width: 290px;
+    }
+#rex-yform div.rex-widget select{
+    width:335px;
+    }
+div#rex-title h1 span {
+    color:#CBCBCB;
+    font-size:0.5em;
+    }
+
+body#rex-page-yform .yform-manager-searchfield{
+    background:silver;
+    color:white;
+    padding:3px;
+    border-radius:5px;
+    margin:1px;
+    display:inline-block;
+
+}
+
+.yform-table_field p.rex-button {
+        padding-left: 140px;
+}
+.yform-table_field p.rex-button a.rex-button {
+        float: left;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: -140px;
+}
+.yform-table_field p.rex-button span {
+        display: block;
+}
+
+
+
+
+/*    Piped ***********************************************************************
+*******************************************************************************/
+.rex-navi-piped {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.rex-navi-piped > * {
+    display: inline;
+    padding: 0 5px 0 6px;
+    font-weight: bold;
+}
+.rex-navi-piped > * {
+    background-image: url(../../../redaxo/media/pipe_c2.gif);
+    background-position: 0px 2px;
+}
+.rex-navi-piped > *:first-child {
+    background: none;
+}

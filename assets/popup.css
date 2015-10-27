@@ -1,0 +1,22 @@
+#rex-redaxo-link,
+#rex-footer,
+#rex-navi-logout,
+#rex-title,
+#rex-navi-main,
+#rex-extra {
+  display:none;
+}
+
+body#rex-page-yform {
+  background: #f9f9f9;
+}
+
+body #rex-website {
+  width:100%;
+  background: none repeat scroll 0 0 transparent;
+}
+
+body#rex-page-yform div#rex-wrapper {
+  margin-left: 10px;
+  margin-right: 10px;
+}

@@ -1,0 +1,12 @@
+
+yform_setup = Setup
+
+
+yform_setup_install_modul = Install Module
+yform_setup_install_modul_description = In order to use yform meaningfully, you have to installe a module:
+yform_setup_install_yform_modul = Install yform Module
+yform_setup_update_following_modul = Update following yform Module "{0}"
+
+yform_setup_copytables = Take tabledefinitions of this table "{0}"
+
+yform_setup_table_copied = Tabledefinitions of "{0}" have been taken

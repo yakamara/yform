@@ -1,0 +1,1287 @@
+@import url("../font-awesome/css/font-awesome.min.css");
+
+
+
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+/*
+html {
+  font-family: sans-serif;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+*/
+/**
+ * Remove default margin.
+ */
+/*
+body {
+  margin: 0;
+}
+*/
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+
+.rex-geo article,
+.rex-geo aside,
+.rex-geo details,
+.rex-geo figcaption,
+.rex-geo figure,
+.rex-geo footer,
+.rex-geo header,
+.rex-geo hgroup,
+.rex-geo main,
+.rex-geo menu,
+.rex-geo nav,
+.rex-geo section,
+.rex-geo summary {
+  display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+.rex-geo audio,
+.rex-geo canvas,
+.rex-geo progress,
+.rex-geo video {
+  display: inline-block; /* 1 */
+  vertical-align: baseline; /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+.rex-geo audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+
+.rex-geo [hidden],
+.rex-geo template {
+  display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+.rex-geo a {
+  background-color: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+.rex-geo a:active,
+.rex-geo a:hover {
+  outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+
+.rex-geo abbr[title] {
+  border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+
+.rex-geo b,
+.rex-geo strong {
+  font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+
+.rex-geo dfn {
+  font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+.rex-geo h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+.rex-geo mark {
+  background: #ff0;
+  color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+.rex-geo small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+.rex-geo sub,
+.rex-geo sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+.rex-geo sup {
+  top: -0.5em;
+}
+
+.rex-geo sub {
+  bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+.rex-geo img {
+  border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+
+.rex-geo svg:not(:root) {
+  overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+
+.rex-geo figure {
+  margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+.rex-geo hr {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+.rex-geo pre {
+  overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+.rex-geo code,
+.rex-geo kbd,
+.rex-geo pre,
+.rex-geo samp {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+.rex-geo button,
+.rex-geo input,
+.rex-geo optgroup,
+.rex-geo select,
+.rex-geo textarea {
+  /*color: inherit;*/ /* 1 */
+  /*font: inherit;*/ /* 2 */
+  margin: 0; /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+.rex-geo button {
+  overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+.rex-geo button,
+.rex-geo select {
+  text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+.rex-geo button,
+.rex-geo html input[type="button"], /* 1 */
+.rex-geo input[type="reset"],
+.rex-geo input[type="submit"] {
+  -webkit-appearance: button; /* 2 */
+  cursor: pointer; /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+.rex-geo button[disabled],
+.rex-geo html input[disabled] {
+  cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+.rex-geo button::-moz-focus-inner,
+.rex-geo input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+.rex-geo input {
+  line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+.rex-geo input[type="checkbox"],
+.rex-geo input[type="radio"] {
+  box-sizing: border-box; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+.rex-geo input[type="number"]::-webkit-inner-spin-button,
+.rex-geo input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+.rex-geo input[type="search"] {
+  -webkit-appearance: textfield; /* 1 */
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box; /* 2 */
+  box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+.rex-geo input[type="search"]::-webkit-search-cancel-button,
+.rex-geo input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+.rex-geo fieldset {
+  border: 1px solid #c0c0c0;
+  margin: 0 2px;
+  padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+.rex-geo legend {
+  border: 0; /* 1 */
+  padding: 0; /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+.rex-geo textarea {
+  overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+.rex-geo optgroup {
+  font-weight: bold;
+}
+
+/* Tables
+   ========================================================================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+.rex-geo table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.rex-geo td,
+.rex-geo th {
+  padding: 0;
+}
+
+
+
+
+
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+
+
+/* rex geo main styles
+   ========================================================================== */
+
+
+.rex-geo * {
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+/*
+body, input, select, textarea, button {
+    font: 13px Helvetica, Arial, sans-serif;
+    line-height: 1.4;
+}
+*/
+
+.rex-geo a {
+    color: #4183c4;
+    text-decoration: none;
+}
+.rex-geo a:hover {
+    text-decoration: underline;
+}
+
+
+.rex-geo-row {
+    margin-left: -10px;
+    margin-right: -10px;    
+}
+.rex-geo-row:before, 
+.rex-geo-row:after {
+    content: " ";
+    display: table;
+}
+.rex-geo-row:after {
+    clear: both;
+}
+.rex-geo-col-xs-1, .rex-geo-col-sm-1, .rex-geo-col-md-1, .rex-geo-col-lg-1, .rex-geo-col-xs-2, .rex-geo-col-sm-2,
+.rex-geo-col-md-2, .rex-geo-col-lg-2, .rex-geo-col-xs-3, .rex-geo-col-sm-3, .rex-geo-col-md-3, .rex-geo-col-lg-3, .rex-geo-col-xs-4,
+.rex-geo-col-sm-4, .rex-geo-col-md-4, .rex-geo-col-lg-4, .rex-geo-col-xs-5, .rex-geo-col-sm-5, .rex-geo-col-md-5, .rex-geo-col-lg-5,
+.rex-geo-col-xs-6, .rex-geo-col-sm-6, .rex-geo-col-md-6, .rex-geo-col-lg-6, .rex-geo-col-xs-7, .rex-geo-col-sm-7, .rex-geo-col-md-7,
+.rex-geo-col-lg-7, .rex-geo-col-xs-8, .rex-geo-col-sm-8, .rex-geo-col-md-8, .rex-geo-col-lg-8, .rex-geo-col-xs-9, .rex-geo-col-sm-9,
+.rex-geo-col-md-9, .rex-geo-col-lg-9, .rex-geo-col-xs-10, .rex-geo-col-sm-10, .rex-geo-col-md-10, .rex-geo-col-lg-10,
+.rex-geo-col-xs-11, .rex-geo-col-sm-11, .rex-geo-col-md-11, .rex-geo-col-lg-11, .rex-geo-col-xs-12, .rex-geo-col-sm-12,
+.rex-geo-col-md-12, .rex-geo-col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.rex-geo-col-xs-1, .rex-geo-col-xs-2, .rex-geo-col-xs-3, .rex-geo-col-xs-4, .rex-geo-col-xs-5, .rex-geo-col-xs-6,
+.rex-geo-col-xs-7, .rex-geo-col-xs-8, .rex-geo-col-xs-9, .rex-geo-col-xs-10, .rex-geo-col-xs-11, .rex-geo-col-xs-12 {
+    float: left;
+}
+.rex-geo-col-xs-1 {
+    width: 8.3333333333%;
+}
+.rex-geo-col-xs-2 {
+    width: 16.6666666667%;
+}
+.rex-geo-col-xs-3 {
+    width: 25%;
+}
+.rex-geo-col-xs-4 {
+    width: 33.3333333333%;
+}
+.rex-geo-col-xs-5 {
+    width: 41.6666666667%;
+}
+.rex-geo-col-xs-6 {
+    width: 50%;
+}
+.rex-geo-col-xs-7 {
+    width: 58.3333333333%;
+}
+.rex-geo-col-xs-8 {
+    width: 66.6666666667%;
+}
+.rex-geo-col-xs-9 {
+    width: 75%;
+}
+.rex-geo-col-xs-10 {
+    width: 83.3333333333%;
+}
+.rex-geo-col-xs-11 {
+    width: 91.6666666667%;
+}
+.rex-geo-col-xs-12 {
+    width: 100%;
+}
+@media (min-width: 568px) {
+    .rex-geo-col-sm-1, .rex-geo-col-sm-2, .rex-geo-col-sm-3, .rex-geo-col-sm-4, .rex-geo-col-sm-5, .rex-geo-col-sm-6,
+    .rex-geo-col-sm-7, .rex-geo-col-sm-8, .rex-geo-col-sm-9, .rex-geo-col-sm-10, .rex-geo-col-sm-11, .rex-geo-col-sm-12 {
+        float: left;
+    }
+    .rex-geo-col-sm-1 {
+        width: 8.3333333333%;
+    }
+    .rex-geo-col-sm-2 {
+        width: 16.6666666667%;
+    }
+    .rex-geo-col-sm-3 {
+        width: 25%;
+    }
+    .rex-geo-col-sm-4 {
+        width: 33.3333333333%;
+    }
+    .rex-geo-col-sm-5 {
+        width: 41.6666666667%;
+    }
+    .rex-geo-col-sm-6 {
+        width: 50%;
+    }
+    .rex-geo-col-sm-7 {
+        width: 58.3333333333%;
+    }
+    .rex-geo-col-sm-8 {
+        width: 66.6666666667%;
+    }
+    .rex-geo-col-sm-9 {
+        width: 75%;
+    }
+    .rex-geo-col-sm-10 {
+        width: 83.3333333333%;
+    }
+    .rex-geo-col-sm-11 {
+        width: 91.6666666667%;
+    }
+    .rex-geo-col-sm-12 {
+        width: 100%;
+    }
+}
+@media (min-width: 992px) {
+    .rex-geo-col-md-1, .rex-geo-col-md-2, .rex-geo-col-md-3, .rex-geo-col-md-4, .rex-geo-col-md-5, .rex-geo-col-md-6,
+    .rex-geo-col-md-7, .rex-geo-col-md-8, .rex-geo-col-md-9, .rex-geo-col-md-10, .rex-geo-col-md-11, .rex-geo-col-md-12 {
+        float: left;
+    }
+    .rex-geo-col-md-1 {
+        width: 8.3333333333%;
+    }
+    .rex-geo-col-md-2 {
+        width: 16.6666666667%;
+    }
+    .rex-geo-col-md-3 {
+        width: 25%;
+    }
+    .rex-geo-col-md-4 {
+        width: 33.3333333333%;
+    }
+    .rex-geo-col-md-5 {
+        width: 41.6666666667%;
+    }
+    .rex-geo-col-md-6 {
+        width: 50%;
+    }
+    .rex-geo-col-md-7 {
+        width: 58.3333333333%;
+    }
+    .rex-geo-col-md-8 {
+        width: 66.6666666667%;
+    }
+    .rex-geo-col-md-9 {
+        width: 75%;
+    }
+    .rex-geo-col-md-10 {
+        width: 83.3333333333%;
+    }
+    .rex-geo-col-md-11 {
+        width: 91.6666666667%;
+    }
+    .rex-geo-col-md-12 {
+        width: 100%;
+    }
+}
+@media (min-width: 1200px) {
+    .rex-geo-col-lg-1, .rex-geo-col-lg-2, .rex-geo-col-lg-3, .rex-geo-col-lg-4, .rex-geo-col-lg-5, .rex-geo-col-lg-6,
+    .rex-geo-col-lg-7, .rex-geo-col-lg-8, .rex-geo-col-lg-9, .rex-geo-col-lg-10, .rex-geo-col-lg-11, .rex-geo-col-lg-12 {
+        float: left;
+    }
+    .rex-geo-col-lg-1 {
+        width: 8.3333333333%;
+    }
+    .rex-geo-col-lg-2 {
+        width: 16.6666666667%;
+    }
+    .rex-geo-col-lg-3 {
+        width: 25%;
+    }
+    .rex-geo-col-lg-4 {
+        width: 33.3333333333%;
+    }
+    .rex-geo-col-lg-5 {
+        width: 41.6666666667%;
+    }
+    .rex-geo-col-lg-6 {
+        width: 50%;
+    }
+    .rex-geo-col-lg-7 {
+        width: 58.3333333333%;
+    }
+    .rex-geo-col-lg-8 {
+        width: 66.6666666667%;
+    }
+    .rex-geo-col-lg-9 {
+        width: 75%;
+    }
+    .rex-geo-col-lg-10 {
+        width: 83.3333333333%;
+    }
+    .rex-geo-col-lg-11 {
+        width: 91.6666666667%;
+    }
+    .rex-geo-col-lg-12 {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 567px) {
+    .rex-geo-hidden-xs {
+        display: none !important;
+    }
+}
+
+@media (min-width: 568px) and (max-width: 991px) {
+    .rex-geo-hidden-sm {
+        display: none !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .rex-geo-hidden-md {
+        display: none !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .rex-geo-hidden-lg {
+        display: none !important;
+    }
+}
+
+
+.rex-geo-icon {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+.rex-geo-icon-refresh:before {
+    content: "\f054";
+}
+.rex-geo-icon-reset:before {
+    content: "\f002";
+    content: "\f00d";
+}
+.rex-geo-icon-list:before {
+    content: "\f03a";
+}
+.rex-geo-icon-pager-prev:before {
+    content: "\f104";
+}
+.rex-geo-icon-pager-next:before {
+    content: "\f105";
+}
+
+
+
+.rex-geo:before, 
+.rex-geo:after {
+    content: " ";
+    display: table
+}
+.rex-geo:after {
+    clear: both
+}
+
+
+.rex-geo {
+    position: relative;
+    border: 1px solid #ddd;
+}
+.rex-geo-loading {
+    width:auto;
+    height:100%;
+    background: url("../images/loading.gif") #fff no-repeat 50% 50%;
+}
+
+
+.rex-geo-main {
+    position: relative;
+}
+.rex-geo-main:after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+}
+@media (min-width: 568px) {
+    .rex-geo-main {
+        float: right;
+        width: 66.6666666667%;
+        height: 100%;
+        border-left: 1px solid #ddd;
+    }
+    .rex-geo-main:after {
+        display: none;
+    }
+}
+
+.rex-geo-sidebar {
+    position: absolute;
+    top: 50px;
+    left: -1px;
+    right: -1px;
+    bottom: 0;
+    overflow-y: scroll;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-top: 0;
+}
+
+@media (min-width: 568px) {
+    .rex-geo-sidebar {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        float: left;
+        width: 33.3333333333%;
+        height: 100%;
+        border: 0;
+        overflow-y: visible;
+    }
+}
+
+.rex-geo-main header, 
+.rex-geo-sidebar header {
+    padding: 0 20px;
+    background: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+    overflow: hidden;
+}
+.rex-geo-main header {
+    height: 50px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+@media (min-width: 568px) {
+    .rex-geo-sidebar header {
+        height: 100px;
+    }
+}
+.rex-geo-sidebar footer {
+    display: none;
+    padding: 20px;
+    background: #f1f1f1;
+    border-top: 1px solid #ddd;
+}
+
+
+@media (min-width: 568px) {
+    .rex-geo-map {
+        width: 100%;
+        border: 1px solid transparent; /* Bug in Webkit-based browsers when using -webkit-transform in child elements. */
+    }
+}
+
+.rex-geo-print {
+    padding: 10px 0;
+}
+.rex-geo-print > a {
+    display: inline-block;
+    padding: 5px 0;
+}
+.rex-geo-print .rex-geo-icon {
+    margin-right: 5px;
+}
+
+
+.rex-geo-pager:before, 
+.rex-geo-pager:after {
+    content: " ";
+    display: table
+}
+.rex-geo-pager:after {
+    clear: both
+}
+.rex-geo-pager {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-top: 1px solid #ddd;
+}
+.rex-geo-pager ul {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.rex-geo-pager ul > li {
+    display: inline;
+}
+.rex-geo-pager ul > li > a {
+    display: inline-block;
+    padding: 5px 20px;
+}
+.rex-geo-pager .rex-geo-prev > a {
+    float: left;
+}
+.rex-geo-pager .rex-geo-next > a {
+    float: right;
+}
+.rex-geo-pager .rex-geo-prev .rex-geo-icon {
+    margin-right: 5px;
+}
+.rex-geo-pager .rex-geo-next .rex-geo-icon {
+    margin-left: 5px;
+}
+
+@media (min-width: 568px) {
+    .rex-geo-result {
+        position: absolute;
+        top: 100px;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        overflow-y: scroll;
+    }
+}
+.rex-geo-result-list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.rex-geo-result-list > li {
+    padding: 10px 20px;
+    border-top: 1px solid #ddd;
+    cursor: pointer;
+}
+.rex-geo-result-list > li:first-child {
+    border-top: 0;
+}
+.rex-geo-result-list > li.rex-geo-active {
+    background-color: #f7f7f7;
+}
+
+
+.rex-geo-button {
+    position: relative;
+    display: inline-block;
+    padding: 7px 5px;
+    background-color: #eeeeee;
+    background-image: -moz-linear-gradient(#fcfcfc, #eee);
+    background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+    background-image: linear-gradient(#fcfcfc, #eee);
+    background-repeat: repeat-x;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.9);
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+}
+.rex-geo-button-reset, 
+.rex-geo-button-refresh, 
+.rex-geo-button-submit {
+    color: #fff;
+}
+@media (min-width: 568px) {
+    .rex-geo-button {
+        padding: 7px 12px;
+    }
+}
+@media (max-width: 567px) {
+    .rex-geo-button-reset {
+        padding: 7px 0;
+    }
+}
+.rex-geo-button:hover {
+    background-color: #dddddd;
+    background-image: -moz-linear-gradient(#eee, #ddd);
+    background-image: -webkit-linear-gradient(#eee, #ddd);
+    background-image: linear-gradient(#eee, #ddd);
+    background-repeat: repeat-x;
+    border-color: #ccc;
+    text-decoration: none;
+}
+.rex-geo-button .rex-geo-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+input[type="text"] {
+    min-height: 34px;
+    padding: 7px 8px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right center;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    color: #333;
+    vertical-align: middle;
+}
+
+.rex-geo-input-group {
+    display: table;
+}
+.rex-geo-input-group input, 
+.rex-geo-input-group-button {
+    display: table-cell;
+}
+.rex-geo-input-group input {
+    width: 100%;
+    position: relative;
+}
+.rex-geo-input-group-button {
+    width: 1%;
+    vertical-align: middle;
+}
+
+.rex-geo-input-group input:first-child, 
+.rex-geo-input-group-button:first-child .rex-geo-button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.rex-geo-input-group input:last-child, 
+.rex-geo-input-group-button:last-child .rex-geo-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.rex-geo-input-group-button:last-child .rex-geo-button {
+    margin-left: -1px;
+}
+
+
+
+.ui-menu {
+    margin: 0 0 0 0;
+    padding: 1px;
+    list-style: none;
+    background-color: #ccc;
+    border-radius: 3px;
+}
+@media (max-width: 567px) {
+    .ui-menu {
+        display: none !important;
+    }
+}
+.ui-menu-item a {
+    display: block;
+    padding: 5px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.ui-menu-item a:hover {
+    background-color: #f7f7f7;
+    font-weight: 700;
+}
+.ui-menu-item a.ui-state-hover,
+.ui-menu-item a.ui-state-active {
+    background-color: #f7f7f7;    
+}
+
+
+
+
+
+/* rex geo color styles
+   ========================================================================== */
+body {
+    color: #4e5567;
+}
+.rex-geo a {
+    color: #e40518;
+}
+
+.rex-geo, 
+.rex-geo-main, 
+.rex-geo-main header, 
+.rex-geo-sidebar, 
+.rex-geo-sidebar header, 
+.rex-geo-sidebar footer, 
+.rex-geo-pager, 
+.rex-geo-result-list > li, 
+.ui-menu-item {
+    border-color: #cdcdcd;
+}
+
+
+.rex-geo-main header, 
+.rex-geo-sidebar header, 
+.rex-geo-result-list > li.rex-geo-active, 
+.ui-menu-item a:hover, 
+.ui-menu-item a.ui-state-hover,
+.ui-menu-item a.ui-state-active {
+    background-color: #e0e3e8;
+}
+
+.rex-geo-button-reset, 
+.rex-geo-button-reset:hover {
+    background: none;
+    border: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    color: #e40518;
+    font-size: 2em;
+}
+.rex-geo-button-submit {
+    background-color: #cf1a0f;
+    background-image: -moz-linear-gradient(#e40518, #cf1a0f);
+    background-image: -webkit-linear-gradient(#e40518, #cf1a0f);
+    background-image: linear-gradient(#e40518, #cf1a0f);
+    color: #fff;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+}
+.rex-geo-button-submit:hover {
+    background-color: #b90000;
+    background-image: -moz-linear-gradient(#cf1a0f, #b90000);
+    background-image: -webkit-linear-gradient(#cf1a0f, #b90000);
+    background-image: linear-gradient(#cf1a0f, #b90000);
+}
+
+@media (min-width: 992px) {
+    .rex-geo-print {
+        font-size: 1.5em;
+    }
+}
+
+
+
+
+.
+
+/*
+body {
+	padding:0px;
+	margin:0px;
+}
+
+
+.rex-geo{
+	background:#fff;
+	border:1px solid #ccc;
+	font-family:verdana;
+	font-size:12px;
+}
+
+.rex-geo-loading {
+	width:auto;
+	height:100%;
+	background:url(../images/loading.gif) #fff no-repeat 50% 50%;
+}
+
+
+
+body .rex-geo-search {
+	background:url(../images/bg_search.png);
+	border-bottom:1px solid #ccc;
+}
+
+body .rex-geo-search-box {
+	float:right;
+	width:485px;
+	text-align: right;
+	padding-right:10px;
+}
+
+body .rex-geo-search input{
+	border:1px solid #B82215;
+	margin:13px 13px 0px 13px;
+	height:20px;
+	padding:1px 5px;
+}
+
+body .rex-geo-search input#rex-geo-plz{
+	width:50px;
+}
+
+body .rex-geo-search a,
+body .rex-geo-search span{
+	line-height:40px;
+}
+
+body .rex-geo-search span{
+	margin-left:10px;
+}
+
+body .rex-geo-search a {
+	background-color:#B82215;
+	color:#fff;
+	padding:5px;
+	font-weight:bold;
+}
+
+body .rex-geo-search-box-2 {
+	margin-top:0px;
+	float:right;
+	width:360px;
+	text-align: right;
+}
+
+body .rex-geo-search .rex-geo-search-box-2 span{
+line-height: 10px;
+font-size:10px;
+display:block;
+width:100px;
+float:left;
+text-align:left;
+}
+
+body .rex-geo-search .rex-geo-search-box-2 span.info-plz{
+width:130px;
+}
+
+
+.rex-geo-sidebar{
+	padding; 0px;
+	margin: 0px
+}
+
+.rex-geo-prev,
+.rex-geo-next {
+	cursor:pointer;
+}
+
+.rex-geo-sidebar ul{
+margin:0px;
+padding:0px;
+}
+
+.rex-geo-sidebar ul li.rex-geo-side-active,
+.rex-geo-prev:hover,
+.rex-geo-next:hover {
+	background: url(../images/bg.png);
+	list-style-type: none;
+}
+
+.rex-geo-sidebar ul li {
+	list-style-type: none;
+	padding: 10px;
+	border-bottom: 1px solid #333;
+}
+
+*/
+

@@ -1,0 +1,17 @@
+package: yform
+version: '1.0-dev'
+author: Jan Kristinus, Gregor Harlan
+supportpage: www.redaxo.org/de/forum/
+
+page:
+    title: 'translate:yform'
+    perm: yform[]
+    pjax: false
+    icon: watson-icon-logo
+    subpages:
+        overview: { title: 'translate:overview' }
+
+stylesheets:
+    - yform.css
+    - popup.css
+

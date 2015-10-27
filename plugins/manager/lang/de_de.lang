@@ -1,0 +1,192 @@
+yform_table_manager = Table Manager
+
+navigation_manager = Tabellen
+yform_manager_fields = Felder
+
+# yform manager
+yform_alltables = Alle Tabellen
+yform_back_to_overview = Zurück zur Übersicht
+yform_updatetable = Tabelle/n aktualisieren
+yform_tablesupdated = Tabelle/n wurde/n aktualisiert
+
+yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
+yform_help_multipleselect = Mehrfachauswahl mit gedrückter CTRL/CMD Taste
+yform_updatetable_with_delete = mit Feldlöschung
+yform_updatetable_with_delete_confirm = Wirklich aktualisieren mit Feldlöschung ?
+
+yform_relation_move_first_data = Ausgewählten Datensatz an den Anfang verschieben
+yform_relation_move_up_data = Ausgewählten Datensatz nach oben verschieben
+yform_relation_move_down_data = Ausgewählten Datensatz nach unten verschieben
+yform_relation_move_last_data = Ausgewählten Datensatz an das Ende verschieben
+yform_relation_choose_entry = Datensatz auswählen
+yform_relation_delete_entry = Ausgewählten Datensatz löschen
+yform_relation_first_create_data = Bitte zunächst diesen Datensatz erstellen
+yform_relation_edit_relations = Verknüpfungen verwalten
+
+yform_prio_top = Am Anfang
+yform_prio_after = Nach "{0}"
+yform_prio_bottom = Am Ende
+
+yform_truncate_table = leeren
+yform_table_truncated = Tabelle wurde geleert
+yform_table_not_found = Die Tabelle wurde nicht gefunden
+yform_truncate_table_confirm = Wirklich die komplette Tabelle leeren?
+yform_table_overview = Tabellenübersicht
+
+yform_manager_edit_table = Tabelle editieren
+yform_manager_add_table = Tabelle hinzufügen
+
+yform_add_row = Reihe hinzufügen
+
+# tables.inc.php
+yform_importcsv = CSV Importieren
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_manager_table_updated = Tabelle und Felder wurden erstellt und/oder aktualisiert
+yform_manager_table_entry_saved = Vielen Dank fuer die Eintragung
+yform_manager_table_enter_name = Bitte tragen Sie die Tabellenbezeichnung ein
+yform_manager_table_enter_specialchars = Bitte tragen Sie beim Tabellenname nur Buchstaben und Zahlen ein. Das erste Zeichen muss ein Buchstabe sein
+yform_manager_table_exists = Dieser Tabellenname ist bereits vorhanden
+
+yform_manager_table_prio = Priorität
+yform_manager_table_prio_short = Prio
+yform_manager_table_name = Name
+yform_manager_table_status = Status
+yform_manager_name = Bezeichnung
+yform_manager_table_description = Beschreibung
+yform_manager_entries_per_page = Datensätze pro Seite
+yform_manager_sortfield = Standardsortierung: Feld
+yform_manager_sortorder = Standardsortierung: Richtung
+yform_manager_sortorder_asc = aufsteigend
+yform_manager_sortorder_desc = absteigend
+yform_manager_search_active = Suche aktiv
+yform_manager_enter_number = Bitte geben Sie eine Zahl für die Datensätze pro Seite ein
+yform_manager_table_hide = In Navigation versteckt
+yform_manager_table_allow_export = Export der Daten erlauben
+yform_manager_table_allow_import = Import von Daten erlauben
+
+yform_manager_table_updated = Vielen Dank für die Aktualisierung.
+yform_manager_table_added = Vielen Dank für den Eintrag.
+yform_manager_table_deleted = Tabelle wurde gelöscht
+yform_manager_table_add = Tabelle anlegen
+yform_manager_table_update = Tabellen und Felder updaten
+yform_manager_table_import = Tabelle importieren
+
+yform_manager_type_id = Typ
+yform_manager_type_name = Typname
+
+yform_manager_tableset = Tableset
+yform_manager_table = Tabelle
+yform_manager_tables = Tabellen
+
+yform_manager_import = importieren
+yform_manager_export = exportieren
+yform_manager_create = anlegen
+yform_manager_migrate = migrieren
+
+yform_manager_table_migrate = Tabelle migrieren
+yform_manager_table_migrated_failed = Migration für `{0}` ist fehlgeschlagen. Fehler: {1}
+yform_manager_table_migrate_info = Der Migrationsmanager erstellt aus einer vorhandenen Tabelle, eine, die über den Tablemanager verwaltet werden kann. Dazu ist in der Tabelle ein Autoinkrement-Feld mit dem Namen `id` nötig. Ohne dieses Feld funktioniert der Tablemanager nicht.<br /><br />Optional ist die Entscheidung ein vorhandenes Autoinkrementfeld umzuwandeln. Z.B. "event_id" zu "id".
+yform_manager_migrate_table_id_convert = `id`-Feld konvertieren falls nicht vorhanden
+yform_manager_table_migrated_success = Die Tabelle wurde erfolgreich migriert.
+
+yform_manager_tableset_import = Tableset importieren
+yform_manager_table_import_jsonimportfile = JSON Datei einspielen
+yform_manager_tableset_import_info =
+yform_manager_table_import_warning_selectfile = Es wurde keine Datei verwendet
+yform_manager_table_import_warning_type = Der Dateityp ist falsch. Es muss eine JSON Datei sein.
+yform_manager_table_import_success = Tabelle/n wurde/n erfolgreich importiert
+
+yform_manager_tableset_export = Tableset exportieren
+yform_manager_tableset_export_info =
+yform_manager_export_error_empty = Bitte mindestens eine Tabelle für den Export auswählen
+
+yform_manager_table_hidden = Sichtbarkeit
+yform_hidden = versteckt
+yform_visible = sichtbar
+
+
+# edit.inc.php
+yform_thankyouforupdate = Datensatz wurde aktualisiert.
+yform_thankyouforentry = Datensatz wurde eingetragen.
+yform_editdata = Datensatz editieren
+yform_adddata = Datensatz anlegen
+yform_searchtext = Suchbegriff
+yform_searchfields = Tabellenfelder über die gesucht wird
+yform_add = hinzufügen
+yform_add_apply = übernehmen
+yform_edit = editieren
+yform_save = speichern
+yform_save_apply = übernehmen
+yform_delete = löschen
+yform_search = suchen
+yform_export = exportieren
+yform_import = importieren
+yform_datadeleted = Datensatz wurde gelöscht
+yform_openerinfo = Opener-Info
+
+yform_table_info = Info
+yform_dataset = Datenergebnis
+
+yform_dataset_delete = Datenergebnis löschen
+yform_dataset_deleted = Datenergebnis wurde geleert
+yform_dataset_delete_confirm = Wirklich das Datenergebnis leeren?
+
+yform_data = Datensatz
+yform_manager_search = Suche
+
+yform_data_select = übernehmen
+
+# field.inc.php
+yform_tablenotexists = Diese Tabelle existiert nicht!
+yform_tablefield = Tabellenfeld
+yform_values = Werte
+yform_validates = Validierung/Überprüfung
+yform_actios = Aktionen
+yform_validatenamenotempty = Bitte tragen Sie den Namen ein
+yform_validatenamepregmatch = Bitte tragen Sie beim Namen nur Buchstaben und "_" ein
+yform_validatenamecheck = Dieser Name ist bereits vorhanden
+yform_donotsaveindb = Nicht in Datenbank speichern
+yform_hideinlist = In Liste verstecken
+yform_useassearchfieldalidatenamenotempty = Als Suchfeld aufnehmen
+yform_tablefielddeleted = Tabellenfeld wurde gelöscht
+yform_tablefieldnotfound = Tabllenfeld wurde nicht gefunden
+yform_addtablefield = Tabellenfeld anlegen
+yform_table = Tabelle
+yform_editfield = Feld editieren
+yform_choosenadd = Felder auswählen
+yform_choosenadd_description = Bitte wählen Sie das Feld aus, welches Sie bei Ihrer Verwaltung verwenden wollen. Dabei gibt es Value-Felder, mit denen normalerweise Eingaben getätigt werden, wie auch Validate-Felder, mit denen die Value-Felder nach diversen Kriterien überprüft werden können.
+yform_addfield = Feld hinzufügen
+yform_editfields = Felder bearbeiten
+
+yform_id_is_missing = ID fehlt
+yform_id_missing_info = Die Tabelle hat leider kein ID Feld mit autoincrement. Somit kann yform nicht damit arbeiten. Bitte aktualisieren Sie die Tabelle und legen notfalls die ID manuell an.
+
+# import
+yform_manager_import_error_missingfile = Bitte laden Sie eine Importdatei hoch
+yform_manager_import_error_missingfields = Es fehlen folgende Felder: {0}
+yform_manager_import_error_field = Feld "{0}" konnte nicht angelegt werden: "{1}"
+yform_manager_import_field_added = Feld "{0}" wurde angelegt
+yform_manager_import_error_import_stopped = Import wurde abgebrochen, da Fehler aufgetaucht sind.
+yform_manager_import_error_dataimport = Datensatz konnte nicht importiert werden: {0}
+yform_manager_import_error_dataimport = Es wurden {0} Datensätze importiert. Davon waren {1} neue Datensätze und {2} Datensätze wurden ersetzt.
+yform_manager_import_info_data_imported = Es wurde/n {0} Datensätze nicht importiert.
+yform_manager_import_error_not_started = Import wurde nicht gestartet.
+yform_manager_import_csv = CSV Datei importieren
+yform_manager_import_csv_info = Hiermit können Sie Daten in diese Tabelle importieren. BItte beachten Sie, dass Sie nur Textdateien importieren können und in der ersten Zeile die Felddefinitionen vorhanden sein müssen
+yform_manager_import_if_no_column = Wenn Spalte in der Datenbank nicht vorhanden ist,
+yform_manager_import_if_no_column_ignore = dann Spalte ignorieren.
+yform_manager_import_if_no_column_addtext = dann Spalte als TEXT in der Datenbank anlegen (Zur Verwaltung müssen später diese Felder noch bestimmt werden).
+yform_manager_import_if_no_column_break = dann Import abbrechen.
+yform_manager_import_divider = Trennzeichen
+yform_manager_import_divider_semicolon = Semikolon
+yform_manager_import_divider_comma = Komma
+yform_manager_import_divider_tab = Tabulator
+yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
+yform_manager_import_start = Hinzufügen
+
+yform_manager_show_form_notation = Formular-Code

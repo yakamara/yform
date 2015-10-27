@@ -1,0 +1,12 @@
+package: yform/manager
+version: '1.0-dev'
+author: 'Jan Kristinus'
+supportpage: www.redaxo.org/de/forum/
+compile: 0
+
+page:
+    title: 'translate:yform_manager'
+    pjax: false
+    icon: watson-icon-logo
+    subpages:
+        index: { title: 'translate:overview' }
