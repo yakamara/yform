@@ -14,7 +14,7 @@ class rex_yform
 
     function rex_yform()
     {
-        global $REX;
+
 
         $this->objparams = array();
 
@@ -159,7 +159,7 @@ class rex_yform
 
     function setRedaxoVars($aid = '', $clang = '', $params = array())
     {
-        global $REX;
+
 
         if ($clang == '') {
             $clang = $REX['CUR_CLANG'];
@@ -222,37 +222,36 @@ class rex_yform
 
         for ($i = 0; $i < $rows; $i++) {
 
-            $element = $this->objparams['form_elements'][$i];
+                $element = $this->objparams['form_elements'][$i];
 
-            if ($element[0] == 'validate') {
-                $classname = 'rex_yform_validate_' . trim($element[1]);
-                $ValidateObject = new $classname;
-                $ValidateObject->loadParams($this->objparams, $element);
-                $ValidateObject->setObjects($this->objparams['values']);
-                $this->objparams['validates'][$element[1]][] = $ValidateObject;
+                if ($element[0] == 'validate') {
+                        $class = 'rex_yform_validate_' . trim($element[1]);
+                        $ValidateObject = new $class;
+                        $ValidateObject->loadParams($this->objparams, $element);
+                        $ValidateObject->setObjects($this->objparams['values']);
+                        $this->objparams['validates'][$element[1]][] = $ValidateObject;
+                } else if ($element[0] == 'action') {
+                    $class = 'rex_yform_action_' . trim($element[1]);
+                    $this->objparams['actions'][$i] = new $class;
+                    $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
+                    $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
 
-            } else if ($element[0] == 'action') {
-                $classname = 'rex_yform_action_' . trim($element[1]);
-                $this->objparams['actions'][$i] = new $classname;
-                $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
-                $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
+                } else {
+                    $class = 'rex_yform_value_' . trim($element[0]);
+                    $this->objparams['values'][$i] = new $class;
+                    $this->objparams['values'][$i]->loadParams($this->objparams, $element);
+                    $this->objparams['values'][$i]->setId($i);
+                    $this->objparams['values'][$i]->init();
+                    $this->objparams['values'][$i]->setObjects($this->objparams['values']);
+                    $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
+                }
 
-            } else {
-                $classname = 'rex_yform_value_' . trim($element[0]);
-                $this->objparams['values'][$i] = new $classname;
-                $this->objparams['values'][$i]->loadParams($this->objparams, $element);
-                $this->objparams['values'][$i]->setId($i);
-                $this->objparams['values'][$i]->init();
-                $this->objparams['values'][$i]->setObjects($this->objparams['values']);
-                $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
-            }
-
-            // special case - submit button shows up by default
-            if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
-                $rows++;
-                $this->objparams['form_elements'][] = array('submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db');
-                $this->objparams['submit_btn_show'] = false;
-            }
+                // special case - submit button shows up by default
+                if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
+                    $rows++;
+                    $this->objparams['form_elements'][] = array('submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db');
+                    $this->objparams['submit_btn_show'] = false;
+                }
 
         }
 
@@ -545,11 +544,7 @@ class rex_yform
     static function showHelp($return = false, $script = false)
     {
 
-        global $REX;
 
-        if (!class_exists('rex_yform_base_abstract')) {
-            require_once $REX['INCLUDE_PATH'] . '/addons/yform/classes/basic/class.yform.base.abstract.inc.php';
-        }
 
         $html = '
 <ul class="yform root">
@@ -709,83 +704,30 @@ class rex_yform
     static function getTypeArray()
     {
 
-        global $REX;
+        $return = [];
 
-        $return = array();
+        $arr = [
+            'value' => 'rex_yform_value_',
+            'validate' => 'rex_yform_validate_',
+            'action' => 'rex_yform_action_'
+        ];
 
-        foreach ($REX['ADDON']['yform']['classpaths']['value'] as $pos => $value_path) {
-            if ($Verzeichniszeiger = @opendir($value_path)) {
-                while ($Datei = readdir($Verzeichniszeiger)) {
-                    if (preg_match('/^(class.yform)/', $Datei) && !preg_match('/^(class.yform.validate|class.yform.abstract)/', $Datei)) {
-                        if (!is_dir($Datei)) {
-                            $classname = (explode('.', substr($Datei, 12)));
-                            $name = $classname[0];
-                            $classname = 'rex_yform_' . $name;
-                            if (file_exists($value_path . $Datei)) {
-                                include_once $value_path . $Datei;
-                                $class = new $classname;
-                                $d = $class->getDefinitions();
-                                if (count($d) > 0) {
-                                $return['value'][$d['name']] = $d;
-                                }
-                            }
+        foreach($arr as $arr_key => $arr_split) {
+
+            foreach (rex_autoload::$classes as $class => $classPath) {
+                $exploded = explode($arr_split, $class);
+                if (count($exploded) == 2) {
+                    $name = $exploded[1];
+                    if ($name != "abstract") {
+                        $class = new $class;
+                        $d = $class->getDefinitions();
+                        if (count($d) > 0) {
+                            $return[$arr_key][$d['name']] = $d;
                         }
                     }
                 }
-                closedir($Verzeichniszeiger);
             }
-        }
 
-
-        // Validate
-
-        foreach ($REX['ADDON']['yform']['classpaths']['validate'] as $pos => $validate_path) {
-            if ($Verzeichniszeiger = @opendir($validate_path)) {
-                while ($Datei = readdir($Verzeichniszeiger)) {
-                    if (preg_match('/^(class.yform.validate)/', $Datei) && !preg_match('/^(class.yform.validate.abstract)/', $Datei)) {
-                        if (!is_dir($Datei)) {
-                            $classname = (explode('.', substr($Datei, 12)));
-                            $name = $classname[0];
-                            $classname = 'rex_yform_' . $name;
-                            if (file_exists($validate_path . $Datei)) {
-                                include_once $validate_path . $Datei;
-                                $class = new $classname;
-                                $d = $class->getDefinitions();
-                                if (count($d) > 0) {
-                                $return['validate'][$d['name']] = $d;
-                                }
-                            }
-                        }
-                    }
-                }
-                closedir($Verzeichniszeiger);
-            }
-        }
-
-
-        // Action
-
-        foreach ($REX['ADDON']['yform']['classpaths']['action'] as $pos => $action_path) {
-            if ($Verzeichniszeiger = @opendir($action_path)) {
-                while ($Datei = readdir($Verzeichniszeiger)) {
-                    if (preg_match('/^(class.yform.action)/', $Datei) && !preg_match('/^(class.yform.action.abstract)/', $Datei)) {
-                        if (!is_dir($Datei)) {
-                            $classname = (explode('.', substr($Datei, 12)));
-                            $name = $classname[0];
-                            $classname = 'rex_yform_' . $name;
-                            if (file_exists($action_path . $Datei)) {
-                                include_once $action_path . $Datei;
-                                $class = new $classname;
-                                $d = $class->getDefinitions();
-                                if (count($d) > 0) {
-                                $return['action'][$d['name']] = $d;
-                                }
-                            }
-                        }
-                    }
-                }
-                closedir($Verzeichniszeiger);
-            }
         }
 
         return $return;

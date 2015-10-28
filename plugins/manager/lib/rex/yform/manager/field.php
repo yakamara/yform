@@ -8,32 +8,28 @@ class rex_yform_manager_field implements ArrayAccess
 
     function __construct(array $values)
     {
-        global $I18N;
         if (count($values) == 0) {
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
-        if (!empty($values['type_name']) && $class = rex_yform::includeClass($values['type_id'], $values['type_name'])) {
-            $object = new $class;
-            $definitions = $object->getDefinitions();
-            if (isset($definitions['values'])) {
-                $i = 'validate' === $values['type_id'] ? 2 : 1;
-                foreach ($definitions['values'] as $key => $value) {
-                    if (isset($values['f' . $i]) && (!isset($values[$key]) || is_null($values[$key]) || '' === $values[$key])) {
-                        $values[$key] = $values['f' . $i];
-                    }
-                    $i++;
+        $class = 'rex_yform_' . $values['type_id'] . '_' . $values['type_name'];
+
+        $object = new $class;
+        $definitions = $object->getDefinitions();
+        if (isset($definitions['values'])) {
+            $i = 'validate' === $values['type_id'] ? 2 : 1;
+            foreach ($definitions['values'] as $key => $value) {
+                if (isset($values['f' . $i]) && (!isset($values[$key]) || is_null($values[$key]) || '' === $values[$key])) {
+                    $values[$key] = $values['f' . $i];
                 }
+                $i++;
             }
-        } else {
-            // echo '<pre>';      var_dump($values);echo '</pre>';
         }
         $this->values = $values;
     }
 
     public static function table()
     {
-        global $REX;
         return rex::getTablePrefix() . 'yform_field';
     }
 

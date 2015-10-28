@@ -204,7 +204,7 @@ SELECT * FROM
     {
         function getBEOutput(& $sql, $content)
         {
-            global $REX;
+
     
             $var = 'REX_DATA';
             $matches = $this->getVarParams($content, $var);

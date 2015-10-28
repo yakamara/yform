@@ -12,7 +12,7 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
     function executeAction()
     {
 
-        global $REX;
+
 
         $template_name = $this->getElement(2);
 

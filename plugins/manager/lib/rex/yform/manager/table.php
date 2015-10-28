@@ -84,7 +84,7 @@ class rex_yform_manager_table implements ArrayAccess
 
     public static function table()
     {
-        global $REX;
+
         return rex::getTablePrefix() . 'yform_table';
     }
 

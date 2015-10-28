@@ -16,7 +16,7 @@ class rex_yform_value_lang_textarea extends rex_yform_value_abstract
 
     function enterObject()
     {
-        global $REX;
+
 
         $text = array();
         if (is_array($this->getvalue())) {

@@ -6,7 +6,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-$msg = '';
+$error = '';
 
 $phpmailer_addon = rex_addon::get('phpmailer');
 if ($phpmailer_addon->exists('phpmailer') && $phpmailer_addon->isAvailable() && $phpmailer_addon->getVersion() >= '5.0-alpha7') {
@@ -15,7 +15,7 @@ if ($phpmailer_addon->exists('phpmailer') && $phpmailer_addon->isAvailable() && 
 
 } else {
 
-    $msg = rex_i18n::msg('yform_install_phpmailer_version_problem', '5.0-alpha7');
+    $error = rex_i18n::msg('yform_install_phpmailer_version_problem', '5.0-alpha7');
 
     /*
 
@@ -50,6 +50,12 @@ if ($phpmailer_addon->exists('phpmailer') && $phpmailer_addon->isAvailable() && 
     */
 
 }
+
+if($error)
+    $this->setProperty('installmsg', $error);
+else
+    $this->setProperty('install', true);
+
 
 /*
 if ($msg != '') {

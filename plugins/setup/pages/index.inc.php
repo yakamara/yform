@@ -36,14 +36,14 @@ if (isset($_REQUEST['install']) && $_REQUEST['install'] == 1) {
     if (isset($_REQUEST['module_id']) && $module_id == $_REQUEST['module_id']) {
         $mi->setWhere('id="' . $module_id . '"');
         $mi->update();
-        echo rex_info('Modul "' . $module_name . '" wurde aktualisiert');
+        echo rex_view::info('Modul "' . $module_name . '" wurde aktualisiert');
 
     } else {
         $mi->setValue('name', $yform_module_name);
         $mi->insert();
         $module_id = (int) $mi->getLastId();
         $module_name = $yform_module_name;
-        echo rex_info('yform Modul wurde angelegt unter "' . $yform_module_name . '"');
+        echo rex_view::info('yform Modul wurde angelegt unter "' . $yform_module_name . '"');
 
     }
 

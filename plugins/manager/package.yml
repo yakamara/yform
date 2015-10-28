@@ -7,6 +7,9 @@ compile: 0
 page:
     title: 'translate:yform_manager'
     pjax: false
-    icon: watson-icon-logo
+    icon: icon
     subpages:
-        index: { title: 'translate:overview' }
+        table_edit: { title: '' }
+        table_field: { title: '' }
+        data_edit: { title: '' }
+        data_import: { title: '' }

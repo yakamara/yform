@@ -150,10 +150,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
   function parse($template, $params = array())
     {
-        global $REX, $I18N;
-
         extract($params);
-
         ob_start();
         include $this->params['this']->getTemplatePath($template);
         return ob_get_clean();

@@ -258,7 +258,7 @@ class rex_yform_manager_table_api
 
     public static function migrateTable($table_name, $convert_id = false)
     {
-        global $REX;
+
         $columns = rex_sql::showColumns($table_name);
 
         if (count($columns) == 0) {

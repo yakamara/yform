@@ -12,7 +12,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
     function enterObject()
     {
 
-        global $REX;
+
 
         // MEDIAPOOL
         $mediacatid     = ($this->getElement(8) == '') ? 0 : (int) $this->getElement(8);
@@ -141,7 +141,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
     function saveMedia($FILE, $filefolder, $extensions_array, $rex_file_category, $mediapool_user)
     {
 
-        global $REX;
+
 
         $FILENAME = $FILE['name'];
         $FILESIZE = $FILE['size'];

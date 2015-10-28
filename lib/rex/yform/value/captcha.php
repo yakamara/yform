@@ -12,7 +12,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
     function enterObject()
     {
 
-        global $REX;
+
 
         require_once realpath(dirname(__FILE__) . '/../../ext/captcha/class.captcha_x.php');
 

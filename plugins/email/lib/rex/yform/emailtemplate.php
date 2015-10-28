@@ -10,7 +10,7 @@ class rex_yform_emailtemplate
 {
     static function getTemplate($name)
     {
-        global $REX;
+
         $gt = rex_sql::factory();
         $gt->setQuery('select * from ' . rex::getTablePrefix() . 'yform_email_template where name="' . mysql_real_escape_string($name) . '"');
         if ($gt->getRows() == 1) {
@@ -22,14 +22,14 @@ class rex_yform_emailtemplate
 
     static function replaceVars($template, $er = array())
     {
-        global $REX;
 
-        $r = rex_register_extension_point('YFORM_EMAIL_BEFORE_REPLACEVARS', array(
-            'template' => $template,
-            'search_replace' => $er,
-            'status' => false
-        )
-        );
+        $r = rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_BEFORE_REPLACEVARS',
+            [
+                'template' => $template,
+                'search_replace' => $er,
+                'status' => false
+            ]
+        ));
 
         $template = $r['template'];
         $er = $r['search_replace'];
@@ -73,12 +73,13 @@ class rex_yform_emailtemplate
     static function sendMail($template, $template_name = '')
     {
 
-        $r = rex_register_extension_point('yform_EMAIL_BEFORE_SEND', array(
-            'template' => $template,
-            'template_name' => $template_name,
-            'status' => false
-        )
-        );
+        $r = rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_BEFORE_SEND',
+            [
+                'template' => $template,
+                'template_name' => $template_name,
+                'status' => false
+            ]
+        ));
 
         $template = $r['template'];
         $template_name = $r['template_name'];
@@ -108,12 +109,12 @@ class rex_yform_emailtemplate
 
         if ($mail->Send()) {
             $template['email_subject'] = $template['subject'];
-            rex_register_extension_point('yform_EMAIL_SENT', $template_name, $template, true); // read only
+            rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT', $template_name, $template, true)); // read only
             return true;
 
         } else {
             $template['email_subject'] = $template['subject'];
-            rex_register_extension_point('yform_EMAIL_SENT_FAILED', $template_name, $template, true); // read only
+            rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT_FAILED', $template_name, $template, true)); // read only
             return false;
 
         }

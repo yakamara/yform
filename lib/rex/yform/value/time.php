@@ -126,7 +126,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     static function getListValue($params)
     {
-        global $I18N;
+
         $format = rex_i18n::msg('yform_format_time');
         if (($d = DateTime::createFromFormat('H:i:s', $params['subject'])) && $d->format('H:i:s') == $params['subject']) {
             return $d->format($format);

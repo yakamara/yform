@@ -50,7 +50,7 @@ class rex_yform_manager_search
 
     function getForm()
     {
-        global $I18N;
+
 
         if (!$this->table->isSearchable()) {
             return '';

@@ -17,7 +17,7 @@ if ($REX['REDAXO'] && !$REX['SETUP']) {
     rex_register_extension('yform_MANAGER_TABLE_FIELD_FUNC', 'rex_yform_geo_page');
     function rex_yform_geo_page($params)
     {
-        global $REX;
+
         include $REX['INCLUDE_PATH'] . '/addons/yform/plugins/geo/pages/ep_geotagging.inc.php';
         return true;
     }
@@ -25,7 +25,7 @@ if ($REX['REDAXO'] && !$REX['SETUP']) {
     rex_register_extension('yform_MANAGER_DATA_EDIT_FUNC', 'rex_yform_geo_data');
     function rex_yform_geo_data($params)
     {
-        global $REX;
+
         return true;
     }
 

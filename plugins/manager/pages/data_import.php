@@ -36,7 +36,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
     // Daten wurden übertragen
     if (!isset($_FILES['file_new']) || $_FILES['file_new']['tmp_name'] == '') {
-        echo rex_warning(rex_i18n::msg('yform_manager_import_error_missingfile'));
+        echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_missingfile'));
 
     } else {
 
@@ -59,18 +59,18 @@ if (rex_request('send', 'int', 0) == 1) {
         $errorcounter = 0;
 
         $import_start = true;
-        $import_start = rex_register_extension_point(
-            'yform_DATASET_IMPORT',
-            $import_start,
-            array(
-                'divider' => $div,
-                'table' => $this->table,
-                'filename' => $filename,
-                'replacefield' => $replacefield,
-                'missing_columns' => $missing_columns,
-                'debug' => $debug
-            )
-            );
+        $import_start = rex_extension::registerPoint(new rex_extension_point(
+                'yform_DATASET_IMPORT',
+                $import_start,
+                [
+                    'divider' => $div,
+                    'table' => $this->table,
+                    'filename' => $filename,
+                    'replacefield' => $replacefield,
+                    'missing_columns' => $missing_columns,
+                    'debug' => $debug
+                ]
+            ));
 
         if ($import_start) {
 
@@ -96,7 +96,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                     if (count($mc) > 0) {
                         if ($missing_columns == 3) {
-                            echo rex_warning(rex_i18n::msg('yform_manager_import_error_missingfields', implode(', ', $mc)));
+                            echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_missingfields', implode(', ', $mc)));
                             $show_importform = true;
                             $func = 'import';
                             break;
@@ -110,16 +110,16 @@ if (rex_request('send', 'int', 0) == 1) {
 
                                 if ($upd->getError()) {
                                     $error = true;
-                                    echo rex_warning(rex_i18n::msg('yform_manager_import_error_field', $mcc, $upd->getError()));
+                                    echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_field', $mcc, $upd->getError()));
 
                                 } else {
-                                    echo rex_info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
+                                    echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
 
                                 }
 
                             }
                             if ($error) {
-                                echo rex_warning(rex_i18n::msg('yform_manager_import_error_import_stopped'));
+                                echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_import_stopped'));
                                 $show_importform = true;
                                 break;
                             }
@@ -156,7 +156,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         if ($cf->getRows() > 0) {
                             $i->setWhere($replacefield . '="' . mysql_real_escape_string($replacevalue) . '"');
 
-                            rex_register_extension_point(
+                            rex_extension::registerPoint(new rex_extension_point(
                                 'yform_DATASET_IMPORT_DATA_UPDATE',
                                 $import_start,
                                 array(
@@ -168,7 +168,7 @@ if (rex_request('send', 'int', 0) == 1) {
                                     'debug' => $debug,
                                     'yform_object' => $i
                                 )
-                                );
+                                ));
 
                             $i->update();
                             $error = $i->getError();
@@ -177,11 +177,11 @@ if (rex_request('send', 'int', 0) == 1) {
 
                             } else {
                                 $dcounter++;
-                                echo rex_warning(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
+                                echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
                             }
                         } else {
 
-                            rex_register_extension_point(
+                            rex_extension::registerPoint(new rex_extension_point(
                                 'yform_DATASET_IMPORT_DATA_INSERT',
                                 $import_start,
                                 array(
@@ -193,7 +193,7 @@ if (rex_request('send', 'int', 0) == 1) {
                                     'debug' => $debug,
                                     'yform_object' => $i
                                 )
-                                );
+                                ));
 
                             $i->insert();
                             $error = $i->getError();
@@ -201,7 +201,7 @@ if (rex_request('send', 'int', 0) == 1) {
                                 $icounter++;
                             } else {
                                 $dcounter++;
-                                echo rex_warning(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
+                                echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
                             }
                         }
 
@@ -212,7 +212,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
             }
 
-            rex_register_extension_point(
+            rex_extension::registerPoint(new rex_extension_point(
                 'yform_DATASET_IMPORTED',
                 '',
                 array(
@@ -229,18 +229,18 @@ if (rex_request('send', 'int', 0) == 1) {
                     'data_inserted' => $icounter, // insert counter
                     'data_errors' => $errorcounter
                 )
-            );
+            ));
 
-            echo rex_info(rex_i18n::msg('yform_manager_import_error_dataimport', ($icounter + $rcounter), $icounter, $rcounter));
+            echo rex_view::info(rex_i18n::msg('yform_manager_import_error_dataimport', ($icounter + $rcounter), $icounter, $rcounter));
 
         } else {
 
-            echo rex_info(rex_i18n::msg('yform_manager_import_error_not_started'));
+            echo rex_view::info(rex_i18n::msg('yform_manager_import_error_not_started'));
 
         }
 
         if ($dcounter > 0) {
-            echo rex_warning(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
+            echo rex_view::warning(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
 
         }
 

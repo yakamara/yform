@@ -5,7 +5,7 @@ rex_sql_util::importDump($this->getPath('_install.sql'));
 
 
 
-global $REX;
+
 
 /**
  * yform

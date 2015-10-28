@@ -12,7 +12,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     function enterObject()
     {
 
-        global $REX;
+
 
         $error = array();
 

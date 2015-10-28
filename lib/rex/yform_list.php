@@ -20,13 +20,14 @@ class rex_yform_list extends rex_list
     static function factory($query, $rowsPerPage = 30, $listName = null, $debug = false, $class = null)
     {
         if (!$class) {
-            // ----- EXTENSION POINT
-            $class = rex_register_extension_point('REX_LIST_CLASSNAME', 'rex_yform_list',
-                array(
-                    'query'       => $query,
-                    'rowsPerPage' => $rowsPerPage,
-                    'listName'    => $listName,
-                    'debug'       => $debug
+
+            $class = rex_extension::registerPoint(new rex_extension_point('REX_LIST_CLASSNAME', 'rex_yform_list',
+                    [
+                        'query'       => $query,
+                        'rowsPerPage' => $rowsPerPage,
+                        'listName'    => $listName,
+                        'debug'       => $debug
+                    ]
                 )
             );
         }
@@ -36,7 +37,7 @@ class rex_yform_list extends rex_list
 
     function getPagination()
     {
-        global $I18N;
+
 
         $s = $this->getPlainView();
         // $s .= $this->getClassicView();
@@ -48,7 +49,7 @@ class rex_yform_list extends rex_list
 
     function getClassicView()
     {
-        global $I18N;
+
 
         $start = $this->getStartRow();
         $rows = $this->getRows();
@@ -86,7 +87,7 @@ class rex_yform_list extends rex_list
 
     function getPlainView()
     {
-        global $I18N;
+
 
         $current = $this->getStartRow();
 
@@ -175,7 +176,7 @@ class rex_yform_list extends rex_list
 
     function getSingleView($params = array())
     {
-        global $I18N;
+
 
         $return = '';
 

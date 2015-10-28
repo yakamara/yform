@@ -44,10 +44,8 @@ if ($REX['REDAXO'] && !$REX['SETUP']) {
     rex_register_extension('OOMEDIA_IS_IN_USE', 'rex_yform_manager::checkMediaInUse');
 
     rex_register_extension('ADDONS_INCLUDED', function () {
-        global $REX, $I18N;
 
         $tables = rex_yform_manager_table::getAll();
-
         $subpages = array();
 
         foreach ($tables as $table) {
@@ -58,9 +56,7 @@ if ($REX['REDAXO'] && !$REX['SETUP']) {
             if ($table['status'] == 1 && $table['hidden'] != 1 && $REX['USER'] && (rex::getUser()->isAdmin() || $REX['USER']->hasPerm($table_perm))) {
                 $table_name = rex_i18n::translate($table['name']);
 
-                if ($I18N) {
-                    rex_i18n::msgaddMsg($table['table_name'], $table_name);
-                }
+                echo rex_i18n::msg($table['table_name'], $table_name);
 
                 $be_page = new rex_be_page($table_name, array('page' => 'yform', 'subpage' => 'manager', 'tripage' => 'data_edit', 'table_name' => $table['table_name']));
                 $be_page->setHref('index.php?page=yform&subpage=manager&tripage=data_edit&table_name=' . $table['table_name']);
@@ -70,7 +66,7 @@ if ($REX['REDAXO'] && !$REX['SETUP']) {
             }
         }
 
-        $subpages = rex_register_extension_point('yform_MANAGER_SUBPAGES_TABLES', $subpages);
+        $subpages = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_SUBPAGES_TABLES', $subpages));
 
         OOPlugin::setProperty('yform', 'manager', 'pages', $subpages);
 

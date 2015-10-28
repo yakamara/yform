@@ -11,7 +11,6 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
 
     function enterObject()
     {
-        global $REX;
 
         $multiple = $this->getElement('multiple') == 1;
 
@@ -25,7 +24,6 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         $clang = (int) $this->getElement('clang');
 
         $add = function (OOCategory $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
-            global $REX;
 
             if (!$checkPerms || $REX['USER']->hasCategoryPerm($cat->getId(), false)) {
                 $cid = $cat->getId();
