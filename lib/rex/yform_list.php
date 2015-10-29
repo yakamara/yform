@@ -6,16 +6,10 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-rex_register_extension('REX_LIST_CLASSNAME', 'rex_yform_list_ep');
-
-function rex_yform_list_ep($params)
-{
-    return new rex_yform_list($params['query'], $params['rowsPerPage'], $params['listName'], $params['debug']);
-}
-
-
 class rex_yform_list extends rex_list
 {
+
+    private $columnLabels = [], $columnFormates = [];
 
     static function factory($query, $rowsPerPage = 30, $listName = null, $debug = false, $class = null)
     {
@@ -56,7 +50,7 @@ class rex_yform_list extends rex_list
         $rowsPerPage = $this->getRowsPerPage();
         $pages = ceil($rows / $rowsPerPage);
 
-        $s .= '<ul class="rex-navi-paginate">' . "\n";
+        $s = '<ul class="rex-navi-paginate">' . "\n";
         $s .= '<li class="rex-navi-paginate-prev"><a href="' . $this->getUrl(array('start' => $start - $rowsPerPage)) . '" title="' . rex_i18n::msg('list_previous') . '"><span>' . rex_i18n::msg('list_previous') . '</span></a></li>';
 
         if ($pages > 1) {
@@ -177,7 +171,6 @@ class rex_yform_list extends rex_list
     function getSingleView($params = array())
     {
 
-
         $return = '';
 
         $current = (int) $_REQUEST[$this->skip_key];
@@ -247,11 +240,10 @@ class rex_yform_list extends rex_list
 
     // ---------------------------------------------------
 
-    function setColumnLabel($columnName, $label)
+    public function setColumnLabel($columnName, $label)
     {
         $this->columnLabels[$columnName] = rex_i18n::translate($label, null);
     }
-
 
     /**
      * Setzt ein Format für die Spalte
@@ -261,7 +253,7 @@ class rex_yform_list extends rex_list
      * @param $format Zu verwendentes Format
      * @param $params Custom params für callback func bei format_type 'custom'
      */
-    function setColumnFormat($columnName, $format_type, $format = '', $params = array() )
+    public function setColumnFormat($columnName, $format_type, $format = '', $params = array() )
     {
         $this->columnFormates[$columnName] = array($format_type, $format, $params);
     }

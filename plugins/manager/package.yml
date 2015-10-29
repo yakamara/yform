@@ -7,7 +7,7 @@ compile: 0
 page:
     title: 'translate:yform_manager'
     pjax: false
-    icon: icon
+    icon: rex-icon fa-hand-spock-o
     subpages:
         table_edit: { title: '' }
         table_field: { title: '' }

@@ -72,7 +72,7 @@ class rex_yform_manager_search
         foreach ($this->table->getFields() as $field) {
 
             if ($field->getTypeName() && $field->getType() == 'value' && $field->isSearchable()) {
-                rex_yform::includeClass($field->getType(), $field->getTypeName());
+
                 if (method_exists('rex_yform_' . $field->getTypeName(), 'getSearchField')) {
                     call_user_func('rex_yform_' . $field->getTypeName() . '::getSearchField', array(
                         'searchForm' => $yform,

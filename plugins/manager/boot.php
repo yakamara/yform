@@ -6,6 +6,68 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
+
+if (rex::isBackend()) {
+    rex_extension::register('PAGES_PREPARED', function ($params) {
+
+        $pages = $params->getSubject();
+
+        // echo '<pre>'; var_dump($pages);
+
+        $tables = rex_yform_manager_table::getAll();
+
+
+        // rex_package::get('yform');
+
+        foreach ($tables as $table) {
+
+            $table_perm = 'yform[table:' . $table['table_name'] . ']';
+            $REX['EXTPERM'][] = $table_perm;
+
+            if ($table['status'] == 1 && $table['hidden'] != 1 && rex::getUser() && (rex::getUser()->isAdmin() || rex::getUser()->hasPerm($table_perm))) {
+                $table_name = rex_i18n::translate($table['name']);
+
+                $table_link = 'index.php?page=yform/manager/data_edit&table_name=' . $table['table_name'];
+                // echo "<br />".rex_i18n::msg($table['table_name'], $table_name)." ...   ".$table_link;
+
+                // $be_page = new rex_be_page($table_name, rex_i18n::msg($table_name));
+                //$be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table['table_name']);
+//                $page->setPath(rex_path::core('pages/login.php'));
+//                $page->setHasNavigation(false);
+
+                // $pages["yform_tables"] = $be_page;
+
+
+                // addPage(rex_be_page $page)
+
+                // setBlock(
+                // rex_be_page_main
+
+
+                //             $subpages[] = new rex_be_main_page('manager', $be_page);
+
+            }
+        }
+
+// rex_be_controller::setCurrentPage('login');
+        return $pages;
+
+    });
+
+}
+
+
+
+
+    // $subpages = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_SUBPAGES_TABLES', $subpages));
+
+
+
+//}
+
+
+
+
 /*
 if ($REX['REDAXO'] && !$REX['SETUP']) {
 

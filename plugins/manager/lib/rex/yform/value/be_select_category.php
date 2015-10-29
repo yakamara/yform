@@ -25,11 +25,11 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
 
         $add = function (OOCategory $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
 
-            if (!$checkPerms || $REX['USER']->hasCategoryPerm($cat->getId(), false)) {
+            if (!$checkPerms || rex::getUser()->hasCategoryPerm($cat->getId(), false)) {
                 $cid = $cat->getId();
                 $cname = $cat->getName();
 
-                if ($REX['USER']->hasPerm('advancedMode[]')) {
+                if (rex::getUser()->hasPerm('advancedMode[]')) {
                     $cname .= ' [' . $cid . ']';
                 }
 
@@ -47,17 +47,17 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 $add($rootCat);
             }
         } else {
-            if (!$checkPerms || rex::getUser()->isAdmin() || $REX['USER']->hasPerm('csw[0]')) {
+            if (!$checkPerms || rex::getUser()->isAdmin() || rex::getUser()->hasPerm('csw[0]')) {
                 if ($rootCats = OOCategory::getRootCategories($ignoreOfflines, $clang)) {
                     foreach ($rootCats as $rootCat) {
                         $add($rootCat);
                     }
                 }
-            } elseif ($REX['USER']->hasMountpoints()) {
-                $mountpoints = $REX['USER']->getMountpoints();
+            } elseif (rex::getUser()->hasMountpoints()) {
+                $mountpoints = rex::getUser()->getMountpoints();
                 foreach ($mountpoints as $id) {
                     $cat = OOCategory::getCategoryById($id, $clang);
-                    if ($cat && !$REX['USER']->hasCategoryPerm($cat->getParentId())) {
+                    if ($cat && !rex::getUser()->hasCategoryPerm($cat->getParentId())) {
                         $add($cat);
                     }
                 }
