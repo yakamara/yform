@@ -190,3 +190,5 @@ yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird de
 yform_manager_import_start = Hinzufügen
 
 yform_manager_show_form_notation = Formular-Code
+
+navigation_yform_tables = Tabellen

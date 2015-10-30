@@ -533,144 +533,47 @@ class rex_yform
         return preg_replace('/[^a-zA-Z\-\_0-9]/', '-', $label);;
     }
 
-    // ----- Hilfsfunktionen -----
-
     static function unhtmlentities($text)
     {
         return html_entity_decode($text);
     }
 
-
-    static function showHelp($return = false, $script = false)
+    static function showHelp($script = false)
     {
 
+        $return = '';
 
+        $arr = [
+            'value' => 'rex_yform_value_',
+            'validate' => 'rex_yform_validate_',
+            'action' => 'rex_yform_action_'
+        ];
 
-        $html = '
-<ul class="yform root">
-    <li class="type value"><strong class="toggler">Value</strong>
-    <ul class="yform type value">
-    ';
+        foreach($arr as $arr_key => $arr_split) {
 
-        foreach ($REX['ADDON']['yform']['classpaths']['value'] as $pos => $value_path) {
-            if ($pos == 1) {
-                $html .= '<li class="value extras"><strong class="toggler opened">Value Extras</strong><ul class="yform type value extras">';
-            }
-            if ($dir = opendir($value_path)) {
-                $list = array();
-                while ($file = readdir($dir)) {
-                    if (preg_match('/^(class.yform)(.)*(.inc.php)/', $file) && !preg_match('/^(class.yform.validate|class.yform.abstract)/', $file)) {
-                        if (!is_dir($file)) {
-                            $classname = (explode('.', substr($file, 12)));
-                            $classname = 'rex_yform_' . $classname[0];
+            $return .= '<li class="type value"><strong class="toggler">'.rex_i18n::msg($arr_key).'</strong>';
 
-                            if (file_exists($value_path . $file)) {
-                                include_once $value_path . $file;
-                                $class = new $classname;
-                                $desc = $class->getDescription();
-                                if ($desc != '') {
-                                    $list[$classname] = '<li>' . $desc . '</li>';
-                                }
-
-                            }
-                        }
+            foreach (rex_autoload::getClasses() as $class) {
+                $exploded = explode($arr_split, $class);
+                if (count($exploded) == 2) {
+                    $name = $exploded[1];
+                    $return .= '<ul class="yform type '.$arr_key.'">';
+                    if ($name != "abstract") {
+                        $class = new $class;
+                        // $d = $class->getDefinitions();
+                        $desc = $class->getDescription();
+                        $return .= '<li>'.$desc.'</li>';
                     }
+                    $return .= '</ul>';
                 }
-                ksort($list);
-                foreach ($list as $l) {
-                    $html .= $l;
-                }
-                closedir($dir);
             }
-        }
-        if ($pos > 0) {
-            $html .= '</ul></li>';
-        }
-        $html .= '</ul>
-    </li>
-    <li class="type validate"><strong class="toggler">Validate</strong>
-    <ul class="yform type validate">
-    ';
 
-        foreach ($REX['ADDON']['yform']['classpaths']['validate'] as $pos => $validate_path) {
-            if ($pos == 1) {
-                $html .= '<li class="validate extras"><strong class="toggler opened">Validate Extras</strong><ul class="yform type validate extras">';
-            }
-            if ($dir = opendir($validate_path)) {
-                $list = array();
-                while ($file = readdir($dir)) {
-                    if (preg_match('/^(class.yform.validate)(.)*(.inc.php)/', $file) && !preg_match('/^(class.yform.validate.abstract)/', $file)) {
-                        if (!is_dir($file)) {
-                            $classname = (explode('.', substr($file, 12)));
-                            $classname = 'rex_yform_' . $classname[0];
-                            if (file_exists($validate_path . $file)) {
-                                include_once $validate_path . $file;
-                                $class = new $classname;
-                                $desc = $class->getDescription();
-                                if ($desc != '') {
-                                    $list[$classname] = '<li>' . $desc . '</li>';
-                                }
-                            }
-                        }
-                    }
-                }
-                ksort($list);
-                foreach ($list as $l) {
-                    $html .= $l;
-                }
-                closedir($dir);
-            }
-        }
-        if ($pos > 0) {
-            $html .= '</ul></li>';
-        }
+            $return .= '</li>';
 
-        $html .= '</ul>
-    </li>
-
-    <li class="type action"><strong class="toggler">Action</strong>
-    <ul class="yform type action">
-    ';
-
-        foreach ($REX['ADDON']['yform']['classpaths']['action'] as $pos => $action_path) {
-            if ($pos == 1) {
-                $html .= '<li class="action extras"><strong class="toggler opened">Action Extras</strong><ul class="yform type action extras">';
-            }
-            if ($dir = opendir($action_path)) {
-                $list = array();
-                while ($file = readdir($dir)) {
-                    if (preg_match('/^(class.yform.action)(.)*(.inc.php)/', $file) && !preg_match('/^(class.yform.action.abstract)/', $file)) {
-                        if (!is_dir($file)) {
-                            $classname = (explode('.', substr($file, 12)));
-                            $classname = 'rex_yform_' . $classname[0];
-                            if (file_exists($action_path . $file)) {
-                                include_once $action_path . $file;
-                                $class = new $classname;
-                                $desc = $class->getDescription();
-                                if ($desc != '') {
-                                   $list[$classname] = '<li>' . $desc . '</li>';
-                                }
-                            }
-                        }
-                    }
-                }
-                ksort($list);
-                foreach ($list as $l) {
-                    $html .= $l;
-                }
-                closedir($dir);
-            }
         }
-        if ($pos > 0) {
-            $html .= '</ul></li>';
-        }
-
-        $html .= '</ul>
-    </li>
-</ul>';
 
         if ($script) {
-            $html .= '
+            $return .= '
 <script type="text/javascript">
 (function($){
 
@@ -692,11 +595,7 @@ class rex_yform
 ';
         }
 
-        if ($return) {
-            return $html;
-        } else {
-            echo $html;
-        }
+        return '<ul class="yform root">'.$return.'</ul>';
 
     }
 

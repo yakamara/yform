@@ -13,6 +13,8 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
     {
         if ($this->params['send'] == '1') {
 
+            $cd = rex_sql::factory();
+
             $table = $this->params['main_table'];
             if ($this->getElement('table') != '') {
                 $table = $this->getElement('table');
@@ -27,7 +29,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $qfields[$o->getId()] = '`' . $o->getName() . '`="' . mysql_real_escape_string($value) . '"';
+                    $qfields[$o->getId()] = '`' . $o->getName() . '`=' . $cd->escape($value) . '';
                 }
             }
 
@@ -42,8 +44,8 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
             if ($this->params['main_where'] != '') {
                 $sql = 'select * from ' . $table . ' WHERE ' . implode(' AND ', $qfields) . ' AND !(' . $this->params['main_where'] . ') LIMIT 1';
             }
-            $cd = rex_sql::factory();
-            // $cd->debugsql = 1;
+
+            $cd->debugsql = 1;
             $cd->setQuery($sql);
             if ($cd->getRows() > 0) {
                 foreach ($qfields as $qfield_id => $qfield_name) {
