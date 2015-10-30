@@ -82,7 +82,7 @@ class rex_yform
 
         $this->objparams['hide_top_warning_messages'] = false;
         $this->objparams['hide_field_warning_messages'] = true;
-        
+
         $this->objparams['fieldsets_opened'] = 0; //
 
         $this->objparams['form_elements'] = array();
@@ -714,7 +714,7 @@ class rex_yform
 
         foreach($arr as $arr_key => $arr_split) {
 
-            foreach (rex_autoload::$classes as $class => $classPath) {
+            foreach (rex_autoload::getClasses() as $class) {
                 $exploded = explode($arr_split, $class);
                 if (count($exploded) == 2) {
                     $name = $exploded[1];
