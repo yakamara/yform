@@ -10,10 +10,4 @@ yform_table_name = MySQL table name
 
 yform_description_all = <p>In the module especially the field definitions are important which are structured in three types.<p /><h5>Value Fields</h5> <p>Theses are the fields which usually appear in a form. These can be simple text fields, select fields, checkboxes etc., but also hidden fields, birthday date, database select fields etc.</p><h5 >Validate Fields</h5><p>These are the fields that check the values of the value fields. Means: with them it can be controlled if a value has been typed in (notEmpty) or if its string, integer or other. Also there can be controlled if there already exists a database field with this value etc.</p><h5>Action Fields</h5><p>Are important for later use. Shall an email be sent and/or shall an entry into the database be made etc....</p><h2>Types Overview</h2>
 
-yform_install_only_utf8 = yform runs only with the charset utf8 activated in REDAXO.
-yform_install_phpmailer_version_problem = PHPMailer needs at least version {0} and has to be installed.
-
-yform_install_checkphpversion = The PHP version is not sufficient. At least version 5.3. is needed. Currently version {0} is installed.
-yform_install_redaxo_version_problem = The REDAXO version is not sufficient. At least version {0} is needed.
-
 list_message = {0} to {1} of {2} entries

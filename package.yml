@@ -15,3 +15,6 @@ stylesheets:
     - yform.css
     - popup.css
 
+requires:
+    packages:
+        phpmailer: '~5.0-alpha7'
