@@ -7,7 +7,6 @@ compile: 0
 page:
     title: 'translate:yform_email_templates'
     perm: yform[email]
-    pjax: false
-    icon: watson-icon-logo
+    pjax: true
     subpages:
         index: { title: 'translate:overview' }

@@ -50,7 +50,7 @@ class rex_yform
 
         $this->objparams['form_label_type'] = 'html'; // plain
 
-        $this->objparams['form_skin'] = 'bootstrap';
+        $this->objparams['form_skin'] = 'bootstrap,classic';
 
         $this->objparams['actions_executed'] = false;
         $this->objparams['postactions_executed'] = false;

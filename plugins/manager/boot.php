@@ -8,6 +8,8 @@
  * @var rex_plugin $this
  */
 
+rex_yform::addTemplatePath(rex_path::plugin('yform','manager','ytemplates'));
+
 if (rex::isBackend() && rex::getUser()) {
 
     $tables = rex_yform_manager_table::getAll();

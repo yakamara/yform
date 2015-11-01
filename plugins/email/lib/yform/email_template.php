@@ -6,7 +6,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_emailtemplate
+class rex_yform_email_template
 {
     static function getTemplate($name)
     {

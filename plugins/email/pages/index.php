@@ -8,12 +8,12 @@
 
 echo rex_view::title(rex_i18n::msg('yform_email_templates'));
 
-
 $table = rex::getTablePrefix() . 'yform_email_template';
 $bezeichner = rex_i18n::msg('yform_email_template');
 $csuchfelder = array('name', 'mail_from', 'mail_subject', 'body');
 
 $func = rex_request('func', 'string', '');
+$page = rex_request('page', 'string', '');
 $template_id = rex_request('template_id', 'int');
 $message = '';
 $show_list = true;
@@ -58,7 +58,6 @@ if ($func == 'edit' || $func == 'add') {
 
     $query = "delete from $table where id='" . $template_id . "' ";
     $delsql = rex_sql::factory();
-    $delsql->debugsql = 0;
     $delsql->setQuery($query);
 
     $message = rex_view::info(rex_i18n::msg('yform_email_info_template_deleted'));
@@ -86,7 +85,7 @@ if ($show_list) {
     $list->setColumnLayout('id',  array('<th class="rex-small">###VALUE###</th>', '<td class="rex-small">###VALUE###</td>'));
 
     $list->setColumnLabel('name', rex_i18n::msg('yform_email_header_template_description'));
-    $list->setColumnParams('name', array('page' => $page, 'subpage' => $subpage, 'func' => 'edit', 'template_id' => '###id###'));
+    $list->setColumnParams('name', array('page' => $page, 'func' => 'edit', 'template_id' => '###id###'));
 
     $list->setColumnLabel('mail_from', rex_i18n::msg('yform_email_header_template_mail_from'));
     $list->setColumnLabel('mail_from_name', rex_i18n::msg('yform_email_header_template_mail_from_name'));
@@ -97,7 +96,7 @@ if ($show_list) {
     $list->removeColumn('attachments');
 
     $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
-    $list->setColumnParams(rex_i18n::msg('yform_delete'), array('page' => $page, 'subpage' => $subpage, 'func' => 'delete', 'template_id' => '###id###'));
+    $list->setColumnParams(rex_i18n::msg('yform_delete'), array('page' => $page, 'func' => 'delete', 'template_id' => '###id###'));
     $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
 
     $list->setNoRowsMessage(rex_i18n::msg('yform_email_templates_not_found'));

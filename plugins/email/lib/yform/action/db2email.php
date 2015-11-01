@@ -12,14 +12,11 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
     function executeAction()
     {
 
-
-
         $template_name = $this->getElement(2);
 
-        if ($etpl = rex_yform_emailtemplate::getTemplate($template_name)) {
+        if ($etpl = rex_yform_email_template::getTemplate($template_name)) {
 
-            // ----- find mailto
-            $mail_to = $REX['ERROR_EMAIL']; // default
+            $mail_to = rex::getErrorEmail();
 
             // finde email label in list
             if ($this->getElement(3) != false && $this->getElement(3) != '') {
@@ -36,7 +33,7 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
                 $mail_to = $this->getElement(4);
             }
 
-            $etpl = rex_yform_emailtemplate::replaceVars($etpl, $this->params['value_pool']['email']);
+            $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
 
             $etpl['mail_to'] = $mail_to;
             $etpl['mail_to_name'] = $mail_to;
@@ -56,7 +53,7 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
                 echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
             }
 
-            if (!rex_yform_emailtemplate::sendMail($etpl, $template_name)) {
+            if (!rex_yform_email_template::sendMail($etpl, $template_name)) {
                 echo 'error - email sent';
                 return false;
 
