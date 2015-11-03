@@ -12,7 +12,7 @@ class rex_yform_email_template
     {
 
         $gt = rex_sql::factory();
-        $gt->setQuery('select * from ' . rex::getTablePrefix() . 'yform_email_template where name="' . mysql_real_escape_string($name) . '"');
+        $gt->setQuery('select * from ' . rex::getTablePrefix() . 'yform_email_template where name=:name',[':name' => $name]);
         if ($gt->getRows() == 1) {
             $b = $gt->getArray();
             return current($b);
@@ -39,13 +39,18 @@ class rex_yform_email_template
             return true;
         }
 
-        $er['REX_SERVER'] = $REX['SERVER'];
-        $er['REX_ERROR_EMAIL'] = $REX['ERROR_EMAIL'];
-        $er['REX_SERVERNAME'] = $REX['SERVERNAME'];
-        $er['REX_NOTFOUND_ARTICLE_ID'] = $REX['NOTFOUND_ARTICLE_ID'];
-        $er['REX_ARTICLE_ID'] = $REX['ARTICLE_ID'];
-        foreach ($er as $search => $replace) {
+        $er['REX_SERVER'] = rex::getServer();
+        $er['REX_ERROR_EMAIL'] = rex::getErrorEmail();
+        $er['REX_SERVERNAME'] = rex::getServerName();
+        $er['REX_NOTFOUND_ARTICLE_ID'] = rex::getProperty('notfound_article_id');
+        $er['REX_ARTICLE_ID'] = rex::getProperty('article_id');
+
+        // REX_DATA[id="2"]
+
+
+//        foreach ($er as $search => $replace) {
             foreach ($template as $k => $v) {
+                /*
                 $template[$k] = str_replace('###' . $search . '###', $replace, $template[$k]);
                 $template[$k] = str_replace('***' . $search . '***', urlencode($replace), $template[$k]);
                 $template[$k] = str_replace('+++' . $search . '+++', self::makeSingleLine($replace), $template[$k]);
@@ -58,8 +63,13 @@ class rex_yform_email_template
                   ),
                   $template[$k]
                 );
+*/
+                $template = rex_var::parse($template,'','yform_email_template', $er);
+
             }
-        }
+//        }
+
+
         return $template;
     }
 

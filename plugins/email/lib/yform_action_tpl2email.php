@@ -6,7 +6,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_action_db2email extends rex_yform_action_abstract
+class rex_yform_action_tpl2email extends rex_yform_action_abstract
 {
 
     function executeAction()
@@ -18,7 +18,6 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
 
             $mail_to = rex::getErrorEmail();
 
-            // finde email label in list
             if ($this->getElement(3) != false && $this->getElement(3) != '') {
                 foreach ($this->params['value_pool']['email'] as $key => $value) {
                     if ($this->getElement(3) == $key) {
@@ -42,7 +41,7 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
                 $f = explode(',', $etpl['attachments']);
                 $etpl['attachments'] = array();
                 foreach ($f as $v) {
-                    $etpl['attachments'][] = array('name' => $v, 'path' => $REX['INCLUDE_PATH'] . '/../../files/' . $v);
+                    $etpl['attachments'][] = array('name' => $v, 'path' => rex_path::media($v));
                 }
 
             } else {
@@ -69,7 +68,7 @@ class rex_yform_action_db2email extends rex_yform_action_abstract
 
     function getDescription()
     {
-        return 'action|db2email|emailtemplate|emaillabel|[email@domain.de]';
+        return 'action|email|emailtemplate|emaillabel|[email@domain.de]';
 
     }
 

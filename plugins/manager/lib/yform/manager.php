@@ -1324,10 +1324,10 @@ class rex_yform_manager
                 }
             }
 
-            $notation_php  .= "\n\n"  . '$yform->setActionField(\'db2email\', array(\'emailtemplate\', \'emaillabel\', \'email@domain.de\'));';
+            $notation_php  .= "\n\n"  . '$yform->setActionField(\'email\', array(\'emailtemplate\', \'emaillabel\', \'email@domain.de\'));';
             $notation_php .= "\n".'echo $yform->getForm();';
 
-            $notation_pipe .= "\n\n"  . 'action|db2email|emailtemplate|emaillabel|email@domain.de';
+            $notation_pipe .= "\n\n"  . 'action|email|emailtemplate|emaillabel|email@domain.de';
 
             echo '<div class="rex-addon-output">';
             echo '<h2 class="rex-hl2">PHP</h2>';
