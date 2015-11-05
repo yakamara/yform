@@ -117,6 +117,7 @@ yform_editdata = Datensatz editieren
 yform_adddata = Datensatz anlegen
 yform_searchtext = Suchbegriff
 yform_searchfields = Tabellenfelder über die gesucht wird
+yform_function = Funktion
 yform_add = hinzufügen
 yform_add_apply = übernehmen
 yform_edit = editieren

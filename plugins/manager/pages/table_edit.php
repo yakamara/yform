@@ -339,14 +339,14 @@ if ($show_list && rex::getUser()->isAdmin()) {
     {
 
         $list = $params['list'];
-        return $list->getValue('status') == 1 ? '<span style="color:green;">' . rex_i18n::msg('yform_tbl_active') . '</span>' : '<span style="color:red;">' . rex_i18n::msg('yform_tbl_inactive') . '</span>';
+        return $list->getValue('status') == 1 ? '<span class="rex-online"><i class="rex-icon rex-icon-online"></i> ' . rex_i18n::msg('yform_tbl_active') . '</span>' : '<span class="rex-offline"><i class="rex-icon rex-icon-offline"></i> ' . rex_i18n::msg('yform_tbl_inactive') . '</span>';
     }
 
     function rex_yform_hidden_col($params)
     {
 
         $list = $params['list'];
-        return $list->getValue('hidden') == 1 ? '<span style="color:grey;">' . rex_i18n::msg('yform_hidden') . '</span>' : '<span>' . rex_i18n::msg('yform_visible') . '</span>';
+        return $list->getValue('hidden') == 1 ? '<span class="text-muted">' . rex_i18n::msg('yform_hidden') . '</span>' : '<span>' . rex_i18n::msg('yform_visible') . '</span>';
     }
 
     function rex_yform_list_translate($params)
@@ -354,19 +354,53 @@ if ($show_list && rex::getUser()->isAdmin()) {
         return rex_i18n::translate($params['subject']);
     }
 
-    $table_echo = '<p><b>';
-    $table_echo .= rex_i18n::msg('yform_manager_table').': <a href=index.php?page=' . $page . '&func=add>' . rex_i18n::msg('yform_manager_create') . '</a>';
-    $table_echo .= ' | <a href=index.php?page=' . $page . '&func=migrate><b>' . rex_i18n::msg('yform_manager_migrate') . '</a>';
-    $table_echo .= ' '.rex_i18n::msg('yform_manager_tableset').':</b> <a href=index.php?page=' . $page . '&func=tableset_export>' . rex_i18n::msg('yform_manager_export') . '</a>';
-    $table_echo .= ' | <a href=index.php?page=' . $page . '&func=tableset_import>' . rex_i18n::msg('yform_manager_import') . '</a>';
-    $table_echo .= '</b></p>';
 
-    echo rex_view::info($table_echo);
+    $context = new rex_context([
+        'page' => $page,
+    ]);
+    $items = [];
+    $item = [];
+    $item['label'] = rex_i18n::msg('yform_manager_table') . ' ' . rex_i18n::msg('yform_manager_migrate');
+    $item['url'] = $context->getUrl(['func' => 'migrate']);
+    $item['attributes']['class'][] = 'btn-default';
+    if ($func == 'migrate') {
+        $item['attributes']['class'][] = 'active';
+    }
+    $items[] = $item;
+
+    $item = [];
+    $item['label'] = rex_i18n::msg('yform_manager_tableset') . ' ' . rex_i18n::msg('yform_manager_export');
+    $item['url'] = $context->getUrl(['func' => 'tableset_export']);
+    $item['attributes']['class'][] = 'btn-default';
+    if ($func == 'tableset_export') {
+        $item['attributes']['class'][] = 'active';
+    }
+    $items[] = $item;
+
+    $item = [];
+    $item['label'] = rex_i18n::msg('yform_manager_tableset') . ' ' . rex_i18n::msg('yform_manager_import');
+    $item['url'] = $context->getUrl(['func' => 'tableset_import']);
+    $item['attributes']['class'][] = 'btn-default';
+    if ($func == 'tableset_import') {
+        $item['attributes']['class'][] = 'active';
+    }
+    $items[] = $item;
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('buttons', $items, false);
+    $fragment->setVar('size', 'xs', false);
+    $panel_options = $fragment->parse('core/buttons/button_group.php');
+
 
     $sql = 'select id, prio, name, table_name, status, hidden from `' . rex_yform_manager_table::table() . '` order by prio,table_name';
 
     $list = rex_list::factory($sql);
     $list->addParam('start', rex_request('start', 'int'));
+
+    $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
+    $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey($this->i18n('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
+    $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
+    $list->setColumnParams($thIcon, ['func' => 'edit', 'pid' => '###pid###']);
 
     $list->removeColumn('id');
 
@@ -383,20 +417,25 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->setColumnLabel('hidden', rex_i18n::msg('yform_manager_table_hidden'));
     $list->setColumnFormat('hidden', 'custom', 'rex_yform_hidden_col');
 
-    $list->addColumn(rex_i18n::msg('yform_edit'), rex_i18n::msg('yform_edit'));
+    $list->addColumn(rex_i18n::msg('yform_edit'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
+    $list->setColumnLabel(rex_i18n::msg('yform_edit'), rex_i18n::msg('yform_function'));
+    $list->setColumnLayout(rex_i18n::msg('yform_edit'), ['<th class="rex-table-action" colspan="3">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('yform_edit'), array('table_id' => '###id###', 'func' => 'edit'));
 
-    $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
+    $list->addColumn(rex_i18n::msg('yform_delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete'));
+    $list->setColumnLayout(rex_i18n::msg('yform_delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('yform_delete'), array('table_name' => '###table_name###', 'func' => 'delete'));
     $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' [###table_name###] ' . rex_i18n::msg('yform_delete') . ' ?\')');
 
     $list->addColumn(rex_i18n::msg('yform_editfields'), rex_i18n::msg('yform_editfields'));
+    $list->setColumnLayout(rex_i18n::msg('yform_editfields'), ['', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('yform_editfields'), array('page' => 'yform/manager/table_field', 'table_name' => '###table_name###'));
 
     $content = $list->get();
 
     $fragment = new rex_fragment();
     $fragment->setVar('title', rex_i18n::msg('yform_table_overview'));
+    $fragment->setVar('options', $panel_options, false);
     $fragment->setVar('content', $content, false);
     $content = $fragment->parse('core/page/section.php');
     echo $content;
