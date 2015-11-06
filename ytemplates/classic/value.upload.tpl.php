@@ -16,7 +16,7 @@ if ($value != "") {
         $a_a = '';
         $a_e = '';
 
-        if ($REX["REDAXO"]) {
+        if (rex::isBackend()) {
             $a_a = '<a href="'.$_SERVER["REQUEST_URI"].'&rex_upload_downloadfile='.urlencode($this->getValue()).'">';
             $a_e = '</a>';
         }

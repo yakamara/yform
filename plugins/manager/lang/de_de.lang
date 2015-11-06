@@ -1,4 +1,4 @@
-yform_table_manager = Table Manager
+yform_manager = Table Manager
 
 navigation_manager = Tabellen
 yform_manager_fields = Felder
@@ -95,14 +95,17 @@ yform_manager_migrate_table_id_convert = `id`-Feld konvertieren falls nicht vorh
 yform_manager_table_migrated_success = Die Tabelle wurde erfolgreich migriert.
 
 yform_manager_tableset_import = Tableset importieren
-yform_manager_table_import_jsonimportfile = JSON Datei einspielen
-yform_manager_tableset_import_info =
-yform_manager_table_import_warning_selectfile = Es wurde keine Datei verwendet
-yform_manager_table_import_warning_type = Der Dateityp ist falsch. Es muss eine JSON Datei sein.
-yform_manager_table_import_success = Tabelle/n wurde/n erfolgreich importiert
+yform_manager_tableset_import_jsonimportfile = JSON Datei einspielen
+yform_manager_tableset_import_info = Info
+yform_manager_tableset_import_warning_selectfile = Es wurde keine Datei verwendet
+yform_manager_tableset_import_warning_type = Der Dateityp ist falsch. Es muss eine JSON Datei sein.
+yform_manager_tableset_import_success = Tabelle/n wurde/n erfolgreich importiert
+yform_manager_tableset_import_failed = Tableset Import ist fehlgeschlagen
+
+yform_manager_table_edit = Tabellen bearbeiten
 
 yform_manager_tableset_export = Tableset exportieren
-yform_manager_tableset_export_info =
+yform_manager_tableset_export_info = Info
 yform_manager_export_error_empty = Bitte mindestens eine Tabelle für den Export auswählen
 
 yform_manager_table_hidden = Sichtbarkeit

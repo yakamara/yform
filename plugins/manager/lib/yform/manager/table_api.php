@@ -57,7 +57,7 @@ class rex_yform_manager_table_api
             $table_update = rex_sql::factory();
             $table_update->debugsql = self::$debug;
             $table_update->setTable(rex_yform_manager_table::table());
-            $table_update->setWhere('table_name = "' . mysql_real_escape_string($table_name) . '"');
+            $table_update->setWhere('table_name = :table_name', [':table_name' => $table_name]);
 
             foreach (self::$table_fields as $field) {
                 if (isset($table[$field])) {
@@ -146,7 +146,7 @@ class rex_yform_manager_table_api
 
         $t = rex_sql::factory();
         $t->debugsql = self::$debug;
-        $t->setQuery('delete from ' . rex_yform_manager_table::table() . ' where table_name="' . mysql_real_escape_string($table_name) . '"');
+        $t->setQuery('delete from ' . rex_yform_manager_table::table() . ' where table_name=:table_name ', [':table_name' => $table_name]);
 
         if ($table) {
             foreach ($table->getFields() as $remove_field) {
@@ -222,10 +222,10 @@ class rex_yform_manager_table_api
 
             $add_where = array();
             foreach ($fieldIdentifier as $field => $value) {
-                $add_where[] = '`' . mysql_real_escape_string($field) . '`="' . mysql_real_escape_string($table_name) . '"';
+                $add_where[] = '`' . $field . '`=' . $field_update->escape($table_name) . '"';
             }
 
-            $where = 'table_name="' . mysql_real_escape_string($table_name) . '"';
+            $where = 'table_name=' . $field_update->escape($table_name) . '';
             if (count($add_where) > 0) {
                 $where .= ' and (' . implode(' and ', $add_where) . ') ';
 
@@ -244,11 +244,9 @@ class rex_yform_manager_table_api
 
     public static function removeTablefield($table_name, $field_name)
     {
-        $where = ' where table_name="' . mysql_real_escape_string($table_name) . '" and name="' . mysql_real_escape_string($field_name) . '"';
-
         $f = rex_sql::factory();
         $f->debugsql = self::$debug;
-        return $f->getArray('delete from ' . rex_yform_manager_field::table() . $where);
+        return $f->setQuery('delete from ' . rex_yform_manager_field::table() . ' where table_name=:table_name and name=:name', [':table_name' => $table_name, ':name' => $field_name]);
 
     }
 
@@ -282,7 +280,7 @@ class rex_yform_manager_table_api
             // everything is ok
 
         } elseif ($convert_id && count($autoincrement) > 1) {
-            rex_sql::factory()->setQuery('ALTER TABLE `' . mysql_real_escape_string($table_name) . '` CHANGE `' . mysql_real_escape_string($autoincrement['name']) . '` `id` INT( 11 ) NOT NULL AUTO_INCREMENT ');
+            rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` CHANGE `' . $autoincrement['name'] . '` `id` INT( 11 ) NOT NULL AUTO_INCREMENT ');
             $columns = rex_sql::showColumns($table_name);
 
         } else {
@@ -552,7 +550,7 @@ class rex_yform_manager_table_api
         $alterTable = array();
         foreach ($field as $column => $value) {
             if (!isset($columns[$column])) {
-                $alterTable[] = 'ADD `' . mysql_real_escape_string($column) . '` TEXT NOT NULL';
+                $alterTable[] = 'ADD `' . $column . '` TEXT NOT NULL';
             }
             $columns[$column] = true;
         }

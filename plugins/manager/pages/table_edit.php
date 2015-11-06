@@ -18,72 +18,7 @@ $table_id = rex_request('table_id', 'int');
 $show_list = true;
 
 
-if ( $func == 'tableset_export' && rex::getUser()->isAdmin() ) {
-
-    $yform_tables = array();
-    foreach (rex_yform_manager_table::getAll() as $g_table) {
-        $yform_tables[$g_table->getTableName()] = rex_i18n::translate("translate:".$g_table->getTableName()).' ['.$g_table->getTableName().']';
-    }
-
-    $yform = new rex_yform;
-    $yform->setDebug(true);
-    $yform->setHiddenField('page', $page);
-    $yform->setHiddenField('func', $func);
-    $yform->setObjectparams('real_field_names',true);
-    $yform->setValueField('select', array('table_names', rex_i18n::msg('yform_manager_tables'), $yform_tables, 'multiple'=>1));
-    $yform->setValidateField('empty', array('table_names', rex_i18n::msg('yform_manager_export_error_empty')));
-    $form = $yform->getForm();
-
-    if ($yform->objparams['form_show']) {
-
-        echo rex_view::info(rex_i18n::msg('yform_manager_tableset_export_info'));
-
-        $fragment = new rex_fragment();
-        $fragment->setVar('class', 'edit', false);
-        $fragment->setVar('title', rex_i18n::msg('yform_manager_tableset_export'));
-        $fragment->setVar('body', $form, false);
-        // $fragment->setVar('buttons', $buttons, false);
-        $form = $fragment->parse('core/page/section.php');
-
-        echo $form;
-
-        echo rex_view::info('<a href="index.php?page=' . $page . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
-
-        $show_list = false;
-
-    } else {
-
-        try {
-
-            $table_names = rex_request("table_names");
-            $return = rex_yform_manager_table_api::exportTablesets($table_names);
-
-            $file_name = 'yform_manager_tableset_export_tables_'.date("YmdHis").'.json';
-
-            ob_end_clean();
-
-            header('Content-Type: application/json');
-            header('Charset: UTF-8');
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            header("Cache-Control: private",false);
-            header('Content-Disposition: attachment; filename="'.basename($file_name).'"');
-            header('Content-Length: ' . strlen($return));
-            header('Pragma: public');
-            header('Expires: 0');
-            header('Content-Transfer-Encoding: binary');
-            echo $return;
-
-            exit;
-
-        } catch (Exception $e) {
-            $show_list = false;
-            echo rex_view::warning(rex_i18n::msg('yform_manager_table_export_failed', '', $e->getMessage()));
-
-        }
-
-    }
-
-} else if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
+if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
 
     $yform = new rex_yform;
     $yform->setDebug(true);
@@ -133,65 +68,6 @@ if ( $func == 'tableset_export' && rex::getUser()->isAdmin() ) {
 
         } catch (Exception $e) {
             echo rex_view::warning(rex_i18n::msg('yform_manager_table_import_failed', '', $e->getMessage()));
-
-        }
-
-    }
-
-
-} else if ( $func == 'migrate' && rex::getUser()->isAdmin() ) {
-
-    $available_tables = rex_sql::showTables();
-    $yform_tables = array();
-    $missing_tables = array();
-
-    foreach (rex_yform_manager_table::getAll() as $g_table) {
-        $yform_tables[] = $g_table->getTableName();
-    }
-
-    foreach ($available_tables as $a_table) {
-        if ( !in_array($a_table, $yform_tables)) {
-            $missing_tables[$a_table] = $a_table;
-        }
-
-    }
-
-    $yform = new rex_yform;
-    $yform->setDebug(true);
-    $yform->setHiddenField('page', $page);
-    $yform->setHiddenField('func', $func);
-    $yform->setValueField('select', array('table_name', rex_i18n::msg('yform_table'), $missing_tables));
-    $yform->setValueField('checkbox', array('convert_id', rex_i18n::msg('yform_manager_migrate_table_id_convert')));
-    $form = $yform->getForm();
-
-    if ($yform->objparams['form_show']) {
-
-        echo rex_view::info(rex_i18n::msg('yform_manager_table_migrate_info'));
-
-        $fragment = new rex_fragment();
-        $fragment->setVar('class', 'edit', false);
-        $fragment->setVar('title', rex_i18n::msg('yform_manager_table_migrate'));
-        $fragment->setVar('body', $form, false);
-        // $fragment->setVar('buttons', $buttons, false);
-        $form = $fragment->parse('core/page/section.php');
-
-        echo $form;
-
-        echo rex_view::info('<a href="index.php?page=' . $page . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
-
-        $show_list = false;
-
-    } else {
-
-        $table_name = $yform->objparams['value_pool']['sql']['table_name'];
-        $convert_id = $yform->objparams['value_pool']['sql']['convert_id'];
-
-        try {
-            rex_yform_manager_table_api::migrateTable($table_name, $convert_id); // with convert id / auto_increment finder
-            echo rex_view::info(rex_i18n::msg('yform_manager_table_migrated_success'));
-
-        } catch (Exception $e) {
-            echo rex_view::warning(rex_i18n::msg('yform_manager_table_migrated_failed', $table_name, $e->getMessage()));
 
         }
 
@@ -315,10 +191,6 @@ if ( $func == 'tableset_export' && rex::getUser()->isAdmin() ) {
 
     }
 
-
-
-
-
 }
 
 
@@ -328,7 +200,7 @@ if ($func == 'delete' && rex::getUser()->isAdmin()) {
     echo rex_yform_manager_table_api::removeTable($table_name);
 
     $func = '';
-    echo rex_view::info(rex_i18n::msg('yform_manager_table_deleted'));
+    echo rex_view::success(rex_i18n::msg('yform_manager_table_deleted'));
 }
 
 
@@ -359,6 +231,8 @@ if ($show_list && rex::getUser()->isAdmin()) {
         'page' => $page,
     ]);
     $items = [];
+
+/*
     $item = [];
     $item['label'] = rex_i18n::msg('yform_manager_table') . ' ' . rex_i18n::msg('yform_manager_migrate');
     $item['url'] = $context->getUrl(['func' => 'migrate']);
@@ -385,7 +259,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
         $item['attributes']['class'][] = 'active';
     }
     $items[] = $item;
-
+*/
     $fragment = new rex_fragment();
     $fragment->setVar('buttons', $items, false);
     $fragment->setVar('size', 'xs', false);

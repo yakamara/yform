@@ -12,8 +12,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     function enterObject()
     {
 
-
-
         $error = array();
 
         $rfile = 'file_' . md5($this->getFieldName('file'));
@@ -74,7 +72,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         if ($value != "") {
 
-            if ($REX["REDAXO"]) {
+            if (rex::isBackend()) {
                 $value = explode("_",$value,2);
                 $value = $value[0];
             }
@@ -147,11 +145,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                         $value = '';
 
                       } else {
-                        @chmod($upload_folder . '/' . $file_normed_new, $REX['FILEPERM']);
+                        @chmod($upload_folder . '/' . $file_normed_new, rex::getDirPerm());
 
                       }
                     } else {
-                      @chmod($upload_folder . '/' . $file_normed_new, $REX['FILEPERM']);
+                      @chmod($upload_folder . '/' . $file_normed_new, rex::getDirPerm());
 
                     }
 

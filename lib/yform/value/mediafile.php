@@ -73,7 +73,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                 if (!in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array)) {
                     $error[] = $err_msgs['type_err'];
                 } else {
-                    $NEWFILE = $this->saveMedia($FILE, $REX['INCLUDE_PATH'] . '/../../files/', $extensions_array, $mediacatid, $mediapool_user);
+                    $NEWFILE = $this->saveMedia($FILE, rex_path::media(), $extensions_array, $mediacatid, $mediapool_user);
 
                     if ($NEWFILE['ok']) {
                         $this->setValue($NEWFILE['filename']);
@@ -141,12 +141,9 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
     function saveMedia($FILE, $filefolder, $extensions_array, $rex_file_category, $mediapool_user)
     {
 
-
-
         $FILENAME = $FILE['name'];
         $FILESIZE = $FILE['size'];
         $FILETYPE = $FILE['type'];
-        $NFILENAME = '';
         $message = '';
 
         // ----- neuer filename und extension holen
@@ -200,7 +197,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             }
         }
 
-        @chmod($filefolder . '/' . $NFILENAME, $REX['FILEPERM']);
+        @chmod($filefolder . '/' . $NFILENAME, rex::getFilePerm());
         $RETURN['type'] = $FILETYPE;
         $RETURN['msg'] = $message;
         $RETURN['ok'] = true;
