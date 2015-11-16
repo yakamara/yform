@@ -57,7 +57,6 @@ class rex_yform_manager_search
         }
 
         $yform = new rex_yform_manager_searchform();
-        $yform->setObjectparams('form_skin', 'default');
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('form_action', $this->scriptPath);
