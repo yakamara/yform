@@ -242,7 +242,7 @@ class rex_yform_manager
                     $delsql = rex_sql::factory();
                     $delsql->debugsql = self::$debug;
                     $delsql->setQuery($query);
-                    echo rex_view::info(rex_i18n::msg('yform_datadeleted'));
+                    echo rex_view::success(rex_i18n::msg('yform_datadeleted'));
                     $func = '';
 
                     $this->table->removeRelationTableRelicts();
@@ -261,7 +261,7 @@ class rex_yform_manager
                     $delsql = rex_sql::factory();
                     $delsql->debugsql = self::$debug;
                     $delsql->setQuery($query);
-                    echo rex_view::info(rex_i18n::msg('yform_dataset_deleted'));
+                    echo rex_view::success(rex_i18n::msg('yform_dataset_deleted'));
                     $func = '';
 
                     $this->table->removeRelationTableRelicts();
@@ -914,15 +914,20 @@ class rex_yform_manager
         }
 
         if ($type_real_field != '') {
-            ?>
-            <div class="rex-addon-output"><h2 class="rex-hl2">Folgendes Feld wird verwendet: <?php echo $type_real_field; ?></h2><div class="rex-addon-content"><p class="rex-tx1"><?php
+            $panel = '';
+            $panel .= '<dl class="dl-horizontal text-left">';
 
             $rfields = $this->table->getColumns();
             foreach ($rfields[$type_real_field] as $k => $v) {
-                echo '<b>' . $k . ':</b> ' . $v . '<br />';
+                $panel .= '<dt>' . ucfirst($k) . ':</dt><dd>' . $v . '</dd>';
             }
+            $panel .= '</dl>';
 
-            ?></p></div></div><?php
+            $fragment = new rex_fragment();
+            $fragment->setVar('class', 'info');
+            $fragment->setVar('title', 'Folgendes Feld wird verwendet: ' . $type_real_field);
+            $fragment->setVar('body', $panel, false);
+            echo $fragment->parse('core/page/section.php');
 
         }
 
@@ -935,6 +940,7 @@ class rex_yform_manager
             $link = 'index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=add&';
 
             $content = [];
+            $panels = [];
 
             if (!$table->hasId()) {
 
@@ -943,61 +949,67 @@ class rex_yform_manager
             } else {
 
                 if ($type_real_field == '' && count($mfields) > 0 ) {
-
-                    $tmp = 'Es gibt noch Felder in der Tabelle welche nicht zugewiesen sind.';
-
+                    $tmp = '';
                     $d = 0;
                     foreach ($mfields as $k => $v) {
                         $d++;
                         $l = 'index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=choosenadd&type_real_field=' . $k . '&type_layout=t';
-                        $tmp .= '<a href="' . $l . '">' . $k . '</a>, ';
+                        $tmp .= '<a class="btn btn-default" href="' . $l . '">' . $k . '</a> ';
                     }
 
-                    echo $tmp;
+                    $fragment = new rex_fragment();
+                    $fragment->setVar('class', 'info');
+                    $fragment->setVar('title', 'Es gibt noch Felder in der Tabelle welche nicht zugewiesen sind.');
+                    $fragment->setVar('body', $tmp, false);
+                    echo $fragment->parse('core/page/section.php');
                 }
 
-                $content = [];
-                $tmp = $TYPE['value'];
+                $tmp = '';
                 if (isset($types['value'])) {
                     ksort($types['value']);
-                    $tmp .= '<dl class="dl-horizontal">';
+                    $tmp .= '<table class="table table-hover">';
                     foreach ($types['value'] as $k => $v) {
-                        $tmp .= '<dt><a class="btn btn-default" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '">' . $k . '</a> </dt><dd>' . $v['description'] . '</dd>';
+                        $tmp .= '<tr><th><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                     }
-                    $tmp .= '</dl>';
+                    $tmp .= '</table>';
                 }
-                $content[] = $tmp;
+                $fragment = new rex_fragment();
+                $fragment->setVar('title', $TYPE['value']);
+                $fragment->setVar('content', $tmp, false);
+                $panels[] =  $fragment->parse('core/page/section.php');
 
 
-                $tmp = $TYPE['validate'];
+                $tmp = '';
                 if (isset($types['validate'])) {
                     ksort($types['validate']);
-                    $tmp .= '<dl class="dl-horizontal">';
+                    $tmp .= '<table class="table table-hover">';
                     foreach ($types['validate'] as $k => $v) {
-                        $tmp .= '<dt><a class="btn btn-default" href="' . $link . 'type_id=validate&type_name=' . $k . '">' . $k . '</a> </dt><dd>' . $v['description'] . '</dd>';
+                        $tmp .= '<tr><th><a class="btn btn-default btn-block" href="' . $link . 'type_id=validate&type_name=' . $k . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                     }
-                    $tmp .= '</dl>';
+                    $tmp .= '</table>';
                 }
-                $content[] = $tmp;
 
                 $fragment = new rex_fragment();
-                $fragment->setVar('content', $content, false);
-                $content_out = $fragment->parse('core/page/grid.php');
+                $fragment->setVar('title', $TYPE['validate']);
+                $fragment->setVar('content', $tmp, false);
+                $panels[] =  $fragment->parse('core/page/section.php');
 
             }
 
             $fragment = new rex_fragment();
-            $fragment->setVar('content', rex_i18n::msg('yform_choosenadd_description'), false);
-            $content_out = $fragment->parse('core/page/grid.php').$content_out;
-
-            $fragment = new rex_fragment();
             $fragment->setVar('title', rex_i18n::msg('yform_choosenadd'));
-            $fragment->setVar('body', $content_out, false);
+            $fragment->setVar('body', rex_i18n::msg('yform_choosenadd_description'), false);
             echo $fragment->parse('core/page/section.php');
 
+            $fragment = new rex_fragment();
+            $fragment->setVar('content', $panels, false);
+            echo $fragment->parse('core/page/grid.php');
 
-            $table_echo = '<a href="index.php?' . $link_vars . '&amp;table_name=' . $table->getTableName() . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>';
-            echo rex_view::info($table_echo);
+            $table_echo = '<a class="btn btn-default" href="index.php?' . $link_vars . '&amp;table_name=' . $table->getTableName() . '">' . rex_i18n::msg('yform_back_to_overview') . '</a>';
+
+            $fragment = new rex_fragment();
+            $fragment->setVar('footer', $table_echo, false);
+            echo $fragment->parse('core/page/section.php');
 
         }
 
@@ -1193,9 +1205,10 @@ class rex_yform_manager
                 $form = $fragment->parse('core/page/section.php');
 
                 echo $form;
-
-                $table_echo = '<a href="index.php?' . $link_vars . '&amp;table_name=' . $table->getTableName() . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>';
-                echo rex_view::info($table_echo);
+                $table_echo = '<a class="btn btn-default" href="index.php?' . $link_vars . '&amp;table_name=' . $table->getTableName() . '">' . rex_i18n::msg('yform_back_to_overview') . '</a>';
+                $fragment = new rex_fragment();
+                $fragment->setVar('footer', $table_echo, false);
+                echo $fragment->parse('core/page/section.php');
 
                 $func = '';
             } else {
@@ -1228,7 +1241,7 @@ class rex_yform_manager
                 $delsql = rex_sql::factory();
                 $delsql->debugsql = self::$debug;
                 $delsql->setQuery($query);
-                echo rex_view::info(rex_i18n::msg('yform_tablefielddeleted'));
+                echo rex_view::success(rex_i18n::msg('yform_tablefielddeleted'));
                 $this->generateAll();
 
             } else {
@@ -1329,31 +1342,26 @@ class rex_yform_manager
 
             $notation_pipe .= "\n\n"  . 'action|email|emailtemplate|emaillabel|email@domain.de';
 
-            echo '<div class="rex-addon-output">';
-            echo '<h2 class="rex-hl2">PHP</h2>';
-            echo '<div class="rex-addon-content">';
-            echo '<pre class="rex-code"><code>' . $notation_php . '</code></pre>';
-            echo '</div></div>';
+            $fragment = new rex_fragment();
+            $fragment->setVar('title', 'PHP');
+            $fragment->setVar('body', '<pre class="pre-scrollable">' . $notation_php . '</pre>', false);
+            $content = $fragment->parse('core/page/section.php');
+            echo $content;
 
-            echo '<div class="rex-addon-output">';
-            echo '<h2 class="rex-hl2">Pipe</h2>';
-            echo '<div class="rex-addon-content">';
-            echo '<pre class="rex-code"><code>' . $notation_pipe . '</code></pre>';
-            echo '</div></div>';
+            $fragment = new rex_fragment();
+            $fragment->setVar('title', 'Pipe');
+            $fragment->setVar('body', '<pre class="pre-scrollable">' . $notation_pipe . '</pre>', false);
+            $content = $fragment->parse('core/page/section.php');
+            echo $content;
 
-            echo '<div class="rex-addon-output">';
-            echo '<h2 class="rex-hl2">E-Mail</h2>';
-            echo '<div class="rex-addon-content">';
-            echo '<pre class="rex-code"><code>' . $notation_email . '</code></pre>';
-            echo '</div></div>';
-
-
+            $fragment = new rex_fragment();
+            $fragment->setVar('title', 'E-Mail');
+            $fragment->setVar('body', '<pre class="pre-scrollable">' . $notation_email . '</pre>', false);
+            $content = $fragment->parse('core/page/section.php');
+            echo $content;
 
             $func = 'list';
         }
-
-
-
 
 
         // ********************************************* LIST
@@ -1398,25 +1406,56 @@ class rex_yform_manager
                     return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete')));
                 }
 
-                $table_echo = '
-                     <div class="rex-area-col-2">
-                             <div class="rex-area-col-a">
-                                     <a href="index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=choosenadd"><b>+ ' . rex_i18n::msg('yform_addtablefield') . '</b></a>
-                             </div>
-                             <div class="rex-area-col-b rex-algn-rght">
-                                <ul class="rex-navi-piped">
-                                    <li><a href="index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=show_form_notation">' . rex_i18n::msg('yform_manager_show_form_notation') . '</a></li><li><a href="index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=updatetable">' . rex_i18n::msg('yform_updatetable') . '</a></li><li><a href="index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=updatetablewithdelete" onclick="return confirm(\'' . rex_i18n::msg('yform_updatetable_with_delete_confirm') . '\')">' . rex_i18n::msg('yform_updatetable_with_delete') . '</a></li>
-                                </ul>
-                             </div>
-                     </div>
-                     <div class="rex-clearer"></div>
-                     ';
-                echo rex_view::info($table_echo);
+                $context = new rex_context(
+                    $this->getLinkVars()
+                );
+                $items = [];
+                $item = [];
+                $item['label'] = rex_i18n::msg('yform_manager_show_form_notation');
+                $item['url'] = $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'show_form_notation']);
+                $item['attributes']['class'][] = 'btn-default';
+                if (rex_request('func', 'string') == 'show_form_notation') {
+                    $item['attributes']['class'][] = 'active';
+                }
+                $items[] = $item;
+
+                $item = [];
+                $item['label'] = rex_i18n::msg('yform_updatetable');
+                $item['url'] = $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'updatetable']);
+                $item['attributes']['class'][] = 'btn-default';
+                if (rex_request('func', 'string') == 'updatetable') {
+                    $item['attributes']['class'][] = 'active';
+                }
+                $items[] = $item;
+
+                $item = [];
+                $item['label'] = rex_i18n::msg('yform_updatetable_with_delete');
+                $item['url'] = $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'updatetablewithdelete']);
+                $item['attributes']['class'][] = 'btn-default';
+                if (rex_request('func', 'string') == 'updatetablewithdelete') {
+                    $item['attributes']['class'][] = 'active';
+                }
+                $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_updatetable_with_delete_confirm') . '\')';
+
+                $items[] = $item;
+
+                $fragment = new rex_fragment();
+                $fragment->setVar('buttons', $items, false);
+                $fragment->setVar('size', 'xs', false);
+                $panel_options = $fragment->parse('core/buttons/button_group.php');
+
+
+
 
                 $sql = 'select id, prio, type_id, type_name, name from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
                 $list = rex_list::factory($sql, 30);
                 // $list->debug = 1;
                 // $list->setColumnFormat('id', 'Id');
+
+                $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
+                $thIcon = '<a href="' . $list->getUrl(['table_name' => $table->getTableName(), 'func' => 'choosenadd']) . '"' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
+                $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
+                $list->setColumnParams($thIcon, ['func' => 'edit', 'table_id' => '###id###']);
 
                 foreach ($this->getLinkVars() as $k => $v) {
                     $list->addParam($k, $v);
@@ -1456,6 +1495,7 @@ class rex_yform_manager
 
                 $fragment = new rex_fragment();
                 $fragment->setVar('title', rex_i18n::msg('yform_tablefield_overview'));
+                $fragment->setVar('options', $panel_options, false);
                 $fragment->setVar('content', $content, false);
                 $content = $fragment->parse('core/page/section.php');
                 echo $content;
@@ -1605,7 +1645,7 @@ class rex_yform_manager
             $table = $sql->getValue('table_name');
             switch ($sql->getValue('type_name')) {
                 case 'be_mediapool':
-                case 'mediafile':    
+                case 'mediafile':
                     $where[$table][] = $sql->getValue('name') . '="' . $filename . '"';
                     break;
                 case 'be_medialist':
