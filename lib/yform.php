@@ -1,22 +1,19 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform
 {
+    public static $TemplatePaths = [];
 
-    static $TemplatePaths = [];
-
-
-    function rex_yform()
+    public function rex_yform()
     {
-
-
-        $this->objparams = array();
+        $this->objparams = [];
 
         // --------------------------- editable via objparams|key|newvalue
 
@@ -24,9 +21,9 @@ class rex_yform
         $this->objparams['submit_btn_label'] = 'Abschicken';
         $this->objparams['submit_btn_show'] = true;
 
-        $this->objparams['values'] = array();
-        $this->objparams['validates'] = array();
-        $this->objparams['actions'] = array();
+        $this->objparams['values'] = [];
+        $this->objparams['validates'] = [];
+        $this->objparams['actions'] = [];
 
         $this->objparams['error_class'] = 'form_warning';
         $this->objparams['unique_error'] = '';
@@ -62,7 +59,6 @@ class rex_yform
 
         $this->objparams['getdata'] = false;
 
-
         // --------------------------- do not edit
 
         $this->objparams['debug'] = false;
@@ -75,57 +71,54 @@ class rex_yform
         $this->objparams['main_table'] = ''; // for db and unique
         $this->objparams['sql_object'] = null;
 
-        $this->objparams['form_hiddenfields'] = array();
+        $this->objparams['form_hiddenfields'] = [];
 
-        $this->objparams['warning'] = array();
-        $this->objparams['warning_messages'] = array();
+        $this->objparams['warning'] = [];
+        $this->objparams['warning_messages'] = [];
 
         $this->objparams['hide_top_warning_messages'] = false;
         $this->objparams['hide_field_warning_messages'] = true;
 
         $this->objparams['fieldsets_opened'] = 0; //
 
-        $this->objparams['form_elements'] = array();
-        $this->objparams['form_output'] = array();
+        $this->objparams['form_elements'] = [];
+        $this->objparams['form_output'] = [];
 
-        $this->objparams['value_pool'] = array();
-        $this->objparams['value_pool']['email'] = array();
-        $this->objparams['value_pool']['sql'] = array();
+        $this->objparams['value_pool'] = [];
+        $this->objparams['value_pool']['email'] = [];
+        $this->objparams['value_pool']['sql'] = [];
 
-        $this->objparams['value'] = array(); // reserver for classes - $this->objparams["value"]["text"] ...
-        $this->objparams['validate'] = array(); // reserver for classes
-        $this->objparams['action'] = array(); // reserver for classes
+        $this->objparams['value'] = []; // reserver for classes - $this->objparams["value"]["text"] ...
+        $this->objparams['validate'] = []; // reserver for classes
+        $this->objparams['action'] = []; // reserver for classes
 
         $this->objparams['this'] = $this;
-
     }
 
-    static public function factory()
+    public static function factory()
     {
-        return new self;
-
+        return new self();
     }
 
-    static function addTemplatePath($path)
+    public static function addTemplatePath($path)
     {
         self::$TemplatePaths[] = $path;
-
     }
 
-    function setDebug($s = true)
+    public function setDebug($s = true)
     {
         $this->objparams['debug'] = $s;
     }
 
-    function setFormData($form_definitions, $refresh = true)
+    public function setFormData($form_definitions, $refresh = true)
     {
         $this->setObjectparams('form_data', $form_definitions, $refresh);
 
-        $this->objparams['form_data'] = str_replace("\n\r", "\n" , $this->objparams['form_data']); // Die Definitionen
-        $this->objparams['form_data'] = str_replace("\r", "\n" , $this->objparams['form_data']); // Die Definitionen
+        $this->objparams['form_data'] = str_replace("\n\r", "\n", $this->objparams['form_data']); // Die Definitionen
+        $this->objparams['form_data'] = str_replace("\r", "\n", $this->objparams['form_data']); // Die Definitionen
 
         if (!is_array($this->objparams['form_elements'])) {
-            $this->objparams['form_elements'] = array();
+            $this->objparams['form_elements'] = [];
         }
 
         $form_elements_tmp = explode("\n", $this->objparams['form_data']);
@@ -139,28 +132,26 @@ class rex_yform
         }
     }
 
-    function setValueField($type = '', $values = array())
+    public function setValueField($type = '', $values = [])
     {
-        $values = array_merge(array($type), $values);
+        $values = array_merge([$type], $values);
         $this->objparams['form_elements'][] = $values;
     }
 
-    function setValidateField($type = '', $values = array())
+    public function setValidateField($type = '', $values = [])
     {
-        $values = array_merge(array('validate', $type), $values);
+        $values = array_merge(['validate', $type], $values);
         $this->objparams['form_elements'][] = $values;
     }
 
-    function setActionField($type = '', $values = array())
+    public function setActionField($type = '', $values = [])
     {
-        $values = array_merge(array('action', $type), $values);
+        $values = array_merge(['action', $type], $values);
         $this->objparams['form_elements'][] = $values;
     }
 
-    function setRedaxoVars($aid = '', $clang = '', $params = array())
+    public function setRedaxoVars($aid = '', $clang = '', $params = [])
     {
-
-
         if ($clang == '') {
             $clang = $REX['CUR_CLANG'];
         }
@@ -171,12 +162,12 @@ class rex_yform
         $this->setObjectparams('form_action', rex_getUrl($aid, $clang, $params));
     }
 
-    function setHiddenField($k, $v)
+    public function setHiddenField($k, $v)
     {
         $this->objparams['form_hiddenfields'][$k] = $v;
     }
 
-    function setObjectparams($k, $v, $refresh = true)
+    public function setObjectparams($k, $v, $refresh = true)
     {
         if (!$refresh && isset($this->objparams[$k])) {
             $this->objparams[$k] .= $v;
@@ -186,7 +177,7 @@ class rex_yform
         return $this->objparams[$k];
     }
 
-    function getObjectparams($k)
+    public function getObjectparams($k)
     {
         if (!isset($this->objparams[$k])) {
             return false;
@@ -194,21 +185,19 @@ class rex_yform
         return $this->objparams[$k];
     }
 
-    function getForm()
+    public function getForm()
     {
         $this->executeFields();
         return $this->executeActions();
-
     }
 
-    function executeFields()
+    public function executeFields()
     {
+        $this->objparams['values'] = [];
+        $this->objparams['validates'] = [];
+        $this->objparams['actions'] = [];
 
-        $this->objparams['values'] = array();
-        $this->objparams['validates'] = array();
-        $this->objparams['actions'] = array();
-
-        $this->objparams['fields'] = array();
+        $this->objparams['fields'] = [];
 
         $this->objparams['fields']['values'] = &$this->objparams['values'];
         $this->objparams['fields']['validates'] = &$this->objparams['validates'];
@@ -220,44 +209,40 @@ class rex_yform
 
         $rows = count($this->objparams['form_elements']);
 
-        for ($i = 0; $i < $rows; $i++) {
+        for ($i = 0; $i < $rows; ++$i) {
+            $element = $this->objparams['form_elements'][$i];
 
-                $element = $this->objparams['form_elements'][$i];
-
-                if ($element[0] == 'validate') {
-                        $class = 'rex_yform_validate_' . trim($element[1]);
-                        $ValidateObject = new $class;
-                        $ValidateObject->loadParams($this->objparams, $element);
-                        $ValidateObject->setObjects($this->objparams['values']);
-                        $this->objparams['validates'][$element[1]][] = $ValidateObject;
-                } else if ($element[0] == 'action') {
-                    $class = 'rex_yform_action_' . trim($element[1]);
-                    $this->objparams['actions'][$i] = new $class;
-                    $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
-                    $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
-
-                } else {
-                    $class = 'rex_yform_value_' . trim($element[0]);
-                    $this->objparams['values'][$i] = new $class;
-                    $this->objparams['values'][$i]->loadParams($this->objparams, $element);
-                    $this->objparams['values'][$i]->setId($i);
-                    $this->objparams['values'][$i]->init();
-                    $this->objparams['values'][$i]->setObjects($this->objparams['values']);
-                    $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
-                }
+            if ($element[0] == 'validate') {
+                $class = 'rex_yform_validate_' . trim($element[1]);
+                $ValidateObject = new $class();
+                $ValidateObject->loadParams($this->objparams, $element);
+                $ValidateObject->setObjects($this->objparams['values']);
+                $this->objparams['validates'][$element[1]][] = $ValidateObject;
+            } elseif ($element[0] == 'action') {
+                $class = 'rex_yform_action_' . trim($element[1]);
+                $this->objparams['actions'][$i] = new $class();
+                $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
+                $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
+            } else {
+                $class = 'rex_yform_value_' . trim($element[0]);
+                $this->objparams['values'][$i] = new $class();
+                $this->objparams['values'][$i]->loadParams($this->objparams, $element);
+                $this->objparams['values'][$i]->setId($i);
+                $this->objparams['values'][$i]->init();
+                $this->objparams['values'][$i]->setObjects($this->objparams['values']);
+                $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
+            }
 
                 // special case - submit button shows up by default
                 if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
-                    $rows++;
-                    $this->objparams['form_elements'][] = array('submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db');
+                    ++$rows;
+                    $this->objparams['form_elements'][] = ['submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db'];
                     $this->objparams['submit_btn_show'] = false;
                 }
-
         }
 
         foreach ($this->objparams['values'] as $ValueObject) {
             $ValueObject->setValue($this->getFieldValue($ValueObject->getId(), '', $ValueObject->getName()));
-
         }
 
         // *************************************************** OBJECT PARAM "send"
@@ -281,7 +266,6 @@ class rex_yform
             }
         }
 
-
         // ----- Felder mit Werten fuellen, fuer wiederanzeige
         // Die Value Objekte werden mit den Werten befuellt die
         // aus dem Formular nach dem Abschicken kommen
@@ -296,20 +280,19 @@ class rex_yform
             }
         }
 
-
         // *************************************************** VALIDATE OBJEKTE
 
         // ***** PreValidateActions
-        foreach ($this->objparams['fields'] as $t => $types){
+        foreach ($this->objparams['fields'] as $t => $types) {
             foreach ($types as $Objects) {
-                if(!is_array($Objects))
-                    $Objects = array($Objects);
-                foreach($Objects as $Object) {
+                if (!is_array($Objects)) {
+                    $Objects = [$Objects];
+                }
+                foreach ($Objects as $Object) {
                     $Object->preValidateAction();
                 }
             }
         }
-
 
         // ***** Validieren
         if ($this->objparams['send'] == 1) {
@@ -321,11 +304,12 @@ class rex_yform
         }
 
         // ***** PostValidateActions
-        foreach ($this->objparams['fields'] as $t => $types){
+        foreach ($this->objparams['fields'] as $t => $types) {
             foreach ($types as $Objects) {
-                if(!is_array($Objects))
-                    $Objects = array($Objects);
-                foreach($Objects as $Object) {
+                if (!is_array($Objects)) {
+                    $Objects = [$Objects];
+                }
+                foreach ($Objects as $Object) {
                     $Object->postValidateAction();
                 }
             }
@@ -349,12 +333,9 @@ class rex_yform
         foreach ($this->objparams['values'] as $ValueObject) {
             $ValueObject->postFormAction();
         }
-
-
     }
 
-
-    function executeActions()
+    public function executeActions()
     {
 
         // *************************************************** ACTION OBJEKTE
@@ -369,28 +350,28 @@ class rex_yform
 
         // ----- Actions
         if ($this->objparams['send'] == 1 && !$hasWarnings && !$hasWarningMessages) {
-
             $this->objparams['form_show'] = false;
 
             // ----- pre Actions
-            foreach ($this->objparams['fields'] as $t => $types){
+            foreach ($this->objparams['fields'] as $t => $types) {
                 foreach ($types as $Objects) {
-                    if(!is_array($Objects))
-                        $Objects = array($Objects);
-                    foreach($Objects as $Object) {
+                    if (!is_array($Objects)) {
+                        $Objects = [$Objects];
+                    }
+                    foreach ($Objects as $Object) {
                         $Object->preAction();
                     }
                 }
             }
             $this->objparams['preactions_executed'] = true;
 
-
             // ----- normal Actions
-            foreach ($this->objparams['fields'] as $t => $types){
+            foreach ($this->objparams['fields'] as $t => $types) {
                 foreach ($types as $Objects) {
-                    if(!is_array($Objects))
-                        $Objects = array($Objects);
-                    foreach($Objects as $Object) {
+                    if (!is_array($Objects)) {
+                        $Objects = [$Objects];
+                    }
+                    foreach ($Objects as $Object) {
                         $Object->executeAction();
                     }
                 }
@@ -398,17 +379,17 @@ class rex_yform
             $this->objparams['actions_executed'] = true;
 
             // ----- post Actions
-            foreach ($this->objparams['fields'] as $types){
+            foreach ($this->objparams['fields'] as $types) {
                 foreach ($types as $Objects) {
-                    if(!is_array($Objects))
-                        $Objects = array($Objects);
-                    foreach($Objects as $Object) {
+                    if (!is_array($Objects)) {
+                        $Objects = [$Objects];
+                    }
+                    foreach ($Objects as $Object) {
                         $Object->postAction();
                     }
                 }
             }
             $this->objparams['postactions_executed'] = true;
-
         }
 
         if ($this->objparams['form_showformafterupdate']) {
@@ -427,14 +408,12 @@ class rex_yform
 
             // -------------------- formOut
             $this->objparams['output'] .= $this->parse('form.tpl.php');
-
         }
 
         return $this->objparams['output'];
-
     }
 
-    function getTemplatePath($template)
+    public function getTemplatePath($template)
     {
         $templates = (array) $template;
         foreach (explode(',', $this->objparams['form_skin']) as $form_skin) {
@@ -456,7 +435,7 @@ class rex_yform
         trigger_error(sprintf('yform template %s not found', $template), E_USER_WARNING);
     }
 
-    function parse($template, array $params = array())
+    public function parse($template, array $params = [])
     {
         extract($params);
         ob_start();
@@ -464,12 +443,12 @@ class rex_yform
         return ob_get_clean();
     }
 
-    static function getTypes()
+    public static function getTypes()
     {
-        return array('value', 'validate', 'action');
+        return ['value', 'validate', 'action'];
     }
 
-    function getFieldName($id = '', $k = '', $label = '')
+    public function getFieldName($id = '', $k = '', $label = '')
     {
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
@@ -488,7 +467,7 @@ class rex_yform
         }
     }
 
-    function getFieldValue($id = '', $k = '', $label = '')
+    public function getFieldValue($id = '', $k = '', $label = '')
     {
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
@@ -505,10 +484,10 @@ class rex_yform
                 return $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k];
             }
         }
-    return '';
+        return '';
     }
 
-    function setFieldValue($id = '', $value = '', $k = '', $label = '')
+    public function setFieldValue($id = '', $value = '', $k = '', $label = '')
     {
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
@@ -528,97 +507,77 @@ class rex_yform
         }
     }
 
-    function prepareLabel($label)
+    public function prepareLabel($label)
     {
-        return preg_replace('/[^a-zA-Z\-\_0-9]/', '-', $label);;
+        return preg_replace('/[^a-zA-Z\-\_0-9]/', '-', $label);
     }
 
-    static function unhtmlentities($text)
+    public static function unhtmlentities($text)
     {
         return html_entity_decode($text);
     }
 
-    static function showHelp($script = false)
+    public static function showHelp($script = false)
     {
-
         $return = '';
 
         $arr = [
             'value' => 'rex_yform_value_',
             'validate' => 'rex_yform_validate_',
-            'action' => 'rex_yform_action_'
+            'action' => 'rex_yform_action_',
         ];
 
-        foreach($arr as $arr_key => $arr_split) {
-
-            $return .= '<li class="type value"><strong class="toggler">'.rex_i18n::msg($arr_key).'</strong>';
-
-            foreach (rex_autoload::getClasses() as $class) {
+        $classes = rex_autoload::getClasses();
+        natsort($classes);
+        $classesDescription = [];
+        foreach ($arr as $arr_key => $arr_split) {
+            foreach ($classes as $class) {
                 $exploded = explode($arr_split, $class);
                 if (count($exploded) == 2) {
                     $name = $exploded[1];
-                    $return .= '<ul class="yform type '.$arr_key.'">';
-                    if ($name != "abstract") {
-                        $class = new $class;
-                        // $d = $class->getDefinitions();
-                        $desc = $class->getDescription();
-                        $return .= '<li>'.$desc.'</li>';
+                    if ($name != 'abstract') {
+                        $class = new $class();
+                        $desc = trim($class->getDescription());
+                        if ($desc == '') {
+                            $definitions = $class->getDefinitions();
+                            $desc = isset($definitions['description']) ? $definitions['description'] : '';
+                        }
+                        $classesDescription[ $arr_key ] .= '<tr><th><button class="btn btn-default btn-block"><code>' . $name . '</code></button></th><td class="vertical-middle">' . $desc . '</td></tr>';
                     }
-                    $return .= '</ul>';
                 }
             }
-
-            $return .= '</li>';
-
         }
 
-        if ($script) {
-            $return .= '
-<script type="text/javascript">
-(function($){
-
-    $("ul.yform strong.toggler").click(function(){
-        var me = $(this);
-        var target = $(this).next("ul.yform");
-        target.toggle(0, function(){
-            if(target.css("display") == "block"){
-                me.addClass("opened");
-            }else{
-                me.removeClass("opened");
-            }
-        });
-
-    });
-
-})(jQuery)
-</script>
-';
+        $return = '';
+        foreach ($classesDescription as $title => $content) {
+            $fragment = new rex_fragment();
+            $fragment->setVar('title', rex_i18n::msg($title));
+            $fragment->setVar('content', '<table class="table table-hover">' . $content . '</table>', false);
+            $fragment->setVar('collapse', true);
+            $fragment->setVar('collapsed', true);
+            $content = $fragment->parse('core/page/section.php');
+            $return .= $content;
         }
-
-        return '<ul class="yform root">'.$return.'</ul>';
-
+        return $return;
     }
 
-
-    static function getTypeArray()
+    public static function getTypeArray()
     {
-
         $return = [];
 
         $arr = [
             'value' => 'rex_yform_value_',
             'validate' => 'rex_yform_validate_',
-            'action' => 'rex_yform_action_'
+            'action' => 'rex_yform_action_',
         ];
 
-        foreach($arr as $arr_key => $arr_split) {
-
+        foreach ($arr as $arr_key => $arr_split) {
             foreach (rex_autoload::getClasses() as $class) {
                 $exploded = explode($arr_split, $class);
                 if (count($exploded) == 2) {
                     $name = $exploded[1];
-                    if ($name != "abstract") {
-                        $class = new $class;
+                    if ($name != 'abstract') {
+                        $class = new $class();
                         $d = $class->getDefinitions();
                         if (count($d) > 0) {
                             $return[$arr_key][$d['name']] = $d;
@@ -626,13 +585,8 @@ class rex_yform
                     }
                 }
             }
-
         }
 
         return $return;
-
     }
-
-
-
 }
