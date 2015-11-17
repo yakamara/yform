@@ -23,9 +23,9 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         $checkPerms = $this->getElement('check_perms');
         $clang = (int) $this->getElement('clang');
 
-        $add = function (OOCategory $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
+        $add = function (rex_category $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
 
-            if (!$checkPerms || rex::getUser()->hasCategoryPerm($cat->getId(), false)) {
+            if (!$checkPerms || rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($cat->getId())) {
                 $cid = $cat->getId();
                 $cname = $cat->getName();
 
@@ -43,21 +43,21 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
             }
         };
         if ($rootId = $this->getElement('category')) {
-            if ($rootCat = OOCategory::getCategoryById($rootId, $clang)) {
+            if ($rootCat = rex_category::getCategoryById($rootId, $clang)) {
                 $add($rootCat);
             }
         } else {
             if (!$checkPerms || rex::getUser()->isAdmin() || rex::getUser()->hasPerm('csw[0]')) {
-                if ($rootCats = OOCategory::getRootCategories($ignoreOfflines, $clang)) {
+                if ($rootCats = rex_category::getRootCategories($ignoreOfflines, $clang)) {
                     foreach ($rootCats as $rootCat) {
                         $add($rootCat);
                     }
                 }
-            } elseif (rex::getUser()->hasMountpoints()) {
-                $mountpoints = rex::getUser()->getMountpoints();
+            } elseif (rex::getUser()->getComplexPerm('structure')->hasMountpoints()) {
+                $mountpoints = rex::getUser()->getComplexPerm('structure')->getMountpoints();
                 foreach ($mountpoints as $id) {
-                    $cat = OOCategory::getCategoryById($id, $clang);
-                    if ($cat && !rex::getUser()->hasCategoryPerm($cat->getParentId())) {
+                    $cat = rex_category::getCategoryById($id, $clang);
+                    if ($cat && !rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($cat->getParentId())) {
                         $add($cat);
                     }
                 }
