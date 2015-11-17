@@ -41,7 +41,7 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
             'values' => array(
                 'name'     => array( 'type' => 'name',    'label' => 'Feld' ),
                 'label'    => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'field'    => array( 'type' => 'text',    'label' => 'Input-Feld'),
+                'field'    => array( 'type' => 'select_name',    'label' => 'Input-Feld'),
                 'function' => array( 'type' => 'text',    'label' => 'Algorithmus'),
                 'salt'     => array( 'type' => 'text',    'label' => 'Salt'),
                 'no_db'     => array( 'type' => 'no_db',  'label' => 'Datenbank'),
