@@ -481,12 +481,11 @@ class rex_yform_manager
                     $yform->setObjectparams('main_id', $data_id);
                     $yform->setObjectparams('main_where', "id=$data_id");
                     $yform->setObjectparams('getdata', true);
-                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => ",submit_short"));
+                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
 
                 } elseif ($func == 'add') {
                     $yform->setActionField('db', array($this->table->getTablename()));
-                    //$yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_add').",".rex_i18n::msg('yform_add_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => ",submit_short"));
-                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_add').",".rex_i18n::msg('yform_add_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => ",submit_short"));
+                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_add').",".rex_i18n::msg('yform_add_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
 
                 }
 
@@ -532,7 +531,7 @@ class rex_yform_manager
                             $yform->setObjectparams('main_id', $data_id);
                             $yform->setObjectparams('main_where', "id=$data_id");
                             $yform->setObjectparams('getdata', true);
-                            $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => ",submit_short"));
+                            $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
                             $yform->setObjectparams('form_showformafterupdate', 1);
                             $yform->executeFields();
 
@@ -1449,12 +1448,12 @@ class rex_yform_manager
 
                 function rex_yform_list_edit_format($p)
                 {
-                    return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_edit'), rex_i18n::msg('yform_edit')));
+                    return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit')));
                 }
 
                 function rex_yform_list_delete_format($p)
                 {
-                    return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete')));
+                    return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete')));
                 }
 
                 $context = new rex_context(
