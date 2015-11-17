@@ -34,7 +34,11 @@ class rex_yform_manager_table implements ArrayAccess
 
         $this->fields = array();
         foreach ($tb->getArray() as $field) {
-            $this->fields[] = new rex_yform_manager_field($field);
+            try{
+                $this->fields[] = new rex_yform_manager_field($field);
+            } catch (Exception $e) {
+                // ignore missing fields
+            }
         }
     }
 
