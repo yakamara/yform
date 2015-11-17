@@ -531,6 +531,7 @@ class rex_yform
         natsort($classes);
         $classesDescription = [];
         foreach ($arr as $arr_key => $arr_split) {
+            $classesDescription[ $arr_key ] = '';
             foreach ($classes as $class) {
                 $exploded = explode($arr_split, $class);
                 if (count($exploded) == 2) {
@@ -551,7 +552,7 @@ class rex_yform
         $return = '';
         foreach ($classesDescription as $title => $content) {
             $fragment = new rex_fragment();
-            $fragment->setVar('title', rex_i18n::msg($title));
+            $fragment->setVar('title', rex_i18n::msg("yform_".$title));
             $fragment->setVar('content', '<table class="table table-hover">' . $content . '</table>', false);
             $fragment->setVar('collapse', true);
             $fragment->setVar('collapsed', true);

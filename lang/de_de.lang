@@ -11,3 +11,7 @@ yform_table_name = MySQL Tabellenname
 yform_description_all = <p>Im Modul sind vor allem die Felddefinitionen wichtig, die sich in 3 Bereiche aufteilen.<p /><h5>Value-Felder</h5> <p>sind die Felder die im Formular normalerweise direkt auftauchen. Das können einerseits einfache Textfelder, Selektfelder, Checkboxen ... sein - aber genauso auch versteckte Felder, Geburtsdaten, Datenbankselektfelder sein.</p><h5 >Validate-Felder</h5><p>sind Felder zum überprüfen der Werte in den Value-Felder. D.h. damit kann man z.B. überprüfen ob ein Wert eingetragen worden ist (empty) oder ob es ein String, Integer oder sonstiges Feld ist. Genauso kann aber auch überprüft werden ob ein Datenbankfeld mit diesem Wert schon existiert ...</p><h5>Action-Felder</h5><p>sind für die späteren Verwendungen wichtig. Soll eine E-Mail verschickt werden und/oder ein Eintrag in die Datenbank geschehen...</p><h2>Typen Übersicht</h2>
 
 list_message = {0} bis {1} von {2} Einträge
+
+yform_value = Values
+yform_validate = Validierungen
+yform_action = Aktionen

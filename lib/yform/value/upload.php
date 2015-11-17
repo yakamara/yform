@@ -202,15 +202,15 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'upload -> Beispiel: upload|name|label|'.
-                'Maximale Größe in Kb oder Range 100,500|'.
-                'endungenmitpunktmitkommasepariert|'.
-                'pflicht=1|'.
-                'min_err,max_err,type_err,empty_err,delete_file_msg|'.
-                'Speichermodus(upload/database/no_save)|'.
-                '`database`: Dateiname wird gespeichert in Feldnamen|'.
-                'Eigener Uploadordner [optional]|'.
-                'Dateiprefix [optional]|';
+        return 'upload -> Beispiel: upload|name | label | '.
+                'Maximale Größe in Kb oder Range 100,500 | '.
+                'endungenmitpunktmitkommasepariert | '.
+                'pflicht=1 | '.
+                'min_err,max_err,type_err,empty_err,delete_file_msg | '.
+                'Speichermodus(upload/database/no_save) | '.
+                '`database`: Dateiname wird gespeichert in Feldnamen | '.
+                'Eigener Uploadordner [optional] | '.
+                'Dateiprefix [optional] |';
     }
 
     function getDefinitions()

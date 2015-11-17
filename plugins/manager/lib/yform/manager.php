@@ -76,7 +76,7 @@ class rex_yform_manager
         $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
         if (count($rex_yform_manager_opener) > 0) {
             if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
-             $popup = true; // id, field, multiple
+                $popup = true; // id, field, multiple
             }
         }
 
@@ -154,11 +154,11 @@ class rex_yform_manager
 
         $show_editpage = true;
         $show_editpage = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_DATA_EDIT_FUNC', $show_editpage,
-             [
-                 'table' => $this->table,
-                 'link_vars' => $this->getLinkVars(),
-             ]
-         ));
+        [
+        'table' => $this->table,
+        'link_vars' => $this->getLinkVars(),
+        ]
+        ));
 
         if ($show_editpage) {
 
@@ -642,10 +642,10 @@ class rex_yform_manager
                     if (!$field->isHiddenInList() && $field->getTypeName()) {
                         if (method_exists('rex_yform_' . $field->getTypeName(), 'getListValue')) {
                             $list->setColumnFormat(
-                                $field->getName(),
-                                'custom',
-                                array('rex_yform_' . $field->getTypeName(), 'getListValue'),
-                                array('field' => $field->toArray(), 'fields' => $this->table->getFields()));
+                            $field->getName(),
+                            'custom',
+                            array('rex_yform_' . $field->getTypeName(), 'getListValue'),
+                            array('field' => $field->toArray(), 'fields' => $this->table->getFields()));
                         }
                     }
 
@@ -662,31 +662,31 @@ class rex_yform_manager
                 if (isset($rex_yform_manager_opener['id'])) {
                     $list->addColumn(rex_i18n::msg('yform_data_select'),'');
                     $list->setColumnFormat(
-                        rex_i18n::msg('yform_data_select'),
-                        'custom',
-                        function($params) {
-                            $value = '';
+                    rex_i18n::msg('yform_data_select'),
+                    'custom',
+                    function($params) {
+                        $value = '';
 
-                            list($table_name, $field_name) = explode(".",$params["params"]["opener_field"]);
-                            $table = rex_yform_manager_table::get($table_name);
-                            if ($table) {
-                                $fields = $table->getValueFields(array("name" => $field_name));
-                                if (isset($fields[$field_name])) {
-                                  $target_table = $fields[$field_name]->getElement('table');
-                                  $target_field = $fields[$field_name]->getElement('field');
-                                  $values = rex_yform_be_manager_relation::getListValues($target_table, $target_field);
-                                  $value = $values[$params['list']->getValue('id')];
+                        list($table_name, $field_name) = explode(".",$params["params"]["opener_field"]);
+                        $table = rex_yform_manager_table::get($table_name);
+                        if ($table) {
+                            $fields = $table->getValueFields(array("name" => $field_name));
+                            if (isset($fields[$field_name])) {
+                                $target_table = $fields[$field_name]->getElement('table');
+                                $target_field = $fields[$field_name]->getElement('field');
+                                $values = rex_yform_be_manager_relation::getListValues($target_table, $target_field);
+                                $value = $values[$params['list']->getValue('id')];
 
-                                }
                             }
+                        }
 
-                            return '<a href="javascript:yform_manager_setData(' . $params["params"]["opener_id"] . ',###id###,\''.htmlspecialchars($value).' [id=###id###]\',' . $params["params"]["opener_multiple"] . ')">'.rex_i18n::msg('yform_data_select').'</a>';
-                        },
-                        array(
-                          "opener_id" => $rex_yform_manager_opener["id"],
-                          "opener_field" => $rex_yform_manager_opener["field"],
-                          "opener_multiple" => $rex_yform_manager_opener["multiple"],
-                        )
+                        return '<a href="javascript:yform_manager_setData(' . $params["params"]["opener_id"] . ',###id###,\''.htmlspecialchars($value).' [id=###id###]\',' . $params["params"]["opener_multiple"] . ')">'.rex_i18n::msg('yform_data_select').'</a>';
+                    },
+                    array(
+                    "opener_id" => $rex_yform_manager_opener["id"],
+                    "opener_field" => $rex_yform_manager_opener["field"],
+                    "opener_multiple" => $rex_yform_manager_opener["multiple"],
+                    )
                     );
 
 
@@ -1123,7 +1123,7 @@ class rex_yform_manager
 
                     case 'no_db':
                         if (!isset($v['default']) || $v['default'] != 1) {
-                          $v['default'] = 0;
+                            $v['default'] = 0;
                         }
 
                         $yform->setValueField('checkbox', array($field, rex_i18n::msg('yform_donotsaveindb'), 'no_db', $v['default']));
@@ -1242,9 +1242,9 @@ class rex_yform_manager
             if ($yform->objparams['form_show']) {
 
                 if ($func == 'add') {
-                    $title = rex_i18n::msg('yform_addfield') . ' "' . $type_name;
+                    $title = rex_i18n::msg('yform_addfield') . ' "' . $type_name. '"';
                 } else {
-                    $title = rex_i18n::msg('yform_editfield') . ' "' . $type_name;
+                    $title = rex_i18n::msg('yform_editfield') . ' "' . $type_name .'"';
                 }
 
                 $fragment = new rex_fragment();
@@ -1331,19 +1331,19 @@ class rex_yform_manager
             $notation_email = '';
 
             $notation_php_pre = array(
-                '$yform = new rex_yform();',
-                '$yform->setObjectparams(\'form_skin\', \'default\');',
-                '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
-                '$yform->setObjectparams(\'real_field_names\', true);',
+            '$yform = new rex_yform();',
+            '$yform->setObjectparams(\'form_skin\', \'default\');',
+            '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
+            '$yform->setObjectparams(\'real_field_names\', true);',
             );
 
             $notation_php .= implode("\n", $notation_php_pre) . "\n";
 
 
             $notation_pipe_pre = array(
-                'objparams|form_skin|bootstrap',
-                'objparams|form_showformafterupdate|0',
-                'objparams|real_field_names|true',
+            'objparams|form_skin|bootstrap',
+            'objparams|form_showformafterupdate|0',
+            'objparams|real_field_names|true',
             );
 
             $notation_pipe .= implode("\n", $notation_pipe_pre) . "\n";
@@ -1419,11 +1419,11 @@ class rex_yform_manager
 
             $show_list = true;
             $show_list = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_TABLE_FIELD_FUNC', $show_list,
-                    [
-                        'table' => $table,
-                        'link_vars' => $this->getLinkVars(),
-                    ]
-                )
+            [
+            'table' => $table,
+            'link_vars' => $this->getLinkVars(),
+            ]
+            )
             );
 
             if ($show_list) {
@@ -1457,7 +1457,7 @@ class rex_yform_manager
                 }
 
                 $context = new rex_context(
-                    $this->getLinkVars()
+                $this->getLinkVars()
                 );
                 $items = [];
                 $item = [];
@@ -1547,7 +1547,7 @@ class rex_yform_manager
                 $content = $list->get();
 
                 $fragment = new rex_fragment();
-                $fragment->setVar('title', rex_i18n::msg('yform_tablefield_overview'));
+                $fragment->setVar('title', rex_i18n::msg('yform_manager_tablefield_overview'));
                 $fragment->setVar('options', $panel_options, false);
                 $fragment->setVar('content', $content, false);
                 $content = $fragment->parse('core/page/section.php');
