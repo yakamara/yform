@@ -8,11 +8,12 @@ class rex_yform_manager_field implements ArrayAccess
 
     function __construct(array $values)
     {
-        if (count($values) == 0) {
+        $class = 'rex_yform_' . $values['type_id'] . '_' . $values['type_name'];
+
+        if (count($values) == 0 || !class_exists($class)) {
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
-        $class = 'rex_yform_' . $values['type_id'] . '_' . $values['type_name'];
 
         $object = new $class;
         $definitions = $object->getDefinitions();
