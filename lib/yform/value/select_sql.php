@@ -81,7 +81,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'select_sql -> Beispiel: select_sql|label|Bezeichnung:|select id,name from table order by name|[defaultvalue]|[no_db]|1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
+        return 'select_sql -> Beispiel: select_sql|label|Bezeichnung:| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
     }
 
 

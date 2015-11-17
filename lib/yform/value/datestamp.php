@@ -38,7 +38,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'datestamp -> Beispiel: datestamp|name|[YmdHis/U/dmy/mysql]|[no_db]|[0-wird immer neu gesetzt,1-nur wenn leer]';
+        return 'datestamp -> Beispiel: datestamp|name| [YmdHis/U/dmy/mysql] | [no_db] | [0-wird immer neu gesetzt,1-nur wenn leer]';
     }
 
     function getDefinitions()
