@@ -16,11 +16,9 @@ class rex_yform_value_readtable extends rex_yform_value_abstract
                 $value = $v;
             }
         }
-        $gd = rex_sql::factory();
-        $gd->setQuery('select * from ' . $this->getElement(1) . ' where ' . $this->getElement(2) . '="' . addslashes($v) . '"');
-
+        $gd = rex_sql::factory()->setQuery('SELECT * FROM' . $this->getElement(1) . ' WHERE ' . $this->getElement(2) . '= ?', [$v]);
         if ($gd->getRows() == 1) {
-            $ar = $gd->get_array();
+            $ar = $gd->getArray();
             foreach ($ar[0] as $k => $v) {
                 $this->params['value_pool']['email'][$k] = $v;
             }
