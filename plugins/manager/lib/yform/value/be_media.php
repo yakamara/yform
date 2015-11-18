@@ -6,7 +6,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_value_be_mediapool extends rex_yform_value_abstract
+class rex_yform_value_be_media extends rex_yform_value_abstract
 {
 
     function enterObject()
@@ -18,7 +18,7 @@ class rex_yform_value_be_mediapool extends rex_yform_value_abstract
             $this->setValue($this->getElement(3));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.be_mediapool.tpl.php', compact('counter'));
+        $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter'));
 
         $this->params['value_pool']['email'][$this->getElement(1)] = stripslashes($this->getValue());
         if ($this->getElement(4) != 'no_db') {
@@ -28,14 +28,14 @@ class rex_yform_value_be_mediapool extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'be_mediapool -> Beispiel: be_mediapool|name|label|defaultwert|no_db';
+        return 'be_media -> Beispiel: be_media|name|label|defaultwert|no_db';
     }
 
     function getDefinitions()
     {
         return array(
             'type' => 'value',
-            'name' => 'be_mediapool',
+            'name' => 'be_media',
             'values' => array(
                 'name' => array( 'type' => 'name',   'label' => 'Name' ),
                 'label' => array( 'type' => 'text',    'label' => 'Bezeichnung'),
