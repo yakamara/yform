@@ -14,24 +14,7 @@ class rex_yform_value_be_medialist extends rex_yform_value_abstract
         static $counter = 0;
         $counter++;
 
-        $medialist = array_filter(explode(',', $this->getValue()));
-
-        // Medialist arguments
-        $args = '';
-        // Category ID
-        $argvalue = intval($this->getElement(4));
-        if ($argvalue > 0) {
-            $args .= '&amp;rex_file_category=' . $argvalue;
-        }
-
-        // Types
-        $argvalue = trim($this->getElement(5));
-        if (!empty($argvalue)) {
-            $argvalue = str_replace(',', '%2C', $argvalue);
-            $args .= '&amp;args[types]=' . $argvalue;
-        }
-
-        $this->params['form_output'][$this->getId()] = $this->parse('value.be_medialist.tpl.php', compact('counter', 'args', 'medialist'));
+        $this->params['form_output'][$this->getId()] = $this->parse('value.be_medialist.tpl.php', compact('counter'));
 
         $this->params['value_pool']['email'][$this->getElement(1)] = stripslashes($this->getValue());
         if ($this->getElement(6) != 'no_db') {

@@ -20,7 +20,7 @@ if (count($notice) > 0) {
 
 $class .= $this->getElement('required') ? 'form-is-required ' : '';
 
-$class_group   = trim('form-group ' . $class . $this->getElement(5) . ' ' . $this->getWarningClass());
+$class_group   = trim('form-group yform-element ' . $class . $this->getElement(5) . ' ' . $this->getWarningClass());
 $class_control = trim('form-control');
 
 $class_label = '';

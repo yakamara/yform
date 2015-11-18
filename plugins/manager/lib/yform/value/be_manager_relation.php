@@ -32,7 +32,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         $this->relation['size'] = (int) $this->getElement(8); // boxsize
         if ($this->relation['size'] < 1) {
-            $this->relation['size'] = 5;
+            $this->relation['size'] = 10;
         }
 
         if ($this->relation['eoption'] != 1) {

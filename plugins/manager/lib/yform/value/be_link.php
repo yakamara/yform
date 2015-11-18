@@ -18,12 +18,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             $this->setValue($this->getElement(3));
         }
 
-        $linkName = '';
-        if ($this->getValue() != '' && $a = OOArticle::getArticleById($this->getValue())) {
-            $linkName = $a->getName();
-        }
-
-        $this->params['form_output'][$this->getId()] = $this->parse('value.be_link.tpl.php', compact('counter', 'linkName'));
+        $this->params['form_output'][$this->getId()] = $this->parse('value.be_link.tpl.php', compact('counter'));
 
         $this->params['value_pool']['email'][$this->getName()] = stripslashes($this->getValue());
         if ($this->getElement(4) != 'no_db') {
