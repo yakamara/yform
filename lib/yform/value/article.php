@@ -11,7 +11,7 @@ class rex_yform_value_article extends rex_yform_value_abstract
 
     function enterObject()
     {
-        $article = rex_article::get($this->getElement(1));
+        $article = new rex_article_content($this->getElement(1));
         if ( $article ) {
             $this->params['form_output'][$this->getId()] = $this->parse('value.article.tpl.php', array('article' => $article));
         }
