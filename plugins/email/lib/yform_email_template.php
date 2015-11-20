@@ -42,7 +42,7 @@ class rex_yform_email_template
         $er['REX_SERVER'] = rex::getServer();
         $er['REX_ERROR_EMAIL'] = rex::getErrorEmail();
         $er['REX_SERVERNAME'] = rex::getServerName();
-        $er['REX_NOTFOUND_ARTICLE_ID'] = rex::getProperty('notfound_article_id');
+        $er['REX_NOTFOUND_ARTICLE_ID'] = rex_article::getNotfoundArticleId();
         $er['REX_ARTICLE_ID'] = rex::getProperty('article_id');
 
         // REX_DATA[id="2"]
@@ -54,7 +54,7 @@ class rex_yform_email_template
                 $template[$k] = str_replace('###' . $search . '###', $replace, $template[$k]);
                 $template[$k] = str_replace('***' . $search . '***', urlencode($replace), $template[$k]);
                 $template[$k] = str_replace('+++' . $search . '+++', self::makeSingleLine($replace), $template[$k]);
-                
+
                 $template[$k] = preg_replace_callback(
                   '@redaxo://(\d+)(?:-(\d+))?/?@i',
                   create_function(
