@@ -17,7 +17,7 @@ stylesheets:
 
 requires:
     packages:
-        phpmailer: '~5.0-alpha7'
+        phpmailer: '^2.0.0-beta'
 
 system_plugins:
     - manager
