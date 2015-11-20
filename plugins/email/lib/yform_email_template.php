@@ -43,7 +43,7 @@ class rex_yform_email_template
         $er['REX_ERROR_EMAIL'] = rex::getErrorEmail();
         $er['REX_SERVERNAME'] = rex::getServerName();
         $er['REX_NOTFOUND_ARTICLE_ID'] = rex_article::getNotfoundArticleId();
-        $er['REX_ARTICLE_ID'] = rex::getProperty('article_id');
+        $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
         // REX_DATA[id="2"]
 
