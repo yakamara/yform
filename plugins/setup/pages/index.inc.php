@@ -11,7 +11,7 @@ rex_title('yform', $REX['ADDON']['yform']['SUBPAGES']);
 $searchtext = 'module:yform_basic_out';
 
 $gm = rex_sql::factory();
-$gm->setQuery('select * from rex_module where ausgabe LIKE "%' . $searchtext . '%"');
+$gm->setQuery('select * from rex_module where output LIKE "%' . $searchtext . '%"');
 
 $module_id = 0;
 $module_name = '';

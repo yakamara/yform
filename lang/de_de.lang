@@ -15,3 +15,8 @@ list_message = {0} bis {1} von {2} Einträge
 yform_value = Values
 yform_validate = Validierungen
 yform_action = Aktionen
+
+yform_install_modul = Setup
+yform_install_modul_description = Um die YForm als Formularsystem sinnvoll nutzen können, muß ein Modul erstellt werden.
+yform_install_yform_modul = Modul "{0}" installieren
+yform_install_update_module = Modul "{0}" aktualisieren
