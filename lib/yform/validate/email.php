@@ -12,14 +12,20 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
     function enterObject()
     {
         if ($this->params['send'] == '1') {
-            foreach ($this->obj_array as $Object) {
-                if ($Object->getValue()) {
-                    if ( !preg_match("#^[\w.+-]{2,}\@\w[\w.-]*\.\w+$#u", $Object->getValue()) ) {
-                        $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                        $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-                    }
+
+            $Object = $this->getValueObject();
+
+            if ($Object->getValue() == "") {
+                return;
+            }
+
+            if ($Object->getValue()) {
+                if ( !preg_match("#^[\w.+-]{2,}\@\w[\w.-]*\.\w+$#u", $Object->getValue()) ) {
+                    $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
                 }
             }
+
         }
     }
 

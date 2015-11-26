@@ -31,8 +31,8 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
             $fields = explode(',', $this->getElement(2));
 
             $value = 0;
-            foreach ($this->obj as $o) {
-                if (in_array($o->getName(), $fields) && $o->getValue() != '') {
+            foreach ($this->getObjects() as $Object) {
+                if (in_array($Object->getName(), $fields) && $Object->getValue() != '') {
                     $value++;
                 }
             }
@@ -40,9 +40,9 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
             if ($value < $minamount || $value > $maxamount) {
                 $this->params['warning_messages'][] = $this->getElement(5);
 
-                foreach ($this->obj as $o) {
-                    if (in_array($o->getName(), $fields)) {
-                        $this->params['warning'][$o->getId()] = $this->params['error_class'];
+                foreach ($this->getObjects() as $Object) {
+                    if (in_array($Object->getName(), $fields)) {
+                        $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                     }
                 }
             }

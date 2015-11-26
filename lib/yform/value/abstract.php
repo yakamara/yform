@@ -10,25 +10,13 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 {
     var $element_values = array();
 
-    var $id;
     var $value;
     var $name;
     var $label;
     var $type;
     var $keys = array();
 
-
     // ------------
-
-    function getId()
-    {
-        return $this->id;
-    }
-
-    function setId($id)
-    {
-        $this->id = $id;
-    }
 
     function setArticleId($aid)
     {

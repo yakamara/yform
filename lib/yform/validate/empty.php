@@ -11,12 +11,15 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
 
     function enterObject()
     {
-        if ($this->params['send'] == '1' && is_array($this->obj_array)) {
-            foreach ($this->obj_array as $Object) {
-                if ($Object->getValue() == '') {
-                    $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-                }
+        if ($this->params['send'] == '1') {
+
+            $Object = $this->getValueObject();
+
+            if ($Object->getValue() == '') {
+
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+
             }
         }
     }

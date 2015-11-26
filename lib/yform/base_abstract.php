@@ -8,6 +8,7 @@
 
 abstract class rex_yform_base_abstract
 {
+    var $id = NULL;
     var $params = array();
     var $obj;
     var $elements;
@@ -41,6 +42,17 @@ abstract class rex_yform_base_abstract
                 $i++;
             }
         }
+    }
+
+
+    function getId()
+    {
+        return $this->id;
+    }
+
+    function setId($id)
+    {
+        $this->id = $id;
     }
 
     abstract protected function getElementMappingOffset();
@@ -110,4 +122,5 @@ abstract class rex_yform_base_abstract
     /* deprecated */
     function execute() {}
 
+    function init() {}
 }

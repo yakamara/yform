@@ -12,17 +12,20 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
     function enterObject()
     {
         if ($this->params['send'] == '1') {
+
             $from = (int) $this->getElement('from');
             $to = (int) $this->getElement('to');
 
-            foreach ($this->obj_array as $Object) {
-                $value = $Object->getValue();
-                $value_int = (int) $value;
-                if ("$value" != "$value_int" || $value_int < $from || $value_int > $to) {
-                    $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-                }
+            $Object = $this->getValueObject();
+
+            $value = $Object->getValue();
+            $value_int = (int) $value;
+
+            if ("$value" != "$value_int" || $value_int < $from || $value_int > $to) {
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
+
         }
     }
 

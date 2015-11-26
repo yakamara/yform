@@ -8,26 +8,46 @@
 
 abstract class rex_yform_validate_abstract extends rex_yform_base_abstract
 {
-    var $obj_array;
+    var $validateObjects = [];
 
-    function setObjects(&$Objects)
-    {
-        parent::setObjects($Objects);
 
-        $tmp_Objects = explode(',', $this->getElement(2));
 
-        foreach ($tmp_Objects as $tmp_Object) {
-            $tmp_FoundObject = false;
-            foreach ($Objects as $Object) {
-                if (strcmp($Object->getName(), trim($tmp_Object)) == 0) {
-                    $this->obj_array[] = &$Object;
-                    $tmp_FoundObject = true;
-                    break;
-                }
+    function getValueObjects($valueNames) {
+
+        $Objects = [];
+        $valueNames = explode(',', $valueNames);
+
+        foreach ($valueNames as $valueName) {
+            if ( ($Object == $this->getValueObject($valueName)) ) {
+                $Objects[] = $Object;
             }
         }
 
+        return $Objects;
+
     }
+
+    function getValueObject($valueName = "") {
+
+        if ($valueName == "") {
+            $valueName = $this->getElement("name");
+        }
+
+        if ($valueName == "") {
+            $valueName = $this->getElement(2);
+        }
+
+        foreach ($this->getObjects() as $Object) {
+            if (strcmp($Object->getName(), trim($valueName)) == 0) {
+                return $Object;
+            }
+        }
+
+        return NULL;
+
+    }
+
+
 
     protected function getElementMappingOffset()
     {

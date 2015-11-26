@@ -12,6 +12,10 @@ class rex_yform_value_radio extends rex_yform_value_abstract
     function enterObject()
     {
 
+        if (!is_string($this->getValue())) {
+            $this->setValue('');
+        }
+
         $options = $this->getArrayFromString($this->getElement(3));
 
         $default = $this->getElement('default');

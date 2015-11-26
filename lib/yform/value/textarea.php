@@ -12,10 +12,12 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
     function enterObject()
     {
 
-        $this->setValue((string) $this->getValue());
+        if (!is_string($this->getValue())) {
+            $this->setValue('');
+        }
 
         if ($this->getValue() == '' && !$this->params['send']) {
-            $this->setValue($this->getElement(3));
+            $this->setValue($this->getElement('default'));
         }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.textarea.tpl.php');

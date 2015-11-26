@@ -17,7 +17,8 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
 
             $field_1 = $this->getElement('name');
             $field_2 = $this->getElement('name2');
-            foreach ($this->obj as $o) {
+
+            foreach ($this->getObjects() as $o) {
                 if ($o->getName() == $field_1) {
                     $id_1    = !isset($id_1)    ? $o->getId()    : $id_1;
                     $value_1 = !isset($value_1) ? $o->getValue() : $value_1;
@@ -66,6 +67,7 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
                 $this->params['warning'][$id_1] = $this->params['error_class'];
                 $this->params['warning'][$id_2] = $this->params['error_class'];
                 $this->params['warning_messages'][$id_1] = $this->getElement('message');
+                $this->params['warning_messages'][$id_2] = $this->getElement('message');
             }
 
         }

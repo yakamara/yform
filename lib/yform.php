@@ -214,15 +214,20 @@ class rex_yform
 
             if ($element[0] == 'validate') {
                 $class = 'rex_yform_validate_' . trim($element[1]);
-                $ValidateObject = new $class();
-                $ValidateObject->loadParams($this->objparams, $element);
-                $ValidateObject->setObjects($this->objparams['values']);
-                $this->objparams['validates'][$element[1]][] = $ValidateObject;
-            } elseif ($element[0] == 'action') {
+                $this->objparams['validates'][$i] = new $class();
+                $this->objparams['validates'][$i]->loadParams($this->objparams, $element);
+                $this->objparams['validates'][$i]->setId($i);
+                $this->objparams['validates'][$i]->init();
+                $this->objparams['validates'][$i]->setObjects($this->objparams['values']);
+
+            } else if ($element[0] == 'action') {
                 $class = 'rex_yform_action_' . trim($element[1]);
                 $this->objparams['actions'][$i] = new $class();
                 $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
+                $this->objparams['actions'][$i]->setId($i);
+                $this->objparams['actions'][$i]->init();
                 $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
+
             } else {
                 $class = 'rex_yform_value_' . trim($element[0]);
                 $this->objparams['values'][$i] = new $class();
@@ -231,14 +236,15 @@ class rex_yform
                 $this->objparams['values'][$i]->init();
                 $this->objparams['values'][$i]->setObjects($this->objparams['values']);
                 $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
+
             }
 
-                // special case - submit button shows up by default
-                if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
-                    ++$rows;
-                    $this->objparams['form_elements'][] = ['submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db'];
-                    $this->objparams['submit_btn_show'] = false;
-                }
+            // special case - submit button shows up by default
+            if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
+                ++$rows;
+                $this->objparams['form_elements'][] = ['submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db'];
+                $this->objparams['submit_btn_show'] = false;
+            }
         }
 
         foreach ($this->objparams['values'] as $ValueObject) {
@@ -282,13 +288,9 @@ class rex_yform
 
         // *************************************************** VALIDATE OBJEKTE
 
-        // ***** PreValidateActions
-        foreach ($this->objparams['fields'] as $t => $types) {
-            foreach ($types as $Objects) {
-                if (!is_array($Objects)) {
-                    $Objects = [$Objects];
-                }
-                foreach ($Objects as $Object) {
+        if ($this->objparams['send'] == 1) {
+            foreach ( $this->objparams['fields'] as $types) {
+                foreach($types as $Object) {
                     $Object->preValidateAction();
                 }
             }
@@ -296,25 +298,18 @@ class rex_yform
 
         // ***** Validieren
         if ($this->objparams['send'] == 1) {
-            foreach ($this->objparams['validates'] as $ValidateType) {
-                foreach ($ValidateType as $ValidateObject) {
-                    $ValidateObject->enterObject();
-                }
+            foreach ($this->objparams['validates'] as $Object) {
+                $Object->enterObject();
             }
         }
 
-        // ***** PostValidateActions
-        foreach ($this->objparams['fields'] as $t => $types) {
-            foreach ($types as $Objects) {
-                if (!is_array($Objects)) {
-                    $Objects = [$Objects];
-                }
-                foreach ($Objects as $Object) {
+        if ($this->objparams['send'] == 1) {
+            foreach ( $this->objparams['fields'] as $types) {
+                foreach($types as $Object) {
                     $Object->postValidateAction();
                 }
             }
         }
-
         // *************************************************** FORMULAR ERSTELLEN
 
         foreach ($this->objparams['values'] as $ValueObject) {
@@ -322,10 +317,8 @@ class rex_yform
         }
 
         if ($this->objparams['send'] == 1) {
-            foreach ($this->objparams['validates'] as $ValidateType) {
-                foreach ($ValidateType as $ValidateObject) {
-                    $ValidateObject->postValueAction();
-                }
+            foreach ($this->objparams['validates'] as $Object) {
+                $Object->postValueAction();
             }
         }
 

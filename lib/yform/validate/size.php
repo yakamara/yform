@@ -12,15 +12,19 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
     function enterObject()
     {
         if ($this->params['send'] == '1') {
-            // Wenn leer, dann alles ok
-            if ($this->obj_array[0]->getValue() == '') {
+
+            $Object = $this->getValueObject($this->getElement("name"));
+
+            if ($Object->getValue() == '') {
                 return;
             }
 
-            if (strlen($this->obj_array[0]->getValue()) != $this->getElement('size')) {
-                $this->params['warning'][$this->obj_array[0]->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$this->obj_array[0]->getId()] = $this->getElement('message');
+            if (strlen($Object->getValue()) != $this->getElement('size')) {
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+
             }
+
         }
     }
 

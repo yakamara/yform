@@ -28,7 +28,7 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
             $fields = explode(',', $fields);
             
             $qfields = array();
-            foreach ($this->obj as $k => $o) {
+            foreach ($this->getObjects() as $k => $o) {
                 if (in_array($o->getName(), $labels)) {
 
                     $label_key = array_search ($o->getName(), $labels);

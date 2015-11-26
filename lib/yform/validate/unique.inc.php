@@ -22,14 +22,14 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
 
             $fields = explode(',', $this->getElement('name'));
             $qfields = array();
-            foreach ($this->obj as $o) {
-                if (in_array($o->getName(), $fields)) {
-                    $value = $o->getValue();
+            foreach ($this->getObjects() as $Object) {
+                if (in_array($Object->getName(), $fields)) {
+                    $value = $Object->getValue();
                     // select array ? (special case)
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $qfields[$o->getId()] = '`' . $o->getName() . '`=' . $cd->escape($value) . '';
+                    $qfields[$Object->getId()] = '`' . $Object->getName() . '`=' . $cd->escape($value) . '';
                 }
             }
 
@@ -45,7 +45,6 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                 $sql = 'select * from ' . $table . ' WHERE ' . implode(' AND ', $qfields) . ' AND !(' . $this->params['main_where'] . ') LIMIT 1';
             }
 
-            $cd->debugsql = 1;
             $cd->setQuery($sql);
             if ($cd->getRows() > 0) {
                 foreach ($qfields as $qfield_id => $qfield_name) {

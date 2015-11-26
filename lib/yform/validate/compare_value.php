@@ -17,15 +17,8 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
             $compare_type = $this->getElement('compare_type');
             $compare_value = $this->getElement('compare_value');
 
-            $field_name = $this->getElement('name');
-            $field_id = "";
-            $field_value = "";
-            foreach ($this->obj as $o) {
-                if ($o->getName() == $field_name) {
-                    $field_id    = $o->getId();
-                    $field_value = $o->getValue();
-                }
-            }
+            $Object = $this->getValueObject($this->getElement('name'));
+            $field_value = $Object->getValue();
 
             $error = false;
             switch($compare_type) {
@@ -61,9 +54,11 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
                     }
             }
 
+            echo "iiiiii".$error."++++";
+
             if ($error) {
-                $this->params['warning'][$field_id] = $this->params['error_class'];
-                $this->params['warning_messages'][$field_id] = $this->getElement('message');
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
 
         }

@@ -12,9 +12,9 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
     function enterObject()
     {
         if ($this->params['send'] == '1') {
-            $Object = $this->obj_array[0];
 
-            // Wenn Feld leer ist - auch ok
+            $Object = $this->getValueObject();
+
             if ($this->getElement('not_required') == 1 && $Object->getValue() == '') {
                 return;
             }
@@ -40,7 +40,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     }
                     break;
                 case 'string':
-                        break;
+                    break;
                 case 'email':
                     $xsRegEx_email = "#^[\w.+-]{2,}\@\w[\w.-]*\.\w+$#u";
 
@@ -57,8 +57,8 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 case 'time':
                     $w = true;
                     $ex = explode(':', $Object->getValue());
-                    if (count($ex) == 3 && $ex[0] > -839 && $ex[0] < 839 && $ex[1] >= 0 && $ex[1] < 60  && $ex[2] >= 0 && $ex[2] < 60) {
-                            $w = false;
+                    if (count($ex) == 3 && $ex[0] > -839 && $ex[0] < 839 && $ex[1] >= 0 && $ex[1] < 60 && $ex[2] >= 0 && $ex[2] < 60) {
+                        $w = false;
                     }
                     break;
                 case 'date':
@@ -79,9 +79,9 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     break;
                 case "hex":
                     $xsRegEx_hex = "/^[0-9a-fA-F]+$/i";
-                    if(preg_match($xsRegEx_hex, $Object->getValue())==0)
-                    $w = TRUE;
-                break;
+                    if (preg_match($xsRegEx_hex, $Object->getValue()) == 0)
+                        $w = TRUE;
+                    break;
                 case '':
                     break;
                 default:
@@ -91,10 +91,12 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             }
 
             if ($w) {
-                    $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
 
             }
+
 
         }
     }

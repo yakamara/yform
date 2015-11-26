@@ -13,8 +13,9 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
     {
         if ($this->params['send'] == '1') {
 
-            // Wenn leer, dann alles ok
-            if ($this->obj_array[0]->getValue() == '') {
+            $Object = $this->getValueObject();
+
+            if ($Object->getValue() == '') {
                 return;
             }
 
@@ -30,7 +31,7 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
                 $maxsize = (int) $this->getElement('max');
             }
 
-            $size = strlen($this->obj_array[0]->getValue());
+            $size = strlen($Object->getValue());
 
             if ($minsize > -1 && $minsize > $size) {
                 $w = true;
@@ -41,10 +42,10 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
             }
 
             if ($w) {
-                $id = $this->obj_array[0]->getId();
-                $this->params['warning'][$id] = $this->params['error_class'];
-                $this->params['warning_messages'][$id] = $this->getElement('message');
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
+
         }
     }
 

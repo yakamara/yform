@@ -110,9 +110,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         // ---------- empty option ?
 
         if ($this->params['send'] == 1 && $this->relation['eoption'] == 0 && count($this->getValue()) == 0) {
-            // Error. Fehlermeldung ausgeben
-            $this->params['warning'][] = $this->params['error_class'];
-            $this->params['warning_messages'][] = $this->getElement(7);
+            $this->params['warning'][$this->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
         }
 
         // --------------------------------------- Selectbox, single 0 or multiple 1

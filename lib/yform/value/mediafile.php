@@ -12,7 +12,9 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
     function enterObject()
     {
 
-
+        if (!is_string($this->getValue())) {
+            $this->setValue('');
+        }
 
         // MEDIAPOOL
         $mediacatid     = ($this->getElement(8) == '') ? 0 : (int) $this->getElement(8);
@@ -41,7 +43,6 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         $rdelete  = md5($this->getFieldName('delete'));
         $rfile    = 'file_' . md5($this->getFieldName('file'));
-        $filename = $this->getValue();
 
         // SIZE CHECK
         if ( $this->params['send'] && isset($_FILES[$rfile]) && $_FILES[$rfile]['name'] != '' && ($_FILES[$rfile]['size'] > $maxsize || $_FILES[$rfile]['size'] < $minsize) ) {
