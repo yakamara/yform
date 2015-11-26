@@ -9,4 +9,4 @@ page:
     perm: yform[email]
     pjax: true
     subpages:
-        index: { title: 'translate:overview' }
+        index: { title: 'translate:overview', hidden: true }

@@ -6,7 +6,8 @@ yform_email_from_name = E-Mail-Name [z.b. REDAXO Server]
 yform_email_subject = Betreff
 yform_email_body = Body
 yform_email_body_html = Body (Html)
-yform_email_add_template = E-Mail Template hinzufügen
+yform_email_create = E-Mail Template hinzufügen
+yform_email_update = E-Mail Template aktualisieren
 yform_email_header_template_description = Key
 yform_email_header_template_mail_from = von
 yform_email_header_template_mail_from_name = Name
@@ -15,7 +16,13 @@ yform_email_create_template = Template erstellen
 yform_email_header_template_functions = Funktionen
 yform_email_templates_not_found = Keine Templates gefunden
 yform_email_delete_template = Löschen
+
+yform_email_info_template_added = Template wurde hinzugefügt
+yform_email_info_template_updated = Template wurde aktualisiert
 yform_email_info_template_deleted = Template wurde gelöscht
+
 yform_email_attachments = Anhänge
 
 yform_delete_template = Template löschen
+
+yform_email_caption = Liste der Templates

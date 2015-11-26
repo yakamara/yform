@@ -15,7 +15,7 @@ $csuchfelder = array('name', 'mail_from', 'mail_subject', 'body');
 $func = rex_request('func', 'string', '');
 $page = rex_request('page', 'string', '');
 $template_id = rex_request('template_id', 'int');
-$message = '';
+$content = '';
 $show_list = true;
 
 if ($func == 'edit' || $func == 'add') {
@@ -33,26 +33,55 @@ if ($func == 'edit' || $func == 'add') {
     $form_data[] = 'textarea|body|translate:yform_email_body';
     $form_data[] = 'be_medialist|attachments|translate:yform_email_attachments';
 
-    $form_data[] = 'action|db|'.$table; // |[where(id=2)/main_where]';
-
     $form_data[]  = 'action|showtext|Vielen Dank|||1'; //  (plaintext/html/textile)
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action','index.php?page=yform/email/index&func='.$func);
 
-    $yform->setObjectparams('main_table', $table);
-
     $yform->setFormData(implode("\n",$form_data));
+
+    if ($func == 'edit') {
+
+        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_save'));
+        $yform->setHiddenField('template_id', $template_id);
+        $yform->setActionField('db', array($table, "id=$template_id"));
+        $yform->setObjectparams('main_id', $template_id);
+        $yform->setObjectparams('main_table', $table);
+        $yform->setObjectparams('main_where', "id=$template_id");
+        $yform->setObjectparams('getdata', true);
+
+        $title = rex_i18n::msg('yform_email_update');
+
+    } else {
+        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add'));
+        $yform->setActionField('db', array($table));
+
+        $title = rex_i18n::msg('yform_email_create');
+    }
 
     $content = $yform->getForm();
 
-    $fragment = new rex_fragment();
-    $fragment->setVar('class', 'edit', false);
-    $fragment->setVar('title', rex_i18n::msg('yform_email_create'));
-    $fragment->setVar('body', $content, false);
-    $content = $fragment->parse('core/page/section.php');
+    if ($yform->objparams['form_show']) {
 
-    echo $content;
+        $fragment = new rex_fragment();
+        $fragment->setVar('class', 'edit', false);
+        $fragment->setVar('title', $title);
+        $fragment->setVar('body', $content, false);
+        $content = $fragment->parse('core/page/section.php');
+
+        $show_list = false;
+
+    } else {
+
+        if ($func == "edit") {
+            $content = rex_view::success(rex_i18n::msg('yform_email_info_template_updated'));
+
+        } else {
+            $content = rex_view::success(rex_i18n::msg('yform_email_info_template_added'));
+
+        }
+
+    }
 
 } else if ($func == 'delete') {
 
@@ -60,9 +89,12 @@ if ($func == 'edit' || $func == 'add') {
     $delsql = rex_sql::factory();
     $delsql->setQuery($query);
 
-    $message = rex_view::info(rex_i18n::msg('yform_email_info_template_deleted'));
+    $content = rex_view::success(rex_i18n::msg('yform_email_info_template_deleted'));
 
 }
+
+echo $content;
+
 
 if ($show_list) {
 
@@ -72,7 +104,7 @@ if ($show_list) {
     $sql = "select * from $table " . $add_sql;
 
     $list = rex_list::factory($sql);
-    $list->setCaption(rex_i18n::msg('yform_email_header_template_caption'));
+    // $list->setCaption(rex_i18n::msg('yform_email_header_template_caption'));
     $list->addTableAttribute('summary', rex_i18n::msg('yform_email_header_template_summary'));
     $list->addTableAttribute('class', 'table-striped');
     $list->addTableColumnGroup(array(40, 40, '*', 153, 153));
@@ -108,7 +140,6 @@ if ($show_list) {
     $fragment->setVar('content', $content, false);
     $content = $fragment->parse('core/page/section.php');
 
-    echo $message;
     echo $content;
 
 }
