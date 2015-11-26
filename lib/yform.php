@@ -153,10 +153,10 @@ class rex_yform
     public function setRedaxoVars($aid = '', $clang = '', $params = [])
     {
         if ($clang == '') {
-            $clang = $REX['CUR_CLANG'];
+            $clang = rex_clang::getCurrentId();
         }
         if ($aid == '') {
-            $aid = $REX['ARTICLE_ID'];
+            $aid = rex_article::getCurrentId();
         }
 
         $this->setObjectparams('form_action', rex_getUrl($aid, $clang, $params));
