@@ -54,8 +54,6 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
                     }
             }
 
-            echo "iiiiii".$error."++++";
-
             if ($error) {
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
