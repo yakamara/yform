@@ -11,7 +11,7 @@ class rex_yform
 {
     public static $TemplatePaths = [];
 
-    public function rex_yform()
+    public function __construct()
     {
         $this->objparams = [];
 
