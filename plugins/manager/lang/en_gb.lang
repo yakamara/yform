@@ -1,4 +1,4 @@
-yform_table_manager = Table Manager
+yform_manager = [missing_text] de:Table Manager
 
 navigation_manager = Tables
 yform_manager_fields = Fields
@@ -68,6 +68,7 @@ yform_manager_enter_number = Please define a amount of displayed entries per pag
 yform_manager_table_hide = hidden in navigation
 yform_manager_table_allow_export = allow export of data
 yform_manager_table_allow_import = allow import of data
+yform_manager_tablefield_overview = [missing_text] de:Feldübersicht
 
 yform_manager_table_updated = Thank you for the update.
 yform_manager_table_added = Thank you for the entry.
@@ -95,19 +96,23 @@ yform_manager_migrate_table_id_convert = convert `id`-field if it does noch exis
 yform_manager_table_migrated_success = The table is migrated.
 
 yform_manager_tableset_import = import tableset
-yform_manager_table_import_jsonimportfile = import JSON file
-yform_manager_tableset_import_info =
-yform_manager_table_import_warning_selectfile = Please choose a file
-yform_manager_table_import_warning_type = Please select a json import tableset file
-yform_manager_table_import_success = table/s has/have been imported
+yform_manager_tableset_import_jsonimportfile = [missing_text] de:JSON Datei einspielen
+yform_manager_tableset_import_info = 
+yform_manager_tableset_import_warning_selectfile = [missing_text] de:Es wurde keine Datei verwendet
+yform_manager_tableset_import_warning_type = [missing_text] de:Der Dateityp ist falsch. Es muss eine JSON Datei sein.
+yform_manager_tableset_import_success = [missing_text] de:Tabelle/n wurde/n erfolgreich importiert
+yform_manager_tableset_import_failed = [missing_text] de:Tableset Import ist fehlgeschlagen
+
+yform_manager_table_edit = [missing_text] de:Tabellen bearbeiten
 
 yform_manager_tableset_export = export tableset
-yform_manager_tableset_export_info =
+yform_manager_tableset_export_info = 
 yform_manager_export_error_empty = Please select at least one table
 
 yform_manager_table_hidden = visibility
 yform_hidden = hidden
 yform_visible = visible
+
 
 # edit.inc.php
 yform_thankyouforupdate = data have been updated.
@@ -116,6 +121,8 @@ yform_editdata = edit data
 yform_adddata = create data set
 yform_searchtext = search term
 yform_searchfields = table fields that are getting searched through
+yform_id = [missing_text] de:Id
+yform_function = [missing_text] de:Funktion
 yform_add = add
 yform_add_apply = apply
 yform_edit = edit
@@ -137,6 +144,7 @@ yform_dataset_delete_confirm = Really delete dataset?
 
 yform_data = Data
 yform_manager_search = Search
+
 yform_data_select = select
 
 # field.inc.php
@@ -144,7 +152,7 @@ yform_tablenotexists = This table does not exist!
 yform_tablefield = table field
 yform_values = values
 yform_validates = valdidation
-yform_actions = actions
+yform_actios = [missing_text] de:Aktionen
 yform_validatenamenotempty = Please fill in the name
 yform_validatenamepregmatch = Please fill in only letters and "_" as name
 yform_validatenamecheck = This name already exists
@@ -170,7 +178,7 @@ yform_manager_import_error_missingfields = [en] Es fehlen folgende Felder: {0}
 yform_manager_import_error_field = [en] Feld "{0}" konnte nicht angelegt werden: "{1}"
 yform_manager_import_field_added = [en] Feld "{0}" wurde angelegt
 yform_manager_import_error_import_stopped = [en] Import wurde abgebrochen, da Fehler aufgetaucht sind.
-yform_manager_import_error_dataimport = [en] Datensatz konnte nicht importiert werden: {0}
+yform_manager_import_error_dataimport = [en] Es wurden {0} Datensätze importiert. Davon waren {1} neue Datensätze und {2} Datensätze wurden ersetzt.
 yform_manager_import_error_dataimport = [en] Es wurden {0} Datensätze importiert. Davon waren {1} neue Datensätze und {2} Datensätze wurden ersetzt.
 yform_manager_import_info_data_imported = [en] Es wurde/n {0} Datensätze nicht importiert.
 yform_manager_import_error_not_started = [en] Import wurde nicht gestartet.
@@ -188,3 +196,6 @@ yform_manager_import_unique_field = [en] Wenn dieses Feld identisch ist, dann wi
 yform_manager_import_start = [en] Hinzufügen
 
 yform_manager_show_form_notation = field definitions
+
+navigation_yform_tables = [missing_text] de:Tabellen
+yform_tabledata_overview = [missing_text] de:Datentabelle
