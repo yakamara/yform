@@ -640,11 +640,11 @@ class rex_yform_manager
                 foreach ($this->table->getFields() as $field) {
 
                     if (!$field->isHiddenInList() && $field->getTypeName()) {
-                        if (method_exists('rex_yform_' . $field->getTypeName(), 'getListValue')) {
+                        if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getListValue')) {
                             $list->setColumnFormat(
                             $field->getName(),
                             'custom',
-                            array('rex_yform_' . $field->getTypeName(), 'getListValue'),
+                            array('rex_yform_value_' . $field->getTypeName(), 'getListValue'),
                             array('field' => $field->toArray(), 'fields' => $this->table->getFields()));
                         }
                     }
@@ -674,7 +674,7 @@ class rex_yform_manager
                             if (isset($fields[$field_name])) {
                                 $target_table = $fields[$field_name]->getElement('table');
                                 $target_field = $fields[$field_name]->getElement('field');
-                                $values = rex_yform_be_manager_relation::getListValues($target_table, $target_field);
+                                $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
                                 $value = $values[$params['list']->getValue('id')];
 
                             }
@@ -714,7 +714,7 @@ class rex_yform_manager
                     $filter = array();
                     $getFilter = function (rex_yform_manager_field $field, $value) {
                         if ('be_manager_relation' == $field->getTypeName()) {
-                            $listValues = rex_yform_be_manager_relation::getListValues($field->getElement('table'), $field->getElement('field'), array('id' => $value));
+                            $listValues = rex_yform_value_be_manager_relation::getListValues($field->getElement('table'), $field->getElement('field'), array('id' => $value));
                             if (isset($listValues[$value])) {
                                 $value = $listValues[$value];
                             }
