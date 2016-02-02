@@ -297,8 +297,9 @@ class rex_yform_manager
                 $fields = array();
                 $g = rex_sql::factory();
                 $g->setQuery($sql);
+                $array = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), array('table' => $this->table)));
 
-                foreach ($g->getArray() as $d) {
+                foreach ($array as $d) {
                     if ($data == '') {
                         foreach ($d as $a => $b) {
                             $fields[] = '"' . $a . '"';
