@@ -187,6 +187,7 @@ class rex_yform
 
     public function getForm()
     {
+        rex_extension::registerPoint(new rex_extension_point('YFORM_GENERATE',$this));
         $this->executeFields();
         return $this->executeActions();
     }

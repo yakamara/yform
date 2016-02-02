@@ -321,11 +321,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $where = array();
                 foreach ($filter as $key => $value) {
                     if (!is_array($value)) {
-                        $where[] = 't0.`' . $db->escape($key) . '` = "' . $db->escape($value) . '"';
+                        $where[] = 't0.' . $db->escapeIdentifier($key) . ' = ' . $db->escape($value);
                     } elseif ($relation = $tableObject->getRelation($key)) {
-                        $join .= ' LEFT JOIN `' . $db->escape($relation['table']) . '` t' . $joinIndex . ' ON t0.`' . $db->escape($key) . '` = t' . $joinIndex . '.id';
+                        $join .= ' LEFT JOIN ' . $db->escapeIdentifier($relation['table']) . ' t' . $joinIndex . ' ON t0.' . $db->escapeIdentifier($key) . ' = t' . $joinIndex . '.id';
                         foreach ($value as $k => $v) {
-                            $where[] = 't' . $joinIndex . '.`' . $db->escape($k) . '` = "' . $db->escape($v) . '"';
+                            $where[] = 't' . $joinIndex . '.' . $db->escapeIdentifier($k) . ' = ' . $db->escape($v);
                         }
                         $joinIndex++;
                     }
@@ -336,11 +336,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $fields = array();
             foreach ($concat as $c) {
                 if ($c['field']) {
-                    $fields[] = 't0.`' . mysql_real_escape_string($c['name']) . '`';
+                    $fields[] = 't0.' . $db->escapeIdentifier($c['name']);
                 }
             }
-            $order = 't0.`' . $db->escape($tableObject['list_sortfield'] ?: 'id') . '` ' . ($tableObject['list_sortorder'] ?: 'ASC');
-            $db_array = $db->getArray('select t0.id, ' . implode(', ', $fields) . ' from `' . $db->escape($table) . '` t0' . $join . $where . ' ORDER BY ' . $order);
+            $order = 't0.' . $db->escapeIdentifier($tableObject['list_sortfield'] ?: 'id') . ' ' . ($tableObject['list_sortorder'] ?: 'ASC');
+            $db_array = $db->getArray('select t0.id, ' . implode(', ', $fields) . ' from ' . $db->escapeIdentifier($table) . ' t0' . $join . $where . ' ORDER BY ' . $order);
             foreach ($db_array as $entry) {
                 $value = '';
                 foreach ($concat as $c) {
@@ -415,12 +415,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         if ($value[0] && $relation) {
                             $relationSql = rex_sql::factory();
                             //$relationSql->debugsql = true;
-                            $tables = '`' . $relationSql->escape($relation['table']) . '` t0';
+                            $tables = '' . $relationSql->escapeIdentifier($relation['table']) . ' t0';
                             for ($i = 1; $i < count($value) - 1; ++$i) {
                                 $relation = rex_yform_manager_table::get($relation['table'])->getRelation($value[$i]);
-                                $tables .= ' LEFT JOIN `' . $relationSql->escape($relation['table']) . '` t' . $i . ' ON t' . $i . '.id = t' . ($i - 1) . '.`' . $relationSql->escape($value[$i]) . '`';
+                                $tables .= ' LEFT JOIN ' . $relationSql->escapeIdentifier($relation['table']) . ' t' . $i . ' ON t' . $i . '.id = t' . ($i - 1) . '.' . $relationSql->escapeIdentifier($value[$i]) . '';
                             }
-                            $relationSql->setQuery('SELECT t' . ($i - 1) . '.`' . $relationSql->escape($value[$i]) . '` FROM ' . $tables . ' WHERE t0.id = ' . (int) $value[0]);
+                            $relationSql->setQuery('SELECT t' . ($i - 1) . '.' . $relationSql->escapeIdentifier($value[$i]) . ' FROM ' . $tables . ' WHERE t0.id = ' . (int) $value[0]);
                             if ($relationSql->getRows()) {
                                 $setValue($key, $relationSql->getValue($value[$i]));
                             }

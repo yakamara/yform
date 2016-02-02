@@ -86,7 +86,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
     {
         $return = array();
 
-        $new_select = new rex_yform_select();
+        $new_select = new self();
         $values = $new_select->getArrayFromString($params['params']['field']['options']);
 
         foreach (explode(',', $params['value']) as $k) {
@@ -104,7 +104,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $options['(empty)'] = "(empty)";
         $options['!(empty)'] = "!(empty)";
 
-        $new_select = new rex_yform_select();
+        $new_select = new self();
         $options += $new_select->getArrayFromString($params['field']['options']);
 
         $params['searchForm']->setValueField('select', array(
