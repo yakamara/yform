@@ -34,7 +34,7 @@ if (trim($this->getElement('grid')) != '') {
 
 
 <?php if (trim($this->getLabel()) != ''): ?>
-    <div class="form-group">
+    <div class="radio form-group">
     <label class="control-label<?php echo $class_label; ?>"><?php echo $this->getLabel() ?></label>
 <?php endif; ?>
 <?php echo $field_before; ?>
