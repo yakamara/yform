@@ -13,7 +13,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
     {
 
         $template_name = $this->getElement(2);
-
         if ($etpl = rex_yform_email_template::getTemplate($template_name)) {
 
             $mail_to = rex::getErrorEmail();
@@ -32,7 +31,15 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $mail_to = $this->getElement(4);
             }
 
+            if ($this->params['debug']) {
+                echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
+            }
+
             $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
+
+            if ($this->params['debug']) {
+                echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
+            }
 
             $etpl['mail_to'] = $mail_to;
             $etpl['mail_to_name'] = $mail_to;
@@ -48,17 +55,22 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $etpl['attachments'] = array();
             }
 
-            if ($this->params['debug']) {
-                echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
-            }
-
             if (!rex_yform_email_template::sendMail($etpl, $template_name)) {
-                echo 'error - email sent';
+                if ($this->params['debug']) {
+                    echo 'email could be sent';
+                }
                 return false;
 
             } else {
+                if ($this->params['debug']) {
+                    echo 'email sent';                }
                 return true;
 
+            }
+
+        } else {
+            if ($this->params['debug']) {
+                echo '<p>Template: "'.htmlspecialchars($template_name).'" not found';
             }
 
         }
@@ -68,7 +80,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     function getDescription()
     {
-        return 'action|email|emailtemplate|emaillabel|[email@domain.de]';
+        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]';
 
     }
 

@@ -17,6 +17,7 @@ oder
 Last Changes
 -------
 
-### Version 5.0 // xx.xx.2015
+### Version 1.0 // xx.xx.2015
 
-* Version ist noch nicht lauffähig und wird gerade portiert
+* Email Templates dürfen nun PHP enthalten und benutzen REX_VARS. z.B. REX_YFORM_DATA[field="label"]
+* Basisanpassungen sind durch.

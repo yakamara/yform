@@ -45,32 +45,22 @@ class rex_yform_email_template
         $er['REX_NOTFOUND_ARTICLE_ID'] = rex_article::getNotfoundArticleId();
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
-        // REX_DATA[id="2"]
+        $template['body'] = rex_var::parse($template['body'],'','yform_email_template', $er);
+        $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
 
+        // rex_vars bug: sonst wird der Zeilenumbruch entfernt - wenn DATA_VAR am Ende einer Zeile
+        if (rex_string::versionCompare(rex::getVersion(), '5.0.1', '<')) {
+            $template['body'] = str_replace("?>\r", "?>\r\n\r", $template['body']);
+            $template['body'] = str_replace("?>\n", "?>\n\r\n", $template['body']);
+            $template['body_html'] = str_replace("?>\r", "?>\r\n\r", $template['body_html']);
+            $template['body_html'] = str_replace("?>\n", "?>\n\r\n", $template['body_html']);
+        }
 
-//        foreach ($er as $search => $replace) {
-            foreach ($template as $k => $v) {
-                /*
-                $template[$k] = str_replace('###' . $search . '###', $replace, $template[$k]);
-                $template[$k] = str_replace('***' . $search . '***', urlencode($replace), $template[$k]);
-                $template[$k] = str_replace('+++' . $search . '+++', self::makeSingleLine($replace), $template[$k]);
-
-                $template[$k] = preg_replace_callback(
-                  '@redaxo://(\d+)(?:-(\d+))?/?@i',
-                  create_function(
-                    '$matches',
-                    'return rex_getUrl($matches[1], isset($matches[2]) ? $matches[2] : ' . $REX['CUR_CLANG'] . ');'
-                  ),
-                  $template[$k]
-                );
-*/
-                $template = rex_var::parse($template,'','yform_email_template', $er);
-
-            }
-//        }
-
+        $template['body'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/body', $template['body']));
+        $template['body_html'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/body_html', $template['body_html']));
 
         return $template;
+
     }
 
     static function makeSingleLine($str)

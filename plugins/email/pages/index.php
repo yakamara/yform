@@ -20,10 +20,9 @@ $show_list = true;
 
 if ($func == 'edit' || $func == 'add') {
 
-    echo rex_view::info('<p>Durch folgende Markierungen <b>###field###</b> kann man die in den Formularen eingegebenen Felder hier im E-Mail Template verwenden. Weiterhin sind
-    alle REDAXO Variablen wie $REX["SERVER"] als <b>###REX_SERVER###</b> verwendbar. Urlencoded, z.b. für Links, bekommt man diese Werte über <b>+++field+++</b></p>');
-
+    echo rex_view::info(rex_i18n::rawMsg('yform_email_info_text'));
     $form_data = [];
+
     $form_data[] = 'text|name|translate:yform_email_key';
     $form_data[] = 'validate|empty|name|Bitte key eintragen';
 
@@ -33,7 +32,7 @@ if ($func == 'edit' || $func == 'add') {
     $form_data[] = 'textarea|body|translate:yform_email_body';
     $form_data[] = 'be_medialist|attachments|translate:yform_email_attachments';
 
-    $form_data[]  = 'action|showtext|Vielen Dank|||1'; //  (plaintext/html/textile)
+    $form_data[]  = 'action|showtext|Vielen Dank|||1';
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action','index.php?page=yform/email/index&func='.$func);
