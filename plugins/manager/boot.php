@@ -23,21 +23,19 @@ if (rex::isBackend() && rex::getUser()) {
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table['table_name']);
             $be_page->setIcon('rex-icon rex-icon-module');
             $be_page->setRequiredPermissions([$table_perm]);
+            if (rex_request('page','string') == 'yform/manager/data_edit' && rex_request('table_name', 'string') == $table['table_name']) {
+                $be_page->setIsActive();
+
+                $main_page = $this->getAddon()->getProperty('page');
+                $main_page['isActive'] = false;
+                $this->getAddon()->setProperty('page', $main_page);
+
+            }
+
             $pages[] = $be_page;
 
             // TODO rechte noch verfügbar machen
 
-            // TODO aktive Navigation noch einbauen
-
-            /*
-                if (rex_request('tripage', 'string') == 'data_edit') {
-                    $REX['ADDON']['navigation']['yform'] = array(
-                        'activateCondition' => array('page' => 'yformmm'),
-                        'hidden' => false
-                    );
-                }
-
-            */
         }
     }
 
