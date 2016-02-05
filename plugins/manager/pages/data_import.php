@@ -141,7 +141,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         $replacevalue = '';
                         foreach ($line_array as $k => $v) {
                             if ($fieldarray[$k] != '' && (array_key_exists($fieldarray[$k], $rfields) || $fieldarray[$k] == 'id')) {
-                                $i->setValue($fieldarray[$k], mysql_real_escape_string($v));
+                                $i->setValue($fieldarray[$k], $v);
                                 if ($replacefield == $fieldarray[$k]) {
                                     $replacevalue = $v;
 
@@ -151,10 +151,10 @@ if (rex_request('send', 'int', 0) == 1) {
 
                         // noch abfrage ob $replacefield
                         $cf = rex_sql::factory();
-                        $cf->setQuery('select * from ' . $this->table->getTablename() . ' where ' . $replacefield . '="' . mysql_real_escape_string($replacevalue) . '"');
+                        $cf->setQuery('select * from ' . $this->table->getTablename() . ' where ' . rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue) . '');
 
                         if ($cf->getRows() > 0) {
-                            $i->setWhere($replacefield . '="' . mysql_real_escape_string($replacevalue) . '"');
+                            $i->setWhere(rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue) . '');
 
                             rex_extension::registerPoint(new rex_extension_point(
                                 'yform_DATASET_IMPORT_DATA_UPDATE',
