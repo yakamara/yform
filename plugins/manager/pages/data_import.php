@@ -36,7 +36,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
     // Daten wurden übertragen
     if (!isset($_FILES['file_new']) || $_FILES['file_new']['tmp_name'] == '') {
-        echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_missingfile'));
+        echo rex_view::error(rex_i18n::msg('yform_manager_import_error_missingfile'));
 
     } else {
 
@@ -96,7 +96,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                     if (count($mc) > 0) {
                         if ($missing_columns == 3) {
-                            echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_missingfields', implode(', ', $mc)));
+                            echo rex_view::error(rex_i18n::msg('yform_manager_import_error_missingfields', implode(', ', $mc)));
                             $show_importform = true;
                             $func = 'import';
                             break;
@@ -110,7 +110,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                                 if ($upd->getError()) {
                                     $error = true;
-                                    echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_field', $mcc, $upd->getError()));
+                                    echo rex_view::error(rex_i18n::msg('yform_manager_import_error_field', $mcc, $upd->getError()));
 
                                 } else {
                                     echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
@@ -119,7 +119,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                             }
                             if ($error) {
-                                echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_import_stopped'));
+                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_stopped'));
                                 $show_importform = true;
                                 break;
                             }
@@ -177,7 +177,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                             } else {
                                 $dcounter++;
-                                echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
+                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
                             }
                         } else {
 
@@ -201,7 +201,7 @@ if (rex_request('send', 'int', 0) == 1) {
                                 $icounter++;
                             } else {
                                 $dcounter++;
-                                echo rex_view::warning(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
+                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
                             }
                         }
 
@@ -240,7 +240,7 @@ if (rex_request('send', 'int', 0) == 1) {
         }
 
         if ($dcounter > 0) {
-            echo rex_view::warning(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
+            echo rex_view::error(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
 
         }
 
@@ -255,72 +255,104 @@ if (rex_request('send', 'int', 0) == 1) {
 
 
 if ($show_importform) {
+    $hidden = '
+        <input type="hidden" name="func" value="import" />
+        <input type="hidden" name="send" value="1" />';
 
-    ?>
-    <div class="rex-addon-output"><h3 class="rex-hl2"><?php echo rex_i18n::msg('yform_manager_import_csv'); ?></h3><div class="rex-addon-content"><div id="rex-yform-import" class="yform">
+    foreach ($this->getLinkVars() as $k => $v) {
+        $hidden .= '<input type="hidden" name="' . $k . '" value="' . addslashes($v) . '" />';
+    }
 
-    <form action="index.php" method="post" enctype="multipart/form-data">
+    $content = '
+        <p>' . rex_i18n::msg('yform_manager_import_csv_info') . '</p>
+        <fieldset>
+            ' . $hidden . '
+    ';
 
-            <p class="rex-tx1"><?php echo rex_i18n::msg('yform_manager_import_csv_info'); ?></p>
 
-            <?php
-            foreach ($this->getLinkVars() as $k => $v) {
-                echo '<input type="hidden" name="' . $k . '" value="' . addslashes($v) . '" />';
-            }
-            ?>
-            <input type="hidden" name="func" value="import" />
-            <input type="hidden" name="send" value="1" />
+    $formElements = [];
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column_ignore') . '</label>';
+    $n['field'] = '<input type="radio" name="missing_columns" value="1"' . (($missing_columns == '1') ? 'checked' : '') . ' />';
+    $formElements[] = $n;
 
-            <?php
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column_addtext') . '</label>';
+    $n['field'] = '<input type="radio" name="missing_columns" value="2"' . (($missing_columns == '2') ? 'checked' : '') . ' />';
+    $formElements[] = $n;
 
-            echo '
-            <p class="formradio formlabel-missing_columns"  id="yform-formular-missing_columns">
-                <strong>' . rex_i18n::msg('yform_manager_import_if_no_column') . '</strong>
-            </p>';
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column_break') . '</label>';
+    $n['field'] = '<input type="radio" name="missing_columns" value="3"' . (($missing_columns == '3') ? 'checked' : '') . ' />';
+    $formElements[] = $n;
 
-            $radio = new rex_radio();
-            $radio->setId('missing_columns');
-            $radio->setName('missing_columns');
-            $radio->addOption(rex_i18n::msg('yform_manager_import_if_no_column_ignore'), '1');
-            $radio->addOption(rex_i18n::msg('yform_manager_import_if_no_column_addtext'), '2');
-            $radio->addOption(rex_i18n::msg('yform_manager_import_if_no_column_break'), '3');
-            // $SEL->setStyle(' class="select ' . $wc . '"');
-            $radio->setSelected($missing_columns);
-            echo $radio->get();
+    $fragment = new rex_fragment();
+    $fragment->setVar('elements', $formElements, false);
+    $radios = $fragment->parse('core/form/radio.php');
 
-            ?>
+    $formElements = [];
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column') . '</label>';
+    $n['field'] = $radios;
+    $formElements[] = $n;
 
-                <p class="rex-form-select">
-                <label class="select " for="divider" ><?php echo rex_i18n::msg('yform_manager_import_divider'); ?></label>
-                <?php
-                $a = new rex_select();
-                $a->setName('divider');
-                $a->setId('divider');
-                $a->setSize(1);
-                $a->addOption(rex_i18n::msg('yform_manager_import_divider_semicolon') . ' (;)', ';');
-                $a->addOption(rex_i18n::msg('yform_manager_import_divider_comma') . ' (,)', ',');
-                $a->addOption(rex_i18n::msg('yform_manager_import_divider_tab') . '', 'tab');
-                $a->setSelected($divider);
-                echo $a->get();
-                ?>
-                    </p>
 
-                <p class="rex-form-text">
-                    <label for="rex-form-error-replacefield"><?php echo rex_i18n::msg('yform_manager_import_unique_field'); ?></label>
-                    <input class="rex-form-text" type="text" id="rex-form-replacefield" name="replacefield" value="<?php echo htmlspecialchars(stripslashes($replacefield)); ?>" />
-                </p>
+    $a = new rex_select();
+    $a->setName('divider');
+    $a->setId('divider');
+    $a->addOption(rex_i18n::msg('yform_manager_import_divider_semicolon') . ' (;)', ';');
+    $a->addOption(rex_i18n::msg('yform_manager_import_divider_comma') . ' (,)', ',');
+    $a->addOption(rex_i18n::msg('yform_manager_import_divider_tab') . '', 'tab');
+    $a->setSelected($divider);
 
-                <p class="rex-form-file">
-                    <label for="file_new">Datei</label>
-                    <input class="rex-form-file" type="file" id="file_new" name="file_new" size="30" />
-                </p>
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_divider') . '</label>';
+    $n['field'] = '<div class="yform-select-style">' . $a->get() . '</div>';
+    $formElements[] = $n;
 
-                <p class="rex-form-submit">
-                 <input class="submit" type="submit" name="save" value="<?php echo rex_i18n::msg('yform_manager_import_start'); ?>" title="<?php echo rex_i18n::msg('yform_manager_import_start'); ?>" />
-                </p>
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_unique_field') . '</label>';
+    $n['field'] = '<input class="form-control" type="text" name="replacefield" value="' . htmlspecialchars(stripslashes($replacefield)) . '" />';
+    $formElements[] = $n;
 
-    </form>
-    </div></div></div>
-    <?php
+    $n = [];
+    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_file') . '</label>';
+    $n['field'] = '<input class="form-control" type="file" name="file_new" />';
+    $formElements[] = $n;
 
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('elements', $formElements, false);
+    $content .= $fragment->parse('core/form/form.php');
+
+    $content .= '</fieldset>';
+
+
+    $formElements = [];
+
+    $n = [];
+    $n['field'] = '<a class="btn btn-abort" href="' . rex_url::currentBackendPage($this->getLinkVars()) . '">' . rex_i18n::msg('form_abort') . '</a>';
+    $formElements[] = $n;
+
+    $n = [];
+    $n['field'] = '<button class="btn btn-save rex-form-aligned" type="submit" name="save" value="' . rex_i18n::msg('yform_manager_import_start') . '">' . rex_i18n::msg('yform_manager_import_start') . '</button>';
+    $formElements[] = $n;
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('elements', $formElements, false);
+    $buttons = $fragment->parse('core/form/submit.php');
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('class', 'edit', false);
+    $fragment->setVar('title', rex_i18n::msg('yform_manager_import_csv'), false);
+    $fragment->setVar('body', $content, false);
+    $fragment->setVar('buttons', $buttons, false);
+    $content = $fragment->parse('core/page/section.php');
+
+    $content = '
+    <form action="' . rex_url::currentBackendPage() . '" data-pjax="false" method="post">
+        ' . $content . '
+    </form>';
+
+    echo $content;
 }

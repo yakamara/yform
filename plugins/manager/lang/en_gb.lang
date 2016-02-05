@@ -97,7 +97,7 @@ yform_manager_table_migrated_success = The table is migrated.
 
 yform_manager_tableset_import = import tableset
 yform_manager_tableset_import_jsonimportfile = [missing_text] de:JSON Datei einspielen
-yform_manager_tableset_import_info = 
+yform_manager_tableset_import_info =
 yform_manager_tableset_import_warning_selectfile = [missing_text] de:Es wurde keine Datei verwendet
 yform_manager_tableset_import_warning_type = [missing_text] de:Der Dateityp ist falsch. Es muss eine JSON Datei sein.
 yform_manager_tableset_import_success = [missing_text] de:Tabelle/n wurde/n erfolgreich importiert
@@ -106,7 +106,7 @@ yform_manager_tableset_import_failed = [missing_text] de:Tableset Import ist feh
 yform_manager_table_edit = [missing_text] de:Tabellen bearbeiten
 
 yform_manager_tableset_export = export tableset
-yform_manager_tableset_export_info = 
+yform_manager_tableset_export_info =
 yform_manager_export_error_empty = Please select at least one table
 
 yform_manager_table_hidden = visibility
@@ -194,6 +194,7 @@ yform_manager_import_divider_comma = [en] Komma
 yform_manager_import_divider_tab = [en] Tabulator
 yform_manager_import_unique_field = [en] Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
 yform_manager_import_start = [en] Hinzufügen
+yform_manager_import_file = [en] Datei
 
 yform_manager_show_form_notation = field definitions
 

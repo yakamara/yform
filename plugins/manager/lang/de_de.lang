@@ -194,6 +194,7 @@ yform_manager_import_divider_comma = Komma
 yform_manager_import_divider_tab = Tabulator
 yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
 yform_manager_import_start = Hinzufügen
+yform_manager_import_file = Datei
 
 yform_manager_show_form_notation = Formular-Code
 
