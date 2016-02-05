@@ -228,7 +228,7 @@ class rex_yform_manager
 
             // -------------- Import
             if (!$popup && $func == 'import' && $this->hasDataPageFunction('import')) {
-                include rex_path::plugin('yform', 'manager', 'pages/data_import.inc.php');
+                include rex_path::plugin('yform', 'manager', 'pages/data_import.php');
                 echo rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
             }
 
