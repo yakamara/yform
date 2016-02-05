@@ -25,8 +25,8 @@ if("REX_VALUE[id=11]" != "") {
 
     $e3 = ''; $e4 = '';
     if ($html == "0") {
-        $e3 = '<div class="rex-message"><div class="rex-info"><p>';
-        $e4 = '</p></div></div>';
+        $e3 = '<div class="alert alert-success">';
+        $e4 = '</div>';
     }
 
     $t = str_replace("<br />","",rex_yform::unhtmlentities('REX_VALUE[6]'));
@@ -43,10 +43,8 @@ $form_type = "REX_VALUE[1]";
 
 // action - email
 if ($form_type == "1" || $form_type == "2") {
-    $mail_from = $REX['ERROR_EMAIL'];
-    if("REX_VALUE[2]" != "") $mail_from = "REX_VALUE[2]";
-    $mail_to = $REX['ERROR_EMAIL'];
-    if("REX_VALUE[12]" != "") $mail_to = "REX_VALUE[12]";
+    $mail_from = ('REX_VALUE[2]' != '') ? 'REX_VALUE[2]' : rex::getErrorEmail();
+    $mail_to = ('REX_VALUE[12]' != '') ? 'REX_VALUE[12]' : rex::getErrorEmail();
     $mail_subject = "REX_VALUE[4]";
     $mail_body = str_replace("<br />","",rex_yform::unhtmlentities('REX_VALUE[5]'));
     $yform->setActionField("email", array(
