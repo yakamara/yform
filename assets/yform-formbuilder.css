@@ -1,0 +1,75 @@
+#yform-formbuilder .form-horizontal .control-label {
+    font-weight: 400;
+    text-align: left;
+}
+
+#yform-formbuilder-classes-showhelp .panel {
+    margin-bottom: 0;
+}
+#yform-formbuilder-classes-showhelp .rex-page-section + .rex-page-section {
+    border-top: 1px solid #c1c9d4;
+}
+#yform-formbuilder-classes-showhelp .panel-title {
+    font-size: 14px;
+}
+#yform-js-formbuilder-placeholders {
+    position: relative;
+    margin-top: -6px;
+    margin-bottom: 10px;
+    padding: 30px 12px 10px 12px;
+    background-color: #fff;
+    border: 1px solid #c1c9d4;    
+}
+#yform-js-formbuilder-placeholders h3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 5px 12px;
+    background: #f3f6fb;
+    color: #324050;
+    font-size: 12px;
+}
+#yform-js-formbuilder-placeholders code {
+    cursor: pointer;
+}
+#yform-js-formbuilder-placeholders-help {
+    margin: 10px -12px -10px -12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: #f3f6fb;
+    border-top: 1px solid #dfe3e9;
+    color: #324050;
+    font-size: 12px;
+}
+#yform-formbuilder-info {
+    padding: 5px 0;
+    border-top: 1px solid #c1c9d4;
+    font-size: 12px;
+    text-align: right;    
+}
+.yform-select-style {
+    overflow: hidden;
+    width: 100%;
+    margin-bottom: 6px;
+    background: #fff url("data:image/png;base64,R0lGODlhDwAUAIABAAAAAP///yH5BAEAAAEALAAAAAAPABQAAAIXjI+py+0Po5wH2HsXzmw//lHiSJZmUAAAOw==") no-repeat 98% 50%;
+    border: 1px solid #c1c9d4;
+}
+.yform-select-style select {
+    width: 100%;
+    padding: 6px 12px;
+    background: transparent;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance:none;
+    -webkit-border-radius: 0px;
+}
+.yform-select-style select:focus {
+    outline: none;
+    background-color: transparent;
+}
+.yform-select-style select:hover {
+    cursor: pointer;
+}
