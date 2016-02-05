@@ -350,7 +350,7 @@ if ($show_importform) {
     $content = $fragment->parse('core/page/section.php');
 
     $content = '
-    <form action="' . rex_url::currentBackendPage() . '" data-pjax="false" method="post">
+    <form action="' . rex_url::currentBackendPage() . '" data-pjax="false" method="post" enctype="multipart/form-data">
         ' . $content . '
     </form>';
 
