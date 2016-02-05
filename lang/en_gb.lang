@@ -8,8 +8,8 @@ yform_description = Description
 yform_back_to_overview = back to overview
 yform_table_name = MySQL table name
 
-yform_description_all = <p>In the module especially the field definitions are important which are structured in three types.<p /><h5>Value Fields</h5> <p>Theses are the fields which usually appear in a form. These can be simple text fields, select fields, checkboxes etc., but also hidden fields, birthday date, database select fields etc.</p><h5 >Validate Fields</h5><p>These are the fields that check the values of the value fields. Means: with them it can be controlled if a value has been typed in (notEmpty) or if its string, integer or other. Also there can be controlled if there already exists a database field with this value etc.</p><h5>Action Fields</h5><p>Are important for later use. Shall an email be sent and/or shall an entry into the database be made etc....</p><h2>Types Overview</h2>
-
+yform_description_all = <h3>In the module especially the field definitions are important which are structured in three types.</h3><div class="list-group"><div class="list-group-item"><h3 class="list-group-item-heading">Value Fields</h3><p class="list-group-item-text">Theses are the fields which usually appear in a form. These can be simple text fields, select fields, checkboxes etc., but also hidden fields, birthday date, database select fields etc.</div><div class="list-group-item"><h3 class="list-group-item-heading">Validate Fields</h3><p class="list-group-item-text">These are the fields that check the values of the value fields. Means: with them it can be controlled if a value has been typed in (notEmpty) or if its string, integer or other. Also there can be controlled if there already exists a database field with this value etc.</p></div><div class="list-group-item"><h3 class="list-group-item-heading">Action Fields</h3><p class="list-group-item-text">Are important for later use. Shall an email be sent and/or shall an entry into the database be made etc....</p></div></div>
+yform_description_type_heading = Types Overview
 list_message = {0} to {1} of {2} entries
 
 yform_value = [missing_text] de:Values

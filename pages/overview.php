@@ -58,7 +58,6 @@ if (rex::getUser()->isAdmin()) {
     $content .= '</p>';
 
     $fragment = new rex_fragment();
-    $fragment->setVar('class', 'info');
     $fragment->setVar('title', $this->i18n('install_modul'), false);
     $fragment->setVar('body', $content , false);
     echo $fragment->parse('core/page/section.php');
@@ -67,10 +66,14 @@ if (rex::getUser()->isAdmin()) {
 
 
 
-$content = rex_i18n::rawMsg('yform_description_all', false) . rex_yform::showHelp(true, true);
+$content = rex_i18n::rawMsg('yform_description_all', false);
 
 $fragment = new rex_fragment();
-$fragment->setVar('class', 'info');
 $fragment->setVar('title', $this->i18n('description'), false);
 $fragment->setVar('body', $content , false);
+echo $fragment->parse('core/page/section.php');
+
+$fragment = new rex_fragment();
+$fragment->setVar('title', $this->i18n('description_type_heading'), false);
+$fragment->setVar('content', rex_yform::showHelp(true, true), false);
 echo $fragment->parse('core/page/section.php');
