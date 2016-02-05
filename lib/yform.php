@@ -547,7 +547,7 @@ class rex_yform
         foreach ($classesDescription as $title => $content) {
             $fragment = new rex_fragment();
             $fragment->setVar('title', rex_i18n::msg("yform_".$title));
-            $fragment->setVar('content', '<table class="table table-hover">' . $content . '</table>', false);
+            $fragment->setVar('content', '<table class="table table-hover yform-table-help">' . $content . '</table>', false);
             $fragment->setVar('collapse', true);
             $fragment->setVar('collapsed', true);
             $content = $fragment->parse('core/page/section.php');
