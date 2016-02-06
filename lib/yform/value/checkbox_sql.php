@@ -21,7 +21,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         $values = $this->getValue();
 
         // ----- query
-        $sql = $this->getElement(3);
+        $sql = $this->getElement('query');
 
         $options_sql = rex_sql::factory();
         $options_sql->debugsql = $this->params['debug'];
@@ -80,7 +80,10 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
     {
         $return = array();
 
-        $query = $params['params']['field']['f3'];
+        $db = rex_sql::factory();
+        // $db->debugsql = 1;
+
+        $query = $params['params']['field']['query'];
         $pos = strrpos(strtoupper($query), 'ORDER BY ');
         if ( $pos !== false) {
             $query = substr($query, 0, $pos);
@@ -91,13 +94,12 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             $query = substr($query, 0, $pos);
         }
 
-        $multiple = (int) $params['params']['field']['f8'];
+        $multiple = (int) $params['params']['field']['multiple'];
         if ($multiple != 1) {
-            $where = ' `id`="' . mysql_real_escape_string($params['value']) . '"';
-
+            $where = ' `id` = ' . $db->escape($params['value']) . ' ';
 
         } else {
-            $where = ' FIND_IN_SET(`id`,"' . mysql_real_escape_string($params['value']) . '")';
+            $where = ' FIND_IN_SET(`id`, ' . $db->escape($params['value']) . ')';
 
         }
 
@@ -110,14 +112,11 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
         }
 
-        $db = rex_sql::factory();
-        // $db->debugsql = 1;
         $db_array = $db->getArray($query);
 
         foreach ($db_array as $entry) {
             $return[] = $entry['name'];
         }
-
 
         if (count($return) == 0 && $params['value'] != '' && $params['value'] != '0') {
             $return[] = $params['value'];
