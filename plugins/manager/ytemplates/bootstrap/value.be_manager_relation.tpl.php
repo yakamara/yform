@@ -52,8 +52,8 @@ $class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . 
         } else {
             $select = new rex_select();
             $select->setStyle('class="form-control"');
-            $select->setId('yform_MANAGER_DATALIST_SELECT_[' . $this->getId(). ']');
-            $select->setName('yform_MANAGER_DATALIST_SELECT[' . $this->getId(). ']');
+            $select->setId('yform_MANAGER_DATALIST_SELECT_' . $this->getId(). '');
+            $select->setName('yform_MANAGER_DATALIST_SELECT' . $this->getId(). '');
             $select->setSize($this->relation['size']);
             $select->addOptions($options);
             $e['field'] = $select->get() . '<input type="hidden" name="' . $this->getFieldName() . '" id="yform_MANAGER_DATALIST_' . $this->getId() . '" value="' . implode(',', $this->getValue()) . '" />';

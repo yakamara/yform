@@ -216,23 +216,17 @@ class rex_yform_manager
             $em_rex_list .= '&sorttype=' . urlencode(rex_request('sorttype', 'string'));
             $em_rex_list .= '&start=' . urlencode(rex_request('start', 'string'));
 
-
-
             // ---------- Popup - no menue, header ...
-
             if ($popup) {
-                echo '<link rel="stylesheet" type="text/css" href="../files/addons/yform/popup.css" media="screen, projection, print" />';
+                echo '<link rel="stylesheet" type="text/css" href="'.rex_plugin::get('yform','manager')->getAssetsUrl('popup.css').'" />';
+
             }
-
-
 
             // -------------- Import
             if (!$popup && $func == 'import' && $this->hasDataPageFunction('import')) {
                 include rex_path::plugin('yform', 'manager', 'pages/data_import.php');
                 echo rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
             }
-
-
 
             // -------------- delete entry
             if ($func == 'delete' && $data_id != '' && $this->hasDataPageFunction('delete')) {
@@ -661,6 +655,7 @@ class rex_yform_manager
                 }
 
                 if (isset($rex_yform_manager_opener['id'])) {
+
                     $list->addColumn(rex_i18n::msg('yform_data_select'),'');
                     $list->setColumnFormat(
                     rex_i18n::msg('yform_data_select'),

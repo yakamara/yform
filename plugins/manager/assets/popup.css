@@ -1,22 +1,12 @@
-#rex-redaxo-link,
-#rex-footer,
-#rex-navi-logout,
-#rex-title,
-#rex-navi-main,
-#rex-extra {
+
+body#rex-page-yform-manager-data-edit .rex-nav-top,
+body#rex-page-yform-manager-data-edit .rex-global-footer,
+body#rex-page-yform-manager-data-edit .rex-nav-main {
   display:none;
 }
 
-body#rex-page-yform {
-  background: #f9f9f9;
-}
 
-body #rex-website {
-  width:100%;
-  background: none repeat scroll 0 0 transparent;
-}
+body#rex-page-yform-manager-data-edit .rex-page-container {
+    padding-top:0;
 
-body#rex-page-yform div#rex-wrapper {
-  margin-left: 10px;
-  margin-right: 10px;
 }

@@ -139,7 +139,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         if ($this->relation['relation_type'] == 2 || $this->relation['relation_type'] == 3) {
 
-            $link = 'index.php?page=yform&subpage=manager&tripage=data_edit&table_name=' . $this->relation['target_table'];
+            $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
             foreach ($filter as $key => $value) {
                 $link .= '&rex_yform_filter[' . $key . ']=' . $value . '&rex_yform_set[' . $key . ']=' . $value;
             }
@@ -152,7 +152,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         if ($this->relation['relation_type'] == 4) {
             $filter[$this->relation['target_field']] = $this->params['main_id'];
-            $link = 'index.php?page=yform&subpage=manager&tripage=data_edit&table_name=' . $this->relation['target_table'];
+            $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
             self::addFilterParams($link, $filter);
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
 
@@ -178,7 +178,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
      */
     function postAction()
     {
-
 
         if (!$relationTable = $this->getElement('relation_table')) {
             return;
@@ -227,7 +226,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
         $sql->flushValues();
         $sql->setTable($relationTable);
-        $sql->setWhere('`' . $sql->escape($relationTableField['source']) . '`=' . $source_id . ' AND `' . $sql->escape($relationTableField['target']) . '` NOT IN (' . implode(',', $values) . ')');
+        $sql->setWhere(' ' . $sql->escapeIdentifier($relationTableField['source']) . ' =' . $source_id . ' AND ' . $sql->escapeIdentifier($relationTableField['target']) . ' NOT IN (' . implode(',', $values) . ')');
         $sql->delete();
 
     }
@@ -279,7 +278,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $field = $params['params']['field'];
 
         if (4 == $field['type']) {
-            $link = 'index.php?page=yform&subpage=manager&tripage=data_edit&table_name=' . $field['table'];
+            $link = 'index.php?page=yform/manager/data_edit&table_name=' . $field['table'];
             if (is_int($popup = rex_request('popup', 'int', null))) {
                 $link .= '&popup=' . $popup;
             } elseif (!rex_request('rex_yform_filter', 'array')) {
