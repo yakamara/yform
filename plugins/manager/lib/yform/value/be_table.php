@@ -62,7 +62,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
                     if ($j > 0) {
                         $e .= ',';
                     }
-                    $e .= $v[$r];
+                    $e .= @$v[$r];
                     $j++;
                 }
                 $this->setValue($this->getValue() . $e);
