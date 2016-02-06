@@ -120,7 +120,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         $return = array();
 
         foreach (explode(',', $params['value']) as $id) {
-            if ($cat = OOCategory::getCategoryById($id, (int) $params['params']['field']['clang'])) {
+            if ($cat = rex_category::get($id, (int) $params['params']['field']['clang'])) {
                 $return[] = $cat->getName();
             }
         }
