@@ -12,6 +12,6 @@ yform_description_all = <h3>In the module especially the field definitions are i
 yform_description_type_heading = Types Overview
 list_message = {0} to {1} of {2} entries
 
-yform_value = [missing_text] de:Values
-yform_validate = [missing_text] de:Validierungen
-yform_action = [missing_text] de:Aktionen
+yform_value = Values
+yform_validate = Vaidations
+yform_action = Actions
