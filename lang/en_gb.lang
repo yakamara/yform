@@ -12,6 +12,11 @@ yform_description_all = <h3>In the module especially the field definitions are i
 yform_description_type_heading = Types Overview
 list_message = {0} to {1} of {2} entries
 
-yform_value = [missing_text] de:Values
-yform_validate = [missing_text] de:Validierungen
-yform_action = [missing_text] de:Aktionen
+yform_value = Values
+yform_validate = Validates
+yform_action = Actions
+
+yform_install_modul = Setup
+yform_install_modul_description = You need a Formmodule to use YForm
+yform_install_yform_modul = install Module "{0}"
+yform_install_update_module = update Module "{0}"

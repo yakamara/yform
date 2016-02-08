@@ -1,4 +1,4 @@
-yform_manager = [missing_text] de:Table Manager
+yform_manager = Table Manager
 
 navigation_manager = Tables
 yform_manager_fields = Fields
@@ -103,7 +103,7 @@ yform_manager_tableset_import_warning_type = [missing_text] de:Der Dateityp ist 
 yform_manager_tableset_import_success = [missing_text] de:Tabelle/n wurde/n erfolgreich importiert
 yform_manager_tableset_import_failed = [missing_text] de:Tableset Import ist fehlgeschlagen
 
-yform_manager_table_edit = [missing_text] de:Tabellen bearbeiten
+yform_manager_table_edit = edit tables
 
 yform_manager_tableset_export = export tableset
 yform_manager_tableset_export_info =
@@ -122,7 +122,7 @@ yform_adddata = create data set
 yform_searchtext = search term
 yform_searchfields = table fields that are getting searched through
 yform_id = [missing_text] de:Id
-yform_function = [missing_text] de:Funktion
+yform_function = functions
 yform_add = add
 yform_add_apply = apply
 yform_edit = edit
@@ -152,7 +152,7 @@ yform_tablenotexists = This table does not exist!
 yform_tablefield = table field
 yform_values = values
 yform_validates = valdidation
-yform_actios = [missing_text] de:Aktionen
+yform_actions = Actions
 yform_validatenamenotempty = Please fill in the name
 yform_validatenamepregmatch = Please fill in only letters and "_" as name
 yform_validatenamecheck = This name already exists
