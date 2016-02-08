@@ -20,4 +20,6 @@ Last Changes
 ### Version 1.0 // xx.xx.2015
 
 * Email Templates dürfen nun PHP enthalten und benutzen REX_VARS. z.B. REX_YFORM_DATA[field="label"]
-* Basisanpassungen sind durch.
+* REDAXO 5 Portierung von XForm.
+* Formularmanager. Erstellung von verschiedenen Formularen, Validierungen und Aktionen
+* Tablemanager: Verwaltung von selbt erstellen Tabellen mit unterschiedlichsten Kriterien.
