@@ -4,6 +4,14 @@ if ($this->getElement('css_classes') != '') {
     $css_classes = explode(',', $this->getElement('css_classes'));
 }
 
+if (rex::isBackend()) {
+    echo '<div class="rex-form-panel-footer">';
+    //    .rex-form-aligned
+
+}
+
+echo '<div class="btn-toolbar">';
+
 $labels = explode(',', $this->getElement('labels'));
 foreach ($labels as $index => $label) {
     $classes = ['btn'];
@@ -21,5 +29,11 @@ foreach ($labels as $index => $label) {
     echo '<button class="' . implode(' ', $classes) . '" type="submit" name="' . $this->getFieldName() . '" id="'. $id .'" value="' . $value . '">' . $label . '</button>';
 }
 
+echo '</div>';
+
+if (rex::isBackend()) {
+    echo '</div>';
+
+}
 
 ?>
