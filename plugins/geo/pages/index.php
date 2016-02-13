@@ -23,7 +23,12 @@ foreach($tables as $i_table) {
     }
 }
 
-if (!$table) {
+if (count($tables) == 0) {
+
+    echo rex_view::info($this->i18n("geo_nogeotablefound"));
+
+
+} else if (!$table) {
 
     echo '<ul>';
     foreach($geo_tables as $g_table) {
