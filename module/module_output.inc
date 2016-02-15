@@ -7,13 +7,13 @@
  */
 
 // module:yform_basic_output
-// v1.0
+// v1.0.1
 //--------------------------------------------------------------------------------
 
 $yform = new rex_yform;
 if ("REX_VALUE[7]" == 1) { $yform->setDebug(TRUE); }
-$form_data = 'REX_VALUE[3]';
-$form_data = trim(str_replace("<br />","",rex_yform::unhtmlentities($form_data)));
+$form_data = "REX_VALUE[id=3 output=html]";
+$form_data = trim(rex_yform::unhtmlentities($form_data));
 $yform->setObjectparams('form_action', rex_getUrl(REX_ARTICLE_ID,REX_CLANG_ID));
 $yform->setFormData($form_data);
 
