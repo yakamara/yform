@@ -16,12 +16,11 @@ foreach($this->params["values"] as $value) {
         $FieldLng = "#".$value->getFieldId();
     }
 
-    if (in_array($value->getLabel(), $LabelsAddress)) {
+    if (in_array($value->getName(), $LabelsAddress)) {
         $FieldsAddress[] = "#".$value->getFieldId();
     }
 
 }
-
 
 ?><?php if ($includeGoogleMaps): ?>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
@@ -69,14 +68,14 @@ foreach($this->params["values"] as $value) {
         rex_geo_getPosition = function() {
 
             var fields = [];
-            <?php 
-            
+            <?php
+
             $i=0;
             foreach($FieldsAddress as $adr) {
                 echo "\n".'fields['.$i.'] = jQuery("' . $adr . '").val();';
                 $i++;
             }
-            
+
             ?>
 
             var address = fields.join(",");
