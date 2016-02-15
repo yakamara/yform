@@ -6,7 +6,7 @@ compile: 0
 
 page:
     title: 'translate:yform_manager'
-    pjax: true
+    pjax: false
     icon: rex-icon fa-hand-spock-o
     subpages:
         table_edit: { title: translate:table_edit, perm: admin}
