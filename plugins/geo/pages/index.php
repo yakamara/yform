@@ -18,6 +18,7 @@ foreach($tables as $i_table) {
     if (count($fields) > 0) {
         if ($table_name == $i_table->getTableName()) {
             $table = $i_table;
+            break;
         }
         $geo_tables[] = $i_table;
     }
@@ -30,13 +31,17 @@ if (count($tables) == 0) {
 
 } else if (!$table) {
 
-    echo '<ul>';
+    $content = [];
     foreach($geo_tables as $g_table) {
-
-        echo '<li><a href="index.php?page=yform/geo/index/&table_name='.$g_table->getTableName().'">'.$g_table->getTableName().'</a></li>';
+        $content[] = '<a href="index.php?page=yform/geo/index/&table_name='.$g_table->getTableName().'" class="btn btn-setup">'.$g_table->getTableName().'</a>';
 
     }
-    echo '</ul>';
+    $content = '<p>'.implode("<br /><br />", $content).'</p>';
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('title', $this->i18n('geo_choosetable'), false);
+    $fragment->setVar('body', $content , false);
+    echo $fragment->parse('core/page/section.php');
 
 } else {
 
@@ -183,12 +188,15 @@ if (count($tables) == 0) {
     -->
     </script>';
 
-    ?><div class="rex-addon-output"><h2 class="rex-hl2">PlugIn: Google Geo Plugin</h2><div class="rex-addon-content"><p class="rex-tx1" style="margin-bottom:0">Geotagging der Inhalte (Beschränkt auf 1000 Datensaetze am Tag, ansonsten kann man von Google gesperrt werden. Bitte deswegen darauf achten, dass diese Funktion angemessen verwendet wird. Standard sind 200 Datensätze auf einen Schlag. Jeder "." der nach der Ausführung auftaucht ist ein Datensatz der aktualisiert wurde). Die Daten müssen, aufgrund von Lizenzen, über die Googlemap verwendet werden.</p><?php
-
+    $content = '<p>'.$this->i18n('geo_tagginginfo').'</p>';
     foreach ($fields as $k => $v) {
-        echo '<p class="rex-button" style="margin-bottom:0"><br /><a class="rex-button" href="javascript:xform_geo_updates(\'' . $table['table_name'] . '\',\'' . $k . '\')">Google Geotagging starten</a> &nbsp;Hiermit werden alle Datensätze anhand des Felder "' . $k . '" nach fehlenden Geopositionen durchsucht und neu gesetzt. <br /><br />[<span id="xform_geo_count_' . $k . '"></span>]</p>';
+        $content .= '<p><a class="btn btn-setup" href="javascript:xform_geo_updates(\'' . $table['table_name'] . '\',\'' . $k . '\')">Google Geotagging starten</a> &nbsp;Hiermit werden alle Datensätze anhand des Felder "' . $k . '" nach fehlenden Geopositionen durchsucht und neu gesetzt. <br /><br />[<span id="xform_geo_count_' . $k . '"></span>]</p>';
     }
 
-    echo '</div></div>';
+    $fragment = new rex_fragment();
+    $fragment->setVar('title', $this->i18n('geo_tagging', $table['table_name']), false);
+    $fragment->setVar('body', $content , false);
+    echo $fragment->parse('core/page/section.php');
+
 
 }

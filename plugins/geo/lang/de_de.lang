@@ -3,3 +3,8 @@ yform_geo_get_position = Hole Position
 yform_geo_clear_position = Lösche Position
 
 yform_geo_nogeotablefound = Keine Tabelle mit Geodaten gefunden
+
+yform_geo_choosetable = Bitte Tabelle auswählen
+
+yform_geo_tagging = Tagging der Daten der Tabelle "{0}"
+yform_geo_tagginginfo = Geotagging der Inhalte (Beschränkt auf 1000 Datensaetze am Tag, ansonsten kann man von Google gesperrt werden. Bitte deswegen darauf achten, dass diese Funktion angemessen verwendet wird. Standard sind 200 Datensätze auf einen Schlag. Jeder "." der nach der Ausführung auftaucht ist ein Datensatz der aktualisiert wurde). Die Daten müssen, aufgrund von Lizenzen, über die Googlemap verwendet werden.
