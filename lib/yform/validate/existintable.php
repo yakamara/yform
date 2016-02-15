@@ -38,7 +38,7 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $qfields[$o->getId()] = '`' . $db->escape($name) . '`="' . $db->escape($value) . '"';
+                    $qfields[$o->getId()] =  $db->escapeIdentifier($name) . ' = ' . $db->escape($value);
                 }
             }
         
