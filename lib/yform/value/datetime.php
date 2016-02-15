@@ -11,9 +11,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     function preValidateAction()
     {
-
-        if ($this->getElement('current_date') && $this->params['send'] == 0 && $this->params['main_id'] < 1) {
-          $this->setValue(date('Y-m-d H:i:00'));
+        if ($this->getElement('current_date') == 1 && $this->params['send'] == 0 && $this->params['main_id'] < 1) {
+            $this->setValue(date('Y-m-d H:i:00'));
 
         }
 
@@ -75,6 +74,10 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         $yearStart = (int) $this->getElement('year_start');
 
+        if ($yearStart == "0") {
+            $yearStart = date("Y");
+        }
+
         if (substr($this->getElement('year_end'),0,1) == "+") {
             $add_years = (int) substr($this->getElement('year_end'),1);
             $yearEnd = date("Y") + $add_years;
@@ -84,7 +87,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         }
 
-        if ($yearEnd < $yearStart) {
+        if ($yearEnd <= $yearStart) {
             $yearEnd = $yearStart + 20;
 
         }

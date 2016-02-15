@@ -289,28 +289,24 @@ class rex_yform
 
         // *************************************************** VALIDATE OBJEKTE
 
-        if ($this->objparams['send'] == 1) {
-            foreach ( $this->objparams['fields'] as $types) {
-                foreach($types as $Object) {
-                    $Object->preValidateAction();
-                }
+        foreach ( $this->objparams['fields'] as $types) {
+            foreach($types as $Object) {
+                $Object->preValidateAction();
             }
         }
 
-        // ***** Validieren
         if ($this->objparams['send'] == 1) {
             foreach ($this->objparams['validates'] as $Object) {
                 $Object->enterObject();
             }
         }
 
-        if ($this->objparams['send'] == 1) {
-            foreach ( $this->objparams['fields'] as $types) {
-                foreach($types as $Object) {
-                    $Object->postValidateAction();
-                }
+        foreach ( $this->objparams['fields'] as $types) {
+            foreach($types as $Object) {
+                $Object->postValidateAction();
             }
         }
+
         // *************************************************** FORMULAR ERSTELLEN
 
         foreach ($this->objparams['values'] as $ValueObject) {
