@@ -26,7 +26,7 @@ class rex_yform_action_createdb extends rex_yform_action_abstract
         }
 
         if (!$table_exists) {
-            $sql->setQuery('CREATE TABLE `' . $table . '` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY);');
+            $sql->setQuery('CREATE TABLE `' . $table . '` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
         }
 
         // Welche Felder sind vorhanden ?

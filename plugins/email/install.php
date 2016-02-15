@@ -17,4 +17,4 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_e
     `body_html` text NOT NULL,
     `attachments` TEXT NOT NULL,
     PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;');

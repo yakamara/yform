@@ -571,7 +571,7 @@ class rex_yform_manager_table_api
 
             $c = rex_sql::factory();
             $c->debugsql = self::$debug;
-            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY )');
+            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
             // remember fields, create and in case delete
             $c->setQuery('SHOW COLUMNS FROM `' . $table['table_name'] . '`');

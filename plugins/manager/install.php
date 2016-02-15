@@ -31,7 +31,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_t
     `import` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE(`table_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
 $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_field` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -45,4 +45,4 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_f
     `label` text NOT NULL,
     `not_required` TEXT NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
