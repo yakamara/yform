@@ -1356,9 +1356,9 @@ class rex_yform_manager
                 foreach ($definitions['values'] as $key => $_) {
                     $key = $this->getFieldName($key, $field['type_id']);
                     if (isset($field[$key])) {
-                        $values[] = $field[$key];
+                        $values[] = htmlspecialchars($field[$key]);
                     } elseif (isset($field['f' . $i])) {
-                        $values[] = $field['f' . $i];
+                        $values[] = htmlspecialchars($field['f' . $i]);
                     } else {
                         $values[] = '';
                     }
@@ -1369,7 +1369,7 @@ class rex_yform_manager
 
                     $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $values), '","') . '"));';
                     $notation_pipe .= "\n" . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
-                    $notation_email .= "\n" . $field['label'] . ': ###' . $field['name'] . '###';
+                    $notation_email .= "\n" . $field['name'] . ': REX_YFORM_DATA[field="' . $field['name'] . '"]';
 
                 } elseif ($field['type_id'] == 'validate') {
 
