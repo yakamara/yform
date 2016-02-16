@@ -56,13 +56,15 @@ class rex_yform_value_float extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
+        $sql = rex_sql::factory();
+
         $value = $params['value'];
-        $field =  mysql_real_escape_string($params['field']->getName());
+        $field =  $sql->escapeIdentifier($params['field']->getName());
 
         if ($value == '(empty)') {
-            return ' (`' . $field . '` = "" or `' . $field . '` IS NULL) ';
+            return ' (' . $field . ' = "" or ' . $field . ' IS NULL) ';
         } elseif ($value == '!(empty)') {
-            return ' (`' . $field . '` <> "" and `' . $field . '` IS NOT NULL) ';
+            return ' (' . $field . ' <> "" and ' . $field . ' IS NOT NULL) ';
         }
 
         $scale = $params['field']->getElement('scale');
@@ -70,12 +72,12 @@ class rex_yform_value_float extends rex_yform_value_abstract
         if (preg_match('/^\s*(' . $float . ')\s*\.\.\s*(' . $float . ')\s*$/', $value, $match)) {
             $match[1] = self::formatValue($match[1], $scale);
             $match[2] = self::formatValue($match[2], $scale);
-            return ' `' . $field . '` BETWEEN ' . $match[1] . ' AND ' . $match[2];
+            return ' ' . $field . ' BETWEEN ' . $match[1] . ' AND ' . $match[2];
         } else {
             preg_match('/^\s*(<|<=|>|>=|<>|!=)?\s*(.*)$/', $value, $match);
             $comparator = $match[1] ?: '=';
             $value = self::formatValue($match[2], $scale);
-            return ' `' . $field . '` ' . $comparator . ' ' . $value;
+            return ' ' . $field . ' ' . $comparator . ' ' . $value;
         }
     }
 

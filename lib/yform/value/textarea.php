@@ -59,14 +59,15 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
+        $sql = rex_sql::factory();
         $value = $params['value'];
         $field =  $params['field']->getName();
 
         if ($value == '(empty)') {
-            return ' (`' . mysql_real_escape_string($field) . '` = "" or `' . mysql_real_escape_string($field) . '` IS NULL) ';
+            return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
 
         } elseif ($value == '!(empty)') {
-            return ' (`' . mysql_real_escape_string($field) . '` <> "" and `' . mysql_real_escape_string($field) . '` IS NOT NULL) ';
+            return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
 
         }
 
@@ -74,9 +75,9 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
         if ($pos !== false) {
             $value = str_replace('%', '\%', $value);
             $value = str_replace('*', '%', $value);
-            return ' `' . mysql_real_escape_string($field) . "` LIKE  '" . mysql_real_escape_string($value) . "'";
+            return $sql->escapeIdentifier($field) . " LIKE " . $sql->escape($value);
         } else {
-            return ' `' . mysql_real_escape_string($field) . "` =  '" . mysql_real_escape_string($value) . "'";
+            return $sql->escapeIdentifier($field) . " = " . $sql->escape($value);
         }
 
     }

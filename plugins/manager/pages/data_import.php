@@ -104,7 +104,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         } elseif ($missing_columns == 2) {
                             $error = false;
                             foreach ($mc as $mcc) {
-                                $sql = 'ALTER TABLE `' . $this->table->getTablename() . '` ADD `' . mysql_real_escape_string($mcc) . '` TEXT NOT NULL;';
+                                $sql = 'ALTER TABLE ' . $i->escapeIdentifier($this->table->getTablename()) . ' ADD ' . $i->escapeIdentifier($mcc) . ' TEXT NOT NULL;';
                                 $upd = rex_sql::factory();
                                 $upd->setQuery($sql);
 

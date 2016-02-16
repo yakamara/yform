@@ -505,11 +505,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
+        $sql = rex_sql::factory();
         $value = $params['value'];
         $field =  $params['field']->getName();
 
         if ($value != '') {
-            return ' ( FIND_IN_SET("' . mysql_real_escape_string($value) . '", `' . mysql_real_escape_string($field) . '`) )';
+            return ' ( FIND_IN_SET(' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
 
         }
 

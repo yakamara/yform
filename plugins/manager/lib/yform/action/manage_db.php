@@ -56,13 +56,6 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
                 $alterTable[] = 'ADD `' . $field . '` TEXT NOT NULL';
                 $columns[$field] = true;
             }
-            /*if (!$value && isset($columns[$field])) {
-                $sql->setQuery('SELECT 1 FROM `' . mysql_real_escape_string($main_table) . '` WHERE `' . mysql_real_escape_string($field) . '` LIMIT 1');
-                if (!$sql->getRows()) {
-                    $alterTable[] = 'DROP `' . mysql_real_escape_string($field) . '`';
-                    unset($columns[$field]);
-                }
-            }*/
         }
         if ($alterTable) {
             $sql->setQuery('ALTER TABLE `' . $main_table . '` ' . implode(',', $alterTable));
@@ -75,7 +68,6 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
             $where = trim($this->getElement(3));
         }
 
-        // SQL Objekt mit Werten f�llen
         foreach ($this->params['value_pool']['sql'] as $key => $value) {
             if (isset($columns[$key])) {
                 $sql->setValue($key, $value);

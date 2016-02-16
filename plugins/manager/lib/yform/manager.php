@@ -851,6 +851,8 @@ class rex_yform_manager
 
     public function getDataListQueryWhere($rex_yform_filter = array(), $searchObject)
     {
+        $sql_o = rex_sql::factory();
+
         $sql = array();
         if (count($rex_yform_filter) > 0) {
             $sql_filter = '';
@@ -859,10 +861,10 @@ class rex_yform_manager
                     $sql_filter .= ' AND ';
                 }
                 if (!is_array($v)) {
-                    $sql_filter .= '`' . $k . '`="' . $v . '"';
+                    $sql_filter .= $sql_o->escapeIdentifier($k) . ' = ' . $sql_o->escape($v);
                 } elseif ($relation = $this->table->getRelation($k)) {
                     foreach ($v as $k2 => $v2) {
-                        $sql_filter .= '(SELECT `' . mysql_real_escape_string($k2) . '` FROM `' . mysql_real_escape_string($relation['table']) . '` WHERE id = t0.`' . mysql_real_escape_string($k) . '`) = "' . mysql_real_escape_string($v2) . '"';
+                        $sql_filter .= '(SELECT ' . $sql_o->escapeIdentifier($k2) . ' FROM ' . $sql_o->escapeIdentifier($relation['table']) . ' WHERE id = t0.' . $sql_o->escapeIdentifier($k) . ') = ' . $sql_o->escape($v2);
                     }
                 }
             }

@@ -22,7 +22,7 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
         if ($this->params['debug']) {
             $gd->debugsql = 1;
         }
-        $gd->setQuery('select * from ' . $this->getElement(2) . ' where `' . $this->getElement(3) . '`="' . mysql_real_escape_string($value) . '"');
+        $gd->setQuery('select * from ' . $this->getElement(2) . ' where ' . $gd->escapeIdentifier($this->getElement(3)) . ' = ' . $gd->escape($value) . ' ');
         $data = $gd->getArray();
 
         if (count($data) == 1) {

@@ -119,6 +119,8 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
+        $sql = rex_sql::factory();
+
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
@@ -126,13 +128,13 @@ class rex_yform_value_select extends rex_yform_value_abstract
         foreach($values as $value) {
             switch($value){
                 case("(empty)"):
-                    $where[] = '`'.$field.'`=""';
+                    $where[] = ' '.$sql->escapeIdentifier($field).' = ""';
                     break;
                 case("!(empty)"):
-                    $where[] = '`'.$field.'`!=""';
+                    $where[] = ' '.$sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET("' . mysql_real_escape_string($value) . '", `' . mysql_real_escape_string($field) . '`) )';
+                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
                     break;
             }
         }

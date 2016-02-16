@@ -110,6 +110,8 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     static function getListValue($params)
     {
+        $sql = rex_sql::factory();
+
         $return = array();
 
         $query = $params['params']['field']['query'];
@@ -125,10 +127,10 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $multiple = (isset($params['params']['field']['multiple'])) ? (int) $params['params']['field']['multiple'] : 0;
         if ($multiple != 1) {
-            $where = ' `id`="' . mysql_real_escape_string($params['value']) . '"';
+            $where = ' `id` = ' . $sql->escape($params['value']) . '';
 
         } else {
-            $where = ' FIND_IN_SET(`id`,"' . mysql_real_escape_string($params['value']) . '")';
+            $where = ' FIND_IN_SET(`id`,"' . $sql->escape($params['value']) . '")';
 
         }
 
@@ -184,6 +186,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
+        $sql = rex_sql::factory();
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
@@ -191,13 +194,13 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         foreach($values as $value) {
             switch($value){
                 case("(empty)"):
-                    $where[] = '`'.$field.'`=""';
+                    $where[] = $sql->escapeIdentifier($field).' = ""';
                     break;
                 case("!(empty)"):
-                    $where[] = '`'.$field.'`!=""';
+                    $where[] = $sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET("' . mysql_real_escape_string($value) . '", `' . mysql_real_escape_string($field) . '`) )';
+                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
                     break;
             }
         }
