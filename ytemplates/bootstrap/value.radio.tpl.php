@@ -1,4 +1,5 @@
 <?php
+
 $notices = array();
 if ($this->getElement('notice') != "") {
     $notices[] = $this->getElement('notice');
@@ -11,7 +12,6 @@ $notice = '';
 if (count($notices) > 0) {
     $notice = '<p class="help-block">' . implode("<br />", $notices) . '</p>';
 }
-
 
 $class_label = '';
 $field_before = '';
