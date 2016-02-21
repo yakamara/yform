@@ -24,10 +24,9 @@ foreach($tables as $i_table) {
     }
 }
 
-if (count($tables) == 0) {
+if (count($geo_tables) == 0) {
 
     echo rex_view::info($this->i18n("geo_nogeotablefound"));
-
 
 } else if (!$table) {
 
@@ -114,7 +113,7 @@ if (count($tables) == 0) {
     var data_running = 0;
     var data_next = 0;
 
-    function xform_geo_updates(tablem,fieldm)
+    function yform_geo_updates(tablem,fieldm)
     {
         if(data_running == 1) return false;
         data_running = 1;
@@ -129,7 +128,7 @@ if (count($tables) == 0) {
             success: function(datam){
                 data = datam;
                 data_counter = 0;
-                xform_geo_update();
+                yform_geo_update();
             },
             error: function() {
                 alert("error loading "+link);
@@ -138,7 +137,7 @@ if (count($tables) == 0) {
 
     }
 
-    function xform_geo_update()
+    function yform_geo_update()
     {
         if(data.length == data_counter) {
             data_running = 0;
@@ -158,7 +157,7 @@ if (count($tables) == 0) {
                         url: data_link,
                         success: function(data_status){
                             if(data_status == "1") {
-                                jQuery("#xform_geo_count_"+field).html(jQuery("#xform_geo_count_"+field).html()+". ");
+                                jQuery("#yform_geo_count_"+field).html(jQuery("#yform_geo_count_"+field).html()+". ");
                                 data_next = "1";
                             }else {
                                 // alert("data status" + data_status);
@@ -178,10 +177,10 @@ if (count($tables) == 0) {
         data_counter = data_counter + 1;
 
         if(data_next == "0") {
-            jQuery("#xform_geo_count_"+field).html(jQuery("#xform_geo_count_"+field).html()+"<a href=\"index.php?page=yform/manager/data_edit&table_name="+table+"&data_id="+data_id+"&func=edit&start=\">Geocoding not possible, try manually [id=\""+data_id+"\"]</a>");
+            jQuery("#yform_geo_count_"+field).html(jQuery("#yform_geo_count_"+field).html()+"<a href=\"index.php?page=yform/manager/data_edit&table_name="+table+"&data_id="+data_id+"&func=edit&start=\">Geocoding not possible, try manually [id=\""+data_id+"\"]</a>");
             // return false;
         }
-        setTimeout("xform_geo_update()",1000);
+        setTimeout("yform_geo_update()",1000);
 
     }
 
@@ -190,7 +189,7 @@ if (count($tables) == 0) {
 
     $content = '<p>'.$this->i18n('geo_tagginginfo').'</p>';
     foreach ($fields as $k => $v) {
-        $content .= '<p><a class="btn btn-setup" href="javascript:xform_geo_updates(\'' . $table['table_name'] . '\',\'' . $k . '\')">Google Geotagging starten</a> &nbsp;Hiermit werden alle Datensätze anhand des Felder "' . $k . '" nach fehlenden Geopositionen durchsucht und neu gesetzt. <br /><br />[<span id="xform_geo_count_' . $k . '"></span>]</p>';
+        $content .= '<p><a class="btn btn-setup" href="javascript:yform_geo_updates(\'' . $table['table_name'] . '\',\'' . $k . '\')">Google Geotagging starten</a> &nbsp;Hiermit werden alle Datensätze anhand des Felder "' . $k . '" nach fehlenden Geopositionen durchsucht und neu gesetzt. <br /><br />[<span id="yform_geo_count_' . $k . '"></span>]</p>';
     }
 
     $fragment = new rex_fragment();
