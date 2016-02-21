@@ -46,7 +46,7 @@ if (rex::getUser()->isAdmin()) {
 
     }
 
-    $content .= '<p>'.$this->i18n('install_modul_description').'<br /><br />';
+    $content .= '<p>'.$this->i18n('install_modul_description').'</p>';
 
     if ($module_id > 0) {
         $content .= '<p><a class="btn btn-primary" href="index.php?page=yform/overview&amp;install=1&amp;module_id=' . $module_id . '" class="rex-button">' . $this->i18n('install_update_module', htmlspecialchars($module_name)) . '</a></p>';
@@ -55,7 +55,6 @@ if (rex::getUser()->isAdmin()) {
         $content .= '<p><a class="btn btn-primary" href="index.php?page=yform/overview&amp;install=1" class="rex-button">' . $this->i18n('install_yform_modul', $yform_module_name) . '</a></p>';
 
     }
-    $content .= '</p>';
 
     $fragment = new rex_fragment();
     $fragment->setVar('title', $this->i18n('install_modul'), false);
@@ -75,5 +74,5 @@ echo $fragment->parse('core/page/section.php');
 
 $fragment = new rex_fragment();
 $fragment->setVar('title', $this->i18n('description_type_heading'), false);
-$fragment->setVar('content', rex_yform::showHelp(true, true), false);
+$fragment->setVar('body', rex_yform::showHelp(true, true), false);
 echo $fragment->parse('core/page/section.php');
