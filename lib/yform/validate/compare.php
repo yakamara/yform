@@ -67,7 +67,7 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
                 $this->params['warning'][$id_1] = $this->params['error_class'];
                 $this->params['warning'][$id_2] = $this->params['error_class'];
                 $this->params['warning_messages'][$id_1] = $this->getElement('message');
-                $this->params['warning_messages'][$id_2] = $this->getElement('message');
+                // $this->params['warning_messages'][$id_2] = $this->getElement('message');
             }
 
         }
@@ -87,7 +87,7 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
                 'name'    => array( 'type' => 'select_name', 'label' => '1. Feldname' ),
                 'name2'   => array( 'type' => 'select_name', 'label' => '2. Feldname'),
                 'compare_type' => array ('type' => 'select', 'label' => 'Vergleichsart', 'options' => '!\=,<,>,\=\=,>\=,<\=', 'default' => '!\='),
-                'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung'),
+                'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung')
 
             ),
             'description' => '2 Felder werden miteinander verglichen',
