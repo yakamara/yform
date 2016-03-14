@@ -448,8 +448,6 @@ class rex_yform
     public function parse($template, array $params = [])
     {
         extract($params);
-
-var_dump($params);exit;
         ob_start();
         include $this->getTemplatePath($template);
         return ob_get_clean();
