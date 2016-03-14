@@ -211,41 +211,61 @@ class rex_yform
         $rows = count($this->objparams['form_elements']);
 
         for ($i = 0; $i < $rows; ++$i) {
+
             $element = $this->objparams['form_elements'][$i];
 
             if ($element[0] == 'validate') {
                 $class = 'rex_yform_validate_' . trim($element[1]);
-                $this->objparams['validates'][$i] = new $class();
-                $this->objparams['validates'][$i]->loadParams($this->objparams, $element);
-                $this->objparams['validates'][$i]->setId($i);
-                $this->objparams['validates'][$i]->init();
-                $this->objparams['validates'][$i]->setObjects($this->objparams['values']);
 
             } else if ($element[0] == 'action') {
                 $class = 'rex_yform_action_' . trim($element[1]);
-                $this->objparams['actions'][$i] = new $class();
-                $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
-                $this->objparams['actions'][$i]->setId($i);
-                $this->objparams['actions'][$i]->init();
-                $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
 
             } else {
                 $class = 'rex_yform_value_' . trim($element[0]);
-                $this->objparams['values'][$i] = new $class();
-                $this->objparams['values'][$i]->loadParams($this->objparams, $element);
-                $this->objparams['values'][$i]->setId($i);
-                $this->objparams['values'][$i]->init();
-                $this->objparams['values'][$i]->setObjects($this->objparams['values']);
-                $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
 
             }
 
-            // special case - submit button shows up by default
-            if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
-                ++$rows;
-                $this->objparams['form_elements'][] = ['submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db'];
-                $this->objparams['submit_btn_show'] = false;
+            if (class_exists($class)) {
+
+                if ($element[0] == 'validate') {
+                    $class = 'rex_yform_validate_' . trim($element[1]);
+                    $this->objparams['validates'][$i] = new $class();
+                    $this->objparams['validates'][$i]->loadParams($this->objparams, $element);
+                    $this->objparams['validates'][$i]->setId($i);
+                    $this->objparams['validates'][$i]->init();
+                    $this->objparams['validates'][$i]->setObjects($this->objparams['values']);
+
+                } else if ($element[0] == 'action') {
+                    $class = 'rex_yform_action_' . trim($element[1]);
+                    $this->objparams['actions'][$i] = new $class();
+                    $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
+                    $this->objparams['actions'][$i]->setId($i);
+                    $this->objparams['actions'][$i]->init();
+                    $this->objparams['actions'][$i]->setObjects($this->objparams['values']);
+
+                } else {
+                    $class = 'rex_yform_value_' . trim($element[0]);
+                    $this->objparams['values'][$i] = new $class();
+                    $this->objparams['values'][$i]->loadParams($this->objparams, $element);
+                    $this->objparams['values'][$i]->setId($i);
+                    $this->objparams['values'][$i]->init();
+                    $this->objparams['values'][$i]->setObjects($this->objparams['values']);
+                    $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
+
+                }
+
+                // special case - submit button shows up by default
+                if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
+                    ++$rows;
+                    $this->objparams['form_elements'][] = ['submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db'];
+                    $this->objparams['submit_btn_show'] = false;
+                }
+
+            } else {
+                echo 'Class does not exist "'.$class.'" ';
+
             }
+
         }
 
         foreach ($this->objparams['values'] as $ValueObject) {
@@ -428,6 +448,8 @@ class rex_yform
     public function parse($template, array $params = [])
     {
         extract($params);
+
+var_dump($params);exit;
         ob_start();
         include $this->getTemplatePath($template);
         return ob_get_clean();
