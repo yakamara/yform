@@ -77,7 +77,7 @@ if (rex_request('send', 'int', 0) == 1) {
             $i = rex_sql::factory();
 
             if ($debug) {
-                $i->debugsql = 1;
+                $i->setDebug();
             }
 
             $fp = fopen($filename, 'r');
@@ -101,7 +101,7 @@ if (rex_request('send', 'int', 0) == 1) {
                             $func = 'import';
                             break;
 
-                        } elseif ($missing_columns == 2) {
+                        } else if ($missing_columns == 2) {
                             $error = false;
                             foreach ($mc as $mcc) {
                                 $sql = 'ALTER TABLE ' . $i->escapeIdentifier($this->table->getTablename()) . ' ADD ' . $i->escapeIdentifier($mcc) . ' TEXT NOT NULL;';
@@ -126,6 +126,14 @@ if (rex_request('send', 'int', 0) == 1) {
 
                             $rfields = $this->table->getColumns();
 
+                        } else {
+                            if (count($fieldarray) == count($mc)) {
+                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_min_missingfields', implode(", ", $mc)));
+                                $show_importform = true;
+                                break;
+                            
+                            }
+                          
                         }
 
                     }
@@ -136,8 +144,11 @@ if (rex_request('send', 'int', 0) == 1) {
                         break;
 
                     } else {
+                    
                         $counter++;
                         $i->setTable($this->table->getTablename());
+                        
+                        $fields_counter = 0;
                         $replacevalue = '';
                         foreach ($line_array as $k => $v) {
                             if ($fieldarray[$k] != '' && (array_key_exists($fieldarray[$k], $rfields) || $fieldarray[$k] == 'id')) {
@@ -146,11 +157,15 @@ if (rex_request('send', 'int', 0) == 1) {
                                     $replacevalue = $v;
 
                                 }
+                                $fields_counter++;
                             }
                         }
 
                         // noch abfrage ob $replacefield
                         $cf = rex_sql::factory();
+                        if ($debug) {
+                            $cf->setDebug();
+                        }
                         $cf->setQuery('select * from ' . $this->table->getTablename() . ' where ' . rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue) . '');
 
                         if ($cf->getRows() > 0) {
