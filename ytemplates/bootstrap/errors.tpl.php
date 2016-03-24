@@ -11,7 +11,7 @@ if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
                 <ul>
     <?php endif; ?>
                     <?php foreach ($this->objparams['warning_messages'] as $k => $v): ?>
-                        <li><?php echo rex_i18n::translate($v, null) ?></li>
+                        <li><?php echo rex_i18n::translate("$v", null); ?></li>
                     <?php endforeach ?>
 
                     <?php if ($this->objparams['unique_error'] != ''): ?>
