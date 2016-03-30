@@ -60,7 +60,7 @@ class rex_yform_manager_field implements ArrayAccess
 
     public function getLabel()
     {
-        return $this->values['label'];
+        return rex_i18n::translate($this->values['label']);
     }
 
     public function getElement($k)

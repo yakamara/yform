@@ -23,7 +23,7 @@ if (rex::isBackend() && rex::getUser()) {
 
         if ($table['status'] == 1 && $table['hidden'] != 1) {
 
-            $be_page = new rex_be_page_main('yform_tables', $table['table_name'], $table['name']);
+            $be_page = new rex_be_page_main('yform_tables', $table['table_name'], rex_i18n::translate($table['name']));
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table['table_name']);
             $be_page->setIcon('rex-icon rex-icon-module');
             $be_page->setRequiredPermissions([$table_perm]);
