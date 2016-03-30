@@ -222,7 +222,7 @@ class rex_yform_manager_table_api
 
             $add_where = array();
             foreach ($fieldIdentifier as $field => $value) {
-                $add_where[] = '`' . $field . '`=' . $field_update->escape($table_name) . '"';
+                $add_where[] = '`' . $field . '`= ' . $field_update->escape($table_name) . ' ';
             }
 
             $where = 'table_name=' . $field_update->escape($table_name) . '';
