@@ -172,6 +172,16 @@ if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
     } else {
 
         if ($func == 'edit') {
+        
+            $table_name = $yform->objparams['value_pool']['email']['table_name'];
+            $table = rex_yform_manager_table::get($table_name);
+
+            if ($table) {
+                $t = new rex_yform_manager();
+                $t->setTable($table);
+                $t->generateAll();
+            }
+        
             echo rex_view::info(rex_i18n::msg('yform_manager_table_updated'));
 
         } elseif ($func == 'add') {
