@@ -206,7 +206,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         $FILESQL = rex_sql::factory();
         // $FILESQL->debugsql=1;
-        $FILESQL->setTable(rex::getTablePrefix() . 'file');
+        $FILESQL->setTable(rex::getTablePrefix() . 'media');
         $FILESQL->setValue('filetype', $FILETYPE);
         $FILESQL->setValue('filename', $NFILENAME);
         $FILESQL->setValue('originalname', $FILENAME);
