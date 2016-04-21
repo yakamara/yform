@@ -72,8 +72,8 @@ class rex_yform_manager_search
 
             if ($field->getTypeName() && $field->getType() == 'value' && $field->isSearchable()) {
 
-                if (method_exists('rex_yform_' . $field->getTypeName(), 'getSearchField')) {
-                    call_user_func('rex_yform_' . $field->getTypeName() . '::getSearchField', array(
+                if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchField')) {
+                    call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchField', array(
                         'searchForm' => $yform,
                         'searchObject' => $this,
                         'field' => $field,
@@ -115,9 +115,9 @@ class rex_yform_manager_search
         foreach ($this->table->getFields() as $field) {
 
             if (array_key_exists($field->getName(), $vars['rex_yform_searchvars']) && $field->getType() == 'value' && $field->isSearchable()) {
-                rex_yform::includeClass($field->getType(), $field->getTypeName());
-                if (method_exists('rex_yform_' . $field->getTypeName(), 'getSearchFilter')) {
-                    $qf = call_user_func('rex_yform_' . $field->getTypeName() . '::getSearchFilter',
+//                rex_yform::includeClass($field->getType(), $field->getTypeName());
+                if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
+                    $qf = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
                         array(
                             'field' => $field,
                             'fields' => $this->table->getFields(),
