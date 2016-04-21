@@ -129,16 +129,13 @@ class rex_yform_manager
 
         $searchform = '';
         if ($this->hasDataPageFunction('search')) {
-            $searchform = '<div class="rex-addon-output">
-                             <h3 class="rex-hl2">'.rex_i18n::msg('yform_manager_search').'</h3>
-                             <div class="rex-addon-content">
-                            <div class="yform" id="rex-yform">'.$searchObject->getForm().'</div>
-                          </div>
-                          </div>';
-
+            $fragment = new rex_fragment();
+            $fragment->setVar('class', 'edit', false);
+            $fragment->setVar('title', rex_i18n::msg('yform_manager_search'));
+            $fragment->setVar('body', $searchObject->getForm(), false);
+            $searchform = $fragment->parse('core/page/section.php');
 
         }
-
 
         // -------------- DEFAULT - LISTE AUSGEBEN
         $link_vars = '';
