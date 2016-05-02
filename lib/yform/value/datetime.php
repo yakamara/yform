@@ -101,8 +101,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         // ------------- min
 
-        if ($this->getElement(5) != '') {
-            $minutes = explode(',', trim($this->getElement(5)));
+        if ($this->getElement('minutes') != '') {
+            $minutes = explode(',', trim($this->getElement('minutes')));
         } else {
             $minutes = array();
             for ($i = 0; $i < 60; $i++) {
@@ -112,7 +112,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         // -------------
 
-        $format = $this->getElement(6);
+        $format = $this->getElement('format');
+
         if ($format == '') {
             $format = '###Y###-###M###-###D### ###H###h ###I###m';
         }
@@ -127,7 +128,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'datetime -> Beispiel: datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat###Y###-###M###-###D### ###H###h ###I###m] |[1/Aktuelles Datum voreingestellt]|[no_db]';
+        return 'datetime -> Beispiel: datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat ###Y###-###M###-###D### ###H###h ###I###m] |[1/Aktuelles Datum voreingestellt]|[no_db]';
     }
 
 
@@ -142,7 +143,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'year_start' => array( 'type' => 'text', 'label' => '[Startjahr]'),
                 'year_end'   => array( 'type' => 'text', 'label' => '[Endjahr] oder [+5]'),
                 'minutes'    => array( 'type' => 'text', 'label' => '[Minutenformate]'),
-                'format'     => array( 'type' => 'text', 'label' => '[Anzeigeformat###Y###-###M###-###D### ###H###h ###I###m]'),
+                'layout'     => array( 'type' => 'text', 'label' => '[Anzeigeformat###Y###-###M###-###D### ###H###h ###I###m]'),
                 'current_date' => array( 'type' => 'boolean', 'label' => 'Aktuelles Datum voreingestellt'),
                 'no_db'      => array( 'type' => 'no_db', 'label' => 'Datenbank',  'default' => 0),
             ),
