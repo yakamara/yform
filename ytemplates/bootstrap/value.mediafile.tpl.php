@@ -9,10 +9,9 @@ $class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . 
         <div class="help-block">
             <dl class="<?= $this->getHTMLClass() ?>-info">
                 <dt>Dateiname</dt>
-                <dd><a href="files/<?php echo htmlspecialchars($this->getValue()) ?>"><?php echo htmlspecialchars($this->getValue()) ?></a></dd>
-                <?php if (in_array(substr(strtolower($this->getValue()), -4), array('.jpg', '.png', '.gif'))): ?>
-                    <dd><img class="img-responsive" src="?rex_img_type=profileimage&amp;rex_img_file=<?php echo htmlspecialchars($this->getValue()) ?>" /></dd>
-                <?php endif ?>
+                <dd><?php
+                    echo '<a href="'.rex_url::media($this->getValue()).'">'.htmlspecialchars($this->getValue()).'</a>';
+                ?></dd>
             </dl>
             <div class="checkbox">
                 <label>
