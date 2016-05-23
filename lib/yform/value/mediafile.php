@@ -180,7 +180,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         // ----- filexists ? -> _1 ..
         if (file_exists($filefolder . '/' . $NFILENAME)) {
             for ($cf = 1; $cf < 1000; $cf++) {
-                $NFILENAME = $NFILE_NAME . '_' . $cf . '.' . $NFILE_EXT;
+                $NFILENAME = $NFILE_NAME . '_' . $cf . $NFILE_EXT;
                 if (!file_exists($filefolder . '/' . $NFILENAME)) {
                     break;
                 }
