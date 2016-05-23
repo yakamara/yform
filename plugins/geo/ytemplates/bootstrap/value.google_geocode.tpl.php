@@ -8,11 +8,11 @@ $LabelsAddress = explode(",",$address);
 
 foreach($this->params["values"] as $value) {
 
-    if ($labelLat == $value->getLabel()) {
+    if ($labelLat == $value->getName()) {
         $FieldLat = "#".$value->getFieldId();
     }
 
-    if ($labelLng == $value->getLabel()) {
+    if ($labelLng == $value->getName()) {
         $FieldLng = "#".$value->getFieldId();
     }
 
