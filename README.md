@@ -14,12 +14,17 @@ oder
 * Ordner in den AddOns Ordner von REDAXO schieben
 * Über das REDAXO Backenend das AddOn installieren und aktivieren
 
+
 Last Changes
 -------
 
-### Version 1.0 // xx.xx.2015
+### Version 1.0 // 01.06.2016
 
-* Email Templates dürfen nun PHP enthalten und benutzen REX_VARS. z.B. REX_YFORM_DATA[field="label"]
-* REDAXO 5 Portierung von XForm.
-* Formularmanager. Erstellung von verschiedenen Formularen, Validierungen und Aktionen
-* Tablemanager: Verwaltung von selbt erstellen Tabellen mit unterschiedlichsten Kriterien.
+* Formularbuilder um einfache bis komplexe Formulare zu bauen
+* Values definieren die Felder und Typen, Validierung definieren die Überprüfungen und Actions werden bei Erfolg ausgeführt
+* Erstellungen eigener Email Templates, bei welchen man Patzhalter der Einträge nutzen kann (z.B. REX_YFORM_DATA[field="label"]). Weiterhin ist auch PHP möglich um spezifische Lösungen bauen zu können
+* Als Basis diente die XForm von REDAXO 4
+* Tablemanager: Verwaltung von selbst erstellen Tabellen mit den verschiednen Value und Validate Typen
+* Es können alle Felder ergänzt werden
+* Darstellungen können über die ytemplates gesteuert werden. Basis ist im Bootstrap - aber eigene Darstellung sind auch möglich
+* Das Geo-PlugIn erweitert die Felder um GoogleMap zuordnungen und Reverse Adresse Lookup Funktionen (Bitte Googlelizenz und Rechte beachten)

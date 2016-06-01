@@ -1,5 +1,5 @@
 package: yform/geo
-version: '1.0-beta7'
+version: '1.0'
 author: 'Jan Kristinus'
 supportpage: www.redaxo.org/de/forum/
 compile: 0
