@@ -11,8 +11,8 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
 
     function executeAction()
     {
-
         $text = $this->getElement(2);
+
         if ($text == '') {
             $text = $this->params['answertext'];
         }
@@ -36,7 +36,7 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
             $text = str_replace('###' . $search . '###', $replace, $text);
         }
 
-        $this->params['output'] = $text;
+        $this->params['output'] .= $text;
     }
 
     function getDescription()
