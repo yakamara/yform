@@ -29,7 +29,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $qfields[$Object->getId()] = '`' . $Object->getName() . '`=' . $cd->escape($value) . '';
+                    $qfields[$Object->getId()] = '`' . $Object->getName() . '`=' . $cd->escape($value) . ' AND ' . $cd->escape($value) . '!=""';
                 }
             }
 
