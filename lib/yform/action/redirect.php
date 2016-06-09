@@ -31,7 +31,7 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
 
         if ($u == $u1) {
             // id -> intern article
-            $url = rex_getUrl($u, '', '', '&');
+            $url = rex_getUrl($u, '', [], '&');
         } else {
             // extern link
             $url = $u;
