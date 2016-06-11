@@ -122,7 +122,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
                 'size'    => array( 'type' => 'text',    'label' => 'Anzahl Spalten'),
                 'columns' => array( 'type' => 'text',    'label' => 'Bezeichnung der Spalten (Menge,Preis,Irgendwas)'),
             ),
-            'description' => 'Eine Tabelle mit Infos',
+            'description' => rex_i18n::msg("yform_values_be_table_description"),
             'dbtype' => 'text'
         );
     }

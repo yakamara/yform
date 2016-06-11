@@ -102,7 +102,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                 'size'         => array( 'type' => 'text',    'label' => 'Höhe der Auswahlbox')
 
             ),
-            'description' => 'Hiermit kann man SQL Abfragen als Selectbox nutzen',
+            'description' => rex_i18n::msg("yform_values_select_sql_description"),
             'dbtype' => 'text'
         );
     }

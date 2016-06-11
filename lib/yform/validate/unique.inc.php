@@ -72,7 +72,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                 'message' => array( 'type' => 'text',      'label' => 'Fehlermeldung'),
                 'table'   => array( 'type' => 'text',      'label' => 'Tabelle [opt]'),
             ),
-            'description' => 'Hiermit geprüft, ob ein Wert bereits vorhanden ist.',
+            'description' => rex_i18n::msg("yform_validate_unique_description"),
         );
 
     }

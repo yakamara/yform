@@ -29,7 +29,7 @@ class rex_yform_value_html extends rex_yform_value_abstract
                 'name' => array( 'type' => 'name',   'label' => 'Feld' ),
                 'html' => array( 'type' => 'textarea',    'label' => 'HTML'),
             ),
-            'description' => 'Nur für die Ausgabe gedacht',
+            'description' => rex_i18n::msg("yform_values_html_description"),
             'dbtype' => 'text'
         );
 

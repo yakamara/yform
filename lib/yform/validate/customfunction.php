@@ -54,7 +54,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
                 'params'   => array( 'type' => 'text',   'label' => 'Weitere Parameter'),
                 'message'  => array( 'type' => 'text',   'label' => 'Fehlermeldung'),
             ),
-            'description' => 'Mit eigener Funktion vergleichen',
+            'description' => rex_i18n::msg("yform_validate_customfunction_description"),
         );
 
     }

@@ -58,7 +58,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'no_db'    => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
                 'function' => array( 'type' => 'select',  'label' => 'Opt. Codierfunktion', 'default' => '0', 'options' => 'Keine Funktion=,md5,sha1' ),
             ),
-            'description' => 'Erstellt einen Index über Felder/Labels, die man selbst festlegen kann.',
+            'description' => rex_i18n::msg("yform_values_index_description"),
             'dbtype' => 'text'
         );
 

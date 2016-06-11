@@ -118,7 +118,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'format'  => array( 'type' => 'text',   'label' => '[Anzeigeformat ###H###h ###I###m]'),
                 'no_db'   => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
             ),
-            'description' => 'Uhrzeitfeld Eingabe',
+            'description' => rex_i18n::msg("yform_values_time_description"),
             'dbtype' => 'time'
         );
 

@@ -41,7 +41,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 'label' => array( 'type' => 'text',    'label' => 'Bezeichnung'),
                 'default' => array( 'type' => 'text',     'label' => 'Defaultwert'),
             ),
-            'description' => 'Mediafeld, welches eine Datei aus dem Medienpool holt',
+            'description' => rex_i18n::msg("yform_values_be_media_description"),
             'dbtype' => 'text'
         );
     }

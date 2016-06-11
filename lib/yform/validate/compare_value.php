@@ -80,7 +80,7 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
                 'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung'),
 
             ),
-            'description' => 'Wert wird mit einem Feld verglichen',
+            'description' => rex_i18n::msg("yform_validate_compare_value_description"),
         );
 
     }

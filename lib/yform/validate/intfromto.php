@@ -45,7 +45,7 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
                 'to'      => array( 'type' => 'text',        'label' => 'Bis'),
                 'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung'),
             ),
-            'description' => 'Hiermit wird ein Name überprüft ob es zwischen zwei Zahlen ist',
+            'description' => rex_i18n::msg("yform_validate_intfromto_description"),
         );
     }
 

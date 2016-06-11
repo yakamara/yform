@@ -53,7 +53,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                 'no_db' => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
                 'only_empty' => array( 'type' => 'select',  'label' => 'Wann soll Wert gesetzt werden', 'default' => '0', 'options' => 'immer=0,nur wenn leer=1' ),
             ),
-            'description' => 'Zeitstempel.',
+            'description' => rex_i18n::msg("yform_values_datestamp_description"),
             'dbtype' => 'varchar(255)'
         );
 

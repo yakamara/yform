@@ -231,7 +231,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'file_prefix'   => array( 'type' => 'text',    'label' => 'Dateiprefix [optional]' ),
                 'default_file'  => array( 'type' => 'text', 'label' => 'Defaultfile')
             ),
-            'description' => 'Dateifeld, welches eine Datei in einen Ordner oder in der Datenbank speichert',
+            'description' => rex_i18n::msg("yform_values_upload_description"),
             'dbtype' => 'blob'
         );
     }

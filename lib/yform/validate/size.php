@@ -43,7 +43,7 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
                 'size'    => array( 'type' => 'text', 'label' => 'Anzahl der Zeichen'),
                 'message' => array( 'type' => 'text', 'label' => 'Fehlermeldung'),
             ),
-            'description' => 'Hiermit wird ein Label überprüft ob es eine bestimmte Anzahl von Zeichen hat',
+            'description' => rex_i18n::msg("yform_validate_size_description"),
         );
 
     }

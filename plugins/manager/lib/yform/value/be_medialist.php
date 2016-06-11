@@ -40,7 +40,7 @@ class rex_yform_value_be_medialist extends rex_yform_value_abstract
                 'category' => array( 'type' => 'text',   'label' => 'Medienpool Kategorie (opt)'),
                 'types'    => array( 'type' => 'text',   'label' => 'Types (opt)')
             ),
-            'description' => 'Medialiste, welches Dateien aus dem Medienpool holt',
+            'description' => rex_i18n::msg("yform_values_be_medialist_description"),
             'dbtype' => 'text'
         );
     }
