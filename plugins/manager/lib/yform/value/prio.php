@@ -93,7 +93,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 'scope'    => array( 'type' => 'select_names', 'label' => 'Tabellenfelder zur Beschränkung'),
                 'default'  => array( 'type' => 'select', 'label' => 'Defaultwert', 'options' => array(1 => 'Am Anfang', '' => 'Am Ende'), 'default' => ''),
             ),
-            'description' => 'Ein Priofeld zur Festlegung der Reihenfolge',
+            'description' => rex_i18n::msg("yform_values_prio_description"),
             'dbtype' => 'int'
         );
 

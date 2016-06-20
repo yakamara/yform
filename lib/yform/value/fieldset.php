@@ -64,7 +64,7 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
                 'name'  => array( 'type' => 'name',  'value' => '' ),
                 'label' => array( 'type' => 'text',  'label' => 'Bezeichnung'),
             ),
-            'description' => 'hiermit kann man Bereiche in der Verwaltung erstellen.',
+            'description' => rex_i18n::msg("yform_values_fieldset_description"),
             'dbtype' => 'none'
         );
     }

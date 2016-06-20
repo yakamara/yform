@@ -43,7 +43,7 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
                 'name'    => array( 'type' => 'select_name', 'label' => 'Name' ),
                 'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung'),
             ),
-            'description' => 'Hiermit wird ein Label überprüft ob es eine E-Mail ist',
+            'description' => rex_i18n::msg("yform_validate_email_description"),
         );
 
     }

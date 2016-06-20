@@ -70,7 +70,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
                 'label' => array( 'type' => 'text',    'label' => 'Bezeichnung'),
                 'query' => array( 'type' => 'text',    'label' => 'Query mit "select id, name from .."')
             ),
-            'description' => 'Hiermit kann man SQL Abfragen als Checkboxliste nutzen',
+            'description' => rex_i18n::msg("yform_values_checkbox_sql_description"),
             'dbtype' => 'text'
         );
     }

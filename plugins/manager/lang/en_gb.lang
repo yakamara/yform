@@ -201,3 +201,11 @@ yform_manager_show_form_notation = field definitions
 
 navigation_yform_tables = [missing_text] de:Tabellen
 yform_tabledata_overview = [missing_text] de:Datentabelle
+
+yform_values_be_link_description = 				Ein Redaxo-Feld, um einen <b>Redaxo-Artikel</b> auszuwählen.
+yform_values_be_manager_relation_description = 	Ein Auswahlfeld / Popup, um ein oder mehrere <b>Datensätze</b> mit denen einer fremden Tabelle zu <b>verknüpfen</b>.
+yform_values_be_medialist_description = 		Ein Redaxo-Feld, um ein oder mehrere <b>Medienpool-Dateien</b> auszuwählen.
+yform_values_be_media_description = 			Ein Redaxo-Feld, um eine einzelne <b>Medienpool-Datei</b> auszuwählen.
+yform_values_be_select_category_description =	Ein Redaxo-Feld, um ein oder mehrere <b>Kategorien</b> aus der Struktur auszuwählen.
+yform_values_be_table_description = 			Eine Reihe von Eingabefeldern, um <b>tabellarische Daten</b> einzugeben.
+yform_values_prio_description =					Ein <b>Auswahlfeld</b>, um Datensätze in eine <b>bestimmte Reihenfolge</b> zu sortieren.

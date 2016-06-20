@@ -128,7 +128,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'current_date' => array( 'type' => 'boolean', 'label' => 'Aktuelles Datum voreingestellt'),
                 'no_db'        => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
             ),
-            'description' => 'Datums Eingabe',
+            'description' => rex_i18n::msg("yform_values_date_description"),
             'dbtype' => 'date'
         );
     }

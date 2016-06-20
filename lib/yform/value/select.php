@@ -76,7 +76,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
                 'multiple' => array( 'type' => 'boolean', 'label' => 'Mehrere Felder möglich'),
                 'size'     => array( 'type' => 'text',    'label' => 'Höhe der Auswahlbox'),
             ),
-            'description' => 'Ein Selectfeld mit festen Definitionen',
+            'description' => rex_i18n::msg("yform_values_select_description"),
             'dbtype' => 'text'
         );
 

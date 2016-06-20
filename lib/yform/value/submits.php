@@ -67,7 +67,7 @@ class rex_yform_value_submits extends rex_yform_value_abstract
                 'default'   => array( 'type' => 'text',    'label' => 'Defaultwert'),
                 'css_classes' => array( 'type' => 'text',    'label' => 'CSS Klassen (kommasepariert)'),
             ),
-            'description' => 'Ein einfaches Textfeld als Eingabe',
+            'description' => rex_i18n::msg("yform_values_submits_description"),
             'dbtype' => 'text',
             'famous' => true
         );

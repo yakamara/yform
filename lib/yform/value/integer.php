@@ -46,7 +46,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
                 'default'   => array( 'type' => 'text',    'label' => 'Defaultwert'),
                 'no_db'     => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
             ),
-            'description' => 'Ein Feld zur Eingabe von Integers',
+            'description' => rex_i18n::msg("yform_values_integer_description"),
             'dbtype' => 'int',
             'null' => true,
         );

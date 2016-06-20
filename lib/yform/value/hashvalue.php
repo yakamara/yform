@@ -50,7 +50,7 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
                 'salt'     => array( 'type' => 'text',    'label' => 'Salt'),
                 'no_db'     => array( 'type' => 'no_db',  'label' => 'Datenbank'),
             ),
-            'description' => 'Erzeug Hash-Wert von anderem Feld und speichert ihn',
+            'description' => rex_i18n::msg("yform_values_hashvalue_description"),
             'dbtype' => 'text'
         );
     }

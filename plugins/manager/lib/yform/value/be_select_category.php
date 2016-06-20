@@ -109,7 +109,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 'size'     => array( 'type' => 'text',    'label' => 'Höhe der Auswahlbox'),
                 'no_db'    => array( 'type' => 'no_db',   'label' => 'Datenbank',          'default' => 0),
             ),
-            'description' => 'Ein Selectfeld für die Strukturkategorien',
+            'description' => rex_i18n::msg("yform_values_be_select_category_description"),
             'dbtype' => 'text'
         );
 

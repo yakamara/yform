@@ -261,7 +261,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'filter'       => array( 'type' => 'textarea', 'label' => 'Filter'),
                 'relation_table' => array( 'type' => 'table', 'label' => 'Relationstabelle', 'empty_option' => 1),
             ),
-            'description' => 'Hiermit kann man Verkn&uuml;pfungen zu anderen Tabellen setzen',
+            'description' => rex_i18n::msg("yform_values_be_manager_relation_description"),
             'dbtype' => 'text',
             'hooks' => array(
                 'preCreate' => function (rex_yform_manager_field $field) {

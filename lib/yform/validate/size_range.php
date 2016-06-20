@@ -65,7 +65,7 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
                 'max'     => array( 'type' => 'text', 'label' => 'Maximale Anzahl der Zeichen (opt)'),
                 'message' => array( 'type' => 'text', 'label' => 'Fehlermeldung'),
             ),
-            'description' => 'Hiermit wird ein Name überprüft ob er eine bestimmte minimale und maximale Anzahl von Zeichen hat',
+            'description' => rex_i18n::msg("yform_validate_size_range_description"),
         );
 
     }

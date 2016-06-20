@@ -9,7 +9,7 @@ yform_back_to_overview = Zurück zur Übersicht
 yform_table_name = MySQL Tabellenname
 
 yform_description_all = <p>Im Modul sind vor allem die Felddefinitionen wichtig, die sich in 3 Bereiche aufteilen.</p><div class="list-group"><div class="list-group-item"><h3 class="list-group-item-heading">Value-Felder</h3><p class="list-group-item-text">sind die Felder die im Formular normalerweise direkt auftauchen. Das können einerseits einfache Textfelder, Selektfelder, Checkboxen ... sein - aber genauso auch versteckte Felder, Geburtsdaten, Datenbankselektfelder sein.</p></div><div class="list-group-item"><h3 class="list-group-item-heading">Validate-Felder</h3><p class="list-group-item-text">sind Felder zum überprüfen der Werte in den Value-Felder. D.h. damit kann man z.B. überprüfen ob ein Wert eingetragen worden ist (empty) oder ob es ein String, Integer oder sonstiges Feld ist. Genauso kann aber auch überprüft werden ob ein Datenbankfeld mit diesem Wert schon existiert ...</p></div><div class="list-group-item"><h3 class="list-group-item-heading">Action-Felder</h3><p class="list-group-item-text">sind für die späteren Verwendungen wichtig. Soll eine E-Mail verschickt werden und/oder ein Eintrag in die Datenbank geschehen...</p></div></div>
-yform_description_type_heading = Typen Übersicht
+yform_description_type_heading = Typen-Übersicht
 list_message = {0} bis {1} von {2} Einträge
 
 yform_value = Values
@@ -17,6 +17,41 @@ yform_validate = Validierungen
 yform_action = Aktionen
 
 yform_install_modul = Setup
-yform_install_modul_description = Um die YForm als Formularsystem sinnvoll nutzen können, muß ein Modul erstellt werden.
+yform_install_modul_description = Um YForm als Formularsystem sinnvoll nutzen können, muss ein Modul erstellt werden.
 yform_install_yform_modul = Modul "{0}" installieren
 yform_install_update_module = Modul "{0}" aktualisieren
+
+yform_validate_compare_description = Vergleicht zwei Eingabe-Werte <b>miteinander</b>.
+yform_validate_compare_value_description = Vergleicht einen Eingabe-Wert mit einem <b>fest definierten Wert</b>.
+yform_validate_customfunction_description = Ruft eine eigene <b>PHP-Funktion</b> für einen Vergleich auf.
+yform_validate_email_description = Überprüft, ob der Eingabe-Typ eine <b>E-Mail-Adresse</b> ist.
+yform_validate_empty_description = Überprüft, ob ein Eingabe-Wert <b>vorhanden</b> ist.
+yform_validate_intfromto_description = Überprüft, ob der Eingabe-Wert <b>zwischen zwei Zahlen</b> liegt.
+yform_validate_size_description = Überprüft, ob der Eingabe-Wert eine <b>bestimmte Anzahl von Zeichen</b> hat.
+yform_validate_size_range_description = Überprüft, ob die <b>Länge</b> des Eingabe-Werts <b>zwischen zwei Zahlen</b> liegt.
+yform_validate_type_description = Überprüft, ob <b>der Typ</b> des Eingabe-Werts korrekt ist [int, float, numeric, string, email, url, date, hex]
+yform_validate_unique_description = Überprüft ob der Eingabe-Wert <b>noch nicht in anderen Datensätzen vorhanden</b> ist.
+
+yform_values_checkbox_description = 			Eine <b>Checkbox</b> mit vordefinierten Werten.
+yform_values_checkbox_sql_description =			Eine <b>Checkbox</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
+yform_values_date_description =					Eine Reihe von Auswahlfeldern, in der ein <b>Datum</b> (Tag, Monat, Jahr) ausgewählt wird.
+yform_values_datestamp_description =			Ein unsichtbares Feld, in das ein <b>Zeitstempel</b> gespeichert wird, wenn der Datensatz hinzugefügt oder bearbeitet wird.
+yform_values_datetime_description =				Eine Reihe von Auswahlfeldern, in der <b>Datum und Uhrzeit</b> (Tag, Monat, Jahr, Stunden, Minuten, Sekunden) ausgewählt wird.
+yform_values_email_description =				Ein einfaches Eingabefeld für <b>E-Mail-Adressen.</b>
+yform_values_emptyname_description =			Ein Feld <b>ohne</b> Eingabemöglichkeit.
+yform_values_fieldset_description =				Ein Fieldset gruppiert Formularfelder.
+yform_values_float_description =				Ein einfaches Eingabefeld für <b>Gleitkomma-Zahlen.</b>
+yform_values_hashvalue_description =			Ein Feld, das aus dem Wert eines anderen Feldes einen <b>Hashwert</b> erzeugt.
+yform_values_html_description =					Gibt <b>HTML-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
+yform_values_index_description =				Ein Feld, das einen <b>Index</b> / Schlüssel über mehrere Felder erzeugt.
+yform_values_integer_description =				Ein einfaches Eingabefeld für <b>ganze Zahlen.</b>
+yform_values_mediafile_description =			Ein <b>Upload-Feld</b>, mit dem eine Datei in den Medienpool hochgeladen wird.
+yform_values_php_description =					Führt <b>PHP-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
+yform_values_radio_description =				Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
+yform_values_select_description =				Ein <b>Auswahlfeld</b> mit vordefinierten Werten.
+yform_values_select_sql_description =			Ein <b>Auswahlfeld</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
+yform_values_submits_description =				Ein <b>Submit-Button</b> zum Absenden des Formulars.
+yform_values_text_description =					Ein <b>einfaches Eingabefeld</b> für Text.
+yform_values_textarea_description =				Ein <b>mehrzeiliges Eingabefeld</b> für Text.
+yform_values_time_description =					Eine Reihe von Auswahlfeldern, in der die <b>Uhrzeit</b> (Stunden, Minuten, Sekunden) ausgewählt wird.
+yform_values_upload_description =				Ein <b>Upload-Feld</b>, mit dem eine Datei in den <b>Medienpool, die Datenbank oder ein Verzeichnis</b> hochgeladen wird.

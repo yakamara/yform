@@ -53,7 +53,7 @@ class rex_yform_value_radio extends rex_yform_value_abstract
                 'no_db'    => array( 'type' => 'no_db',   'label' => 'Datenbank',          'default' => 0),
                 'default'  => array( 'type' => 'text',    'label' => 'Defaultwert'),
             ),
-            'description' => 'Ein Selectfeld mit festen Definitionen',
+            'description' => rex_i18n::msg("yform_values_radio_description"),
             'dbtype' => 'text'
         );
 

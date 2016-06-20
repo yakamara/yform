@@ -44,7 +44,7 @@ class rex_yform_value_email extends rex_yform_value_abstract
                 'no_db'     => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
                 'css_class' => array( 'type' => 'text',    'label' => 'cssclassname'),
             ),
-            'description' => 'Ein einfaches Textfeld als Eingabe',
+            'description' => rex_i18n::msg("yform_values_email_description"),
             'dbtype' => 'text',
             'famous' => false
         );

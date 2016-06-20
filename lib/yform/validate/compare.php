@@ -90,7 +90,7 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
                 'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung')
 
             ),
-            'description' => '2 Felder werden miteinander verglichen',
+            'description' => rex_i18n::msg("yform_validate_compare_description"),
         );
 
     }

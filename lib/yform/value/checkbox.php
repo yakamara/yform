@@ -69,7 +69,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
                 'default' => array( 'type' => 'boolean', 'label' => 'Defaultstatus', 'default' => 0),
                 'no_db'   => array( 'type' => 'no_db', 'label' => 'Datenbank', 'default' => 0),
             ),
-            'description' => 'Eine Checkbox mit fester Definition.',
+            'description' => rex_i18n::msg("yform_values_checkbox_description"),
             'dbtype' => 'varchar(255)',
             'famous' => true
         );

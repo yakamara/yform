@@ -42,7 +42,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                 'name' => array( 'type' => 'name',   'label' => 'Name' ),
                 'label' => array( 'type' => 'text',   'label' => 'Bezeichnung'),
             ),
-            'description' => 'Hiermit kann man einen Link zu einem REDAXO Artikel setzen.',
+            'description' => rex_i18n::msg("yform_values_be_link_description"),
             'dbtype' => 'text'
         );
     }

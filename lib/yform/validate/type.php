@@ -119,7 +119,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     'message'  => array( 'type' => 'text',    'label' => 'Fehlermeldung'),
                     'not_required' => array( 'type' => 'boolean',    'label' => 'Feld muss nicht ausgefüllt werden', 'default' => 0 ),
                 ),
-                'description' => 'Es kann nach verschiedenen Typen geprüft werden (int/float/numeric/string/email/url/date/hex)',
+                'description' => rex_i18n::msg("yform_validate_type_description"),
                 'famous' => true
             );
 

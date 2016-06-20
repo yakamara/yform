@@ -41,6 +41,19 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         return 'radio_sql -> Beispiel: select_sql|name|label|select id,name from table order by name|[defaultvalue]|[no_db]|';
     }
 
-
+    function getDefinitions()
+    {
+        return array(
+            'type' => 'value',
+            'name' => 'radio_sql',
+            'values' => array(
+                'name'  => array( 'type' => 'name',    'label' => 'Name' ),
+                'label' => array( 'type' => 'text',    'label' => 'Bezeichnung'),
+                'query' => array( 'type' => 'text',    'label' => 'Query mit "select id, name from .."')
+            ),
+            'description' => 'Hiermit kann man SQL Abfragen als Radioliste nutzen',
+            'dbtype' => 'text'
+        );
+    }
 
 }
