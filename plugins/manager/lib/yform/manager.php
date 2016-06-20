@@ -1327,7 +1327,7 @@ class rex_yform_manager
 
             $notation_php_pre = array(
             '$yform = new rex_yform();',
-            '$yform->setObjectparams(\'form_skin\', \'default\');',
+            '$yform->setObjectparams(\'form_skin\', \'bootstrap\');',
             '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
             '$yform->setObjectparams(\'real_field_names\', true);',
             );
