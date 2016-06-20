@@ -27,7 +27,7 @@ class rex_yform_manager_search
     /** @type rex_yform_manager_table */
     protected $table = null;
 
-    public function rex_yform_manager_search(rex_yform_manager_table $table)
+    public function __construct(rex_yform_manager_table $table)
     {
         $this->table = $table;
         $this->setScriptPath($_SERVER['PHP_SELF']);

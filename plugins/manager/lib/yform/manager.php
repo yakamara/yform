@@ -25,7 +25,7 @@ class rex_yform_manager
 
     protected static $reservedFieldColumns = array('id', 'table_name', 'prio', 'type_id', 'type_name', 'list_hidden', 'search');
 
-    function rex_yform_manager()
+    function __construct()
     {
         $this->setDataPageFunctions();
     }
