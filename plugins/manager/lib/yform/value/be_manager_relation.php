@@ -467,9 +467,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $sql = rex_sql::factory();
             $sql->debugsql = $this->params['debug'];
             $sql->setQuery('
-                SELECT `' . $sql->escape($relationTableFields['target']) . '` as id
-                FROM `' . $sql->escape($this->getElement('relation_table')) . '`
-                WHERE `' . $sql->escape($relationTableFields['source']) . '` = ' . (int) $this->params['main_id']
+                SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
+                FROM ' . $sql->escapeIdentifier($this->getElement('relation_table')) . '
+                WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $this->params['main_id']
             );
             while ($sql->hasNext()) {
                 $id = $sql->getValue('id');
