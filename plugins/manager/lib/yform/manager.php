@@ -1382,10 +1382,10 @@ class rex_yform_manager
                 }
             }
 
-            $notation_php  .= "\n\n"  . '$yform->setActionField(\'email\', array(\'emailtemplate\', \'emaillabel\', \'email@domain.de\'));';
+            $notation_php  .= "\n\n"  . '$yform->setActionField(\'tpl2email\', array(\'emailtemplate\', \'emaillabel\', \'email@domain.de\'));';
             $notation_php .= "\n".'echo $yform->getForm();';
 
-            $notation_pipe .= "\n\n"  . 'action|email|emailtemplate|emaillabel|email@domain.de';
+            $notation_pipe .= "\n\n"  . 'action|tpl2email|emailtemplate|emaillabel|email@domain.de';
 
             $fragment = new rex_fragment();
             $fragment->setVar('title', 'PHP');
