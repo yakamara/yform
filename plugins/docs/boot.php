@@ -4,7 +4,7 @@
 
 $page = [
     'title' => rex_i18n::msg('yform_docs'),
-    'pjax' => true
+    'pjax' => false
 ];
 
 $this->setProperty("page", $page);
