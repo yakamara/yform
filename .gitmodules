@@ -1,0 +1,3 @@
+[submodule "plugins/docs/docs"]
+	path = plugins/docs/docs
+	url = https://dergel@github.com/yakamara/redaxo_yform_docs.git
