@@ -11,8 +11,8 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function setValue($value)
     {
-        if ($this->getElement(3) == 'REQUEST' && isset($_REQUEST[$this->getName()])) {
-            $this->value = stripslashes(rex_request($this->getName()));
+        if ($this->getElement(3) == 'REQUEST' && isset($_REQUEST[$this->getElement(2)])) {
+            $this->value = stripslashes(rex_request($this->getElement(2)));
 
         } else {
             $this->value = $this->getElement(2);
