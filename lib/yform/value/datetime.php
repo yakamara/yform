@@ -112,16 +112,16 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         // -------------
 
-        $format = $this->getElement('format');
+        $layout = $this->getElement('layout');
 
-        if ($format == '') {
-            $format = '###Y###-###M###-###D### ###H###h ###I###m';
+        if ($layout == '') {
+            $layout = '###Y###-###M###-###D### ###H###h ###I###m';
         }
-        $format = preg_split('/(?<=###[YMDHI]###)(?=.)|(?<=.)(?=###[YMDHI]###)/', $format);
+        $layout = preg_split('/(?<=###[YMDHI]###)(?=.)|(?<=.)(?=###[YMDHI]###)/', $layout);
 
         $this->params['form_output'][$this->getId()] = $this->parse(
             'value.datetime.tpl.php',
-            compact('format', 'yearStart', 'yearEnd', 'hours', 'minutes', 'year', 'month', 'day', 'hour', 'minute')
+            compact('layout', 'yearStart', 'yearEnd', 'hours', 'minutes', 'year', 'month', 'day', 'hour', 'minute')
         );
     }
 
@@ -147,7 +147,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'current_date' => array( 'type' => 'boolean', 'label' => 'Aktuelles Datum voreingestellt'),
                 'no_db'      => array( 'type' => 'no_db', 'label' => 'Datenbank',  'default' => 0),
             ),
-            'description' => rex_i18n::msg("yform_values_datetime_description"),
+            'description' => 'Datum & Uhrzeit Eingabe',
             'dbtype' => 'datetime'
         );
     }

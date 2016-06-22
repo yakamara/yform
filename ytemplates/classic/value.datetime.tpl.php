@@ -3,7 +3,7 @@
 
     <?php
 
-        foreach ($format as $component):
+        foreach ($layout as $component):
             switch ($component):
                 case '###Y###':
                     ?><select id="<?php echo $this->getFieldId('year') ?>" name="<?php echo $this->getFieldName('year') ?>" class="<?php echo $this->getWarningClass() ?>" size="1">
