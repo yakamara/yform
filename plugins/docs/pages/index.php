@@ -72,13 +72,13 @@ foreach($files as $i_file) {
     $content = preg_replace($search, $replace, $content);
 }
 
-if (class_exists("rex_markitup_markdown")) {
+if (class_exists("rex_markdown")) {
 
-    $miu = new rex_markitup_markdown();
-    $navi = $miu->text($navi);
+    $miu = new rex_markdown();
+    $navi = $miu->parse($navi);
 
-    $miu = new rex_markitup_markdown();
-    $content = $miu->text($content);
+    $miu = new rex_markdown();
+    $content = $miu->parse($content);
 
 }
 
