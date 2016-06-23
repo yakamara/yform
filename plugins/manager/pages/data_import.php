@@ -60,7 +60,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
         $import_start = true;
         $import_start = rex_extension::registerPoint(new rex_extension_point(
-                'yform_DATASET_IMPORT',
+                'YFORM_DATASET_IMPORT',
                 $import_start,
                 [
                     'divider' => $div,
@@ -131,9 +131,9 @@ if (rex_request('send', 'int', 0) == 1) {
                                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_min_missingfields', implode(", ", $mc)));
                                 $show_importform = true;
                                 break;
-                            
+
                             }
-                          
+
                         }
 
                     }
@@ -144,10 +144,10 @@ if (rex_request('send', 'int', 0) == 1) {
                         break;
 
                     } else {
-                    
+
                         $counter++;
                         $i->setTable($this->table->getTablename());
-                        
+
                         $fields_counter = 0;
                         $replacevalue = '';
                         foreach ($line_array as $k => $v) {
@@ -172,7 +172,7 @@ if (rex_request('send', 'int', 0) == 1) {
                             $i->setWhere(rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue) . '');
 
                             rex_extension::registerPoint(new rex_extension_point(
-                                'yform_DATASET_IMPORT_DATA_UPDATE',
+                                'YFORM_DATASET_IMPORT_DATA_UPDATE',
                                 $import_start,
                                 array(
                                     'divider' => $div,
@@ -197,7 +197,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         } else {
 
                             rex_extension::registerPoint(new rex_extension_point(
-                                'yform_DATASET_IMPORT_DATA_INSERT',
+                                'YFORM_DATASET_IMPORT_DATA_INSERT',
                                 $import_start,
                                 array(
                                     'divider' => $div,
@@ -228,7 +228,7 @@ if (rex_request('send', 'int', 0) == 1) {
             }
 
             rex_extension::registerPoint(new rex_extension_point(
-                'yform_DATASET_IMPORTED',
+                'YFORM_DATASET_IMPORTED',
                 '',
                 array(
                     'divider' => $div,
