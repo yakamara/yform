@@ -68,17 +68,13 @@ if (rex_request('send', 'int', 0) == 1) {
                     'filename' => $filename,
                     'replacefield' => $replacefield,
                     'missing_columns' => $missing_columns,
-                    'debug' => $debug
+                    'debug' => $debug,
                 ]
             ));
 
         if ($import_start) {
 
-            $i = rex_sql::factory();
 
-            if ($debug) {
-                $i->setDebug();
-            }
 
             $fp = fopen($filename, 'r');
             while ( ($line_array = fgetcsv($fp, 30384, $div)) !== false ) {
@@ -103,6 +99,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                         } else if ($missing_columns == 2) {
                             $error = false;
+                            $i = rex_sql::factory();
                             foreach ($mc as $mcc) {
                                 $sql = 'ALTER TABLE ' . $i->escapeIdentifier($this->table->getTablename()) . ' ADD ' . $i->escapeIdentifier($mcc) . ' TEXT NOT NULL;';
                                 $upd = rex_sql::factory();
@@ -145,79 +142,70 @@ if (rex_request('send', 'int', 0) == 1) {
 
                     } else {
 
+                        /** @var rex_yform $yform */
+                        $yform = $this->getDataForm();
+                        $yform->setObjectparams('real_field_names', true);
+
                         $counter++;
-                        $i->setTable($this->table->getTablename());
 
                         $fields_counter = 0;
                         $replacevalue = '';
+                        $data = [];
                         foreach ($line_array as $k => $v) {
-                            if ($fieldarray[$k] != '' && (array_key_exists($fieldarray[$k], $rfields) || $fieldarray[$k] == 'id')) {
-                                $i->setValue($fieldarray[$k], $v);
-                                if ($replacefield == $fieldarray[$k]) {
-                                    $replacevalue = $v;
-
-                                }
-                                $fields_counter++;
+                            if ($fieldarray[$k] == '') {
+                                continue;
                             }
+                            if ($fieldarray[$k] == 'id') {
+                                $yform->objparams['value_pool']['sql']['id'] = $v;
+                            } elseif (array_key_exists($fieldarray[$k], $rfields)) {
+                                $yform->setFieldValue(0, $v, '', $fieldarray[$k]);
+                            }
+                            if ($replacefield == $fieldarray[$k]) {
+                                $replacevalue = $v;
+
+                            }
+                            $fields_counter++;
+                            $data[$fieldarray[$k]] = $v;
                         }
+
+                        $yform->setFieldValue('send', '1', 'send');
 
                         // noch abfrage ob $replacefield
                         $cf = rex_sql::factory();
                         if ($debug) {
                             $cf->setDebug();
                         }
-                        $cf->setQuery('select * from ' . $this->table->getTablename() . ' where ' . rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue) . '');
+                        $cf->setQuery('select * from ' . $this->table->getTablename() . ' where ' . rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue));
 
-                        if ($cf->getRows() > 0) {
-                            $i->setWhere(rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue) . '');
+                        $edit = $cf->getRows() > 0;
+                        if ($edit) {
+                            $where = $cf->escapeIdentifier($replacefield) . '= ' . $cf->escape($replacevalue);
+                            $yform->setActionField('db', array($this->table->getTablename(), $where));
+                            $yform->setObjectparams('main_id', $replacevalue);
+                            $yform->setObjectparams('main_where', $where);
 
-                            rex_extension::registerPoint(new rex_extension_point(
-                                'YFORM_DATASET_IMPORT_DATA_UPDATE',
-                                $import_start,
-                                array(
-                                    'divider' => $div,
-                                    'table' => $this->table,
-                                    'filename' => $filename,
-                                    'replacefield' => $replacefield,
-                                    'missing_columns' => $missing_columns,
-                                    'debug' => $debug,
-                                    'yform_object' => $i
-                                )
-                                ));
-
-                            $i->update();
-                            $error = $i->getError();
-                            if ($error == '') {
-                                $rcounter++;
-
-                            } else {
-                                $dcounter++;
-                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
-                            }
                         } else {
+                            $yform->setActionField('db', array($this->table->getTablename()));
 
-                            rex_extension::registerPoint(new rex_extension_point(
-                                'YFORM_DATASET_IMPORT_DATA_INSERT',
-                                $import_start,
-                                array(
-                                    'divider' => $div,
-                                    'table' => $this->table,
-                                    'filename' => $filename,
-                                    'replacefield' => $replacefield,
-                                    'missing_columns' => $missing_columns,
-                                    'debug' => $debug,
-                                    'yform_object' => $i
-                                )
-                                ));
+                        }
 
-                            $i->insert();
-                            $error = $i->getError();
-                            if ($error == '') {
-                                $icounter++;
-                            } else {
-                                $dcounter++;
-                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $error));
+                        $this->executeDataFormActions($yform, $replacevalue, $data);
+
+                        if ($yform->objparams['warning_messages']) {
+                            $error = '<ul>';
+                            foreach ($yform->objparams['warning_messages'] as $msg) {
+                                $error .= '<li>'.rex_i18n::translate($msg).'</li>';
                             }
+                            $error .= '</ul>';
+
+                            $dcounter++;
+                            $dataId = $replacefield.': '.$replacevalue;
+                            echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, $error));
+
+                        } elseif ($edit) {
+                            $rcounter++;
+                        } else {
+                            $icounter++;
                         }
 
                     }
@@ -242,11 +230,11 @@ if (rex_request('send', 'int', 0) == 1) {
                     'data_empty_rows' => $ecounter, // leere reihen
                     'data_replaced' => $rcounter, // replace counter
                     'data_inserted' => $icounter, // insert counter
-                    'data_errors' => $errorcounter
+                    'data_errors' => $errorcounter,
                 )
             ));
 
-            echo rex_view::info(rex_i18n::msg('yform_manager_import_error_dataimport', ($icounter + $rcounter), $icounter, $rcounter));
+            echo rex_view::info(rex_i18n::msg('yform_manager_import_error_import', ($icounter + $rcounter), $icounter, $rcounter));
 
         } else {
 

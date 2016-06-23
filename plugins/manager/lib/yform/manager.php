@@ -336,8 +336,7 @@ class rex_yform_manager
             if (($func == 'add'  && $this->hasDataPageFunction('add')) || $func == 'edit') {
                 $back = rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
-                $yform = new rex_yform;
-                $yform->setDebug(self::$debug);
+                $yform = $this->getDataForm();
                 foreach ($this->getLinkVars() as $k => $v) {
                     $yform->setHiddenField($k, $v);
                 }
@@ -382,44 +381,6 @@ class rex_yform_manager
                 $yform->setHiddenField('sorttype', rex_request('sorttype', 'string'));
                 $yform->setHiddenField('start', rex_request('start', 'string'));
 
-                foreach ($this->table->getFields() as $field) {
-                    $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
-
-                    $cl = new $class;
-                    $definitions = $cl->getDefinitions();
-
-                    $values = array();
-                    $i = 1;
-                    foreach ($definitions['values'] as $key => $_) {
-                        $key = $this->getFieldName($key, $field->getType());
-                        /*if ($field->getElement($key)) {
-                            $values[] = $field->getElement($key);
-                        } elseif ($field->getElement('f' . $i)) {
-                            $values[] = $field->getElement('f' . $i);
-                        } else {
-                            $values[] = '';
-                        }*/
-                        $values[] = $field->getElement($key);
-                        $i++;
-                    }
-
-                    if ($field->getType() == 'value') {
-                        if (in_array($values[1], $this->getFilterFields())) {
-                            // Feld vorhanden -> ignorieren -> hidden feld machen
-                            // TODO: Feld trotzdem noch aufnehmen, damit validierungen etc noch funktionieren
-                        } else {
-                            $yform->setValueField($field->getTypeName(), $values);
-                        }
-
-                    } elseif ($field->getType() == 'validate') {
-                        $yform->setValidateField($field->getTypeName(), $values);
-
-                    } elseif ($field->getType() == 'action') {
-                        $yform->setActionField($field->getTypeName(), $values);
-                    }
-                }
-
-
                 if (rex_request('rex_yform_show_formularblock', 'string') != '') {
                     // Optional .. kann auch geloescht werden. Dient nur zu Hilfe beim Aufbau
                     // von yform-Formularen über php
@@ -461,7 +422,6 @@ class rex_yform_manager
                     echo '<pre>' . $text_block . '</pre>';
                 }
 
-                $yform->setObjectparams('main_table', $this->table->getTablename()); // für db speicherungen und unique abfragen
                 $yform->setObjectparams('rex_yform_set', $rex_yform_set);
 
                 $yform_clone = clone $yform;
@@ -481,37 +441,22 @@ class rex_yform_manager
 
                 }
 
-                if ($func == 'edit') {
-                    $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, array('table' => $this->table, 'data_id' => $data_id, 'data' => $data)));
-
-                } elseif ($func == 'add') {
-                    $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, array('table' => $this->table)));
-
-                }
-
-                $yform->executeFields();
-
-                $submit_type = 1; // normal, 2=apply
-                foreach($yform->objparams["values"] as $f) {
-                    if ($f->getName() == "submit") {
-                        if ($f->getValue() == 2) { // apply
-                            $yform->setObjectparams('form_showformafterupdate', 1);
-                            $yform->executeFields();
-                            $submit_type = 2;
-                        }
-                    }
-                }
-
-                $form = $yform->executeActions();
+                $form = $this->executeDataFormActions($yform, $data_id, $data);
 
                 if ($yform->objparams['actions_executed']) {
                     if ($func == 'edit') {
                         echo rex_view::info(rex_i18n::msg('yform_thankyouforupdate'));
-                        $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, array('table' => $this->table, 'data_id' => $data_id, 'data' => $data)));
-
                     } elseif ($func == 'add') {
                         echo rex_view::info(rex_i18n::msg('yform_thankyouforentry'));
-                        $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADDED', $yform, array('table' => $this->table)));
+
+                        $submit_type = 1; // normal, 2=apply
+                        foreach($yform->objparams["values"] as $f) {
+                            if ($f->getName() == "submit") {
+                                if ($f->getValue() == 2) { // apply
+                                    $submit_type = 2;
+                                }
+                            }
+                        }
 
                         if ($submit_type == 2) {
                             $data_id = $yform->objparams['main_id'];
@@ -843,6 +788,93 @@ class rex_yform_manager
 
         } // end: $show_editpage
 
+    }
+
+    /**
+     * @return rex_yform
+     */
+    protected function getDataForm()
+    {
+        $yform = new rex_yform();
+        $yform->setDebug(self::$debug);
+
+        foreach ($this->table->getFields() as $field) {
+            $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
+
+            /** @var rex_yform_base_abstract $cl */
+            $cl = new $class;
+            $definitions = $cl->getDefinitions();
+
+            $values = array();
+            $i = 1;
+            foreach ($definitions['values'] as $key => $_) {
+                $key = $this->getFieldName($key, $field->getType());
+                /*if ($field->getElement($key)) {
+                    $values[] = $field->getElement($key);
+                } elseif ($field->getElement('f' . $i)) {
+                    $values[] = $field->getElement('f' . $i);
+                } else {
+                    $values[] = '';
+                }*/
+                $values[] = $field->getElement($key);
+                $i++;
+            }
+
+            if ($field->getType() == 'value') {
+                if (in_array($values[1], $this->getFilterFields())) {
+                    // Feld vorhanden -> ignorieren -> hidden feld machen
+                    // TODO: Feld trotzdem noch aufnehmen, damit validierungen etc noch funktionieren
+                } else {
+                    $yform->setValueField($field->getTypeName(), $values);
+                }
+
+            } elseif ($field->getType() == 'validate') {
+                $yform->setValidateField($field->getTypeName(), $values);
+
+            } elseif ($field->getType() == 'action') {
+                $yform->setActionField($field->getTypeName(), $values);
+            }
+        }
+
+        $yform->setObjectparams('main_table', $this->table->getTablename()); // für db speicherungen und unique abfragen
+
+        return $yform;
+    }
+
+    protected function executeDataFormActions(rex_yform $yform, $data_id, $data)
+    {
+        if ($data_id) {
+            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, array('table' => $this->table, 'data_id' => $data_id, 'data' => $data)));
+
+        } else {
+            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, array('table' => $this->table)));
+
+        }
+
+        $yform->executeFields();
+
+        $submit_type = 1; // normal, 2=apply
+        foreach($yform->objparams["values"] as $f) {
+            if ($f->getName() == "submit") {
+                if ($f->getValue() == 2) { // apply
+                    $yform->setObjectparams('form_showformafterupdate', 1);
+                    $yform->executeFields();
+                    $submit_type = 2;
+                }
+            }
+        }
+
+        $form = $yform->executeActions();
+
+        if ($yform->objparams['actions_executed']) {
+            if ($data_id) {
+                $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, array('table' => $this->table, 'data_id' => $data_id, 'data' => $data)));
+            } else {
+                $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADDED', $yform, array('table' => $this->table)));
+            }
+        }
+
+        return $form;
     }
 
 
