@@ -96,15 +96,15 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         }
 
-        $format = $this->getElement('format');
-        if ($format == '') {
-            $format = '###Y###-###M###-###D###';
+        $layout = $this->getElement('layout');
+        if ($layout == '') {
+            $layout = '###Y###-###M###-###D###';
         }
-        $format = preg_split('/(?<=###[YMD]###)(?=.)|(?<=.)(?=###[YMD]###)/', $format);
+        $layout = preg_split('/(?<=###[YMD]###)(?=.)|(?<=.)(?=###[YMD]###)/', $layout);
 
         $this->params['form_output'][$this->getId()] = $this->parse(
             array('value.date.tpl.php', 'value.datetime.tpl.php'),
-            compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
+            compact('layout', 'yearStart', 'yearEnd', 'year', 'month', 'day')
         );
     }
 
@@ -124,11 +124,11 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'label'        => array( 'type' => 'text', 'label' => 'Bezeichnung'),
                 'year_start'   => array( 'type' => 'text', 'label' => '[Startjahr]'),
                 'year_end'     => array( 'type' => 'text', 'label' => '[Endjahr] oder [+5]'),
-                'format'       => array( 'type' => 'text', 'label' => '[Anzeigeformat###Y###-###M###-###D###]]'),
+                'layout'       => array( 'type' => 'text', 'label' => '[Anzeigeformat###Y###-###M###-###D###]]'),
                 'current_date' => array( 'type' => 'boolean', 'label' => 'Aktuelles Datum voreingestellt'),
                 'no_db'        => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
             ),
-            'description' => rex_i18n::msg("yform_values_date_description"),
+            'description' => 'Datums Eingabe',
             'dbtype' => 'date'
         );
     }
