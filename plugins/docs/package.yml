@@ -4,7 +4,7 @@ author: 'Jan Kristinus'
 supportpage: www.redaxo.org/de/forum/
 
 page:
-    title: docs
+    title: translate:yform_docs
     perm: admin
 
 requires:
