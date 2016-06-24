@@ -9,7 +9,7 @@ page:
     pjax: false
     icon: rex-icon fa-hand-spock-o
     subpages:
-        overview: { title: 'translate:overview' }
+        overview: { title: 'translate:overview', perm: admin }
 
 stylesheets:
     - yform.css
