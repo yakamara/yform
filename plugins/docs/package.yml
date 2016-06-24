@@ -2,7 +2,10 @@ package: yform/docs
 version: '1.0'
 author: 'Jan Kristinus'
 supportpage: www.redaxo.org/de/forum/
-compile: 0
+
+page:
+    title: docs
+    perm: admin
 
 requires:
     redaxo: '>=5.0.0'
