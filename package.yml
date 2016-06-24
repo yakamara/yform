@@ -5,7 +5,6 @@ supportpage: www.redaxo.org/de/forum/
 
 page:
     title: 'translate:yform'
-    perm: yform[]
     pjax: false
     icon: rex-icon fa-hand-spock-o
     subpages:

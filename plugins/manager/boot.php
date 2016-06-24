@@ -14,6 +14,12 @@ if (rex::isBackend() && rex::getUser()) {
 
     rex_view::addJsFile($this->getAssetsUrl('manager.js'));
 
+    if (!rex::getUser()->isAdmin()) {
+        $page = $this->getProperty('page');
+        $page['hidden'] = true;
+        $this->setProperty('page', $page);
+    }
+
     $tables = rex_yform_manager_table::getAll();
     $pages = [];
 
