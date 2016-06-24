@@ -15,7 +15,7 @@ if (!function_exists('rex_yform_manager_checkField')) {
 
 class rex_yform_manager
 {
-    /** @type rex_yform_manager_table */
+    /** @var rex_yform_manager_table */
     var $table = '';
     var $linkvars = array();
     var $type = '';
@@ -697,7 +697,7 @@ class rex_yform_manager
                     $item['attributes']['class'][] = 'btn-default';
                     $dataset_links[] = $item;
                 }
-                if ($this->hasDataPageFunction('truncate_table')) {
+                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_delete');
                     $item['url'] = 'index.php?' . $link_vars . '&func=dataset_delete&' . $em_url . $em_rex_list;
@@ -728,7 +728,7 @@ class rex_yform_manager
                     $item['attributes']['class'][] = 'btn-default';
                     $table_links[] = $item;
                 }
-                if ($this->hasDataPageFunction('truncate_table')) {
+                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_truncate_table');
                     $item['url'] = 'index.php?' . $link_vars . '&func=truncate_table&' . $em_url . $em_rex_list;

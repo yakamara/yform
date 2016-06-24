@@ -145,6 +145,11 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['export'] == 1;
     }
 
+    public function isMassDeletionAllowed()
+    {
+        return $this->values['mass_deletion'] == 1;
+    }
+
     public function getSortFieldName()
     {
         return $this->values['list_sortfield'];

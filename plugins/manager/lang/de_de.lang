@@ -68,6 +68,7 @@ yform_manager_enter_number = Bitte geben Sie eine Zahl für die Datensätze pro 
 yform_manager_table_hide = In Navigation versteckt
 yform_manager_table_allow_export = Export der Daten erlauben
 yform_manager_table_allow_import = Import von Daten erlauben
+yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
 yform_manager_tablefield_overview = Feldübersicht
 
 yform_manager_table_updated = Vielen Dank für die Aktualisierung.

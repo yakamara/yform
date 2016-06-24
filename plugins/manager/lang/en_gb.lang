@@ -68,6 +68,7 @@ yform_manager_enter_number = Please define a amount of displayed entries per pag
 yform_manager_table_hide = hidden in navigation
 yform_manager_table_allow_export = allow export of data
 yform_manager_table_allow_import = allow import of data
+yform_manager_table_allow_mass_deletion = allow mass deletion of data
 yform_manager_tablefield_overview = [missing_text] de:Feldübersicht
 
 yform_manager_table_updated = Thank you for the update.
