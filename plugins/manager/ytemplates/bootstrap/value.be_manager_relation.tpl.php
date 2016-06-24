@@ -81,7 +81,7 @@ if (count($notice) > 0) {
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_moveDatalist(' . $this->getId() . ',\'down\');return false;" title="' . rex_i18n::msg('yform_relation_down_first_data') . '"><i class="rex-icon rex-icon-down"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_moveDatalist(' . $this->getId() . ',\'bottom\');return false;" title="' . rex_i18n::msg('yform_relation_move_last_data') . '"><i class="rex-icon rex-icon-bottom"></i></a>';
             $e['functionButtons'] = '
-                <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_openDatalist(' . $this->getId() . ', \'' . $this->relation['source_table'].' . '.$this->getName() . '\', \'' . $link . '\',\'1\');return false;" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
+                <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_openDatalist(' . $this->getId() . ', \'' . $this->relation['source_table'].'.'.$this->getName() . '\', \'' . $link . '\',\'1\');return false;" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_deleteDatalist(' . $this->getId() . ',\'1\');return false;" title="' . rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>
             ';
 
