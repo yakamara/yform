@@ -1,6 +1,6 @@
 <?php
 
-echo rex_view::title('yform');
+echo rex_view::title($this->i18n('yform'));
 
 if (rex::getUser()->isAdmin()) {
 
