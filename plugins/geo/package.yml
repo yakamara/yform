@@ -10,3 +10,7 @@ page:
     pjax: true
     subpages:
         index: { title: 'translate:overview', hidden: true }
+
+requires:
+    packages:
+        yform/manager: '^1.0'
