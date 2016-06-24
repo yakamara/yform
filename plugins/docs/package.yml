@@ -8,4 +8,4 @@ page:
     perm: admin
 
 requires:
-    redaxo: '>=5.0.0'
+    redaxo: '^5.0.0'

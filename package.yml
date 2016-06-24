@@ -18,7 +18,7 @@ stylesheets:
 requires:
     packages:
         phpmailer: '^2.0.0'
-    redaxo: '>=5.0.0'
+    redaxo: '^5.0.0'
 
 system_plugins:
     - manager
