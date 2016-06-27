@@ -4,6 +4,8 @@
  * yform
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
+ *
+ * @var rex_yform_manager $this
  */
 
 ini_set('auto_detect_line_endings', true);
@@ -13,14 +15,10 @@ $show_list = false;
 
 $rfields = $this->table->getColumns();
 
-$replacefield = rex_request('replacefield', 'string');
 $divider = rex_request('divider', 'string', ';');
 $missing_columns = rex_request('missing_columns', 'int');
 $debug = rex_request('debug', 'string');
 
-if ($replacefield == '') {
-    $replacefield = 'id';
-}
 if (!in_array($divider, array(';', ',', 'tab'))) {
     $divider = ',';
 }
@@ -66,7 +64,6 @@ if (rex_request('send', 'int', 0) == 1) {
                     'divider' => $div,
                     'table' => $this->table,
                     'filename' => $filename,
-                    'replacefield' => $replacefield,
                     'missing_columns' => $missing_columns,
                     'debug' => $debug,
                 ]
@@ -77,6 +74,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
 
             $fp = fopen($filename, 'r');
+            $idColumn = null;
             while ( ($line_array = fgetcsv($fp, 30384, $div)) !== false ) {
 
                 if (count($fieldarray) == 0) {
@@ -87,6 +85,9 @@ if (rex_request('send', 'int', 0) == 1) {
                     foreach ($fieldarray as $k => $v) {
                         if (!array_key_exists($fieldarray[$k], $rfields) && $fieldarray[$k] != 'id') {
                             $mc[$fieldarray[$k]] = $fieldarray[$k];
+                        }
+                        if ('id' === $fieldarray[$k]) {
+                            $idColumn = $k;
                         }
                     }
 
@@ -142,67 +143,40 @@ if (rex_request('send', 'int', 0) == 1) {
 
                     } else {
 
-                        /** @var rex_yform $yform */
-                        $yform = $this->getDataForm();
-                        $yform->setObjectparams('real_field_names', true);
+                        if (null !== $idColumn && isset($line_array[$idColumn])) {
+                            $id = $line_array[$idColumn];
+                            $dataset = $this->table->getDataset($id);
+                        } else {
+                            $id = null;
+                            $dataset = $this->table->createDataset();
+                        }
+
+                        $exists = $dataset->exists();
+
+                        foreach ($line_array as $k => $v) {
+                            if (!$fieldarray[$k] ||'id' === $fieldarray[$k]) {
+                                continue;
+                            }
+
+                            $dataset->setValue($fieldarray[$k], $v);
+                        }
 
                         $counter++;
 
-                        $fields_counter = 0;
-                        $replacevalue = '';
-                        $data = [];
-                        foreach ($line_array as $k => $v) {
-                            if ($fieldarray[$k] == '') {
-                                continue;
-                            }
-                            if ($fieldarray[$k] == 'id') {
-                                $yform->objparams['value_pool']['sql']['id'] = $v;
-                            } elseif (array_key_exists($fieldarray[$k], $rfields)) {
-                                $yform->setFieldValue(0, $v, '', $fieldarray[$k]);
-                            }
-                            if ($replacefield == $fieldarray[$k]) {
-                                $replacevalue = $v;
+                        $dataset->save();
 
-                            }
-                            $fields_counter++;
-                            $data[$fieldarray[$k]] = $v;
-                        }
-
-                        $yform->setFieldValue('send', '1', 'send');
-
-                        // noch abfrage ob $replacefield
-                        $cf = rex_sql::factory();
-                        if ($debug) {
-                            $cf->setDebug();
-                        }
-                        $cf->setQuery('select * from ' . $this->table->getTablename() . ' where ' . rex_sql::factory()->escapeIdentifier($replacefield) . '= ' . rex_sql::factory()->escape($replacevalue));
-
-                        $edit = $cf->getRows() > 0;
-                        if ($edit) {
-                            $where = $cf->escapeIdentifier($replacefield) . '= ' . $cf->escape($replacevalue);
-                            $yform->setActionField('db', array($this->table->getTablename(), $where));
-                            $yform->setObjectparams('main_id', $replacevalue);
-                            $yform->setObjectparams('main_where', $where);
-
-                        } else {
-                            $yform->setActionField('db', array($this->table->getTablename()));
-
-                        }
-
-                        $this->executeDataFormActions($yform, $replacevalue, $data);
-
-                        if ($yform->objparams['warning_messages']) {
+                        if ($messages = $dataset->getMessages()) {
                             $error = '<ul>';
-                            foreach ($yform->objparams['warning_messages'] as $msg) {
+                            foreach ($messages as $msg) {
                                 $error .= '<li>'.rex_i18n::translate($msg).'</li>';
                             }
                             $error .= '</ul>';
 
                             $dcounter++;
-                            $dataId = $replacefield.': '.$replacevalue;
+                            $dataId = 'ID: '.$id;
                             echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, $error));
 
-                        } elseif ($edit) {
+                        } elseif ($exists) {
                             $rcounter++;
                         } else {
                             $icounter++;
@@ -222,7 +196,6 @@ if (rex_request('send', 'int', 0) == 1) {
                     'divider' => $div,
                     'table' => $this->table,
                     'filename' => $filename,
-                    'replacefield' => $replacefield,
                     'missing_columns' => $missing_columns,
                     'debug' => $debug,
                     'data_imported' => $counter,  // importierte
@@ -311,11 +284,6 @@ if ($show_importform) {
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_divider') . '</label>';
     $n['field'] = '<div class="yform-select-style">' . $a->get() . '</div>';
-    $formElements[] = $n;
-
-    $n = [];
-    $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_unique_field') . '</label>';
-    $n['field'] = '<input class="form-control" type="text" name="replacefield" value="' . htmlspecialchars($replacefield) . '" />';
     $formElements[] = $n;
 
     $n = [];
