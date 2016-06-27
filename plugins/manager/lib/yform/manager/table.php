@@ -297,10 +297,10 @@ class rex_yform_manager_table implements ArrayAccess
                 $table = self::get($field->getElement('relation_table'));
                 $source = $table->getRelationsTo($this->getTableName());
                 if (!empty($source)) {
-                    $relationTable = $deleteSql->escape($field->getElement('relation_table'));
+                    $relationTable = $deleteSql->escapeIdentifier($field->getElement('relation_table'));
                     $deleteSql->setQuery('
-                        DELETE FROM `' . $relationTable . '`
-                        WHERE NOT EXISTS (SELECT * FROM `' . $this->getTableName() . '` WHERE id = ' . $relationTable . '.`' . $deleteSql->escape(reset($source)->getName()) . '`)
+                        DELETE FROM ' . $relationTable . '
+                        WHERE NOT EXISTS (SELECT * FROM ' . $deleteSql->escapeIdentifier($this->getTableName()) . ' WHERE id = ' . $relationTable . '.' . $deleteSql->escapeIdentifier(reset($source)->getName()) . ')
                     ');
                 }
             }
