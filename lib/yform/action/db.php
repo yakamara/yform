@@ -45,14 +45,16 @@ class rex_yform_action_db extends rex_yform_action_abstract
             }
         }
 
+        $action = null;
+
         try {
             if ($where != '') {
                 $sql->setWhere($where);
                 $saved = $sql->update();
-                $flag = 'update';
+                $action = 'update';
             } else {
                 $saved = $sql->insert();
-                $flag = 'insert';
+                $action = 'insert';
                 $id = $sql->getLastId();
                 $this->params['main_id'] = $id;
                 $this->params['value_pool']['email']['ID'] = $id;
@@ -67,7 +69,14 @@ class rex_yform_action_db extends rex_yform_action_abstract
 
         }
 
-        rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql, array('form' => $this, 'sql' => $sql, 'yform' => true)));
+        rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql, array(
+            'form' => $this,
+            'sql' => $sql,
+            'table' => $main_table,
+            'action' => $action,
+            'id' => $this->params['main_id'],
+            'yform' => true
+        )));
 
     }
 
