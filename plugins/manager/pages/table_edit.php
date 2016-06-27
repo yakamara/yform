@@ -97,7 +97,7 @@ if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
         $yform->setActionField('db', array(rex_yform_manager_table::table(), "id=$table_id"));
         $yform->setObjectparams('main_id', $table_id);
         $yform->setObjectparams('main_where', "id=$table_id");
-        $yform->setObjectparams('getdata', true); // Datein vorher auslesen
+        $yform->setObjectparams('getdata', true);
 
     } elseif ($func == 'add') {
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add'));
@@ -110,7 +110,6 @@ if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
         $yform->setValidateField('customfunction', array('table_name', function ($label = '', $table = '', $params = '') {
             return (boolean) rex_yform_manager_table::get($table);
         }, '', rex_i18n::msg('yform_manager_table_exists')));
-        $yform->setActionField('wrapper_value', array('table_name', '###value###')); // Tablename
         $yform->setActionField('db', array(rex_yform_manager_table::table()));
 
     }
@@ -120,7 +119,6 @@ if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
 
     $yform->setValueField('textarea', array('description', rex_i18n::msg('yform_manager_table_description'), 'css_class' => "short1"));
     $yform->setValueField('checkbox', array('status', rex_i18n::msg('yform_tbl_active')));
-    // $yform->setValueField("fieldset",array("fs-list","Liste"));
     $yform->setValueField('text', array('list_amount', rex_i18n::msg('yform_manager_entries_per_page'), '50'));
     $yform->setValidateField('type', array('list_amount', 'int', rex_i18n::msg('yform_manager_enter_number')));
 
