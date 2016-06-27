@@ -37,9 +37,8 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
             $url = $u;
         }
 
-        // Emailkeys ersetzen. Somit auch Weiterleitungen mit neuer ID m�glich. "id=###ID###"
         foreach ($this->params['value_pool']['email'] as $search => $replace) {
-            $url = str_replace('###' . $search . '###', $replace, $url);
+            $url = str_replace('###' . $search . '###', urlencode($replace), $url);
         }
 
         if ($url != '') {
