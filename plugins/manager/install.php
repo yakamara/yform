@@ -29,7 +29,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_t
     `hidden` tinyint(1) NOT NULL,
     `export` tinyint(1) NOT NULL,
     `import` tinyint(1) NOT NULL,
-    `mass_deletion` tinyint(1) NOT NULL DEFAULT 1,
+    `mass_deletion` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE(`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
@@ -48,6 +48,15 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_f
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
-rex_sql_table::get(rex::getTable('yform_table'))
-    ->ensureColumn(new rex_sql_column('mass_deletion', 'tinyint(1)', false, 1))
+$table = rex_sql_table::get(rex::getTable('yform_table'));
+$hasMassDeletion = $table->hasColumn('mass_deletion');
+$table
+    ->ensureColumn(new rex_sql_column('mass_deletion', 'tinyint(1)'))
     ->alter();
+
+if (!$hasMassDeletion) {
+    $sql
+        ->setTable(rex::getTable('yform_table'))
+        ->setValue('mass_deletion', 1)
+        ->update();
+}
