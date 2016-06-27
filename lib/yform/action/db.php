@@ -67,7 +67,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
 
         }
 
-        rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED'), $sql, array('form' => $this, 'sql' => $sql, 'yform' => true));
+        rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql, array('form' => $this, 'sql' => $sql, 'yform' => true)));
 
     }
 
