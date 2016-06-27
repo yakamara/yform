@@ -330,6 +330,31 @@ class rex_yform_manager_table implements ArrayAccess
 
     }
 
+    /**
+     * @param int $id Dataset ID
+     *
+     * @return bool
+     */
+    public function deleteDataset($id)
+    {
+        $sql = rex_sql::factory();
+        $sql->setDebug(self::$debug);
+
+        $data = $sql->getArray('SELECT * FROM ' . $this->getTableName() . ' WHERE id=' . $id)[0];
+
+        if (!rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETE', true, array('id' => $id, 'data' => $data, 'table' => $this)))) {
+            return false;
+        }
+
+        $sql->setQuery('DELETE FROM ' . $this->getTableName() . ' WHERE id=' . $id);
+
+        $this->removeRelationTableRelicts();
+
+        rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', array('id' => $id, 'data' => $data, 'table' => $this)));
+
+        return true;
+    }
+
     // ------------------------------------------- Array Access
     public function offsetSet($offset, $value)
     {

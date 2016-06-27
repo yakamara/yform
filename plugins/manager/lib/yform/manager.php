@@ -227,54 +227,34 @@ class rex_yform_manager
 
             // -------------- delete entry
             if ($func == 'delete' && $data_id != '' && $this->hasDataPageFunction('delete')) {
-                $delete = true;
-                if (rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETE', $delete, array('id' => $data_id, 'value' => $data, 'table' => $this->table)))) {
-                    $query = 'delete from ' . $this->table->getTablename() . ' where id=' . $data_id;
-                    $delsql = rex_sql::factory();
-                    $delsql->debugsql = self::$debug;
-                    $delsql->setQuery($query);
+                if ($this->table->deleteDataset($data_id)) {
                     echo rex_view::success(rex_i18n::msg('yform_datadeleted'));
                     $func = '';
-
-                    $this->table->removeRelationTableRelicts();
-
-                    rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', array('id' => $data_id, 'value' => $data, 'table' => $this->table)));
                 }
-
             }
 
             // -------------- delete dataset
             if ($func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
-
-                $delete = true;
-                $query = 'delete from `' . $this->table->getTablename() . '` ' . $this->getDataListQueryWhere($rex_yform_filter, $searchObject);
-                if (rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DATASET_DELETE', $delete, array('table' => $this->table, 'query' => &$query)))) {
-                    $delsql = rex_sql::factory();
-                    $delsql->debugsql = self::$debug;
-                    $delsql->setQuery($query);
-                    echo rex_view::success(rex_i18n::msg('yform_dataset_deleted'));
-                    $func = '';
-
-                    $this->table->removeRelationTableRelicts();
-
-                    rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DATASET_DELETED', '', array('table' => $this->table)));
+                $delsql = rex_sql::factory();
+                $delsql->setDebug(self::$debug);
+                $delsql->setQuery('select id from `' . $this->table->getTablename() . '` ' . $this->getDataListQueryWhere($rex_yform_filter, $searchObject));
+                foreach ($delsql as $row) {
+                    $this->table->deleteDataset($delsql->getValue('id'));
                 }
+                echo rex_view::success(rex_i18n::msg('yform_dataset_deleted'));
+                $func = '';
             }
 
             // -------------- truncate table
             if ($func == 'truncate_table' && $this->hasDataPageFunction('truncate_table')) {
-                $truncate = true;
-                if (rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_TRUNCATE', $truncate, array('table' => $this->table)))) {
-                    $query = 'truncate table ' . $this->table->getTablename();
-                    $trunsql = rex_sql::factory();
-                    $trunsql->setQuery($query);
-                    echo rex_view::info(rex_i18n::msg('yform_table_truncated'));
-                    $func = '';
-
-                    $this->table->removeRelationTableRelicts();
-
-                    rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_TRUNCATED', '', array('table' => $this->table)));
+                $delsql = rex_sql::factory();
+                $delsql->setDebug(self::$debug);
+                $delsql->setQuery('select id from `' . $this->table->getTablename() . '`');
+                foreach ($delsql as $row) {
+                    $this->table->deleteDataset($delsql->getValue('id'));
                 }
+                echo rex_view::success(rex_i18n::msg('yform_table_truncated'));
+                $func = '';
             }
 
             // -------------- export dataset
