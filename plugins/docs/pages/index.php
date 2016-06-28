@@ -74,10 +74,8 @@ foreach($files as $i_file) {
 
 if (class_exists("rex_markdown")) {
 
-    $miu = new rex_markdown();
+    $miu = rex_markdown::factory();
     $navi = $miu->parse($navi);
-
-    $miu = new rex_markdown();
     $content = $miu->parse($content);
 
 }
