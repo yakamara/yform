@@ -56,11 +56,6 @@ yform_values_textarea_description =				Ein <b>mehrzeiliges Eingabefeld</b> für 
 yform_values_time_description =					Eine Reihe von Auswahlfeldern, in der die <b>Uhrzeit</b> (Stunden, Minuten, Sekunden) ausgewählt wird.
 yform_values_upload_description =				Ein <b>Upload-Feld</b>, mit dem eine Datei in den <b>Medienpool, die Datenbank oder ein Verzeichnis</b> hochgeladen wird.
 
-<<<<<<< HEAD
-------------------------------------------------
-VALUES
-------------------------------------------------
-
 yform_values_defaults_name = Name
 yform_values_defaults_label = Bezeichnung
 yform_values_defaults_table = Datenbank
@@ -130,10 +125,6 @@ yform_values_upload_upload_folder = Eigener Uploadordner
 yform_values_upload_file_prefix = Dateiprefix
 yform_values_upload_default_file = Defaultfile
 
-------------------------------------------------
-VALIDATE
-------------------------------------------------
-
 yform_validate_compare_firstname = 1. Feldname
 yform_validate_compare_secondname = 2. Feldname
 yform_validate_compare_type = Vergleichsart
@@ -165,45 +156,6 @@ yform_validate_unique_name = Name
 yform_validate_unique_message = Fehlermeldung
 yform_validate_unique_table = Tabelle
 
-------------------------------------------------
-YFORM MANAGE VALUES
-------------------------------------------------
-
-yform_values_be_manager_relation_table = Ziel Tabelle
-yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Zielfeld
-yform_values_be_manager_relation_type = Mehrfachauswahl
-yform_values_be_manager_relation_empty_option = Mit "Leer-Option"
-yform_values_be_manager_relation_empty_value = Fehlermeldung wenn "Leer-Option" nicht aktiviert ist.
-yform_values_be_manager_relation_size = Höhe der Auswahlbox
-yform_values_be_manager_relation_filter = Filter
-yform_values_be_manager_relation_relation_table = Relationstabelle
-yform_values_be_media_default = Defaultwert
-yform_values_be_medialist_preview = Preview (0/1)
-yform_values_be_medialist_category = Medienpool Kategorie
-yform_values_be_medialist_types = Types
-yform_values_be_select_category_ignore_offlines = Ignoriere Offline-Kategorien
-yform_values_be_select_category_check_perms = Prüfe Rechte
-yform_values_be_select_category_homepage = Füge "Homepage"-Eintrag (Root) hinzu
-yform_values_be_select_category_category = Root-ID
-yform_values_be_select_category_clang = Sprache
-yform_values_be_select_category_multiple = Mehrere Felder möglich
-yform_values_be_select_category_size = Höhe der Auswahlbox
-yform_values_be_table_size = Anzahl Spalten
-yform_values_be_table_columns = Bezeichnung der Spalten (Menge,Preis,Irgendwas)
-yform_values_prio_fields = Anzeige
-yform_values_prio_scope = Beschränkung
-yform_values_prio_default = Am Anfang
-
-
-
-
-
-
-
-
-
-=======
 yform_values_options_name = 	Name
 yform_values_options_label = 	Bezeichnung
 yform_values_options_boolvalues	= 	Werte (0,1) (nicht angeklickt,angeklickt)
->>>>>>> origin/i18n
