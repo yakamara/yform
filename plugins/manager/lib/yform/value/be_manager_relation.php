@@ -216,7 +216,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $sql = rex_sql::factory();
         $sql->debugsql = $this->params['debug'];
         $relationTablePreEditValues = $this->getRelationTableValues();
-        foreach ($values as $value) {
             if (!isset($relationTablePreEditValues[$value])) {
                 $sql->setTable($relationTable);
                 $sql->setValue($relationTableField['source'], $source_id);
@@ -224,10 +223,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $sql->insert();
             }
         }
-        $sql->flushValues();
-        $sql->setTable($relationTable);
-        $sql->setWhere(' ' . $sql->escapeIdentifier($relationTableField['source']) . ' =' . $source_id . ' AND ' . $sql->escapeIdentifier($relationTableField['target']) . ' NOT IN (' . implode(',', $values) . ')');
-        $sql->delete();
 
     }
 
