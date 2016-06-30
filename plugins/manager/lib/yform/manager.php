@@ -1087,7 +1087,7 @@ class rex_yform_manager
             $yform->setValueField('hidden', array('type_name', $type_name, 'REQUEST'));
             $yform->setValueField('hidden', array('type_id', $type_id, 'REQUEST'));
 
-            $yform->setValueField('prio', array('prio', 'Prioritaet', array('name', 'type_id', 'type_name'), array('table_name')));
+            $yform->setValueField('prio', array('prio', rex_i18n::msg("yform_values_defaults_prio"), array('name', 'type_id', 'type_name'), array('table_name')));
 
             $selectFields = array();
             $i = 1;

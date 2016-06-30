@@ -63,19 +63,11 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'checkbox',
             'values' => array(
-<<<<<<< HEAD
                 'name'    => array( 'type' => 'name', 'label' => rex_i18n::msg("yform_values_defaults_name")),
                 'label'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_label")),
                 'values'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_checkbox_values"), 'default' => '0,1'),
                 'default' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_checkbox_default"), 'default' => 0),
                 'no_db'   => array( 'type' => 'no_db', 'label' => rex_i18n::msg("yform_values_defaults_table"), 'default' => 0),
-=======
-                'name'    => array( 'type' => 'name', 'label' => rex_i18n::msg("yform_values_options_name")),
-                'label'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_options_label")),
-                'values'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_options_boolvalues"), 'default' => '0,1'),
-                'default' => array( 'type' => 'boolean', 'label' => 'Defaultstatus', 'default' => 0),
-                'no_db'   => array( 'type' => 'no_db', 'label' => 'Datenbank', 'default' => 0),
->>>>>>> origin/i18n
             ),
             'description' => rex_i18n::msg("yform_values_checkbox_description"),
             'dbtype' => 'varchar(255)',

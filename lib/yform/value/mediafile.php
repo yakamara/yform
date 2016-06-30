@@ -124,9 +124,9 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'mediafile',
             'values' => array(
-                'name'     => array( 'type' => 'label',   'label' => rex_i18n::msg("yform_values_defaults_name") ),
-                'label'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label"),
-                'max_size' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_mediafile_max_size"),
+                'name'     => array( 'type' => 'label',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'max_size' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_mediafile_max_size")),
                 'types'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_mediafile_types")),
                 'required' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_mediafile_required")),
                 'messages' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_mediafile_messages")),

@@ -225,11 +225,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'types'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_types")),
                 'required' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_upload_required")),
                 'messages' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_messages")),
-                'modus'    => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_upload_modus")),, 'options' => 'upload,database,no_save', 'default' => 'upload'),
+                'modus'    => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_upload_modus"), 'options' => 'upload,database,no_save', 'default' => 'upload'),
                 'database_filename_field'    => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_upload_database_filename_field")),
                 'upload_folder'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_upload_folder")),
                 'file_prefix'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_file_prefix")),
-                'default_file'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_upload_default_file")),)
+                'default_file'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_upload_default_file"))
             ),
             'description' => rex_i18n::msg("yform_values_upload_description"),
             'dbtype' => 'blob'

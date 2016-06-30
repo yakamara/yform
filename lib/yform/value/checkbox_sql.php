@@ -67,8 +67,8 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             'name' => 'checkbox_sql',
             'values' => array(
                 'name'  => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name") ),
-                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label"),
-                'query' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_checkbox_sql_query")
+                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'query' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_checkbox_sql_query"))
             ),
             'description' => rex_i18n::msg("yform_values_checkbox_sql_description"),
             'dbtype' => 'text'

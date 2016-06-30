@@ -210,6 +210,7 @@ yform_values_be_select_category_description =	Ein Redaxo-Feld, um ein oder mehre
 yform_values_be_table_description = 			Eine Reihe von Eingabefeldern, um <b>tabellarische Daten</b> einzugeben.
 yform_values_prio_description =					Ein <b>Auswahlfeld</b>, um Datensätze in eine <b>bestimmte Reihenfolge</b> zu sortieren.
 
+yform_values_defaults_prio = Priorität
 yform_values_be_manager_relation_table = Ziel Tabelle
 yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Zielfeld
 yform_values_be_manager_relation_type = Mehrfachauswahl
