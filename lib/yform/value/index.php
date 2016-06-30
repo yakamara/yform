@@ -53,10 +53,10 @@ class rex_yform_value_index extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'index',
             'values' => array(
-                'name'     => array( 'type' => 'name',   'label' => 'Feld' ),
-                'names'    => array( 'type' => 'select_names',  'label' => 'Felder'),
-                'no_db'    => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
-                'function' => array( 'type' => 'select',  'label' => 'Opt. Codierfunktion', 'default' => '0', 'options' => 'Keine Funktion=,md5,sha1' ),
+                'name'     => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'names'    => array( 'type' => 'select_names',  'label' => rex_i18n::msg("yform_values_index_names")),
+                'no_db'    => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
+                'function' => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_index_function"), 'default' => '0', 'options' => 'Keine Funktion=,md5,sha1' ),
             ),
             'description' => rex_i18n::msg("yform_values_index_description"),
             'dbtype' => 'text'

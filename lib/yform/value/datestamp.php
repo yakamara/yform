@@ -48,10 +48,10 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'datestamp',
             'values' => array(
-                'name'  =>  array( 'type' => 'name',   'label' => 'Name' ),
-                'label' => array( 'type' => 'text',    'label' => 'Format [YmdHis/U/dmy/mysql]'),
-                'no_db' => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
-                'only_empty' => array( 'type' => 'select',  'label' => 'Wann soll Wert gesetzt werden', 'default' => '0', 'options' => 'immer=0,nur wenn leer=1' ),
+                'name'  =>  array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_datestamp_format")),
+                'no_db' => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
+                'only_empty' => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_datestamp_only_empty"), 'default' => '0', 'options' => 'immer=0,nur wenn leer=1' ),
             ),
             'description' => rex_i18n::msg("yform_values_datestamp_description"),
             'dbtype' => 'varchar(255)'

@@ -91,15 +91,15 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'select_sql',
             'values' => array(
-                'name'         => array( 'type' => 'name',    'label' => 'Name' ),
-                'label'        => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'query'        => array( 'type' => 'text',    'label' => 'Query mit "select id, name from .."'),
-                'default'      => array( 'type' => 'text',    'label' => 'Defaultwert (opt.)'),
-                'no_db'        => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
-                'empty_option' => array( 'type' => 'boolean', 'label' => 'Leeroption'),
-                'empty_value'  => array( 'type' => 'text',    'label' => 'Text bei Leeroption (Bitte auswählen)'),
-                'multiple'     => array( 'type' => 'boolean', 'label' => 'Mehrere Felder möglich'),
-                'size'         => array( 'type' => 'text',    'label' => 'Höhe der Auswahlbox')
+                'name'         => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'        => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'query'        => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_query")),
+                'default'      => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_default")),
+                'no_db'        => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
+                'empty_option' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_sql_empty_option")),
+                'empty_value'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_empty_value")),
+                'multiple'     => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_sql_multiple")),
+                'size'         => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_size"))
 
             ),
             'description' => rex_i18n::msg("yform_values_select_sql_description"),

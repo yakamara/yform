@@ -39,9 +39,9 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'size',
             'values' => array(
-                'name'    => array( 'type' => 'select_name', 'label' => 'Name' ),
-                'size'    => array( 'type' => 'text', 'label' => 'Anzahl der Zeichen'),
-                'message' => array( 'type' => 'text', 'label' => 'Fehlermeldung'),
+                'name'    => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_size_name")),
+                'size'    => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_validate_size_size")),
+                'message' => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_validate_size_message")),
             ),
             'description' => rex_i18n::msg("yform_validate_size_description"),
         );

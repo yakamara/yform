@@ -28,8 +28,8 @@ class rex_yform_value_php extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'php',
             'values' => array(
-                'name'      => array( 'type' => 'name',    'label' => 'Feld' ),
-                'label'     => array( 'type' => 'textarea',    'label' => 'PHP Code'),
+                'name'      => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name") ),
+                'label'     => array( 'type' => 'textarea',    'label' => rex_i18n::msg("yform_values_php_code")),
             ),
             'description' => rex_i18n::msg("yform_values_php_description"),
             'dbtype' => 'text',

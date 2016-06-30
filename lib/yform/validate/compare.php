@@ -84,10 +84,10 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'compare',
             'values' => array(
-                'name'    => array( 'type' => 'select_name', 'label' => '1. Feldname' ),
-                'name2'   => array( 'type' => 'select_name', 'label' => '2. Feldname'),
-                'compare_type' => array ('type' => 'select', 'label' => 'Vergleichsart', 'options' => '!\=,<,>,\=\=,>\=,<\=', 'default' => '!\='),
-                'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung')
+                'name'    => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_compare_firstname")),
+                'name2'   => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_compare_secondname")),
+                'compare_type' => array ('type' => 'select', 'label' => rex_i18n::msg("yform_validate_compare_type"), 'options' => '!\=,<,>,\=\=,>\=,<\=', 'default' => '!\='),
+                'message' => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_validate_compare_message"))
 
             ),
             'description' => rex_i18n::msg("yform_validate_compare_description"),

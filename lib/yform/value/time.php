@@ -111,12 +111,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'time',
             'values' => array(
-                'name'    => array( 'type' => 'name',   'label' => 'Feld' ),
-                'label'   => array( 'type' => 'text',   'label' => 'Bezeichnung'),
-                'hours'   => array( 'type' => 'text',   'label' => '[Stundenraster]'),
-                'minutes' => array( 'type' => 'text',   'label' => '[Minutenraster]'),
-                'format'  => array( 'type' => 'text',   'label' => '[Anzeigeformat ###H###h ###I###m]'),
-                'no_db'   => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
+                'name'    => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'   => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'hours'   => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_hours")),
+                'minutes' => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_minutes")),
+                'format'  => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_format")),
+                'no_db'   => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
             ),
             'description' => rex_i18n::msg("yform_values_time_description"),
             'dbtype' => 'time'

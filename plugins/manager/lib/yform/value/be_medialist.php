@@ -34,11 +34,11 @@ class rex_yform_value_be_medialist extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'be_medialist',
             'values' => array(
-                'name'     => array( 'type' => 'name',   'label' => 'Name' ),
-                'label'    => array( 'type' => 'text',   'label' => 'Bezeichnung'),
-                'preview'  => array( 'type' => 'text',   'label' => 'Preview (0/1) (opt)'),
-                'category' => array( 'type' => 'text',   'label' => 'Medienpool Kategorie (opt)'),
-                'types'    => array( 'type' => 'text',   'label' => 'Types (opt)')
+                'name'     => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'    => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'preview'  => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_be_medialist_preview")),
+                'category' => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_be_medialist_category")),
+                'types'    => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_be_medialist_types")),
             ),
             'description' => rex_i18n::msg("yform_values_be_medialist_description"),
             'dbtype' => 'text'
