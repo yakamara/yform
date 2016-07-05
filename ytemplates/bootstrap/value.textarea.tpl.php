@@ -22,6 +22,8 @@ $class_control = trim('form-control');
 $class_label = '';
 $field_before = '';
 $field_after = '';
+$idprefix ='';
+$fieldclass ='';
 
 if (trim($this->getElement('grid')) != '') {
     $grid = explode(',', trim($this->getElement('grid')));
@@ -41,9 +43,20 @@ if ($rows == "") {
     $rows = 10;
 }
 
+if ($this->getElement('idprefix')!='')
+{
+$idprefix=$this->getElement('idprefix').'_';
+}
+
+if ($this->getElement('field_class')!='')
+{
+$fieldclass=' '.$this->getElement('field_class');
+}
+
+
 ?>
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $field_before; ?><textarea class="<?php echo $class_control ?>" name="<?php echo $this->getFieldName() ?>" id="<?php echo $this->getFieldId() ?>" rows="<?php echo $rows; ?>" <?php echo $this->getAttributeElement('placeholder'), $this->getAttributeElement('pattern'), $this->getAttributeElement('required', true), $this->getAttributeElement('disabled', true), $this->getAttributeElement('readonly', true) ?>><?php echo htmlspecialchars(stripslashes($this->getValue())) ?></textarea>
+    <?php echo $field_before; ?><textarea class="<?php echo $class_control.$fieldclass ?>" name="<?php echo $this->getFieldName() ?>" id="<?php echo $idprefix.$this->getFieldId() ?>" rows="<?php echo $rows; ?>" <?php echo $this->getAttributeElement('placeholder'), $this->getAttributeElement('pattern'), $this->getAttributeElement('required', true), $this->getAttributeElement('disabled', true), $this->getAttributeElement('readonly', true) ?>><?php echo htmlspecialchars(stripslashes($this->getValue())) ?></textarea>
     <?php echo $notice ?><?php echo $field_after; ?>
 </div>

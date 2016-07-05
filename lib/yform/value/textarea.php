@@ -45,6 +45,8 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
                 'default'   => array( 'type' => 'text',    'label' => 'Defaultwert'),
                 'no_db'     => array( 'type' => 'no_db',   'label' => 'Datenbank',  'default' => 0),
                 'css_class' => array( 'type' => 'text',    'label' => 'classes'),
+                'field_class' => array( 'type' => 'text',    'label' => 'field classes'),
+                'idprefix'   => array( 'type' => 'text',    'label' => 'ID-Prefix'),
             ),
             'description' => rex_i18n::msg("yform_values_textarea_description"),
             'dbtype' => 'text',
