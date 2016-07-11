@@ -12,7 +12,6 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
     function executeAction()
     {
 
-        $value = '';
         if (!isset($this->params['value_pool']['email'][$this->getElement(4)])) {
             return;
         }
@@ -20,10 +19,9 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
 
         $gd = rex_sql::factory();
         if ($this->params['debug']) {
-            $gd->debugsql = 1;
+            $gd->setDebug();
         }
-        $gd->setQuery('select * from ' . $this->getElement(2) . ' where ' . $gd->escapeIdentifier($this->getElement(3)) . ' = ' . $gd->escape($value) . ' ');
-        $data = $gd->getArray();
+        $data = $gd->getArray('select * from ' . $this->getElement(2) . ' where ' . $gd->escapeIdentifier($this->getElement(3)) . ' = ' . $gd->escape($value) . ' ');
 
         if (count($data) == 1) {
             $data = current($data);
