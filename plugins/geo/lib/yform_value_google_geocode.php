@@ -72,7 +72,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
     function floattostr( $val )
     {
         preg_match( "#^([\+\-]|)([0-9]*)(\.([0-9]*?)|)(0*)$#", trim($val), $o );
-        return $o[1] . sprintf('%d', $o[2]) . ($o[3] != '.' ? $o[3] : '');
+        return @$o[1] . sprintf('%d', @$o[2]) . (@$o[3] != '.' ? @$o[3] : '');
     }
 
 }
