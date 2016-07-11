@@ -1026,7 +1026,7 @@ class rex_yform_manager
                     ksort($types['value']);
                     $tmp .= '<table class="table table-hover">';
                     foreach ($types['value'] as $k => $v) {
-                        $tmp .= '<tr><th><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+                        $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                     }
                     $tmp .= '</table>';
                 }
@@ -1041,7 +1041,7 @@ class rex_yform_manager
                     ksort($types['validate']);
                     $tmp .= '<table class="table table-hover">';
                     foreach ($types['validate'] as $k => $v) {
-                        $tmp .= '<tr><th><a class="btn btn-default btn-block" href="' . $link . 'type_id=validate&type_name=' . $k . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+                        $tmp .= '<tr><th data-title="Validate"><a class="btn btn-default btn-block" href="' . $link . 'type_id=validate&type_name=' . $k . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                     }
                     $tmp .= '</table>';
                 }
