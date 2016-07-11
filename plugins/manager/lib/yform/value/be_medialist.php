@@ -16,7 +16,7 @@ class rex_yform_value_be_medialist extends rex_yform_value_abstract
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_medialist.tpl.php', compact('counter'));
 
-        $this->params['value_pool']['email'][$this->getElement(1)] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
         if ($this->getElement(6) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
         }

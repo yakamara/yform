@@ -20,7 +20,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_link.tpl.php', compact('counter'));
 
-        $this->params['value_pool']['email'][$this->getName()] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(4) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }

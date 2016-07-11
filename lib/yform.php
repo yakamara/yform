@@ -300,7 +300,7 @@ class rex_yform
             foreach ($this->objparams['values'] as $i => $valueObject) {
                 if ($valueObject->getName()) {
                     if (isset($this->objparams['sql_object'])) {
-                        $this->setFieldValue($i, @addslashes($this->objparams['sql_object']->getValue($valueObject->getName())), '', $valueObject->getName());
+                        $this->setFieldValue($i, @$this->objparams['sql_object']->getValue($valueObject->getName()), '', $valueObject->getName());
                     }
                 }
                 $valueObject->setValue($this->getFieldValue($i, '', $valueObject->getName()));

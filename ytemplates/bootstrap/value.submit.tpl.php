@@ -1,1 +1,1 @@
-<button type="submit" class="btn btn-primary<?= trim($this->getElement(4)) != '' ? ' ' . $this->getElement(4) : '' ?>" id="<?= $this->getFieldId() ?>" value="<?= htmlspecialchars(stripslashes($this->getValue())) ?>"><?= htmlspecialchars(stripslashes(rex_i18n::translate($this->getValue()))) ?></button>
+<button type="submit" class="btn btn-primary<?= trim($this->getElement(4)) != '' ? ' ' . $this->getElement(4) : '' ?>" id="<?= $this->getFieldId() ?>" value="<?= htmlspecialchars($this->getValue()) ?>"><?= rex_i18n::translate($this->getValue(), true) ?></button>

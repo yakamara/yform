@@ -4,7 +4,7 @@
     <div class="rex-widget">
         <div class="rex-widget-media">
             <p class="rex-widget-field">
-                <input type="text" class="text <?php echo $this->getWarningClass() ?>" name="<?php echo $this->getFieldName() ?>" id="REX_MEDIA_<?php echo $counter ?>" readonly="readonly" value="<?php echo htmlspecialchars(stripslashes($this->getValue())) ?>" />
+                <input type="text" class="text <?php echo $this->getWarningClass() ?>" name="<?php echo $this->getFieldName() ?>" id="REX_MEDIA_<?php echo $counter ?>" readonly="readonly" value="<?php echo htmlspecialchars($this->getValue()) ?>" />
             </p>
             <p class="rex-widget-icons rex-widget-1col">
                 <span class="rex-widget-column rex-widget-column-first">

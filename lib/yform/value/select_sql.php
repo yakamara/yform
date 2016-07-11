@@ -51,7 +51,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         if (!is_array($this->getValue())) {
-            $this->setValue(explode(',', stripslashes($this->getValue())));
+            $this->setValue(explode(',', $this->getValue()));
         }
 
         // ---------- rex_yform_set
@@ -70,7 +70,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $this->setValue(implode(',', $this->getValue()));
 
-        $this->params['value_pool']['email'][$this->getElement(1)] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
         if ($this->getElement(5) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
 

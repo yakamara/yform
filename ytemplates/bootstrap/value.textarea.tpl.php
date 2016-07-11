@@ -44,6 +44,6 @@ if ($rows == "") {
 ?>
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $field_before; ?><textarea class="<?php echo $class_control ?>" name="<?php echo $this->getFieldName() ?>" id="<?php echo $this->getFieldId() ?>" rows="<?php echo $rows; ?>" <?php echo $this->getAttributeElement('placeholder'), $this->getAttributeElement('pattern'), $this->getAttributeElement('required', true), $this->getAttributeElement('disabled', true), $this->getAttributeElement('readonly', true) ?>><?php echo htmlspecialchars(stripslashes($this->getValue())) ?></textarea>
+    <?php echo $field_before; ?><textarea class="<?php echo $class_control ?>" name="<?php echo $this->getFieldName() ?>" id="<?php echo $this->getFieldId() ?>" rows="<?php echo $rows; ?>" <?php echo $this->getAttributeElement('placeholder'), $this->getAttributeElement('pattern'), $this->getAttributeElement('required', true), $this->getAttributeElement('disabled', true), $this->getAttributeElement('readonly', true) ?>><?php echo htmlspecialchars($this->getValue()) ?></textarea>
     <?php echo $notice ?><?php echo $field_after; ?>
 </div>

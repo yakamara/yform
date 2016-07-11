@@ -24,7 +24,7 @@ foreach ($labels as $index => $label) {
     }
 
     $id = $this->getFieldId() . '-' . rex_string::normalize($label);
-    $value = htmlspecialchars(stripslashes(rex_i18n::translate($label)));
+    $value = rex_i18n::translate($label, true);
 
     echo '<button class="' . implode(' ', $classes) . '" type="submit" name="' . $this->getFieldName() . '" id="'. $id .'" value="' . $value . '">' . $label . '</button>';
 }

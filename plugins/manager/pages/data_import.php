@@ -315,7 +315,7 @@ if ($show_importform) {
 
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_unique_field') . '</label>';
-    $n['field'] = '<input class="form-control" type="text" name="replacefield" value="' . htmlspecialchars(stripslashes($replacefield)) . '" />';
+    $n['field'] = '<input class="form-control" type="text" name="replacefield" value="' . htmlspecialchars($replacefield) . '" />';
     $formElements[] = $n;
 
     $n = [];

@@ -18,11 +18,9 @@ class rex_yform_value_text extends rex_yform_value_abstract
             $this->setValue($this->getElement(3));
         }
 
-
         $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
 
-
-        $this->params['value_pool']['email'][$this->getName()] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(4) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }

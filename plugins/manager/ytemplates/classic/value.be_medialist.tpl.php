@@ -2,7 +2,7 @@
     <label class="text <?php echo $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>" ><?php echo $this->getLabel() ?></label>
     <div class="rex-widget">
         <div class="rex-widget-medialist<?php echo $this->getElement(3) ? ' rex-widget-preview rex-widget-preview-image-manager' : '' ?>">
-            <input type="hidden" name="<?php echo $this->getFieldName() ?>" id="REX_MEDIALIST_<?php echo $counter ?>" value="<?php echo htmlspecialchars(stripslashes($this->getValue())) ?>" />
+            <input type="hidden" name="<?php echo $this->getFieldName() ?>" id="REX_MEDIALIST_<?php echo $counter ?>" value="<?php echo htmlspecialchars($this->getValue()) ?>" />
             <p class="rex-widget-field">
                 <select name="MEDIALIST_SELECT[<?php echo $counter ?>]" id="REX_MEDIALIST_SELECT_<?php echo $counter ?>" size="8">
                     <?php foreach ($medialist as $value): ?>
