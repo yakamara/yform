@@ -1112,8 +1112,9 @@ class rex_yform_manager
 
                     case 'name':
 
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
                         if ($func == 'edit' ) {
-                            $yform->setValueField('showvalue', array($field, 'Name'));
+                            $yform->setValueField('showvalue', array($field, 'Name', 'notice' => $v["notice"]));
                         } else {
                             if (!isset($v['value']) && $type_real_field != '') {
                                 $v['value'] = $type_real_field;
@@ -1121,7 +1122,7 @@ class rex_yform_manager
                                 $v['value'] = '';
                             }
 
-                            $yform->setValueField('text', array($field, 'Name', $v['value']));
+                            $yform->setValueField('text', array($field, 'Name', $v['value'], 'notice' => $v["notice"]));
                             $yform->setValidateField('empty', array($field, rex_i18n::msg('yform_validatenamenotempty')));
                             $yform->setValidateField('preg_match', array($field, "/(([a-zA-Z])+([a-zA-Z0-9\_])*)/", rex_i18n::msg('yform_validatenamepregmatch')));
                             $yform->setValidateField('customfunction', array($field, 'rex_yform_manager_checkField', array('table_name' => $table->getTableName()), rex_i18n::msg('yform_validatenamecheck')));
@@ -1141,12 +1142,14 @@ class rex_yform_manager
                         if (!isset($v['default'])) {
                             $v['default'] = '';
                         }
-                        $yform->setValueField('checkbox', array($field, $v['label'], '', $v['default']));
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
+                        $yform->setValueField('checkbox', array($field, $v['label'], '', $v['default'], 'notice' => $v["notice"]));
                         break;
 
                     case 'select':
                         // select|gender|Geschlecht *|Frau=w;Herr=m|[no_db]|defaultwert|multiple=1
-                        $yform->setValueField('select', array($field, $v['label'], $v['options'], '', $v['default'], 0));
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
+                        $yform->setValueField('select', array($field, $v['label'], $v['options'], '', $v['default'], 0, 'notice' => $v["notice"]));
                         break;
 
                     case 'table':
@@ -1173,7 +1176,8 @@ class rex_yform_manager
                         break;
 
                     case 'textarea':
-                        $yform->setValueField('textarea', array($field, $v['label']));
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
+                        $yform->setValueField('textarea', array($field, $v['label'], 'notice' => $v["notice"]));
                         break;
 
                     case 'table.field':
@@ -1184,7 +1188,8 @@ class rex_yform_manager
                         foreach ($table->getValueFields() as $_k => $_v) {
                             $_fields[] = $_k;
                         }
-                        $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 0));
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
+                        $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 0, 'notice' => $v["notice"]));
                         break;
 
                     case 'select_names':
@@ -1192,7 +1197,8 @@ class rex_yform_manager
                         foreach ($table->getValueFields() as $_k => $_v) {
                             $_fields[] = $_k;
                         }
-                        $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 1, 5));
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
+                        $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 1, 5, 'notice' => $v["notice"]));
                         break;
 
                     default:
@@ -1202,7 +1208,9 @@ class rex_yform_manager
                         } elseif (!isset($v['value'])) {
                             $v['value'] = '';
                         }
-                        $yform->setValueField('text', array($field, $v['label'], $v['value']));
+
+                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
+                        $yform->setValueField('text', array($field, $v['label'], $v['value'], 'notice' => $v["notice"]));
                 }
 
             }
