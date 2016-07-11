@@ -42,9 +42,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 case 'string':
                     break;
                 case 'email':
-                    $xsRegEx_email = "#^[\w.+-]{2,}\@\w[\w.-]*\.\w+$#u";
-
-                    if (preg_match($xsRegEx_email, $Object->getValue()) == 0) {
+                    if (!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue()) ) {
                         $w = true;
                     }
                     break;

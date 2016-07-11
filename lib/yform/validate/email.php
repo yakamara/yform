@@ -20,10 +20,14 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
             }
 
             if ($Object->getValue()) {
-                if ( !preg_match("#^[\w.+-]{2,}\@\w[\w.-]*\.\w+$#u", $Object->getValue()) ) {
+                // https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
+                if ( !preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue()) ) {
                     $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                     $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
                 }
+
+                
+
             }
 
         }
