@@ -260,6 +260,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'size'         => array( 'type' => 'text', 'name' => 'boxheight',    'label' => rex_i18n::msg("yform_values_be_manager_relation_size")),
                 'filter'       => array( 'type' => 'textarea', 'label' => rex_i18n::msg("yform_values_be_manager_relation_filter")),
                 'relation_table' => array( 'type' => 'table', 'label' => rex_i18n::msg("yform_values_be_manager_relation_relation_table"), 'empty_option' => 1),
+                'notice'       => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_manager_relation_description"),
             'dbtype' => 'text',

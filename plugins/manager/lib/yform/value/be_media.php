@@ -40,6 +40,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 'name' => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
                 'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
                 'default' => array( 'type' => 'text',     'label' => rex_i18n::msg("yform_values_be_media_default")),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_media_description"),
             'dbtype' => 'text'

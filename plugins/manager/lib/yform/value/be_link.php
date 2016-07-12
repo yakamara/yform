@@ -41,6 +41,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             'values' => array(
                 'name' => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
                 'label' => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_link_description"),
             'dbtype' => 'text'
