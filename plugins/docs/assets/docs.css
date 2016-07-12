@@ -1,19 +1,77 @@
-
-
 #rex-page-yform-docs .rex-yform-docs h1 {
-  margin-top: 5px;
-  font-size: 20px;
+    font-size: 22px;
+    margin-top: 5px;
+    margin-bottom: 20px;
 }
-
 #rex-page-yform-docs .rex-yform-docs h2 {
-  margin-top: 20px;
-  font-size: 18px;
+    font-size: 16px;
+    margin-top: 60px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    letter-spacing: 0.02em;
+    border-bottom: 1px solid rgb(204, 204, 204);
+    padding: 13px 15px 10px;
+    background: rgb(238, 238, 238);
+}
+#rex-page-yform-docs .rex-yform-docs h3 {
+    margin-top: 40px;
+    margin-bottom: 5px;
 }
 
-#rex-page-yform-docs .rex-yform-docs li {
-  list-style: outside none square;
+#rex-page-yform-docs .rex-yform-docs blockquote {
+	margin: 20px 0;
+	background: #f3f6fb;
 }
+
+#rex-page-yform-docs .rex-yform-docs ol {
+    padding-left: 18px;
+}
+
 #rex-page-yform-docs .rex-yform-docs ul {
-  margin-bottom: 10px;
-  padding-left: 20px;
+    margin-bottom: 10px;
+    padding-left: 16px;
+}
+#rex-page-yform-docs .rex-yform-docs ul li {
+    list-style-type: square;
+    list-style-position: outside;
+}
+#rex-page-yform-docs .rex-yform-docs ul ul {
+    padding-top: 5px;
+}
+#rex-page-yform-docs .rex-yform-docs ul ul li {
+    list-style-type: circle;
+    list-style-position: outside;
+	padding-bottom: 0;
+}
+
+#rex-page-yform-docs .rex-yform-docs p,
+#rex-page-yform-docs .rex-yform-docs li {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#rex-page-yform-docs .rex-yform-docs hr {
+    margin-top: 40px;
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+#rex-page-yform-docs .rex-yform-docs table {
+	width: 100%;
+	max-width: 100%;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
+	margin: 20px 0 30px;
+}
+#rex-page-yform-docs .rex-yform-docs th {
+	background: #f7f7f7;
+	border-bottom: 2px solid #ddd;
+	border-collapse: separate;
+}
+#rex-page-yform-docs .rex-yform-docs th,
+#rex-page-yform-docs .rex-yform-docs td {
+	border-top: 1px solid #ddd;
+	padding: 8px;
+	line-height: 1.42857143;
+	vertical-align: top;
+	font-size: 13px;
 }
