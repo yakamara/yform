@@ -1,0 +1,19 @@
+
+
+#rex-page-yform-docs .rex-yform-docs h1 {
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+#rex-page-yform-docs .rex-yform-docs h2 {
+  margin-top: 20px;
+  font-size: 18px;
+}
+
+#rex-page-yform-docs .rex-yform-docs li {
+  list-style: outside none square;
+}
+#rex-page-yform-docs .rex-yform-docs ul {
+  margin-bottom: 10px;
+  padding-left: 20px;
+}
