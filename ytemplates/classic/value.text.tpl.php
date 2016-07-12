@@ -1,7 +1,7 @@
 <?php
     $type = isset($type) ? $type : 'text';
     $class = $type == 'text' ? '' : $type . ' ';
-    $value = isset($value) ? $value : stripslashes($this->getValue());
+    $value = $this->getValue();
 ?>
 <p class="formtext <?php echo $class ? 'form' . $class : '' ?>formlabel-<?php echo $this->getName() ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="text <?php echo $class, ' ', $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>" ><?php echo $this->getLabel() ?></label>

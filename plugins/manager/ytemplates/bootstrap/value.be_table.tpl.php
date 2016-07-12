@@ -22,7 +22,7 @@ if (count($notice) > 0) {
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th><?php echo $column ?></th>
+                <th><?php echo htmlspecialchars($column) ?></th>
             <?php endforeach ?>
             <th class="rex-table-action"><a class="btn btn-xs btn-default" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>
@@ -31,7 +31,7 @@ if (count($notice) > 0) {
         <?php foreach ($data as $row): ?>
             <tr>
                 <?php foreach ($row as $i => $column): ?>
-                    <td><input class="form-control" type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="<?php echo $column ?>" /></td>
+                    <td><input class="form-control" type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="<?php echo htmlspecialchars($column) ?>" /></td>
                 <?php endforeach ?>
                 <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>
             </tr>

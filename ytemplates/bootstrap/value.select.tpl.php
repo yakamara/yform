@@ -42,7 +42,7 @@ if (trim($this->getElement('grid')) != '') {
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
     <?php echo $field_before; ?>
-    <select class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" <?php echo $multiple ? 'name="' . $this->getFieldName() . '[]" multiple="multiple"' : 'name="' . $this->getFieldName() . '"' ?><?php $size > 1 ? ' size="' . $size . '"' : '' ?>>
+    <select class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" <?php echo $multiple ? 'name="' . $this->getFieldName() . '[]" multiple="multiple"' : 'name="' . $this->getFieldName() . '"' ?><?php echo ($size > 1) ? ' size="' . $size . '"' : '' ?>>
         <?php foreach ($options as $key => $value): ?>
             <option value="<?php echo htmlspecialchars($key) ?>"<?php echo in_array((string) $key, $this->getValue()) ? ' selected="selected"' : '' ?>><?php echo $this->getLabelStyle($value) ?></option>
         <?php endforeach ?>

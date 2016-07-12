@@ -2,7 +2,7 @@
 
 $type = isset($type) ? $type : 'text';
 $class = $type == 'text' ? '' : 'form-' . $type . ' ';
-$value = isset($value) ? $value : stripslashes($this->getValue());
+$value = $this->getValue();
 
 $notice = array();
 if ($this->getElement('notice') != "") {

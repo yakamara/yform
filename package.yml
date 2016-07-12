@@ -5,11 +5,10 @@ supportpage: www.redaxo.org/de/forum/
 
 page:
     title: 'translate:yform'
-    perm: yform[]
     pjax: false
     icon: rex-icon fa-hand-spock-o
     subpages:
-        overview: { title: 'translate:overview' }
+        overview: { title: 'translate:overview', perm: admin }
 
 stylesheets:
     - yform.css
@@ -18,7 +17,7 @@ stylesheets:
 requires:
     packages:
         phpmailer: '^2.0.0'
-    redaxo: '>=5.0.0'
+    redaxo: '^5.0.0'
 
 system_plugins:
     - manager

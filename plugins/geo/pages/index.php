@@ -100,7 +100,7 @@ if (count($geo_tables) == 0) {
         exit;
     }
 
-    echo '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>';
+    echo '<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>';
 
     echo '<script type="text/javascript">
     <!--

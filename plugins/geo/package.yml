@@ -2,7 +2,6 @@ package: yform/geo
 version: '1.0'
 author: 'Jan Kristinus'
 supportpage: www.redaxo.org/de/forum/
-compile: 0
 
 page:
     title: 'translate:yform_geo'
@@ -10,3 +9,7 @@ page:
     pjax: true
     subpages:
         index: { title: 'translate:overview', hidden: true }
+
+requires:
+    packages:
+        yform/manager: '^1.0'

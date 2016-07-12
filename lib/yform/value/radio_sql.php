@@ -30,7 +30,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.radio.tpl.php', compact('options'));
 
-        $this->params['value_pool']['email'][$this->getName()] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(5) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }

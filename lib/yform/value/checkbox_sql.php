@@ -15,7 +15,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
     {
 
         if (!is_array($this->getValue())) {
-            $this->setValue(explode(',', stripslashes($this->getValue())));
+            $this->setValue(explode(',', $this->getValue()));
         }
 
         $values = $this->getValue();

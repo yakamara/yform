@@ -68,11 +68,11 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'unique',
             'values' => array(
-                'name'    => array( 'type' => 'select_names', 'label' => 'Name' ),
-                'message' => array( 'type' => 'text',      'label' => 'Fehlermeldung'),
-                'table'   => array( 'type' => 'text',      'label' => 'Tabelle [opt]'),
+                'name'    => array( 'type' => 'text', 'label' => 'Names', "notice" => "Bitte kommasepariert die Liste der Felder eintragen. z.B. name,email" ),
+                'message' => array( 'type' => 'text', 'label' => 'Fehlermeldung'),
+                'table'   => array( 'type' => 'text', 'label' => 'Tabelle [opt]'),
             ),
-            'description' => rex_i18n::msg("yform_validate_unique_description"),
+            'description' => rex_i18n::msg("yform_validate_unique_description")
         );
 
     }

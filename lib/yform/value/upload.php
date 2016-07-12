@@ -219,7 +219,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'upload',
             'values' => array(
-                'name'     => array( 'type' => 'label',   'label' => 'Label' ),
+                'name'     => array( 'type' => 'name',    'label' => 'Name' ),
                 'label'    => array( 'type' => 'text',    'label' => 'Bezeichnung'),
                 'max_size' => array( 'type' => 'text',    'label' => 'Maximale Größe in Kb oder Range 100,500'),
                 'types'    => array( 'type' => 'text',    'label' => 'Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png"'),

@@ -300,7 +300,7 @@ class rex_yform
             foreach ($this->objparams['values'] as $i => $valueObject) {
                 if ($valueObject->getName()) {
                     if (isset($this->objparams['sql_object'])) {
-                        $this->setFieldValue($i, @addslashes($this->objparams['sql_object']->getValue($valueObject->getName())), '', $valueObject->getName());
+                        $this->setFieldValue($i, @$this->objparams['sql_object']->getValue($valueObject->getName()), '', $valueObject->getName());
                     }
                 }
                 $valueObject->setValue($this->getFieldValue($i, '', $valueObject->getName()));
@@ -529,7 +529,6 @@ class rex_yform
 
     public static function showHelp($script = false)
     {
-        $return = '';
 
         $arr = [
             'value' => 'rex_yform_value_',
@@ -553,7 +552,7 @@ class rex_yform
                             $definitions = $class->getDefinitions();
                             $desc = isset($definitions['description']) ? $definitions['description'] : '';
                         }
-                        $classesDescription[ $arr_key ] .= '<tr><th><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+                        $classesDescription[ $arr_key ] .= '<tr><th data-title="'.ucfirst($arr_key).'"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
                     }
                 }
             }

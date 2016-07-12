@@ -145,6 +145,11 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['export'] == 1;
     }
 
+    public function isMassDeletionAllowed()
+    {
+        return $this->values['mass_deletion'] == 1;
+    }
+
     public function getSortFieldName()
     {
         return $this->values['list_sortfield'];
@@ -292,10 +297,10 @@ class rex_yform_manager_table implements ArrayAccess
                 $table = self::get($field->getElement('relation_table'));
                 $source = $table->getRelationsTo($this->getTableName());
                 if (!empty($source)) {
-                    $relationTable = $deleteSql->escape($field->getElement('relation_table'));
+                    $relationTable = $deleteSql->escapeIdentifier($field->getElement('relation_table'));
                     $deleteSql->setQuery('
-                        DELETE FROM `' . $relationTable . '`
-                        WHERE NOT EXISTS (SELECT * FROM `' . $this->getTableName() . '` WHERE id = ' . $relationTable . '.`' . $deleteSql->escape(reset($source)->getName()) . '`)
+                        DELETE FROM ' . $relationTable . '
+                        WHERE NOT EXISTS (SELECT * FROM ' . $deleteSql->escapeIdentifier($this->getTableName()) . ' WHERE id = ' . $relationTable . '.' . $deleteSql->escapeIdentifier(reset($source)->getName()) . ')
                     ');
                 }
             }
@@ -323,6 +328,31 @@ class rex_yform_manager_table implements ArrayAccess
         $gf->setQuery($sql);
         return $gf->getValue('prio');
 
+    }
+
+    /**
+     * @param int $id Dataset ID
+     *
+     * @return bool
+     */
+    public function deleteDataset($id)
+    {
+        $sql = rex_sql::factory();
+        $sql->setDebug(self::$debug);
+
+        $data = $sql->getArray('SELECT * FROM ' . $this->getTableName() . ' WHERE id=' . $id)[0];
+
+        if (!rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETE', true, array('id' => $id, 'data' => $data, 'table' => $this)))) {
+            return false;
+        }
+
+        $sql->setQuery('DELETE FROM ' . $this->getTableName() . ' WHERE id=' . $id);
+
+        $this->removeRelationTableRelicts();
+
+        rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', array('id' => $id, 'data' => $data, 'table' => $this)));
+
+        return true;
     }
 
     // ------------------------------------------- Array Access

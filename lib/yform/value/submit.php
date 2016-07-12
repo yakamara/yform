@@ -32,7 +32,7 @@ class rex_yform_value_submit extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php');
 
         if (!isset($this->params['value_pool']['email'][$this->getName()]) || $this->params['value_pool']['email'][$this->getName()] == "") {
-            $this->params['value_pool']['email'][$this->getName()] = stripslashes($real_value);
+            $this->params['value_pool']['email'][$this->getName()] = $real_value;
         }
 
         if ($this->getElement(3) != 'no_db') {

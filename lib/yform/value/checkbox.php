@@ -46,7 +46,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', array('value' => $v));
 
         ## set values
-        $this->params['value_pool']['email'][$this->getName()] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(5) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }

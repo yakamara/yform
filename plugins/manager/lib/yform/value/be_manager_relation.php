@@ -161,7 +161,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // --------------------------------------- save
 
-        $this->params['value_pool']['email'][$this->getName()] = stripslashes(implode(',', $this->getValue()));
+        $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
         if (!$this->getElement('relation_table') && $this->relation['relation_type'] != 4) {
             $this->params['value_pool']['sql'][$this->getName()] = implode(',', array_unique($this->getValue()));
         }

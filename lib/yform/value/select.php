@@ -75,6 +75,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
                 'default'  => array( 'type' => 'text',    'label' => 'Defaultwert'),
                 'multiple' => array( 'type' => 'boolean', 'label' => 'Mehrere Felder möglich'),
                 'size'     => array( 'type' => 'text',    'label' => 'Höhe der Auswahlbox'),
+                'notice'    => array( 'type' => 'text',    'label' => 'Notiz' ),
             ),
             'description' => rex_i18n::msg("yform_values_select_description"),
             'dbtype' => 'text'

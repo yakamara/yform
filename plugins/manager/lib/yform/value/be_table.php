@@ -11,98 +11,51 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     function preValidateAction()
     {
-        $columns = (int) $this->getElement(3);
-        if ($columns < 1) {
-            $columns = 1;
+        $columns = explode(',', $this->getElement('columns'));
+        if (count($columns) == 0) {
+            return;
         }
+
         $id = $this->getId();
-        $values = array();
-        if ($this->params['send']) {
 
-            $i = 0;
+        // Cleanup Array
 
-            $search = array(',', ';');
-            $replace = array('‚', '⁏'); // , -> alt-s
+        $table_array = [];
 
-            if (isset($_REQUEST['v'][$id])) {
-                foreach ($_REQUEST['v'][$id] as $c) {
-                    for ($r = 0; $r < count($c); $r++) {
-                        if (!isset($values[$r])) {
-                            $values[$r] = '';
-                        }
-                        if ($i > 0) {
-                            $values[$r] .= ',';
-                        }
-                        if (isset($c[$r])) {
-                            $values[$r] .= str_replace($search, $replace, trim($c[$r]));
-                        }
-                    }
-                    $i++;
-                    // die nur den Trenner haben loeschen
-                    if (count($values) > 0) {
-                        foreach ($values as $key => $val) {
-                            if (trim($val) == ',') {
-                                unset($values[$key]);
-                            }
-                        }
-                    }
+        if (isset($_REQUEST['v'][$id])) {
+            $rows = count($_REQUEST['v'][$id][0]);
+            // Spalten durchgehen
+            for ($c = 0; $c < count($columns); $c++) {
+                for ($r = 0; $r < $rows; $r++) {
+                    $table_array[$r][$c] = (isset($_REQUEST['v'][$id][$c][$r])) ? $_REQUEST['v'][$id][$c][$r] : "" ;
                 }
             }
-
-            $this->setValue('');
-            $i = 0;
-            foreach ($values as $value) {
-                if ($i > 0) {
-                    $this->setValue($this->getValue() . ';');
-                }
-                $v = explode(',', $value);
-                $e = '';
-                $j = 0;
-                for ($r = 0; $r < $columns; $r++) {
-                    if ($j > 0) {
-                        $e .= ',';
-                    }
-                    $e .= @$v[$r];
-                    $j++;
-                }
-                $this->setValue($this->getValue() . $e);
-                $i++;
-            }
-
+            $this->setValue(json_encode($table_array));
         }
+
+        return;
 
     }
 
     function enterObject()
     {
-        $columnsCount = max(1, (int) $this->getElement(3));
-        $columns = explode(',', $this->getElement(4));
-        if (count($columns) < $columnsCount) {
-            $columns = array_pad($columns, $columnsCount, '');
-        } elseif (count($columns) > $columnsCount) {
-            $columns = array_slice($columns, 0, $columnsCount);
+
+        $columns = explode(',', $this->getElement('columns'));
+        if (count($columns) == 0) {
+            return;
         }
 
-        // "1,1000,121;10,900,1212;100,800,1212;"
+        $data = json_decode($this->getValue(),true);
 
-        $data = array();
-        $rows = explode(';', $this->getValue());
-        foreach ($rows as $rawRow) {
-            $row = array();
-            $rawColumns = explode(',', $rawRow);
-            for ($i = 0; $i < $columnsCount; ++$i) {
-                $row[$i] = isset($rawColumns[$i]) ? $rawColumns[$i] : '';
-            }
-            $data[] = $row;
+        if (!is_array($data)) {
+            $data = [];
         }
-
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
 
-        $this->params['value_pool']['email'][$this->getName()] = stripslashes($this->getValue());
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(5) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
-        return;
 
     }
 
@@ -119,7 +72,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             'values' => array(
                 'name'    => array( 'type' => 'name',   'label' => 'Name' ),
                 'label'   => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'size'    => array( 'type' => 'text',    'label' => 'Anzahl Spalten'),
                 'columns' => array( 'type' => 'text',    'label' => 'Bezeichnung der Spalten (Menge,Preis,Irgendwas)'),
             ),
             'description' => rex_i18n::msg("yform_values_be_table_description"),

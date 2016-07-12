@@ -90,7 +90,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         if ($this->params['send']) {
 
-            $this->params['value_pool']['email'][$this->getElement(1)] = stripslashes($this->getValue());
+            $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
             if ($this->getElement(7) != 'no_db') {
                 $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
             }
@@ -124,7 +124,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'mediafile',
             'values' => array(
-                'name'     => array( 'type' => 'label',   'label' => 'Label' ),
+                'name'     => array( 'type' => 'name',   'label' => 'Name' ),
                 'label'    => array( 'type' => 'text',    'label' => 'Bezeichnung'),
                 'max_size' => array( 'type' => 'text',    'label' => 'Maximale Größe in Kb oder Range 100,500'),
                 'types'    => array( 'type' => 'text',    'label' => 'Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png"'),

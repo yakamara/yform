@@ -20,7 +20,7 @@
       $classes[] = $this->getWarningClass();
     }
 
-    $value = htmlspecialchars(stripslashes(rex_i18n::translate($label)));
+    $value = rex_i18n::translate($label, true);
 
     $id = $this->getFieldId();
 

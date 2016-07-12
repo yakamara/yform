@@ -13,6 +13,7 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
     {
 
         $query = trim($this->getElement(2));
+        $labels = explode(",",$this->getElement(3));
 
         if ($query == '') {
             if ($this->params['debug']) {
@@ -23,26 +24,22 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
 
         $sql = rex_sql::factory();
         if ($this->params['debug']) {
-            $sql->debugsql = true;
+            $sql->setDebug();
         }
 
-        foreach ($this->params['value_pool']['sql'] as $key => $value) {
-            $query = str_replace('###' . $key . '###', addslashes($value), $query);
+        $params = [];
+        foreach($labels as $label) {
+            $label = trim($label);
+            $params[] = $this->params['value_pool']['sql'][$label];
         }
 
-        $sql->setQuery($query);
-
-        if ( $sql->getError() != '') {
-            $this->params['form_show'] = true;
-            $this->params['hasWarnings'] = true;
-            $this->params['warning_messages'][] = $this->getElement(3);
-        }
+        $sql->setQuery($query, $params);
 
     }
 
     function getDescription()
     {
-        return 'action|db_query|query|Fehlermeldung';
+        return 'action|db_query|query|labels[name,email,id]';
     }
 
 }
