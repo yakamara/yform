@@ -45,7 +45,7 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
                 'default'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_textarea_default")),
                 'no_db'     => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
                 'css_class' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_textarea_classes")),
-				'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_textarea_notice") ),
+				'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice") ),
             ),
             'description' => rex_i18n::msg("yform_values_textarea_description"),
             'dbtype' => 'text',

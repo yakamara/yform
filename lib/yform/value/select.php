@@ -75,7 +75,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
                 'default'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_deault")),
                 'multiple' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_multiple")),
                 'size'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_size")),
-                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_notice")),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_select_description"),
             'dbtype' => 'text'
