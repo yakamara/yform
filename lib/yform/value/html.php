@@ -26,8 +26,8 @@ class rex_yform_value_html extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'html',
             'values' => array(
-                'name' => array( 'type' => 'name',   'label' => 'Feld' ),
-                'html' => array( 'type' => 'textarea',    'label' => 'HTML'),
+                'name' => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'html' => array( 'type' => 'textarea',    'label' => rex_i18n::msg("yform_values_html_HTML")),
             ),
             'description' => rex_i18n::msg("yform_values_html_description"),
             'dbtype' => 'text'

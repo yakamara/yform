@@ -43,12 +43,12 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'hashvalue',
             'values' => array(
-                'name'     => array( 'type' => 'name',    'label' => 'Feld' ),
-                'label'    => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'field'    => array( 'type' => 'select_name',    'label' => 'Input-Feld'),
-                'function' => array( 'type' => 'text',    'label' => 'Algorithmus'),
-                'salt'     => array( 'type' => 'text',    'label' => 'Salt'),
-                'no_db'     => array( 'type' => 'no_db',  'label' => 'Datenbank'),
+                'name'     => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'field'    => array( 'type' => 'select_name',    'label' => rex_i18n::msg("yform_values_hashvalue_field")),
+                'function' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_hashvalue_function")),
+                'salt'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_hashvalue_salt")),
+                'no_db'     => array( 'type' => 'no_db',  'label' => rex_i18n::msg("yform_values_defaults_table")),
             ),
             'description' => rex_i18n::msg("yform_values_hashvalue_description"),
             'dbtype' => 'text'

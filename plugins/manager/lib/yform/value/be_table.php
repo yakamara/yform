@@ -70,9 +70,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'be_table',
             'values' => array(
-                'name'    => array( 'type' => 'name',   'label' => 'Name' ),
-                'label'   => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'columns' => array( 'type' => 'text',    'label' => 'Bezeichnung der Spalten (Menge,Preis,Irgendwas)'),
+                'name'    => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+               'columns' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_be_table_columns")),
             ),
             'description' => rex_i18n::msg("yform_values_be_table_description"),
             'dbtype' => 'text'

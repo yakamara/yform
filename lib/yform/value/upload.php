@@ -219,17 +219,17 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'upload',
             'values' => array(
-                'name'     => array( 'type' => 'name',    'label' => 'Name' ),
-                'label'    => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'max_size' => array( 'type' => 'text',    'label' => 'Maximale Größe in Kb oder Range 100,500'),
-                'types'    => array( 'type' => 'text',    'label' => 'Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png"'),
-                'required' => array( 'type' => 'boolean', 'label' => 'Pflichtfeld'),
-                'messages' => array( 'type' => 'text',    'label' => 'min_err,max_err,type_err,empty_err,delete_file_msg'),
-                'modus'    => array( 'type' => 'select',  'label' => 'Speichermodus', 'options' => 'upload,database,no_save', 'default' => 'upload'),
-                'database_filename_field'    => array( 'type' => 'text',  'label' => '`database`: Dateiname wird gespeichert in Feldnamen'),
-                'upload_folder'   => array( 'type' => 'text',    'label' => 'Eigener Uploadordner [optional]|' ),
-                'file_prefix'   => array( 'type' => 'text',    'label' => 'Dateiprefix [optional]' ),
-                'default_file'  => array( 'type' => 'text', 'label' => 'Defaultfile')
+                'name'     => array( 'type' => 'name',	  'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'max_size' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_max_size")),
+                'types'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_types")),
+                'required' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_upload_required")),
+                'messages' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_messages")),
+                'modus'    => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_upload_modus"), 'options' => 'upload,database,no_save', 'default' => 'upload'),
+                'database_filename_field'    => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_upload_database_filename_field")),
+                'upload_folder'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_upload_folder")),
+                'file_prefix'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_file_prefix")),
+                'default_file'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_upload_default_file"))
             ),
             'description' => rex_i18n::msg("yform_values_upload_description"),
             'dbtype' => 'blob'

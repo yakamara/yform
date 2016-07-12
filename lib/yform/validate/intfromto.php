@@ -40,10 +40,10 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'intfromto',
             'values' => array(
-                'name'    => array( 'type' => 'select_name', 'label' => 'Name' ),
-                'from'    => array( 'type' => 'text',        'label' => 'Von'),
-                'to'      => array( 'type' => 'text',        'label' => 'Bis'),
-                'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung'),
+                'name'    => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_intfromto_name")),
+                'from'    => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_validate_intfromto_from")),
+                'to'      => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_validate_intfromto_to")),
+                'message' => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_validate_intfromto_message")),
             ),
             'description' => rex_i18n::msg("yform_validate_intfromto_description"),
         );

@@ -87,11 +87,11 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'prio',
             'values' => array(
-                'name'     => array( 'type' => 'name',         'label' => 'Feld' ),
-                'label'    => array( 'type' => 'text',         'label' => 'Bezeichnung'),
-                'fields'   => array( 'type' => 'select_names', 'label' => 'Tabellenfelder zur Anzeige' ),
-                'scope'    => array( 'type' => 'select_names', 'label' => 'Tabellenfelder zur Beschränkung'),
-                'default'  => array( 'type' => 'select', 'label' => 'Defaultwert', 'options' => array(1 => 'Am Anfang', '' => 'Am Ende'), 'default' => ''),
+                'name'     => array( 'type' => 'name',         'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'    => array( 'type' => 'text',         'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'fields'   => array( 'type' => 'select_names', 'label' => rex_i18n::msg("yform_values_prio_fields")),
+                'scope'    => array( 'type' => 'select_names', 'label' => rex_i18n::msg("yform_values_prio_scope")),
+                'default'  => array( 'type' => 'select', 'label' => rex_i18n::msg("yform_values_prio_default"), 'options' => array(1 => 'Am Anfang', '' => 'Am Ende'), 'default' => ''),
             ),
             'description' => rex_i18n::msg("yform_values_prio_description"),
             'dbtype' => 'int'

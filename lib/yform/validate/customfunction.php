@@ -49,10 +49,10 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'customfunction',
             'values' => array(
-                'name'     => array( 'type' => 'select_name', 'label' => 'Name'),
-                'function' => array( 'type' => 'text',  'label' => 'Name der Funktion' ),
-                'params'   => array( 'type' => 'text',   'label' => 'Weitere Parameter'),
-                'message'  => array( 'type' => 'text',   'label' => 'Fehlermeldung'),
+                'name'     => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_customfunction_name")),
+                'function' => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_validate_customfunction_function")),
+                'params'   => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_validate_customfunction_params")),
+                'message'  => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_validate_customfunction_message")),
             ),
             'description' => rex_i18n::msg("yform_validate_customfunction_description"),
         );

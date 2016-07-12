@@ -44,8 +44,8 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'email',
             'values' => array(
-                'name'    => array( 'type' => 'select_name', 'label' => 'Name' ),
-                'message' => array( 'type' => 'text',        'label' => 'Fehlermeldung'),
+                'name'    => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_email_name")),
+                'message' => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_validate_email_message")),
             ),
             'description' => rex_i18n::msg("yform_validate_email_description"),
         );
