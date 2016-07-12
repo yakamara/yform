@@ -49,7 +49,8 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             'values' => array(
                 'name'  => array( 'type' => 'name',    'label' => 'Name' ),
                 'label' => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'query' => array( 'type' => 'text',    'label' => 'Query mit "select id, name from .."')
+                'query' => array( 'type' => 'text',    'label' => 'Query mit "select id, name from .."'),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => 'Hiermit kann man SQL Abfragen als Radioliste nutzen',
             'dbtype' => 'text'

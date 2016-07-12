@@ -52,6 +52,7 @@ class rex_yform_value_radio extends rex_yform_value_abstract
                 'options'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_radio_options")),
                 'no_db'    => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),          'default' => 0),
                 'default'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_radio_default")),
+                'notice'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_radio_description"),
             'dbtype' => 'text'

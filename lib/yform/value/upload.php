@@ -229,7 +229,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'database_filename_field'    => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_upload_database_filename_field")),
                 'upload_folder'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_upload_folder")),
                 'file_prefix'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_file_prefix")),
-                'default_file'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_upload_default_file"))
+                'default_file'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_upload_default_file")),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_upload_description"),
             'dbtype' => 'blob'

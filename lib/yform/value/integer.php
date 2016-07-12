@@ -45,6 +45,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
                 'label'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
                 'default'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_integer_default")),
                 'no_db'     => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_integer_description"),
             'dbtype' => 'int',

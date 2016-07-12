@@ -133,6 +133,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                 'no_db'    => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
                 'category' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_mediafile_category")),
                 'user'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_mediafile_user")),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_mediafile_description"),
             'dbtype' => 'text'
