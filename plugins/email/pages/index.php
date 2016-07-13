@@ -29,8 +29,8 @@ if ($func == 'edit' || $func == 'add') {
     $form_data[] = 'text|mail_from|translate:yform_email_from';
     $form_data[] = 'text|mail_from_name|translate:yform_email_from_name';
     $form_data[] = 'text|subject|translate:yform_email_subject';
-    $form_data[] = 'textarea|body|translate:yform_email_body';
-    $form_data[] = 'textarea|body_html|translate:yform_email_body_html';
+    $form_data[] = 'textarea|body|translate:yform_email_body|#attributes:{"class":"codemirror","codemirror-mode":"php/htmlmixed"}';
+    $form_data[] = 'textarea|body_html|translate:yform_email_body_html|#attributes:{"class":"codemirror","codemirror-mode":"php/htmlmixed"}';
     $form_data[] = 'be_medialist|attachments|translate:yform_email_attachments';
 
 //     $form_data[]  = 'action|showtext|Vielen Dank|||1';
