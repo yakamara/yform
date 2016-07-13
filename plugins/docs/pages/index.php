@@ -64,6 +64,7 @@ foreach($files as $i_file) {
     $search = '#\[(.*)\]\(('.$i_file.')\)#';
     $replace = '<a href="index.php?page=yform/docs&yform_docs_file=$2">$1</a>';
     $navi = preg_replace($search, $replace, $navi);
+    $content = preg_replace($search, $replace, $content);
 
     // ![Alt-Text](bildname.png)
     // ![Ein Screenshot](screenshot.png)
