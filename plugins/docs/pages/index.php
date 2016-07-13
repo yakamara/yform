@@ -94,7 +94,7 @@ $content = $fragment->parse('core/page/section.php');
 
 echo '<section class="rex-yform-docs">
     <div class="row">
-    <div class="col-md-4">'.$navi.'</div>
-    <div class="col-md-8">'.$content.'</div>
+    <div class="col-md-4 yform-docs-navi">'.$navi.'</div>
+    <div class="col-md-8 yform-docs-content">'.$content.'</div>
     </div>
 </section>';
