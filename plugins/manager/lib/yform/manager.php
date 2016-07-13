@@ -20,7 +20,6 @@ class rex_yform_manager
     var $linkvars = array();
     var $type = '';
     var $dataPageFunctions = array();
-    var $DataPageFilterFields = array();
     static $debug = false;
 
     protected static $reservedFieldColumns = array('id', 'table_name', 'prio', 'type_id', 'type_name', 'list_hidden', 'search');
@@ -801,12 +800,7 @@ class rex_yform_manager
             }
 
             if ($field->getType() == 'value') {
-                if (in_array($values[1], $this->getFilterFields())) {
-                    // Feld vorhanden -> ignorieren -> hidden feld machen
-                    // TODO: Feld trotzdem noch aufnehmen, damit validierungen etc noch funktionieren
-                } else {
-                    $yform->setValueField($field->getTypeName(), $values);
-                }
+                $yform->setValueField($field->getTypeName(), $values);
 
             } elseif ($field->getType() == 'validate') {
                 $yform->setValidateField($field->getTypeName(), $values);
@@ -1612,20 +1606,6 @@ class rex_yform_manager
             return true;
         }
         return false;
-    }
-
-    function setFilterFields($DataPageFilterFields = array())
-    {
-        $this->DataPageFilterFields = $DataPageFilterFields;
-    }
-
-    function getFilterFields()
-    {
-        if (!is_array($this->DataPageFilterFields)) {
-            return array();
-        } else {
-            return $this->DataPageFilterFields;
-        }
     }
 
     function createTable($mifix = '', $data_table, $params = array(), $debug = false)
