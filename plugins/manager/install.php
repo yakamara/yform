@@ -30,6 +30,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_t
     `export` tinyint(1) NOT NULL,
     `import` tinyint(1) NOT NULL,
     `mass_deletion` tinyint(1) NOT NULL,
+    `history` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE(`table_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
@@ -48,10 +49,33 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_f
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
+$sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_history` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `table_name` varchar(255) NOT NULL,
+    `dataset_id` int(11) NOT NULL,
+    `action` varchar(255) NOT NULL,
+    `user` varchar(255) NOT NULL,
+    `timestamp` datetime NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `dataset` (`table_name`, `dataset_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
+$sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_history_field` (
+    `history_id` int(11) NOT NULL,
+    `field` varchar(255) NOT NULL,
+    `value` longtext NOT NULL,
+    PRIMARY KEY (`history_id`, `field`),
+    FOREIGN KEY (history_id) 
+        REFERENCES ' . rex::getTablePrefix() . 'yform_history(`id`)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+
 $table = rex_sql_table::get(rex::getTable('yform_table'));
 $hasMassDeletion = $table->hasColumn('mass_deletion');
 $table
     ->ensureColumn(new rex_sql_column('mass_deletion', 'tinyint(1)'))
+    ->ensureColumn(new rex_sql_column('history', 'tinyint(1)'))
     ->alter();
 
 if (!$hasMassDeletion) {

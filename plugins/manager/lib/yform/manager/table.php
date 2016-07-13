@@ -150,6 +150,11 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['mass_deletion'] == 1;
     }
 
+    public function hasHistory()
+    {
+        return $this->values['history'] == 1;
+    }
+
     public function getSortFieldName()
     {
         return $this->values['list_sortfield'];
@@ -331,28 +336,21 @@ class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @param int $id Dataset ID
+     * @param int $id
      *
-     * @return bool
+     * @return rex_yform_manager_dataset
      */
-    public function deleteDataset($id)
+    public function getDataset($id)
     {
-        $sql = rex_sql::factory();
-        $sql->setDebug(self::$debug);
+        return rex_yform_manager_dataset::get($this->getTableName(), $id);
+    }
 
-        $data = $sql->getArray('SELECT * FROM ' . $this->getTableName() . ' WHERE id=' . $id)[0];
-
-        if (!rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETE', true, array('id' => $id, 'data' => $data, 'table' => $this)))) {
-            return false;
-        }
-
-        $sql->setQuery('DELETE FROM ' . $this->getTableName() . ' WHERE id=' . $id);
-
-        $this->removeRelationTableRelicts();
-
-        rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', array('id' => $id, 'data' => $data, 'table' => $this)));
-
-        return true;
+    /**
+     * @return rex_yform_manager_dataset
+     */
+    public function createDataset()
+    {
+        return rex_yform_manager_dataset::create($this->getTableName());
     }
 
     // ------------------------------------------- Array Access
