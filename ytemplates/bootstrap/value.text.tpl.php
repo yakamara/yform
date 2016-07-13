@@ -18,12 +18,9 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
-$class .= $this->getElement('required') ? 'form-is-required ' : '';
+$class_group   = trim('form-group yform-element ' . $this->getWarningClass());
 
-$class_group   = trim('form-group yform-element ' . $class . $this->getElement(5) . ' ' . $this->getWarningClass());
-$class_control = trim('form-control');
-
-$class_label = '';
+$class_label[] = 'control-label';
 $field_before = '';
 $field_after = '';
 
@@ -31,7 +28,7 @@ if (trim($this->getElement('grid')) != '') {
     $grid = explode(',', trim($this->getElement('grid')));
 
     if (isset($grid[0]) && $grid[0] != '') {
-        $class_label .= ' ' . trim($grid[0]);
+        $class_label[] = trim($grid[0]);
     }
 
     if (isset($grid[1]) && $grid[1] != '') {
@@ -39,9 +36,18 @@ if (trim($this->getElement('grid')) != '') {
         $field_after = '</div>';
     }
 }
-?>
-<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $field_before; ?><input class="<?php echo $class_control ?>" type="<?php echo $type ?>" name="<?php echo $this->getFieldName() ?>" id="<?php echo $this->getFieldId() ?>" value="<?php echo htmlspecialchars($value) ?>"<?php echo $this->getAttributeElement('placeholder'), $this->getAttributeElement('autocomplete'), $this->getAttributeElement('pattern'), $this->getAttributeElement('required', true), $this->getAttributeElement('disabled', true), $this->getAttributeElement('readonly', true) ?> />
-    <?php echo $notice ?><?php echo $field_after; ?>
-</div>
+
+$attributes = [
+    "class" => 'form-control',
+    "name" => $this->getFieldName(),
+    "type" => $type,
+    "id" => $this->getFieldId(),
+    "value" => $value
+];
+
+$attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
+
+echo '<div class="'.$class_group.'" id="'.$this->getHTMLId().'">
+<label class="'.implode(" ", $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
+'.$field_before.'<input '.implode(" ", $attributes).' />'.$notice . $field_after.'
+</div>';

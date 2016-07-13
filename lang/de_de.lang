@@ -60,6 +60,8 @@ yform_values_defaults_name = Name
 yform_values_defaults_label = Bezeichnung
 yform_values_defaults_table = Datenbank
 yform_values_defaults_notice = Notiz
+yform_values_defaults_attributes = Individuelle Attribute
+yform_values_defaults_attributes_notice = Bitte als JSON schreiben. z.B. {"readonly":"readonly","placeholder":"Mein Placeholder"}
 
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
