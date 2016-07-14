@@ -60,24 +60,31 @@ if ($content == "") {
     $content = '<p class="alert alert-warning">'.rex_i18n::rawMsg('yform_docs_filenotfound').'</p>';
 }
 
-foreach($files as $i_file) {
-    $search = '#\[(.*)\]\(('.$i_file.')\)#';
-    $replace = '<a href="index.php?page=yform/docs&yform_docs_file=$2">$1</a>';
-    $navi = preg_replace($search, $replace, $navi);
-    $content = preg_replace($search, $replace, $content);
 
-    // ![Alt-Text](bildname.png)
-    // ![Ein Screenshot](screenshot.png)
-    $search = '#\!\[(.*)\]\(('.$i_file.')\)#';
-    $replace = '<img src="index.php?page=yform/docs&yform_docs_image=$2" alt="$1" style="width:100%"/>';
-    $content = preg_replace($search, $replace, $content);
-}
 
 if (class_exists("rex_markdown")) {
 
     $miu = rex_markdown::factory();
     $navi = $miu->parse($navi);
     $content = $miu->parse($content);
+
+    foreach($files as $i_file) {
+
+        $search = '#href="('.$i_file.')"#';
+        $replace = 'href="index.php?page=yform/docs&yform_docs_file=$1"';
+        $navi = preg_replace($search, $replace, $navi);
+        $content = preg_replace($search, $replace, $content);
+
+        // ![Alt-Text](bildname.png)
+        // ![Ein Screenshot](screenshot.png)
+        $search = '#\!\[(.*)\]\(('.$i_file.')\)#';
+        $replace = '<img src="index.php?page=yform/docs&yform_docs_image=$2" alt="$1" style="width:100%"/>';
+        $content = preg_replace($search, $replace, $content);
+
+    }
+
+
+
 
 }
 
