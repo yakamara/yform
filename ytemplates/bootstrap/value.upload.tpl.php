@@ -60,7 +60,7 @@ if ($value != '') {
         echo '
         <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
             <label>
-                <input type="checkbox" id="' .  $this->getFieldId(delete) . '" name="' . $this->getFieldName('delete') . '" value="1" />
+                <input type="checkbox" id="' .  $this->getFieldId("delete") . '" name="' . $this->getFieldName('delete') . '" value="1" />
                 ' . $this->tmp_messages['delete_file'] . ' "' . $label . '"
             </label>
         </div>';
