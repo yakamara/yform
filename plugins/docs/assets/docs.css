@@ -9,9 +9,9 @@
     text-transform: uppercase;
     margin-bottom: 20px;
     letter-spacing: 0.02em;
-    border-bottom: 1px solid rgb(204, 204, 204);
+    border-bottom: 1px solid #ccc;
     padding: 13px 15px 10px;
-    background: rgb(238, 238, 238);
+    background: #eee;
 }
 .rex-yform-docs h3 {
     margin-top: 40px;
@@ -19,8 +19,13 @@
 }
 
 .rex-yform-docs blockquote {
-	margin: 20px 0;
-	background: #f3f6fb;
+    margin: 20px 0;
+    background: #f3f6fb;
+}
+.rex-yform-docs blockquote h2 {
+    margin: -10px -20px 20px;
+    background: transparent;
+	border-top: 1px #ccc;
 }
 
 .rex-yform-docs ol {
@@ -29,6 +34,7 @@
 
 .rex-yform-docs ul {
     margin-bottom: 10px;
+	padding-bottom: 5px;;
     padding-left: 16px;
 }
 .rex-yform-docs ul li {
@@ -41,7 +47,7 @@
 .rex-yform-docs ul ul li {
     list-style-type: circle;
     list-style-position: outside;
-	padding-bottom: 0;
+    padding-bottom: 0;
 }
 
 .rex-yform-docs p,
@@ -52,56 +58,56 @@
 
 .rex-yform-docs hr {
     margin-top: 40px;
-    border-top: 1px solid rgb(221, 221, 221);
+    border-top: 1px solid #ddd;
 }
 
 .rex-yform-docs table {
-	width: 100%;
-	max-width: 100%;
-	border-top: 1px solid #ddd;
-	border-bottom: 1px solid #ddd;
-	margin: 20px 0 30px;
+    width: 100%;
+    max-width: 100%;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin: 20px 0 30px;
 }
 .rex-yform-docs th {
-	background: #f7f7f7;
-	border-bottom: 2px solid #ddd;
-	border-collapse: separate;
+    background: #f7f7f7;
+    border-bottom: 2px solid #ddd;
+    border-collapse: separate;
 }
 .rex-yform-docs th,
 .rex-yform-docs td {
-	border-top: 1px solid #ddd;
-	padding: 8px;
-	line-height: 1.42857143;
-	vertical-align: top;
-	font-size: 13px;
+    border-top: 1px solid #ddd;
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    font-size: 13px;
 }
 
 
-.rex-yform-docs ul {
+.rex-yform-docs .yform-docs-navi ul {
     margin-bottom: 10px;
     padding-left: 0;
 }
-.rex-yform-docs ul li {
+.rex-yform-docs .yform-docs-navi ul li {
     list-style-type: none;
-	background: #eee;
-	padding: 0 15px;
-	line-height: 40px;
+    background: #eee;
+    padding: 0 15px;
+    line-height: 40px;
 }
-.rex-yform-docs ul {
-	background: #fff;
-	margin-left: -15px;
-	margin-right: -15px;
+.rex-yform-docs .yform-docs-navi ul {
+    background: #fff;
+    margin-left: -15px;
+    margin-right: -15px;
 }
-.rex-yform-docs ul li li {
+.rex-yform-docs .yform-docs-navi ul li li {
     list-style-type: none;
-	background: #fff;
-	line-height: 30px;
+    background: #fff;
+    line-height: 30px;
 }
-.rex-yform-docs ul li li:before {
+.rex-yform-docs .yform-docs-navi ul li li:before {
 font-family: FontAwesome;
-	content: '\f0a9';
-	margin-right: 10px;
+    content: '\f0a9';
+    margin-right: 10px;
 }
-.rex-yform-docs ul sup {
+.rex-yform-docs .yform-docs-navi ul sup {
     display: none;
 }
