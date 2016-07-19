@@ -9,5 +9,6 @@ rex_extension::register('OUTPUT_FILTER', function () {
 });
 
 if ($this->getPlugin('manager')->isInstalled()) {
-    $this->getPlugin('manager')->includeFile('install.php');
+    // use path relative to __DIR__ to get correct path in update temp dir
+    $this->getPlugin('manager')->includeFile(__DIR__.'/plugins/manager/install.php');
 }
