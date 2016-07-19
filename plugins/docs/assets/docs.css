@@ -5,7 +5,7 @@
 }
 .rex-yform-docs h2 {
     font-size: 16px;
-    margin-top: 60px;
+    margin-top: 40px;
     text-transform: uppercase;
     margin-bottom: 20px;
     letter-spacing: 0.02em;
@@ -26,22 +26,24 @@
 .rex-yform-docs ol {
     padding-left: 18px;
 }
+
 .rex-yform-docs ul {
-	margin-bottom: 10px;
-	padding-left: 16px;
+    margin-bottom: 10px;
+    padding-left: 16px;
 }
 .rex-yform-docs ul li {
-	list-style-type: square;
-	list-style-position: outside;
+    list-style-type: square;
+    list-style-position: outside;
 }
 .rex-yform-docs ul ul {
-	padding-top: 5px;
+    padding-top: 5px;
 }
 .rex-yform-docs ul ul li {
-	list-style-type: circle;
-	list-style-position: outside;
+    list-style-type: circle;
+    list-style-position: outside;
 	padding-bottom: 0;
 }
+
 .rex-yform-docs p,
 .rex-yform-docs li {
     font-size: 14px;
@@ -75,61 +77,31 @@
 }
 
 
-.rex-yform-docs .yform-docs-navi ul {
+.rex-yform-docs ul {
     margin-bottom: 10px;
     padding-left: 0;
-	background: #fff;
-	margin-left: -15px;
-	margin-right: -15px;
 }
-.rex-yform-docs .yform-docs-navi ul li {
-	list-style-type: none;
+.rex-yform-docs ul li {
+    list-style-type: none;
 	background: #eee;
 	padding: 0 15px;
 	line-height: 40px;
 }
-.rex-yform-docs .yform-docs-navi ul ul {
-	padding-top: 5px;
+.rex-yform-docs ul {
+	background: #fff;
+	margin-left: -15px;
+	margin-right: -15px;
 }
-.rex-yform-docs .yform-docs-navi ul li li {
+.rex-yform-docs ul li li {
+    list-style-type: none;
 	background: #fff;
 	line-height: 30px;
-	padding: 0;
-	position: relative;;
 }
-.rex-yform-docs .yform-docs-navi ul li li a {
-	padding: 0 20px 0 35px;
-	display: block;
-}
-.rex-yform-docs .yform-docs-navi ul li li a:hover {
-	background: #eee;
-	text-decoration: none;
-}
-.rex-yform-docs .yform-docs-navi ul li li:before {
-	position: absolute;
-	font-family: FontAwesome;
+.rex-yform-docs ul li li:before {
+font-family: FontAwesome;
 	content: '\f0a9';
 	margin-right: 10px;
-	top: 0;
-	left: 15px;
 }
-.rex-yform-docs .yform-docs-navi ul sup {
+.rex-yform-docs ul sup {
     display: none;
-}
-
-.rex-yform-docs blockquote h2 {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border-bottom: none;
-    padding: 0;
-    background: transparent;
-}
-.rex-yform-docs blockquote ul li {
-	padding-bottom: 5px;
-}
-.rex-yform-docs blockquote ul ul {
-	padding-bottom: 10px;
-}
-.rex-yform-docs blockquote ul ul li {
-	padding-bottom: 0;
 }
