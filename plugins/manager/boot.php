@@ -55,3 +55,24 @@ if (rex::isBackend() && rex::getUser()) {
 
 }
 
+rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
+    if ($ep->getSubject() instanceof Exception) {
+        return;
+    }
+
+    $table = rex_yform_manager_table::get($ep->getParam('table'));
+    if (!$table) {
+        return;
+    }
+
+    $dataset = $ep->getParam('form')->getParam('manager_dataset');
+    if (!$dataset) {
+        $dataset = rex_yform_manager_dataset::get($table->getTableName(), $ep->getParam('id'));
+    }
+    $dataset->invalidateData();
+
+    if ($table->hasHistory()) {
+        $action = 'insert' === $ep->getParam('action') ? rex_yform_manager_dataset::ACTION_CREATE : rex_yform_manager_dataset::ACTION_UPDATE;
+        $dataset->makeSnapshot($action);
+    }
+});

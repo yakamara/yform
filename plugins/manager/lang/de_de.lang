@@ -69,6 +69,7 @@ yform_manager_table_hide = In Navigation versteckt
 yform_manager_table_allow_export = Export der Daten erlauben
 yform_manager_table_allow_import = Import von Daten erlauben
 yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
+yform_manager_table_history = Historie anlegen
 yform_manager_tablefield_overview = Feldübersicht
 
 yform_manager_table_updated = Vielen Dank für die Aktualisierung.
@@ -197,6 +198,19 @@ yform_manager_import_divider_tab = Tabulator
 yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
 yform_manager_import_start = Hinzufügen
 yform_manager_import_file = Datei
+
+# history
+yform_history = Historie
+yform_history_dataset_id = Datensatz-ID
+yform_history_action = Aktion
+yform_history_action_create = erstellt
+yform_history_action_update = bearbeitet
+yform_history_action_delete = gelöscht
+yform_history_user = Benutzer
+yform_history_timestamp = Zeitstempel
+yform_history_restore = Zurücksetzen
+yform_history_restore_success = Datensatz wurde zurückgesetzt.
+yform_history_restore_error = Datensatz konnte nicht zurückgesetzt werden.
 
 yform_manager_show_form_notation = Formular-Code
 

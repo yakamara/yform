@@ -17,9 +17,8 @@ if (count($notice) > 0) {
 $class = $this->getElement('required') ? 'form-is-required ' : '';
 
 $class_group   = trim('form-group ' . $class . $this->getElement(5) . ' ' . $this->getWarningClass());
-$class_control = trim('form-control');
 
-$class_label = '';
+$class_label = ['control-label'];
 $field_before = '';
 $field_after = '';
 
@@ -27,7 +26,7 @@ if (trim($this->getElement('grid')) != '') {
     $grid = explode(',', trim($this->getElement('grid')));
 
     if (isset($grid[0]) && $grid[0] != '') {
-        $class_label .= ' ' . trim($grid[0]);
+        $class_label[] = trim($grid[0]);
     }
 
     if (isset($grid[1]) && $grid[1] != '') {
@@ -37,13 +36,20 @@ if (trim($this->getElement('grid')) != '') {
 }
 
 $rows = $this->getElement('rows');
-if ($rows == "") {
+if (!$rows) {
     $rows = 10;
 }
 
-?>
-<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $field_before; ?><textarea class="<?php echo $class_control ?>" name="<?php echo $this->getFieldName() ?>" id="<?php echo $this->getFieldId() ?>" rows="<?php echo $rows; ?>" <?php echo $this->getAttributeElement('placeholder'), $this->getAttributeElement('pattern'), $this->getAttributeElement('required', true), $this->getAttributeElement('disabled', true), $this->getAttributeElement('readonly', true) ?>><?php echo htmlspecialchars($this->getValue()) ?></textarea>
-    <?php echo $notice ?><?php echo $field_after; ?>
-</div>
+$attributes = [
+    "class" => 'form-control',
+    "name" => $this->getFieldName(),
+    "id" => $this->getFieldId(),
+    "rows" => $rows
+];
+
+$attributes = $this->getAttributeElements($attributes, ['placeholder', 'pattern', 'required', 'disabled', 'readonly']);
+
+echo '<div class="'.$class_group.'" id="'.$this->getHTMLId().'">
+<label class="'.implode(" ", $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
+'.$field_before.'<textarea '.implode(" ", $attributes).'>'.htmlspecialchars($this->getValue()).'</textarea>'.$notice.$field_after.
+'</div>';

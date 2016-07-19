@@ -1,7 +1,7 @@
 <?php
 
-$notice = array();
-if ($this->getElement('notice') != "") {
+$notice = [];
+if ($this->getElement('notice') != '') {
     $notice[] = $this->getElement('notice');
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -14,37 +14,56 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
-?><p class="<?php echo $this->getHTMLClass() ?> formlabel-<?php echo $this->getName() ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="text <?php echo $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>" >
-        <?php echo $this->getLabel() ?>
-    </label>
 
-    <input class="upload <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" type="file" />
-    <?php echo $notice ?>
-</p>
+$class  = $this->getElement('required') ? 'form-is-required ' : '';
+
+$class_group   = trim('form-group ' . $class . $this->getWarningClass());
+$class_control = trim('form-control');
+
+$class_label = '';
+$field_before = '';
+$field_after = '';
+
+if (trim($this->getElement('grid')) != '') {
+    $grid = explode(',', trim($this->getElement('grid')));
+
+    if (isset($grid[0]) && $grid[0] != '') {
+        $class_label .= ' ' . trim($grid[0]);
+    }
+
+    if (isset($grid[1]) && $grid[1] != '') {
+        $field_before = '<div class="' . trim($grid[1]) . '">';
+        $field_after = '</div>';
+    }
+}
+?>
+<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
+    <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
+    <?php echo $field_before; ?><input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" name="file_<?php echo md5($this->getFieldName('file')) ?>" />
+    <?php echo $notice ?><?php echo $field_after; ?>
+</div>
+
 <?php
 
 $value = $this->getValue();
-if ($value != "") {
-    $values = explode("_",$value,2);
+if ($value != '') {
+    $values = explode('_', $value, 2);
     if (count($values) == 2) {
-        echo '<input type="hidden" name="'.$this->getFieldName().'" value="'.$values[0].'" />';
+        echo '<input type="hidden" name="' . $this->getFieldName() . '" value="' . $values[0] . '" />';
 
-        $a_a = '';
-        $a_e = '';
+        $label = htmlspecialchars($values[1]);
 
         if (rex::isBackend()) {
-            $a_a = '<a href="'.$_SERVER["REQUEST_URI"].'&rex_upload_downloadfile='.urlencode($this->getValue()).'">';
-            $a_e = '</a>';
+            $label = '<a href="' . $_SERVER["REQUEST_URI"] . '&rex_upload_downloadfile=' . urlencode($this->getValue()) . '">' . $label . '</a>';
         }
 
         echo '
-<p class="formcheckbox formlabel-'.$this->getName('checkbox').'" id="'.$this->getHTMLId('checkbox').'">
-    <input type="checkbox" class="checkbox" name="'.$this->getFieldName('delete').'" id="'.$this->getFieldId('delete').'" value="1" />
-    <label class="checkbox" for="'.$this->getFieldId('delete').'" >'.$this->tmp_messages["delete_file"].' "'.$a_a.htmlspecialchars($values[1]).$a_e.'"</label>
-</p>';
-
-
+        <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
+            <label>
+                <input type="checkbox" id="' .  $this->getFieldId("delete") . '" name="' . $this->getFieldName('delete') . '" value="1" />
+                ' . $this->tmp_messages['delete_file'] . ' "' . $label . '"
+            </label>
+        </div>';
 
     }
 }

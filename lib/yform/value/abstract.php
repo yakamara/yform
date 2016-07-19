@@ -136,7 +136,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     }
 
-  function parse($template, $params = array())
+    function parse($template, $params = array())
     {
         extract($params);
         ob_start();
@@ -144,13 +144,31 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return ob_get_clean();
     }
 
-    function getAttributeElement($attribute, $boolean = false)
+    function getAttributeElements($attributes, $direct_attributes = [])
     {
-        $element = $this->getElement($attribute);
-        if ($element) {
-            return ' ' . $attribute . '="' . ($boolean ? $attribute : htmlspecialchars($element)) . '"';
+
+        if ( ($json_attributes = trim($this->getElement("attributes"))) ) {
+            $json_attributes = json_decode($json_attributes, true);
+            if (is_array($json_attributes)) {
+                foreach($json_attributes as $attribute => $value) {
+                    $attributes[$attribute] = $value;
+                }
+            }
         }
-        return '';
+
+        foreach($direct_attributes as $attribute) {
+            if ( ($element = $this->getElement($attribute)) ) {
+                $attributes[$attribute] = $element;
+            }
+        }
+
+        $return = [];
+        foreach($attributes as $attribute => $value) {
+            $return[] = $attribute.'="'.htmlspecialchars($value).'"';
+        }
+
+        return $return;
+
     }
 
     function getWarningClass()

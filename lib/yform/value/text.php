@@ -17,7 +17,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
         if ($this->getValue() == '' && !$this->params['send']) {
             $this->setValue($this->getElement(3));
         }
-
+        
         $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -29,7 +29,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'text -> Beispiel: text|name|label|defaultwert|[no_db]|cssclassname';
+        return 'text -> Beispiel: text|name|label|defaultwert|[no_db]|';
     }
 
     function getDefinitions()
@@ -42,7 +42,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
                 'label'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
                 'default'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_text_default")),
                 'no_db'     => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
-                'css_class' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_text_css_class")),
+                'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
                 'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_text_description"),
