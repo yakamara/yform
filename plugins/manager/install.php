@@ -1,12 +1,5 @@
 <?php
 
-
-rex_sql_util::importDump($this->getPath('_install.sql'));
-
-
-
-
-
 /**
  * yform
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
