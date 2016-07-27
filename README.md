@@ -24,6 +24,7 @@ Last Changes
 
 * Klasse datetime hat sich verändert. Stichwort: Layout/Format
 * Klasse date hat sich verändert. Stichwort: Layout/Format
+* Klasse time hat sich verändert. Stichwort: Layout/Format
 * REDAXO 5.2 ist mindestens nötig.
 * fulltext_value.php entfernt da über index_value.php möglich
 * action db_query.php umgebaut. Keine Fehlermeldung mehr und mehrere Labels zuweisbar und über ? im query setzbar

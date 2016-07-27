@@ -87,15 +87,15 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
         // -------------
 
-        $format = $this->getElement('format');
-        if ($format == '') {
-            $format = '###H###h ###I###m';
+        $layout = $this->getElement('format');
+        if ($layout == '') {
+            $layout = '###H###h ###I###m';
         }
-        $format = preg_split('/(?<=###[HI]###)(?=.)|(?<=.)(?=###[HI]###)/', $format);
+        $layout = preg_split('/(?<=###[HI]###)(?=.)|(?<=.)(?=###[HI]###)/', $layout);
 
         $this->params['form_output'][$this->getId()] = $this->parse(
             array('value.time.tpl.php', 'value.datetime.tpl.php'),
-            compact('format', 'hours', 'minutes', 'hour', 'minute')
+            compact('layout', 'hours', 'minutes', 'hour', 'minute')
         );
     }
 
