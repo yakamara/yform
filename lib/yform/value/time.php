@@ -115,7 +115,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'label'   => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_defaults_label")),
                 'hours'   => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_hours")),
                 'minutes' => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_minutes")),
-                'format'  => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_format")),
+                'layout'  => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_values_time_format")),
                 'no_db'   => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
             ),
             'description' => rex_i18n::msg("yform_values_time_description"),
