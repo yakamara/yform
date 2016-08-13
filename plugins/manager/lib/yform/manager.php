@@ -488,7 +488,15 @@ class rex_yform_manager
                     // $fragment->setVar('buttons', $buttons, false);
                     $form = $fragment->parse('core/page/section.php');
 
-                    echo $form;
+                    if ($this->table->isSearchable()  && $this->hasDataPageFunction('search')) {
+                        $fragment = new rex_fragment();
+                        $fragment->setVar('content', [$searchform, $form], false);
+                        $fragment->setVar('classes', ['col-sm-3', 'col-sm-9'], false);
+                        echo $fragment->parse('core/page/grid.php');
+
+                    } else {
+                        echo $form;
+                    }
 
                     echo rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_FORM', '', array('form' => $form, 'func' => $func, 'this' => $this, 'table' => $this->table)));
 
@@ -667,13 +675,7 @@ class rex_yform_manager
 
                 $panel_options  = '';
                 $data_links = [];
-                if ($this->table->isSearchable()  && $this->hasDataPageFunction('search')) {
-                    $item = [];
-                    $item['label'] = rex_i18n::msg('yform_search');
-                    $item['attributes']['class'][] = 'btn-search';
-                    $item['attributes']['id'] = 'searchtoggler';
-                    $data_links[] = $item;
-                }
+
                 if (count($data_links) > 0) {
                     $fragment = new rex_fragment();
                     $fragment->setVar('size', 'xs', false);
@@ -759,12 +761,6 @@ class rex_yform_manager
                     $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_manager_fields') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
                 }
 
-
-                // SEARCHBLOCK
-                $searchVars = $searchObject->getSearchVars();
-                $display = count($searchVars["rex_yform_searchvars"]) >0 ? 'block' : 'none';
-                echo '<div id="searchblock" style="display:' . $display . ';">' . $searchform . '</div>';
-
                 $content = $list->get();
 
                 $fragment = new rex_fragment();
@@ -775,14 +771,21 @@ class rex_yform_manager
 
                 $content .= '
                  <script type="text/javascript">/* <![CDATA[ */
-                     jQuery("#searchtoggler").click(function(){jQuery("#searchblock").slideToggle("fast");});
                      jQuery("#yform_help_empty_toggler").click(function(){jQuery("#yform_help_empty").slideToggle("fast");});
                      jQuery("#yform_search_reset").click(function(){window.location.href = "index.php?page=yform/manager/data_edit&table_name=' . $this->table->getTableName() . '";});
                      jQuery("#truncate-table").click(function(){if(confirm("' . rex_i18n::msg('yform_truncate_table_confirm') . '")){return true;} else {return false;}});
                      jQuery("#dataset-delete").click(function(){if(confirm("' . rex_i18n::msg('yform_dataset_delete_confirm') . '")){return true;} else {return false;}});
                  /* ]]> */</script>';
 
-                echo $content;
+                if ($this->table->isSearchable()  && $this->hasDataPageFunction('search')) {
+                    $fragment = new rex_fragment();
+                    $fragment->setVar('content', [$searchform, $content], false);
+                    $fragment->setVar('classes', ['col-sm-3', 'col-sm-9'], false);
+                    echo $fragment->parse('core/page/grid.php');
+
+                } else {
+                    echo $content;
+                }
 
             }
 
