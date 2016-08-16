@@ -34,7 +34,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 }
 
                 $options[$cid] = str_repeat('&nbsp;&nbsp;&nbsp;', $level) . $cname;
-                $childs = $cat->getChildren($ignoreOfflines, $clang);
+                $childs = $cat->getChildren($ignoreOfflines);
                 if (is_array($childs)) {
                     foreach ($childs as $child) {
                         $add($child, $level + 1);
@@ -43,7 +43,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
             }
         };
         if ($rootId = $this->getElement('category')) {
-            if ($rootCat = rex_category::getCategoryById($rootId, $clang)) {
+            if ($rootCat = rex_category::get($rootId, $clang)) {
                 $add($rootCat);
             }
         } else {
@@ -104,7 +104,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 'check_perms'     => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_be_select_category_check_perms"), 'default' => 1),
                 'homepage'        => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_be_select_category_homepage"), 'default' => 1),
                 'category' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_be_select_category_category"), 'value' => 0),
-                'clang'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_be_select_category_clang"), 'value' => 0),
+                'clang'    => array( 'type' => 'select_sql',    'query' => 'select id, code as name from rex_clang', 'label' => rex_i18n::msg("yform_values_be_select_category_clang"), 'value' => 1),
                 'multiple' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_be_select_category_multiple")),
                 'size'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_be_select_category_size")),
                 'no_db'    => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),          'default' => 0),
