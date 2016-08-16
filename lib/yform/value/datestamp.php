@@ -12,15 +12,15 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
     function preValidateAction()
     {
         $format = 'Y-m-d';
-        if ($this->getElement(2) != '') {
-            $format = $this->getElement(2);
+        if ($this->getElement('format') != '') {
+            $format = $this->getElement('format');
             if ($format == 'mysql') {
                 $format = 'Y-m-d H:i:s';
             }
         }
 
         // 0 = immer setzen, 1 = nur wenn leer / create
-        if ($this->getElement(4) != 1 || !isset($this->params['sql_object']) || !$this->params['sql_object']->getValue($this->getName())) {
+        if ($this->getElement('only_empty') != 1 || !isset($this->params['sql_object']) || !$this->params['sql_object']->getValue($this->getName())) {
             $this->setValue(date($format));
         }
 
@@ -28,10 +28,8 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     function enterObject()
     {
-        //$this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
-
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getValue() && $this->getElement(3) != 'no_db') {
+        if ($this->getValue() && $this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }
@@ -49,7 +47,8 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             'name' => 'datestamp',
             'values' => array(
                 'name'  =>  array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
-                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_datestamp_format")),
+                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'format' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_datestamp_format")),
                 'no_db' => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
                 'only_empty' => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_datestamp_only_empty"), 'default' => '0', 'options' => 'immer=0,nur wenn leer=1' ),
             ),
