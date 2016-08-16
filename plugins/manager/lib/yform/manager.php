@@ -1046,7 +1046,6 @@ class rex_yform_manager
                 switch ($v['type']) {
 
                     case 'name':
-
                         $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
                         if ($func == 'edit' ) {
                             $yform->setValueField('showvalue', array($field, 'Name', 'notice' => $v["notice"]));
@@ -1081,12 +1080,6 @@ class rex_yform_manager
                         $yform->setValueField('checkbox', array($field, $v['label'], '', $v['default'], 'notice' => $v["notice"]));
                         break;
 
-                    case 'select':
-                        // select|gender|Geschlecht *|Frau=w;Herr=m|[no_db]|defaultwert|multiple=1
-                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
-                        $yform->setValueField('select', array($field, $v['label'], $v['options'], '', $v['default'], 0, 'notice' => $v["notice"]));
-                        break;
-
                     case 'table':
                         // ist fest eingetragen, damit keine Dinge durcheinandergehen
 
@@ -1110,11 +1103,6 @@ class rex_yform_manager
                         }
                         break;
 
-                    case 'textarea':
-                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
-                        $yform->setValueField('textarea', array($field, $v['label'], 'notice' => $v["notice"]));
-                        break;
-
                     case 'table.field':
                         // Todo:
 
@@ -1136,16 +1124,25 @@ class rex_yform_manager
                         $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 1, 5, 'notice' => $v["notice"]));
                         break;
 
-                    default:
+                    case 'text':
                         // nur beim "Bezeichnungsfeld"
                         if ($field == 'label' && $type_real_field != '' && !isset($v['value'])) {
                             $v['value'] = $type_real_field;
                         } elseif (!isset($v['value'])) {
                             $v['value'] = '';
                         }
+                        $v['name'] = $field;
+                        $yform->setValueField('text', $v);
+                        break;
 
-                        $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
-                        $yform->setValueField('text', array($field, $v['label'], $v['value'], 'notice' => $v["notice"]));
+                    case 'textarea':
+                    case 'select':
+                    case 'select_sql':
+                    default:
+                        $v['name'] = $field;
+                        $yform->setValueField('select_sql', $v);
+                        break;
+
                 }
 
             }
