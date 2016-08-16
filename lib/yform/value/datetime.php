@@ -143,7 +143,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'year_start' => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_datetime_year_start")),
                 'year_end'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_datetime_year_end")),
                 'minutes'    => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_datetime_minutes")),
-                'layout'     => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_datetime_layout")),
+                'layout'     => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_datetime_layout"), 'notice' => rex_i18n::msg("yform_values_datetime_notice")),
                 'current_date' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_datetime_current_date")),
                 'no_db'      => array( 'type' => 'no_db', 'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
             ),

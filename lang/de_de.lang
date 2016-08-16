@@ -77,6 +77,7 @@ yform_values_datetime_year_start = Startjahr
 yform_values_datetime_year_end = Endjahr
 yform_values_datetime_minutes = Minutenformate
 yform_values_datetime_layout = Anzeigeformat
+yform_values_datetime_notice = Format: ###Y###-###M###-###D### ###H###h ###I###m
 yform_values_datetime_current_date = Aktuelles Datum voreingestellt
 yform_values_email_default = Defaultstatus
 yform_values_email_classname = Klassenname
