@@ -11,6 +11,16 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     function preValidateAction()
     {
+
+        // bc service for Version < 1.1
+        if ($this->getValue() != "" && json_decode($this->getValue()) == "") {
+            $rows = explode(";",$this->getValue());
+            foreach($rows as $row_id => $row) {
+                $rows[$row_id] = explode(",",$row);
+            }
+            $this->setValue(json_encode($rows));
+        }
+
         $columns = explode(',', $this->getElement('columns'));
         if (count($columns) == 0) {
             return;
