@@ -33,22 +33,25 @@ if (trim($this->getElement('grid')) != '') {
 ?>
 
 <?php if (trim($this->getLabel()) != ''): ?>
-    <div class="radio-group form-group">
+<div class="checkbox-group form-group">
     <label class="control-label<?php echo $class_label; ?>"><?php echo $this->getLabel() ?></label>
+
 <?php endif; ?>
 <?php echo $field_before; ?>
-<?php
-foreach ($options as $key => $value): ?>
-    <?php $id = $this->getFieldId() . '-' . htmlspecialchars($key) ?>
-    <div class="radio<?php echo (bool)$this->getElement('inline') ? '-inline' : ''; ?>">
+
+<?php foreach ($options as $k => $v): ?>
+    <?php
+    $class_group = trim('checkbox yform-element ' . $this->getHTMLClass($k) . ' ' . $this->getWarningClass());
+    ?>
+    <div class="<?= $class_group ?>" id="<?= $this->getHTMLId($k) ?>">
         <label>
-            <input type="radio" id="<?php echo $id ?>" name="<?php echo $this->getFieldName() ?>" value="<?php echo htmlspecialchars($key) ?>"<?php echo $key == $this->getValue() ? ' checked="checked"' : '' ?> />
-            <?php echo $this->getLabelStyle($value) ?>
+            <input type="checkbox" name="<?= $this->getFieldName() ?>[]" value="<?= $k ?>"<?= in_array($k, $this->getValue()) ? ' checked="checked"' : '' ?> />
+            <?= $this->getLabelStyle($v) ?>
         </label>
     </div>
 <?php endforeach ?>
 <?php echo $notice; ?>
 <?php echo $field_after; ?>
 <?php if (trim($this->getLabel()) != ''): ?>
-    </div>
+</div>
 <?php endif; ?>
