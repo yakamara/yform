@@ -144,6 +144,16 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return ob_get_clean();
     }
 
+    /* deprecated - will be deleted in Version 1.2 */
+    function getAttributeElement($attribute, $boolean = false) {
+
+        $element = $this->getElement($attribute);
+        if ($element) {
+            return ' ' . $attribute . '="' . ($boolean ? $attribute : htmlspecialchars($element)) . '"';
+        }
+        return '';
+    }
+
     function getAttributeElements($attributes, $direct_attributes = [])
     {
 
