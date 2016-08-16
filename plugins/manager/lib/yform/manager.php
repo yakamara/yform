@@ -1140,7 +1140,7 @@ class rex_yform_manager
                     case 'select_sql':
                     default:
                         $v['name'] = $field;
-                        $yform->setValueField('select_sql', $v);
+                        $yform->setValueField($v['type'], $v);
                         break;
 
                 }
