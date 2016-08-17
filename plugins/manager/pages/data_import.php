@@ -132,6 +132,12 @@ if (rex_request('send', 'int', 0) == 1) {
 
                             }
 
+                            foreach ($fieldarray as $k => $name) {
+                                if (isset($mc[$name])) {
+                                    unset($fieldarray[$k]);
+                                }
+                            }
+
                         }
 
                     }
@@ -154,7 +160,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         $exists = $dataset->exists();
 
                         foreach ($line_array as $k => $v) {
-                            if (!$fieldarray[$k] ||'id' === $fieldarray[$k]) {
+                            if (empty($fieldarray[$k]) ||'id' === $fieldarray[$k]) {
                                 continue;
                             }
 
