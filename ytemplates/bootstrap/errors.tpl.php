@@ -1,4 +1,4 @@
-<div class="alert alert-danger <?php echo $this->objparams['error_class'] ?>">
+<div class="alert alert-danger">
 
 <?php
 if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):

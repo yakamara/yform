@@ -25,7 +25,7 @@ class rex_yform
         $this->objparams['validates'] = [];
         $this->objparams['actions'] = [];
 
-        $this->objparams['error_class'] = 'form_warning';
+        $this->objparams['error_class'] = 'has-error';
         $this->objparams['unique_error'] = '';
         $this->objparams['unique_field_warning'] = 'not unique';
 
