@@ -11,7 +11,7 @@
 $table_name = rex_request('table_name', 'string');
 $table = rex_yform_manager_table::get($table_name);
 
-if ($table && rex::getUser() && (rex::getUser()->isAdmin() || rex::getUser()->hasPerm('yform[table:' . $table_name . ']')) ) {
+if ($table && rex::getUser() && (rex::getUser()->isAdmin() || rex::getUser()->getComplexPerm('yform_manager_table')->hasPerm($table->getTableName())) ) {
 
     try {
 
