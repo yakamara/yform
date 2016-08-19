@@ -769,14 +769,6 @@ class rex_yform_manager
                 $fragment->setVar('content', $content, false);
                 $content = $fragment->parse('core/page/section.php');
 
-                $content .= '
-                 <script type="text/javascript">/* <![CDATA[ */
-                     jQuery("#yform_help_empty_toggler").click(function(){jQuery("#yform_help_empty").slideToggle("fast");});
-                     jQuery("#yform_search_reset").click(function(){window.location.href = "index.php?page=yform/manager/data_edit&table_name=' . $this->table->getTableName() . '";});
-                     jQuery("#truncate-table").click(function(){if(confirm("' . rex_i18n::msg('yform_truncate_table_confirm') . '")){return true;} else {return false;}});
-                     jQuery("#dataset-delete").click(function(){if(confirm("' . rex_i18n::msg('yform_dataset_delete_confirm') . '")){return true;} else {return false;}});
-                 /* ]]> */</script>';
-
                 if ($this->table->isSearchable()  && $this->hasDataPageFunction('search')) {
                     $fragment = new rex_fragment();
                     $fragment->setVar('content', [$searchform, $content], false);
