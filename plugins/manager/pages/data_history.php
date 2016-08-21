@@ -8,7 +8,7 @@ $subfunc = rex_request('subfunc', 'string');
 $datasetId = rex_request('dataset_id', 'int');
 $historyId = rex_request('history_id', 'int');
 if ('restore' === $subfunc && $datasetId && $historyId) {
-    $dataset = rex_yform_manager_dataset::get($this->table->getTableName(), $datasetId);
+    $dataset = rex_yform_manager_dataset::getRaw($this->table->getTableName(), $datasetId);
 
     if ($dataset->restoreSnapshot($historyId)) {
         echo rex_view::success(rex_i18n::msg('yform_history_restore_success'));

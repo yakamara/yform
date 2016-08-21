@@ -151,7 +151,7 @@ if (rex_request('send', 'int', 0) == 1) {
 
                         if (null !== $idColumn && isset($line_array[$idColumn])) {
                             $id = $line_array[$idColumn];
-                            $dataset = $this->table->getDataset($id);
+                            $dataset = $this->table->getRawDataset($id);
                         } else {
                             $id = null;
                             $dataset = $this->table->createDataset();
