@@ -30,15 +30,12 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $this->tmp_messages = $err_msgs;
 
         $value = $this->getValue();
-        if ($value == "") {
-            $value = $this->getElement('default_file');
-        }
         $this->setValue('');
         $value_email = '';
         $value_sql = '';
 
         if (!is_string($value) && $value["delete"] == 1) {
-            $value = '';
+            $value = "";
         }
 
         // SIZE CHECK
@@ -64,11 +61,9 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         if ($this->getElement('file_prefix')) {
             $prefix .= $this->getElement('file_prefix').'_';
         }
-        $upload_folder = $this->getElement('upload_folder');
-        if ($upload_folder == "") {
-            $upload_folder = rex_path::addonData('yform','uploads');
-            rex_dir::create($upload_folder);
-        }
+
+        $upload_folder = rex_path::pluginData('yform','manager','uploads'.$this->getElement('upload_folder'));
+        rex_dir::create($upload_folder);
 
         if ($value != "") {
 
@@ -84,21 +79,21 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $value = basename($files[0]);
 
                 if (rex_request("rex_upload_downloadfile") == $value) {
-                  $file = $upload_folder.'/'.$value;
-                  if (file_exists($file)) {
-                    ob_end_clean();
-                    $filename = explode("_",basename($file),2);
-                    $filename = $filename[1];
-                    header('Content-Description: File Transfer');
-                    header('Content-Type: application/octet-stream');
-                    header('Content-Disposition: attachment; filename='.$filename);
-                    header('Expires: 0');
-                    header('Cache-Control: must-revalidate');
-                    header('Pragma: public');
-                    header('Content-Length: ' . filesize($file));
-                    readfile($file);
-                    exit;
-                  }
+                    $file = $upload_folder.'/'.$value;
+                    if (file_exists($file)) {
+                        ob_end_clean();
+                        $filename = explode("_",basename($file),2);
+                        $filename = $filename[1];
+                        header('Content-Description: File Transfer');
+                        header('Content-Type: application/octet-stream');
+                        header('Content-Disposition: attachment; filename='.$filename);
+                        header('Expires: 0');
+                        header('Cache-Control: must-revalidate');
+                        header('Pragma: public');
+                        header('Content-Length: ' . filesize($file));
+                        readfile($file);
+                        exit;
+                    }
                 }
 
             } else {
@@ -129,27 +124,33 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                     $file_normed = $FILE['name_normed'];
                     $file_normed_new = $prefix.$file_normed;
                     if (file_exists($upload_folder . '/' . $file_normed_new)) {
-                      for ($cf = 1; $cf < 1000; $cf++) {
-                        $file_normed_new = $prefix . $cf . '_' . $file_normed ;
-                        if (!file_exists($upload_folder . '/' . $file_normed_new)) {
-                          break;
+                        for ($cf = 1; $cf < 1000; $cf++) {
+                            $file_normed_new = $prefix . $cf . '_' . $file_normed ;
+                            if (!file_exists($upload_folder . '/' . $file_normed_new)) {
+                                break;
+                            }
                         }
-                      }
                     }
 
                     $value = $file_normed_new;
 
-                    if (!@move_uploaded_file($FILE['tmp_name'], $upload_folder . '/' . $file_normed_new ) ) {
-                      if (!@copy($FILE['tmp_name'], $upload_folder . '/' . $file_normed_new )) {
-                        $error[] = 'upload failed: destination folder problem';
-                        $value = '';
+                    if (!move_uploaded_file($FILE['tmp_name'], $upload_folder . '/' . $file_normed_new ) ) {
+                        if (!copy($FILE['tmp_name'], $upload_folder . '/' . $file_normed_new )) {
+                            $error[] = 'upload failed: destination folder problem';
+                            $value = '';
 
-                      } else {
-                        @chmod($upload_folder . '/' . $file_normed_new, rex::getDirPerm());
+                        } else {
+                            @chmod($upload_folder . '/' . $file_normed_new, rex::getDirPerm());
+                            // Important! .. Sometime yform executeField is called more often
+                            unset($_FILES[$rfile]);
+                            $this->params['this']->setFieldValue($this->getId(), $value);
 
                       }
                     } else {
-                      @chmod($upload_folder . '/' . $file_normed_new, rex::getDirPerm());
+                        @chmod($upload_folder . '/' . $file_normed_new, rex::getDirPerm());
+                        // Important! .. Sometime yform executeField is called more often
+                        unset($_FILES[$rfile]);
+                        $this->params['this']->setFieldValue($this->getId(), $value);
 
                     }
 
@@ -163,8 +164,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             switch ($this->getElement('modus')) {
                 case('database'):
                     if ($database_filename_field != "") {
-                      $this->params['value_pool']['email'][$database_filename_field] = $value; // $FILE['name_normed'];
-                      $this->params['value_pool']['sql'][$database_filename_field] = $value; // $FILE['name_normed'];
+                        $this->params['value_pool']['email'][$database_filename_field] = $value;
+                        $this->params['value_pool']['sql'][$database_filename_field] = $value;
                     }
 
                     $value_email = file_get_contents($upload_folder.'/'.$value);
@@ -172,7 +173,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                     break;
 
                 case('upload'):
-                default:
                     $value_email = $value;
                     $value_sql = $value_email;
                     break;
@@ -185,12 +185,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $this->params['value_pool']['email'][$this->getName()] = $value_email;
         $this->params['value_pool']['sql'][$this->getName()] = $value_sql;
 
-        ## check for required file
         if ($this->params['send'] && $this->getElement('required') == 1 && $this->getValue() == '') {
             $error[] = $err_msgs['empty_error'];
         }
 
-        ## setting up error Message
         if ($this->params['send'] && count($error) > 0) {
             $this->params['warning'][$this->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$this->getId()] = implode(', ', $error);
@@ -203,14 +201,14 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     function getDescription()
     {
         return 'upload -> Beispiel: upload|name | label | '.
-                'Maximale Größe in Kb oder Range 100,500 | '.
-                'endungenmitpunktmitkommasepariert | '.
-                'pflicht=1 | '.
-                'min_err,max_err,type_err,empty_err,delete_file_msg | '.
-                'Speichermodus(upload/database/no_save) | '.
-                '`database`: Dateiname wird gespeichert in Feldnamen | '.
-                'Eigener Uploadordner [optional] | '.
-                'Dateiprefix [optional] |';
+        'Maximale Größe in Kb oder Range 100,500 | '.
+        'endungenmitpunktmitkommasepariert | '.
+        'pflicht=1 | '.
+        'min_err,max_err,type_err,empty_err,delete_file_msg | '.
+        'Speichermodus(upload/database/no_save) | '.
+        '`database`: Dateiname wird gespeichert in Feldnamen | '.
+        'Eigener Uploadordner [optional] | '.
+        'Dateiprefix [optional] |';
     }
 
     function getDefinitions()
@@ -227,9 +225,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'messages' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_messages")),
                 'modus'    => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_upload_modus"), 'options' => 'upload,database,no_save', 'default' => 'upload'),
                 'database_filename_field'    => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_upload_database_filename_field")),
-                'upload_folder'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_upload_folder")),
+                'upload_folder'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_upload_folder"), 'notice' => rex_i18n::msg("yform_values_upload_upload_folder_notice", rex_path::pluginData('yform','manager','uploads'))),
                 'file_prefix'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_upload_file_prefix")),
-                'default_file'  => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_upload_default_file")),
                 'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_upload_description"),
@@ -242,45 +239,44 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $return = '';
         $field = new rex_yform_manager_field($params['params']["field"]);
 
-        if ($field->getElement('modus') == "database") {
-            $return = '[raw data]';
+        switch($field->getElement('modus')) {
+            case ("database"):
+                $return = '[raw data]';
+                break;
 
-        } else {
+            case ("upload"):
+                $upload_folder = rex_path::pluginData('yform','manager','uploads'.$field->getElement('upload_folder'));
+                $value = explode("_", $params['value'], 2);
 
-            $upload_folder = $field->getElement('upload_folder');
-            if ($upload_folder == "") {
-                $upload_folder = rex_path::addonData('yform','uploads');
-            }
-
-            $value = explode("_", $params['value'], 2);
-
-            if (count($value) == 2) {
-                $hash = $value[0];
-                $value = $value[1];
-                $search_path = $upload_folder.'/'.$hash.'_'.$field->getElement('file_prefix');
-                $files = glob(preg_replace('/(\*|\?|\[)/', '[$1]', $search_path).'*');
-                if (count($files) == 1) {
-                    $return = '<a href="'.$_SERVER["REQUEST_URI"].'&rex_upload_downloadfile='.urlencode($params['value']).'">'.basename($value).'</a>';
-                    if (rex_request("rex_upload_downloadfile") == $params['value']) {
-                        $file = $upload_folder.'/'.$params['value'];
-                        if (file_exists($file)) {
-                            ob_end_clean();
-                            $filename = explode("_",basename($file),2);
-                            $filename = $filename[1];
-                            header('Content-Description: File Transfer');
-                            header('Content-Type: application/octet-stream');
-                            header('Content-Disposition: attachment; filename='.$filename);
-                            header('Expires: 0');
-                            header('Cache-Control: must-revalidate');
-                            header('Pragma: public');
-                            header('Content-Length: ' . filesize($file));
-                            readfile($file);
+                if (count($value) == 2) {
+                    $hash = $value[0];
+                    $value = $value[1];
+                    $search_path = $upload_folder.'/'.$hash.'_'.$field->getElement('file_prefix');
+                    $files = glob(preg_replace('/(\*|\?|\[)/', '[$1]', $search_path).'*');
+                    if (count($files) == 1) {
+                        $return = '<a href="'.$_SERVER["REQUEST_URI"].'&rex_upload_downloadfile='.urlencode($params['value']).'">'.basename($value).'</a>';
+                        if (rex_request("rex_upload_downloadfile") == $params['value']) {
+                            $file = $upload_folder.'/'.$params['value'];
+                            if (file_exists($file)) {
+                                ob_end_clean();
+                                $filename = explode("_",basename($file),2);
+                                $filename = $filename[1];
+                                header('Content-Description: File Transfer');
+                                header('Content-Type: application/octet-stream');
+                                header('Content-Disposition: attachment; filename='.$filename);
+                                header('Expires: 0');
+                                header('Cache-Control: must-revalidate');
+                                header('Pragma: public');
+                                header('Content-Length: ' . filesize($file));
+                                readfile($file);
+                            }
                         }
+
                     }
 
                 }
 
-            }
+                break;
 
         }
 

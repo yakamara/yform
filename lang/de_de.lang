@@ -126,8 +126,8 @@ yform_values_upload_messages = min_err,max_err,type_err,empty_err,delete_file_ms
 yform_values_upload_modus = Speichermodus
 yform_values_upload_database_filename_field = bei `database`: Dateiname wird gespeichert in Feldnamen
 yform_values_upload_upload_folder = bei `upload`: Uploadordner festlegen
+yform_values_upload_upload_folder_notice = Relativen Pfad zu "{0}" eintragen
 yform_values_upload_file_prefix = Dateiprefix
-yform_values_upload_default_file = Defaultfile
 
 yform_validate_compare_firstname = 1. Feldname
 yform_validate_compare_secondname = 2. Feldname
