@@ -455,17 +455,15 @@ class rex_yform_manager
                             $data_id = $yform->objparams['main_id'];
                             $func = "edit";
                             $yform = $yform_clone;
+                            $yform->setFieldValue('send', '', '', 'send');
                             $yform->setHiddenField('func', $func);
                             $yform->setHiddenField('data_id', $data_id);
-                            $yform->setActionField('db', array($this->table->getTablename(), "id=$data_id"));
                             $yform->setObjectparams('main_id', $data_id);
                             $yform->setObjectparams('main_where', "id=$data_id");
                             $yform->setObjectparams('getdata', true);
+                            $yform->setObjectparams('send', false);
                             $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
-                            $yform->setObjectparams('form_showformafterupdate', 1);
-                            $yform->executeFields();
-
-                            $form = $yform->executeActions();
+                            $form = $yform->getForm();
 
                         }
 
