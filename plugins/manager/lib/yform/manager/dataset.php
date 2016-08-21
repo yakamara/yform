@@ -531,6 +531,21 @@ class rex_yform_manager_dataset
         return $this->save();
     }
 
+    public function __isset($key)
+    {
+        return $this->hasValue($key);
+    }
+
+    public function __get($key)
+    {
+        return $this->getValue($key);
+    }
+
+    public function __set($key, $value)
+    {
+        $this->setValue($key, $value);
+    }
+
     private static function tableToModel($table)
     {
         return isset(self::$tableToModel[$table]) ? self::$tableToModel[$table] : __CLASS__;
