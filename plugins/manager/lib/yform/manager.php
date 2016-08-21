@@ -233,7 +233,7 @@ class rex_yform_manager
 
             // -------------- delete entry
             if ($func == 'delete' && $data_id != '' && $this->hasDataPageFunction('delete')) {
-                if ($this->table->getDataset($data_id)->delete()) {
+                if ($this->table->getRawDataset($data_id)->delete()) {
                     echo rex_view::success(rex_i18n::msg('yform_datadeleted'));
                     $func = '';
                 }
@@ -245,7 +245,7 @@ class rex_yform_manager
                 $delsql->setDebug(self::$debug);
                 $delsql->setQuery('select id from `' . $this->table->getTablename() . '` ' . $this->getDataListQueryWhere($rex_yform_filter, $searchObject));
                 foreach ($delsql as $row) {
-                    $this->table->getDataset($delsql->getValue('id'))->delete();
+                    $this->table->getRawDataset($delsql->getValue('id'))->delete();
                 }
                 echo rex_view::success(rex_i18n::msg('yform_dataset_deleted'));
                 $func = '';
@@ -257,7 +257,7 @@ class rex_yform_manager
                 $delsql->setDebug(self::$debug);
                 $delsql->setQuery('select id from `' . $this->table->getTablename() . '`');
                 foreach ($delsql as $row) {
-                    $this->table->getDataset($delsql->getValue('id'))->delete();
+                    $this->table->getRawDataset($delsql->getValue('id'))->delete();
                 }
                 echo rex_view::success(rex_i18n::msg('yform_table_truncated'));
                 $func = '';
@@ -322,7 +322,7 @@ class rex_yform_manager
             if (($func == 'add'  && $this->hasDataPageFunction('add')) || $func == 'edit') {
                 $back = rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
-                $dataset = $func == 'add' ? $this->table->createDataset() : $this->table->getDataset($data_id);
+                $dataset = $func == 'add' ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
                 $yform = $dataset->getForm();
                 foreach ($this->getLinkVars() as $k => $v) {
                     $yform->setHiddenField($k, $v);
