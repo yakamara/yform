@@ -313,14 +313,16 @@ class rex_yform_manager_dataset
         $yform = $this->getForm();
         $yform->setObjectparams('real_field_names', true);
 
-        $fields = $this->getTable()->getValueFields();
-        foreach ($this->newData as $key => $value) {
+        $table = $this->getTable();
+        $fields = $table->getValueFields();
+        $columns = $table->getColumns();
+        foreach ($this->data as $key => $value) {
             if ('id' === $key) {
                 continue;
             }
             if (isset($fields[$key])) {
                 $yform->setFieldValue(0, $value, '', $key);
-            } else {
+            } elseif (isset($columns[$key])) {
                 $yform->objparams['value_pool']['sql'][$key] = $value;
             }
         }
