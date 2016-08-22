@@ -241,24 +241,20 @@ class rex_yform_manager
 
             // -------------- delete dataset
             if ($func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
-                $delsql = rex_sql::factory();
-                $delsql->setDebug(self::$debug);
-                $delsql->setQuery('select id from `' . $this->table->getTablename() . '` ' . $this->getDataListQueryWhere($rex_yform_filter, $searchObject));
-                foreach ($delsql as $row) {
-                    $this->table->getRawDataset($delsql->getValue('id'))->delete();
+                $query = $this->table->query();
+                $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject);
+                if ($where) {
+                    $query->whereRaw($where);
                 }
+                $collection = $query->find();
+                $collection->delete();
                 echo rex_view::success(rex_i18n::msg('yform_dataset_deleted'));
                 $func = '';
             }
 
             // -------------- truncate table
             if ($func == 'truncate_table' && $this->hasDataPageFunction('truncate_table')) {
-                $delsql = rex_sql::factory();
-                $delsql->setDebug(self::$debug);
-                $delsql->setQuery('select id from `' . $this->table->getTablename() . '`');
-                foreach ($delsql as $row) {
-                    $this->table->getRawDataset($delsql->getValue('id'))->delete();
-                }
+                $this->table->query()->find()->delete();
                 echo rex_view::success(rex_i18n::msg('yform_table_truncated'));
                 $func = '';
             }
@@ -683,6 +679,11 @@ class rex_yform_manager
 
                 // INFO LINK
                 $dataset_links = [];
+                $item = [];
+                $item['label'] = rex_i18n::msg('yform_edit');
+                $item['url'] = 'index.php?' . $link_vars . '&func=edit&' . $em_url . $em_rex_list;
+                $item['attributes']['class'][] = 'btn-default';
+                $dataset_links[] = $item;
                 if (($this->table->isExportable() == 1 && $this->hasDataPageFunction('export'))) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_export');
@@ -811,7 +812,7 @@ class rex_yform_manager
         }
 
         if (count($sql) > 0) {
-            $sql = ' where ' . implode(' and ', $sql);
+            $sql = implode(' and ', $sql);
         } else {
             $sql = '';
         }
@@ -846,7 +847,10 @@ class rex_yform_manager
             $sql = 'select `id`,' . implode(',', $fields) . ' from `' . $this->table->getTablename() . '` t0';
         }
 
-        $sql .= $this->getDataListQueryWhere($rex_yform_filter, $searchObject);
+        $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject);
+        if ($where) {
+            $sql .= ' where '.$where;
+        }
         if ($this->table->getSortFieldName() != "") {
             $sql .= ' ORDER BY `' . $this->table->getSortFieldName() . '` ' . $this->table->getSortOrderName();
         }

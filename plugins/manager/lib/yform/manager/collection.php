@@ -168,4 +168,18 @@ class rex_yform_manager_collection extends \SplFixedArray
 
         return $array;
     }
+
+    /**
+     * @return bool
+     */
+    public function delete()
+    {
+        $success = true;
+
+        foreach ($this as $dataset) {
+            $success = $dataset->delete() && $success;
+        }
+
+        return $success;
+    }
 }
