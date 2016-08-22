@@ -58,8 +58,8 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
             'values' => array(
                 'name'     => array( 'type' => 'name',     'label' => 'Name' ),
                 'label'    => array( 'type' => 'text',     'label' => 'Bezeichnung'),
-                'position' => array( 'type' => 'select_name', 'label' => '"lat"-name,"lng"-name'),
-                'address'  => array( 'type' => 'select_name', 'label' => 'Names Positionsfindung'),
+                'position' => array( 'type' => 'text', 'label' => '"lat"-name,"lng"-name'),
+                'address'  => array( 'type' => 'text', 'label' => 'Names Positionsfindung'),
                 'width'    => array( 'type' => 'text',     'label' => 'Map-Breite'),
                 'height'   => array( 'type' => 'text',     'label' => 'Map-H&ouml;he'),
             ),
