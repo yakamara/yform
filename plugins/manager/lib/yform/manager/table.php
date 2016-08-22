@@ -371,7 +371,7 @@ class rex_yform_manager_table implements ArrayAccess
      */
     public function getDataset($id)
     {
-        return rex_yform_manager_dataset::get($this->getTableName(), $id);
+        return rex_yform_manager_dataset::get($id, $this->getTableName());
     }
 
     /**
@@ -381,7 +381,7 @@ class rex_yform_manager_table implements ArrayAccess
      */
     public function getRawDataset($id)
     {
-        return rex_yform_manager_dataset::getRaw($this->getTableName(), $id);
+        return rex_yform_manager_dataset::getRaw($id, $this->getTableName());
     }
 
     /**

@@ -49,12 +49,12 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param null|string $table Table name
      * @param int         $id    Dataset ID
+     * @param null|string $table Table name
      *
      * @return null|static
      */
-    public static function get($table, $id)
+    public static function get($id, $table = null)
     {
         if ($id <= 0) {
             throw new InvalidArgumentException(sprintf('$id has to be an integer greater than 0, but "%s" given', $id));
@@ -68,12 +68,12 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param null|string $table Table name
      * @param int         $id    Dataset ID
+     * @param null|string $table Table name
      *
      * @return static
      */
-    public static function getRaw($table, $id)
+    public static function getRaw($id, $table = null)
     {
         if ($id <= 0) {
             throw new InvalidArgumentException(sprintf('$id has to be an integer greater than 0, but "%s" given', $id));
@@ -98,31 +98,35 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param string $table
-     * @param string $query
-     * @param array  $params
+     * @param string      $query
+     * @param array       $params
+     * @param null|string $table
      *
      * @return null|static
      */
-    public static function queryOne($table, $query, array $params = [])
+    public static function queryOne($query, array $params = [], $table = null)
     {
+        $table = $table ?: static::modelToTable();
+
         $sql = rex_sql::factory();
         $sql
             ->setDebug(self::$debug)
             ->setQuery($query, $params);
 
-        return static::fromSql($table, $sql);
+        return static::fromSql($sql, $table);
     }
 
     /**
-     * @param string $table
-     * @param string $query
-     * @param array  $params
+     * @param string      $query
+     * @param array       $params
+     * @param null|string $table
      *
      * @return rex_yform_manager_collection
      */
-    public static function queryCollection($table, $query, array $params = [])
+    public static function queryCollection($query, array $params = [], $table = null)
     {
+        $table = $table ?: static::modelToTable();
+
         $sql = rex_sql::factory();
         $sql
             ->setDebug(self::$debug)
@@ -130,7 +134,7 @@ class rex_yform_manager_dataset
 
         $data = [];
         foreach ($sql as $row) {
-            $data[] = static::fromSql($table, $sql);
+            $data[] = static::fromSql($sql, $table);
         }
 
         return new rex_yform_manager_collection($table, $data);
@@ -277,7 +281,7 @@ class rex_yform_manager_dataset
     {
         $relation = $this->getTable()->getRelation($key);
 
-        return rex_yform_manager_dataset::get($relation['table'], $this->getValue($key));
+        return rex_yform_manager_dataset::get($this->getValue($key), $relation['table']);
     }
 
     /**
@@ -569,12 +573,12 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param string  $table
      * @param rex_sql $sql
+     * @param string  $table
      *
      * @return null|static
      */
-    private static function fromSql($table, rex_sql $sql)
+    private static function fromSql(rex_sql $sql, $table)
     {
         if (!$sql->valid()) {
             return null;

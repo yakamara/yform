@@ -484,7 +484,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function find()
     {
-        return rex_yform_manager_dataset::queryCollection($this->table, $this->getQuery(), $this->getParams());
+        return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
     }
 
     /**
@@ -517,7 +517,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         $this->limit(1);
 
-        return rex_yform_manager_dataset::queryOne($this->table, $this->getQuery(), $this->getParams());
+        return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
     }
 
     /**
