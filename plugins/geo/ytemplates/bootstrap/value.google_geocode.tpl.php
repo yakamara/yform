@@ -133,11 +133,26 @@ foreach($this->params["values"] as $value) {
 
 </script>
 
+<?php
+
+if ( (string) (int) $mapWidth == (string) $mapWidth) {
+    $mapWidth = $mapWidth.'px';
+}
+if ( (string) (int) $mapHeight == (string) $mapHeight) {
+    $mapHeight = $mapHeight.'px';
+}
+
+?>
+
 <div class="<?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="text <?php echo $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getElement('label') ?></label>
     <p class="yform-google-btnbar">
         <a class="get-position" href="javascript:void(0);"><?php echo rex_i18n::msg('yform_geo_get_position'); ?></a> |
         <a class="clear-position" href="javascript:void(0);"><?php echo rex_i18n::msg('yform_geo_clear_position'); ?></a>
     </p>
-    <div class="form_google_geocode_map" id="map_canvas<?php echo $this->getId() ?>" style="width:<?php echo $mapWidth ?>px; height:<?php echo $mapHeight ?>px">Google Map</div>
+    <div class="form_google_geocode_map" id="map_canvas<?php echo $this->getId() ?>" style="
+    <?php
+    echo 'width: '.$mapWidth.';';
+    echo 'height: '.$mapHeight;
+    ?>">Google Map</div>
 </div>

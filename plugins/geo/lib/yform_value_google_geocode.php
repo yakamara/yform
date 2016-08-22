@@ -14,11 +14,11 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 
         $mapWidth = "100%";
         if ($this->getElement('width') != '') {
-            $mapWidth = (int) $this->getElement('width');
+            $mapWidth = $this->getElement('width');
         }
         $mapHeight = 300;
         if ($this->getElement('height') != '') {
-            $mapHeight = (int) $this->getElement('height');
+            $mapHeight = $this->getElement('height');
         }
 
         foreach ($this->obj as $o) {
@@ -58,8 +58,8 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
             'values' => array(
                 'name'     => array( 'type' => 'name',     'label' => 'Name' ),
                 'label'    => array( 'type' => 'text',     'label' => 'Bezeichnung'),
-                'position' => array( 'type' => 'text', 'label' => '"lat"-name,"lng"-name'),
-                'address'  => array( 'type' => 'text', 'label' => 'Names Positionsfindung'),
+                'position' => array( 'type' => 'text',     'label' => '"lat"-name,"lng"-name'),
+                'address'  => array( 'type' => 'text',     'label' => 'Names Positionsfindung'),
                 'width'    => array( 'type' => 'text',     'label' => 'Map-Breite'),
                 'height'   => array( 'type' => 'text',     'label' => 'Map-H&ouml;he'),
             ),
