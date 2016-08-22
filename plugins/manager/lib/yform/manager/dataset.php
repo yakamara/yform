@@ -348,7 +348,7 @@ class rex_yform_manager_dataset
 
     public function delete()
     {
-        if (!rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETE', true, ['data_id' => $this->id, 'data' => $this]))) {
+        if (!rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETE', true, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]))) {
             return false;
         }
 
@@ -365,7 +365,7 @@ class rex_yform_manager_dataset
 
         $this->getTable()->removeRelationTableRelicts();
 
-        rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', ['data_id' => $this->id, 'data' => $this]));
+        rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
 
         $this->invalidateData();
         $this->dataLoaded = true;
@@ -426,10 +426,10 @@ class rex_yform_manager_dataset
 
         if ($exits) {
             /** @var rex_yform $yform */
-            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, ['data_id' => $this->id, 'data' => $this]));
+            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
         } else {
             /** @var rex_yform $yform */
-            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, ['data' => $this]));
+            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, ['table' => $this->getTable(), 'data' => $this]));
         }
 
         $yform->setObjectparams('manager_dataset', $this);
@@ -462,9 +462,9 @@ class rex_yform_manager_dataset
 
         if ($yform->objparams['actions_executed']) {
             if ($exits) {
-                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, ['data_id' => $this->id, 'data' => $this]));
+                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
             } else {
-                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADDED', $yform, ['data_id' => $this->id, 'data' => $this]));
+                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADDED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
             }
         }
 
