@@ -1,5 +1,7 @@
 <?php
 
+/** @var rex_yform_value_checkbox $this */
+
 $notices = array();
 if ($this->getElement('notice') != "") {
     $notices[] = $this->getElement('notice');
@@ -17,10 +19,22 @@ $class_group = trim('checkbox yform-element ' . $this->getHTMLClass() . ' ' . $t
 
 $value = isset($value) ? $value : 1;
 
+$attributes = [
+    'type' => 'checkbox',
+    'id' => $this->getFieldId(),
+    'name' => $this->getFieldName(),
+    'value' => $value,
+];
+if ($this->getValue() == $value) {
+    $attributes['checked'] = 'checked';
+}
+
+$attributes = $this->getAttributeElements($attributes);
+
 ?>
 <div class="<?= $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label>
-        <input type="checkbox" id="<?php echo $this->getFieldId() ?>" name="<?php echo $this->getFieldName() ?>" value="<?php echo $value ?>"<?php echo $this->getValue() == $value ? ' checked="checked"' : '' ?> />
+        <input <?= implode(' ', $attributes) ?> />
         <?php echo $this->getLabel() ?>
     </label>
     <?php echo $notice; ?>
