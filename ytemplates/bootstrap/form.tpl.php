@@ -1,6 +1,6 @@
 <div id="<?php echo $this->objparams['form_wrap_id'] ?>" class="<?php echo $this->objparams['form_wrap_class'] ?>">
 
-    <form action="<?php echo $this->objparams['form_action'] ?>" method="<?php echo $this->objparams['form_method'] ?>" id="<?php echo  $this->objparams['form_id'] ?>" class="<?php echo $this->objparams['form_class'] ?>" enctype="multipart/form-data">
+    <form action="<?php echo $this->objparams['form_action'] ?>" method="<?php echo $this->objparams['form_method'] ?>" id="<?php echo  $this->objparams['form_name'] ?>" class="<?php echo $this->objparams['form_class'] ?>" enctype="multipart/form-data">
 
         <?php
         if (!$this->objparams['hide_top_warning_messages']){

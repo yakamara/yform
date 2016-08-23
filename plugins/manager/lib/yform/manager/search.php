@@ -60,7 +60,7 @@ class rex_yform_manager_search
         $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('form_action', $this->scriptPath);
         $yform->setObjectparams('form_method', 'get');
-        $yform->setObjectparams('form_id', 'yform-manager-search-form');
+        $yform->setObjectparams('form_name', 'yform-manager-search-form');
 
         foreach ($this->linkVars as $k => $v) {
             $yform->setHiddenField($k, $v);
