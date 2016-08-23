@@ -154,13 +154,15 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return '';
     }
 
-    function getAttributeElements($attributes, $direct_attributes = [])
+    function getAttributeElements(array $attributes, array $direct_attributes = [])
     {
-
-        if ( ($json_attributes = trim($this->getElement("attributes"))) ) {
-            $json_attributes = json_decode($json_attributes, true);
-            if (is_array($json_attributes)) {
-                foreach($json_attributes as $attribute => $value) {
+        $additionalAttributes = $this->getElement("attributes");
+        if ($additionalAttributes) {
+            if (!is_array($additionalAttributes)) {
+                $additionalAttributes = json_decode(trim($additionalAttributes), true);
+            }
+            if ($additionalAttributes && is_array($additionalAttributes)) {
+                foreach($additionalAttributes as $attribute => $value) {
                     $attributes[$attribute] = $value;
                 }
             }
