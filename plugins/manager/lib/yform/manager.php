@@ -315,11 +315,22 @@ class rex_yform_manager
 
 
             // -------------- form
-            if (($func == 'add'  && $this->hasDataPageFunction('add')) || $func == 'edit') {
+            if (($func == 'add'  && $this->hasDataPageFunction('add')) || $func == 'edit' || $func == 'collection_edit') {
                 $back = rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
-                $dataset = $func == 'add' ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
-                $yform = $dataset->getForm();
+                if ('collection_edit' === $func) {
+                    $query = $this->table->query();
+                    $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject);
+                    if ($where) {
+                        $query->whereRaw($where);
+                    }
+                    $data = $query->find();
+                } else {
+                    $data = $func == 'add' ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
+                }
+
+                $yform = $data->getForm();
+
                 foreach ($this->getLinkVars() as $k => $v) {
                     $yform->setHiddenField($k, $v);
                 }
@@ -418,9 +429,11 @@ class rex_yform_manager
                 } elseif ($func == 'add') {
                     $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_add').",".rex_i18n::msg('yform_add_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
 
+                } elseif ('collection_edit' === $func) {
+                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
                 }
 
-                $form = $dataset->executeForm($yform, function (rex_yform $yform) {
+                $form = $data->executeForm($yform, function (rex_yform $yform) {
                     /** @var rex_yform_value_abstract $f */
                     foreach ($yform->objparams['values'] as $f) {
                         if ($f->getName() == 'submit') {
@@ -469,7 +482,9 @@ class rex_yform_manager
 
                 if ($yform->objparams['form_show'] || ($yform->objparams['form_showformafterupdate'] )) {
 
-                    if ($func == 'add') {
+                    if ('collection_edit' === $func) {
+                        $title = rex_i18n::msg('yform_editdata_collection', $data->count());
+                    } elseif ($func == 'add') {
                         $title = rex_i18n::msg('yform_adddata');
                     } else {
                         $title = rex_i18n::msg('yform_editdata');
@@ -682,7 +697,7 @@ class rex_yform_manager
                 $dataset_links = [];
                 $item = [];
                 $item['label'] = rex_i18n::msg('yform_edit');
-                $item['url'] = 'index.php?' . $link_vars . '&func=edit&' . $em_url . $em_rex_list;
+                $item['url'] = 'index.php?' . $link_vars . '&func=collection_edit&' . $em_url . $em_rex_list;
                 $item['attributes']['class'][] = 'btn-default';
                 $dataset_links[] = $item;
                 if (($this->table->isExportable() == 1 && $this->hasDataPageFunction('export'))) {

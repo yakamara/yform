@@ -120,6 +120,7 @@ yform_visible = visible
 yform_thankyouforupdate = data have been updated.
 yform_thankyouforentry = data have been added.
 yform_editdata = edit data
+yform_editdata_collection = edit {0} data sets
 yform_adddata = create data set
 yform_searchtext = search term
 yform_searchfields = table fields that are getting searched through
@@ -203,6 +204,8 @@ yform_manager_show_form_notation = field definitions
 
 navigation_yform_tables = [missing_text] de:Tabellen
 yform_tabledata_overview = [missing_text] de:Datentabelle
+
+yform_manager_multi_edit_field = edit field "{0}"
 
 yform_values_be_link_description = 				Ein Redaxo-Feld, um einen <b>Redaxo-Artikel</b> auszuwählen.
 yform_values_be_manager_relation_description = 	Ein Auswahlfeld / Popup, um ein oder mehrere <b>Datensätze</b> mit denen einer fremden Tabelle zu <b>verknüpfen</b>.

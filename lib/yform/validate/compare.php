@@ -91,6 +91,7 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
 
             ),
             'description' => rex_i18n::msg("yform_validate_compare_description"),
+            'multi_edit' => false,
         );
 
     }

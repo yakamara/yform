@@ -53,7 +53,8 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                 'only_empty' => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_datestamp_only_empty"), 'default' => '0', 'options' => 'immer=0,nur wenn leer=1' ),
             ),
             'description' => rex_i18n::msg("yform_values_datestamp_description"),
-            'dbtype' => 'varchar(255)'
+            'dbtype' => 'varchar(255)',
+            'multi_edit' => 'always',
         );
 
 

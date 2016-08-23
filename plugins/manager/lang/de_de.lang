@@ -120,6 +120,7 @@ yform_visible = sichtbar
 yform_thankyouforupdate = Datensatz wurde aktualisiert.
 yform_thankyouforentry = Datensatz wurde eingetragen.
 yform_editdata = Datensatz editieren
+yform_editdata_collection = {0} Datensätze editieren
 yform_adddata = Datensatz anlegen
 yform_searchtext = Suchbegriff
 yform_searchfields = Tabellenfelder über die gesucht wird
@@ -216,6 +217,8 @@ yform_manager_show_form_notation = Formular-Code
 
 navigation_yform_tables = Tabellen
 yform_tabledata_overview = Datentabelle
+
+yform_manager_multi_edit_field = Feld „{0}“ bearbeiten
 
 yform_values_be_link_description = 				Ein Redaxo-Feld, um einen <b>Redaxo-Artikel</b> auszuwählen.
 yform_values_be_manager_relation_description = 	Ein Auswahlfeld / Popup, um ein oder mehrere <b>Datensätze</b> mit denen einer fremden Tabelle zu <b>verknüpfen</b>.

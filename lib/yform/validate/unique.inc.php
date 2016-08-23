@@ -72,7 +72,8 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                 'message' => array( 'type' => 'text',      'label' => rex_i18n::msg("yform_validate_unique_message")),
                 'table'   => array( 'type' => 'text',      'label' => rex_i18n::msg("yform_validate_unique_table")),
             ),
-            'description' => rex_i18n::msg("yform_validate_unique_description")
+            'description' => rex_i18n::msg("yform_validate_unique_description"),
+            'multi_edit' => false,
         );
 
     }

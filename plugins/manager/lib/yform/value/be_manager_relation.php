@@ -109,7 +109,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // ---------- empty option ?
 
-        if ($this->params['send'] == 1 && $this->relation['eoption'] == 0 && count($this->getValue()) == 0) {
+        if (!$this->isValidationDisabled() && $this->params['send'] == 1 && $this->relation['eoption'] == 0 && count($this->getValue()) == 0) {
             $this->params['warning'][$this->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
         }
@@ -269,6 +269,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     return !$field->getElement('relation_table') && '4' != $field->getElement('type');
                 }
             ),
+            'multi_edit' => function (rex_yform_manager_field $field) {
+                return '4' != $field->getElement('type') && !$field['relation_table'];
+            },
         );
     }
 

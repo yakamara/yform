@@ -64,7 +64,8 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
                 'height'   => array( 'type' => 'text',     'label' => 'Map-H&ouml;he'),
             ),
             'description' => 'GoogeMap Positionierung',
-            'dbtype' => 'text'
+            'dbtype' => 'text',
+            'multi_edit' => false,
         );
 
     }

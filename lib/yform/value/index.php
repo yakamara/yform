@@ -59,7 +59,8 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'function' => array( 'type' => 'select',  'label' => rex_i18n::msg("yform_values_index_function"), 'default' => '0', 'options' => 'Keine Funktion=,md5,sha1' ),
             ),
             'description' => rex_i18n::msg("yform_values_index_description"),
-            'dbtype' => 'text'
+            'dbtype' => 'text',
+            'multi_edit' => false,
         );
 
     }

@@ -55,6 +55,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
                 'message'  => array( 'type' => 'text',   'label' => rex_i18n::msg("yform_validate_customfunction_message")),
             ),
             'description' => rex_i18n::msg("yform_validate_customfunction_description"),
+            'multi_edit' => false,
         );
 
     }

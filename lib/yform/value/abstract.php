@@ -191,6 +191,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return '';
     }
 
+    public function isValidationDisabled()
+    {
+        return $this->getElement('validation_disabled');
+    }
+
     // ------------
 
     function loadParams(&$params, $elements = array())

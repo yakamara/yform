@@ -312,6 +312,35 @@ class rex_yform_manager_dataset
         return $this->relatedCollections[$key] = $query->find();
     }
 
+    /**
+     * @return bool
+     */
+    public function isValid()
+    {
+        $yform = $this->getForm();
+        $yform->setObjectparams('real_field_names', true);
+
+        $table = $this->getTable();
+        $fields = $table->getValueFields();
+        foreach ($this->data as $key => $value) {
+            if ('id' === $key) {
+                continue;
+            }
+            if (isset($fields[$key])) {
+                $yform->setFieldValue(0, $value, '', $key);
+            }
+        }
+
+        $yform->setFieldValue('send', '1', '', 'send');
+        $yform->executeFields();
+        $this->messages = $yform->getObjectparams('warning_messages');
+
+        return empty($this->messages);
+    }
+
+    /**
+     * @return bool
+     */
     public function save()
     {
         $yform = $this->getForm();

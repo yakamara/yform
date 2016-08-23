@@ -3,7 +3,7 @@
 function em_openRelation(id,subpage,fieldname)
 {
     var value = document.getElementById("REX_RELATION_"+id).value;
-    newPoolWindow('index.php?page=editme&subpage=' + subpage + '&rex_em_opener_field=' + id + '&rex_em_opener_fieldname=' + fieldname);
+    newWindow('index.php?page=editme&subpage=' + subpage + '&rex_em_opener_field=' + id + '&rex_em_opener_fieldname=' + fieldname);
 }
 
 function em_deleteRelation(id,subpage,fieldname)
@@ -76,3 +76,34 @@ function yform_manager_setData(id, data_id, data_name, multiple){
     }
 
 }
+
+$(document).on('rex:ready', function (event, container) {
+    container.find('form.yform-manager-multi-edit').each(function () {
+        var $form = $(this);
+        $form.find('[data-multi-edit-checkbox]').each(function () {
+            var $checkbox = $(this);
+            var $wrapper = $checkbox.closest('div');
+            var id = $wrapper.attr('id');
+            // extract "_multi_edit"
+            id = id.substring(0, id.length - 11);
+            var $target = $form.find('#'+id);
+
+            var toggle = function () {
+                if ($checkbox.prop('checked')) {
+                    $target.find(':input').prop('disabled', false);
+                    $target.find(':input[data-multi-edit-original-disabled]').prop('disabled', true).removeAttr('data-multi-edit-original-disabled');
+                    $target.find('a.btn').removeClass('disabled');
+                    $target.find('a.btn[data-multi-edit-original-disabled]').addClass('disabled').removeAttr('data-multi-edit-original-disabled');
+                } else {
+                    $target.find(':input:disabled').attr('data-multi-edit-original-disabled', 1);
+                    $target.find(':input').prop('disabled', true);
+                    $target.find('a.btn[data-disabled], a.btn.disabled').attr('data-multi-edit-original-disabled', 1);
+                    $target.find('a.btn').addClass('disabled');
+                }
+            };
+
+            toggle();
+            $checkbox.change(toggle);
+        });
+    });
+});
