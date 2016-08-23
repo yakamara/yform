@@ -512,6 +512,7 @@ class rex_yform_manager
 
                 /** @type rex_list $list */
                 $list = rex_list::factory($sql, $this->table->getListAmount());
+                $list->addTableAttribute('class', 'table-striped table-hover');
 
                 if ($this->hasDataPageFunction('add')) {
                     $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
