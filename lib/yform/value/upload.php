@@ -67,10 +67,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         if ($value != "") {
 
-            if (rex::isBackend()) {
+            //if (rex::isBackend()) {
                 $value = explode("_",$value,2);
                 $value = $value[0];
-            }
+            //}
 
             $search_path = $upload_folder.'/'.$value.'_'.$this->getElement('file_prefix');
             $files = glob(preg_replace('/(\*|\?|\[)/', '[$1]', $search_path).'*');
@@ -78,7 +78,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             if (count($files) == 1) {
                 $value = basename($files[0]);
 
-                if (rex_request("rex_upload_downloadfile") == $value) {
+                if (rex::isBackend() && rex_request("rex_upload_downloadfile") == $value) {
                     $file = $upload_folder.'/'.$value;
                     if (file_exists($file)) {
                         ob_end_clean();
