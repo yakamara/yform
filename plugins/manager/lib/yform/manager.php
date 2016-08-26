@@ -500,7 +500,7 @@ class rex_yform_manager
                     if ($this->table->isSearchable()  && $this->hasDataPageFunction('search')) {
                         $fragment = new rex_fragment();
                         $fragment->setVar('content', [$searchform, $form], false);
-                        $fragment->setVar('classes', ['col-sm-3', 'col-sm-9'], false);
+                        $fragment->setVar('classes', ['col-sm-3 col-md-3 col-lg-2', 'col-sm-9 col-md-9 col-lg-10'], false);
                         echo $fragment->parse('core/page/grid.php');
 
                     } else {
@@ -787,7 +787,7 @@ class rex_yform_manager
                 if ($this->table->isSearchable()  && $this->hasDataPageFunction('search')) {
                     $fragment = new rex_fragment();
                     $fragment->setVar('content', [$searchform, $content], false);
-                    $fragment->setVar('classes', ['col-sm-3', 'col-sm-9'], false);
+                    $fragment->setVar('classes', ['col-sm-3 col-md-3 col-lg-2', 'col-sm-9 col-md-9 col-lg-10'], false);
                     echo $fragment->parse('core/page/grid.php');
 
                 } else {
