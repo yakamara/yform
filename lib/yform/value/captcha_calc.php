@@ -35,7 +35,16 @@ class rex_yform_value_captcha_calc extends rex_yform_value_abstract
         }
 
         if ($this->getElement(3) != '') {
-            $link = $this->getElement(3) . '?captcha=show&' . time();
+            $link = $this->getElement(3);
+            if(preg_match("/\?/", $link)) {
+                if (substr($link, -1) != "&") {
+                    $link .= '&';
+                }
+            } else {
+                $link .= '?';
+            }
+
+            $link .= 'captcha=show&' . time();
 
         } else {
             $link = rex_getUrl($this->params['article_id'], $this->params['clang'], array('captcha' => 'show'), '&') . '&' . time() . str_replace(" ","",microtime());
