@@ -55,7 +55,7 @@ class rex_yform_value_captcha_calc extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'captcha_calc -> Beispiel: captcha|Beschreibungstext|Fehlertext';
+        return 'captcha_calc -> Beispiel: captcha|Beschreibungstext|Fehlertext|[link]';
     }
 
     function captcha_showImage()
