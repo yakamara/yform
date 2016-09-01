@@ -1,5 +1,10 @@
 $(document).on('ready pjax:success',function() {
 
+
+    $("#rex-page-yform-manager-data-edit select").each(function () {
+        $(this).select2();
+    });
+
     $("input[data-yform-tools-inputmask]").each(function () {
         var format = $(this).attr('data-yform-tools-inputmask');
         if (format != "") {
