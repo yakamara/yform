@@ -116,7 +116,14 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $extensions_array = explode(',', $this->getElement('types'));
                 $ext = '.' . pathinfo($FILE['name'], PATHINFO_EXTENSION);
 
-                if (!in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array)) {
+
+                echo "##".$this->getElement('types');
+
+                if (
+                    ( $this->getElement('types') != "*" ) &&
+                    ( !in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array) )
+
+                    ) {
                     $error[] = $err_msgs['type_error'];
                     $value = '';
 
