@@ -45,6 +45,8 @@ class rex_yform_email_template
         $er['REX_NOTFOUND_ARTICLE_ID'] = rex_article::getNotfoundArticleId();
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
+        $template['subject'] = rex_var::parse($template['subject'],'','yform_email_template', $er);
+        $template['subject'] = self::makeSingleLine($template['subject']);
         $template['body'] = rex_var::parse($template['body'],'','yform_email_template', $er);
         $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
 
