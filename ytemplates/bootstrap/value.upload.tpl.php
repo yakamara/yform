@@ -39,33 +39,30 @@ if (trim($this->getElement('grid')) != '') {
 ?>
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $field_before; ?><input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" name="file_<?php echo md5($this->getFieldName('file')) ?>" />
+    <?php echo $field_before; ?><input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" name="<?php echo $unique ?>" />
     <?php echo $notice ?><?php echo $field_after; ?>
+    <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo $unique; ?>" />
 </div>
 
 <?php
 
 $value = $this->getValue();
-if ($value != '') {
-    $values = explode('_', $value, 2);
-    if (count($values) == 2) {
-        echo '<input type="hidden" name="' . $this->getFieldName() . '" value="' . $values[0] . '" />';
-
-        $label = htmlspecialchars($values[1]);
+if ($filename != '') {
+        $label = htmlspecialchars($filename);
 
         if (rex::isBackend()) {
-            $label = '<a href="' . $_SERVER["REQUEST_URI"] . '&rex_upload_downloadfile=' . urlencode($this->getValue()) . '">' . $label . '</a>';
+            // $link = '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement("table_name").'&data_id='.$params["list"]->getValue("id").'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement("name"));
+            // $label = '<a href="' . $link . '">' . $label . '</a>';
         }
 
         echo '
         <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
             <label>
                 <input type="checkbox" id="' .  $this->getFieldId("delete") . '" name="' . $this->getFieldName('delete') . '" value="1" />
-                ' . $this->tmp_messages['delete_file'] . ' "' . $label . '"
+                ' . $error_messages['delete_file'] . ' "' . $label . '"
             </label>
         </div>';
 
-    }
 }
 
 ?>
