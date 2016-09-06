@@ -193,7 +193,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 
         $relatedField = $relatedTable.'.id';
 
-        if (!$relation['relation_table']) {
+        if (empty($relation['relation_table'])) {
             $column = $this->getTableAlias().'.'.$column;
             $operator = in_array($relation['type'], [1, 3]) ? 'FIND_IN_SET' : '=';
 
