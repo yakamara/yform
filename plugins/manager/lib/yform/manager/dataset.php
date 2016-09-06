@@ -90,6 +90,16 @@ class rex_yform_manager_dataset
     /**
      * @param null|string $table
      *
+     * @return rex_yform_manager_collection
+     */
+    public static function getAll($table = null)
+    {
+        return static::query($table)->find();
+    }
+
+    /**
+     * @param null|string $table
+     *
      * @return rex_yform_manager_query
      */
     public static function query($table = null)
