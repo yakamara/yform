@@ -264,6 +264,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_be_manager_relation_description"),
             'dbtype' => 'text',
+            'search' => true,
+            'list_hidden' => false,
             'hooks' => array(
                 'preCreate' => function (rex_yform_manager_field $field) {
                     return !$field->getElement('relation_table') && '4' != $field->getElement('type');

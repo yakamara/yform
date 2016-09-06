@@ -79,6 +79,8 @@ class rex_yform_value_select extends rex_yform_value_abstract
                 'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_select_description"),
+            'search' => true,
+            'list_hidden' => false,
             'dbtype' => 'text'
         );
 

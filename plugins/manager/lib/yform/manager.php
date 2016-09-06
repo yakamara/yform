@@ -1024,6 +1024,8 @@ class rex_yform_manager
 
         if ( ($func == 'add' || $func == 'edit' )  && isset($types[$type_id][$type_name]) ) {
 
+            $field = new rex_yform_manager_field(['type_id' => $type_id, 'type_name' => $type_name]);
+
             $yform = new rex_yform;
             $yform->setDebug(false);
 
@@ -1049,8 +1051,8 @@ class rex_yform_manager
             $selectFields = array();
             $i = 1;
             foreach ($types[$type_id][$type_name]['values'] as $k => $v) {
-                $field = $this->getFieldName($k, $type_id);
-                $selectFields['f' . $i] = $field;
+                $k_field = $this->getFieldName($k, $type_id);
+                $selectFields['f' . $i] = $k_field;
                 $i++;
 
                 switch ($v['type']) {
@@ -1058,7 +1060,7 @@ class rex_yform_manager
                     case 'name':
                         $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
                         if ($func == 'edit' ) {
-                            $yform->setValueField('showvalue', array($field, 'Name', 'notice' => $v["notice"]));
+                            $yform->setValueField('showvalue', array($k_field, 'Name', 'notice' => $v["notice"]));
                         } else {
                             if (!isset($v['value']) && $type_real_field != '') {
                                 $v['value'] = $type_real_field;
@@ -1066,10 +1068,10 @@ class rex_yform_manager
                                 $v['value'] = '';
                             }
 
-                            $yform->setValueField('text', array($field, 'Name', $v['value'], 'notice' => $v["notice"]));
-                            $yform->setValidateField('empty', array($field, rex_i18n::msg('yform_validatenamenotempty')));
-                            $yform->setValidateField('preg_match', array($field, "/(([a-zA-Z])+([a-zA-Z0-9\_])*)/", rex_i18n::msg('yform_validatenamepregmatch')));
-                            $yform->setValidateField('customfunction', array($field, 'rex_yform_manager_checkField', array('table_name' => $table->getTableName()), rex_i18n::msg('yform_validatenamecheck')));
+                            $yform->setValueField('text', array($k_field, 'Name', $v['value'], 'notice' => $v["notice"]));
+                            $yform->setValidateField('empty', array($k_field, rex_i18n::msg('yform_validatenamenotempty')));
+                            $yform->setValidateField('preg_match', array($k_field, "/(([a-zA-Z])+([a-zA-Z0-9\_])*)/", rex_i18n::msg('yform_validatenamepregmatch')));
+                            $yform->setValidateField('customfunction', array($k_field, 'rex_yform_manager_checkField', array('table_name' => $table->getTableName()), rex_i18n::msg('yform_validatenamecheck')));
                         }
                         break;
 
@@ -1078,7 +1080,7 @@ class rex_yform_manager
                             $v['default'] = 0;
                         }
 
-                        $yform->setValueField('checkbox', array($field, rex_i18n::msg('yform_donotsaveindb'), 'no_db', $v['default']));
+                        $yform->setValueField('checkbox', array($k_field, rex_i18n::msg('yform_donotsaveindb'), 'no_db', $v['default']));
                         break;
 
                     case 'boolean':
@@ -1087,14 +1089,14 @@ class rex_yform_manager
                             $v['default'] = '';
                         }
                         $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
-                        $yform->setValueField('checkbox', array($field, $v['label'], '', $v['default'], 'notice' => $v["notice"]));
+                        $yform->setValueField('checkbox', array($k_field, $v['label'], '', $v['default'], 'notice' => $v["notice"]));
                         break;
 
                     case 'table':
                         // ist fest eingetragen, damit keine Dinge durcheinandergehen
 
                         if ($func == 'edit' ) {
-                            $yform->setValueField('showvalue', array($field, $v['label']));
+                            $yform->setValueField('showvalue', array($k_field, $v['label']));
                         } else {
                             $_tables = rex_yform_manager_table::getAll();
                             $_options = array();
@@ -1108,7 +1110,7 @@ class rex_yform_manager
                             if (!isset($v['default'])) {
                                 $v['default'] = '';
                             }
-                            $yform->setValueField('select', array($field, $v['label'], implode(',', $_options), '', $v['default'], 0));
+                            $yform->setValueField('select', array($k_field, $v['label'], implode(',', $_options), '', $v['default'], 0));
 
                         }
                         break;
@@ -1122,7 +1124,7 @@ class rex_yform_manager
                             $_fields[] = $_k;
                         }
                         $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
-                        $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 0, 'notice' => $v["notice"]));
+                        $yform->setValueField('select', array($k_field, $v['label'], implode(',', $_fields), '', '', 0, 'notice' => $v["notice"]));
                         break;
 
                     case 'select_names':
@@ -1131,17 +1133,17 @@ class rex_yform_manager
                             $_fields[] = $_k;
                         }
                         $v["notice"] = (isset($v["notice"]) ? $v["notice"] : "");
-                        $yform->setValueField('select', array($field, $v['label'], implode(',', $_fields), '', '', 1, 5, 'notice' => $v["notice"]));
+                        $yform->setValueField('select', array($k_field, $v['label'], implode(',', $_fields), '', '', 1, 5, 'notice' => $v["notice"]));
                         break;
 
                     case 'text':
                         // nur beim "Bezeichnungsfeld"
-                        if ($field == 'label' && $type_real_field != '' && !isset($v['value'])) {
+                        if ($k_field == 'label' && $type_real_field != '' && !isset($v['value'])) {
                             $v['value'] = $type_real_field;
                         } elseif (!isset($v['value'])) {
                             $v['value'] = '';
                         }
-                        $v['name'] = $field;
+                        $v['name'] = $k_field;
                         $yform->setValueField('text', $v);
                         break;
 
@@ -1149,7 +1151,7 @@ class rex_yform_manager
                     case 'select':
                     case 'select_sql':
                     default:
-                        $v['name'] = $field;
+                        $v['name'] = $k_field;
                         $yform->setValueField($v['type'], $v);
                         break;
 
@@ -1168,10 +1170,10 @@ class rex_yform_manager
                 $yform->setObjectparams('main_where', "id=$field_id");
                 $sql = rex_sql::factory();
                 $sql->setQuery('SELECT * FROM ' . rex_yform_manager_field::table() . " WHERE id=$field_id");
-                foreach ($selectFields as $alias => $field) {
-                    if ($alias != $field) {
-                        if ((!$sql->hasValue($field) || null === $sql->getValue($field) || '' === $sql->getValue($field)) && $sql->hasValue($alias)) {
-                            $sql->setValue($field, $sql->getValue($alias));
+                foreach ($selectFields as $alias => $s_field) {
+                    if ($alias != $s_field) {
+                        if ((!$sql->hasValue($s_field) || null === $sql->getValue($s_field) || '' === $sql->getValue($s_field)) && $sql->hasValue($alias)) {
+                            $sql->setValue($s_field, $sql->getValue($alias));
                         }
                         $yform->setValueField('hidden', array($alias, ''));
                     }
@@ -1186,8 +1188,16 @@ class rex_yform_manager
             }
 
             if ($type_id == 'value') {
-                $yform->setValueField('checkbox', array('list_hidden', rex_i18n::msg('yform_hideinlist'), 1, '1'));
-                $yform->setValueField('checkbox', array('search', rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 1, '1'));
+
+                // echo '<pre>';var_dump($field->values);echo '</pre>';
+
+                if (!$field->isHiddenInList()) {
+                    $yform->setValueField('checkbox', array('list_hidden', rex_i18n::msg('yform_hideinlist'), 1, '1'));
+                }
+
+                if ($field->isSearchable()) {
+                    $yform->setValueField('checkbox', array('search', rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 1, '1'));
+                }
 
             } elseif ($type_id == 'validate') {
                 $yform->setValueField('hidden', array('list_hidden', 1));
@@ -1240,13 +1250,13 @@ class rex_yform_manager
         if ($func == 'delete') {
 
             $sf = rex_sql::factory();
-            $sf->debugsql = self::$debug;
+            $sf->setDebug(self::$debug);
             $sf->setQuery('select * from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" and id=' . $field_id);
             $sfa = $sf->getArray();
             if (count($sfa) == 1) {
                 $query = 'delete from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" and id=' . $field_id;
                 $delsql = rex_sql::factory();
-                $delsql->debugsql = self::$debug;
+                $delsql->setDebug(self::$debug);
                 $delsql->setQuery($query);
                 echo rex_view::success(rex_i18n::msg('yform_tablefielddeleted'));
                 $this->generateAll();

@@ -96,6 +96,8 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_prio_description"),
             'dbtype' => 'int',
+            'search' => true,
+            'list_hidden' => false,
             'multi_edit' => false,
         );
 

@@ -3,6 +3,7 @@
 class rex_yform_manager_field implements ArrayAccess
 {
     protected $values = array();
+    protected $definitions = array();
     protected static $debug = false;
     protected static $types = array('value', 'validate', 'action');
 
@@ -14,12 +15,11 @@ class rex_yform_manager_field implements ArrayAccess
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
-
         $object = new $class;
-        $definitions = $object->getDefinitions();
-        if (isset($definitions['values'])) {
+        $this->definitions = $object->getDefinitions();
+        if (isset($this->definitions['values'])) {
             $i = 'validate' === $values['type_id'] ? 2 : 1;
-            foreach ($definitions['values'] as $key => $value) {
+            foreach ($this->definitions['values'] as $key => $value) {
                 if (isset($values['f' . $i]) && (!isset($values[$key]) || is_null($values[$key]) || '' === $values[$key])) {
                     $values[$key] = $values['f' . $i];
                 }
@@ -27,6 +27,7 @@ class rex_yform_manager_field implements ArrayAccess
             }
         }
         $this->values = $values;
+
     }
 
     public static function table()
@@ -73,7 +74,9 @@ class rex_yform_manager_field implements ArrayAccess
 
     public function isSearchable()
     {
-        if ($this->values['search'] == 1) {
+        if (isset($this->definitions["search"]) && $this->definitions["search"]){
+            return true;
+        } else if (isset($this->values['search']) && $this->values['search'] == 1) {
             return true;
         }
         return false;
@@ -81,7 +84,9 @@ class rex_yform_manager_field implements ArrayAccess
 
     public function isHiddenInList()
     {
-        if ($this->values['list_hidden'] == 1) {
+        if (isset($this->definitions["list_hidden"]) && $this->definitions["list_hidden"]) {
+            return true;
+        } else if (isset($this->values['list_hidden']) && $this->values['list_hidden']) {
             return true;
         }
         return false;

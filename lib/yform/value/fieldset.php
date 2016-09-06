@@ -66,6 +66,8 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_fieldset_description"),
             'dbtype' => 'none',
+            'search' => false,
+            'list_hidden' => true,
             'multi_edit' => 'always',
         );
     }

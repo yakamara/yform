@@ -47,6 +47,8 @@ class rex_yform_value_email extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_email_description"),
             'dbtype' => 'text',
+            'search' => true,
+            'list_hidden' => false,
             'famous' => false
         );
 

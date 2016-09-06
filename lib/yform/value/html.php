@@ -33,8 +33,15 @@ class rex_yform_value_html extends rex_yform_value_abstract
             'description' => rex_i18n::msg("yform_values_html_description"),
             'dbtype' => 'text',
             'multi_edit' => 'always',
+            'search' => true,
+            'list_hidden' => true,
         );
 
+    }
+
+    public static function getSearchField($params)
+    {
+        $params['searchForm']->setValueField('text', array('name' => $params['field']->getName(), 'label' => $params['field']->getLabel()));
     }
 
 }

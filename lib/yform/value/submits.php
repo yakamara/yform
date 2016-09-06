@@ -69,6 +69,8 @@ class rex_yform_value_submits extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_submits_description"),
             'dbtype' => 'text',
+            'search' => false,
+            'list_hidden' => true,
             'famous' => true
         );
 

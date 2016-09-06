@@ -197,6 +197,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_date_description"),
+            'search' => true,
+            'list_hidden' => false,
             'dbtype' => 'date'
         );
     }
