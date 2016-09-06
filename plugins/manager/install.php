@@ -57,11 +57,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_h
     `history_id` int(11) NOT NULL,
     `field` varchar(255) NOT NULL,
     `value` longtext NOT NULL,
-    PRIMARY KEY (`history_id`, `field`),
-    FOREIGN KEY (history_id) 
-        REFERENCES ' . rex::getTablePrefix() . 'yform_history(`id`)
-        ON UPDATE CASCADE
-        ON DELETE CASCADE
+    PRIMARY KEY (`history_id`, `field`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
 $table = rex_sql_table::get(rex::getTable('yform_table'));
