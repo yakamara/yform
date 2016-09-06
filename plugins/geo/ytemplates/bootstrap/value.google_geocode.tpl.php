@@ -1,43 +1,42 @@
 <?php
 
-$FieldLat = '';
-$FieldLng = '';
 $FieldsAddress = [];
-
 $LabelsAddress = explode(",",$address);
 
-foreach($this->params["values"] as $value) {
+foreach($this->params["values"] as $address_value) {
 
-    if ($labelLat == $value->getName()) {
-        $FieldLat = "#".$value->getFieldId();
-    }
-
-    if ($labelLng == $value->getName()) {
-        $FieldLng = "#".$value->getFieldId();
-    }
-
-    if (in_array($value->getName(), $LabelsAddress)) {
-        $FieldsAddress[] = "#".$value->getFieldId();
+    if (in_array($address_value->getName(), $LabelsAddress)) {
+        $FieldsAddress[] = "#".$address_value->getFieldId();
     }
 
 }
 
-?><?php if ($includeGoogleMaps): ?>
-    <script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>
-<?php endif ?>
+if ($googleapikey != "") {
+    echo '<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key='.$googleapikey.'&sensor=false"></script>';
+
+} else {
+    echo '<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>';
+
+}
+
+?>
 <script type="text/javascript">
 
     var rex_geo_coder = function() {
 
-        jQuery("#<?php echo $this->getHTMLId() ?> .yform-google-btnbar .get-position").on("click", function(){
+        jQuery("#<?php echo $this->getFieldId() ?>").on("change", function(){
+            alert("set_position");
+        });
+
+        jQuery("#<?php echo $this->getHTMLId('google') ?> .yform-google-btnbar .get-position").on("click", function(){
             rex_geo_getPosition();
         });
 
-        jQuery("#<?php echo $this->getHTMLId() ?> .yform-google-btnbar .clear-position").on("click", function(){
+        jQuery("#<?php echo $this->getHTMLId('google') ?> .yform-google-btnbar .clear-position").on("click", function(){
             rex_geo_clearPosition();
         });
 
-        var myLatlng = new google.maps.LatLng(<?php echo $valueLat ?>, <?php echo $valueLng ?>);
+        var myLatlng = new google.maps.LatLng(<?php echo $value; ?>);
 
         var myOptions = {
             zoom: 8,
@@ -58,8 +57,7 @@ foreach($this->params["values"] as $value) {
         });
 
         rex_geo_updatePosition = function(latLng) {
-            jQuery("<?php echo $FieldLat ?>").val( latLng.lat() );
-            jQuery("<?php echo $FieldLng ?>").val( latLng.lng() );
+            jQuery("#<?php echo $this->getFieldId() ?>").val( latLng.lat()+","+latLng.lng() );
             map.setCenter(latLng);
         }
 
@@ -109,8 +107,8 @@ foreach($this->params["values"] as $value) {
         }
 
         rex_geo_clearPosition = function() {
-            jQuery("<?php echo $FieldLat ?>").val("0");
-            jQuery("<?php echo $FieldLng ?>").val("0");
+
+            jQuery("#<?php echo $this->getFieldId() ?>").val("0,0");
             var clearLatlng = new google.maps.LatLng(0, 0);
             marker.setMap(null);
             marker = new google.maps.Marker({
@@ -129,6 +127,7 @@ foreach($this->params["values"] as $value) {
 
     jQuery(function($){
         rex_geo_coder<?php echo $this->getId() ?> = new rex_geo_coder();
+
     });
 
 </script>
@@ -144,8 +143,8 @@ if ( (string) (int) $mapHeight == (string) $mapHeight) {
 
 ?>
 
-<div class="<?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="text <?php echo $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getElement('label') ?></label>
+<div class="<?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId('google') ?>">
+    <label class="text <?php echo $this->getWarningClass() ?>"><?php echo $this->getElement('label') ?></label>
     <p class="yform-google-btnbar">
         <a class="get-position" href="javascript:void(0);"><?php echo rex_i18n::msg('yform_geo_get_position'); ?></a> |
         <a class="clear-position" href="javascript:void(0);"><?php echo rex_i18n::msg('yform_geo_clear_position'); ?></a>
