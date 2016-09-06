@@ -2,7 +2,7 @@
 
 $notice = array();
 if ($this->getElement('notice') != "") {
-  $notice[] = $this->getElement('notice');
+    $notice[] = $this->getElement('notice');
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
     $notice[] =  '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
@@ -15,12 +15,10 @@ if (count($notice) > 0) {
 }
 
 $class  = $this->getElement('required') ? 'form-is-required ' : '';
-
 $class_group   = trim('form-group ' . $class . $this->getWarningClass());
-$class_control = trim('form-control');
 
 
-$class_label = '';
+$class_label[] = 'control-label';
 $field_before = '';
 $field_after = '';
 
@@ -37,16 +35,35 @@ if (trim($this->getElement('grid')) != '') {
     }
 }
 
-?>
+$attributes = [];
+$attributes["class"] = 'form-control';
+$attributes["id"] = $this->getFieldId();
+if($multiple) {
+    $attributes["name"] = $this->getFieldName() . '[]';
+    $attributes["multiple"] = "multiple";
+} else {
+    $attributes["name"] = $this->getFieldName();
+}
+if ($size > 1) {
+    $attributes["size"] = $size;
 
-<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="control-label<?php echo $class_label; ?>" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $field_before; ?>
-    <select class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" <?php echo $multiple ? 'name="' . $this->getFieldName() . '[]" multiple="multiple"' : 'name="' . $this->getFieldName() . '"' ?><?php echo ($size > 1) ? ' size="' . $size . '"' : '' ?>>
-        <?php foreach ($options as $key => $value): ?>
-            <option value="<?php echo htmlspecialchars($key) ?>"<?php echo in_array((string) $key, $this->getValue()) ? ' selected="selected"' : '' ?>><?php echo $this->getLabelStyle($value) ?></option>
-        <?php endforeach ?>
+}
+
+$attributes = $this->getAttributeElements($attributes, ['autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
+
+echo '
+<div class="'.$class_group.'" id="'.$this->getHTMLId().'">
+    <label class="'.implode(" ", $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
+    '.$field_before.'
+    <select '.implode(" ", $attributes).'>';
+    foreach ($options as $key => $value):
+        echo '<option value="'.htmlspecialchars($key).'" ';
+        if ( in_array((string) $key, $this->getValue()) ) echo ' selected="selected"';
+        echo '>';
+        echo $this->getLabelStyle($value);
+        echo '</option>';
+        endforeach;
+echo '
     </select>
-    <?php echo $notice ?>
-    <?php echo $field_after; ?>
-</div>
+    '.$notice . $field_after.'
+</div>';

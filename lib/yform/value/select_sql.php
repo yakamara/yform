@@ -99,8 +99,9 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                 'empty_option' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_sql_empty_option")),
                 'empty_value'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_empty_value")),
                 'multiple'     => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_sql_multiple")),
-                'size'         => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_size"))
-
+                'size'         => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_size")),
+                'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
+                'notice'       => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_select_sql_description"),
             'dbtype' => 'text'
@@ -144,13 +145,12 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         $db = rex_sql::factory();
-        // $db->debugsql = 1;
+        $db->setDebug();
         $db_array = $db->getArray($query);
 
         foreach ($db_array as $entry) {
             $return[] = $entry['name'];
         }
-
 
         if (count($return) == 0 && $params['value'] != '' && $params['value'] != '0') {
             $return[] = $params['value'];
