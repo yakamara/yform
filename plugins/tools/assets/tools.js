@@ -1,8 +1,10 @@
 $(document).on('ready pjax:success',function() {
 
-
-    $("#rex-page-yform-manager-data-edit select").each(function () {
-        $(this).select2();
+    $("select[data-yform-tools-select2]").each(function () {
+        $(this).select2({
+              theme: "bootstrap"
+          }
+        );
     });
 
     $("input[data-yform-tools-inputmask]").each(function () {
