@@ -1,10 +1,11 @@
 $(document).on('ready pjax:success',function() {
 
     $("select[data-yform-tools-select2]").each(function () {
-        $(this).select2({
-              theme: "bootstrap"
-          }
-        );
+        var options = $(this).attr('data-yform-tools-inputmask');
+        if (options != "") {
+            options = {"theme":"bootstrap"}
+        }
+        $(this).select2(options);
     });
 
     $("input[data-yform-tools-inputmask]").each(function () {
