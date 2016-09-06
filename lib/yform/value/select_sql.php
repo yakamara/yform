@@ -145,7 +145,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         $db = rex_sql::factory();
-        $db->setDebug();
+        // $db->setDebug();
         $db_array = $db->getArray($query);
 
         foreach ($db_array as $entry) {
