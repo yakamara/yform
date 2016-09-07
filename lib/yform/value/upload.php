@@ -203,7 +203,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
 
         if ($this->params['send'] && $this->getElement('required') == 1 && $filename == "") {
-            $error[] = $error_messages['empty_error'];
+            $errors[] = $error_messages['empty_error'];
         }
 
         if ($this->params['send'] && count($errors) > 0) {
