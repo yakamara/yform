@@ -86,6 +86,7 @@ class rex_yform
         $this->objparams['value_pool'] = [];
         $this->objparams['value_pool']['email'] = [];
         $this->objparams['value_pool']['sql'] = [];
+        $this->objparams['value_pool']['files'] = [];
 
         $this->objparams['value'] = []; // reserver for classes - $this->objparams["value"]["text"] ...
         $this->objparams['validate'] = []; // reserver for classes
