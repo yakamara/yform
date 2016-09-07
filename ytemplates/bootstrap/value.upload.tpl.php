@@ -50,10 +50,12 @@ $value = $this->getValue();
 if ($filename != '') {
         $label = htmlspecialchars($filename);
 
-        if (rex::isBackend()) {
-            // $link = '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement("table_name").'&data_id='.$params["list"]->getValue("id").'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement("name"));
-            // $label = '<a href="' . $link . '">' . $label . '</a>';
+        /*
+        if (rex::isBackend() && $download_link != "") {
+            $label = '<a href="' . $download_link . '">' . $label . '</a>';
+
         }
+        */
 
         echo '
         <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
