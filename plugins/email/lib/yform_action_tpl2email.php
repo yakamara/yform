@@ -37,10 +37,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
             $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
 
-            if ($this->params['debug']) {
-                echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
-            }
-
             $etpl['mail_to'] = $mail_to;
             $etpl['mail_to_name'] = $mail_to;
 
@@ -55,15 +51,27 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $etpl['attachments'] = array();
             }
 
+            if (is_array($this->params['value_pool']['email_attachments'])) {
+                foreach ($this->params['value_pool']['email_attachments'] as $v) {
+                    $etpl['attachments'][] = ['name' => $v[0], 'path' => $v[1]];
+                }
+
+            }
+
+            if ($this->params['debug']) {
+                echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
+            }
+
             if (!rex_yform_email_template::sendMail($etpl, $template_name)) {
                 if ($this->params['debug']) {
-                    echo 'email could be sent';
+                    echo 'email could not be sent';
                 }
                 return false;
 
             } else {
                 if ($this->params['debug']) {
-                    echo 'email sent';                }
+                    echo 'email sent';
+                }
                 return true;
 
             }
