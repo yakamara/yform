@@ -73,25 +73,12 @@ class rex_yform_manager
         // -------------- opener - popup for selection
         $popup = false;
         $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
-        if (count($rex_yform_manager_opener) > 0) {
-            if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
-                $popup = true; // id, field, multiple
-            }
-        }
-
-        // -------------- filter - popup for selection
-        if (count($rex_yform_filter) > 0) {
-            $popup = true;
-
-        }
-        if (is_bool($p = rex_request('popup', 'bool', null))) {
-            $popup = $p;
-            $this->setLinkVars(array('popup' => $p ? 1 : 0));
+        if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
+            $popup = true; // id, field, multiple
         }
 
         // SearchObject
         $searchObject = new rex_yform_manager_search($this->table);
-
         $searchObject->setLinkVars(array("list" => rex_request('list', 'string', '')));
         $searchObject->setLinkVars(array("start" => rex_request('start', 'string', '')));
         $searchObject->setLinkVars(array("sort" => rex_request('sort', 'string', '')));
@@ -211,12 +198,6 @@ class rex_yform_manager
             $em_rex_list .= '&sort=' . urlencode(rex_request('sort', 'string'));
             $em_rex_list .= '&sorttype=' . urlencode(rex_request('sorttype', 'string'));
             $em_rex_list .= '&start=' . urlencode(rex_request('start', 'string'));
-
-            // ---------- Popup - no menue, header ...
-            if ($popup) {
-                echo '<link rel="stylesheet" type="text/css" href="'.rex_plugin::get('yform','manager')->getAssetsUrl('popup.css').'" />';
-
-            }
 
             // -------------- Import
             if (!$popup && $func == 'import' && $this->hasDataPageFunction('import')) {
@@ -695,19 +676,22 @@ class rex_yform_manager
 
                 // INFO LINK
                 $dataset_links = [];
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_edit');
-                $item['url'] = 'index.php?' . $link_vars . '&func=collection_edit&' . $em_url . $em_rex_list;
-                $item['attributes']['class'][] = 'btn-default';
-                $dataset_links[] = $item;
-                if (($this->table->isExportable() == 1 && $this->hasDataPageFunction('export'))) {
+
+                if (!$popup) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_edit');
+                    $item['url'] = 'index.php?' . $link_vars . '&func=collection_edit&' . $em_url . $em_rex_list;
+                    $item['attributes']['class'][] = 'btn-default';
+                    $dataset_links[] = $item;
+                }
+                if (!$popup && ($this->table->isExportable() == 1 && $this->hasDataPageFunction('export'))) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_export');
                     $item['url'] = 'index.php?' . $link_vars . '&func=dataset_export&' . $em_url . $em_rex_list;
                     $item['attributes']['class'][] = 'btn-default';
                     $dataset_links[] = $item;
                 }
-                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
+                if (!$popup && $this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_delete');
                     $item['url'] = 'index.php?' . $link_vars . '&func=dataset_delete&' . $em_url . $em_rex_list;
@@ -731,7 +715,7 @@ class rex_yform_manager
                     $item['attributes']['class'][] = 'btn-default';
                     $table_links[] = $item;
                 }
-                if (rex::getUser()->isAdmin()) {
+                if (!$popup && rex::getUser()->isAdmin()) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_edit');
                     $item['url'] = 'index.php?page=yform/manager&table_id=' . $this->table->getId() . '&func=edit';
@@ -747,7 +731,7 @@ class rex_yform_manager
                     $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_truncate_table_confirm') . '\');';
                     $table_links[] = $item;
                 }
-                if ($this->table->hasHistory() && rex::getUser()->isAdmin()) {
+                if (!$popup && $this->table->hasHistory() && rex::getUser()->isAdmin()) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_history');
                     $item['url'] = 'index.php?' . htmlspecialchars($link_vars) . '&amp;func=history';
@@ -762,7 +746,7 @@ class rex_yform_manager
                 }
 
                 $field_links = array();
-                if (rex::getUser()->isAdmin()) {
+                if (!$popup && rex::getUser()->isAdmin()) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_edit');
                     $item['url'] = 'index.php?page=yform/manager/table_field&table_name=' . $this->table->getTableName();

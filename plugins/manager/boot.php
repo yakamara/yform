@@ -44,6 +44,15 @@ if (rex::isBackend() && rex::getUser()) {
 
                 $main_page = $this->getAddon()->getProperty('page');
                 $main_page['isActive'] = false;
+
+                $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
+                $rex_yform_filter = rex_request('rex_yform_filter', 'array');
+
+                if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
+                    $main_page['popup'] = true;
+
+                }
+
                 $this->getAddon()->setProperty('page', $main_page);
 
             }

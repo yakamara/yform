@@ -279,17 +279,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     static function getListValue($params)
     {
-        // TODO Relation table berücksichtigen
-
         $field = $params['params']['field'];
 
         if (4 == $field['type']) {
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $field['table'];
-            if (is_int($popup = rex_request('popup', 'int', null))) {
-                $link .= '&popup=' . $popup;
-            } elseif (!rex_request('rex_yform_filter', 'array')) {
-                $link .= '&popup=0';
-            }
             if (isset($field['filter']) && $field['filter']) {
                 $filter = self::getFilterArray($field['filter'], $field['table_name'], function ($key) use ($params) {
                     return $params['list']->getValue($key);
@@ -500,11 +493,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             'table' => $params['field']->getElement('table'),
             'field' => $params['field']->getElement('field'),
             'type' => 2,
-                /* TODO:
-                  eventuell auch type 3
-                  wie kann man das optional machen ?
-                */
-
         )
         );
     }
