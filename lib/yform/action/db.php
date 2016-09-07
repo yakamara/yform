@@ -52,6 +52,12 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 $sql->setWhere($where);
                 $saved = $sql->update();
                 $action = 'update';
+
+                $sql_id = rex_sql::factory();
+                $sql_id->setTable($main_table);
+                $sql_id->setWhere($where);
+                $sql_id->select('id');
+                $this->params['main_id'] = $id = $this->params['value_pool']['email']['ID'] = $sql_id->getValue('id');
             } else {
                 $saved = $sql->insert();
                 $action = 'insert';
