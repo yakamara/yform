@@ -52,17 +52,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             // echo '<pre>++ ';var_dump($this->getValue());echo '</pre>';
         }
 
-
-        // ---------- connected, fix values
-        if (isset($this->params['rex_yform_set'][$this->getName()]) && !is_array($this->params['rex_yform_set'][$this->getName()])) {
-
-            $values = $this->getValue();
-            $values[] = $this->params['rex_yform_set'][$this->getName()];
-            $this->setValue($values);
-            $this->relation['disabled'] = true;
-        }
-
-
         // ---------- Value angleichen -> immer Array mit IDs daraus machen
         if (!is_array($this->getValue())) {
 
@@ -72,12 +61,17 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $this->setValue(explode(',', $this->getValue()));
             }
         }
+        
+        // ---------- connected, fix values
+        if (isset($this->params['rex_yform_set'][$this->getName()]) && !is_array($this->params['rex_yform_set'][$this->getName()])) {
 
-        // ---------- (array) $this->getValue()
-        // echo '<hr /><pre>'; var_dump($this->getValue()); echo '</pre>';
+            $values = $this->getValue();
+            $values[] = $this->params['rex_yform_set'][$this->getName()];
+            $this->setValue($values);
+            $this->relation['disabled'] = true;
+        }
 
         // ---------- Filter
-
         $filter = array();
         if ($rawFilter = $this->getElement('filter')) {
             $filter = self::getFilterArray($rawFilter, $this->params['main_table'], array($this, 'getValueForKey'));
@@ -103,19 +97,13 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->setValue($values);
         }
 
-        // ---------- (array) $this->getValue()
-        // echo '<pre>'; var_dump($this->getValue()); echo '</pre>';
-
-
         // ---------- empty option ?
-
         if (!$this->isValidationDisabled() && $this->params['send'] == 1 && $this->relation['eoption'] == 0 && count($this->getValue()) == 0) {
             $this->params['warning'][$this->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
         }
 
         // --------------------------------------- Selectbox, single 0 or multiple 1
-
         if ($this->relation['relation_type'] < 2) {
 
             // ----- SELECT BOX
@@ -134,9 +122,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         }
 
-
         // ------------------------------------ POPUP, single, multiple 1-1, n-m
-
         if ($this->relation['relation_type'] == 2 || $this->relation['relation_type'] == 3) {
 
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
@@ -147,9 +133,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         }
 
-
         // --------------------------------------- POPUP, 1-n
-
         if ($this->relation['relation_type'] == 4) {
             $filter[$this->relation['target_field']] = $this->params['main_id'];
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
@@ -160,11 +144,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
 
         // --------------------------------------- save
-
         $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
         if (!$this->getElement('relation_table') && $this->relation['relation_type'] != 4) {
             $this->params['value_pool']['sql'][$this->getName()] = implode(',', array_unique($this->getValue()));
         }
+
     }
 
 
@@ -260,6 +244,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'size'         => array( 'type' => 'text', 'name' => 'boxheight',    'label' => rex_i18n::msg("yform_values_be_manager_relation_size")),
                 'filter'       => array( 'type' => 'textarea', 'label' => rex_i18n::msg("yform_values_be_manager_relation_filter")),
                 'relation_table' => array( 'type' => 'table', 'label' => rex_i18n::msg("yform_values_be_manager_relation_relation_table"), 'empty_option' => 1),
+                'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
                 'notice'       => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_manager_relation_description"),
