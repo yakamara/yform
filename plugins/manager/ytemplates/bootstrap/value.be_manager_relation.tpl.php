@@ -18,23 +18,42 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
+
+
+
+
+
 ?>
 <?php if ($this->relation['relation_type'] < 2): ?>
     <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
         <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabelStyle($this->relation['label']) ?></label>
         <?php
+
+        $attributes = [];
+        $attributes["class"] = 'form-control';
+        $attributes["id"] = $this->getFieldId();
+
         $select = new rex_select();
-        $select->setStyle('class="form-control"');
+
         if ($this->relation['relation_type'] == 1) {
             $select->setName($this->getFieldName() . '[]');
             $select->setMultiple();
             $select->setSize($this->relation['size']);
+
         } else {
             $select->setName($this->getFieldName());
+
         }
+
         if ($this->relation['disabled']) {
             $select->setAttribute('disabled', 'disabled');
+
         }
+
+        $attributes = $this->getAttributeArray($attributes, ['required', 'readonly']);
+
+        $select->setAttributes($attributes);
+
         $select->addOptions($options);
         $select->setSelected($this->getValue());
         echo $select->get();
@@ -69,8 +88,13 @@ if (count($notice) > 0) {
             echo $fragment->parse('core/form/widget.php');
 
         } else {
+
+            $attributes = [];
+            $attributes["class"] = 'form-control';
+            $attributes = $this->getAttributeArray($attributes, ['required', 'readonly']);
+
             $select = new rex_select();
-            $select->setStyle('class="form-control"');
+            $select->setAttributes($attributes);
             $select->setId('yform_MANAGER_DATALIST_SELECT_' . $id. '');
             $select->setName('yform_MANAGER_DATALIST_SELECT' . $id. '');
             $select->setSize($this->relation['size']);

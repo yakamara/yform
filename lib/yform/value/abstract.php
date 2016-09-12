@@ -156,6 +156,17 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     function getAttributeElements(array $attributes, array $direct_attributes = [])
     {
+        $attributes = self::getAttributeArray($attributes, $direct_attributes);
+        $return = [];
+        foreach($attributes as $attribute => $value) {
+            $return[] = $attribute.'="'.htmlspecialchars($value).'"';
+        }
+
+        return $return;
+    }
+
+    function getAttributeArray(array $attributes, array $direct_attributes = [])
+    {
         $additionalAttributes = $this->getElement("attributes");
         if ($additionalAttributes) {
             if (!is_array($additionalAttributes)) {
@@ -174,13 +185,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
             }
         }
 
-        $return = [];
-        foreach($attributes as $attribute => $value) {
-            $return[] = $attribute.'="'.htmlspecialchars($value).'"';
-        }
-
-        return $return;
-
+        return $attributes;
     }
 
     function getWarningClass()
