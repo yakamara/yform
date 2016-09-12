@@ -11,7 +11,15 @@ class rex_yform_value_html extends rex_yform_value_abstract
 
     function enterObject()
     {
-        $this->params['form_output'][$this->getId()] = $this->getElement('html');
+        $html = $this->getElement('html');
+        $label = $this->getElement('label');
+
+        // BC
+        if ($html == "") {
+            $html = $label;
+        }
+
+        $this->params['form_output'][$this->getId()] = $html;
     }
 
     function getDescription()
