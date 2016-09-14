@@ -43,8 +43,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_php_description"),
             'dbtype' => 'text',
-            'search' => true,
-            'list_hidden' => true,
+            'is_hiddeninlist' => true,
             'famous' => false,
             'multi_edit' => 'always',
         );

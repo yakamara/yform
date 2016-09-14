@@ -49,8 +49,6 @@ class rex_yform_value_integer extends rex_yform_value_abstract
             ),
             'description' => rex_i18n::msg("yform_values_integer_description"),
             'dbtype' => 'int',
-            'search' => true,
-            'list_hidden' => false,
             'null' => true,
         );
 

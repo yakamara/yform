@@ -111,8 +111,6 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_select_category_description"),
-            'search' => true,
-            'list_hidden' => false,
             'dbtype' => 'text'
         );
 

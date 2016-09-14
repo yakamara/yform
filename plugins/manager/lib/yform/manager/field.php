@@ -72,28 +72,53 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->values[$k];
     }
 
+
+    public function isSearchableDisabled()
+    {
+        if (!isset($this->definitions["is_searchable"])) {
+            return false;
+        } else if (!$this->definitions["is_searchable"]){
+            return true;
+        }
+        return false;
+    }
+
     public function isSearchable()
     {
-        if (isset($this->definitions["search"]) && !$this->definitions["search"]){
+        if ($this->isSearchableDisabled()) {
             return false;
+
         }
 
-        if (isset($this->values['search']) && $this->values['search'] == 1) {
+        if (isset($this->values['search']) && $this->values['search']) {
             return true;
+
+        }
+        return false;
+    }
+
+    public function isHiddenInListDisabled()
+    {
+        if (!isset($this->definitions["is_hiddeninlist"])) {
+            return false;
+
+        } else if ($this->definitions["is_hiddeninlist"]) {
+            return true;
+
         }
         return false;
     }
 
     public function isHiddenInList()
     {
-        if (isset($this->definitions["list_hidden"]) && $this->definitions["list_hidden"]) {
+        if ($this->isHiddenInListDisabled()) {
             return true;
         }
 
-        if (isset($this->values['list_hidden']) && !$this->values['list_hidden']) {
-            return false;
+        if (!isset($this->values['list_hidden']) || $this->values['list_hidden']) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     // deprecated

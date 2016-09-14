@@ -1173,18 +1173,18 @@ class rex_yform_manager
 
             if ($type_id == 'value') {
 
-                // echo '<pre>';var_dump($field->values);echo '</pre>';
-
-                if (!$field->isHiddenInList()) {
+                if (!$field->isHiddenInListDisabled()) {
                     $yform->setValueField('checkbox', array('list_hidden', rex_i18n::msg('yform_hideinlist'), 1, '1'));
                 }
 
-                if ($field->isSearchable()) {
+                if (!$field->isSearchableDisabled()) {
                     $yform->setValueField('checkbox', array('search', rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 1, '1'));
                 }
 
-            } elseif ($type_id == 'validate') {
+            } else if ($type_id == 'validate') {
+
                 $yform->setValueField('hidden', array('list_hidden', 1));
+                $yform->setValueField('hidden', array('search', 0));
 
             }
 

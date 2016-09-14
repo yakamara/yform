@@ -41,8 +41,8 @@ class rex_yform_value_html extends rex_yform_value_abstract
             'description' => rex_i18n::msg("yform_values_html_description"),
             'dbtype' => 'text',
             'multi_edit' => 'always',
-            'search' => false,
-            'list_hidden' => true,
+            'is_searchable' => false,
+            'is_hiddeninlist' => true,
         );
 
     }

@@ -60,8 +60,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'function' => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_index_function"), 'notice' => rex_i18n::msg("yform_values_index_function")),
             ),
             'description' => rex_i18n::msg("yform_values_index_description"),
-            'search' => true,
-            'list_hidden' => true,
+            'is_hiddeninlist' => true,
             'dbtype' => 'text',
             'multi_edit' => false,
         );

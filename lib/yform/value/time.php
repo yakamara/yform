@@ -190,8 +190,6 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_time_description"),
-            'search' => true,
-            'list_hidden' => false,
             'dbtype' => 'time'
         );
 
