@@ -78,6 +78,7 @@ yform_manager_table_deleted = Tabelle wurde gelöscht
 yform_manager_table_add = Tabelle anlegen
 yform_manager_table_update = Tabellen und Felder updaten
 yform_manager_table_import = Tabelle importieren
+yform_manager_table_features = Aktivierte Optionen
 
 yform_manager_type_id = Typ
 yform_manager_type_name = Typname

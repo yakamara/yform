@@ -219,7 +219,6 @@ if ($show_list && rex::getUser()->isAdmin()) {
     // formatting func fuer status col
     function rex_yform_status_col($params)
     {
-
         $list = $params['list'];
         return $list->getValue('status') == 1 ? '<span class="rex-online"><i class="rex-icon rex-icon-online"></i> ' . rex_i18n::msg('yform_tbl_active') . '</span>' : '<span class="rex-offline"><i class="rex-icon rex-icon-offline"></i> ' . rex_i18n::msg('yform_tbl_inactive') . '</span>';
     }
@@ -229,6 +228,19 @@ if ($show_list && rex::getUser()->isAdmin()) {
 
         $list = $params['list'];
         return $list->getValue('hidden') == 1 ? '<span class="text-muted">' . rex_i18n::msg('yform_hidden') . '</span>' : '<span>' . rex_i18n::msg('yform_visible') . '</span>';
+    }
+
+    function rex_yform_features_col($params)
+    {
+        $list = $params['list'];
+        $info = [];
+        if ($list->getValue("import") == 1) $info[] = 'import';
+        if ($list->getValue("export") == 1) $info[] = 'export';
+        if ($list->getValue("search") == 1) $info[] = 'search';
+        if ($list->getValue("mass_deletion") == 1) $info[] = 'mass_deletion';
+        if ($list->getValue("history") == 1) $info[] = 'history';
+
+        return implode(", ", $info); // $list->getValue('hidden') == 1 ? '<span class="text-muted">' . rex_i18n::msg('yform_hidden') . '</span>' : '<span>' . rex_i18n::msg('yform_visible') . '</span>';
     }
 
     function rex_yform_list_translate($params)
@@ -276,7 +288,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $panel_options = $fragment->parse('core/buttons/button_group.php');
 
 
-    $sql = 'select id, prio, name, table_name, status, hidden from `' . rex_yform_manager_table::table() . '` order by prio,table_name';
+    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, history  from `' . rex_yform_manager_table::table() . '` order by prio,table_name';
 
     $list = rex_list::factory($sql);
     $list->addParam('start', rex_request('start', 'int'));
@@ -287,6 +299,11 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->setColumnParams($thIcon, ['func' => 'edit', 'table_id' => '###id###']);
 
     $list->removeColumn('id');
+    $list->removeColumn('import');
+    $list->removeColumn('export');
+    $list->removeColumn('search');
+    $list->removeColumn('mass_deletion');
+    $list->removeColumn('history');
 
     $list->setColumnLabel('prio', rex_i18n::msg('yform_manager_table_prio_short'));
     $list->setColumnLabel('name', rex_i18n::msg('yform_manager_name'));
@@ -300,6 +317,10 @@ if ($show_list && rex::getUser()->isAdmin()) {
 
     $list->setColumnLabel('hidden', rex_i18n::msg('yform_manager_table_hidden'));
     $list->setColumnFormat('hidden', 'custom', 'rex_yform_hidden_col');
+
+    $list->addColumn('features', '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_features'));
+    $list->setColumnLabel('features', rex_i18n::msg('yform_manager_table_features'));
+    $list->setColumnFormat('features', 'custom', 'rex_yform_features_col');
 
     $list->addColumn(rex_i18n::msg('yform_edit'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
     $list->setColumnLabel(rex_i18n::msg('yform_edit'), rex_i18n::msg('yform_function'));
