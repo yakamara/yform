@@ -10,13 +10,21 @@ if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
     <?php else: ?>
                 <ul>
     <?php endif; ?>
-                    <?php foreach ($this->objparams['warning_messages'] as $k => $v): ?>
-                        <li><?php echo rex_i18n::translate("$v", null); ?></li>
-                    <?php endforeach ?>
+                    <?php
 
-                    <?php if ($this->objparams['unique_error'] != ''): ?>
-                        <li><?php echo rex_i18n::translate(preg_replace("~\\*|:|\\(.*\\)~Usim", '', $this->objparams['unique_error'])) ?></li>
-                    <?php endif ?>
+    $warning_messages = [];
+    foreach ($this->objparams['warning_messages'] as $k => $v) {
+        $warning_messages[rex_i18n::translate("$v", null)] = '<li>'.rex_i18n::translate("$v", null).'</li>';
+    }
+    if (count($warning_messages)>0) {
+        echo implode('', $warning_messages);
+    }
+
+    if ($this->objparams['unique_error'] != '') {
+        echo '<li>'.rex_i18n::translate(preg_replace("~\\*|:|\\(.*\\)~Usim", '', $this->objparams['unique_error'])).'</li>';
+    }
+
+    ?>
                 </ul>
     <?php if ($this->objparams['Error-occured']): ?>
             </dd>
