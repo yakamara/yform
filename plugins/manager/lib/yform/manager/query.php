@@ -604,7 +604,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $sql = rex_sql::factory();
         $sql->setQuery($query->getQuery(), $query->getParams());
 
-        return $sql->getRows();
+        return $sql->getValue('count');
     }
 
     /**
