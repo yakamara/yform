@@ -11,6 +11,8 @@ class rex_yform_manager_table implements ArrayAccess
 {
     protected $values = [];
 
+    protected $columns = [];
+
     /** @var rex_yform_manager_field[] */
     protected $fields = [];
 
@@ -20,21 +22,15 @@ class rex_yform_manager_table implements ArrayAccess
     protected static $tables = [];
     protected static $loadedAllTables = false;
 
-    public function __construct(array $values)
-    {
-        if (count($values) == 0) {
-            throw new Exception(rex_i18n::msg('yform_table_not_found'));
-        }
-        $this->values = $values;
+    private static $cache;
 
-        $tb = rex_sql::factory();
-        if (self::$debug) {
-            $tb->setDebug();
-        }
-        $tb->setQuery('select * from ' . rex_yform_manager_field::table() . ' where table_name=' . $tb->escape($this->getTablename()) . ' order by prio');
+    private function __construct(array $data)
+    {
+        $this->values = $data['table'];
+        $this->columns = $data['columns'];
 
         $this->fields = [];
-        foreach ($tb->getArray() as $field) {
+        foreach ($data['fields'] as $field) {
             try {
                 $this->fields[] = new rex_yform_manager_field($field);
             } catch (Exception $e) {
@@ -43,47 +39,43 @@ class rex_yform_manager_table implements ArrayAccess
         }
     }
 
-    public static function get($table_name)
+    /**
+     * @param string $tableName
+     *
+     * @return null|rex_yform_manager_table
+     */
+    public static function get($tableName)
     {
-        if (isset(self::$tables[$table_name])) {
-            return self::$tables[$table_name];
+        if (isset(self::$tables[$tableName])) {
+            return self::$tables[$tableName];
         }
 
-        $tb = rex_sql::factory();
-        if (self::$debug) {
-            $tb->setDebug();
-        }
-        $tables = $tb->getArray('select * from ' . self::table() . ' where table_name = ' . $tb->escape($table_name) . '');
+        $cache = self::getCache();
 
-        if (count($tables) != 1) {
-            return null;
+        if (!isset($cache[$tableName])) {
+            return self::$tables[$tableName] = null;
         }
-        return self::$tables[$table_name] = new self($tables[0]);
+
+        return self::$tables[$tableName] = new self($cache[$tableName]);
     }
 
-    public static function reload()
-    {
-        self::$tables = [];
-        self::$loadedAllTables = false;
-    }
-
+    /**
+     * @return rex_yform_manager_table[]
+     */
     public static function getAll()
     {
         if (self::$loadedAllTables) {
             return self::$tables;
         }
+
         self::$loadedAllTables = true;
 
-        $table_array = rex_sql::factory();
-        if (self::$debug) {
-            $table_array->setDebug();
-        }
-        $table_array = $table_array->getArray('select * from ' . self::table() . ' order by prio');
-
+        $tables = self::$tables;
         self::$tables = [];
-        foreach ($table_array as $t) {
-            self::$tables[$t['table_name']] = new self($t);
+        foreach (self::getCache() as $tableName => $table) {
+            self::$tables[$tableName] = isset($tables[$tableName]) ? $tables[$tableName] : new self($table);
         }
+
         return self::$tables;
     }
 
@@ -281,13 +273,7 @@ class rex_yform_manager_table implements ArrayAccess
     // Database Fielddefinition
     public function getColumns()
     {
-        $columns = rex_sql::showColumns($this->getTableName());
-        $c = [];
-        foreach ($columns as $column) {
-            $c[$column['name']] = $column;
-        }
-        unset($c['id']);
-        return $c;
+        return $this->columns;
     }
 
     public function getMissingFields()
@@ -420,5 +406,61 @@ class rex_yform_manager_table implements ArrayAccess
     public function __toString()
     {
         return $this->getTableName();
+    }
+
+    public static function deleteCache()
+    {
+        rex_file::delete(self::cachePath());
+        self::$cache = null;
+        self::$tables = [];
+        self::$loadedAllTables = false;
+    }
+
+    private static function getCache()
+    {
+        if (null !== self::$cache) {
+            return self::$cache;
+        }
+
+        $cachePath = self::cachePath();
+        if (file_exists($cachePath)) {
+            return self::$cache = rex_file::getCache($cachePath);
+        }
+
+        self::$cache = [];
+
+        $sql = rex_sql::factory();
+        $sql->setDebug(self::$debug);
+
+        $tables = $sql->getArray('select * from ' . self::table() . ' order by prio');
+        foreach ($tables as $table) {
+            $tableName = $table['table_name'];
+            self::$cache[$tableName]['table'] = $table;
+
+            self::$cache[$tableName]['columns'] = [];
+            foreach (rex_sql::showColumns($tableName) as $column) {
+                if ('id' !== $column['name']) {
+                    self::$cache[$tableName]['columns'][$column['name']] = $column;
+                }
+            }
+
+            self::$cache[$tableName]['fields'] = [];
+        }
+
+        $fields = $sql->getArray('select * from ' . rex_yform_manager_field::table() . ' order by prio');
+        foreach ($fields as $field) {
+            if (isset(self::$cache[$field['table_name']])) {
+                self::$cache[$field['table_name']]['fields'][] = $field;
+            }
+        }
+
+        rex_file::putCache($cachePath, self::$cache);
+
+        return self::$cache;
+    }
+
+    private static function cachePath()
+    {
+        return rex_path::pluginCache('yform', 'manager', 'tables.cache');
     }
 }

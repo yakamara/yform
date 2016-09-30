@@ -154,6 +154,7 @@ class rex_yform_manager_table_api
             }
         }
 
+        rex_yform_manager_table::deleteCache();
     }
 
 
@@ -240,14 +241,16 @@ class rex_yform_manager_table_api
 
         }
 
+        rex_yform_manager_table::deleteCache();
     }
 
     public static function removeTablefield($table_name, $field_name)
     {
         $f = rex_sql::factory();
         $f->debugsql = self::$debug;
-        return $f->setQuery('delete from ' . rex_yform_manager_field::table() . ' where table_name=:table_name and name=:name', [':table_name' => $table_name, ':name' => $field_name]);
+        $f->setQuery('delete from ' . rex_yform_manager_field::table() . ' where table_name=:table_name and name=:name', [':table_name' => $table_name, ':name' => $field_name]);
 
+        rex_yform_manager_table::deleteCache();
     }
 
 
@@ -561,11 +564,12 @@ class rex_yform_manager_table_api
             $alter->setQuery('ALTER TABLE `' .  rex_yform_manager_field::table() . '` ' . implode(',', $alterTable));
         }
 
+        rex_yform_manager_table::deleteCache();
     }
 
     static function generateTablesAndFields($delete_old = false)
     {
-        rex_yform_manager_table::reload();
+        rex_yform_manager_table::deleteCache();
         $types = rex_yform::getTypeArray();
         foreach (rex_yform_manager_table::getAll() as $table) {
 
@@ -623,6 +627,8 @@ class rex_yform_manager_table_api
             }
 
         }
+
+        rex_yform_manager_table::deleteCache();
     }
 
 
