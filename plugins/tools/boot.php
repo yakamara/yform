@@ -22,6 +22,7 @@ if (rex::isBackend() && rex::getUser()) {
 
     rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/min/jquery.inputmask.bundle.min.js'));
 
+    rex_view::addCssFile($this->getAssetsUrl('tools.css'));
     rex_view::addJsFile($this->getAssetsUrl('tools.js'));
 }
 
