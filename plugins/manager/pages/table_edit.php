@@ -254,34 +254,6 @@ if ($show_list && rex::getUser()->isAdmin()) {
     ]);
     $items = [];
 
-/*
-    $item = [];
-    $item['label'] = rex_i18n::msg('yform_manager_table') . ' ' . rex_i18n::msg('yform_manager_migrate');
-    $item['url'] = $context->getUrl(['func' => 'migrate']);
-    $item['attributes']['class'][] = 'btn-default';
-    if ($func == 'migrate') {
-        $item['attributes']['class'][] = 'active';
-    }
-    $items[] = $item;
-
-    $item = [];
-    $item['label'] = rex_i18n::msg('yform_manager_tableset') . ' ' . rex_i18n::msg('yform_manager_export');
-    $item['url'] = $context->getUrl(['func' => 'tableset_export']);
-    $item['attributes']['class'][] = 'btn-default';
-    if ($func == 'tableset_export') {
-        $item['attributes']['class'][] = 'active';
-    }
-    $items[] = $item;
-
-    $item = [];
-    $item['label'] = rex_i18n::msg('yform_manager_tableset') . ' ' . rex_i18n::msg('yform_manager_import');
-    $item['url'] = $context->getUrl(['func' => 'tableset_import']);
-    $item['attributes']['class'][] = 'btn-default';
-    if ($func == 'tableset_import') {
-        $item['attributes']['class'][] = 'active';
-    }
-    $items[] = $item;
-*/
     $fragment = new rex_fragment();
     $fragment->setVar('buttons', $items, false);
     $fragment->setVar('size', 'xs', false);
@@ -310,7 +282,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->setColumnFormat('name', 'custom', 'rex_yform_list_translate');
 
     $list->setColumnLabel('table_name', rex_i18n::msg('yform_manager_table_name'));
-    $list->setColumnParams('table_name', array('table_id' => '###id###', 'func' => 'edit'));
+    $list->setColumnFormat('table_name', 'custom', function($params) { return '<a href="index.php?page=yform/manager/data_edit&table_name=' . $params["value"] . '">' . $params["value"] . '</a>'; });
 
     $list->setColumnLabel('status', rex_i18n::msg('yform_manager_table_status'));
     $list->setColumnFormat('status', 'custom', 'rex_yform_status_col');
@@ -325,16 +297,16 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->addColumn(rex_i18n::msg('yform_edit'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
     $list->setColumnLabel(rex_i18n::msg('yform_edit'), rex_i18n::msg('yform_function'));
     $list->setColumnLayout(rex_i18n::msg('yform_edit'), ['<th class="rex-table-action" colspan="3">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('yform_edit'), array('table_id' => '###id###', 'func' => 'edit'));
+    $list->setColumnParams(rex_i18n::msg('yform_edit'), ['table_id' => '###id###', 'func' => 'edit']);
 
     $list->addColumn(rex_i18n::msg('yform_delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete'));
     $list->setColumnLayout(rex_i18n::msg('yform_delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('yform_delete'), array('table_name' => '###table_name###', 'func' => 'delete'));
+    $list->setColumnParams(rex_i18n::msg('yform_delete'), ['table_name' => '###table_name###', 'func' => 'delete']);
     $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' [###table_name###] ' . rex_i18n::msg('yform_delete') . ' ?\')');
 
     $list->addColumn(rex_i18n::msg('yform_editfields'), rex_i18n::msg('yform_editfields'));
     $list->setColumnLayout(rex_i18n::msg('yform_editfields'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('yform_editfields'), array('page' => 'yform/manager/table_field', 'table_name' => '###table_name###'));
+    $list->setColumnParams(rex_i18n::msg('yform_editfields'), ['page' => 'yform/manager/table_field', 'table_name' => '###table_name###']);
 
     $content = $list->get();
 
