@@ -51,7 +51,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $etpl['attachments'] = array();
             }
 
-            if (is_array($this->params['value_pool']['email_attachments'])) {
+            if (isset($this->params['value_pool']['email_attachments']) && is_array($this->params['value_pool']['email_attachments'])) {
                 foreach ($this->params['value_pool']['email_attachments'] as $v) {
                     $etpl['attachments'][] = ['name' => $v[0], 'path' => $v[1]];
                 }

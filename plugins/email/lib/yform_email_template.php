@@ -46,7 +46,6 @@ class rex_yform_email_template
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
         $template['subject'] = rex_var::parse($template['subject'],'','yform_email_template', $er);
-        $template['subject'] = self::makeSingleLine($template['subject']);
         $template['body'] = rex_var::parse($template['body'],'','yform_email_template', $er);
         $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
 
@@ -58,8 +57,11 @@ class rex_yform_email_template
             $template['body_html'] = str_replace("?>\n", "?>\n\r\n", $template['body_html']);
         }
 
+        $template['subject'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/subject', $template['subject']));
         $template['body'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/body', $template['body']));
         $template['body_html'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/body_html', $template['body_html']));
+
+        $template['subject'] = self::makeSingleLine($template['subject']);
 
         return $template;
 
