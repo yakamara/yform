@@ -163,8 +163,9 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if ($this->getElement('widget') == 'input:text') {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
 
-        } else if ($this->getElement('widget') == 'input:date') {
-            $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'date']);
+        // } else if ($this->getElement('widget') == 'input:date') {
+            // wird im moment nicht genutzt.
+            // $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'date']);
 
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
@@ -193,7 +194,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'format'       => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_date_format"), 'notice' => rex_i18n::msg("yform_values_date_format_notice")),
                 'current_date' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_date_current_date")),
                 'no_db'        => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table")),
-                'widget'       => ['type' => 'select', 'label' => rex_i18n::msg("yform_values_defaults_widgets"), 'options' => ['select'=>'select', 'input:date'=>'input:date', 'input:text'=>'input:text'], 'default' => 'select'],
+                'widget'       => ['type' => 'select', 'label' => rex_i18n::msg("yform_values_defaults_widgets"), 'options' => ['select'=>'select', 'input:text'=>'input:text'], 'default' => 'select'],
                 'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_date_description"),
