@@ -26,10 +26,24 @@ class rex_yform_manager_search
 
     /** @type rex_yform_manager_table */
     protected $table = null;
+    protected $fields = null;
 
     public function __construct(rex_yform_manager_table $table)
     {
         $this->table = $table;
+
+        $id_field = [new rex_yform_manager_field([
+            "id" => 0,
+            "table_name" => $this->table->getTableName(),
+            "type_id" => "value",
+            "type_name" => "text",
+            "search" => 1,
+            "label" => "ID",
+            "name" => "id",
+        ])];
+        
+        $this->fields = array_merge($id_field, $this->table->getFields());
+
         $this->setScriptPath($_SERVER['PHP_SELF']);
     }
 
@@ -67,9 +81,7 @@ class rex_yform_manager_search
             $yform->setHiddenField($k, $v);
         }
 
-        // $yform->setValueField('text', array('label' => 'ID', 'name' => 'id'));
-
-        foreach ($this->table->getFields() as $field) {
+        foreach ($this->fields as $field) {
 
             if ($field->getTypeName() && $field->getType() == 'value' && $field->isSearchable()) {
 
@@ -78,7 +90,7 @@ class rex_yform_manager_search
                         'searchForm' => $yform,
                         'searchObject' => $this,
                         'field' => $field,
-                        'fields' => $this->table->getFields()
+                        'fields' => $this->fields
                     ));
                 }
             }
@@ -113,7 +125,7 @@ class rex_yform_manager_search
         $queryFilter = array();
         $vars = $this->getSearchVars();
 
-        foreach ($this->table->getFields() as $field) {
+        foreach ($this->fields as $field) {
 
             if (array_key_exists($field->getName(), $vars['rex_yform_searchvars']) && $field->getType() == 'value' && $field->isSearchable()) {
 //                rex_yform::includeClass($field->getType(), $field->getTypeName());
@@ -121,7 +133,7 @@ class rex_yform_manager_search
                     $qf = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
                         array(
                             'field' => $field,
-                            'fields' => $this->table->getFields(),
+                            'fields' => $this->fields,
                             'value' => $vars['rex_yform_searchvars'][$field->getName()]
                         )
                     );
