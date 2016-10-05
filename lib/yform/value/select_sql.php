@@ -111,11 +111,10 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     static function getListValue($params)
     {
-        $sql = rex_sql::factory();
-
         $return = array();
 
         $query = $params['params']['field']['query'];
+        $query_params = [];
         $pos = strrpos(strtoupper($query), 'ORDER BY ');
         if ( $pos !== false) {
             $query = substr($query, 0, $pos);
@@ -128,10 +127,12 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $multiple = (isset($params['params']['field']['multiple'])) ? (int) $params['params']['field']['multiple'] : 0;
         if ($multiple != 1) {
-            $where = ' `id` = ' . $sql->escape($params['value']) . '';
+            $where = ' `id` = ?';
+            $query_params[] = $params['value'];
 
         } else {
-            $where = ' FIND_IN_SET(`id`,"' . $sql->escape($params['value']) . '")';
+            $where = ' FIND_IN_SET(`id`, ?)';
+            $query_params[] = $params['value'];
 
         }
 
@@ -145,8 +146,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         $db = rex_sql::factory();
-        // $db->setDebug();
-        $db_array = $db->getArray($query);
+        $db_array = $db->getArray($query, $query_params);
 
         foreach ($db_array as $entry) {
             $return[] = $entry['name'];
