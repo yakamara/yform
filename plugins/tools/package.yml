@@ -2,6 +2,7 @@ package: yform/tools
 version: '1.1-beta2'
 author: 'Jan Kristinus'
 supportpage: www.redaxo.org/de/forum/
+compile: 0
 
 requires:
     packages:
