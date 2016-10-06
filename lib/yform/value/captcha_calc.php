@@ -17,7 +17,7 @@ class rex_yform_value_captcha_calc extends rex_yform_value_abstract
         $this->captcha_ini = parse_ini_string($this->captacha_ini(), true);
         extract( $this->captcha_ini );
 
-        $captchaRequest = rex_request('captcha', 'string');
+        $captchaRequest = rex_request('captcha_calc', 'string');
 
         if ($captchaRequest == 'show') {
             while (@ob_end_clean());
@@ -44,10 +44,10 @@ class rex_yform_value_captcha_calc extends rex_yform_value_abstract
                 $link .= '?';
             }
 
-            $link .= 'captcha=show&' . time();
+            $link .= 'captcha_calc=show&' . time();
 
         } else {
-            $link = rex_getUrl($this->params['article_id'], $this->params['clang'], array('captcha' => 'show'), '&') . '&' . time() . str_replace(" ","",microtime());
+            $link = rex_getUrl($this->params['article_id'], $this->params['clang'], array('captcha_calc' => 'show'), '&') . '&' . time() . str_replace(" ","",microtime());
         }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.captcha.tpl.php', array('link' => $link));
@@ -55,7 +55,7 @@ class rex_yform_value_captcha_calc extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'captcha_calc -> Beispiel: captcha|Beschreibungstext|Fehlertext|[link]';
+        return 'captcha_calc -> Beispiel: captcha_calc|Beschreibungstext|Fehlertext|[link]';
     }
 
     function captcha_showImage()
