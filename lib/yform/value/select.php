@@ -59,7 +59,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'select -> Beispiel: select|name|label|Frau=w,Herr=m|[no_db]|defaultwert|multiple=1|selectsize';
+        return 'select|name|label|Frau=w,Herr=m|[no_db]|defaultwert|multiple=1|selectsize';
     }
 
     function getDefinitions()

@@ -26,6 +26,6 @@ class rex_yform_value_ip extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'ip -> Beispiel: ip|name|[no_db]';
+        return 'ip|name|[no_db]';
     }
 }

@@ -16,7 +16,7 @@ class rex_yform_value_emptyname extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'emptyname -> Beispiel: emptyname|name|';
+        return 'emptyname|name|';
     }
 
     function getDefinitions()

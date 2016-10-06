@@ -19,6 +19,6 @@ class rex_yform_value_resetbutton extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'resetbutton -> Beispiel: resetbutton|name|label|value|cssclassname';
+        return 'resetbutton|name|label|value|cssclassname';
     }
 }

@@ -29,7 +29,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'text -> Beispiel: text|name|label|defaultwert|[no_db]|';
+        return 'text|name|label|defaultwert|[no_db]|';
     }
 
     function getDefinitions()

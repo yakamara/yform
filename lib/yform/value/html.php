@@ -24,7 +24,7 @@ class rex_yform_value_html extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return htmlspecialchars('html -> Beispiel: html|label|<div class="block"></div>');
+        return htmlspecialchars('html|label|<div class="block"></div>');
     }
 
     function getDefinitions()

@@ -15,7 +15,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'index -> Beispiel: index|label|name|name1,name2,name3|[no_db]|[func/md5/sha]';
+        return 'index|label|name|name1,name2,name3|[no_db]|[func/md5/sha]';
     }
 
     function enterObject()

@@ -75,7 +75,7 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'compare -> prüft ob leer, beispiel: validate|compare|label1|label2|[!=|<|>|==|>=|<=]|warning_message|';
+        return 'validate|compare|label1|label2|[!=/</>/==/>=/<=]|warning_message|';
     }
 
     function getDefinitions()

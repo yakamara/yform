@@ -30,7 +30,7 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'size -> Laenge der Eingabe muss gleich size sein, beispiel: validate|size|plz|6|warning_message';
+        return 'validate|size|plz|6|warning_message';
     }
 
     function getDefinitions()

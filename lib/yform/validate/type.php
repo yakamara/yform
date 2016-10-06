@@ -102,7 +102,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'type -> prüft auf typ,beispiel: validate|type|label|int(oder float/numeric/string/email/url/date/datetime)|Fehlermeldung|[1= Feld darf auch leer sein]';
+        return 'validate|type|label|int/float/numeric/string/email/url/date/datetime|Fehlermeldung|[1= Feld darf auch leer sein]';
     }
 
     function getDefinitions()

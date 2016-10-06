@@ -78,7 +78,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'prio -> Beispiel: prio|name|label|fields|scope|defaultwert';
+        return 'prio|name|label|fields|scope|defaultwert';
     }
 
     function getDefinitions()

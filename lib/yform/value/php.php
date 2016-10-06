@@ -28,7 +28,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return htmlspecialchars('php -> Beispiel: php|name|<?php echo date("mdY"); ?>');
+        return htmlspecialchars('php|name|<?php echo date("mdY"); ?>');
     }
 
     function getDefinitions()

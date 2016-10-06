@@ -32,7 +32,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'integer -> Beispiel: integer|name|label|defaultwert|[no_db]';
+        return 'integer|name|label|defaultwert|[no_db]';
     }
 
     function getDefinitions()

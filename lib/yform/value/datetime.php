@@ -232,7 +232,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'datetime -> Beispiel: datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat YYYY/MM/DD HH:ii:ss] |[1/Aktuelles Datum voreingestellt]|[no_db]';
+        return 'datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat YYYY/MM/DD HH:ii:ss] |[1/Aktuelles Datum voreingestellt]|[no_db]';
     }
 
 

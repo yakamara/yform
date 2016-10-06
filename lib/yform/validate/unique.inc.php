@@ -59,7 +59,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'unique -> prüft ob unique, beispiel: validate|unique|dbfeldname[,dbfeldname2]|Dieser Name existiert schon|[table]';
+        return 'validate|unique|dbfeldname[,dbfeldname2]|Dieser Name existiert schon|[table]';
     }
 
     function getDefinitions()

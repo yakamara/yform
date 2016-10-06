@@ -65,7 +65,7 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'compare_value -> compare label with value, example: validate|compare_value|label|value|[!=|<|>|==|>=|<=]|warning_message ';
+        return 'validate|compare_value|label|value|[!=/</>/==/>=/<=]|warning_message ';
     }
 
     function getDefinitions()

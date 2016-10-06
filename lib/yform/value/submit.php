@@ -45,6 +45,6 @@ class rex_yform_value_submit extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'submit -> Beispiel: submit|label|value_on_button|[no_db]|cssclassname|[value_to_save_if_clicked]';
+        return 'submit|label|value_on_button|[no_db]|cssclassname|[value_to_save_if_clicked]';
     }
 }

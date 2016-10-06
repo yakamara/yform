@@ -51,7 +51,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'google_geocode -> Beispiel: google_geocode|gcode|Bezeichnung|pos_lat,pos_lng|strasse,plz,ort|width|height|';
+        return 'google_geocode|gcode|Bezeichnung|pos_lat,pos_lng|strasse,plz,ort|width|height|';
     }
 
     function getDefinitions()
@@ -70,6 +70,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
             ),
             'description' => 'GoogeMap Positionierung',
             'dbtype' => 'text',
+            'formbuilder' => false,
             'multi_edit' => false,
         );
 

@@ -19,7 +19,7 @@ class rex_yform_value_article extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'article -> Beispiel: article|article_id';
+        return 'article|article_id';
     }
 
 }

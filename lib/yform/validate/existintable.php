@@ -64,6 +64,6 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'existintable -> prüft ob vorhanden, beispiel: validate|existintable|label,label2|tablename|feldname,feldname2|warning_message';
+        return 'validate|existintable|label,label2|tablename|feldname,feldname2|warning_message';
     }
 }

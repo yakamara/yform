@@ -35,7 +35,7 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'email -> prueft ob email korrekt ist. leere email ist auch korrekt, bitte zusaetzlich mit ifempty prfen, beispiel: validate|email|emaillabel|warning_message ';
+        return 'validate|email|emaillabel|warning_message ';
     }
 
     function getDefinitions()

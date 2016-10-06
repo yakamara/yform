@@ -51,6 +51,6 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'labelexist -> mindestens ein feld muss ausgefüllt sein, example: validate|labelexist|label,label2,label3|[minlabels]|[maximallabels]|Fehlermeldung';
+        return 'validate|labelexist|label,label2,label3|[minlabels]|[maximallabels]|Fehlermeldung';
     }
 }

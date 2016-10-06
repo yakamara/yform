@@ -29,7 +29,7 @@ class rex_yform_value_email extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'email -> Beispiel: email|name|label|defaultwert|[no_db]|cssclassname';
+        return 'email|name|label|defaultwert|[no_db]|cssclassname';
     }
 
     function getDefinitions()

@@ -35,9 +35,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return '
-                hidden -> Beispiel: hidden|name|(default)value||[no_db]<br />  hidden -> Beispiel: hidden|job_id|my_id|REQUEST|[no_db]
-        ';
+        return 'hidden|name|(default)value||[no_db]'."\n".'hidden|job_id|my_id|REQUEST|[no_db]';
     }
 
 }

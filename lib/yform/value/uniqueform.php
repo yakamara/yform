@@ -40,6 +40,6 @@ class rex_yform_value_uniqueform extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'uniqueform -> Beispiel: uniqueform|name|table|Fehlermeldung';
+        return 'uniqueform|name|table|Fehlermeldung';
     }
 }

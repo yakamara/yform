@@ -22,11 +22,6 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         }
     }
 
-    function getDescription()
-    {
-        return 'be_media -> Beispiel: be_media|name|label|defaultwert|no_db';
-    }
-
     function getDefinitions()
     {
         return array(
@@ -42,6 +37,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_media_description"),
+            'formbuilder' => false,
             'dbtype' => 'text'
         );
     }

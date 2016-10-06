@@ -25,6 +25,6 @@ class rex_yform_value_password extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'password -> Beispiel: password|name|label|default_value|[no_db]';
+        return 'password|name|label|default_value|[no_db]';
     }
 }

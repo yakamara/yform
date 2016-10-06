@@ -24,6 +24,6 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'showvalue -> Beispiel: showvalue|name|label|defaultwert';
+        return 'showvalue|name|label|defaultwert';
     }
 }

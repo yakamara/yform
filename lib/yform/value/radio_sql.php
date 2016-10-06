@@ -38,7 +38,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'radio_sql -> Beispiel: select_sql|name|label|select id,name from table order by name|[defaultvalue]|[no_db]|';
+        return 'radio_sql|name|label|select id,name from table order by name|[defaultvalue]|[no_db]|';
     }
 
     function getDefinitions()

@@ -37,7 +37,7 @@ class rex_yform_value_objparams extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'objparams -> Beispiel: objparams|key|newvalue|[init/runtime]';
+        return 'objparams|key|newvalue|[init/runtime]';
     }
 
     private function setObjectParamsValue($key, $value)

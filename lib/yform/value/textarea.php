@@ -31,7 +31,7 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'textarea -> Beispiel: textarea|name|label|default|[no_db]';
+        return 'textarea|name|label|default|[no_db]';
     }
 
     function getDefinitions()

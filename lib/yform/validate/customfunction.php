@@ -40,7 +40,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'customfunction -> prüft über customfunc, beispiel: validate|customfunction|label|[!]function/class::method|weitere_parameter|warning_message';
+        return 'validate|customfunction|label|[!]function/class::method|weitere_parameter|warning_message';
     }
 
     function getDefinitions()

@@ -28,7 +28,7 @@ class rex_yform_value_float extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'float -> Beispiel: float|name|label|scale|defaultwert|[no_db]';
+        return 'float|name|label|scale|defaultwert|[no_db]';
     }
 
     function getDefinitions()

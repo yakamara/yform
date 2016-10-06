@@ -32,7 +32,7 @@ class rex_yform_validate_preg_match extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'preg_match -> prüft über preg_match, beispiel: validate|preg_match|label|/[a-z]/i|warning_message ';
+        return 'validate|preg_match|label|/[a-z]/i|warning_message ';
     }
 
 }

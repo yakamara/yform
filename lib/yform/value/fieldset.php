@@ -51,7 +51,7 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'fieldset -> Beispiel: fieldset|name|label|[class]|[onlyclose/onlycloseall/onlyopen/closeandopen]';
+        return 'fieldset|name|label|[class]|[onlyclose/onlycloseall/onlyopen/closeandopen]';
 
     }
 

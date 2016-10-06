@@ -56,7 +56,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'checkbox_sql -> Beispiel: checkbox_sql|label|Bezeichnung:|select id,name from table order by name|';
+        return 'checkbox_sql|label|Bezeichnung:|select id,name from table order by name|';
     }
 
 

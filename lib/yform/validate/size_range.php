@@ -51,7 +51,7 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'size_range -> Laenge der Eingabe muss mindestens und/oder maximal sein, beispiel: validate|size_range|label|[minsize]|[maxsize]|Fehlermeldung';
+        return 'validate|size_range|label|[minsize]|[maxsize]|Fehlermeldung';
     }
 
     function getDefinitions()

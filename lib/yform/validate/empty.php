@@ -26,7 +26,7 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'empty -> prüft ob leer, beispiel: validate|empty|label|warning_message ';
+        return 'validate|empty|label|warning_message ';
     }
 
     function getDefinitions()

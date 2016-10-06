@@ -113,7 +113,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'mediafile -> Beispiel: mediafile|name|label|groesseinkb|endungenmitpunktmitkommasepariert|pflicht=1|min_err,max_err,type_err,empty_err|[no_db]|mediacatid|user';
+        return 'mediafile|name|label|groesseinkb|endungenmitpunktmitkommasepariert|pflicht=1|min_err,max_err,type_err,empty_err|[no_db]|mediacatid|user';
     }
 
 

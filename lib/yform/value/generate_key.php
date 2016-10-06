@@ -21,6 +21,6 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'generate_key -> Beispiel: generate_key|name|[no_db]';
+        return 'generate_key|name|[no_db]';
     }
 }

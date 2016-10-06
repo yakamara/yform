@@ -69,11 +69,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     }
 
-    function getDescription()
-    {
-        return 'be_table -> Beispiel: be_table|name|label|Anzahl Spalten|Menge,Preis/Stück';
-    }
-
     function getDefinitions()
     {
         return array(
@@ -86,6 +81,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
                 'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
             ),
             'description' => rex_i18n::msg("yform_values_be_table_description"),
+            'formbuilder' => false,
             'dbtype' => 'text'
         );
     }

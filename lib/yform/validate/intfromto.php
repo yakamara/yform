@@ -31,7 +31,7 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'intfromto -> prüft auf zahlengröße, größer from, kleiner to: validate|intfromto|label|from|to|warning_message';
+        return 'validate|intfromto|label|from|to|warning_message';
     }
 
     function getDefinitions()

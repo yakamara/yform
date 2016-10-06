@@ -548,11 +548,22 @@ class rex_yform
                     if ($name != 'abstract') {
                         $class = new $class();
                         $desc = trim($class->getDescription());
-                        if ($desc == '') {
-                            $definitions = $class->getDefinitions();
-                            $desc = isset($definitions['description']) ? $definitions['description'] : '';
+                        $definitions = $class->getDefinitions();
+                        $definition_desc = isset($definitions['description']) ? $definitions['description'] : '';
+                        if ($desc != "") {
+                            $desc = '<code>' . $desc . '</code>';
                         }
-                        $classesDescription[ $arr_key ] .= '<tr><th data-title="'.ucfirst($arr_key).'"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle"><code>' . preg_replace('@.*?Beispiel:\s?@', '', $desc) . '</code></td></tr>';
+                        if ($definition_desc != '') {
+                            $desc = $definition_desc."<br />".$desc;
+                        }
+
+                        if (isset($definitions['formbuilder']) && !$definitions['formbuilder']) {
+
+                        } else {
+                            $classesDescription[ $arr_key ] .= '<tr><th data-title="'.ucfirst($arr_key).'"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+
+                        }
+
                     }
                 }
             }
