@@ -1283,7 +1283,7 @@ class rex_yform_manager
 
             $notation_php_pre = array(
             '$yform = new rex_yform();',
-            '$yform->setObjectparams(\'form_skin\', \'bootstrap\');',
+            '$yform->setObjectparams(\'form_ytemplate\', \'bootstrap\');',
             '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
             '$yform->setObjectparams(\'real_field_names\', true);',
             );
@@ -1292,7 +1292,7 @@ class rex_yform_manager
 
 
             $notation_pipe_pre = array(
-            'objparams|form_skin|bootstrap',
+            'objparams|form_ytemplate|bootstrap',
             'objparams|form_showformafterupdate|0',
             'objparams|real_field_names|true',
             );

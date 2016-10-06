@@ -46,7 +46,7 @@ class rex_yform
 
         $this->objparams['form_label_type'] = 'html'; // plain
 
-        $this->objparams['form_skin'] = 'bootstrap,classic';
+        $this->objparams['form_ytemplate'] = 'bootstrap,classic';
 
         $this->objparams['actions_executed'] = false;
         $this->objparams['postactions_executed'] = false;
@@ -426,15 +426,15 @@ class rex_yform
     public function getTemplatePath($template)
     {
         $templates = (array) $template;
-        foreach (explode(',', $this->objparams['form_skin']) as $form_skin) {
-            $skins[$form_skin] = true;
+        foreach (explode(',', $this->objparams['form_ytemplate']) as $form_ytemplate) {
+            $ytemplates[$form_ytemplate] = true;
         }
 
-        $skins['default'] = true;
+        $ytemplates['default'] = true;
         foreach ($templates as $template) {
-            foreach ($skins as $skin => $_) {
+            foreach ($ytemplates as $ytemplate => $_) {
                 foreach (array_reverse(self::$TemplatePaths) as $path) {
-                    $template_path = $path . '/' . $skin . '/' . $template;
+                    $template_path = $path . '/' . $ytemplate . '/' . $template;
                     if (file_exists($template_path)) {
                         return $template_path;
                     }
