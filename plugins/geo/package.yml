@@ -1,5 +1,5 @@
 package: yform/geo
-version: '1.1-beta2'
+version: '2.0-beta3'
 author: 'Jan Kristinus'
 supportpage: www.redaxo.org/de/forum/
 
@@ -12,4 +12,4 @@ page:
 
 requires:
     packages:
-        yform/manager: '^1.1-beta2'
+        yform/manager: '^2.0-beta2'

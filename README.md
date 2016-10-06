@@ -1,4 +1,4 @@
-YForm für REDAXO 5.0
+YForm für REDAXO 5.2
 =============
 
 
@@ -18,10 +18,11 @@ oder
 Last Changes
 -------
 
-### Version 1.1 // xx.xx.xxxx
+### Version 2.0 // xx.xx.xxxx
 
-#### Achtung !!
+#### Achtung !! Bitte genau anschauen und vor dem Update anpassen !!
 
+* be_medialist entfernt und in be_media eingebaut.
 * Klasse datetime hat sich verändert. Stichwort: Layout/Format
 * Klasse date hat sich verändert. Stichwort: Layout/Format
 * Klasse time hat sich verändert. Stichwort: Layout/Format
