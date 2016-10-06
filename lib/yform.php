@@ -552,7 +552,7 @@ class rex_yform
                             $definitions = $class->getDefinitions();
                             $desc = isset($definitions['description']) ? $definitions['description'] : '';
                         }
-                        $classesDescription[ $arr_key ] .= '<tr><th data-title="'.ucfirst($arr_key).'"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+                        $classesDescription[ $arr_key ] .= '<tr><th data-title="'.ucfirst($arr_key).'"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle"><code>' . preg_replace('@.*?Beispiel:\s?@', '', $desc) . '</code></td></tr>';
                     }
                 }
             }
