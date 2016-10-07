@@ -13,4 +13,24 @@ if ($this->getPlugin('manager')->isInstalled()) {
     $this->getPlugin('manager')->includeFile(__DIR__.'/plugins/manager/install.php');
 }
 
+if (rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
+
+    $fields_removed[] = ['submits'];
+    $fields_change = ['html','php','date','datetime','fieldset','time','upload', 'google_geocode', 'submit'];
+    $actions_removed = ['fulltext_value', 'wrapper_value'];
+
+    foreach($removed_fields as $field) {
+        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`value` and type_name = ?',[$field]);
+    }
+
+    foreach($fields_change as $field) {
+        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`value` and type_name = ?',[$field]);
+    }
+
+    foreach($actions_removed as $action) {
+        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`action` and type_name = ?',[$action]);
+    }
+
+}
+
 rex_autoload::removeCache();
