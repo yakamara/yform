@@ -19,7 +19,7 @@ if (rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
     $fields_change = ['html','php','date','datetime','fieldset','time','upload', 'google_geocode', 'submit'];
     $actions_removed = ['fulltext_value', 'wrapper_value'];
 
-    foreach($removed_fields as $field) {
+    foreach($fields_removed as $field) {
         rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`value` and type_name = ?',[$field]);
     }
 
