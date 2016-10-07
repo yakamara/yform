@@ -4,7 +4,7 @@ $(document).on('ready pjax:success',function() {
         var options = $(this).attr('data-yform-tools-select2');
         var placeholder = $(this).attr("placeholder");
         if (options == "tags") {
-            options = {"theme":"bootstrap", placeholder: placeholder, allowClear: true, tags: true, tokenSeparators: [',', ' '] };
+            options = {"theme":"bootstrap", placeholder: placeholder, allowClear: true, tags: true, tokenSeparators: [','] };
         } else {
             options = {"theme":"bootstrap", placeholder: placeholder, allowClear: true };
         }
