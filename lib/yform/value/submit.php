@@ -17,27 +17,46 @@ class rex_yform_value_submit extends rex_yform_value_abstract
     function enterObject()
     {
 
-        $real_value = $this->getElement(5);
-        $value_on_button = $this->getElement(2);
-        if ($real_value == "") {
-            $real_value = $value_on_button;
+        $labels = explode(",", $this->getElement('labels'));
+        $values = $this->getElement('values');
+        if ($values == "") {
+            $values = [];
+
+        } else {
+            $values = explode(",", $values);
+
+        }
+        $default_value = $this->getElement('default');
+
+        if (!in_array($this->getValue(), $labels)) {
+            $this->setValue($default_value);
+
+        } else {
+            $key = array_search($this->getValue(), $labels);
+            if (isset($values[$key])) {
+                $this->setValue($values[$key]);
+
+            } else {
+                $this->setValue($default_value);
+
+            }
+
         }
 
-        if ($this->getValue() != $value_on_button) {
-            $real_value = "";
-        }
+        if (count($labels) == 1 && $this->getElement('css_classes') == "") {
+            $this->setElement('css_classes', 'btn-primary');
 
-        $this->setValue($value_on_button);
+        }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php');
 
         if (!isset($this->params['value_pool']['email'][$this->getName()]) || $this->params['value_pool']['email'][$this->getName()] == "") {
-            $this->params['value_pool']['email'][$this->getName()] = $real_value;
+            $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         }
 
-        if ($this->getElement(3) != 'no_db') {
+        if ($this->getElement('no_db') != 'no_db') {
             if (!isset($this->params['value_pool']['sql'][$this->getName()]) || $this->params['value_pool']['sql'][$this->getName()] == "") {
-                $this->params['value_pool']['sql'][$this->getName()] = $real_value;
+                $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
             }
         }
 
@@ -45,6 +64,30 @@ class rex_yform_value_submit extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'submit|label|value_on_button|[no_db]|cssclassname|[value_to_save_if_clicked]';
+        return 'submit|label|labelvalue1_on_button1,labelvalue2_on_button2 | [value_1_to_save_if_clicked,value_2_to_save_if_clicked] | [no_db] | [Default-Wert] | [cssclassname1,cssclassname2]';
     }
+
+    function getDefinitions()
+    {
+        return array(
+                'type' => 'value',
+                'name' => 'submit',
+                'values' => array(
+                    'name'      => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name")),
+                    'labels'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                    'values'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_submit_values")),
+                    'no_db'     => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
+                    'default'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_submit_default")),
+                    'css_classes' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_submit_css_classes")
+                ),
+            ),
+            'description' => rex_i18n::msg("yform_values_submit_description"),
+            'dbtype' => 'text',
+            'is_searchable' => false,
+            'is_hiddeninlist' => true,
+            'famous' => true
+        );
+
+    }
+
 }

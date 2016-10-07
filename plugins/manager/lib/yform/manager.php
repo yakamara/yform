@@ -405,13 +405,13 @@ class rex_yform_manager
                 if ($func == 'edit') {
                     $yform->setHiddenField('data_id', $data_id);
                     $yform->setObjectparams('getdata', true);
-                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
+                    $yform->setValueField('submit', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
 
                 } elseif ($func == 'add') {
-                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_add').",".rex_i18n::msg('yform_add_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
+                    $yform->setValueField('submit', array("name"=>"submit", "labels" => rex_i18n::msg('yform_add').",".rex_i18n::msg('yform_add_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
 
                 } elseif ('collection_edit' === $func) {
-                    $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
+                    $yform->setValueField('submit', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
                 }
 
                 $form = $data->executeForm($yform, function (rex_yform $yform) {
@@ -452,7 +452,7 @@ class rex_yform_manager
                             $yform->setObjectparams('main_where', "id=$data_id");
                             $yform->setObjectparams('getdata', true);
                             $yform->setObjectparams('send', false);
-                            $yform->setValueField('submits', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
+                            $yform->setValueField('submit', array("name"=>"submit", "labels" => rex_i18n::msg('yform_save').",".rex_i18n::msg('yform_save_apply'), "values"=>"1,2", "no_db" => true, "css_classes" => "btn-save,btn-apply"));
                             $form = $yform->getForm();
 
                         }

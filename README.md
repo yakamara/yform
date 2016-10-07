@@ -22,6 +22,7 @@ Last Changes
 
 #### Achtung !! Bitte genau anschauen und vor dem Update anpassen !!
 
+* submits entfernt, mit submit kann man nun auch mehrere felder anlegen
 * be_medialist entfernt und in be_media eingebaut.
 * Klasse datetime hat sich verändert. Stichwort: Layout/Format
 * Klasse date hat sich verändert. Stichwort: Layout/Format
@@ -37,6 +38,7 @@ Last Changes
 * geocode verändert. geokoordinaten werden nun direkt kommasepariert im Feld gespeichert. Google-Api-Key kann nun gesetzt werden.
 * objparam: form_id entfernt. es wird nun ausschliesslich form_name verwendet
 * html/php Felder haben nun ein Label.
+* objparams form_skin -> form_ytemplate
 
 #### Neu
 
