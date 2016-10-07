@@ -22,6 +22,8 @@ Last Changes
 
 #### Achtung !! Bitte genau anschauen und vor dem Update anpassen !!
 
+* Beim Update aus einer 1er Version werden veränderte Felder aus der Tabelle gelöscht und müssen neu angelegt werden.
+
 * submits entfernt, mit submit kann man nun auch mehrere felder anlegen
 * be_medialist entfernt und in be_media eingebaut.
 * Klasse datetime hat sich verändert. Stichwort: Layout/Format
