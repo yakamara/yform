@@ -257,7 +257,7 @@ class rex_yform
                 // special case - submit button shows up by default
                 if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
                     ++$rows;
-                    $this->objparams['form_elements'][] = ['submit', 'rex_yform_submit', $this->objparams['submit_btn_label'], 'no_db'];
+                    $this->objparams['form_elements'][] = ['submit', 'name' => 'rex_yform_submit', 'label' => $this->objparams['submit_btn_label'], 'no_db' => 'no_db'];
                     $this->objparams['submit_btn_show'] = false;
                 }
 
