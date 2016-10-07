@@ -22,7 +22,7 @@ Last Changes
 
 #### Achtung !! Bitte genau anschauen und vor dem Update anpassen !!
 
-* Beim Update aus einer 1er Version werden veränderte Felder aus der Tabelle gelöscht und müssen neu angelegt werden.
+* Beim Update aus einer 1er Version werden veränderte Felder aus der Feldtabellendefinition gelöscht und müssen neu angelegt werden. Es werden keine echten Daten gelöscht.
 
 * submits entfernt, mit submit kann man nun auch mehrere felder anlegen
 * be_medialist entfernt und in be_media eingebaut.
