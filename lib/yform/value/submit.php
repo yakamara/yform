@@ -17,7 +17,15 @@ class rex_yform_value_submit extends rex_yform_value_abstract
     function enterObject()
     {
 
-        $labels = explode(",", $this->getElement('labels'));
+        $labels = $this->getElement('labels');
+        if ($labels == "") {
+            $labels = [$this->getElement('label')];
+
+        } else {
+            $labels = explode(",", $this->getElement('labels'));
+
+        }
+
         $values = $this->getElement('values');
         if ($values == "") {
             $values = [];
@@ -26,21 +34,31 @@ class rex_yform_value_submit extends rex_yform_value_abstract
             $values = explode(",", $values);
 
         }
-        $default_value = $this->getElement('default');
 
-        if (!in_array($this->getValue(), $labels)) {
-            $this->setValue($default_value);
+        $default_value = "";
+        if ( $this->getElement('default')) {
+            $default_value = $this->getElement('default');
 
-        } else {
+        }
+
+        if (in_array($this->getValue(), $labels)) {
             $key = array_search($this->getValue(), $labels);
             if (isset($values[$key])) {
-                $this->setValue($values[$key]);
+                $value = $values[$key];
 
             } else {
-                $this->setValue($default_value);
-
+                $value = $default_value;
             }
 
+        } else {
+            $value = $default_value;
+
+        }
+
+        $this->setValue($value);
+
+        if (count($labels) == 0) {
+            $labels = [$value];
         }
 
         if (count($labels) == 1 && $this->getElement('css_classes') == "") {
@@ -48,13 +66,13 @@ class rex_yform_value_submit extends rex_yform_value_abstract
 
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php');
+        $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php',compact('labels'));
 
         if (!isset($this->params['value_pool']['email'][$this->getName()]) || $this->params['value_pool']['email'][$this->getName()] == "") {
             $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         }
 
-        if ($this->getElement('no_db') != 'no_db') {
+        if ($this->getElement('no_db') != 'no_db' && $this->getElement(3) != 'no_db') { // BC element[3]
             if (!isset($this->params['value_pool']['sql'][$this->getName()]) || $this->params['value_pool']['sql'][$this->getName()] == "") {
                 $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
             }
