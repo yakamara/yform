@@ -47,7 +47,9 @@ body#rex-page-yform .yform-manager-searchfield{
         display: block;
 }
 
-
+#yform-manager-search-form p.help-block {
+    font-size: 11px;
+}
 
 
 /*    Piped ***********************************************************************

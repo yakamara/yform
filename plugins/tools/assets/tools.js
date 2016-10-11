@@ -112,4 +112,68 @@ $(document).on('ready pjax:success',function() {
         }
     });
 
+
+    $("input[data-yform-tools-daterangepicker]").each(function () {
+        var format = $(this).attr('data-yform-tools-daterangepicker');
+        if (format != "") {
+            $(this).daterangepicker({
+                "autoUpdateInput": false,
+                "showDropdowns": true,
+                "showWeekNumbers": true,
+                "showISOWeekNumbers": true,
+                "linkedCalendars": false,
+                "ranges": {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                    'This Year': [moment().startOf('year'), moment().endOf('year')],
+                    'Last Year': [moment().subtract(365, 'days').startOf('year'), moment().subtract(365, 'days').endOf('year')],
+                },
+                "locale": {
+                    "format": format,
+                    "separator": " - ",
+                    "weekLabel": "W",
+                    "daysOfWeek": [
+                        "Su",
+                        "Mo",
+                        "Tu",
+                        "We",
+                        "Th",
+                        "Fr",
+                        "Sa"
+                    ],
+                    "monthNames": [
+                        "January",
+                        "February",
+                        "March",
+                        "April",
+                        "May",
+                        "June",
+                        "July",
+                        "August",
+                        "September",
+                        "October",
+                        "November",
+                        "December"
+                    ],
+                    "firstDay": 1
+                }
+            }, function (start, end, label) {
+                // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+
+            }).on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format(format) + ' - ' + picker.endDate.format(format));
+
+            }).on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+
+            });
+        }
+    })
+
+
+
 });

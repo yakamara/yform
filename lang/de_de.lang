@@ -73,6 +73,7 @@ yform_values_date_year_end = Endjahr
 yform_values_date_format = Anzeigeformat
 yform_values_date_format_notice = Default: YYYY/MM/DD
 yform_values_date_current_date = Aktuelles Datum voreingestellt
+yform_values_date_search_notice = Format: {0} - {0}
 yform_values_datestamp_format = Format
 yform_values_datestamp_only_empty = Wann soll Wert gesetzt werden
 yform_values_datetime_year_start = Startjahr
