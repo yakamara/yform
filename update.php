@@ -20,15 +20,15 @@ if (rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
     $actions_removed = ['fulltext_value', 'wrapper_value'];
 
     foreach($fields_removed as $field) {
-        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`value` and type_name = ?',[$field]);
+        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id="value" and type_name = ?',[$field]);
     }
 
     foreach($fields_change as $field) {
-        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`value` and type_name = ?',[$field]);
+        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id="value" and type_name = ?',[$field]);
     }
 
     foreach($actions_removed as $action) {
-        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id=`action` and type_name = ?',[$action]);
+        rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id="action" and type_name = ?',[$action]);
     }
 
 }
