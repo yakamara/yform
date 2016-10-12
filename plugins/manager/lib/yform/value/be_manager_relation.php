@@ -138,6 +138,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $filter[$this->relation['target_field']] = $this->params['main_id'];
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
             self::addFilterParams($link, $filter);
+            $link = self::addOpenerParams($link);
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
 
         }
@@ -262,7 +263,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 });
             }
             $filter[$field['field']] = $params['list']->getValue('id');
+
             self::addFilterParams($link, $filter);
+            $link = self::addOpenerParams($link);
+
             return '<a href="' . $link . '">' . rex_i18n::translate($field['label']) . '</a>';
         }
 
@@ -418,6 +422,17 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $link .= '&rex_yform_filter[' . $key . ']=' . $value . '&rex_yform_set[' . $key . ']=' . $value;
             }
         }
+    }
+
+    private static function addOpenerParams($link)
+    {
+        $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
+        if (count($rex_yform_manager_opener) > 0) {
+            foreach ($rex_yform_manager_opener as $k => $v) {
+                $link .= '&rex_yform_manager_opener['.$k.']='.urlencode($v);
+            }
+        }
+        return $link;
     }
 
     protected function getRelationTableFields()
