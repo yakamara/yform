@@ -19,10 +19,25 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             }
         }
 
-        // 0 = immer setzen, 1 = nur wenn leer / create
-        if ($this->getElement('only_empty') != 1 || !isset($this->params['sql_object']) || !$this->params['sql_object']->getValue($this->getName())) {
+        // wird immer neu gesetzt
+        if ($this->getElement('only_empty') != 1) { // -> == 0
             $this->setValue(date($format));
+            return;
         }
+
+        // wenn Wert vorhanden ist direkt zurück
+        if ($this->getValue() != "") {
+            return;
+        }
+
+        // sql object vorhanden und Wert gesetzt ?
+        if (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != "") {
+            return;
+        }
+
+        $this->setValue(date($format));
+
+        return;
 
     }
 
