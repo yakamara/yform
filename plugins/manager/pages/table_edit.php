@@ -186,6 +186,7 @@ if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
 
         } elseif ($func == 'add') {
 
+            rex_yform_manager_table::deleteCache();
             $table_name = $yform->objparams['value_pool']['sql']['table_name'];
             $table = rex_yform_manager_table::get($table_name);
 

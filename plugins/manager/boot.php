@@ -23,7 +23,11 @@ if (rex::isBackend() && rex::getUser()) {
         $this->setProperty('page', $page);
     }
 
-    $tables = rex_yform_manager_table::getAll();
+    try {
+        $tables = rex_yform_manager_table::getAll();
+    } catch (Exception $e) {
+        $tables = [];
+    }
     $pages = [];
 
     $prio = 1;

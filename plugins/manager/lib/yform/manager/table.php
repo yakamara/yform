@@ -438,10 +438,14 @@ class rex_yform_manager_table implements ArrayAccess
             self::$cache[$tableName]['table'] = $table;
 
             self::$cache[$tableName]['columns'] = [];
-            foreach (rex_sql::showColumns($tableName) as $column) {
-                if ('id' !== $column['name']) {
-                    self::$cache[$tableName]['columns'][$column['name']] = $column;
+            try {
+                foreach (rex_sql::showColumns($tableName) as $column) {
+                    if ('id' !== $column['name']) {
+                        self::$cache[$tableName]['columns'][$column['name']] = $column;
+                    }
                 }
+            } catch (Exception $e) {
+
             }
 
             self::$cache[$tableName]['fields'] = [];
@@ -463,4 +467,5 @@ class rex_yform_manager_table implements ArrayAccess
     {
         return rex_path::pluginCache('yform', 'manager', 'tables.cache');
     }
+
 }
