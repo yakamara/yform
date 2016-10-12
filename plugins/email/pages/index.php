@@ -31,9 +31,7 @@ if ($func == 'edit' || $func == 'add') {
     $form_data[] = 'text|subject|translate:yform_email_subject';
     $form_data[] = 'textarea|body|translate:yform_email_body|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
     $form_data[] = 'textarea|body_html|translate:yform_email_body_html|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
-    $form_data[] = 'be_medialist|attachments|translate:yform_email_attachments';
-
-//     $form_data[]  = 'action|showtext|Vielen Dank|||1';
+    $form_data[] = 'be_media|attachments|translate:yform_email_attachments|0|1';
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action','index.php?page=yform/email/index');
@@ -107,9 +105,6 @@ if ($func == 'edit' || $func == 'add') {
                 $title = rex_i18n::msg('yform_email_update');
                 $template_id = $yform->objparams['main_id'];
                 $func = "edit";
-
-
-
 
                 $yform = $yform_clone;
                 $yform->setHiddenField('func', $func);
