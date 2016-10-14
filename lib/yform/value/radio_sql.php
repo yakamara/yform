@@ -24,8 +24,13 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             $options[$k] = $v;
         }
 
-        if ($this->getElement('default') != '') {
-            $this->setValue($this->getElement('default'));
+        $default = $this->getElement('default');
+        if (!array_key_exists($default, $options)) {
+            $default = key($options);
+        }
+
+        if (!array_key_exists($this->getValue(), $options)) {
+            $this->setValue($default);
         }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.radio.tpl.php', compact('options'));
@@ -38,7 +43,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'radio_sql|name|label|select id,name from table order by name|[defaultvalue]|[no_db]|';
+        return 'radio_sql|name|label|select id,name from table order by name|[defaultvalue]|';
     }
 
     function getDefinitions()
