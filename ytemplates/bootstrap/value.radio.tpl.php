@@ -30,25 +30,45 @@ if (trim($this->getElement('grid')) != '') {
     }
 }
 
-?>
+if (trim($this->getLabel()) != ''){
+    echo '<div class="radio-group form-group">
+    <label class="control-label'.$class_label.'">'.$this->getLabel().'</label>';
+}
 
-<?php if (trim($this->getLabel()) != ''): ?>
-    <div class="radio-group form-group">
-    <label class="control-label<?php echo $class_label; ?>"><?php echo $this->getLabel() ?></label>
-<?php endif; ?>
-<?php echo $field_before; ?>
-<?php
-foreach ($options as $key => $value): ?>
-    <?php $id = $this->getFieldId() . '-' . htmlspecialchars($key) ?>
-    <div class="radio<?php echo (bool)$this->getElement('inline') ? '-inline' : ''; ?>">
-        <label>
-            <input type="radio" id="<?php echo $id ?>" name="<?php echo $this->getFieldName() ?>" value="<?php echo htmlspecialchars($key) ?>"<?php echo $key == $this->getValue() ? ' checked="checked"' : '' ?> />
-            <?php echo $this->getLabelStyle($value) ?>
+echo $field_before;
+
+foreach ($options as $key => $value){
+
+    echo '<div class="radio';
+    echo (bool)$this->getElement('inline') ? '-inline' : '';
+    echo '">';
+
+    $attributes = [
+        'id' => $this->getFieldId() . '-' . htmlspecialchars($key),
+        'name' => $this->getFieldName(),
+        'value' => $key,
+        'type' => 'radio'
+    ];
+
+    if ($key == $this->getValue()) {
+        $attributes['checked'] = 'checked';
+    }
+
+    $attributes = $this->getAttributeElements($attributes);
+
+    echo '  <label>
+            <input '.implode(" ", $attributes).' />
+            '.$this->getLabelStyle($value).'
         </label>
-    </div>
-<?php endforeach ?>
-<?php echo $notice; ?>
-<?php echo $field_after; ?>
-<?php if (trim($this->getLabel()) != ''): ?>
-    </div>
-<?php endif; ?>
+    </div>';
+
+}
+
+echo $notice;
+echo $field_after;
+
+if (trim($this->getLabel()) != '') {
+    echo '</div>';
+}
+
+?>

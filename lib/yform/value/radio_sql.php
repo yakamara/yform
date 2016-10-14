@@ -11,10 +11,10 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
 
     function enterObject()
     {
-        $sql = $this->getElement(3);
+        $sql = $this->getElement('query');
 
         $teams = rex_sql::factory();
-        $teams->debugsql = $this->params['debug'];
+        $teams->setDebug($this->params['debug']);
         $teams->setQuery($sql);
 
         $options = array();
@@ -24,14 +24,14 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             $options[$k] = $v;
         }
 
-        if ($this->getElement(4) != '') {
-            $this->setValue($this->getElement(4));
+        if ($this->getElement('default') != '') {
+            $this->setValue($this->getElement('default'));
         }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.radio.tpl.php', compact('options'));
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement(5) != 'no_db') {
+        if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }
@@ -47,10 +47,13 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             'type' => 'value',
             'name' => 'radio_sql',
             'values' => array(
-                'name'  => array( 'type' => 'name',    'label' => 'Name' ),
-                'label' => array( 'type' => 'text',    'label' => 'Bezeichnung'),
-                'query' => array( 'type' => 'text',    'label' => 'Query mit "select id, name from .."'),
-                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
+                'name'      => array( 'type' => 'name', 'label' => rex_i18n::msg("yform_values_defaults_name") ),
+                'label'     => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'query'     => array( 'type' => 'text', 'label' => 'Query mit "select id, name from .."'),
+                'default'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_radio_default")),
+                'attributes'=> array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
+                'notice'    => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_notice")),
+                'no_db'     => array( 'type' => 'no_db', 'label' => rex_i18n::msg("yform_values_defaults_table"), 'default' => 0),
             ),
             'description' => 'Hiermit kann man SQL Abfragen als Radioliste nutzen',
             'dbtype' => 'text'
