@@ -20,7 +20,7 @@ oder
 Last Changes
 -------
 
-### Version 2.0 // xx.xx.xxxx
+### Version 2.0 // 14.10.2016
 
 #### Achtung !! Bitte genau anschauen und vor dem Update anpassen !!
 
