@@ -1,6 +1,8 @@
 YForm für REDAXO 5.2
 =============
 
+![Screenshot](https://raw.githubusercontent.com/yakamara/redaxo_yform/assets/manager_editdata.png)
+
 
 Installation
 -------
