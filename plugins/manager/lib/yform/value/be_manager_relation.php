@@ -211,7 +211,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
         $sql->flushValues();
         $sql->setTable($relationTable);
-        $sql->setWhere(' ' . $sql->escapeIdentifier($relationTableField['source']) . ' =' . $source_id . ' AND ' . $sql->escapeIdentifier($relationTableField['target']) . ' NOT IN (' . implode(',', $values) . ')');
+        $sql->setWhere(' ' . $sql->escapeIdentifier($relationTableField['source']) . ' =' . $source_id . ' AND ' . (empty($values) ? : $sql->escapeIdentifier($relationTableField['target']) . ' NOT IN (' . implode(',', $values) . ')'));
         $sql->delete();
 
     }
