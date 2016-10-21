@@ -86,7 +86,7 @@ rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
 
     $dataset = $ep->getParam('form')->getParam('manager_dataset');
     if (!$dataset) {
-        $dataset = rex_yform_manager_dataset::getRaw($ep->getParam('id'), $table->getTableName());
+        $dataset = rex_yform_manager_dataset::getRaw($table->getTableName(), $ep->getParam('id'));
     }
     $dataset->invalidateData();
 
