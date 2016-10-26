@@ -77,9 +77,9 @@ abstract class rex_yform_base_abstract
         return false;
     }
 
-    function getParam($param)
+    function getParam($param, $default = null)
     {
-        return $this->params[$param];
+        return isset($this->params[$param]) ? $this->params[$param] : $default;
     }
 
     function setObjects(&$obj)
