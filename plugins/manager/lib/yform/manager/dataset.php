@@ -413,14 +413,27 @@ class rex_yform_manager_dataset
     }
 
     /**
+     * Fields of yform Definitions.
+     *
+     * @param array $filter
+     *
+     * @return rex_yform_manager_field[]
+     */
+    public function getFields(array $filter = [])
+    {
+        return $this->getTable()->getFields($filter);
+    }
+
+    /**
      * @return rex_yform
      */
     public function getForm()
     {
-        $yform = new rex_yform();
+        $yform  = new rex_yform();
+        $fields = $this->getFields();
         $yform->setDebug(self::$debug);
 
-        foreach ($this->getTable()->getFields() as $field) {
+        foreach ($fields as $field) {
             $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
 
             /** @var rex_yform_base_abstract $cl */
