@@ -10,7 +10,7 @@ if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
                 <ul class="<?php echo $this->objparams['error_class'] ?>">
     <?php endif; ?>
                     <?php foreach ($this->objparams['warning_messages'] as $k => $v): ?>
-                        <li class="el_<?php echo $k ?>"><?php echo rex_i18n::translate($v, null) ?></li>
+                        <li class="el_<?php echo $k ?>"><?php echo rex_i18n::translate("$v", null) ?></li>
                     <?php endforeach ?>
 
                     <?php if ($this->objparams['unique_error'] != ''): ?>
