@@ -26,7 +26,7 @@ if (trim($this->getElement('grid')) != '') {
     $grid = explode(',', trim($this->getElement('grid')));
 
     if (isset($grid[0]) && $grid[0] != '') {
-        $class_label .= ' ' . trim($grid[0]);
+        $class_label[] = trim($grid[0]);
     }
 
     if (isset($grid[1]) && $grid[1] != '') {
