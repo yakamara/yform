@@ -67,6 +67,7 @@ class rex_yform_manager_table_api
             $table_update->update();
 
         }
+        rex_yform_manager_table::deleteCache();
 
         if (count($table_fields) > 0) {
             foreach ($table_fields as $field) {

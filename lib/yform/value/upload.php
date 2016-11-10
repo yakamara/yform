@@ -52,7 +52,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $errors = [];
 
         // Hat Formular einen Uniquekey für dieses Formular und dieses Feld übertragen ?
-        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique');
+        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique', 'importfile');
         if ($unique == "") {
             // Nein - also anlegen
             $unique = self::_upload_getUniqueKey();
@@ -263,7 +263,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     function postAction()
     {
-        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique');
+        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique', 'importfile');
 
         if (isset($_SESSION[$unique]['file'])) {
             $FILE = $_SESSION[$unique]['file'];
@@ -273,7 +273,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $main_id = $this->getParam('main_id');
                 if ($main_id != "") {
                     $FILE['upload_name'] = $main_id.'_'.$FILE['name'];
-
                 }
 
                 $upload_filefolder = $FILE['upload_folder'].'/'.$FILE['upload_name'];
