@@ -14,33 +14,33 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     function preValidateAction()
     {
 
-        if ($this->getElement('current_date') == 1 && $this->params['send'] == 0 && $this->params['main_id'] < 1) {
-            $this->setValue(date('Y-m-d H:i:00'));
+        // if date is unformated
+        $value = $this->getValue();
+        if (is_string($value) && $value != "") {
 
-        } else {
+            if (strlen($value) == 14) {
+                if ( $d = DateTime::createFromFormat('YmdHis', $value) ) {
+                    if ($d->format("YmdHis") == $value) {
+                        $this->setValue($d->format("Y-m-d H:i:s"));
+                        return;
+                    }
+                }
 
-            // if not isodate / fallback / BC
-            $value = $this->getValue();
-            if (is_string($value) && strlen($value) == 14) {
+            } else {
+                if ( $d = date_create_from_format('Y-m-d H:i:s', $value) ) {
+                    if ($d->format("Y-m-d") == $value) {
+                        return;
+                    }
+                }
 
-                // 20000101152500
-                $year = (int) substr($value, 0, 4);
-                $month = (int) substr($value, 4, 2);
-                $day = (int) substr($value, 6, 2);
-                $hour = (int) substr($value, 8, 2);
-                $minute = (int) substr($value, 10, 2);
-                $second = (int) substr($value, 12, 2);
-
-                $value =
-                    str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
-                    str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
-                    str_pad($day, 2, '0', STR_PAD_LEFT) . ' ' .
-                    str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
-                    str_pad($minute, 2, '0', STR_PAD_LEFT) . ':'.
-                    str_pad($second, 2, '0', STR_PAD_LEFT);
-
-                $this->setValue($value);
             }
+
+        }
+
+        if ($this->getElement('current_date') == 1 && $this->getValue() == "" && $this->params['main_id'] < 1) {
+            $this->setValue(date('Y-m-d H:i:00'));
+            return;
+
         }
 
         if ($this->params['send']) {
@@ -76,8 +76,6 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $this->setValue($value);
 
         }
-
-        // value set: isodateformat
 
     }
 
