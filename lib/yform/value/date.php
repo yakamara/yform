@@ -160,7 +160,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         $input_value = self::date_convertIsoDateToFormat($this->getValue(), $format);
 
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName()] = $input_value;
 
         if ($this->getElement('widget') == 'input:text') {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
