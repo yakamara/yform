@@ -27,7 +27,10 @@ class rex_yform_action_email extends rex_yform_action_abstract
         }
 
         $mail = new rex_mailer();
-        $mail->AddAddress($mail_to, $mail_to);
+        $recipients = explode(',', $mail_to);
+        foreach ($recipients as $to) {
+            $mail->AddAddress(trim($to), trim($to));
+        }
         $mail->WordWrap = 80;
         $mail->FromName = $mail_from;
         $mail->From = $mail_from;
