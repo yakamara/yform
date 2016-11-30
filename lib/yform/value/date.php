@@ -130,8 +130,6 @@ class rex_yform_value_date extends rex_yform_value_abstract
     {
         $format = self::date_getFormat($this->getElement('format'));
 
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-
         if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
@@ -161,6 +159,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $day = (int) substr($this->getValue(), 8, 2);
 
         $input_value = self::date_convertIsoDateToFormat($this->getValue(), $format);
+
+        $this->params['value_pool']['email'][$this->getName()] = $input_value;
 
         if ($this->getElement('widget') == 'input:text') {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
