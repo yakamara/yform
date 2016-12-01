@@ -13,7 +13,9 @@ class rex_yform_value_resetbutton extends rex_yform_value_abstract
     {
         $this->setValue($this->getElement(3));
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.resetbutton.tpl.php');
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.resetbutton.tpl.php');
+        }
 
     }
 

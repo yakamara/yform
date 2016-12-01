@@ -163,14 +163,17 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     function enterObject()
     {
-
-        $format = $this->datetime_getFormat();
-
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
+
+        if (!$this->needsOutput()) {
+            return;
+        }
+
+        $format = $this->datetime_getFormat();
 
         $yearStart = (int) $this->getElement('year_start');
 

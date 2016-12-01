@@ -43,7 +43,9 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
             $this->setValue($w);
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', array('value' => $v));
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', array('value' => $v));
+        }
 
         ## set values
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();

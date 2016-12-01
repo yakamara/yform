@@ -45,7 +45,9 @@ class rex_yform_value_select extends rex_yform_value_abstract
             $this->setValue(explode(',', $this->getValue()));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+        }
 
         $this->setValue(implode(',', $this->getValue()));
 

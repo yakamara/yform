@@ -23,7 +23,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->getElement(3) == 'REQUEST') {
+        if ($this->needsOutput() && $this->getElement(3) == 'REQUEST') {
             $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
         }
 

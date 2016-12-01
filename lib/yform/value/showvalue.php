@@ -16,7 +16,9 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
             $this->setValue($this->getElement(3));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php');
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php');
+        }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 

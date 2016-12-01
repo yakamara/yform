@@ -329,6 +329,7 @@ class rex_yform_manager_dataset
     {
         $yform = $this->getForm();
         $yform->setObjectparams('real_field_names', true);
+        $yform->setObjectparams('form_needs_output', false);
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -355,6 +356,7 @@ class rex_yform_manager_dataset
     {
         $yform = $this->getForm();
         $yform->setObjectparams('real_field_names', true);
+        $yform->setObjectparams('form_needs_output', false);
 
         $table = $this->getTable();
         $fields = $table->getValueFields();

@@ -107,7 +107,9 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = implode(', ', $error);
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.mediafile.tpl.php');
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.mediafile.tpl.php');
+        }
 
     }
 

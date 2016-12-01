@@ -36,7 +36,9 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
 
     function enterObject()
     {
-        $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php');
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php');
+        }
     }
 
     function postFormAction()

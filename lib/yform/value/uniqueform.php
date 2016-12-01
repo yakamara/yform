@@ -32,7 +32,10 @@ class rex_yform_value_uniqueform extends rex_yform_value_abstract
 
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
+        }
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
 

@@ -128,13 +128,17 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     function enterObject()
     {
-        $format = self::date_getFormat($this->getElement('format'));
-
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
+
+        if (!$this->needsOutput()) {
+            return;
+        }
+
+        $format = self::date_getFormat($this->getElement('format'));
 
         $yearStart = (int) $this->getElement('year_start');
 

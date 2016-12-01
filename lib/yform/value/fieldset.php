@@ -11,6 +11,10 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
 
     function enterObject()
     {
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         $output = '';
 
         $option = $this->getElement(4);

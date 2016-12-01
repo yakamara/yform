@@ -42,6 +42,10 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
 
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
         $this->params['form_output'][$this->getId()] .= $this->parse(
             'value.google_geocode.tpl.php',

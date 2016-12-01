@@ -214,7 +214,9 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = implode(', ', $errors);
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', ['unique' => $unique, 'filename' => $filename, 'error_messages' => $error_messages, 'download_link' => $download_link]);
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', ['unique' => $unique, 'filename' => $filename, 'error_messages' => $error_messages, 'download_link' => $download_link]);
+        }
 
         return $this;
     }

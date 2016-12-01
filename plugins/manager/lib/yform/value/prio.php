@@ -68,7 +68,9 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             $this->setValue(explode(',', $this->getValue()));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', array('options' => $options, 'multiple' => false, 'size' => 1));
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', array('options' => $options, 'multiple' => false, 'size' => 1));
+        }
 
         $this->setValue(implode(',', $this->getValue()));
 

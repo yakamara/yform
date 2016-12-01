@@ -14,7 +14,9 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         static $counter = 0;
         $counter++;
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter'));
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter'));
+        }
 
         $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
         if ($this->getElement(4) != 'no_db') {

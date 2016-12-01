@@ -61,7 +61,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $this->setValue(explode(',', $this->getValue()));
             }
         }
-        
+
         // ---------- connected, fix values
         if (isset($this->params['rex_yform_set'][$this->getName()]) && !is_array($this->params['rex_yform_set'][$this->getName()])) {
 
@@ -103,6 +103,16 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
         }
 
+        // --------------------------------------- save
+        $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
+        if (!$this->getElement('relation_table') && $this->relation['relation_type'] != 4) {
+            $this->params['value_pool']['sql'][$this->getName()] = implode(',', array_unique($this->getValue()));
+        }
+
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         // --------------------------------------- Selectbox, single 0 or multiple 1
         if ($this->relation['relation_type'] < 2) {
 
@@ -142,14 +152,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
 
         }
-
-
-        // --------------------------------------- save
-        $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
-        if (!$this->getElement('relation_table') && $this->relation['relation_type'] != 4) {
-            $this->params['value_pool']['sql'][$this->getName()] = implode(',', array_unique($this->getValue()));
-        }
-
     }
 
 

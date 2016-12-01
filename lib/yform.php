@@ -82,6 +82,7 @@ class rex_yform
 
         $this->objparams['form_elements'] = [];
         $this->objparams['form_output'] = [];
+        $this->objparams['form_needs_output'] = true;
 
         $this->objparams['value_pool'] = [];
         $this->objparams['value_pool']['email'] = [];
