@@ -248,7 +248,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 }
             ),
             'multi_edit' => function (rex_yform_manager_field $field) {
-                return '4' != $field->getElement('type') && !$field['relation_table'];
+                return '4' != $field->getElement('type') && !$field->getElement('relation_table');
             },
         );
     }
