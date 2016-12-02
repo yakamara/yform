@@ -201,7 +201,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $values = array_map('intval', $values);
 
         $sql = rex_sql::factory();
-        $sql->debugsql = $this->params['debug'];
+        $sql->setDebug($this->params['debug']);
         $relationTablePreEditValues = $this->getRelationTableValues();
         foreach ($values as $value) {
             if (!isset($relationTablePreEditValues[$value])) {
@@ -454,7 +454,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $relationTableFields = $this->getRelationTableFields();
         if ($relationTableFields['source'] && $relationTableFields['target']) {
             $sql = rex_sql::factory();
-            $sql->debugsql = $this->params['debug'];
+            $sql->setDebug($this->params['debug']);
             $sql->setQuery('
                 SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                 FROM ' . $sql->escapeIdentifier($this->getElement('relation_table')) . '

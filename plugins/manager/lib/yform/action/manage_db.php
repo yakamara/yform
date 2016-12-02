@@ -28,9 +28,7 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
 
         // $this->params["debug"]= TRUE;
         $sql = rex_sql::factory();
-        if ($this->params['debug']) {
-            $sql->debugsql = true;
-        }
+        $sql->setDebug($this->params['debug']);
 
         $main_table = '';
         if ($this->getElement(2) != '') {

@@ -1542,7 +1542,7 @@ class rex_yform_manager
     {
         $q = 'select * from ' . rex_yform_manager_field::table() . ' where table_name="' . $p['table_name'] . '" and type_id="value" and ' . $l . '="' . $v . '" LIMIT 1';
         $c = rex_sql::factory();
-        $c->debugsql = self::$debug;
+        $c->setDebug(self::$debug);
         $c->setQuery($q);
         if ($c->getRows() > 0) {
             return true;
@@ -1555,12 +1555,12 @@ class rex_yform_manager
 
         // Tabelle erstellen wenn noch nicht vorhanden
         $c = rex_sql::factory();
-        $c->debugsql = $debug;
+        $c->setDebug($debug);
         $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $data_table . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
         // Tabellenset in die Basics einbauen, wenn noch nicht vorhanden
         $c = rex_sql::factory();
-        $c->debugsql = $debug;
+        $c->setDebug($debug);
         $c->setQuery('DELETE FROM ' . rex_yform_manager_table::table() . ' where table_name="' . $data_table . '"');
         $c->setTable(rex_yform_manager_table::table());
 

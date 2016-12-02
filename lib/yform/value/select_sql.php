@@ -19,7 +19,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         $sql = $this->getElement('query');
 
         $options_sql = rex_sql::factory();
-        $options_sql->debugsql = $this->params['debug'];
+        $options_sql->setDebug($this->params['debug']);
         $options_sql->setQuery($sql);
 
         $options = array();

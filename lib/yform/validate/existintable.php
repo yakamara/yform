@@ -12,21 +12,18 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
     function enterObject()
     {
         if ($this->params['send'] == '1') {
-        
-            $db = rex_sql::factory();
 
-            if ($this->params['debug']) {
-                $db->debugsql = 1;
-            }
+            $db = rex_sql::factory();
+            $db->setDebug($this->params['debug']);
 
             $table = $this->getElement(3);
             $labels = $this->getElement(2);
             $fields = $this->getElement(4);
-        
-            
+
+
             $labels = explode(',', $labels);
             $fields = explode(',', $fields);
-            
+
             $qfields = array();
             foreach ($this->getObjects() as $k => $o) {
                 if (in_array($o->getName(), $labels)) {
@@ -41,16 +38,16 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
                     $qfields[$o->getId()] =  $db->escapeIdentifier($name) . ' = ' . $db->escape($value);
                 }
             }
-        
+
             // all fields available ?
             if (count($qfields) != count($fields)) {
                 $this->params['warning'][] = $this->params['error_class'];
                 $this->params['warning_messages'][] = $this->getElement(5);
                 return;
             }
-        
+
             $sql = 'select * from ' . $table . ' WHERE ' . implode(' AND ', $qfields) . ' LIMIT 2';
-        
+
             $db->setQuery($sql);
             if ($db->getRows() == 0) {
                 foreach ($qfields as $qfield_id => $qfield_name) {

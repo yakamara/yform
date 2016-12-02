@@ -20,9 +20,7 @@ class rex_yform_value_uniqueform extends rex_yform_value_abstract
         } else {
             $sql = 'select ' . $this->getName() . ' from ' . $table . ' WHERE ' . $this->getName() . '="' . $this->getValue() . '" LIMIT 1';
             $cd = rex_sql::factory();
-            if ($this->params['debug']) {
-                $cd->debugsql = true;
-            }
+            $cd->setDebug($this->params['debug']);
 
             $cd->setQuery($sql);
             if ($cd->getRows() == 1) {

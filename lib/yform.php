@@ -215,7 +215,7 @@ class rex_yform
         if ($this->objparams['getdata']) {
             if (!$this->objparams['sql_object'] instanceof rex_sql) {
                 $this->objparams['sql_object'] = rex_sql::factory();
-                $this->objparams['sql_object']->debugsql = $this->objparams['debug'];
+                $this->objparams['sql_object']->setDebug($this->objparams['debug']);
                 $this->objparams['sql_object']->setQuery('SELECT * from ' . $this->objparams['main_table'] . ' WHERE ' . $this->objparams['main_where']);
             }
             if ($this->objparams['sql_object']->getRows() > 1 || $this->objparams['sql_object']->getRows() == 0) {
