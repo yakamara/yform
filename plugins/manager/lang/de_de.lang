@@ -214,6 +214,11 @@ yform_history_timestamp = Zeitstempel
 yform_history_restore = Zurücksetzen
 yform_history_restore_success = Datensatz wurde zurückgesetzt.
 yform_history_restore_error = Datensatz konnte nicht zurückgesetzt werden.
+yform_history_delete = Historie löschen
+yform_history_delete_all = komplett
+yform_history_delete_older_3_months = älter als 3 Monate
+yform_history_delete_confirm = Historie wirklich löschen?
+yform_history_delete_success = Die Historien-Datensätze wurden gelöscht.
 
 yform_manager_show_form_notation = Formular-Code
 

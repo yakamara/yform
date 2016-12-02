@@ -24,6 +24,26 @@ if ('restore' === $subfunc && $datasetId && $historyId) {
     }
 }
 
+if (rex::getUser()->isAdmin() && in_array($subfunc, ['delete_old', 'delete_all'], true)) {
+    $where = '';
+    if ('delete_old' === $subfunc) {
+        $where = 'AND h.`timestamp` < DATE_SUB(NOW(), INTERVAL 3 MONTH)';
+    }
+
+    $sql = rex_sql::factory();
+    $sql->setQuery(
+        sprintf('
+            DELETE h, hf
+            FROM %s h
+            LEFT JOIN %s hf ON hf.history_id = h.id
+            WHERE h.table_name = ? %s
+        ', rex::getTable('yform_history'), rex::getTable('yform_history_field'), $where),
+        [$this->table->getTableName()]
+    );
+
+    echo rex_view::success(rex_i18n::msg('yform_history_delete_success'));
+}
+
 $sql = rex_sql::factory();
 $list = rex_list::factory(
     'SELECT
@@ -68,7 +88,33 @@ $list->setColumnParams('restore', ['subfunc' => 'restore', 'dataset_id' => '###d
 
 $content = $list->get();
 
+$options = '';
+
+if (rex::getUser()->isAdmin()) {
+    $buttons = [];
+
+    $item = [];
+    $item['label'] = rex_i18n::msg('yform_history_delete_older_3_months');
+    $item['url'] = $list->getUrl(['subfunc' => 'delete_old']);
+    $item['attributes']['class'][] = 'btn-delete';
+    $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_history_delete_confirm') . '\');';
+    $buttons[] = $item;
+
+    $item = [];
+    $item['label'] = rex_i18n::msg('yform_history_delete_all');
+    $item['url'] = $list->getUrl(['subfunc' => 'delete_all']);
+    $item['attributes']['class'][] = 'btn-delete';
+    $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_history_delete_confirm') . '\');';
+    $buttons[] = $item;
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('size', 'xs', false);
+    $fragment->setVar('buttons', $buttons, false);
+    $options = '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_history_delete') . ':</small> ' . $fragment->parse('core/buttons/button_group.php');
+}
+
 $fragment = new rex_fragment();
 $fragment->setVar('title', rex_i18n::msg('yform_history'));
+$fragment->setVar('options', $options, false);
 $fragment->setVar('content', $content, false);
 echo $fragment->parse('core/page/section.php');
