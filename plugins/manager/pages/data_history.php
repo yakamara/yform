@@ -7,6 +7,7 @@
 $subfunc = rex_request('subfunc', 'string');
 $datasetId = rex_request('dataset_id', 'int');
 $historyId = rex_request('history_id', 'int');
+
 if ('restore' === $subfunc && $datasetId && $historyId) {
     $dataset = rex_yform_manager_dataset::getRaw($datasetId, $this->table->getTableName());
 
@@ -24,15 +25,25 @@ if ('restore' === $subfunc && $datasetId && $historyId) {
 }
 
 $sql = rex_sql::factory();
-$list = rex_list::factory('SELECT * FROM '.rex::getTable('yform_history').' WHERE `table_name` = '.$sql->escape($this->table->getTableName()).' ORDER BY `timestamp` DESC');
+$list = rex_list::factory(
+    'SELECT
+        h.id, dataset_id,
+        IF(LENGTH(hf.value) > 50, CONCAT(LEFT(hf.value, 50), "…"), hf.value) as title,
+        `action`, `user`, `timestamp`
+    FROM '.rex::getTable('yform_history').' h
+    LEFT JOIN '.rex::getTable('yform_history_field').' hf ON hf.history_id = h.id AND hf.field IN ("title", "name", "last_name")
+    WHERE `table_name` = '.$sql->escape($this->table->getTableName()).'
+    GROUP BY h.id
+    ORDER BY `timestamp` DESC'
+);
 
 $list->addParam('table_name', $this->table->getTableName());
 $list->addParam('func', 'history');
 
 $list->removeColumn('id');
-$list->removeColumn('table_name');
 
 $list->setColumnLabel('dataset_id', rex_i18n::msg('yform_history_dataset_id'));
+$list->setColumnLabel('title', rex_i18n::msg('yform_history_dataset'));
 
 $list->setColumnLabel('action', rex_i18n::msg('yform_history_action'));
 $list->setColumnFormat('action', 'custom', function (array $params) {

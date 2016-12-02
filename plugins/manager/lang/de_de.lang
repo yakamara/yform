@@ -204,6 +204,7 @@ yform_manager_import_file = Datei
 # history
 yform_history = Historie
 yform_history_dataset_id = Datensatz-ID
+yform_history_dataset = Datensatz
 yform_history_action = Aktion
 yform_history_action_create = erstellt
 yform_history_action_update = bearbeitet
