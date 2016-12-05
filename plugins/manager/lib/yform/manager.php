@@ -206,7 +206,7 @@ class rex_yform_manager
             }
 
             // -------------- History
-            if (!$popup && $func == 'history') {
+            if (!$popup && $func == 'history' && rex::getUser()->isAdmin()) {
                 echo rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
                 include rex_path::plugin('yform', 'manager', 'pages/data_history.php');
                 $show_list = false;
@@ -622,18 +622,28 @@ class rex_yform_manager
 
                 } else {
                     $list->addColumn(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
-                    $list->setColumnLayout(rex_i18n::msg('yform_function'), ['<th class="rex-table-action">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
                     $list->setColumnParams(rex_i18n::msg('yform_function'), array('data_id' => '###id###', 'func' => 'edit', 'start' => rex_request('start', 'string'), 'sort' => rex_request('sort', 'string'), 'sorttype' => rex_request('sorttype', 'string'), 'list' => rex_request('list', 'string')));
 
+                    $colspan = 1;
+
                     if ($this->hasDataPageFunction('delete')) {
-                        // Column layout fuer edit neu setzen
-                        $list->setColumnLayout(rex_i18n::msg('yform_function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+                        ++$colspan;
 
                         $list->addColumn(rex_i18n::msg('yform_delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete'));
                         $list->setColumnLayout(rex_i18n::msg('yform_delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
                         $list->setColumnParams(rex_i18n::msg('yform_delete'), array('data_id' => '###id###', 'func' => 'delete', 'start' => rex_request('start', 'string'), 'sort' => rex_request('sort', 'string'), 'sorttype' => rex_request('sorttype', 'string'), 'list' => rex_request('list', 'string')));
                         $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
                     }
+
+                    if (!$popup && $this->table->hasHistory() && rex::getUser()->isAdmin()) {
+                        ++$colspan;
+
+                        $list->addColumn(rex_i18n::msg('yform_history'), '<i class="rex-icon fa-history"></i> ' . rex_i18n::msg('yform_history'));
+                        $list->setColumnLayout(rex_i18n::msg('yform_history'), ['', '<td class="rex-table-action">###VALUE###</td>']);
+                        $list->setColumnParams(rex_i18n::msg('yform_history'), array('func' => 'history', 'dataset_id' => '###id###', 'filter_dataset' => 1));
+                    }
+
+                    $list->setColumnLayout(rex_i18n::msg('yform_function'), ['<th class="rex-table-action" colspan="'.$colspan.'">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
                 }
 
                 // *********************************************

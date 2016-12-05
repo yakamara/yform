@@ -6,11 +6,24 @@
 
 $subfunc = rex_request('subfunc', 'string');
 $datasetId = rex_request('dataset_id', 'int');
+$filterDataset = rex_request('filter_dataset', 'bool');
 $historyId = rex_request('history_id', 'int');
 
-if ('restore' === $subfunc && $datasetId && $historyId) {
+$dataset = null;
+if ($datasetId) {
     $dataset = rex_yform_manager_dataset::getRaw($datasetId, $this->table->getTableName());
+} else {
+    $filterDataset = false;
+}
 
+$filterWhere = '';
+if ($filterDataset) {
+    echo rex_view::info('<b>' . rex_i18n::msg('yform_history_dataset_id') .':</b> ' . $datasetId);
+
+    $filterWhere = ' AND dataset_id = '.$datasetId;
+}
+
+if ('restore' === $subfunc && $dataset && $historyId) {
     if ($dataset->restoreSnapshot($historyId)) {
         echo rex_view::success(rex_i18n::msg('yform_history_restore_success'));
     } else {
@@ -25,9 +38,9 @@ if ('restore' === $subfunc && $datasetId && $historyId) {
 }
 
 if (rex::getUser()->isAdmin() && in_array($subfunc, ['delete_old', 'delete_all'], true)) {
-    $where = '';
+    $where = $filterWhere;
     if ('delete_old' === $subfunc) {
-        $where = 'AND h.`timestamp` < DATE_SUB(NOW(), INTERVAL 3 MONTH)';
+        $where = ' AND h.`timestamp` < DATE_SUB(NOW(), INTERVAL 3 MONTH)';
     }
 
     $sql = rex_sql::factory();
@@ -52,13 +65,18 @@ $list = rex_list::factory(
         `action`, `user`, `timestamp`
     FROM '.rex::getTable('yform_history').' h
     LEFT JOIN '.rex::getTable('yform_history_field').' hf ON hf.history_id = h.id AND hf.field IN ("title", "name", "last_name")
-    WHERE `table_name` = '.$sql->escape($this->table->getTableName()).'
+    WHERE `table_name` = '.$sql->escape($this->table->getTableName()).$filterWhere.'
     GROUP BY h.id
     ORDER BY `timestamp` DESC'
 );
 
 $list->addParam('table_name', $this->table->getTableName());
 $list->addParam('func', 'history');
+
+if ($filterDataset) {
+    $list->addParam('filter_dataset', 1);
+    $list->addParam('dataset_id', $datasetId);
+}
 
 $list->removeColumn('id');
 
