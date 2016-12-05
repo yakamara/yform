@@ -64,7 +64,7 @@ $list = rex_list::factory(
         IF(LENGTH(hf.value) > 50, CONCAT(LEFT(hf.value, 50), "…"), hf.value) as title,
         `action`, `user`, `timestamp`
     FROM '.rex::getTable('yform_history').' h
-    LEFT JOIN '.rex::getTable('yform_history_field').' hf ON hf.history_id = h.id AND hf.field IN ("title", "name", "last_name")
+    LEFT JOIN '.rex::getTable('yform_history_field').' hf ON hf.history_id = h.id AND hf.field IN ("title", "titel", "name", "last_name")
     WHERE `table_name` = '.$sql->escape($this->table->getTableName()).$filterWhere.'
     GROUP BY h.id
     ORDER BY `timestamp` DESC'
