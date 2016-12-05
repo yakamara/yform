@@ -258,6 +258,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $field = $params['params']['field'];
 
         if (4 == $field['type']) {
+            if (!isset($params['list'])) {
+                return '';
+            }
+
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $field['table'];
             if (isset($field['filter']) && $field['filter']) {
                 $filter = self::getFilterArray($field['filter'], $field['table_name'], function ($key) use ($params) {

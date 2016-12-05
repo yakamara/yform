@@ -23,6 +23,67 @@ if ($filterDataset) {
     $filterWhere = ' AND dataset_id = '.$datasetId;
 }
 
+if ('view' === $subfunc && $dataset && $historyId) {
+    $sql = rex_sql::factory();
+    $timestamp = $sql->setQuery(sprintf('SELECT `timestamp` FROM %s WHERE id = %d', rex::getTable('yform_history'), $historyId))->getValue('timestamp');
+
+    $data = $sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = %d', rex::getTable('yform_history_field'), $historyId));
+    $data = array_column($data, 'value', 'field');
+
+    $rows = '';
+
+    foreach ($this->table->getValueFields() as $field) {
+        if (!array_key_exists($field->getName(), $data)) {
+            continue;
+        }
+
+        $value = $data[$field->getName()];
+        $class = 'rex_yform_value_'.$field->getTypeName();
+        if (method_exists($class, 'getListValue')) {
+            $value = $class::getListValue([
+                'value' => $value,
+                'subject' => $value,
+                'params' => [
+                    'field' => $field->toArray(),
+                    'fields' => $this->table->getFields(),
+                ],
+            ]);
+        } else {
+            $value = htmlspecialchars($value);
+        }
+
+        $rows .= '
+            <tr>
+                <th class="rex-table-width-5">'.$field->getLabel().'</th>
+                <td>'.$value.'</td>
+            </tr>';
+    }
+
+    $content = '
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             <h4 class="modal-title">
+                '.rex_i18n::msg('yform_history_dataset').' '.$datasetId.'
+                <small>['.date('d.m.Y H:i:s', strtotime($timestamp)).']</small>
+            </h4>
+        </div>
+        <div class="modal-body">
+            <table class="table">
+                <tbody>
+                    '.$rows.'
+                </tbody>
+            </table>
+        </div>
+        <div class="modal-footer">
+            <a href="index.php?page=yform/manager/data_edit&amp;table_name='.$this->table->getTableName().'&amp;func=history&amp;subfunc=restore&amp;filter_dataset='.((int) $filterDataset).'&amp;dataset_id='.$datasetId.'&amp;history_id='.$historyId.'" class="btn btn-warning">'.rex_i18n::msg('yform_history_restore_this').'</a>
+            <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+    ';
+
+    rex_response::sendContent($content);
+    exit;
+}
+
 if ('restore' === $subfunc && $dataset && $historyId) {
     if ($dataset->restoreSnapshot($historyId)) {
         echo rex_view::success(rex_i18n::msg('yform_history_restore_success'));
@@ -101,7 +162,12 @@ $list->setColumnFormat('timestamp', 'custom', function (array $params) {
     return (new DateTime($params['subject']))->format('d.m.Y H:i:s');
 });
 
-$list->addColumn('restore', rex_i18n::msg('yform_history_restore'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
+$list->addColumn('view', '<i class="rex-icon fa-eye"></i> '.rex_i18n::msg('yform_history_view'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
+$list->setColumnParams('view', ['subfunc' => 'view', 'dataset_id' => '###dataset_id###', 'history_id' => '###id###']);
+$list->addLinkAttribute('view', 'data-toggle', 'modal');
+$list->addLinkAttribute('view', 'data-target', '#rex-yform-history-modal');
+
+$list->addColumn('restore', '<i class="rex-icon fa-undo"></i> '.rex_i18n::msg('yform_history_restore'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
 $list->setColumnParams('restore', ['subfunc' => 'restore', 'dataset_id' => '###dataset_id###', 'history_id' => '###id###']);
 
 $content = $list->get();
@@ -136,3 +202,11 @@ $fragment->setVar('title', rex_i18n::msg('yform_history'));
 $fragment->setVar('options', $options, false);
 $fragment->setVar('content', $content, false);
 echo $fragment->parse('core/page/section.php');
+
+?>
+<div class="modal fade" id="rex-yform-history-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        </div>
+    </div>
+</div>
