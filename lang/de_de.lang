@@ -91,6 +91,7 @@ yform_values_hashvalue_function = Algorithmus
 yform_values_hashvalue_salt = Salt
 yform_values_html_HTML = HTML
 yform_values_index_names = Felder
+yform_values_index_names_notice = Kommasepariert, auch Felder aus Relationen möglich, z. B.: title,description,category_id.name
 yform_values_index_function = Optional Codierfunktion
 yform_values_index_function_notice = z.B. md5, sha1
 yform_values_integer_default = Defaultwert
