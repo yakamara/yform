@@ -24,7 +24,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         $sql = $this->getElement('query');
 
         $options_sql = rex_sql::factory();
-        $options_sql->debugsql = $this->params['debug'];
+        $options_sql->setDebug($this->params['debug']);
         $options = array();
         foreach ($options_sql->getArray($sql) as $option) {
             $options[$option['id']] = $option['name'];
@@ -40,7 +40,9 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             }
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox_group.tpl.php', compact('options'));
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox_group.tpl.php', compact('options'));
+        }
 
         $this->setValue(implode(',', $proofed_values));
 

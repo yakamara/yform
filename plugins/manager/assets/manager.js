@@ -106,4 +106,8 @@ $(document).on('rex:ready', function (event, container) {
             $checkbox.change(toggle);
         });
     });
+
+    container.find('#rex-yform-history-modal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal').find(".modal-content").empty();
+    });
 });

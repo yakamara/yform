@@ -61,7 +61,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $this->setValue(explode(',', $this->getValue()));
             }
         }
-        
+
         // ---------- connected, fix values
         if (isset($this->params['rex_yform_set'][$this->getName()]) && !is_array($this->params['rex_yform_set'][$this->getName()])) {
 
@@ -103,6 +103,16 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
         }
 
+        // --------------------------------------- save
+        $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
+        if (!$this->getElement('relation_table') && $this->relation['relation_type'] != 4) {
+            $this->params['value_pool']['sql'][$this->getName()] = implode(',', array_unique($this->getValue()));
+        }
+
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         // --------------------------------------- Selectbox, single 0 or multiple 1
         if ($this->relation['relation_type'] < 2) {
 
@@ -142,14 +152,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
 
         }
-
-
-        // --------------------------------------- save
-        $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
-        if (!$this->getElement('relation_table') && $this->relation['relation_type'] != 4) {
-            $this->params['value_pool']['sql'][$this->getName()] = implode(',', array_unique($this->getValue()));
-        }
-
     }
 
 
@@ -199,7 +201,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $values = array_map('intval', $values);
 
         $sql = rex_sql::factory();
-        $sql->debugsql = $this->params['debug'];
+        $sql->setDebug($this->params['debug']);
         $relationTablePreEditValues = $this->getRelationTableValues();
         foreach ($values as $value) {
             if (!isset($relationTablePreEditValues[$value])) {
@@ -246,7 +248,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 }
             ),
             'multi_edit' => function (rex_yform_manager_field $field) {
-                return '4' != $field->getElement('type') && !$field['relation_table'];
+                return '4' != $field->getElement('type') && !$field->getElement('relation_table');
             },
         );
     }
@@ -256,6 +258,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $field = $params['params']['field'];
 
         if (4 == $field['type']) {
+            if (!isset($params['list'])) {
+                return '';
+            }
+
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $field['table'];
             if (isset($field['filter']) && $field['filter']) {
                 $filter = self::getFilterArray($field['filter'], $field['table_name'], function ($key) use ($params) {
@@ -452,7 +458,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $relationTableFields = $this->getRelationTableFields();
         if ($relationTableFields['source'] && $relationTableFields['target']) {
             $sql = rex_sql::factory();
-            $sql->debugsql = $this->params['debug'];
+            $sql->setDebug($this->params['debug']);
             $sql->setQuery('
                 SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                 FROM ' . $sql->escapeIdentifier($this->getElement('relation_table')) . '

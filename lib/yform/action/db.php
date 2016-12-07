@@ -13,9 +13,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
     {
 
         $sql = rex_sql::factory();
-        if ($this->params['debug']) {
-            $sql->debugsql = true;
-        }
+        $sql->setDebug($this->params['debug']);
 
         $main_table = '';
         if (!$main_table = $this->getElement(2)) {

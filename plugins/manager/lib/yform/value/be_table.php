@@ -50,6 +50,15 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
     function enterObject()
     {
 
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        if ($this->getElement(5) != 'no_db') {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
+
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         $columns = explode(',', $this->getElement('columns'));
         if (count($columns) == 0) {
             return;
@@ -61,11 +70,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $data = [];
         }
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
-
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement(5) != 'no_db') {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-        }
 
     }
 

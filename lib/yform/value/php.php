@@ -42,7 +42,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
                 'php'     => array( 'type' => 'textarea',    'label' => rex_i18n::msg("yform_values_php_code")),
             ),
             'description' => rex_i18n::msg("yform_values_php_description"),
-            'dbtype' => 'text',
+            'dbtype' => 'none',
             'is_hiddeninlist' => true,
             'famous' => false,
             'multi_edit' => 'always',

@@ -34,6 +34,10 @@ class rex_yform_value_captcha_calc extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = $this->getElement(2);
         }
 
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         if ($this->getElement(3) != '') {
             $link = $this->getElement(3);
             if(preg_match("/\?/", $link)) {

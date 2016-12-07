@@ -8,7 +8,7 @@
             echo $this->parse('errors.tpl.php');
         }}
         ?>
-    
+
         <?php foreach ($this->objparams['form_output'] as $field):
             echo $field;
         endforeach ?>
@@ -18,7 +18,11 @@
         endfor ?>
 
         <?php foreach ($this->objparams['form_hiddenfields'] as $k => $v): ?>
-            <input type="hidden" name="<?php echo $k ?>" value="<?php echo htmlspecialchars($v) ?>" />
+            <?php if (is_array($v)): foreach ($v as $l => $w): ?>
+                <input type="hidden" name="<?php echo $k, '[', $l, ']' ?>" value="<?php echo htmlspecialchars($w) ?>" />
+            <?php endforeach; else: ?>
+                <input type="hidden" name="<?php echo $k ?>" value="<?php echo htmlspecialchars($v) ?>" />
+            <?php endif; ?>
         <?php endforeach ?>
     </form>
 </div>

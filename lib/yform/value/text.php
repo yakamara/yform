@@ -17,8 +17,10 @@ class rex_yform_value_text extends rex_yform_value_abstract
         if ($this->getValue() == '' && !$this->params['send']) {
             $this->setValue($this->getElement('default'));
         }
-        
-        $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
+
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
+        }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement('no_db') != 'no_db') {

@@ -116,18 +116,21 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     function enterObject()
     {
-
-        $format = $this->time_getFormat();
-
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
+        if (!$this->needsOutput()) {
+            return;
+        }
+
+        $format = $this->time_getFormat();
+
         if ($this->getElement('hours') != '') {
             $hours = explode(',', trim($this->getElement('hours')));
-            
+
         } else {
             $hours = array();
             for ($i = 0; $i < 24; $i++) {
@@ -137,7 +140,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
         if ($this->getElement('minutes') != '') {
             $minutes = explode(',', trim($this->getElement('minutes')));
-            
+
         } else {
             $minutes = [];
             for ($i = 0; $i < 60; $i++) {
@@ -165,7 +168,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 compact('format', 'hours', 'minutes', 'seconds', 'hour', 'minute', 'second')
             );
         }
-        
+
     }
 
     function getDescription()

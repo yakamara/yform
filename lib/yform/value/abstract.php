@@ -136,6 +136,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     }
 
+    function needsOutput()
+    {
+        return $this->getParam('form_needs_output', true);
+    }
+
     function parse($template, $params = array())
     {
         extract($params);

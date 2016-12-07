@@ -16,6 +16,9 @@ class rex_yform_manager_table implements ArrayAccess
     /** @var rex_yform_manager_field[] */
     protected $fields = [];
 
+    /** @var rex_yform_manager_field[] */
+    protected $relations = null;
+
     protected static $debug = false;
 
     /** @var self[] */
@@ -228,7 +231,11 @@ class rex_yform_manager_table implements ArrayAccess
      */
     public function getRelations()
     {
-        return $this->getValueFields(['type_name' => 'be_manager_relation']);
+        if (null === $this->relations) {
+            $this->relations = $this->getValueFields(['type_name' => 'be_manager_relation']);
+        }
+
+        return $this->relations;
     }
 
     /**

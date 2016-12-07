@@ -11,6 +11,8 @@ class rex_yform
 {
     public static $TemplatePaths = [];
 
+    private $fieldsInitialized = false;
+
     public function __construct()
     {
         $this->objparams = [];
@@ -82,6 +84,7 @@ class rex_yform
 
         $this->objparams['form_elements'] = [];
         $this->objparams['form_output'] = [];
+        $this->objparams['form_needs_output'] = true;
 
         $this->objparams['value_pool'] = [];
         $this->objparams['value_pool']['email'] = [];
@@ -194,6 +197,89 @@ class rex_yform
 
     public function executeFields()
     {
+        if (!$this->fieldsInitialized) {
+            $this->initializeFields();
+        }
+
+        foreach ($this->objparams['values'] as $ValueObject) {
+            $ValueObject->setValue($this->getFieldValue($ValueObject->getId(), '', $ValueObject->getName()));
+        }
+
+        // *************************************************** OBJECT PARAM "send"
+        if ($this->getFieldValue('send', '', 'send') == '1') {
+            $this->objparams['send'] = 1;
+        }
+
+        // *************************************************** PRE VALUES
+        // Felder aus Datenbank auslesen - Sofern Aktualisierung
+        if ($this->objparams['getdata']) {
+            if (!$this->objparams['sql_object'] instanceof rex_sql) {
+                $this->objparams['sql_object'] = rex_sql::factory();
+                $this->objparams['sql_object']->setDebug($this->objparams['debug']);
+                $this->objparams['sql_object']->setQuery('SELECT * from ' . $this->objparams['main_table'] . ' WHERE ' . $this->objparams['main_where']);
+            }
+            if ($this->objparams['sql_object']->getRows() > 1 || $this->objparams['sql_object']->getRows() == 0) {
+                $this->objparams['warning'][] = $this->objparams['Error-Code-EntryNotFound'];
+                $this->objparams['warning_messages'][] = $this->objparams['Error-Code-EntryNotFound'];
+                $this->objparams['form_show'] = true;
+                unset($this->objparams['sql_object']);
+            }
+        }
+
+        // ----- Felder mit Werten fuellen, fuer wiederanzeige
+        // Die Value Objekte werden mit den Werten befuellt die
+        // aus dem Formular nach dem Abschicken kommen
+        if ($this->objparams['send'] != 1 && $this->objparams['main_where'] != '') {
+            foreach ($this->objparams['values'] as $i => $valueObject) {
+                if ($valueObject->getName()) {
+                    if (isset($this->objparams['sql_object'])) {
+                        $this->setFieldValue($i, @$this->objparams['sql_object']->getValue($valueObject->getName()), '', $valueObject->getName());
+                    }
+                }
+                $valueObject->setValue($this->getFieldValue($i, '', $valueObject->getName()));
+            }
+        }
+
+        // *************************************************** VALIDATE OBJEKTE
+
+        foreach ( $this->objparams['fields'] as $types) {
+            foreach($types as $Object) {
+                $Object->preValidateAction();
+            }
+        }
+
+        if ($this->objparams['send'] == 1) {
+            foreach ($this->objparams['validates'] as $Object) {
+                $Object->enterObject();
+            }
+        }
+
+        foreach ( $this->objparams['fields'] as $types) {
+            foreach($types as $Object) {
+                $Object->postValidateAction();
+            }
+        }
+
+        // *************************************************** FORMULAR ERSTELLEN
+
+        foreach ($this->objparams['values'] as $ValueObject) {
+            $ValueObject->enterObject();
+        }
+
+        if ($this->objparams['send'] == 1) {
+            foreach ($this->objparams['validates'] as $Object) {
+                $Object->postValueAction();
+            }
+        }
+
+        // ***** PostFormActions
+        foreach ($this->objparams['values'] as $ValueObject) {
+            $ValueObject->postFormAction();
+        }
+    }
+
+    public function initializeFields()
+    {
         $this->objparams['values'] = [];
         $this->objparams['validates'] = [];
         $this->objparams['actions'] = [];
@@ -268,81 +354,7 @@ class rex_yform
 
         }
 
-        foreach ($this->objparams['values'] as $ValueObject) {
-            $ValueObject->setValue($this->getFieldValue($ValueObject->getId(), '', $ValueObject->getName()));
-        }
-
-        // *************************************************** OBJECT PARAM "send"
-        if ($this->getFieldValue('send', '', 'send') == '1') {
-            $this->objparams['send'] = 1;
-        }
-
-        // *************************************************** PRE VALUES
-        // Felder aus Datenbank auslesen - Sofern Aktualisierung
-        if ($this->objparams['getdata']) {
-            if (!$this->objparams['sql_object'] instanceof rex_sql) {
-                $this->objparams['sql_object'] = rex_sql::factory();
-                $this->objparams['sql_object']->debugsql = $this->objparams['debug'];
-                $this->objparams['sql_object']->setQuery('SELECT * from ' . $this->objparams['main_table'] . ' WHERE ' . $this->objparams['main_where']);
-            }
-            if ($this->objparams['sql_object']->getRows() > 1 || $this->objparams['sql_object']->getRows() == 0) {
-                $this->objparams['warning'][] = $this->objparams['Error-Code-EntryNotFound'];
-                $this->objparams['warning_messages'][] = $this->objparams['Error-Code-EntryNotFound'];
-                $this->objparams['form_show'] = true;
-                unset($this->objparams['sql_object']);
-            }
-        }
-
-        // ----- Felder mit Werten fuellen, fuer wiederanzeige
-        // Die Value Objekte werden mit den Werten befuellt die
-        // aus dem Formular nach dem Abschicken kommen
-        if ($this->objparams['send'] != 1 && $this->objparams['main_where'] != '') {
-            foreach ($this->objparams['values'] as $i => $valueObject) {
-                if ($valueObject->getName()) {
-                    if (isset($this->objparams['sql_object'])) {
-                        $this->setFieldValue($i, @$this->objparams['sql_object']->getValue($valueObject->getName()), '', $valueObject->getName());
-                    }
-                }
-                $valueObject->setValue($this->getFieldValue($i, '', $valueObject->getName()));
-            }
-        }
-
-        // *************************************************** VALIDATE OBJEKTE
-
-        foreach ( $this->objparams['fields'] as $types) {
-            foreach($types as $Object) {
-                $Object->preValidateAction();
-            }
-        }
-
-        if ($this->objparams['send'] == 1) {
-            foreach ($this->objparams['validates'] as $Object) {
-                $Object->enterObject();
-            }
-        }
-
-        foreach ( $this->objparams['fields'] as $types) {
-            foreach($types as $Object) {
-                $Object->postValidateAction();
-            }
-        }
-
-        // *************************************************** FORMULAR ERSTELLEN
-
-        foreach ($this->objparams['values'] as $ValueObject) {
-            $ValueObject->enterObject();
-        }
-
-        if ($this->objparams['send'] == 1) {
-            foreach ($this->objparams['validates'] as $Object) {
-                $Object->postValueAction();
-            }
-        }
-
-        // ***** PostFormActions
-        foreach ($this->objparams['values'] as $ValueObject) {
-            $ValueObject->postFormAction();
-        }
+        $this->fieldsInitialized = true;
     }
 
     public function executeActions()

@@ -15,7 +15,9 @@ class rex_yform_value_password extends rex_yform_value_abstract
             $this->setValue($this->getElement(3));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse(array('value.password.tpl.php', 'value.text.tpl.php'), array('type' => 'password', 'value' => ''));
+        if ($this->needsOutput()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(array('value.password.tpl.php', 'value.text.tpl.php'), array('type' => 'password', 'value' => ''));
+        }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(4) != 'no_db') {

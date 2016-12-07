@@ -22,7 +22,7 @@ class rex_yform_manager_table_api
 
             // Insert
             $table_insert = rex_sql::factory();
-            $table_insert->debugsql = self::$debug;
+            $table_insert->setDebug(self::$debug);
             $table_insert->setTable(rex_yform_manager_table::table());
             $table_insert->setValue('table_name', $table_name);
 
@@ -55,7 +55,7 @@ class rex_yform_manager_table_api
             }
 
             $table_update = rex_sql::factory();
-            $table_update->debugsql = self::$debug;
+            $table_update->setDebug(self::$debug);
             $table_update->setTable(rex_yform_manager_table::table());
             $table_update->setWhere('table_name = :table_name', [':table_name' => $table_name]);
 
@@ -146,7 +146,7 @@ class rex_yform_manager_table_api
         $table = rex_yform_manager_table::get($table_name);
 
         $t = rex_sql::factory();
-        $t->debugsql = self::$debug;
+        $t->setDebug(self::$debug);
         $t->setQuery('delete from ' . rex_yform_manager_table::table() . ' where table_name=:table_name ', [':table_name' => $table_name]);
 
         if ($table) {
@@ -198,7 +198,7 @@ class rex_yform_manager_table_api
 
             // Insert
             $field_insert = rex_sql::factory();
-            $field_insert->debugsql = self::$debug;
+            $field_insert->setDebug(self::$debug);
             $field_insert->setTable(rex_yform_manager_field::table());
             $field_insert->setValue('table_name', $table_name);
 
@@ -219,7 +219,7 @@ class rex_yform_manager_table_api
             }
 
             $field_update = rex_sql::factory();
-            $field_update->debugsql = self::$debug;
+            $field_update->setDebug(self::$debug);
             $field_update->setTable(rex_yform_manager_field::table());
 
             $add_where = array();
@@ -248,7 +248,7 @@ class rex_yform_manager_table_api
     public static function removeTablefield($table_name, $field_name)
     {
         $f = rex_sql::factory();
-        $f->debugsql = self::$debug;
+        $f->setDebug(self::$debug);
         $f->setQuery('delete from ' . rex_yform_manager_field::table() . ' where table_name=:table_name and name=:name', [':table_name' => $table_name, ':name' => $field_name]);
 
         rex_yform_manager_table::deleteCache();
@@ -561,7 +561,7 @@ class rex_yform_manager_table_api
 
         if (count($alterTable)) {
             $alter = rex_sql::factory();
-            $alter->debugsql = self::$debug;
+            $alter->setDebug(self::$debug);
             $alter->setQuery('ALTER TABLE `' .  rex_yform_manager_field::table() . '` ' . implode(',', $alterTable));
         }
 
@@ -575,7 +575,7 @@ class rex_yform_manager_table_api
         foreach (rex_yform_manager_table::getAll() as $table) {
 
             $c = rex_sql::factory();
-            $c->debugsql = self::$debug;
+            $c->setDebug(self::$debug);
             $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
             // remember fields, create and in case delete

@@ -11,6 +11,10 @@ class rex_yform_value_html extends rex_yform_value_abstract
 
     function enterObject()
     {
+        if (!$this->needsOutput()) {
+            return;
+        }
+
         $html = $this->getElement('html');
         $label = $this->getElement('label');
 
@@ -39,7 +43,7 @@ class rex_yform_value_html extends rex_yform_value_abstract
                 'html' => array( 'type' => 'textarea',    'label' => rex_i18n::msg("yform_values_html_HTML")),
             ),
             'description' => rex_i18n::msg("yform_values_html_description"),
-            'dbtype' => 'text',
+            'dbtype' => 'none',
             'multi_edit' => 'always',
             'is_searchable' => false,
             'is_hiddeninlist' => true,

@@ -11,6 +11,18 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
 
     function enterObject()
     {
+        if (is_array($this->getValue())) {
+            $this->setValue(implode(',', $this->getValue()));
+        }
+
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        if ($this->getElement(4) != 'no_db') {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
+
+        if (!$this->needsOutput()) {
+            return;
+        }
 
         $multiple = $this->getElement('multiple') == 1;
 
@@ -80,11 +92,6 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
 
         $this->setValue(implode(',', $this->getValue()));
-
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement(4) != 'no_db') {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-        }
     }
 
     function getDefinitions()

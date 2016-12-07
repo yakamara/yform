@@ -13,6 +13,8 @@ class rex_yform_manager_dataset
     private static $tableToModel = [];
     private static $modelToTable = [];
 
+    private static $internalForms = [];
+
     private $table;
 
     private $id;
@@ -123,7 +125,16 @@ class rex_yform_manager_dataset
             ->setDebug(self::$debug)
             ->setQuery($query, $params);
 
-        return static::fromSql($sql, $table);
+        if (!$sql->getRows()) {
+            return null;
+        }
+
+        $data = [];
+        foreach ($sql->getFieldnames() as $key) {
+            $data[$key] = $sql->getValue($key);
+        }
+
+        return static::fromSqlData($data, $table);
     }
 
     /**
@@ -138,16 +149,16 @@ class rex_yform_manager_dataset
         $table = $table ?: static::modelToTable();
 
         $sql = rex_sql::factory();
-        $sql
-            ->setDebug(self::$debug)
-            ->setQuery($query, $params);
+        $sql->setDebug(self::$debug);
 
-        $data = [];
-        foreach ($sql as $row) {
-            $data[] = static::fromSql($sql, $table);
+        $data = $sql->getArray($query, $params);
+
+        $datasets = [];
+        foreach ($data as $row) {
+            $datasets[] = static::fromSqlData($row, $table);
         }
 
-        return new rex_yform_manager_collection($table, $data);
+        return new rex_yform_manager_collection($table, $datasets);
     }
 
     /**
@@ -327,8 +338,8 @@ class rex_yform_manager_dataset
      */
     public function isValid()
     {
-        $yform = $this->getForm();
-        $yform->setObjectparams('real_field_names', true);
+        $yform = clone $this->getInternalForm();
+        $this->setFormMainId($yform);
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -353,8 +364,8 @@ class rex_yform_manager_dataset
      */
     public function save()
     {
-        $yform = $this->getForm();
-        $yform->setObjectparams('real_field_names', true);
+        $yform = clone $this->getInternalForm();
+        $this->setFormMainId($yform);
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -429,45 +440,8 @@ class rex_yform_manager_dataset
      */
     public function getForm()
     {
-        $yform  = new rex_yform();
-        $fields = $this->getFields();
-        $yform->setDebug(self::$debug);
-
-        foreach ($fields as $field) {
-            $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
-
-            /** @var rex_yform_base_abstract $cl */
-            $cl = new $class();
-            $definitions = $cl->getDefinitions();
-
-            $values = [];
-            $i = 1;
-            foreach ($definitions['values'] as $key => $_) {
-                $values[] = $field->getElement($key);
-                ++$i;
-            }
-
-            if ($field->getType() == 'value') {
-                $yform->setValueField($field->getTypeName(), $values);
-            } elseif ($field->getType() == 'validate') {
-                $yform->setValidateField($field->getTypeName(), $values);
-            } elseif ($field->getType() == 'action') {
-                $yform->setActionField($field->getTypeName(), $values);
-            }
-        }
-
-        $yform->setObjectparams('main_table', $this->table);
-        if ($this->exists()) {
-            $where = 'id = ' . (int) $this->id;
-            $yform->setActionField('db', [$this->table, $where]);
-            $yform->setObjectparams('main_id', $this->id);
-            $yform->setObjectparams('main_where', $where);
-        } else {
-            $yform->setActionField('db', [$this->table]);
-            if ($this->id) {
-                $yform->objparams['value_pool']['sql']['id'] = $this->id;
-            }
-        }
+        $yform  = $this->createForm();
+        $this->setFormMainId($yform);
 
         return $yform;
     }
@@ -604,6 +578,69 @@ class rex_yform_manager_dataset
         $this->setValue($key, $value);
     }
 
+    private function getInternalForm()
+    {
+        if (isset(self::$internalForms[$this->table])) {
+            return self::$internalForms[$this->table];
+        }
+
+        /** @var self $dummy */
+        $dummy = new static($this->table, 'dummy');
+
+        $yform = $dummy->createForm();
+        $yform->setObjectparams('real_field_names', true);
+        $yform->setObjectparams('form_needs_output', false);
+        $yform->initializeFields();
+
+        return self::$internalForms[$this->table] = $yform;
+    }
+
+    private function createForm()
+    {
+        $yform  = new rex_yform();
+        $fields = $this->getFields();
+        $yform->setDebug(self::$debug);
+
+        foreach ($fields as $field) {
+            $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
+
+            /** @var rex_yform_base_abstract $cl */
+            $cl = new $class();
+            $definitions = $cl->getDefinitions();
+
+            $values = [];
+            $i = 1;
+            foreach ($definitions['values'] as $key => $_) {
+                $values[] = $field->getElement($key);
+                ++$i;
+            }
+
+            if ($field->getType() == 'value') {
+                $yform->setValueField($field->getTypeName(), $values);
+            } elseif ($field->getType() == 'validate') {
+                $yform->setValidateField($field->getTypeName(), $values);
+            } elseif ($field->getType() == 'action') {
+                $yform->setActionField($field->getTypeName(), $values);
+            }
+        }
+
+        $yform->setObjectparams('main_table', $this->table);
+        $yform->setActionField('db', [$this->table, 'main_where']);
+
+        return $yform;
+    }
+
+    private function setFormMainId(rex_yform $yform)
+    {
+        if ($this->exists()) {
+            $where = 'id = ' . (int) $this->id;
+            $yform->setObjectparams('main_id', $this->id);
+            $yform->setObjectparams('main_where', $where);
+        } elseif ($this->id) {
+            $yform->objparams['value_pool']['sql']['id'] = $this->id;
+        }
+    }
+
     private static function tableToModel($table)
     {
         return isset(self::$tableToModel[$table]) ? self::$tableToModel[$table] : __CLASS__;
@@ -625,18 +662,14 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param rex_sql $sql
-     * @param string  $table
+     * @param array  $data
+     * @param string $table
      *
-     * @return null|static
+     * @return static
      */
-    private static function fromSql(rex_sql $sql, $table)
+    private static function fromSqlData(array $data, $table)
     {
-        if (!$sql->valid()) {
-            return null;
-        }
-
-        $id = $sql->getValue('id');
+        $id = $data['id'];
         $class = self::tableToModel($table);
 
         /** @var static $dataset */
@@ -645,9 +678,7 @@ class rex_yform_manager_dataset
 
         $dataset->dataLoaded = true;
         $dataset->exists = true;
-        foreach ($sql->getFieldnames() as $key) {
-            $dataset->data[$key] = $sql->getValue($key);
-        }
+        $dataset->data = $data;
 
         return $dataset;
     }
