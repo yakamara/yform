@@ -172,6 +172,16 @@ class rex_yform_manager_dataset
     }
 
     /**
+     * @param string $table
+     *
+     * @return null|string
+     */
+    public static function getModelClass($table)
+    {
+        return isset(self::$tableToModel[$table]) ? self::$tableToModel[$table] : null;
+    }
+
+    /**
      * @return string
      */
     public function getTableName()
@@ -643,14 +653,14 @@ class rex_yform_manager_dataset
 
     private static function tableToModel($table)
     {
-        return isset(self::$tableToModel[$table]) ? self::$tableToModel[$table] : __CLASS__;
+        return self::getModelClass($table) ?: __CLASS__;
     }
 
     private static function modelToTable()
     {
         $class = get_called_class();
 
-        if (self::$modelToTable[$class]) {
+        if (isset(self::$modelToTable[$class])) {
             return self::$modelToTable[$class];
         }
 
