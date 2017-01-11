@@ -45,6 +45,9 @@ class rex_yform_email_template
         $er['REX_NOTFOUND_ARTICLE_ID'] = rex_article::getNotfoundArticleId();
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
+        $template['mail_from'] = rex_var::parse($template['mail_from'],'','yform_email_template', $er);
+        $template['mail_from_name'] = rex_var::parse($template['mail_from_name'],'','yform_email_template', $er);
+
         $template['subject'] = rex_var::parse($template['subject'],'','yform_email_template', $er);
         $template['body'] = rex_var::parse($template['body'],'','yform_email_template', $er);
         $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
@@ -57,10 +60,13 @@ class rex_yform_email_template
             $template['body_html'] = str_replace("?>\n", "?>\n\r\n", $template['body_html']);
         }
 
+        $template['mail_from'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/mail_from', $template['mail_from']));
+        $template['mail_from_name'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/mail_from_name', $template['mail_from_name']));
         $template['subject'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/subject', $template['subject']));
         $template['body'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/body', $template['body']));
         $template['body_html'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/body_html', $template['body_html']));
 
+        $template['mail_from'] = self::makeSingleLine($template['mail_from']);
         $template['subject'] = self::makeSingleLine($template['subject']);
 
         return $template;
