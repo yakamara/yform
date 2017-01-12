@@ -31,6 +31,12 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $mail_to = $this->getElement(4);
             }
 
+            if ($this->getElement(5) != false && $this->getElement(5) != '') {
+                $mail_to_name = $this->getElement(5);
+            } else {
+                $mail_to_name = $mail_to;
+            }
+
             if ($this->params['debug']) {
                 echo '<hr /><pre>'; var_dump($etpl); echo '</pre><hr />';
             }
@@ -38,7 +44,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
             $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
 
             $etpl['mail_to'] = $mail_to;
-            $etpl['mail_to_name'] = $mail_to;
+            $etpl['mail_to_name'] = $mail_to_name;
 
             if ($etpl['attachments'] != '') {
                 $f = explode(',', $etpl['attachments']);
@@ -78,7 +84,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
         } else {
             if ($this->params['debug']) {
-                echo '<p>Template: "'.htmlspecialchars($template_name).'" not found';
+                echo '<p>Template: "' . htmlspecialchars($template_name) . '" not found';
             }
 
         }
@@ -88,7 +94,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     function getDescription()
     {
-        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]';
+        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]';
 
     }
 
