@@ -104,7 +104,7 @@ yform_manager_tableset_import_info = Info
 yform_manager_tableset_import_warning_selectfile = Es wurde keine .json Datei verwendet, oder die Datei war fehlerhaft.
 yform_manager_tableset_import_warning_type = Der Dateityp ist falsch. Es muss eine JSON Datei sein.
 yform_manager_tableset_import_success = Tabelle/n wurde/n erfolgreich importiert
-yform_manager_tableset_import_failed = Tableset Import ist fehlgeschlagen
+yform_manager_tableset_import_failed = Tableset Import ist fehlgeschlagen:<br />{0}
 
 yform_manager_table_edit = Tabellen bearbeiten
 

@@ -104,7 +104,7 @@ yform_manager_tableset_import_info =
 yform_manager_tableset_import_warning_selectfile = [missing_text] de:Es wurde keine Datei verwendet
 yform_manager_tableset_import_warning_type = [missing_text] de:Der Dateityp ist falsch. Es muss eine JSON Datei sein.
 yform_manager_tableset_import_success = [missing_text] de:Tabelle/n wurde/n erfolgreich importiert
-yform_manager_tableset_import_failed = [missing_text] de:Tableset Import ist fehlgeschlagen
+yform_manager_tableset_import_failed = [missing_text] de:Tableset Import ist fehlgeschlagen:<br />{0}
 
 yform_manager_table_edit = edit tables
 
