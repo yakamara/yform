@@ -67,6 +67,7 @@ class rex_yform_manager_table_api
             $table_update->update();
 
         }
+        rex_yform_manager_table::deleteCache();
 
         self::generateTablesAndFields();
 

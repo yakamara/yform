@@ -13,6 +13,7 @@ $page = rex_request('page', 'string', '');
 $yform = new rex_yform;
 $yform->setHiddenField('page', $page);
 $yform->setObjectparams('real_field_names',true);
+$yform->setObjectparams('main_id', 'tableset_import');
 $yform->setObjectparams('hide_top_warning_messages', true);
 $yform->setObjectparams('form_showformafterupdate',1);
 $yform->setValueField('upload', array(
@@ -36,8 +37,7 @@ $form = $yform->getForm();
 if ($yform->objparams['actions_executed']) {
 
     try {
-
-        $content = file_get_contents(rex_path::addonData('yform','uploads/'.$yform->objparams['value_pool']['email']['importfile']));
+        $content = file_get_contents(rex_path::pluginData('yform', 'manager', 'upload/importfile/tableset_import_'.$yform->objparams['value_pool']['email']['importfile']));
         rex_yform_manager_table_api::importTablesets($content);
         echo rex_view::success(rex_i18n::msg('yform_manager_tableset_import_success'));
 
@@ -45,7 +45,7 @@ if ($yform->objparams['actions_executed']) {
         echo rex_view::warning(rex_i18n::msg('yform_manager_tableset_import_failed', '', $e->getMessage()));
 
     }
-    rex_file::delete(rex_path::addonData('yform','uploads/'.$yform->objparams['value_pool']['email']['importfile']));
+    rex_file::delete(rex_path::pluginData('yform', 'manager', 'upload/importfile/tableset_import_'.$yform->objparams['value_pool']['email']['importfile']));
 
 } else if ($yform->objparams['send']) {
 
