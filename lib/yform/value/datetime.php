@@ -197,7 +197,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         $hours = array();
         for ($i = 0; $i < 24; $i++) {
-            $hours[$i] = str_pad($i, 2, '0', STR_PAD_LEFT);
+            $hours[$i] = $i;
         }
 
         if ($this->getElement('minutes') != '') {
@@ -205,7 +205,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         } else {
             $minutes = array();
             for ($i = 0; $i < 60; $i++) {
-                $minutes[$i] = str_pad($i, 2, '0', STR_PAD_LEFT);
+                $minutes[$i] = $i;
             }
         }
 
@@ -262,8 +262,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     static function getListValue($params)
     {
-        $format = $params['params']['field']['format'];
-        if ($format == '') {
+        $format = @$params['params']['field']['format'];
+        if (!$format) {
             $format = self::VALUE_DATETIME_DEFAULT;
         }
 
