@@ -237,6 +237,7 @@ yform_values_be_select_category_clang = Sprache
 yform_values_be_select_category_multiple = Mehrere Felder möglich
 yform_values_be_select_category_size = Höhe der Auswahlbox
 yform_values_be_table_columns = Bezeichnung der Spalten (Menge,Preis,Irgendwas)
+yform_values_be_link_multiple = Mehrfachauswahl
 yform_values_prio_fields = Anzeige
 yform_values_prio_scope = Beschränkung
 yform_values_prio_default = Am Anfang
