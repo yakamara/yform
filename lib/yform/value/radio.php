@@ -14,13 +14,12 @@ class rex_yform_value_radio extends rex_yform_value_abstract
 
         $options = $this->getArrayFromString($this->getElement('options'));
 
-        $default = $this->getElement('default');
-        if (!array_key_exists($default, $options)) {
-            $default = key($options);
-        }
-
         if (!array_key_exists($this->getValue(), $options)) {
-            $this->setValue($default);
+            $this->setValue('');
+            $default = $this->getElement('default');
+            if($default && array_key_exists($default, $options)) {
+                $this->setValue($default);
+            }
         }
 
         if ($this->needsOutput()) {
@@ -56,6 +55,70 @@ class rex_yform_value_radio extends rex_yform_value_abstract
             'description' => rex_i18n::msg("yform_values_radio_description"),
             'dbtype' => 'text'
         );
+
+    }
+
+    public static function getListValue($params)
+    {
+        $return = array();
+
+        $new_select = new self();
+        $values = $new_select->getArrayFromString($params['params']['field']['options']);
+
+        foreach (explode(',', $params['value']) as $k) {
+            if (isset($values[$k])) {
+                $return[] = rex_i18n::translate($values[$k]);
+            }
+        }
+
+        return implode('<br />', $return);
+    }
+
+    public static function getSearchField($params)
+    {
+        $options = array();
+        $options['(empty)'] = '(empty)';
+        $options['!(empty)'] = '!(empty)';
+
+        $new_select = new self();
+        $options += $new_select->getArrayFromString($params['field']['options']);
+
+        $params['searchForm']->setValueField('select', array(
+        'name' => $params['field']->getName(),
+        'label' => $params['field']->getLabel(),
+        'options' => $options,
+        'multiple' => 1,
+        'size' => 5,
+        )
+        );
+    }
+
+    public static function getSearchFilter($params)
+    {
+        $sql = rex_sql::factory();
+
+        $field = $params['field']->getName();
+        $values = (array) $params['value'];
+
+        $where = array();
+        foreach ($values as $value) {
+            switch ($value) {
+                case '(empty)':
+                    $where[] = ' ' . $sql->escapeIdentifier($field) . ' = ""';
+                    break;
+                case '!(empty)':
+                    $where[] = ' ' . $sql->escapeIdentifier($field) . ' != ""';
+                    break;
+                default:
+                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    break;
+            }
+        }
+
+        if (count($where) > 0) {
+            return ' ( ' . implode(' or ', $where) . ' )';
+
+        }
 
     }
 

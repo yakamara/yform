@@ -24,13 +24,12 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             $options[$k] = $v;
         }
 
-        $default = $this->getElement('default');
-        if (!array_key_exists($default, $options)) {
-            $default = key($options);
-        }
-
         if (!array_key_exists($this->getValue(), $options)) {
-            $this->setValue($default);
+            $this->setValue('');
+            $default = $this->getElement('default');
+            if($default && array_key_exists($default, $options)) {
+                $this->setValue($default);
+            }
         }
 
         if ($this->needsOutput()) {
@@ -65,6 +64,99 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             'description' => 'Hiermit kann man SQL Abfragen als Radioliste nutzen',
             'dbtype' => 'text'
         );
+    }
+
+    static function getListValue($params)
+    {
+        $return = array();
+
+        $query = $params['params']['field']['query'];
+        $query_params = [];
+        $pos = strrpos(strtoupper($query), 'ORDER BY ');
+        if ( $pos !== false) {
+            $query = substr($query, 0, $pos);
+        }
+
+        $pos = strrpos(strtoupper($query), 'LIMIT ');
+        if ( $pos !== false) {
+            $query = substr($query, 0, $pos);
+        }
+
+        $where = ' `id` = ?';
+        $query_params[] = $params['value'];
+
+        $pos = strrpos(strtoupper($query), 'WHERE ');
+        if ( $pos !== false) {
+            $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
+
+        } else {
+            $query .= ' WHERE ' . $where;
+
+        }
+
+        $db = rex_sql::factory();
+        $db_array = $db->getArray($query, $query_params);
+
+        foreach ($db_array as $entry) {
+            $return[] = $entry['name'];
+        }
+
+        if (count($return) == 0 && $params['value'] != '' && $params['value'] != '0') {
+            $return[] = $params['value'];
+        }
+
+        return implode('<br />', $return);
+    }
+
+    public static function getSearchField($params)
+    {
+        $options = array();
+        $options['(empty)'] = "(empty)";
+        $options['!(empty)'] = "!(empty)";
+
+        $options_sql = rex_sql::factory();
+        $options_sql->setQuery($params['field']['query']);
+
+        foreach ($options_sql->getArray() as $t) {
+            $options[$t['id']] = $t['name'];
+        }
+
+        $params['searchForm']->setValueField('select', array(
+        'name' => $params['field']->getName(),
+        'label' => $params['field']->getLabel(),
+        'options' => $options,
+        'multiple' => 1,
+        'size' => 5,
+        )
+        );
+    }
+
+    public static function getSearchFilter($params)
+    {
+        $sql = rex_sql::factory();
+        $field = $params['field']->getName();
+        $values = (array) $params['value'];
+
+        $where = array();
+        foreach($values as $value) {
+            switch($value){
+                case("(empty)"):
+                    $where[] = $sql->escapeIdentifier($field).' = ""';
+                    break;
+                case("!(empty)"):
+                    $where[] = $sql->escapeIdentifier($field).' != ""';
+                    break;
+                default:
+                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    break;
+            }
+        }
+
+        if (count($where) > 0) {
+            return ' ( ' . implode(" or ", $where) . ' )';
+
+        }
+
     }
 
 }
