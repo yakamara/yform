@@ -1,63 +1,84 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_select_sql extends rex_yform_value_abstract
 {
+    public static $getListValues = [];
 
-    static $getListValues = array();
-
-    function enterObject()
+    public function enterObject()
     {
         $multiple = $this->getElement('multiple') == 1;
 
-        // ----- query
         $sql = $this->getElement('query');
 
         $options_sql = rex_sql::factory();
         $options_sql->setDebug($this->params['debug']);
         $options_sql->setQuery($sql);
 
-        $options = array();
-        $option_names = array();
+        $options = [];
         foreach ($options_sql->getArray() as $t) {
-            $v = $t['name'];
-            $k = $t['id'];
-            $options[$k] = $v;
-            $option_names[$k] = $t['name'];
-        }
-
-        // ----- default value
-        if ($this->getValue() == '' && $this->getElement('default') != '') {
-            $this->setValue($this->getElement('default'));
+            $options[$t['id']] = $t['name'];
         }
 
         if ($multiple) {
+
             $size = (int) $this->getElement('size');
             if ($size < 2) {
                 $size = count($options);
             }
+
+            $values = $this->getValue();
+            if (!is_array($values)) {
+                $values = explode(',', $values);
+            }
+
+            $real_values = [];
+            foreach ($values as $value) {
+                if (array_key_exists($value, $options)) {
+                    $real_values[] = $value;
+                }
+            }
+
+            $this->setValue($real_values);
+
         } else {
+
             $size = 1;
 
-            // mit --- keine auswahl ---
             if ($this->getElement('empty_option') == 1) {
-                $options = array('0' => $this->getElement('empty_value')) + $options;
+                $options = ['0' => $this->getElement('empty_value')] + $options;
             }
-        }
 
-        if (!is_array($this->getValue())) {
-            $this->setValue(explode(',', $this->getValue()));
+            $default = null;
+            if (array_key_exists((string) $this->getElement('default'), $options)) {
+                $default = $this->getElement('default');
+            }
+            $value = (string) $this->getValue();
+
+            if (!array_key_exists($value, $options)) {
+                if ($default) {
+                    $this->setValue([$default]);
+                } else {
+                    reset($options);
+                    $this->setValue([key($options)]);
+                }
+            } else {
+                $this->setValue([$value]);
+            }
+
+
         }
 
         // ---------- rex_yform_set
         if (isset($this->params['rex_yform_set'][$this->getName()]) && !is_array($this->params['rex_yform_set'][$this->getName()])) {
             $value = $this->params['rex_yform_set'][$this->getName()];
-            $values = array();
+            $values = [];
             if (array_key_exists($value, $options)) {
                 $values[] = $value;
             }
@@ -72,58 +93,55 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $this->setValue(implode(',', $this->getValue()));
 
-        $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
-        if ($this->getElement(5) != 'no_db') {
-            $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName() . '_NAME'] = isset($options[$this->getValue()]) ? $options[$this->getValue()] : null;
 
+        if ($this->getElement("no_db") != 'no_db') {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
-
     }
 
-
-    function getDescription()
+    public function getDescription()
     {
         return 'select_sql|label|Bezeichnung:| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
     }
 
-
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'select_sql',
-            'values' => array(
-                'name'         => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name")),
-                'label'        => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
-                'query'        => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_query")),
-                'default'      => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_default")),
-                'no_db'        => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
-                'empty_option' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_sql_empty_option")),
-                'empty_value'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_empty_value")),
-                'multiple'     => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_select_sql_multiple")),
-                'size'         => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_select_sql_size")),
-                'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
-                'notice'       => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
-            ),
-            'description' => rex_i18n::msg("yform_values_select_sql_description"),
-            'dbtype' => 'text'
-        );
+            'values' => [
+                'name' => ['type' => 'name',    'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'query' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_sql_query')],
+                'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_sql_default')],
+                'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'empty_option' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_select_sql_empty_option')],
+                'empty_value' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_sql_empty_value')],
+                'multiple' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_select_sql_multiple')],
+                'size' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_sql_size')],
+                'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
+                'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+            ],
+            'description' => rex_i18n::msg('yform_values_select_sql_description'),
+            'dbtype' => 'text',
+        ];
     }
 
-
-    static function getListValue($params)
+    public static function getListValue($params)
     {
-        $return = array();
+        $return = [];
 
         $query = $params['params']['field']['query'];
         $query_params = [];
         $pos = strrpos(strtoupper($query), 'ORDER BY ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos);
         }
 
         $pos = strrpos(strtoupper($query), 'LIMIT ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos);
         }
 
@@ -131,20 +149,16 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         if ($multiple != 1) {
             $where = ' `id` = ?';
             $query_params[] = $params['value'];
-
         } else {
             $where = ' FIND_IN_SET(`id`, ?)';
             $query_params[] = $params['value'];
-
         }
 
         $pos = strrpos(strtoupper($query), 'WHERE ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
-
         } else {
             $query .= ' WHERE ' . $where;
-
         }
 
         $db = rex_sql::factory();
@@ -161,13 +175,11 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         return implode('<br />', $return);
     }
 
-
-
     public static function getSearchField($params)
     {
-        $options = array();
-        $options['(empty)'] = "(empty)";
-        $options['!(empty)'] = "!(empty)";
+        $options = [];
+        $options['(empty)'] = '(empty)';
+        $options['!(empty)'] = '!(empty)';
 
         $options_sql = rex_sql::factory();
         $options_sql->setQuery($params['field']['query']);
@@ -176,13 +188,13 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $options[$t['id']] = $t['name'];
         }
 
-        $params['searchForm']->setValueField('select', array(
+        $params['searchForm']->setValueField('select', [
                 'name' => $params['field']->getName(),
                 'label' => $params['field']->getLabel(),
                 'options' => $options,
                 'multiple' => 1,
                 'size' => 5,
-            )
+            ]
         );
     }
 
@@ -192,13 +204,13 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
-        $where = array();
-        foreach($values as $value) {
-            switch($value){
-                case("(empty)"):
+        $where = [];
+        foreach ($values as $value) {
+            switch ($value) {
+                case '(empty)':
                     $where[] = $sql->escapeIdentifier($field).' = ""';
                     break;
-                case("!(empty)"):
+                case '!(empty)':
                     $where[] = $sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
@@ -208,12 +220,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         if (count($where) > 0) {
-            return ' ( ' . implode(" or ", $where) . ' )';
-
+            return ' ( ' . implode(' or ', $where) . ' )';
         }
-
     }
-
-
-
 }
