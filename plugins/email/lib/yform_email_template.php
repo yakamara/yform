@@ -45,12 +45,19 @@ class rex_yform_email_template
         $er['REX_NOTFOUND_ARTICLE_ID'] = rex_article::getNotfoundArticleId();
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
-        $template['mail_from'] = rex_var::parse($template['mail_from'],'','yform_email_template', $er);
-        $template['mail_from_name'] = rex_var::parse($template['mail_from_name'],'','yform_email_template', $er);
+        // $template['subject'] = rex_var::parse($template['subject'],'','yform_email_template', $er);
+        // $template['body'] = rex_var::parse($template['body'],'','yform_email_template', $er);
+        // $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
 
-        $template['subject'] = rex_var::parse($template['subject'],'','yform_email_template', $er);
-        $template['body'] = rex_var::parse($template['body'],'','yform_email_template', $er);
-        $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
+        // BC < 2.0
+        foreach($template as $k => $v) {
+            foreach($er as $er_key => $er_value) {
+                $template[$k] = str_replace('###' . $er_key . '###', $er_value, $template[$k]);
+                $template[$k] = str_replace('***' . $er_key . '***', urlencode($er_value), $template[$k]);
+                $template[$k] = str_replace('+++' . $er_key . '+++', self::makeSingleLine($er_value), $template[$k]);
+            }
+            $template[$k] = rex_var::parse($template[$k],'','yform_email_template', $er);
+        }
 
         // rex_vars bug: sonst wird der Zeilenumbruch entfernt - wenn DATA_VAR am Ende einer Zeile
         if (rex_string::versionCompare(rex::getVersion(), '5.0.1', '<')) {
