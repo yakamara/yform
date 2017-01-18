@@ -52,7 +52,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $errors = [];
 
         // Hat Formular einen Uniquekey für dieses Formular und dieses Feld übertragen ?
-        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique', 'importfile');
+        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique', $this->getName());
+
         if ($unique == "") {
             // Nein - also anlegen
             $unique = self::_upload_getUniqueKey();
@@ -92,7 +93,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $ext = '.' . pathinfo($FILE['name'], PATHINFO_EXTENSION);
 
             if (
-                ( $this->getElement('types') != "" ) &&
+                ( $this->getElement('types') != "*" ) &&
                 ( !in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array) )
             ) {
                 $error[] = $error_messages['type_error'];
@@ -118,6 +119,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             }
 
             if (isset($FILE)) {
+
                 if (!@move_uploaded_file($FILE['tmp_name'], $FILE['tmp_yform_name'] ) ) {
                     if (!@copy($FILE['tmp_name'], $FILE['tmp_yform_name'] )) {
                         $error[] = 'upload failed: destination folder problem';
@@ -144,13 +146,14 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         $filename = "";
         $filepath = "";
+        $real_filepath = "";
         $download_link = "";
 
         // Datei war bereits vorhanden - vorbereitung für den Download und setzen des Values
         if (isset($_SESSION[$unique]['value'])) {
             $filename = (string) $_SESSION[$unique]['value'];
             $filepath = (string) $this->upload_getFolder() . '/' . $this->getParam('main_id') . '_' . $filename;
-
+            $real_filepath = $filepath;
         }
 
         // Datei aus Upload vorhanden - aber noch nicht gespeichert - vorbereitung für den Download und setzen des Values
@@ -163,6 +166,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             } else {
                 $filepath = $FILE['tmp_yform_name'];
                 $filename = $FILE["name"];
+                $real_filepath = $FILE['upload_folder'].'/'.$FILE['upload_name'];
 
             }
 
@@ -201,7 +205,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $this->params['value_pool']['sql'][$this->getName()] = $filename;
 
         if ($filepath != "") {
-            $this->params['value_pool']['files'][$this->getName()] = [$filename, $filepath];
+            $this->params['value_pool']['files'][$this->getName()] = [$filename, $filepath, $real_filepath];
 
         }
 
@@ -232,10 +236,9 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         if ($this->getParam('main_table') != "") {
             $folders[] = $this->getParam('main_table');
-        }
-
-        if ($this->getName() != "") {
-            $folders[] = $this->getName();
+            if ($this->getName() != "") {
+                $folders[] = $this->getName();
+            }
         }
 
         if (count($folders) == 0) {
@@ -265,7 +268,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     function postAction()
     {
-        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique', 'importfile');
+        $unique = $this->params["this"]->getFieldValue($this->getId(), 'unique', $this->getName());
 
         if (isset($_SESSION[$unique]['file'])) {
             $FILE = $_SESSION[$unique]['file'];
@@ -273,8 +276,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             if (file_exists($FILE['tmp_yform_name'])) {
 
                 $main_id = $this->getParam('main_id');
-                if ($main_id != "") {
+                if ($main_id != "" && $main_id != -1) {
                     $FILE['upload_name'] = $main_id.'_'.$FILE['name'];
+                } else {
+                    $FILE['upload_name'] = $unique.'_'.$FILE['name'];
                 }
 
                 $upload_filefolder = $FILE['upload_folder'].'/'.$FILE['upload_name'];

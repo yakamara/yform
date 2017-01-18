@@ -69,6 +69,8 @@ class rex_yform_manager_table_api
         }
         rex_yform_manager_table::deleteCache();
 
+        self::generateTablesAndFields();
+
         if (count($table_fields) > 0) {
             foreach ($table_fields as $field) {
                 self::setTableField($table_name, $field);

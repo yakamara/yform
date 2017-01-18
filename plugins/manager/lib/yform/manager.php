@@ -1293,6 +1293,7 @@ class rex_yform_manager
 
             $notation_php_pre = array(
             '$yform = new rex_yform();',
+            '$yform->setObjectparams(\'form_action\',rex_getUrl(\'REX_ARTICLE_ID\'));',
             '$yform->setObjectparams(\'form_ytemplate\', \'bootstrap\');',
             '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
             '$yform->setObjectparams(\'real_field_names\', true);',
@@ -1332,7 +1333,7 @@ class rex_yform_manager
 
                 if ($field['type_id'] == 'value') {
 
-                    $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $values), '","') . '"));';
+                    $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array(\'' . rtrim(implode('\',\'', $values), '\',\'') . '\'));';
                     $notation_pipe .= "\n" . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                     $notation_email .= "\n" . $field['name'] . ': REX_YFORM_DATA[field="' . $field['name'] . '"]';
 
