@@ -1,3 +1,6 @@
 [submodule "plugins/docs/docs"]
 	path = plugins/docs/docs
 	url = https://dergel@github.com/yakamara/redaxo_yform_docs.git
+[submodule "plugins/usability"]
+	path = plugins/usability
+	url = https://github.com/kreatifIT/yform_plugin_usability.git
