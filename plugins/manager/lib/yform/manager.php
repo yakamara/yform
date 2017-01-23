@@ -597,19 +597,33 @@ class rex_yform_manager
                     function($params) {
                         $value = '';
 
-                        list($table_name, $field_name) = explode(".",$params["params"]["opener_field"]);
-                        $table = rex_yform_manager_table::get($table_name);
-                        if ($table) {
-                            $fields = $table->getValueFields(array("name" => $field_name));
-                            if (isset($fields[$field_name])) {
-                                $target_table = $fields[$field_name]->getElement('table');
-                                $target_field = $fields[$field_name]->getElement('field');
+                        $tablefield = explode(".",$params["params"]["opener_field"]);
+                        if (count($tablefield) == 1) {
+
+                            if (isset($params["list"]->getParams()["table_name"])) {
+                                $target_table = $params["list"]->getParams()["table_name"];
+                                $target_field = $tablefield[0];
                                 $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
                                 $value = $values[$params['list']->getValue('id')];
-
                             }
-                        }
 
+                        } else {
+
+                            list($table_name, $field_name) = explode(".",$params["params"]["opener_field"]);
+                            $table = rex_yform_manager_table::get($table_name);
+                            if ($table) {
+                                $fields = $table->getValueFields(array("name" => $field_name));
+                                if (isset($fields[$field_name])) {
+                                    $target_table = $fields[$field_name]->getElement('table');
+                                    $target_field = $fields[$field_name]->getElement('field');
+
+                                    $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
+                                    $value = $values[$params['list']->getValue('id')];
+
+                                }
+                            }
+
+                        }
                         return '<a href="javascript:yform_manager_setData(' . $params["params"]["opener_id"] . ',###id###,\''.htmlspecialchars($value).' [id=###id###]\',' . $params["params"]["opener_multiple"] . ')">'.rex_i18n::msg('yform_data_select').'</a>';
                     },
                     array(
