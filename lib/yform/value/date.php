@@ -16,19 +16,19 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         // if date is unformated
         $value = $this->getValue();
-        if (is_string($value) && $value != "") {
+        if (is_string($value) && $value != '') {
 
             if (strlen($value) == 8) {
                 if ( $d = DateTime::createFromFormat('Ymd', $value) ) {
-                    if ($d->format("Ymd") == $value) {
-                        $this->setValue($d->format("Y-m-d"));
+                    if ($d->format('Ymd') == $value) {
+                        $this->setValue($d->format('Y-m-d'));
                         return;
                     }
                 }
 
             } else {
                 if ( $d = date_create_from_format('Y-m-d', $value) ) {
-                    if ($d->format("Y-m-d") == $value) {
+                    if ($d->format('Y-m-d') == $value) {
                         return;
                     }
                 }
@@ -37,8 +37,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         }
 
-        if ($this->getElement('current_date') == 1 && $this->getValue() == "" && $this->params['main_id'] < 1) {
-            $this->setValue(date("Y-m-d"));
+        if ($this->getElement('current_date') == 1 && $this->getValue() == '' && $this->params['main_id'] < 1) {
+            $this->setValue(date('Y-m-d'));
 
         }
 
@@ -71,7 +71,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     }
 
-    static public function date_getFormat($format){
+    public static function date_getFormat($format)
+    {
         if ($format == '') {
             $format = self::VALUE_DATE_DEFAULT;
         }
@@ -99,19 +100,19 @@ class rex_yform_value_date extends rex_yform_value_abstract
     {
 
         $year = 0;
-        $pos = strpos($format, "YYYY");
+        $pos = strpos($format, 'YYYY');
         if ($pos !== false) {
             $year = (int) substr($datestring, $pos, 4);
         }
 
         $month = 0;
-        $pos = strpos($format, "MM");
+        $pos = strpos($format, 'MM');
         if ($pos !== false) {
             $month = (int) substr($datestring, $pos, 2);
         }
 
         $day = 0;
-        $pos = strpos($format, "DD");
+        $pos = strpos($format, 'DD');
         if ($pos !== false) {
             $day = (int) substr($datestring, $pos, 2);
         }
@@ -142,13 +143,13 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         $yearStart = (int) $this->getElement('year_start');
 
-        if ($yearStart == "0") {
-            $yearStart = date("Y");
+        if ($yearStart == '0') {
+            $yearStart = date('Y');
         }
 
-        if (substr($this->getElement('year_end'),0,1) == "+") {
-            $add_years = (int) substr($this->getElement('year_end'),1);
-            $yearEnd = date("Y") + $add_years;
+        if (substr($this->getElement('year_end'), 0, 1) == '+') {
+            $add_years = (int) substr($this->getElement('year_end'), 1);
+            $yearEnd = date('Y') + $add_years;
 
         } else {
             $yearEnd = (int) $this->getElement('year_end');
@@ -190,22 +191,23 @@ class rex_yform_value_date extends rex_yform_value_abstract
     function getDefinitions()
     {
         return array(
-        'type' => 'value',
-        'name' => 'date',
-        'values' => array(
-        'name'         => array( 'type' => 'name', 'label' => rex_i18n::msg("yform_values_defaults_name")),
-        'label'        => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_label")),
-        'year_start'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_date_year_start")),
-        'year_end'     => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_date_year_end")),
-        'format'       => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_date_format"), 'notice' => rex_i18n::msg("yform_values_date_format_notice")),
-        'current_date' => array( 'type' => 'boolean', 'label' => rex_i18n::msg("yform_values_date_current_date")),
-        'no_db'        => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table")),
-        'widget'       => ['type' => 'select', 'label' => rex_i18n::msg("yform_values_defaults_widgets"), 'options' => ['select'=>'select', 'input:text'=>'input:text'], 'default' => 'select'],
-        'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
-        'notice'       => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
-        ),
-        'description' => rex_i18n::msg("yform_values_date_description"),
-        'dbtype' => 'date'
+            'type' => 'value',
+            'name' => 'date',
+            'values' => array(
+                'name'         => array( 'type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')),
+                'label'        => array( 'type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')),
+                'year_start'   => array( 'type' => 'text', 'label' => rex_i18n::msg('yform_values_date_year_start')),
+                'year_end'     => array( 'type' => 'text', 'label' => rex_i18n::msg('yform_values_date_year_end')),
+                'format'       => array( 'type' => 'text', 'label' => rex_i18n::msg('yform_values_date_format'), 'notice' => rex_i18n::msg('yform_values_date_format_notice')),
+                'current_date' => array( 'type' => 'boolean', 'label' => rex_i18n::msg('yform_values_date_current_date')),
+                'no_db'        => array( 'type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table')),
+                'widget'       => ['type' => 'select', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'options' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
+                'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')),
+                'notice'       => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')),
+            ),
+            'description' => rex_i18n::msg('yform_values_date_description'),
+            'dbtype' => 'date',
+            'famous' => true,
         );
     }
 
@@ -224,7 +226,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
     {
         // 01/15/2015 - 02/15/2015
         $format = self::date_getFormat($params['field']->getElement('format'));
-        $params['searchForm']->setValueField('text', array('name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg("yform_values_date_search_notice", $format), 'attributes' => '{"data-yform-tools-daterangepicker":"'.$format.'"}'));
+        $params['searchForm']->setValueField('text', array('name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_values_date_search_notice', $format), 'attributes' => '{"data-yform-tools-daterangepicker":"' . $format . '"}'));
     }
 
     public static function getSearchFilter($params)
@@ -239,7 +241,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         // $value = self::date_convertFromFormatToIsoDate($this->getValue(), self::date_getFormat($this->getElement('format')));
 
         $value = trim($params['value']);
-        if($value == "") {
+        if ($value == '') {
             return;
         }
 
@@ -247,15 +249,15 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $format = $params['field']->getElement('format');
         $format_len = strlen($format);
         $field =  $params['field']->getName();
-        $firstchar = substr($value,0,1);
+        $firstchar = substr($value, 0, 1);
 
-        switch($firstchar) {
-            case(">"):
-            case("<"):
-            case("="):
+        switch ($firstchar) {
+            case '>':
+            case '<':
+            case '=':
                 $date = substr($value, 1);
                 $date = self::date_convertFromFormatToIsoDate($date, $format);
-                return '('.$sql->escapeIdentifier($field) .' '.$firstchar.' '.$sql->escape($date).')';
+                return '(' . $sql->escapeIdentifier($field) . ' ' . $firstchar . ' ' . $sql->escape($date) . ')';
                 break;
 
         }
@@ -263,25 +265,25 @@ class rex_yform_value_date extends rex_yform_value_abstract
         // date
         if (strlen($value) == $format_len) {
             $date = self::date_convertFromFormatToIsoDate($value, $format);
-            return '('.$sql->escapeIdentifier($field) .' = '.$sql->escape($date).')';
+            return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($date) . ')';
 
         }
 
-        $dates = explode(" - ", $value);
+        $dates = explode(' - ', $value);
         if (count($dates) == 2) {
             // daterange
             $date_from = self::date_convertFromFormatToIsoDate($dates[0], $format);
             $date_to = self::date_convertFromFormatToIsoDate($dates[1], $format);
 
             return ' (
-            '.$sql->escapeIdentifier($field) .'>= '.$sql->escape($date_from).' and
-            '.$sql->escapeIdentifier($field) .'<= '.$sql->escape($date_to).'
+            ' . $sql->escapeIdentifier($field) . '>= ' . $sql->escape($date_from) . ' and
+            ' . $sql->escapeIdentifier($field) . '<= ' . $sql->escape($date_to) . '
             ) ';
 
         }
 
         // wenn alles nicht hilfe -> plain rein
-        return '('.$sql->escapeIdentifier($field) .' = '.$sql->escape($value).')';
+        return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value) . ')';
 
     }
 
