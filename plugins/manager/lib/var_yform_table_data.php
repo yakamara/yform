@@ -137,7 +137,13 @@ class rex_var_yform_table_data extends rex_var
     public static function getWidget($id, $name, $value, array $args = [])
     {
         $link = $args['link'];
-        $valueName = htmlspecialchars($args['valueName']) . ' [id=' . $value . ']';
+        if ($value == "") {
+            $valueName = '';
+
+        } else {
+            $valueName = htmlspecialchars($args['valueName']) . ' [id=' . $value . ']';
+
+        }
 
         $e['field'] = '<input class="form-control" type="text" name="yform_MANAGER_DATANAME[' . $id . ']" value="' .  $valueName . '" id="yform_MANAGER_DATANAME_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $name . '" id="yform_MANAGER_DATA_' . $id . '" value="' . $value . '" />';
         $e['functionButtons'] = '
