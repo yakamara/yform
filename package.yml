@@ -20,5 +20,6 @@ requires:
     redaxo: '^5.2.0'
 
 system_plugins:
+    - docs
     - manager
     - email
