@@ -597,19 +597,33 @@ class rex_yform_manager
                     function($params) {
                         $value = '';
 
-                        list($table_name, $field_name) = explode(".",$params["params"]["opener_field"]);
-                        $table = rex_yform_manager_table::get($table_name);
-                        if ($table) {
-                            $fields = $table->getValueFields(array("name" => $field_name));
-                            if (isset($fields[$field_name])) {
-                                $target_table = $fields[$field_name]->getElement('table');
-                                $target_field = $fields[$field_name]->getElement('field');
+                        $tablefield = explode(".",$params["params"]["opener_field"]);
+                        if (count($tablefield) == 1) {
+
+                            if (isset($params["list"]->getParams()["table_name"])) {
+                                $target_table = $params["list"]->getParams()["table_name"];
+                                $target_field = $tablefield[0];
                                 $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
                                 $value = $values[$params['list']->getValue('id')];
-
                             }
-                        }
 
+                        } else {
+
+                            list($table_name, $field_name) = explode(".",$params["params"]["opener_field"]);
+                            $table = rex_yform_manager_table::get($table_name);
+                            if ($table) {
+                                $fields = $table->getValueFields(array("name" => $field_name));
+                                if (isset($fields[$field_name])) {
+                                    $target_table = $fields[$field_name]->getElement('table');
+                                    $target_field = $fields[$field_name]->getElement('field');
+
+                                    $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
+                                    $value = $values[$params['list']->getValue('id')];
+
+                                }
+                            }
+
+                        }
                         return '<a href="javascript:yform_manager_setData(' . $params["params"]["opener_id"] . ',###id###,\''.htmlspecialchars($value).' [id=###id###]\',' . $params["params"]["opener_multiple"] . ')">'.rex_i18n::msg('yform_data_select').'</a>';
                     },
                     array(
@@ -963,11 +977,18 @@ class rex_yform_manager
                 $tmp = '';
                 if (isset($types['value'])) {
                     ksort($types['value']);
-                    $tmp .= '<table class="table table-hover">';
+                    $tmp_famous = '';
+                    $tmp = '';
                     foreach ($types['value'] as $k => $v) {
-                        $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+                        if (isset($v['famous']) && $v['famous']) {
+                            $tmp_famous .= '<tr class="yform-classes-famous"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+
+                        } else {
+                            $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+
+                        }
                     }
-                    $tmp .= '</table>';
+                    $tmp = '<table class="table table-hover yform-table-help">'.$tmp_famous.$tmp.'</table>';
                 }
                 $fragment = new rex_fragment();
                 $fragment->setVar('title', $TYPE['value']);
@@ -978,11 +999,18 @@ class rex_yform_manager
                 $tmp = '';
                 if (isset($types['validate'])) {
                     ksort($types['validate']);
-                    $tmp .= '<table class="table table-hover">';
+                    $tmp_famous = '';
+                    $tmp = '';
                     foreach ($types['validate'] as $k => $v) {
-                        $tmp .= '<tr><th data-title="Validate"><a class="btn btn-default btn-block" href="' . $link . 'type_id=validate&type_name=' . $k . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+                        if (isset($v['famous']) && $v['famous']) {
+                            $tmp_famous .= '<tr class="yform-classes-famous"><th data-title="Validate"><a class="btn btn-default btn-block" href="' . $link . 'type_id=validate&type_name=' . $k . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+
+                        } else {
+                            $tmp .= '<tr><th data-title="Validate"><a class="btn btn-default btn-block" href="' . $link . 'type_id=validate&type_name=' . $k . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
+
+                        }
                     }
-                    $tmp .= '</table>';
+                    $tmp = '<table class="table table-hover yform-table-help">'.$tmp_famous.$tmp.'</table>';
                 }
 
                 $fragment = new rex_fragment();

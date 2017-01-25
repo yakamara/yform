@@ -190,7 +190,7 @@ class rex_yform
 
     public function getForm()
     {
-        rex_extension::registerPoint(new rex_extension_point('YFORM_GENERATE',$this));
+        rex_extension::registerPoint(new rex_extension_point('YFORM_GENERATE', $this));
         $this->executeFields();
         return $this->executeActions();
     }
@@ -243,7 +243,7 @@ class rex_yform
         // *************************************************** VALIDATE OBJEKTE
 
         foreach ( $this->objparams['fields'] as $types) {
-            foreach($types as $Object) {
+            foreach ($types as $Object) {
                 $Object->preValidateAction();
             }
         }
@@ -255,7 +255,7 @@ class rex_yform
         }
 
         foreach ( $this->objparams['fields'] as $types) {
-            foreach($types as $Object) {
+            foreach ($types as $Object) {
                 $Object->postValidateAction();
             }
         }
@@ -303,7 +303,7 @@ class rex_yform
             if ($element[0] == 'validate') {
                 $class = 'rex_yform_validate_' . trim($element[1]);
 
-            } else if ($element[0] == 'action') {
+            } elseif ($element[0] == 'action') {
                 $class = 'rex_yform_action_' . trim($element[1]);
 
             } else {
@@ -321,7 +321,7 @@ class rex_yform
                     $this->objparams['validates'][$i]->init();
                     $this->objparams['validates'][$i]->setObjects($this->objparams['values']);
 
-                } else if ($element[0] == 'action') {
+                } elseif ($element[0] == 'action') {
                     $class = 'rex_yform_action_' . trim($element[1]);
                     $this->objparams['actions'][$i] = new $class();
                     $this->objparams['actions'][$i]->loadParams($this->objparams, $element);
@@ -348,7 +348,7 @@ class rex_yform
                 }
 
             } else {
-                echo 'Class does not exist "'.$class.'" ';
+                echo 'Class does not exist "' . $class . '" ';
 
             }
 
@@ -551,8 +551,10 @@ class rex_yform
         $classes = rex_autoload::getClasses();
         natsort($classes);
         $classesDescription = [];
+        $classesFamousDescription = [];
         foreach ($arr as $arr_key => $arr_split) {
             $classesDescription[ $arr_key ] = '';
+            $classesFamousDescription[ $arr_key ] = '';
             foreach ($classes as $class) {
                 $exploded = explode($arr_split, $class);
                 if (count($exploded) == 2) {
@@ -562,29 +564,35 @@ class rex_yform
                         $desc = trim($class->getDescription());
                         $definitions = $class->getDefinitions();
                         $definition_desc = isset($definitions['description']) ? $definitions['description'] : '';
-                        if ($desc != "") {
+                        if ($desc != '') {
                             $desc = '<code>' . $desc . '</code>';
                         }
                         if ($definition_desc != '') {
-                            $desc = $definition_desc."<br />".$desc;
+                            $desc = $definition_desc . '<br />' . $desc;
                         }
 
                         if (isset($definitions['formbuilder']) && !$definitions['formbuilder']) {
 
+                        } elseif (isset($definitions['famous']) && $definitions['famous']) {
+                            $classesFamousDescription[ $arr_key ] .= '<tr class="yform-classes-famous"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+
                         } else {
-                            $classesDescription[ $arr_key ] .= '<tr><th data-title="'.ucfirst($arr_key).'"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+                            $classesDescription[ $arr_key ] .= '<tr><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
 
                         }
 
                     }
                 }
             }
+
+            $classesDescription[ $arr_key ] = $classesFamousDescription[ $arr_key ] . $classesDescription[ $arr_key ];
+
         }
 
         $return = '';
         foreach ($classesDescription as $title => $content) {
             $fragment = new rex_fragment();
-            $fragment->setVar('title', rex_i18n::msg("yform_".$title));
+            $fragment->setVar('title', rex_i18n::msg('yform_' . $title));
             $fragment->setVar('content', '<table class="table table-hover yform-table-help">' . $content . '</table>', false);
             $fragment->setVar('collapse', true);
             $fragment->setVar('collapsed', true);

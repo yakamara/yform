@@ -70,7 +70,7 @@ yform_manager_table_allow_export = allow export of data
 yform_manager_table_allow_import = allow import of data
 yform_manager_table_allow_mass_deletion = allow mass deletion of data
 yform_manager_table_history = add history
-yform_manager_tablefield_overview = [missing_text] de:Feldübersicht
+yform_manager_tablefield_overview = Fieldoverview
 
 yform_manager_table_updated = Thank you for the update.
 yform_manager_table_added = Thank you for the entry.
@@ -94,13 +94,13 @@ yform_manager_migrate = migrate
 
 yform_manager_table_migrate = migrate table
 yform_manager_table_migrated_failed = Migration for table `{0}` failed. Message: {1}
-yform_manager_table_migrate_info = Der Migrationsmanager erstellt aus einer vorhandenen Tabelle, eine, die über den Tablemanager verwaltet werden kann. Dazu ist in der Tabelle ein Autoinkrement-Feld mit dem Namen `id` nötig. Ohne dieses Feld funktioniert der Tablemanager nicht.<br /><br />Optional ist die Entscheidung ein vorhandenes Autoinkrementfeld umzuwandeln. Z.B. "event_id" zu "id".
+yform_manager_table_migrate_info = [missing_text] Der Migrationsmanager erstellt aus einer vorhandenen Tabelle, eine, die über den Tablemanager verwaltet werden kann. Dazu ist in der Tabelle ein Autoinkrement-Feld mit dem Namen `id` nötig. Ohne dieses Feld funktioniert der Tablemanager nicht.<br /><br />Optional ist die Entscheidung ein vorhandenes Autoinkrementfeld umzuwandeln. Z.B. "event_id" zu "id".
 yform_manager_migrate_table_id_convert = convert `id`-field if it does noch exist
 yform_manager_table_migrated_success = The table is migrated.
 
 yform_manager_tableset_import = import tableset
 yform_manager_tableset_import_jsonimportfile = [missing_text] de:JSON Datei einspielen
-yform_manager_tableset_import_info =
+yform_manager_tableset_import_info = [missing_text] tableset_import_info
 yform_manager_tableset_import_warning_selectfile = [missing_text] de:Es wurde keine Datei verwendet
 yform_manager_tableset_import_warning_type = [missing_text] de:Der Dateityp ist falsch. Es muss eine JSON Datei sein.
 yform_manager_tableset_import_success = [missing_text] de:Tabelle/n wurde/n erfolgreich importiert
@@ -125,7 +125,7 @@ yform_editdata_collection = edit {0} data sets
 yform_adddata = create data set
 yform_searchtext = search term
 yform_searchfields = table fields that are getting searched through
-yform_id = [missing_text] de:Id
+yform_id = ID
 yform_function = functions
 yform_add = add
 yform_add_apply = apply
@@ -203,8 +203,8 @@ yform_manager_import_file = [en] Datei
 
 yform_manager_show_form_notation = field definitions
 
-navigation_yform_tables = [missing_text] de:Tabellen
-yform_tabledata_overview = [missing_text] de:Datentabelle
+navigation_yform_tables = Tables
+yform_tabledata_overview = Datatable
 
 yform_manager_multi_edit_field = edit field "{0}"
 

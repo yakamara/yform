@@ -31,7 +31,7 @@ if (trim($this->getElement('grid')) != '') {
     <div class="input-group">
         <span class="input-group-addon"><img id="<?php echo $this->getFieldId() ?>-captcha" src="<?php echo $link ?>" onclick="javascript:this.src='<?php echo $link ?>&'+Math.random();" alt="CAPTCHA" /></span>
         <input class="form-control" type="text" name="<?php echo $this->getFieldName() ?>" id="<?php echo $this->getFieldId() ?>" value="" maxlength="5" size="5" />
-        <span class="input-group-btn"><a class="btn btn-default" href="javascript:void();" onclick="document.getElementById('<?php echo $this->getFieldId() ?>-captcha').src='<?php echo $link ?>&'+Math.random(); return false;"><i class="glyphicon glyphicon-refresh"></i></a></span>
+        <span class="input-group-btn"><a class="btn btn-default" href="javascript:void();" onclick="document.getElementById('<?php echo $this->getFieldId() ?>-captcha').src='<?php echo $link ?>&'+Math.random(); return false;">Reload</a></span>
     </div>
     <?php echo $notice ?>
     <?php echo $field_after; ?>
