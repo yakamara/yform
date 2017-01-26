@@ -20,6 +20,47 @@ oder
 Last Changes
 -------
 
+### Version 2.1 // 26.01.2017
+
+#### Achtung !! Bitte genau anschauen und vor dem Update anpassen !! BItte auch Hinweise der Version 2.0 beachten wenn ein Updaten von 1.x erfolgen soll
+
+#### Neu
+
+* classic view: Umgang mit Fehlern verbessert
+* manager/tools:daterangepicker nun ohne autoupdate
+* performance yorm verbessert. Nur Ausgabe wenn nötig.
+* html und php Felder erzeugen nun keine eigene Spalte mehr in der Tabelle
+* hiddenfields kann nun auch arrays
+* manager: relationsfelder werden nun gecacht.
+* massenoperatione: Performance stark verbessert
+* debugstatus wird an diversen stellen nun weitergegeben
+* Historiedarstellung: Bezeichnung wird geraten. Einzelinfoansicht eines Artikels. Einzelhistorie einseh- und löschbar.
+* index Feld kann nun auch Unterfelder aus Relationen mit aufnehmen.
+* diverse Textkorreturen
+* Erweiterung der Dokumentation
+* Email: Versand email und Versand-Email Name können nun auch ersetzt werden.
+* select: Werteüberprüfung verbessert. Initial und Defaults korrigiert.
+* upload: Diverse Fehler. Typabfrage, übernahme feld, textkorrekturen
+* radiofelder überarbeitet. Fehler behoben
+* datetime: formartierung angeglichen / listenansicht korrigiert
+* be_link um mehrfachauswahl ergänzt
+* Email: Templates: BC zu v1.0 .. Ersetzung wie ###key### gehen wieder ..
+* Formbuilder: CS und Showtext wird nun immer nur verwendet wenn Text eingegeben wurde
+* Captcha: Darstellung angepasst. Icon entfernt.
+* YFORM Data Widget ergänzt. Context: module. Bsp: REX_YFORM_TABLE_DATA[id="12" table="address" output="widget" field="firstnam,' ',surname"]
+* be_relation kann nun die gleiche ID mehrfach verwenden.
+* Famous Felder wieder aufgenommen.
+
+#### Bugs
+
+* import: Tableset Fehler behoben
+* validate type url: nun auch https
+* action: createdb funktionierte nicht richtig
+* massenoperationen: Problem mit date und datetime korrigiert
+* select template: grid classes korrigiert
+* manager dataset: mysql error getFields behoben
+* be_manager_relation: check for empty values Fehler behoben
+
 ### Version 2.0 // 14.10.2016
 
 #### Achtung !! Bitte genau anschauen und vor dem Update anpassen !!
