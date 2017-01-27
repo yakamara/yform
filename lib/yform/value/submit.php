@@ -105,7 +105,6 @@ class rex_yform_value_submit extends rex_yform_value_abstract
             'dbtype' => 'text',
             'is_searchable' => false,
             'is_hiddeninlist' => true,
-            'famous' => true
         );
 
     }

@@ -28,3 +28,13 @@
     -ms-word-break: break-all;
          word-break: break-all;
 }
+
+.form-captcha .input-group-addon {
+    padding: 0;
+}
+
+.form-captcha .input-group-addon > img {
+    height: 100%;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}

@@ -12,6 +12,8 @@
 #yform-formbuilder-classes-showhelp .panel-title {
     font-size: 14px;
 }
+
+
 #yform-js-formbuilder-placeholders {
     position: relative;
     margin-top: -6px;
@@ -47,4 +49,13 @@
     border-top: 1px solid #c1c9d4;
     font-size: 12px;
     text-align: right;
+}
+
+table.yform-table-help tr.yform-classes-famous {
+    background: #c2d0e0;
+}
+
+table.yform-table-help tr.yform-classes-famous .btn-default {
+    background-color: #e1e9f4;
+    border-color: #a1a9b4
 }
