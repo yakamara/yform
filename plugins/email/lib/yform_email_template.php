@@ -124,6 +124,8 @@ class rex_yform_email_template
             }
         }
 
+        rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SEND', $mail, $template)); // read only
+
         if ($mail->Send()) {
             $template['email_subject'] = $template['subject'];
             rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT', $template_name, $template, true)); // read only
