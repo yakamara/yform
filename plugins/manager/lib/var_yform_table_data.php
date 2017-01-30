@@ -125,7 +125,7 @@ class rex_var_yform_table_data extends rex_var
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_moveDatalist(' . $id . ',\'down\');return false;" title="' . rex_i18n::msg('yform_relation_down_first_data') . '"><i class="rex-icon rex-icon-down"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_moveDatalist(' . $id . ',\'bottom\');return false;" title="' . rex_i18n::msg('yform_relation_move_last_data') . '"><i class="rex-icon rex-icon-bottom"></i></a>';
         $e['functionButtons'] = '
-                <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_openDatalist(' . $id . ', \'' . $args['fieldName'] . '\', \'' . $link . '\',\'1\');return false;" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
+                <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_openDatalist(' . $id . ', \'' . urlencode($args['fieldName']) . '\', \'' . $link . '\',\'1\');return false;" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_deleteDatalist(' . $id . ',\'1\');return false;" title="' . rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>
             ';
 
@@ -137,11 +137,17 @@ class rex_var_yform_table_data extends rex_var
     public static function getWidget($id, $name, $value, array $args = [])
     {
         $link = $args['link'];
-        $valueName = htmlspecialchars($args['valueName']) . ' [id=' . $value . ']';
+        if ($value == "") {
+            $valueName = '';
+
+        } else {
+            $valueName = htmlspecialchars($args['valueName']) . ' [id=' . $value . ']';
+
+        }
 
         $e['field'] = '<input class="form-control" type="text" name="yform_MANAGER_DATANAME[' . $id . ']" value="' .  $valueName . '" id="yform_MANAGER_DATANAME_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $name . '" id="yform_MANAGER_DATA_' . $id . '" value="' . $value . '" />';
         $e['functionButtons'] = '
-                <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_openDatalist(' . $id . ', \'' . $args['fieldName'] . '\', \'' . $link . '\',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
+                <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_openDatalist(' . $id . ', \'' . urlencode($args['fieldName']) . '\', \'' . $link . '\',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="yform_manager_deleteDatalist(' . $id . ',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>';
 
         $fragment = new rex_fragment();
