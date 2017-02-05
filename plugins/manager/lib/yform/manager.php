@@ -251,7 +251,7 @@ class rex_yform_manager
                 $fields = array();
                 $g = rex_sql::factory();
                 $g->setQuery($sql);
-                $array = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), array('table' => $this->table)));
+                $array = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), ['table' => $this->table]));
 
                 foreach ($array as $d) {
                     if ($data == '') {
@@ -488,7 +488,7 @@ class rex_yform_manager
                         echo $form;
                     }
 
-                    echo rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_FORM', '', array('form' => $form, 'func' => $func, 'this' => $this, 'table' => $this->table)));
+                    echo rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_FORM', '', ['form' => $form, 'func' => $func, 'this' => $this, 'table' => $this->table]));
 
                     echo $back;
 
@@ -662,7 +662,7 @@ class rex_yform_manager
 
                 // *********************************************
 
-                $list = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST', $list, array('table' => $this->table)));
+                $list = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST', $list, ['table' => $this->table]));
 
                 if ($rex_yform_filter) {
                     $filter = array();
@@ -878,7 +878,7 @@ class rex_yform_manager
         if ($this->table->getSortFieldName() != "") {
             $sql .= ' ORDER BY `' . $this->table->getSortFieldName() . '` ' . $this->table->getSortOrderName();
         }
-        $sql = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST_SQL', $sql, array('table' => $this->table)));
+        $sql = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST_SQL', $sql, ['table' => $this->table]));
 
         return $sql;
     }
