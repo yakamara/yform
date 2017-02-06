@@ -198,7 +198,7 @@ if (rex_request('send', 'int', 0) == 1) {
             rex_extension::registerPoint(new rex_extension_point(
                 'YFORM_DATASET_IMPORTED',
                 '',
-                array(
+                [
                     'divider' => $div,
                     'table' => $this->table,
                     'filename' => $filename,
@@ -210,7 +210,7 @@ if (rex_request('send', 'int', 0) == 1) {
                     'data_replaced' => $rcounter, // replace counter
                     'data_inserted' => $icounter, // insert counter
                     'data_errors' => $errorcounter,
-                )
+                ]
             ));
 
             echo rex_view::info(rex_i18n::msg('yform_manager_import_error_import', ($icounter + $rcounter), $icounter, $rcounter));

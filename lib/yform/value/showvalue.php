@@ -13,7 +13,7 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
     {
 
         if ($this->getValue() == '' && !$this->params['send']) {
-            $this->setValue($this->getElement(3));
+            $this->setValue($this->getElement('default'));
         }
 
         if ($this->needsOutput()) {
@@ -26,6 +26,24 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
 
     function getDescription()
     {
-        return 'showvalue|name|label|defaultwert';
+        return 'showvalue|name|label|defaultwert|notice';
     }
+
+    function getDefinitions()
+    {
+        return array(
+            'type' => 'value',
+            'name' => 'showvalue',
+            'values' => array(
+                'name'      => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'label'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
+                'default'   => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_text_default")),
+                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
+            ),
+            'description' => rex_i18n::msg("yform_values_showvalue_description"),
+            'dbtype' => 'text'
+        );
+
+    }
+
 }

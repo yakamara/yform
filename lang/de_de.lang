@@ -63,6 +63,8 @@ yform_values_defaults_notice = Notiz
 yform_values_defaults_attributes = Individuelle Attribute
 yform_values_defaults_attributes_notice = Bitte als JSON schreiben. z.B. {"readonly":"readonly","placeholder":"Mein Placeholder"}
 yform_values_defaults_widgets = Widget
+yform_values_defaults_showvalue = Wert anzeigen
+
 
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
