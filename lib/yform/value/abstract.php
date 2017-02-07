@@ -218,7 +218,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     protected function getElementMappingOffset()
     {
-        return 1;
+        return 0;
     }
 
     function setName($name)
