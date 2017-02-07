@@ -64,7 +64,7 @@ yform_values_defaults_attributes = Individuelle Attribute
 yform_values_defaults_attributes_notice = Bitte als JSON schreiben. z.B. {"readonly":"readonly","placeholder":"Mein Placeholder"}
 yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Wert anzeigen
-
+yform_validate_defaults_message = Fehlermeldung
 
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
@@ -168,6 +168,9 @@ yform_validate_unique_name = Name
 yform_validate_unique_message = Fehlermeldung
 yform_validate_unique_table = Tabelle
 yform_validate_unique_notice = Bitte kommasepariert die Liste der Felder eintragen. z.B. name,email
+yform_validate_preg_match_pattern = Suchmuster eingeben.
+yform_validate_preg_match_pattern_info = z.B. /^start/
+
 
 yform_values_options_name = 	Name
 yform_values_options_label = 	Bezeichnung
