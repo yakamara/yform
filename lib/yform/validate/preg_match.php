@@ -32,7 +32,24 @@ class rex_yform_validate_preg_match extends rex_yform_validate_abstract
 
     function getDescription()
     {
-        return 'validate|preg_match|label|/[a-z]/i|warning_message ';
+        return 'validate|preg_match|name|/[a-z]/i|warning_message ';
+    }
+
+    function getDefinitions()
+    {
+
+        return array(
+            'type' => 'validate',
+            'name' => 'preg_match',
+            'values' => array(
+                'name'     => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_values_defaults_name")),
+                'pattern'     => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_validate_preg_match_pattern"), 'default' => '', 'notice' => rex_i18n::msg("yform_validate_preg_match_pattern_info") ),
+                'message'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_validate_defaults_message")),
+            ),
+            'description' => rex_i18n::msg("yform_validate_preg_match_description"),
+            'famous' => false
+        );
+
     }
 
 }
