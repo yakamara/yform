@@ -724,7 +724,7 @@ class rex_yform_manager
                     $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_dataset_delete_confirm') . '\');';
                     $dataset_links[] = $item;
                 }
-                if (count($dataset_links) > 0) {
+                if (count($dataset_links) > 0 && rex::getUser()->isAdmin()) {
                     $fragment = new rex_fragment();
                     $fragment->setVar('size', 'xs', false);
                     $fragment->setVar('buttons', $dataset_links, false);
