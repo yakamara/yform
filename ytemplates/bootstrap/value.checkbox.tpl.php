@@ -29,7 +29,7 @@ if ($this->getValue() == $value) {
     $attributes['checked'] = 'checked';
 }
 
-$attributes = $this->getAttributeElements($attributes);
+$attributes = $this->getAttributeElements($attributes, ['required', 'disabled', 'autofocus']);
 
 ?>
 <div class="<?= $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
