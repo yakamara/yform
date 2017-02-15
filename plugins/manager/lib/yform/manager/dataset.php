@@ -310,9 +310,15 @@ class rex_yform_manager_dataset
      */
     public function getRelatedDataset($key)
     {
+        $id = $this->getValue($key);
+
+        if (!$id) {
+            return null;
+        }
+
         $relation = $this->getTable()->getRelation($key);
 
-        return rex_yform_manager_dataset::get($this->getValue($key), $relation['table']);
+        return rex_yform_manager_dataset::get($id, $relation['table']);
     }
 
     /**
