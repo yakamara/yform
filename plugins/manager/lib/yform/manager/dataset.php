@@ -336,6 +336,18 @@ class rex_yform_manager_dataset
             return $this->relatedCollections[$key];
         }
 
+        $query = $this->getRelatedQuery($key);
+
+        return $this->relatedCollections[$key] = $query->find();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return rex_yform_manager_query
+     */
+    public function getRelatedQuery($key)
+    {
         $relation = $this->getTable()->getRelation($key);
 
         if (!$relation) {
@@ -344,7 +356,9 @@ class rex_yform_manager_dataset
 
         $query = self::query($relation['table']);
 
-        if (4 == $relation['type']) {
+        if ($relation['type'] <= 1) {
+            $query->where('id', $this->getValue($key));
+        } elseif (4 == $relation['type']) {
             $query->where($relation['field'], $this->getId());
         } elseif (empty($relation['relation_table'])) {
             $query->where('id', explode(',', $this->getValue($key)));
@@ -355,7 +369,7 @@ class rex_yform_manager_dataset
                 ->where($relation['relation_table'].'.'.$columns['source'], $this->getId());
         }
 
-        return $this->relatedCollections[$key] = $query->find();
+        return $query;
     }
 
     /**
