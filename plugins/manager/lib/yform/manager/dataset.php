@@ -100,6 +100,20 @@ class rex_yform_manager_dataset
     }
 
     /**
+     * @return rex_yform_manager_table
+     */
+    public static function table()
+    {
+        $class = get_called_class();
+
+        if (__CLASS__ === $class || !isset(self::$modelToTable[$class])) {
+            throw new RuntimeException(sprintf('Method "%s()" is only callable for registered model classes.', __METHOD__));
+        }
+
+        return rex_yform_manager_table::get(self::$modelToTable[$class]);
+    }
+
+    /**
      * @param null|string $table
      *
      * @return rex_yform_manager_query
