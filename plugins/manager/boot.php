@@ -54,7 +54,7 @@ if (rex::isBackend() && rex::getUser()) {
                 $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
                 $rex_yform_filter = rex_request('rex_yform_filter', 'array');
 
-                if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
+                if ((isset($rex_yform_filter['id']) && $rex_yform_filter['id'] != '') || (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '')) {
                     $main_page['popup'] = true;
 
                 }
