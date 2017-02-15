@@ -310,13 +310,17 @@ class rex_yform_manager_dataset
      */
     public function getRelatedDataset($key)
     {
+        $relation = $this->getTable()->getRelation($key);
+
+        if (!$relation) {
+            throw new InvalidArgumentException(sprintf('Field "%s" in table "%s" is not a relation field.', $key, $this->getTableName()));
+        }
+
         $id = $this->getValue($key);
 
         if (!$id) {
             return null;
         }
-
-        $relation = $this->getTable()->getRelation($key);
 
         return rex_yform_manager_dataset::get($id, $relation['table']);
     }
@@ -333,6 +337,11 @@ class rex_yform_manager_dataset
         }
 
         $relation = $this->getTable()->getRelation($key);
+
+        if (!$relation) {
+            throw new InvalidArgumentException(sprintf('Field "%s" in table "%s" is not a relation field.', $key, $this->getTableName()));
+        }
+
         $query = self::query($relation['table']);
 
         if (4 == $relation['type']) {
