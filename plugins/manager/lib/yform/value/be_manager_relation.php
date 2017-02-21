@@ -89,8 +89,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             foreach ($this->getValue() as $v) {
                 if (isset($listValues[$v])) {
                     $values[] = $v;
-                    $valueName = ['id' => $v, 'name' => $listValues[$v] . ' [id=' . $v . ']'];
-                    $options[] = $valueName;
+                    $valueName = $listValues[$v] . ' [id=' . $v . ']';
+                    $options[] = ['id' => $v, 'name' => $valueName];
                 }
             }
 
