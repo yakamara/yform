@@ -100,6 +100,20 @@ class rex_yform_manager_dataset
     }
 
     /**
+     * @return rex_yform_manager_table
+     */
+    public static function table()
+    {
+        $class = get_called_class();
+
+        if (__CLASS__ === $class || !isset(self::$modelToTable[$class])) {
+            throw new RuntimeException(sprintf('Method "%s()" is only callable for registered model classes.', __METHOD__));
+        }
+
+        return rex_yform_manager_table::get(self::$modelToTable[$class]);
+    }
+
+    /**
      * @param null|string $table
      *
      * @return rex_yform_manager_query
@@ -312,7 +326,17 @@ class rex_yform_manager_dataset
     {
         $relation = $this->getTable()->getRelation($key);
 
-        return rex_yform_manager_dataset::get($this->getValue($key), $relation['table']);
+        if (!$relation) {
+            throw new InvalidArgumentException(sprintf('Field "%s" in table "%s" is not a relation field.', $key, $this->getTableName()));
+        }
+
+        $id = $this->getValue($key);
+
+        if (!$id) {
+            return null;
+        }
+
+        return rex_yform_manager_dataset::get($id, $relation['table']);
     }
 
     /**
@@ -326,10 +350,29 @@ class rex_yform_manager_dataset
             return $this->relatedCollections[$key];
         }
 
+        $query = $this->getRelatedQuery($key);
+
+        return $this->relatedCollections[$key] = $query->find();
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return rex_yform_manager_query
+     */
+    public function getRelatedQuery($key)
+    {
         $relation = $this->getTable()->getRelation($key);
+
+        if (!$relation) {
+            throw new InvalidArgumentException(sprintf('Field "%s" in table "%s" is not a relation field.', $key, $this->getTableName()));
+        }
+
         $query = self::query($relation['table']);
 
-        if (4 == $relation['type']) {
+        if ($relation['type'] <= 1) {
+            $query->where('id', $this->getValue($key));
+        } elseif (4 == $relation['type']) {
             $query->where($relation['field'], $this->getId());
         } elseif (empty($relation['relation_table'])) {
             $query->where('id', explode(',', $this->getValue($key)));
@@ -340,7 +383,7 @@ class rex_yform_manager_dataset
                 ->where($relation['relation_table'].'.'.$columns['source'], $this->getId());
         }
 
-        return $this->relatedCollections[$key] = $query->find();
+        return $query;
     }
 
     /**
