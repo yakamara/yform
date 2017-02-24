@@ -64,7 +64,7 @@ class rex_yform_manager_dataset
 
         $table = $table ?: static::modelToTable();
 
-        return self::getInstance([$table, $id], function ($table, $id) {
+        return static::getInstance([$table, $id], function ($table, $id) {
             return static::query($table)->findId($id);
         });
     }
@@ -134,6 +134,12 @@ class rex_yform_manager_dataset
     {
         $table = $table ?: static::modelToTable();
 
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::queryOne($query, $params, $table);
+        }
+
         $sql = rex_sql::factory();
         $sql
             ->setDebug(self::$debug)
@@ -161,6 +167,12 @@ class rex_yform_manager_dataset
     public static function queryCollection($query, array $params = [], $table = null)
     {
         $table = $table ?: static::modelToTable();
+
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::queryCollection($query, $params, $table);
+        }
 
         $sql = rex_sql::factory();
         $sql->setDebug(self::$debug);
