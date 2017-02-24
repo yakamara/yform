@@ -382,7 +382,7 @@ class rex_yform_manager_dataset
 
         $query = self::query($relation['table']);
 
-        if ($relation['type'] <= 1) {
+        if (0 == $relation['type'] || 2 == $relation['type']) {
             $query->where('id', $this->getValue($key));
         } elseif (4 == $relation['type']) {
             $query->where($relation['field'], $this->getId());
