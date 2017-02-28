@@ -27,5 +27,5 @@ yform_delete_template = Template löschen
 
 yform_email_caption = Liste der Templates
 
-yform_email_info_text = <p>Felder die in Formulare verwendet werden, können in den Templates angezeigt und verarbeitet werden. <mark>Grundsätzlich ist auch PHP erlaubt</mark>, so dass man ganz individuell auf einzele Fälle eingehen kann. Die normale Ausgabe eines Felder geschieht folgendermaßen:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-Mail wurde ausgefüllt"]<br />REX_YFORM_DATA[field="name" instead="defaultwert"]<br />REX_YFORM_DATA[field="name" prefix="\nMein Name:" suffix=""]</p>
+yform_email_info_text = <p>Felder, die in Formularen verwendet werden, können in den Templates angezeigt und verarbeitet werden. <mark>Grundsätzlich ist auch PHP erlaubt</mark>, so dass man ganz individuell auf einzelne Fälle eingehen kann. Die normale Ausgabe eines Feldes geschieht folgendermaßen:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-Mail wurde ausgefüllt"]<br />REX_YFORM_DATA[field="name" instead="defaultwert"]<br />REX_YFORM_DATA[field="name" prefix="\nMein Name:" suffix=""]</p>
 
