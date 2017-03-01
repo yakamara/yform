@@ -510,7 +510,7 @@ class rex_yform_manager
                 $list = rex_list::factory($sql, $this->table->getListAmount());
                 $list->addTableAttribute('class', 'table-striped table-hover');
 
-                if ($this->hasDataPageFunction('add')) {
+                if ($this->table->isAddable() == 1 && $this->hasDataPageFunction('add')) {
                     $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
                     $thIcon = '<a href="index.php?' . $link_vars . '&func=add&' . $em_url . $em_rex_list . '"' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
                     $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);

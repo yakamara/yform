@@ -140,6 +140,7 @@ if ( $func == 'tableset_import' && rex::getUser()->isAdmin() ) {
     $yform->setValueField('checkbox', array('search', rex_i18n::msg('yform_manager_search_active')));
 
     $yform->setValueField('checkbox', array('hidden', rex_i18n::msg('yform_manager_table_hide')));
+    $yform->setValueField('checkbox', array('add_new', rex_i18n::msg('yform_manager_table_allow_add_new')));
     $yform->setValueField('checkbox', array('export', rex_i18n::msg('yform_manager_table_allow_export')));
     $yform->setValueField('checkbox', array('import', rex_i18n::msg('yform_manager_table_allow_import')));
     $yform->setValueField('checkbox', array('mass_deletion', rex_i18n::msg('yform_manager_table_allow_mass_deletion')));

@@ -67,6 +67,7 @@ yform_manager_search_active = Suche aktiv
 yform_manager_enter_number = Bitte geben Sie eine Zahl für die Datensätze pro Seite ein
 yform_manager_table_hide = In Navigation versteckt
 yform_manager_table_allow_export = Export der Daten erlauben
+yform_manager_table_allow_add_new = Erlaube das Erstellen von neuen Datensätzen
 yform_manager_table_allow_import = Import von Daten erlauben
 yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
 yform_manager_table_history = Historie anlegen

@@ -20,6 +20,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_t
     `prio` int(11) NOT NULL,
     `search` tinyint(1) NOT NULL,
     `hidden` tinyint(1) NOT NULL,
+    `add_new` tinyint(1) NOT NULL DEFAULT 1,
     `export` tinyint(1) NOT NULL,
     `import` tinyint(1) NOT NULL,
     `mass_deletion` tinyint(1) NOT NULL,
