@@ -64,7 +64,7 @@ class rex_yform_manager_dataset
 
         $table = $table ?: static::modelToTable();
 
-        return self::getInstance([$table, $id], function ($table, $id) {
+        return static::getInstance([$table, $id], function ($table, $id) {
             return static::query($table)->findId($id);
         });
     }
@@ -134,6 +134,12 @@ class rex_yform_manager_dataset
     {
         $table = $table ?: static::modelToTable();
 
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::queryOne($query, $params, $table);
+        }
+
         $sql = rex_sql::factory();
         $sql
             ->setDebug(self::$debug)
@@ -161,6 +167,12 @@ class rex_yform_manager_dataset
     public static function queryCollection($query, array $params = [], $table = null)
     {
         $table = $table ?: static::modelToTable();
+
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::queryCollection($query, $params, $table);
+        }
 
         $sql = rex_sql::factory();
         $sql->setDebug(self::$debug);
@@ -370,7 +382,7 @@ class rex_yform_manager_dataset
 
         $query = self::query($relation['table']);
 
-        if ($relation['type'] <= 1) {
+        if (0 == $relation['type'] || 2 == $relation['type']) {
             $query->where('id', $this->getValue($key));
         } elseif (4 == $relation['type']) {
             $query->where($relation['field'], $this->getId());
