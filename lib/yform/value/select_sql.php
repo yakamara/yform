@@ -52,7 +52,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $size = 1;
 
             if ($this->getElement('empty_option') == 1) {
-                $options = ['0' => $this->getElement('empty_value')] + $options;
+                $options = ['0' => (string)$this->getElement('empty_value')] + $options;
             }
 
             $default = null;
