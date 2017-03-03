@@ -527,7 +527,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function findId($id)
     {
-        return $this->where('id', $id)->findOne();
+        return $this->where('id', $id)->resetOrderBy()->findOne();
     }
 
     /**
