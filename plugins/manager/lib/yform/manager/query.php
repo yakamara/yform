@@ -541,57 +541,6 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @return rex_yform_manager_collection
-     */
-    public function find()
-    {
-        return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
-    }
-
-    /**
-     * @param rex_pager $pager
-     *
-     * @return rex_yform_manager_collection
-     */
-    public function paginate(rex_pager $pager)
-    {
-        $pager->setRowCount($this->count());
-        $this->limit($pager->getCursor(), $pager->getRowsPerPage());
-
-        return $this->find();
-    }
-
-    /**
-     * @param int[] $ids
-     *
-     * @return rex_yform_manager_collection
-     */
-    public function findIds($ids)
-    {
-        return $this->where('id', $ids)->find();
-    }
-
-    /**
-     * @return null|rex_yform_manager_dataset
-     */
-    public function findOne()
-    {
-        $this->limit(1);
-
-        return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return null|rex_yform_manager_dataset
-     */
-    public function findId($id)
-    {
-        return $this->where('id', $id)->resetOrderBy()->findOne();
-    }
-
-    /**
      * @return string
      */
     public function getQuery()
@@ -649,6 +598,57 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     public function getIterator()
     {
         return $this->find();
+    }
+
+    /**
+     * @return rex_yform_manager_collection
+     */
+    public function find()
+    {
+        return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
+    }
+
+    /**
+     * @param rex_pager $pager
+     *
+     * @return rex_yform_manager_collection
+     */
+    public function paginate(rex_pager $pager)
+    {
+        $pager->setRowCount($this->count());
+        $this->limit($pager->getCursor(), $pager->getRowsPerPage());
+
+        return $this->find();
+    }
+
+    /**
+     * @param int[] $ids
+     *
+     * @return rex_yform_manager_collection
+     */
+    public function findIds($ids)
+    {
+        return $this->where('id', $ids)->find();
+    }
+
+    /**
+     * @return null|rex_yform_manager_dataset
+     */
+    public function findOne()
+    {
+        $this->limit(1);
+
+        return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return null|rex_yform_manager_dataset
+     */
+    public function findId($id)
+    {
+        return $this->where('id', $id)->resetOrderBy()->findOne();
     }
 
     /**
