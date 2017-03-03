@@ -23,7 +23,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     private $limit = null;
 
     /**
-     * @param string      $table
+     * @param string $table
      */
     public function __construct($table)
     {
@@ -39,7 +39,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param string      $table
+     * @param string $table
      *
      * @return static
      */
@@ -320,22 +320,83 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         if (is_array($value)) {
             $param = [];
             foreach ($value as $v) {
-                $counter = $this->paramCounter++;
-                $this->params['p'.$counter] = $this->normalizeValue($v);
-                $param[] = ':p'.$counter;
+                $param[] = $this->addParam($v);
             }
             $param = '('.implode(', ', $param).')';
 
             $operator = $operator ?: 'IN';
         } else {
-            $counter = $this->paramCounter++;
-            $this->params['p'.$counter] = $this->normalizeValue($value);
-            $param = ':p'.$counter;
+            $param = $this->addParam($value);
 
             $operator = $operator ?: '=';
         }
 
         $this->where[] = sprintf('%s %s %s', $this->quoteIdentifier($column), $operator, $param);
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function whereNot($column, $value)
+    {
+        $operator = is_array($value) ? 'NOT IN' : '!=';
+
+        return $this->where($column, $value, $operator);
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function whereNull($column)
+    {
+        $this->where[] = $this->quoteIdentifier($column).' IS NULL';
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function whereNotNull($column)
+    {
+        $this->where[] = $this->quoteIdentifier($column).' IS NOT NULL';
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param mixed  $from
+     * @param mixed  $to
+     *
+     * @return $this
+     */
+    public function whereBetween($column, $from, $to)
+    {
+        $this->where[] = sprintf('%s BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam($from), $this->addParam($to));
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param mixed  $from
+     * @param mixed  $to
+     *
+     * @return $this
+     */
+    public function whereNotBetween($column, $from, $to)
+    {
+        $this->where[] = sprintf('%s NOT BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam($from), $this->addParam($to));
 
         return $this;
     }
@@ -654,6 +715,14 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return $value;
     }
 
+    private function addParam($value)
+    {
+        $param = 'p'.$this->paramCounter++;
+        $this->params[$param] = $this->normalizeValue($value);
+
+        return ':'.$param;
+    }
+
     private function buildNestedWhere(array $where, $operator = 'AND')
     {
         $nextOperator = 'AND' === $operator ? 'OR' : 'AND';
@@ -664,11 +733,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
                 continue;
             }
 
-            $counter = $this->paramCounter++;
-            $this->params['p'.$counter] = $this->normalizeValue($value);
-            $param = ':p'.$counter;
-
-            $value = sprintf('%s = %s', $this->quoteIdentifier($key), $param);
+            $value = sprintf('%s = %s', $this->quoteIdentifier($key), $this->addParam($value));
         }
 
         return implode(' '.$operator.' ', $where);
