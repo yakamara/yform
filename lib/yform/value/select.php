@@ -45,7 +45,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             }
             $value = (string) $this->getValue();
 
-            if (!array_key_exists($value, $options)) {
+            if ($value == '' || !array_key_exists($value, $options)) {
                 if ($default) {
                     $this->setValue([$default]);
                 } else {
