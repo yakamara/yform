@@ -652,6 +652,69 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
+     * @param string $column
+     *
+     * @return mixed
+     */
+    public function findValue($column)
+    {
+        return $this->findValueRaw($this->quoteIdentifier($column));
+    }
+
+    /**
+     * @param string $expression
+     *
+     * @return mixed
+     */
+    public function findValueRaw($expression)
+    {
+        $query = clone $this;
+        $query
+            ->resetSelect()
+            ->selectRaw($expression, 'value')
+            ->limit(1);
+
+        $sql = rex_sql::factory();
+        $sql->setQuery($query->getQuery(), $query->getParams());
+
+        return $sql->getRows() ? $sql->getValue('value') : null;
+    }
+
+    /**
+     * @param string $column
+     * @param string $keyColumn
+     *
+     * @return array
+     */
+    public function findValues($column, $keyColumn = null)
+    {
+        return $this->findValuesRaw($this->quoteIdentifier($column), $keyColumn);
+    }
+
+    /**
+     * @param string $expression
+     * @param string $keyColumn
+     *
+     * @return array
+     */
+    public function findValuesRaw($expression, $keyColumn = null)
+    {
+        $query = clone $this;
+        $query
+            ->resetSelect()
+            ->selectRaw($expression, 'value');
+
+        if ($keyColumn) {
+            $query->select($keyColumn);
+        }
+
+        $sql = rex_sql::factory();
+        $array = $sql->getArray($query->getQuery(), $query->getParams());
+
+        return array_column($array, 'value', $keyColumn);
+    }
+
+    /**
      * @return int
      */
     public function count()
