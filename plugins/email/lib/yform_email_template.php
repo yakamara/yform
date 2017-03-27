@@ -123,6 +123,8 @@ class rex_yform_email_template
                 $mail->AddAttachment($f['path'], $f['name']);
             }
         }
+        
+        rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SEND', $mail, $template));
 
         rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SEND', $mail, $template)); // read only
 

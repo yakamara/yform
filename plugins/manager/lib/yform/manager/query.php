@@ -23,7 +23,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     private $limit = null;
 
     /**
-     * @param string      $table
+     * @param string $table
      */
     public function __construct($table)
     {
@@ -39,7 +39,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param string      $table
+     * @param string $table
      *
      * @return static
      */
@@ -320,22 +320,83 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         if (is_array($value)) {
             $param = [];
             foreach ($value as $v) {
-                $counter = $this->paramCounter++;
-                $this->params['p'.$counter] = $this->normalizeValue($v);
-                $param[] = ':p'.$counter;
+                $param[] = $this->addParam($v);
             }
             $param = '('.implode(', ', $param).')';
 
             $operator = $operator ?: 'IN';
         } else {
-            $counter = $this->paramCounter++;
-            $this->params['p'.$counter] = $this->normalizeValue($value);
-            $param = ':p'.$counter;
+            $param = $this->addParam($value);
 
             $operator = $operator ?: '=';
         }
 
         $this->where[] = sprintf('%s %s %s', $this->quoteIdentifier($column), $operator, $param);
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param mixed  $value
+     *
+     * @return $this
+     */
+    public function whereNot($column, $value)
+    {
+        $operator = is_array($value) ? 'NOT IN' : '!=';
+
+        return $this->where($column, $value, $operator);
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function whereNull($column)
+    {
+        $this->where[] = $this->quoteIdentifier($column).' IS NULL';
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return $this
+     */
+    public function whereNotNull($column)
+    {
+        $this->where[] = $this->quoteIdentifier($column).' IS NOT NULL';
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param mixed  $from
+     * @param mixed  $to
+     *
+     * @return $this
+     */
+    public function whereBetween($column, $from, $to)
+    {
+        $this->where[] = sprintf('%s BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam($from), $this->addParam($to));
+
+        return $this;
+    }
+
+    /**
+     * @param string $column
+     * @param mixed  $from
+     * @param mixed  $to
+     *
+     * @return $this
+     */
+    public function whereNotBetween($column, $from, $to)
+    {
+        $this->where[] = sprintf('%s NOT BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam($from), $this->addParam($to));
 
         return $this;
     }
@@ -480,57 +541,6 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @return rex_yform_manager_collection
-     */
-    public function find()
-    {
-        return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
-    }
-
-    /**
-     * @param rex_pager $pager
-     *
-     * @return rex_yform_manager_collection
-     */
-    public function paginate(rex_pager $pager)
-    {
-        $pager->setRowCount($this->count());
-        $this->limit($pager->getCursor(), $pager->getRowsPerPage());
-
-        return $this->find();
-    }
-
-    /**
-     * @param int[] $ids
-     *
-     * @return rex_yform_manager_collection
-     */
-    public function findIds($ids)
-    {
-        return $this->where('id', $ids)->find();
-    }
-
-    /**
-     * @return null|rex_yform_manager_dataset
-     */
-    public function findOne()
-    {
-        $this->limit(1);
-
-        return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
-    }
-
-    /**
-     * @param int $id
-     *
-     * @return null|rex_yform_manager_dataset
-     */
-    public function findId($id)
-    {
-        return $this->where('id', $id)->findOne();
-    }
-
-    /**
      * @return string
      */
     public function getQuery()
@@ -588,6 +598,120 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     public function getIterator()
     {
         return $this->find();
+    }
+
+    /**
+     * @return rex_yform_manager_collection
+     */
+    public function find()
+    {
+        return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
+    }
+
+    /**
+     * @param rex_pager $pager
+     *
+     * @return rex_yform_manager_collection
+     */
+    public function paginate(rex_pager $pager)
+    {
+        $pager->setRowCount($this->count());
+        $this->limit($pager->getCursor(), $pager->getRowsPerPage());
+
+        return $this->find();
+    }
+
+    /**
+     * @param int[] $ids
+     *
+     * @return rex_yform_manager_collection
+     */
+    public function findIds($ids)
+    {
+        return $this->where('id', $ids)->find();
+    }
+
+    /**
+     * @return null|rex_yform_manager_dataset
+     */
+    public function findOne()
+    {
+        $this->limit(1);
+
+        return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return null|rex_yform_manager_dataset
+     */
+    public function findId($id)
+    {
+        return $this->where('id', $id)->resetOrderBy()->findOne();
+    }
+
+    /**
+     * @param string $column
+     *
+     * @return mixed
+     */
+    public function findValue($column)
+    {
+        return $this->findValueRaw($this->quoteIdentifier($column));
+    }
+
+    /**
+     * @param string $expression
+     *
+     * @return mixed
+     */
+    public function findValueRaw($expression)
+    {
+        $query = clone $this;
+        $query
+            ->resetSelect()
+            ->selectRaw($expression, 'value')
+            ->limit(1);
+
+        $sql = rex_sql::factory();
+        $sql->setQuery($query->getQuery(), $query->getParams());
+
+        return $sql->getRows() ? $sql->getValue('value') : null;
+    }
+
+    /**
+     * @param string $column
+     * @param string $keyColumn
+     *
+     * @return array
+     */
+    public function findValues($column, $keyColumn = null)
+    {
+        return $this->findValuesRaw($this->quoteIdentifier($column), $keyColumn);
+    }
+
+    /**
+     * @param string $expression
+     * @param string $keyColumn
+     *
+     * @return array
+     */
+    public function findValuesRaw($expression, $keyColumn = null)
+    {
+        $query = clone $this;
+        $query
+            ->resetSelect()
+            ->selectRaw($expression, 'value');
+
+        if ($keyColumn) {
+            $query->select($keyColumn);
+        }
+
+        $sql = rex_sql::factory();
+        $array = $sql->getArray($query->getQuery(), $query->getParams());
+
+        return array_column($array, 'value', $keyColumn);
     }
 
     /**
@@ -654,6 +778,14 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return $value;
     }
 
+    private function addParam($value)
+    {
+        $param = 'p'.$this->paramCounter++;
+        $this->params[$param] = $this->normalizeValue($value);
+
+        return ':'.$param;
+    }
+
     private function buildNestedWhere(array $where, $operator = 'AND')
     {
         $nextOperator = 'AND' === $operator ? 'OR' : 'AND';
@@ -664,11 +796,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
                 continue;
             }
 
-            $counter = $this->paramCounter++;
-            $this->params['p'.$counter] = $this->normalizeValue($value);
-            $param = ':p'.$counter;
-
-            $value = sprintf('%s = %s', $this->quoteIdentifier($key), $param);
+            $value = sprintf('%s = %s', $this->quoteIdentifier($key), $this->addParam($value));
         }
 
         return implode(' '.$operator.' ', $where);
