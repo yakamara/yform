@@ -21,81 +21,31 @@ class rex_var_yform_table_data extends rex_var
         }
 
         $value = $this->getContextData()->getValue('value' . $id);
-
         if ($this->hasArg('isset') && $this->getArg('isset')) {
             return $value ? 'true' : 'false';
         }
 
+        if (!$this->environmentIs(self::ENV_INPUT)) {
+            return false;
+        }
+
+        $table = rex_yform_manager_table::get($tableName);
+        if (!$table) {
+            return self::quote('[table not in YForm?]');
+        }
+        $tableName = $table->getTableName();
+
+        $args = [];
+        $args['table'] = $tableName;
+        $args['fieldName'] = $fieldName;
+
         switch ($output) {
             case 'listwidget':
-                if (!$this->environmentIs(self::ENV_INPUT)) {
-                    return false;
-                }
-
-                $table = rex_yform_manager_table::get($tableName);
-                if (!$table) {
-                    return self::quote('[table not in YForm?]');
-                }
-                $tableName = $table->getTableName();
-
-                $options = [];
-                $valueArray = explode(',', $value);
-                $values = [];
-                if ($value != '') {
-                    foreach ($valueArray as $valueID) {
-                        $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $valueID]);
-                        if (isset($listValues[$valueID])) {
-                            $name =  $listValues[$valueID];
-                            if (strlen($name) > 50) {
-                                $name = mb_substr($name, 0, 45) . ' ... ';
-                            }
-
-                            $options[] = ['id' => $valueID, 'name' => $name];
-                            $values[] = $valueID;
-                        }
-                    }
-                }
-                $value = implode(',', $values);
-
-                $args = [];
-                $args['link'] = 'index.php?page=yform/manager/data_edit&table_name=' . $tableName;
-                $args['table'] = $table;
-                $args['fieldName'] = $fieldName;
-                $args['options'] = $options;
-
                 $value = self::getListWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
                 break;
-
             case 'widget':
-
-                if (!$this->environmentIs(self::ENV_INPUT)) {
-                    return false;
-                }
-
-                $table = rex_yform_manager_table::get($tableName);
-                if (!$table) {
-                    return self::quote('[table not in YForm?]');
-                }
-                $tableName = $table->getTableName();
-                $valueName = '';
-
-                $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $value]);
-                if (isset($listValues[$value])) {
-                    $valueName =  $listValues[$value];
-                    if (strlen($valueName) > 50) {
-                        $valueName = mb_substr($valueName, 0, 45) . ' ... ';
-                    }
-                }
-
-                $args = [];
-                $args['link'] = 'index.php?page=yform/manager/data_edit&table_name=' . $tableName;
-                $args['table'] = $table;
-                $args['fieldName'] = $fieldName;
-                $args['valueName'] = $valueName;
-
                 $value = self::getWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
                 break;
-
             default:
                 break;
         }
@@ -105,7 +55,24 @@ class rex_var_yform_table_data extends rex_var
 
     public static function getListWidget($id, $name, $value, array $args = [])
     {
+        if(!isset($args['link']))
+            $args['link'] = 'index.php?page=yform/manager/data_edit&table_name=' . $args['table'];
+
         $link = $args['link'];
+
+        $valueArray = explode(',', $value);
+        if ($value != '' && !isset($args['options'])) {
+            foreach ($valueArray as $valueID) {
+                $listValues = rex_yform_value_be_manager_relation::getListValues($args['table'], $args['fieldName'], ['id' => $valueID]);
+                if (isset($listValues[$valueID])) {
+                    $valueName =  $listValues[$valueID];
+                    if (strlen($valueName) > 50) {
+                        $valueName = mb_substr($valueName, 0, 45) . ' ... ';
+                    }
+                    $args['options'][] = ['id' => $valueID, 'name' => $valueName];
+                }
+            }
+        }
 
         $options = [];
         foreach ($args['options'] as $option) {
@@ -114,7 +81,7 @@ class rex_var_yform_table_data extends rex_var
 
         $e = [];
         $e['field'] = '
-                <select class="form-control" name="yform_MANAGER_DATALIST_SELECT_' . $id . '" id="yform_MANAGER_DATALIST_SELECT_' . $id . '" size="10">
+                <select class="form-control" name="yform_MANAGER_DATALIST_SELECT[' . $id . ']" id="yform_MANAGER_DATALIST_SELECT_' . $id . '" size="10">
                     ' . implode('', $options) . '
                 </select>
                 <input type="hidden" name="' . $name . '" id="yform_MANAGER_DATALIST_' . $id . '" value="' . htmlspecialchars($value) . '" />';
@@ -136,7 +103,21 @@ class rex_var_yform_table_data extends rex_var
 
     public static function getWidget($id, $name, $value, array $args = [])
     {
+        if(!isset($args['link']))
+            $args['link'] = 'index.php?page=yform/manager/data_edit&table_name=' . $args['table'];
+
         $link = $args['link'];
+
+        if(!isset($args['valueName'])) {
+            $listValues = rex_yform_value_be_manager_relation::getListValues($args['table'], $args['fieldName'], ['id' => $value]);
+            if (isset($listValues[$value])) {
+                $args['valueName'] =  $listValues[$value];
+                if (strlen($args['valueName']) > 50) {
+                    $args['valueName'] = mb_substr($args['valueName'], 0, 45) . ' ... ';
+                }
+            }
+        }
+
         if ($value == "") {
             $valueName = '';
 
