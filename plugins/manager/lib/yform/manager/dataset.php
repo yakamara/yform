@@ -704,6 +704,10 @@ class rex_yform_manager_dataset
         } elseif ($this->id) {
             $yform->objparams['value_pool']['sql']['id'] = $this->id;
         }
+        else {
+            $yform->setObjectparams('main_id', '');
+            $yform->setObjectparams('main_where', '');
+        }
     }
 
     private static function tableToModel($table)
