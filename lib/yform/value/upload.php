@@ -198,6 +198,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $this->upload_checkdownloadFile($filename, $filepath);
         }
 
+        // billiger hack, damit bei yorm save(), der wert nicht gelöhsct wird
+        if (!$delete && $this->params['send'] && $this->getValue() != "" && is_string($this->getValue())) {
+            $filename = $this->getValue();
+        }
+
         $this->setValue($filename);
 
         $this->params['value_pool']['email'][$this->getName()] = $filename;
