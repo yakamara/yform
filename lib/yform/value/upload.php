@@ -190,7 +190,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $download_link = '/redaxo/index.php?'.http_build_query($link_params);
 
         }
-
         */
 
         // Download starten - wenn Dateinamen übereinstimmen
@@ -199,7 +198,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
 
         // billiger hack, damit bei yorm save(), der wert nicht gelöhsct wird
-        if (!$delete && $this->params['send'] && $this->getValue() != "" && is_string($this->getValue())) {
+        if (!$delete && $this->params['send'] && $this->getValue() != "" && is_string($this->getValue()) && !isset($_SESSION[$unique]['file']) && $_SESSION[$unique]['file'] ==  "") {
             $filename = $this->getValue();
         }
 
