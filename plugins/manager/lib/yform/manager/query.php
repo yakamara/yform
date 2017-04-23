@@ -438,7 +438,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         call_user_func($nested, $query);
 
         if ($query->where) {
-            $this->where[] = implode(' '.$operator.' ', $query->where);
+            $this->where[] = '('.implode(' '.$operator.' ', $query->where).')';
             $this->params = array_merge($this->params, $query->params);
             $this->paramCounter = $query->paramCounter;
         }
