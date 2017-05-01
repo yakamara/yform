@@ -227,6 +227,80 @@ class rex_yform_manager_collection extends \SplFixedArray
         return $this;
     }
 
+    public function populateRelation($key)
+    {
+        $relation = $this->getTable()->getRelation($key);
+
+        if (!$relation) {
+            throw new InvalidArgumentException(sprintf('Field "%s" in table "%s" is not a relation field.', $key, $this->getTableName()));
+        }
+
+        if ($this->isEmpty()) {
+            return;
+        }
+
+        $query = rex_yform_manager_dataset::query($relation['table']);
+
+        if (0 == $relation['type'] || 2 == $relation['type']) {
+            $query->where('id', $this->getValues($key));
+            $query->find();
+
+            return;
+        }
+
+        $relatedDatasets = [];
+        foreach ($this as $dataset) {
+            $relatedDatasets[$dataset->getId()] = [];
+        }
+
+        if (4 == $relation['type']) {
+            $query->where($relation['field'], $this->getIds());
+
+            foreach ($query->find() as $dataset) {
+                $relatedDatasets[$dataset->getValue($relation['field'])][] = $dataset;
+            }
+        } elseif (empty($relation['relation_table'])) {
+            $relatedIds = [];
+            foreach ($this as $dataset) {
+                $ids = array_filter(explode(',', $dataset->getValue($key)));
+
+                if (empty($ids)) {
+                    continue;
+                }
+
+                foreach ($ids as $id) {
+                    $relatedIds[$id][$dataset->getId()] = true;
+                }
+            }
+
+            $query->where('id', array_keys($relatedIds));
+
+            foreach ($query->find() as $dataset) {
+                foreach ($relatedIds[$dataset->getId()] as $id => $_) {
+                    $relatedDatasets[$id][] = $dataset;
+                }
+            }
+        } else {
+            $columns = $this->getTable()->getRelationTableColumns($key);
+            $query
+                ->join($relation['relation_table'], null, $relation['relation_table'].'.'.$columns['target'], $relation['table'].'.id')
+                ->where($relation['relation_table'].'.'.$columns['source'], $this->getIds())
+                ->groupBy($relation['table'].'.id')
+                ->selectRaw(sprintf('GROUP_CONCAT(%s SEPARATOR ",")', $query->quoteIdentifier($relation['relation_table'].'.'.$columns['source'])), '__related_ids')
+            ;
+
+            foreach ($query->find() as $dataset) {
+                foreach (explode(',', $dataset->getValue('__related_ids')) as $relatedId) {
+                    $relatedDatasets[$relatedId][] = $dataset;
+                }
+            }
+        }
+
+        foreach ($this as $dataset) {
+            $dataset->setRelatedCollection($key, new self($relation['table'], $relatedDatasets[$dataset->getId()]));
+        }
+    }
+
     /**
      * @return bool
      */

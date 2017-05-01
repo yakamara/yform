@@ -749,7 +749,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return $sql->getRows() > 0;
     }
 
-    private function quoteIdentifier($identifier)
+    public function quoteIdentifier($identifier)
     {
         $identifier = explode('.', $identifier, 2);
         foreach ($identifier as &$part) {
