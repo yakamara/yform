@@ -1660,7 +1660,7 @@ class rex_yform_manager
         $warning = $params['subject'];
 
         $sql = rex_sql::factory();
-        $sql->setQuery('SELECT `table_name`, `type_name`, `name` FROM `' . rex_yform_manager_field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_medialist","be_mediapool","mediafile")');
+        $sql->setQuery('SELECT `table_name`, `type_name`, `name` FROM `' . rex_yform_manager_field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_media","mediafile")');
 
         $rows = $sql->getRows();
 
