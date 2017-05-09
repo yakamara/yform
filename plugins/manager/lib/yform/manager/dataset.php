@@ -348,7 +348,7 @@ class rex_yform_manager_dataset
             return null;
         }
 
-        return rex_yform_manager_dataset::get($id, $relation['table']);
+        return self::get($id, $relation['table']);
     }
 
     /**
@@ -365,6 +365,19 @@ class rex_yform_manager_dataset
         $query = $this->getRelatedQuery($key);
 
         return $this->relatedCollections[$key] = $query->find();
+    }
+
+    /**
+     * @param string                       $key
+     * @param rex_yform_manager_collection $collection
+     *
+     * @return $this
+     */
+    public function setRelatedCollection($key, rex_yform_manager_collection $collection)
+    {
+        $this->relatedCollections[$key] = $collection;
+
+        return $this;
     }
 
     /**
@@ -505,7 +518,7 @@ class rex_yform_manager_dataset
      */
     public function getForm()
     {
-        $yform  = $this->createForm();
+        $yform = $this->createForm();
         $this->setFormMainId($yform);
 
         return $yform;
@@ -662,7 +675,7 @@ class rex_yform_manager_dataset
 
     private function createForm()
     {
-        $yform  = new rex_yform();
+        $yform = new rex_yform();
         $fields = $this->getFields();
         $yform->setDebug(self::$debug);
 

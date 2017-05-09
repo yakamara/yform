@@ -23,6 +23,10 @@ class rex_yform_value_index extends rex_yform_value_abstract
         foreach ($index_labels as $name) {
             $name = trim($name);
 
+            if ($name == "id" && $this->params["main_id"] > 0) {
+                $value .= $this->params["main_id"];
+            }
+
             if (isset($this->params['value_pool']['sql'][$name])) {
                 $value .= ' '.$this->params['value_pool']['sql'][$name];
                 continue;
