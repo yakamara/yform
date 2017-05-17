@@ -53,4 +53,36 @@ class rex_yform_value_email extends rex_yform_value_abstract
         );
 
     }
+
+
+    public static function getSearchField($params)
+    {
+        $params['searchForm']->setValueField('text', array('name' => $params['field']->getName(), 'label' => $params['field']->getLabel()));
+    }
+
+    public static function getSearchFilter($params)
+    {
+        $sql = rex_sql::factory();
+        $value = $params['value'];
+        $field =  $params['field']->getName();
+
+        if ($value == '(empty)') {
+            return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
+
+        } elseif ($value == '!(empty)') {
+            return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
+
+        }
+
+        $pos = strpos($value, '*');
+        if ($pos !== false) {
+            $value = str_replace('%', '\%', $value);
+            $value = str_replace('*', '%', $value);
+            return $sql->escapeIdentifier($field) . " LIKE " . $sql->escape($value);
+        } else {
+            return $sql->escapeIdentifier($field) . " = " . $sql->escape($value);
+        }
+
+    }
+
 }
