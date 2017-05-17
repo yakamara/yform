@@ -2,7 +2,7 @@
 
 $notice = array();
 if ($this->getElement('notice') != "") {
-  $notice[] = rex_i18n::translate($this->getElement('notice'));
+  $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
     $notice[] =  '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
