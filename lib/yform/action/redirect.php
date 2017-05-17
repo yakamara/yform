@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_redirect extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         // spezialfaelle - nur bei request oder label
         switch ($this->getElement(3)) {
             case 'request':
@@ -45,12 +44,10 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
             ob_end_clean();
             header('Location: ' . $url);
         }
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|redirect|Artikel-Id oder Externer Link|request/label|field';
     }
-
 }

@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_manage_db extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         // START - Spezialfall "be_em_relation"
         /*
         $be_em_table_field = "";
@@ -22,7 +21,6 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
         }
         */
         // ENDE - Spezialfall
-
 
         // ********************************* TABLE A
 
@@ -44,11 +42,11 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
             return false;
         }
 
-        $columns = array();
+        $columns = [];
         foreach (rex_sql::showColumns($main_table) as $column) {
             $columns[$column['name']] = true;
         }
-        $alterTable = array();
+        $alterTable = [];
         foreach ($this->params['value_pool']['sql'] as $field => $value) {
             if ($value != '' && !isset($columns[$field])) {
                 $alterTable[] = 'ADD `' . $field . '` TEXT NOT NULL';
@@ -93,9 +91,5 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
                 $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
             }
         }
-
-        return;
-
     }
-
 }

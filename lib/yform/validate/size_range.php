@@ -1,18 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_validate_size_range extends rex_yform_validate_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         if ($this->params['send'] == '1') {
-
             $Object = $this->getValueObject();
 
             if ($Object->getValue() == '') {
@@ -45,30 +44,26 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
-
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'validate|size_range|label|[minsize]|[maxsize]|Fehlermeldung';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'validate',
             'name' => 'size_range',
-            'values' => array(
-                'name'    => array( 'type' => 'select_name', 'label' => 'Name' ),
-                'min'     => array( 'type' => 'text', 'label' => 'Minimale Anzahl der Zeichen (opt)'),
-                'max'     => array( 'type' => 'text', 'label' => 'Maximale Anzahl der Zeichen (opt)'),
-                'message' => array( 'type' => 'text', 'label' => 'Fehlermeldung'),
-            ),
-            'description' => rex_i18n::msg("yform_validate_size_range_description"),
-        );
-
+            'values' => [
+                'name' => ['type' => 'select_name', 'label' => 'Name'],
+                'min' => ['type' => 'text', 'label' => 'Minimale Anzahl der Zeichen (opt)'],
+                'max' => ['type' => 'text', 'label' => 'Maximale Anzahl der Zeichen (opt)'],
+                'message' => ['type' => 'text', 'label' => 'Fehlermeldung'],
+            ],
+            'description' => rex_i18n::msg('yform_validate_size_range_description'),
+        ];
     }
-
-
 }

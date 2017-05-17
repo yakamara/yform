@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_ip extends rex_yform_value_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         $sk = 'REMOTE_ADDR';
         if ($this->getElement(3) != '') {
@@ -24,7 +24,7 @@ class rex_yform_value_ip extends rex_yform_value_abstract
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'ip|name|[no_db]';
     }

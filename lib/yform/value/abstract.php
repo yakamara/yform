@@ -1,43 +1,42 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 {
-    var $element_values = array();
+    public $element_values = [];
 
-    var $value;
-    var $name;
-    var $label;
-    var $type;
-    var $keys = array();
+    public $value;
+    public $name;
+    public $label;
+    public $type;
+    public $keys = [];
 
     // ------------
 
-    function setArticleId($aid)
+    public function setArticleId($aid)
     {
         $this->aid = $aid;
     }
 
-    function setValue($value)
+    public function setValue($value)
     {
         $this->value = $value;
     }
 
-    function getValue()
+    public function getValue()
     {
         return $this->value;
     }
 
-
-
     //  ------------ keys
 
-    function getFieldId($k = '')
+    public function getFieldId($k = '')
     {
         if ($k === '') {
             return 'yform-' . $this->params['form_name'] . '-field-' . $this->getId();
@@ -45,12 +44,12 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return 'yform-' . $this->params['form_name'] . '-field-' . $this->getId() . '_' . $k;
     }
 
-    function getFieldName($k = '')
+    public function getFieldName($k = '')
     {
         return $this->params['this']->getFieldName($this->getId(), $k, $this->getName());
     }
 
-    function getHTMLId($suffix = '')
+    public function getHTMLId($suffix = '')
     {
         if ($suffix != '') {
             return 'yform-' . $this->params['form_name'] . '-' . $this->getName() . '-' . $suffix;
@@ -61,25 +60,24 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return '';
     }
 
-    function getHTMLClass()
+    public function getHTMLClass()
     {
         return 'form' . $this->type;
     }
 
-
     // ------------ helpers
 
-    function setKey($k, $v)
+    public function setKey($k, $v)
     {
         $this->keys[$k] = $v;
     }
 
-    function getKeys()
+    public function getKeys()
     {
         return $this->keys;
     }
 
-    function getValueFromKey($v = '')
+    public function getValueFromKey($v = '')
     {
         if ($v == '') {
             $v = $this->getValue();
@@ -87,61 +85,53 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
         if (is_array($v)) {
             return $v;
-
-        } else {
-            if (isset($this->keys[$v]))  {
-                return $this->keys[$v];
-            } else {
-                return $v;
-            }
         }
+        if (isset($this->keys[$v])) {
+            return $this->keys[$v];
+        }
+        return $v;
     }
 
-    function emptyKeys()
+    public function emptyKeys()
     {
-        $this->keys = array();
+        $this->keys = [];
     }
 
     public function getArrayFromString($string)
     {
         if (is_array($string)) {
             return $string;
-
-        } else {
-
-            $delimeter = ",";
-            $rawOptions = preg_split('~(?<!\\\)' . preg_quote($delimeter, '~') . '~', $string);
-
-            $options = array();
-            foreach ($rawOptions as $option) {
-
-                $delimeter = "=";
-                $finalOption = preg_split('~(?<!\\\)' . preg_quote($delimeter, '~') . '~', $option);
-                $v = $finalOption[0];
-                if (isset($finalOption[1])) {
-                    $k = $finalOption[1];
-                } else {
-                    $k = $finalOption[0];
-                }
-                $s = array('\=','\,');
-                $r = array('=',',');
-                $k = str_replace($s, $r, $k);
-                $v = str_replace($s, $r, $v);
-                $options[$k] = $v;
-            }
-
-            return $options;
-
         }
 
+        $delimeter = ',';
+        $rawOptions = preg_split('~(?<!\\\)' . preg_quote($delimeter, '~') . '~', $string);
+
+        $options = [];
+        foreach ($rawOptions as $option) {
+            $delimeter = '=';
+            $finalOption = preg_split('~(?<!\\\)' . preg_quote($delimeter, '~') . '~', $option);
+            $v = $finalOption[0];
+            if (isset($finalOption[1])) {
+                $k = $finalOption[1];
+            } else {
+                $k = $finalOption[0];
+            }
+            $s = ['\=', '\,'];
+            $r = ['=', ','];
+            $k = str_replace($s, $r, $k);
+            $v = str_replace($s, $r, $v);
+            $options[$k] = $v;
+        }
+
+        return $options;
     }
 
-    function needsOutput()
+    public function needsOutput()
     {
         return $this->getParam('form_needs_output', true);
     }
 
-    function parse($template, $params = array())
+    public function parse($template, $params = [])
     {
         extract($params);
         ob_start();
@@ -150,8 +140,8 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     }
 
     /* deprecated - will be deleted in Version 1.2 */
-    function getAttributeElement($attribute, $boolean = false) {
-
+    public function getAttributeElement($attribute, $boolean = false)
+    {
         $element = $this->getElement($attribute);
         if ($element) {
             return ' ' . $attribute . '="' . ($boolean ? $attribute : htmlspecialchars($element)) . '"';
@@ -159,33 +149,33 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return '';
     }
 
-    function getAttributeElements(array $attributes, array $direct_attributes = [])
+    public function getAttributeElements(array $attributes, array $direct_attributes = [])
     {
         $attributes = self::getAttributeArray($attributes, $direct_attributes);
         $return = [];
-        foreach($attributes as $attribute => $value) {
+        foreach ($attributes as $attribute => $value) {
             $return[] = $attribute.'="'.htmlspecialchars($value).'"';
         }
 
         return $return;
     }
 
-    function getAttributeArray(array $attributes, array $direct_attributes = [])
+    public function getAttributeArray(array $attributes, array $direct_attributes = [])
     {
-        $additionalAttributes = $this->getElement("attributes");
+        $additionalAttributes = $this->getElement('attributes');
         if ($additionalAttributes) {
             if (!is_array($additionalAttributes)) {
                 $additionalAttributes = json_decode(trim($additionalAttributes), true);
             }
             if ($additionalAttributes && is_array($additionalAttributes)) {
-                foreach($additionalAttributes as $attribute => $value) {
+                foreach ($additionalAttributes as $attribute => $value) {
                     $attributes[$attribute] = $value;
                 }
             }
         }
 
-        foreach($direct_attributes as $attribute) {
-            if ( ($element = $this->getElement($attribute)) ) {
+        foreach ($direct_attributes as $attribute) {
+            if (($element = $this->getElement($attribute))) {
                 $attributes[$attribute] = $element;
             }
         }
@@ -193,7 +183,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return $attributes;
     }
 
-    function getWarningClass()
+    public function getWarningClass()
     {
         if (isset($this->params['warning'][$this->getId()])) {
             return ' ' . $this->params['warning'][$this->getId()];
@@ -208,7 +198,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     // ------------
 
-    function loadParams(&$params, $elements = array())
+    public function loadParams(&$params, $elements = [])
     {
         parent::loadParams($params, $elements);
         $this->setLabel($this->getElement(2));
@@ -221,36 +211,33 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return 1;
     }
 
-    function setName($name)
+    public function setName($name)
     {
         $this->name = $name;
     }
 
-    function getName()
+    public function getName()
     {
         return $this->name;
     }
 
-    function setLabel($label)
+    public function setLabel($label)
     {
         $this->label = $label;
     }
 
-    function getLabel()
+    public function getLabel()
     {
         return $this->getLabelStyle($this->label);
     }
 
-    function getLabelStyle($label)
+    public function getLabelStyle($label)
     {
-
         $label = rex_i18n::translate($label, null);
 
         if ($this->params['form_label_type'] == 'html') {
-
         } else {
             $label = nl2br(htmlspecialchars($label));
-
         }
         return $label;
         return '<span style="color:#f90">' . ($label) . '</span>';
@@ -270,12 +257,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     // ------------ Trigger
 
-    function enterObject()
+    public function enterObject()
     {
     }
 
-    function init()
+    public function init()
     {
     }
-
 }

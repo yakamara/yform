@@ -8,10 +8,8 @@ if ($this->getElement('css_classes') != '') {
 if (count($labels) > 1) {
     if (rex::isBackend()) {
         echo '<div class="rex-form-panel-footer">';
-
     }
     echo '<div class="btn-toolbar">';
-
 }
 
 foreach ($labels as $index => $label) {
@@ -37,8 +35,5 @@ if (count($labels) > 1) {
     echo '</div>';
     if (rex::isBackend()) {
         echo '</div>';
-
     }
 }
-
-?>

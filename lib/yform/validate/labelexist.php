@@ -1,18 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_validate_labelexist extends rex_yform_validate_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         if ($this->params['send'] == '1') {
-
             // optional, ein oder mehrere felder müssen ausgefüllt sein
             if ($this->getElement(3) == '') {
                 $minamount = 1;
@@ -26,14 +25,13 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
                 $maxamount = (int) $this->getElement(4);
             }
 
-
             // labels auslesen
             $fields = explode(',', $this->getElement(2));
 
             $value = 0;
             foreach ($this->getObjects() as $Object) {
                 if (in_array($Object->getName(), $fields) && $Object->getValue() != '') {
-                    $value++;
+                    ++$value;
                 }
             }
 
@@ -49,7 +47,7 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'validate|labelexist|label,label2,label3|[minlabels]|[maximallabels]|Fehlermeldung';
     }

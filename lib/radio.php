@@ -1,17 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_radio
 {
-
-    var $attributes;
-    var $options;
-    var $option_selected;
+    public $attributes;
+    public $options;
+    public $option_selected;
 
     public function __construct()
     {
@@ -20,7 +20,7 @@ class rex_radio
 
     public function init()
     {
-        $this->attributes = array();
+        $this->attributes = [];
         $this->resetSelected();
         $this->setName('standard');
         $this->setDisabled(false);
@@ -107,9 +107,9 @@ class rex_radio
         $this->option_selected = '';
     }
 
-    public function addOption($name, $value, $attributes = array())
+    public function addOption($name, $value, $attributes = [])
     {
-        $this->options[] = array('name' => $name, 'value' => $value, 'attributes' => $attributes);
+        $this->options[] = ['name' => $name, 'value' => $value, 'attributes' => $attributes];
     }
 
     public function get()
@@ -154,7 +154,8 @@ class rex_radio
         $id = $this->getAttribute('id');
         $counter = 0;
         foreach ($this->options as $option) {
-            $counter++; $oid = $id . '-' . $counter;
+            ++$counter;
+            $oid = $id . '-' . $counter;
             $return .= '<p class="radio">';
             $return .= '<input type="radio" class="radio" id="' . $oid . '" name="' . $this->getAttribute('name') . '" value="' . $option['value'] . '" ';
             if ($selected == $option['value']) {
@@ -166,7 +167,5 @@ class rex_radio
         }
 
         return $return;
-
     }
-
 }

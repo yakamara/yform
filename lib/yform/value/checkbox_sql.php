@@ -1,19 +1,18 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 {
+    public static $getListValues = [];
 
-    static $getListValues = array();
-
-    function enterObject()
+    public function enterObject()
     {
-
         if (!is_array($this->getValue())) {
             $this->setValue(explode(',', $this->getValue()));
         }
@@ -25,18 +24,17 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
         $options_sql = rex_sql::factory();
         $options_sql->setDebug($this->params['debug']);
-        $options = array();
+        $options = [];
         foreach ($options_sql->getArray($sql) as $option) {
             $options[$option['id']] = $option['name'];
         }
 
-
-        $proofed_values = array();
-        $proofed_name_values = array();
+        $proofed_values = [];
+        $proofed_name_values = [];
         foreach ($values as $value) {
             if (array_key_exists($value, $options)) {
-                 $proofed_values[$value] = $value;
-                 $proofed_name_values[$value] = $options[$value];
+                $proofed_values[$value] = $value;
+                $proofed_name_values[$value] = $options[$value];
             }
         }
 
@@ -50,69 +48,59 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         if ($this->getElement('no_db') != 1) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
-
-        return;
-
     }
 
-
-    function getDescription()
+    public function getDescription()
     {
         return 'checkbox_sql|label|Bezeichnung:|select id,name from table order by name|';
     }
 
-
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'checkbox_sql',
-            'values' => array(
-                'name'  => array( 'type' => 'name',    'label' => rex_i18n::msg("yform_values_defaults_name") ),
-                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
-                'query' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_checkbox_sql_query")),
-                'notice'=> array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_notice")),
-            ),
-            'description' => rex_i18n::msg("yform_values_checkbox_sql_description"),
+            'values' => [
+                'name' => ['type' => 'name',    'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'query' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_checkbox_sql_query')],
+                'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+            ],
+            'description' => rex_i18n::msg('yform_values_checkbox_sql_description'),
             'dbtype' => 'text',
-        );
+        ];
     }
 
-
-    static function getListValue($params)
+    public static function getListValue($params)
     {
-        $return = array();
+        $return = [];
 
         $db = rex_sql::factory();
         // $db->debugsql = 1;
 
         $query = $params['params']['field']['query'];
         $pos = strrpos(strtoupper($query), 'ORDER BY ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos);
         }
 
         $pos = strrpos(strtoupper($query), 'LIMIT ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos);
         }
 
         $multiple = (int) $params['params']['field']['multiple'];
         if ($multiple != 1) {
             $where = ' `id` = ' . $db->escape($params['value']) . ' ';
-
         } else {
             $where = ' FIND_IN_SET(`id`, ' . $db->escape($params['value']) . ')';
-
         }
 
         $pos = strrpos(strtoupper($query), 'WHERE ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
-
         } else {
             $query .= ' WHERE ' . $where;
-
         }
 
         $db_array = $db->getArray($query);
@@ -127,5 +115,4 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
         return implode('<br />', $return);
     }
-
 }

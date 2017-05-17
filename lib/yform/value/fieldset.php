@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_fieldset extends rex_yform_value_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         if (!$this->needsOutput()) {
             return;
@@ -18,7 +18,7 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
         $output = '';
 
         $option = $this->getElement(4);
-        $options = array('onlyclose', 'onlycloseall', 'onlyopen', 'closeandopen');
+        $options = ['onlyclose', 'onlycloseall', 'onlyopen', 'closeandopen'];
         if (!in_array($option, $options)) {
             $option = 'closeandopen';
         }
@@ -27,13 +27,13 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
             case 'closeandopen':
             case 'onlyclose':
                 if ($this->params['fieldsets_opened'] > 0) {
-                    $output .= $this->parse('value.fieldset.tpl.php', array('option' => 'close'));
-                    $this->params['fieldsets_opened']--;
+                    $output .= $this->parse('value.fieldset.tpl.php', ['option' => 'close']);
+                    --$this->params['fieldsets_opened'];
                 }
                 break;
             case 'onlycloseall':
-                for ($i = 0; $i < $this->params['fieldsets_opened']; $i++) {
-                    $output .= $this->parse('value.fieldset.tpl.php', array('option' => 'close'));
+                for ($i = 0; $i < $this->params['fieldsets_opened']; ++$i) {
+                    $output .= $this->parse('value.fieldset.tpl.php', ['option' => 'close']);
                 }
                 $this->params['fieldsets_opened'] = 0;
                 break;
@@ -45,35 +45,32 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
             case 'closeandopen':
             case 'onlyopen':
                 $this->params['fieldsets_opened']++;
-                $output .= $this->parse('value.fieldset.tpl.php', array('option' => 'open'));
+                $output .= $this->parse('value.fieldset.tpl.php', ['option' => 'open']);
                 break;
         }
 
         $this->params['form_output'][$this->getId()] = $output;
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'fieldset|name|label|[class]|[onlyclose/onlycloseall/onlyopen/closeandopen]';
-
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'fieldset',
-            'values' => array(
-                'name'  => array( 'type' => 'name',  'label' => rex_i18n::msg("yform_values_defaults_name")),
-                'label' => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_defaults_label")),
-            ),
-            'description' => rex_i18n::msg("yform_values_fieldset_description"),
+            'values' => [
+                'name' => ['type' => 'name',  'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_defaults_label')],
+            ],
+            'description' => rex_i18n::msg('yform_values_fieldset_description'),
             'dbtype' => 'none',
             'is_searchable' => false,
             'is_hiddeninlist' => true,
             'multi_edit' => 'always',
-        );
+        ];
     }
-
 }

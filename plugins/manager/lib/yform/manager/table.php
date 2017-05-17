@@ -168,7 +168,6 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['list_amount'];
     }
 
-
     public function getDescription()
     {
         return $this->values['description'];
@@ -297,7 +296,6 @@ class rex_yform_manager_table implements ArrayAccess
         return $c;
     }
 
-
     public function getPermKey()
     {
         return 'yform[table:' . $this->getTableName() . ']';
@@ -307,7 +305,6 @@ class rex_yform_manager_table implements ArrayAccess
     {
         return $this->values;
     }
-
 
     public function removeRelationTableRelicts()
     {
@@ -388,7 +385,7 @@ class rex_yform_manager_table implements ArrayAccess
     // ------------------------------------------- Array Access
     public function offsetSet($offset, $value)
     {
-        if (is_null($offset)) {
+        if (null === $offset) {
             $this->values[] = $value;
         } else {
             $this->values[$offset] = $value;
@@ -452,7 +449,6 @@ class rex_yform_manager_table implements ArrayAccess
                     }
                 }
             } catch (Exception $e) {
-
             }
 
             self::$cache[$tableName]['fields'] = [];
@@ -474,5 +470,4 @@ class rex_yform_manager_table implements ArrayAccess
     {
         return rex_path::pluginCache('yform', 'manager', 'tables.cache');
     }
-
 }

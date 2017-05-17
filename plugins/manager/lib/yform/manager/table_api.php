@@ -2,15 +2,13 @@
 
 class rex_yform_manager_table_api
 {
-
-    static $table_fields = array('status', 'name', 'description', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import');
-    static $debug = false;
+    public static $table_fields = ['status', 'name', 'description', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import'];
+    public static $debug = false;
 
     // ---------- TABLES
 
-    public static function setTable(array $table, array $table_fields = array())
+    public static function setTable(array $table, array $table_fields = [])
     {
-
         if (!isset($table['table_name'])) {
             throw new Exception('table[table_name] must be set');
         }
@@ -19,7 +17,6 @@ class rex_yform_manager_table_api
         $currentTable = rex_yform_manager_table::get($table_name);
 
         if (!$currentTable) {
-
             // Insert
             $table_insert = rex_sql::factory();
             $table_insert->setDebug(self::$debug);
@@ -39,7 +36,6 @@ class rex_yform_manager_table_api
                 $table_insert->setValue('prio', rex_yform_manager_table::getMaximumTablePrio() + 1);
             }
             $table_insert->insert();
-
         } else {
             $currentTable = $currentTable->toArray();
 
@@ -65,7 +61,6 @@ class rex_yform_manager_table_api
                 }
             }
             $table_update->update();
-
         }
 
         self::generateTablesAndFields();
@@ -79,7 +74,6 @@ class rex_yform_manager_table_api
         self::generateTablesAndFields();
 
         return rex_yform_manager_table::get($table_name);
-
     }
 
     public static function setTables(array $tables)
@@ -91,56 +85,53 @@ class rex_yform_manager_table_api
 
     public static function exportTableset($table_name)
     {
-        $export = array();
+        $export = [];
         $export_table = rex_yform_manager_table::get($table_name);
-        $export_fields = array();
+        $export_fields = [];
         foreach ($export_table->getFields() as $field) {
             $export_fields[] = $field->toArray();
         }
 
-        $export[$export_table['table_name']] = array(
+        $export[$export_table['table_name']] = [
             'table' => $export_table->toArray(),
             'fields' => $export_fields,
-        );
+        ];
 
         return json_encode($export);
-
     }
 
-    public static function importTablesets( $tableset_content )
+    public static function importTablesets($tableset_content)
     {
         $tableset_content = json_decode($tableset_content, true);
-        foreach($tableset_content as $table) {
-          if (!isset($table["table"]) || !isset($table["fields"])) {
-              throw new Exception('json format wrong');
-          }
-          $settable = $table["table"];
-          $fields = $table["fields"];
-          rex_yform_manager_table_api::setTable($settable, $fields);
+        foreach ($tableset_content as $table) {
+            if (!isset($table['table']) || !isset($table['fields'])) {
+                throw new Exception('json format wrong');
+            }
+            $settable = $table['table'];
+            $fields = $table['fields'];
+            self::setTable($settable, $fields);
         }
-        rex_yform_manager_table_api::generateTablesAndFields();
+        self::generateTablesAndFields();
         return true;
     }
 
-    public static function exportTablesets( $table_names )
+    public static function exportTablesets($table_names)
     {
-        $export = array();
-        foreach($table_names as $table_name) {
+        $export = [];
+        foreach ($table_names as $table_name) {
             $export_table = rex_yform_manager_table::get($table_name);
-            $export_fields = array();
+            $export_fields = [];
             foreach ($export_table->getFields() as $field) {
                 $export_fields[] = $field->toArray();
             }
-            $export[$export_table['table_name']] = array(
+            $export[$export_table['table_name']] = [
             'table' => $export_table->toArray(),
             'fields' => $export_fields,
-            );
+            ];
         }
 
         return json_encode($export);
-
     }
-
 
     public static function removeTable($table_name)
     {
@@ -159,9 +150,6 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-
-
-
     // ---------- FIELDS
 
     public static function setTableField($table_name, array $table_field)
@@ -176,11 +164,11 @@ class rex_yform_manager_table_api
             throw new Exception('field must be a filled array');
         }
 
-        $fieldIdentifier = array(
+        $fieldIdentifier = [
             'type_id' => $table_field['type_id'],
             'type_name' => $table_field['type_name'],
-            'name' => $table_field['name']
-        );
+            'name' => $table_field['name'],
+        ];
 
         $currentFields = rex_yform_manager_table::get($table_name)->getFields($fieldIdentifier);
 
@@ -194,9 +182,7 @@ class rex_yform_manager_table_api
 
         if (count($currentFields) > 1) {
             throw new Exception('more than one field found for table: ' . $table_name . ' with Fieldidentifier: ' . implode(', ', $fieldIdentifier) . '');
-
         } elseif (count($currentFields) == 0) {
-
             // Insert
             $field_insert = rex_sql::factory();
             $field_insert->setDebug(self::$debug);
@@ -210,9 +196,7 @@ class rex_yform_manager_table_api
                 $field_insert->setValue('prio', rex_yform_manager_table::get($table_name)->getMaximumPrio() + 1);
             }
             $field_insert->insert();
-
         } else {
-
             // Update
             $currentField = $currentFields[0]->toArray();
             foreach ($table_field as $field_name => $field_value) {
@@ -223,7 +207,7 @@ class rex_yform_manager_table_api
             $field_update->setDebug(self::$debug);
             $field_update->setTable(rex_yform_manager_field::table());
 
-            $add_where = array();
+            $add_where = [];
             foreach ($fieldIdentifier as $field => $value) {
                 $add_where[] = '`' . $field . '`= ' . $field_update->escape($table_name) . ' ';
             }
@@ -231,7 +215,6 @@ class rex_yform_manager_table_api
             $where = 'table_name=' . $field_update->escape($table_name) . '';
             if (count($add_where) > 0) {
                 $where .= ' and (' . implode(' and ', $add_where) . ') ';
-
             }
 
             $field_update->setWhere($where);
@@ -240,7 +223,6 @@ class rex_yform_manager_table_api
                 $field_update->setValue($field_name, $field_value);
             }
             $field_update->update();
-
         }
 
         rex_yform_manager_table::deleteCache();
@@ -255,26 +237,22 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-
-
     // ---------- MIGRATION und Erstellung
 
     public static function migrateTable($table_name, $convert_id = false)
     {
-
         $columns = rex_sql::showColumns($table_name);
 
         if (count($columns) == 0) {
-            throw new Exception( '`' . $table_name . '` does not exists or no fields available');
-
+            throw new Exception('`' . $table_name . '` does not exists or no fields available');
         }
 
-        $table = array(
+        $table = [
             'table_name' => $table_name,
-            'status' => 1
-        );
+            'status' => 1,
+        ];
 
-        $autoincrement = array();
+        $autoincrement = [];
         foreach ($columns as $column) {
             if ($column['extra'] == 'auto_increment') {
                 $autoincrement = $column;
@@ -283,14 +261,11 @@ class rex_yform_manager_table_api
 
         if (count($autoincrement) > 0 && $autoincrement['name'] == 'id') {
             // everything is ok
-
         } elseif ($convert_id && count($autoincrement) > 1) {
             rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` CHANGE `' . $autoincrement['name'] . '` `id` INT( 11 ) NOT NULL AUTO_INCREMENT ');
             $columns = rex_sql::showColumns($table_name);
-
         } else {
-            throw new Exception( '`id`-field with auto_increment is missing.');
-
+            throw new Exception('`id`-field with auto_increment is missing.');
         }
 
         self::setTable($table);
@@ -298,20 +273,17 @@ class rex_yform_manager_table_api
         foreach ($columns as $column) {
             if ($column['name'] != 'id') {
                 self::migrateField($table_name, $column);
-
             }
-
         }
-
     }
 
-    static function migrateField($table_name, $column)
+    public static function migrateField($table_name, $column)
     {
         if ($column['name'] == 'id') {
-            return array();
+            return [];
         }
 
-        $fields = array();
+        $fields = [];
 
         preg_match('@^(.*)\((.*)\)@i', $column['type'], $r);
 
@@ -324,47 +296,46 @@ class rex_yform_manager_table_api
         }
 
         switch ($column['clean_type']) {
-
             case 'varchar':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'text',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
 
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'validate',
                     'type_name' => 'size_range',
                     'name' => $column['name'],
                     'max' => $column['length'],
-                    'message' => 'error: size max in ' . $column['name'] . ' is ' . $column['length']
-                );
+                    'message' => 'error: size max in ' . $column['name'] . ' is ' . $column['length'],
+                ];
 
                 if (preg_match('/(?:^|_)e?mail(?:address|adresse)?(?:_|$)/', $column['name'])) {
-                    $fields[] = array(
+                    $fields[] = [
                         'type_id' => 'validate',
                         'type_name' => 'type',
                         'name' => $column['name'],
                         'type' => 'email',
                         'not_required' => 'YES' === $column['null'],
                         'message' => $column['name'] . ' must be a valid email address',
-                    );
+                    ];
                 }
 
                 break;
 
             case 'char':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'text',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
 
                 /*
                 $fields[] = array(
@@ -384,15 +355,15 @@ class rex_yform_manager_table_api
                     return $option . '=' . $option;
                 }, explode(',', $column['length']));
 
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'select',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'options' => implode(',', $options),
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
 
                 break;
 
@@ -402,7 +373,7 @@ class rex_yform_manager_table_api
                     return $option . '=' . $option;
                 }, explode(',', $column['length']));
 
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'select',
                     'name' => $column['name'],
@@ -410,8 +381,8 @@ class rex_yform_manager_table_api
                     'options' => implode(',', $options),
                     'default' => (string) $column['default'],
                     'multiple' => 1,
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
 
                 break;
 
@@ -420,14 +391,14 @@ class rex_yform_manager_table_api
                     $sql = rex_sql::factory();
                     $sql->setQuery('SELECT * FROM `' . $sql->escape($table_name) . '` WHERE `' . $sql->escape($column['name']) . '` NOT IN (0, 1) LIMIT 1');
                     if (!$sql->getRows()) {
-                        $fields[] = array(
+                        $fields[] = [
                             'type_id' => 'value',
                             'type_name' => 'checkbox',
                             'name' => $column['name'],
                             'label' => $column['name'],
                             'default' => (string) $column['default'],
-                            'no_db' => 0
-                        );
+                            'no_db' => 0,
+                        ];
                         break;
                     }
                 }
@@ -436,80 +407,80 @@ class rex_yform_manager_table_api
             case 'mediumint':
             case 'int':
             case 'bigint':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'text',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
 
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'validate',
                     'type_name' => 'type',
                     'name' => $column['name'],
                     'type' => 'int',
                     'not_required' => 'YES' === $column['null'],
                     'message' => $column['name'] . ' must be an integer',
-                );
+                ];
 
                 break;
 
             case 'float':
             case 'double':
             case 'decimal':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'text',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
 
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'validate',
                     'type_name' => 'type',
                     'name' => $column['name'],
                     'type' => 'float',
                     'not_required' => 'YES' === $column['null'],
                     'message' => $column['name'] . ' must be a float',
-                );
+                ];
                 break;
 
             case 'date':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'date',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
                 break;
 
             case 'time':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'time',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
                 break;
 
             case 'datetime':
             case 'timestamp':
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'datetime',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
                 break;
 
             case 'blob':
@@ -527,32 +498,30 @@ class rex_yform_manager_table_api
             case 'mediumtext':
             case 'longtext':
             default:
-                $fields[] = array(
+                $fields[] = [
                     'type_id' => 'value',
                     'type_name' => 'textarea',
                     'name' => $column['name'],
                     'label' => $column['name'],
                     'default' => (string) $column['default'],
-                    'no_db' => 0
-                );
+                    'no_db' => 0,
+                ];
                 break;
-
         }
 
         foreach ($fields as $field) {
             self::setTableField($table_name, $field);
         }
-
     }
 
-    static function createMissingFieldColumns($field)
+    public static function createMissingFieldColumns($field)
     {
-        $columns = array();
+        $columns = [];
         foreach (rex_sql::showColumns(rex_yform_manager_field::table()) as $column) {
             $columns[$column['name']] = true;
         }
 
-        $alterTable = array();
+        $alterTable = [];
         foreach ($field as $column => $value) {
             if (!isset($columns[$column])) {
                 $alterTable[] = 'ADD `' . $column . '` TEXT NOT NULL';
@@ -569,12 +538,11 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-    static function generateTablesAndFields($delete_old = false)
+    public static function generateTablesAndFields($delete_old = false)
     {
         rex_yform_manager_table::deleteCache();
         $types = rex_yform::getTypeArray();
         foreach (rex_yform_manager_table::getAll() as $table) {
-
             $c = rex_sql::factory();
             $c->setDebug(self::$debug);
             $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
@@ -615,9 +583,7 @@ class rex_yform_manager_table_api
                             $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` ADD `' . $type_label . '` ' . $dbtype . $null);
                         }
                     }
-
                 }
-
             }
 
             if ($delete_old === true) {
@@ -627,11 +593,8 @@ class rex_yform_manager_table_api
                     }
                 }
             }
-
         }
 
         rex_yform_manager_table::deleteCache();
     }
-
-
 }

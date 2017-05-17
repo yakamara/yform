@@ -1,22 +1,18 @@
 <?php
 
 $FieldsAddress = [];
-$LabelsAddress = explode(",",$address);
+$LabelsAddress = explode(',', $address);
 
-foreach($this->params["values"] as $address_value) {
-
+foreach ($this->params['values'] as $address_value) {
     if (in_array($address_value->getName(), $LabelsAddress)) {
-        $FieldsAddress[] = "#".$address_value->getFieldId();
+        $FieldsAddress[] = '#'.$address_value->getFieldId();
     }
-
 }
 
-if ($googleapikey != "") {
+if ($googleapikey != '') {
     echo '<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key='.$googleapikey.'&sensor=false"></script>';
-
 } else {
     echo '<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>';
-
 }
 
 ?>
@@ -68,10 +64,10 @@ if ($googleapikey != "") {
             var fields = [];
             <?php
 
-            $i=0;
-            foreach($FieldsAddress as $adr) {
+            $i = 0;
+            foreach ($FieldsAddress as $adr) {
                 echo "\n".'fields['.$i.'] = jQuery("' . $adr . '").val();';
-                $i++;
+                ++$i;
             }
 
             ?>
@@ -134,10 +130,10 @@ if ($googleapikey != "") {
 
 <?php
 
-if ( (string) (int) $mapWidth == (string) $mapWidth) {
+if ((string) (int) $mapWidth == (string) $mapWidth) {
     $mapWidth = $mapWidth.'px';
 }
-if ( (string) (int) $mapHeight == (string) $mapHeight) {
+if ((string) (int) $mapHeight == (string) $mapHeight) {
     $mapHeight = $mapHeight.'px';
 }
 

@@ -4,7 +4,7 @@
         <?php echo $this->getLabel() ?>
         <?php if ($this->getValue()): ?>
             <br />Dateiname: <a href="files/<?php echo htmlspecialchars($this->getValue()) ?>"><?php echo htmlspecialchars($this->getValue()) ?></a><br />
-            <?php if (in_array(substr(strtolower($this->getValue()), -4), array('.jpg', '.png', '.gif'))): ?>
+            <?php if (in_array(substr(strtolower($this->getValue()), -4), ['.jpg', '.png', '.gif'])): ?>
                 <br /><img src="?rex_img_type=profileimage&amp;rex_img_file=<?php echo htmlspecialchars($this->getValue()) ?>" />
             <?php endif ?>
         <?php endif ?>

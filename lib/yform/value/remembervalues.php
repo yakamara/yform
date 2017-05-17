@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_remembervalues extends rex_yform_value_abstract
 {
-
-    function postValidateAction()
+    public function postValidateAction()
     {
         if ($this->params['send'] == 0) {
             $fields = explode(',', $this->getElement(3));
@@ -20,7 +20,7 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
             if (isset($_COOKIE[$cookiename])) {
                 $fields = unserialize(base64_decode($_COOKIE[$cookiename]));
             } else {
-                $fields = array();
+                $fields = [];
             }
             if (is_array($fields)) {
                 foreach ($this->obj as $o) {
@@ -31,20 +31,19 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
                 }
             }
         }
-
     }
 
-    function enterObject()
+    public function enterObject()
     {
         if ($this->needsOutput()) {
             $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php');
         }
     }
 
-    function postFormAction()
+    public function postFormAction()
     {
         if ($this->params['send'] == 1) {
-            $c = array();
+            $c = [];
             if ($this->getValue() == 1) {
                 $fields = explode(',', $this->getElement(3));
                 foreach ($this->obj as $o) {
@@ -62,13 +61,12 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
             if ($lastfor < 3600) {
                 $lastfor = 4 * 7 * 24 * 60 * 60;
             } // if < 1 hour -> one month
-            setcookie($cookiename, $c , time() + $lastfor, '/');
+            setcookie($cookiename, $c, time() + $lastfor, '/');
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'remembervalues|name|label|label1,label2,label3,label4|opt:default:1/0|opt:dauerinsekunden';
     }
-
 }

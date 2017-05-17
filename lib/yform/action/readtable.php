@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_readtable extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         if (!isset($this->params['value_pool']['email'][$this->getElement(4)])) {
             return;
         }
@@ -29,13 +28,10 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
                 $this->params['value_pool']['email'][$k] = $v;
             }
         }
-
-        return;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|readtable|tablename|feldname|label';
     }
-
 }

@@ -13,8 +13,6 @@ if (count($notices) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notices) . '</p>';
 }
 
-
-
 $class_group = trim('form-group yform-element ' . $this->getWarningClass());
 
 $class_label[] = 'control-label';
@@ -33,8 +31,6 @@ if (trim($this->getElement('grid')) != '') {
         $field_after = '</div>';
     }
 }
-
-
 
 $output = $format;
 
@@ -118,7 +114,6 @@ if ($pos !== false) {
 
 // $output = str_replace($search, $replace, $output);
 $output = strtr($output, $replace);
-
 
 echo '
     <div class="' . $class_group . '" id="' . $this->getHTMLId() . '">

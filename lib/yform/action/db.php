@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_db extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         $sql = rex_sql::factory();
         $sql->setDebug($this->params['debug']);
 
@@ -21,10 +20,10 @@ class rex_yform_action_db extends rex_yform_action_abstract
         }
 
         if ($main_table == '') {
-                $this->params['form_show'] = true;
-                $this->params['hasWarnings'] = true;
-                $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
-                return false;
+            $this->params['form_show'] = true;
+            $this->params['hasWarnings'] = true;
+            $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
+            return false;
         }
 
         $sql->setTable($main_table);
@@ -67,13 +66,11 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 $this->params['value_pool']['email']['ID'] = $id;
                 // $this->params["value_pool"]["sql"]["ID"] = $id;
             }
-
         } catch (Exception $sql) {
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
             $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
             echo $sql->getMessage();
-
         }
 
         rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql,
@@ -83,15 +80,13 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 'table' => $main_table,
                 'action' => $action,
                 'id' => $this->params['main_id'],
-                'yform' => true
+                'yform' => true,
             ]
         ));
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|db|tblname|[where(id=2)/main_where]';
     }
-
 }

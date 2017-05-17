@@ -2,12 +2,12 @@
 
 class rex_yform_manager_field implements ArrayAccess
 {
-    protected $values = array();
-    protected $definitions = array();
+    protected $values = [];
+    protected $definitions = [];
     protected static $debug = false;
-    protected static $types = array('value', 'validate', 'action');
+    protected static $types = ['value', 'validate', 'action'];
 
-    function __construct(array $values)
+    public function __construct(array $values)
     {
         $class = 'rex_yform_' . $values['type_id'] . '_' . $values['type_name'];
 
@@ -15,19 +15,18 @@ class rex_yform_manager_field implements ArrayAccess
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
-        $object = new $class;
+        $object = new $class();
         $this->definitions = $object->getDefinitions();
         if (isset($this->definitions['values'])) {
             $i = 'validate' === $values['type_id'] ? 2 : 1;
             foreach ($this->definitions['values'] as $key => $value) {
-                if (isset($values['f' . $i]) && (!isset($values[$key]) || is_null($values[$key]) || '' === $values[$key])) {
+                if (isset($values['f' . $i]) && (!isset($values[$key]) || null === $values[$key] || '' === $values[$key])) {
                     $values[$key] = $values['f' . $i];
                 }
-                $i++;
+                ++$i;
             }
         }
         $this->values = $values;
-
     }
 
     public static function table()
@@ -38,7 +37,7 @@ class rex_yform_manager_field implements ArrayAccess
     // value, validate, action
     public function getType()
     {
-        $type_id =  $this->values['type_id'];
+        $type_id = $this->values['type_id'];
         if (!in_array($type_id, self::$types)) {
             return false;
         }
@@ -72,12 +71,11 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->values[$k];
     }
 
-
     public function isSearchableDisabled()
     {
-        if (!isset($this->definitions["is_searchable"])) {
+        if (!isset($this->definitions['is_searchable'])) {
             return false;
-        } else if (!$this->definitions["is_searchable"]){
+        } elseif (!$this->definitions['is_searchable']) {
             return true;
         }
         return false;
@@ -87,24 +85,20 @@ class rex_yform_manager_field implements ArrayAccess
     {
         if ($this->isSearchableDisabled()) {
             return false;
-
         }
 
         if (isset($this->values['search']) && $this->values['search']) {
             return true;
-
         }
         return false;
     }
 
     public function isHiddenInListDisabled()
     {
-        if (!isset($this->definitions["is_hiddeninlist"])) {
+        if (!isset($this->definitions['is_hiddeninlist'])) {
             return false;
-
-        } else if ($this->definitions["is_hiddeninlist"]) {
+        } elseif ($this->definitions['is_hiddeninlist']) {
             return true;
-
         }
         return false;
     }
@@ -126,13 +120,12 @@ class rex_yform_manager_field implements ArrayAccess
     public function toArray()
     {
         return $this->values;
-
     }
 
     // ------------------------------------------- Array Access
     public function offsetSet($offset, $value)
     {
-        if (is_null($offset)) {
+        if (null === $offset) {
             $this->values[] = $value;
         } else {
             $this->values[$offset] = $value;
@@ -158,5 +151,4 @@ class rex_yform_manager_field implements ArrayAccess
     {
         return $this->getName();
     }
-
 }

@@ -5,7 +5,6 @@
  */
 class rex_yform_manager_table_perm extends rex_complex_perm
 {
-
     public function hasPerm($table_name)
     {
         return $this->hasAll() || in_array($table_name, $this->perms);
@@ -19,5 +18,4 @@ class rex_yform_manager_table_perm extends rex_complex_perm
             'sql_options' => 'select concat(`name`," [", `table_name`,"]") as name, table_name as id from ' . rex::getTablePrefix() . 'yform_table where status = 1 order by prio',
         ];
     }
-
 }

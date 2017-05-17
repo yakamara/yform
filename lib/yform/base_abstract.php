@@ -1,27 +1,28 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 abstract class rex_yform_base_abstract
 {
-    var $id = NULL;
-    var $params = array();
-    var $obj;
-    var $elements;
+    public $id = null;
+    public $params = [];
+    public $obj;
+    public $elements;
     protected $elementMapping;
 
-    function loadParams(&$params, $elements)
+    public function loadParams(&$params, $elements)
     {
         $this->params = &$params;
         $offset = 0;
         foreach ($elements as $key => $value) {
             if (is_string($value) && !empty($value) && $value[0] == '#' && false !== strpos($value, ':')) {
                 list($key, $value) = explode(':', substr($value, 1), 2);
-                $offset++;
+                ++$offset;
             }
             $this->setElement(is_numeric($key) ? $key - $offset : $key, $value);
         }
@@ -29,35 +30,34 @@ abstract class rex_yform_base_abstract
 
     protected function loadElementMapping()
     {
-        if (!is_null($this->elementMapping)) {
+        if (null !== $this->elementMapping) {
             return;
         }
 
-        $this->elementMapping = array();
+        $this->elementMapping = [];
         $definitions = $this->getDefinitions();
         if (isset($definitions['values'])) {
             $i = $this->getElementMappingOffset();
             foreach ($definitions['values'] as $key => $_) {
                 $this->elementMapping[$i] = is_int($key) ? $i : $key;
-                $i++;
+                ++$i;
             }
         }
     }
 
-
-    function getId()
+    public function getId()
     {
         return $this->id;
     }
 
-    function setId($id)
+    public function setId($id)
     {
         $this->id = $id;
     }
 
     abstract protected function getElementMappingOffset();
 
-    function setElement($i, $v)
+    public function setElement($i, $v)
     {
         $this->loadElementMapping();
         if (is_int($i) && isset($this->elementMapping[$i])) {
@@ -66,7 +66,7 @@ abstract class rex_yform_base_abstract
         $this->elements[$i] = $v;
     }
 
-    function getElement($i)
+    public function getElement($i)
     {
         if (isset($this->elements[$i])) {
             return $this->elements[$i];
@@ -77,50 +77,66 @@ abstract class rex_yform_base_abstract
         return false;
     }
 
-    function getParam($param, $default = null)
+    public function getParam($param, $default = null)
     {
         return isset($this->params[$param]) ? $this->params[$param] : $default;
     }
 
-    function setObjects(&$obj)
+    public function setObjects(&$obj)
     {
         $this->obj = &$obj;
     }
 
-    function getObjects()
+    public function getObjects()
     {
         return $this->obj;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return '';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array();
+        return [];
     }
 
-    function preValidateAction() {}
+    public function preValidateAction()
+    {
+    }
 
-    function postValidateAction() {}
+    public function postValidateAction()
+    {
+    }
 
-    function postValueAction() {}
+    public function postValueAction()
+    {
+    }
 
-    function postFormAction() {}
+    public function postFormAction()
+    {
+    }
 
-    function preAction() {}
+    public function preAction()
+    {
+    }
 
-    function executeAction()
+    public function executeAction()
     {
         return $this->execute();
     }
 
-    function postAction() {}
+    public function postAction()
+    {
+    }
 
     /* deprecated */
-    function execute() {}
+    public function execute()
+    {
+    }
 
-    function init() {}
+    public function init()
+    {
+    }
 }

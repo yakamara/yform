@@ -1,18 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_validate_type extends rex_yform_validate_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         if ($this->params['send'] == '1') {
-
             $Object = $this->getValueObject();
 
             if ($this->getElement('not_required') == 1 && $Object->getValue() == '') {
@@ -23,7 +22,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
             switch (trim($this->getElement('type'))) {
                 case 'int':
-                    $xsRegEx_int = "/^[0-9]+$/i";
+                    $xsRegEx_int = '/^[0-9]+$/i';
                     if (preg_match($xsRegEx_int, $Object->getValue()) == 0) {
                         $w = true;
                     }
@@ -42,7 +41,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 case 'string':
                     break;
                 case 'email':
-                    if (!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue()) ) {
+                    if (!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
                         $w = true;
                     }
                     break;
@@ -75,10 +74,11 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         }
                     }
                     break;
-                case "hex":
-                    $xsRegEx_hex = "/^[0-9a-fA-F]+$/i";
-                    if (preg_match($xsRegEx_hex, $Object->getValue()) == 0)
-                        $w = TRUE;
+                case 'hex':
+                    $xsRegEx_hex = '/^[0-9a-fA-F]+$/i';
+                    if (preg_match($xsRegEx_hex, $Object->getValue()) == 0) {
+                        $w = true;
+                    }
                     break;
                 case '':
                     break;
@@ -89,43 +89,30 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             }
 
             if ($w) {
-
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-
             }
-
-
         }
     }
 
-
-    function getDescription()
+    public function getDescription()
     {
         return 'validate|type|label|int/float/numeric/string/email/url/date/datetime|Fehlermeldung|[1= Feld darf auch leer sein]';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-
-            return array(
+        return [
                 'type' => 'validate',
                 'name' => 'type',
-                'values' => array(
-                    'name'     => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_type_name")),
-                    'type'     => array( 'type' => 'select',    'label' => rex_i18n::msg("yform_validate_type_type"), 'default' => '', 'options' => 'int,float,numeric,string,email,url,date,datetime' ),
-                    'message'  => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_validate_type_message")),
-                    'not_required' => array( 'type' => 'boolean',    'label' => rex_i18n::msg("yform_validate_type_not_required"), 'default' => 0 ),
-                ),
-                'description' => rex_i18n::msg("yform_validate_type_description"),
-                'famous' => true
-            );
-
+                'values' => [
+                    'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_type_name')],
+                    'type' => ['type' => 'select',    'label' => rex_i18n::msg('yform_validate_type_type'), 'default' => '', 'options' => 'int,float,numeric,string,email,url,date,datetime'],
+                    'message' => ['type' => 'text',    'label' => rex_i18n::msg('yform_validate_type_message')],
+                    'not_required' => ['type' => 'boolean',    'label' => rex_i18n::msg('yform_validate_type_not_required'), 'default' => 0],
+                ],
+                'description' => rex_i18n::msg('yform_validate_type_description'),
+                'famous' => true,
+            ];
     }
-
-
-
-
-
-
 }

@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_copy_value extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         $label_from = $this->getElement(2);
         $label_to = $this->getElement(3);
 
@@ -21,14 +20,10 @@ class rex_yform_action_copy_value extends rex_yform_action_abstract
                 break;
             }
         }
-
-        return;
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|copy_value|label_from|label_to';
     }
-
 }

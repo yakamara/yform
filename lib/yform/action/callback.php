@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_callback extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         if (!$this->getElement(2)) {
             return false;
         }
@@ -26,14 +25,10 @@ class rex_yform_action_callback extends rex_yform_action_abstract
         } elseif (function_exists($f)) {
             $f($this);
         }
-
-        return;
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|callback|mycallback / myclass::mycallback';
     }
-
 }

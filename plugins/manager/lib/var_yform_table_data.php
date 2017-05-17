@@ -45,7 +45,7 @@ class rex_var_yform_table_data extends rex_var
                     foreach ($valueArray as $valueID) {
                         $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $valueID]);
                         if (isset($listValues[$valueID])) {
-                            $name =  $listValues[$valueID];
+                            $name = $listValues[$valueID];
                             if (strlen($name) > 50) {
                                 $name = mb_substr($name, 0, 45) . ' ... ';
                             }
@@ -81,7 +81,7 @@ class rex_var_yform_table_data extends rex_var
 
                 $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $value]);
                 if (isset($listValues[$value])) {
-                    $valueName =  $listValues[$value];
+                    $valueName = $listValues[$value];
                     if (strlen($valueName) > 50) {
                         $valueName = mb_substr($valueName, 0, 45) . ' ... ';
                     }
@@ -137,12 +137,10 @@ class rex_var_yform_table_data extends rex_var
     public static function getWidget($id, $name, $value, array $args = [])
     {
         $link = $args['link'];
-        if ($value == "") {
+        if ($value == '') {
             $valueName = '';
-
         } else {
             $valueName = htmlspecialchars($args['valueName']) . ' [id=' . $value . ']';
-
         }
 
         $e['field'] = '<input class="form-control" type="text" name="yform_MANAGER_DATANAME[' . $id . ']" value="' .  $valueName . '" id="yform_MANAGER_DATANAME_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $name . '" id="yform_MANAGER_DATA_' . $id . '" value="' . $value . '" />';
@@ -153,6 +151,5 @@ class rex_var_yform_table_data extends rex_var
         $fragment = new rex_fragment();
         $fragment->setVar('elements', [$e], false);
         return $fragment->parse('core/form/widget.php');
-
     }
 }

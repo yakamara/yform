@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_showtext extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
         $text = $this->getElement(2);
 
@@ -39,9 +39,8 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
         $this->params['output'] .= $text;
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|showtext|Antworttext|&lt;p&gt;|&lt;/p&gt;|0/1/2 (plaintext/html/textile)';
     }
-
 }

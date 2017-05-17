@@ -1,18 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_validate_unique extends rex_yform_validate_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         if ($this->params['send'] == '1') {
-
             $cd = rex_sql::factory();
 
             $table = $this->params['main_table'];
@@ -21,7 +20,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
             }
 
             $fields = explode(',', $this->getElement('name'));
-            $qfields = array();
+            $qfields = [];
             foreach ($this->getObjects() as $Object) {
                 if (in_array($Object->getName(), $fields)) {
                     $value = $Object->getValue();
@@ -57,24 +56,23 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'validate|unique|dbfeldname[,dbfeldname2]|Dieser Name existiert schon|[table]';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'validate',
             'name' => 'unique',
-            'values' => array(
-                'name'    => array( 'type' => 'text', 	   'label' => rex_i18n::msg("yform_validate_unique_name"), 'notice' => rex_i18n::msg("yform_validate_unique_notice")),
-                'message' => array( 'type' => 'text',      'label' => rex_i18n::msg("yform_validate_unique_message")),
-                'table'   => array( 'type' => 'text',      'label' => rex_i18n::msg("yform_validate_unique_table")),
-            ),
-            'description' => rex_i18n::msg("yform_validate_unique_description"),
+            'values' => [
+                'name' => ['type' => 'text',       'label' => rex_i18n::msg('yform_validate_unique_name'), 'notice' => rex_i18n::msg('yform_validate_unique_notice')],
+                'message' => ['type' => 'text',      'label' => rex_i18n::msg('yform_validate_unique_message')],
+                'table' => ['type' => 'text',      'label' => rex_i18n::msg('yform_validate_unique_table')],
+            ],
+            'description' => rex_i18n::msg('yform_validate_unique_description'),
             'multi_edit' => false,
-        );
-
+        ];
     }
 }

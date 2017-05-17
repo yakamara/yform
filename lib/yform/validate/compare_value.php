@@ -1,19 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_validate_compare_value extends rex_yform_validate_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
-
         if ($this->params['send'] == '1') {
-
             $compare_type = $this->getElement('compare_type');
             $compare_value = $this->getElement('compare_value');
 
@@ -21,33 +19,33 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
             $field_value = $Object->getValue();
 
             $error = false;
-            switch($compare_type) {
-                case("<="):
+            switch ($compare_type) {
+                case '<=':
                     if ($field_value <= $compare_value) {
                         $error = true;
                     }
                     break;
-                case(">="):
+                case '>=':
                     if ($field_value >= $compare_value) {
                         $error = true;
                     }
                     break;
-                case(">"):
+                case '>':
                     if ($field_value > $compare_value) {
                         $error = true;
                     }
                     break;
-                case("<"):
+                case '<':
                     if ($field_value < $compare_value) {
                         $error = true;
                     }
                     break;
-                case("=="):
+                case '==':
                     if ($field_value == $compare_value) {
                         $error = true;
                     }
                     break;
-                case("!="):
+                case '!=':
                 default:
                     if ($field_value != $compare_value) {
                         $error = true;
@@ -58,31 +56,27 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
-
         }
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'validate|compare_value|label|value|[!=/</>/==/>=/<=]|warning_message ';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'validate',
             'name' => 'compare_value',
-            'values' => array(
-                'name'    => array( 'type' => 'select_name', 'label' => rex_i18n::msg("yform_validate_compare_value_name")),
-                'compare_value'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_validate_compare_value_compare_value")),
-                'compare_type' => array ('type' => 'select', 'label' => rex_i18n::msg("yform_validate_compare_value_compare_type"), 'options' => '!\=,<,>,\=\=,>\=,<\=', 'default' => '!\='),
-                'message' => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_validate_compare_value_message")),
-
-            ),
-            'description' => rex_i18n::msg("yform_validate_compare_value_description"),
+            'values' => [
+                'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_compare_value_name')],
+                'compare_value' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_compare_value_compare_value')],
+                'compare_type' => ['type' => 'select', 'label' => rex_i18n::msg('yform_validate_compare_value_compare_type'), 'options' => '!\=,<,>,\=\=,>\=,<\=', 'default' => '!\='],
+                'message' => ['type' => 'text',        'label' => rex_i18n::msg('yform_validate_compare_value_message')],
+            ],
+            'description' => rex_i18n::msg('yform_validate_compare_value_description'),
             'multi_edit' => false,
-        );
-
+        ];
     }
 }

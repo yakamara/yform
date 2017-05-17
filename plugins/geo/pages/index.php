@@ -1,20 +1,21 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 echo rex_view::title(rex_i18n::msg('yform_geo'));
 
-$table_name = rex_request('table_name','string');
-$table = NULL;
+$table_name = rex_request('table_name', 'string');
+$table = null;
 
 $tables = rex_yform_manager_table::getAll();
 $geo_tables = [];
-foreach($tables as $i_table) {
-    $fields = $i_table->getValueFields(array('type_name' => 'google_geocode'));
+foreach ($tables as $i_table) {
+    $fields = $i_table->getValueFields(['type_name' => 'google_geocode']);
     if (count($fields) > 0) {
         if ($table_name == $i_table->getTableName()) {
             $table = $i_table;
@@ -25,36 +26,30 @@ foreach($tables as $i_table) {
 }
 
 if (count($geo_tables) == 0) {
-
-    echo rex_view::info($this->i18n("geo_nogeotablefound"));
-
-} else if (!$table) {
-
+    echo rex_view::info($this->i18n('geo_nogeotablefound'));
+} elseif (!$table) {
     $content = [];
-    foreach($geo_tables as $g_table) {
+    foreach ($geo_tables as $g_table) {
         $content[] = '<a href="index.php?page=yform/geo/index/&table_name='.$g_table->getTableName().'" class="btn btn-setup">'.$g_table->getTableName().'</a>';
-
     }
-    $content = '<p>'.implode("<br /><br />", $content).'</p>';
+    $content = '<p>'.implode('<br /><br />', $content).'</p>';
 
     $fragment = new rex_fragment();
     $fragment->setVar('title', $this->i18n('geo_choosetable'), false);
-    $fragment->setVar('body', $content , false);
+    $fragment->setVar('body', $content, false);
     echo $fragment->parse('core/page/section.php');
-
 } else {
-
     $func = rex_request('geo_func', 'string');
     $field = rex_request('geo_field', 'string');
 
     $gd = rex_sql::factory();
 
     if ($func == 'get_data') {
-        $data = array();
+        $data = [];
         ob_end_clean();
         if (array_key_exists($field, $fields)) {
             $address_fields = explode(',', $fields[$field]['address']);
-            $fs = array();
+            $fs = [];
             foreach ($address_fields as $f) {
                 $fs[] = $gd->escapeIdentifier(trim($f));
             }
@@ -71,7 +66,6 @@ if (count($geo_tables) == 0) {
         }
         echo json_encode($data);
         exit;
-
     } elseif ($func == 'save_data') {
         ob_end_clean();
         $data = '0';
@@ -194,8 +188,6 @@ if (count($geo_tables) == 0) {
 
     $fragment = new rex_fragment();
     $fragment->setVar('title', $this->i18n('geo_tagging', $table['table_name']), false);
-    $fragment->setVar('body', $content , false);
+    $fragment->setVar('body', $content, false);
     echo $fragment->parse('core/page/section.php');
-
-
 }
