@@ -22,7 +22,7 @@ if (count($notice) > 0) {
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th><?php echo htmlspecialchars($column) ?></th>
+                <th><?php echo htmlspecialchars(rex_i18n::translate(trim($column))) ?></th>
             <?php endforeach ?>
             <th class="rex-table-action"><a class="btn btn-xs btn-default" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>

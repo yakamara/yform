@@ -7,7 +7,7 @@
     <table class="rex-table rex-yform-be-table" id="yform_table<?php echo $this->getId() ?>">
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th><?php echo $column ?></th>
+                <th><?php echo htmlspecialchars(rex_i18n::translate(trim($column))) ?></th>
             <?php endforeach ?>
             <th></th>
         </tr>
