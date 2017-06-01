@@ -1,0 +1,4 @@
+yform_docs = Documentação
+yform_docs_filenotfound = Arquivo não encontrado. O conteúdo não existe (ainda). <br /> Sugestões são bem-vindas: <a href="https://github.com/yakamara/redaxo_yform_docs/tree/master/en_gb" target="_blank">https://github.com/yakamara/redaxo_yform_docs/tree/master/en_gb</a>
+yform_docs_navigation = Navegação
+yform_docs_content = Conteúdo
