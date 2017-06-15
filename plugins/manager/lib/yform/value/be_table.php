@@ -20,23 +20,23 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $this->setValue(json_encode($rows));
         }
 
-        $columns = explode(',', $this->getElement('columns'));
-        if (count($columns) == 0) {
-            return;
-        }
+        if ($this->getParam('send') && isset($_POST['FORM'])) {
+            // Cleanup Array
+            $table_array = [];
+            $id = $this->getId();
 
-        $id = $this->getId();
+            $columns = explode(',', $this->getElement('columns'));
+            if (count($columns) == 0) {
+                return;
+            }
 
-        // Cleanup Array
+            $form_data = rex_post('FORM', 'array');
+            $rows = count($form_data[$id .'.0']);
 
-        $table_array = [];
-
-        if (isset($_REQUEST['v'][$id])) {
-            $rows = count($_REQUEST['v'][$id][0]);
             // Spalten durchgehen
-            for ($c = 0; $c < count($columns); ++$c) {
-                for ($r = 0; $r < $rows; ++$r) {
-                    $table_array[$r][$c] = (isset($_REQUEST['v'][$id][$c][$r])) ? $_REQUEST['v'][$id][$c][$r] : '';
+            for ($c = 0; $c < count($columns); $c++) {
+                for ($r = 0; $r < $rows; $r++) {
+                    $table_array[$r][$c] = (isset($form_data[$id .'.'. $c][$r])) ? $form_data[$id .'.'. $c][$r] : "" ;
                 }
             }
             $this->setValue(json_encode($table_array));
@@ -54,16 +54,39 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
-        $columns = explode(',', $this->getElement('columns'));
-        if (count($columns) == 0) {
+        $_columns = explode(',', $this->getElement('columns'));
+        if (count($_columns) == 0) {
             return;
         }
 
-        $data = json_decode($this->getValue(), true);
+        $columns  = [];
+        $yfparams = ['this' => \rex_yform::factory()];
+
+        foreach ($_columns as $index => $col) {
+            $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
+
+            if (count($values) == 1) {
+                $values = ['text', 'text_'. $index, $values[0]];
+            }
+
+            $values[1] = '';
+            $class = 'rex_yform_value_' . trim($values[0]);
+            $field = new $class();
+
+            $field->loadParams($yfparams, $values);
+            $field->setId($field->name);
+            $field->init();
+            $field->setLabel('');
+
+            $columns[] = ['label' => $values[2], 'field' => $field];
+        }
+
+        $data = json_decode($this->getValue(),true);
 
         if (!is_array($data)) {
             $data = [];
         }
+
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
     }
 
