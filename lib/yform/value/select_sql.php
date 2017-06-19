@@ -59,7 +59,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!array_key_exists($value, $options)) {
-                if ($default) {
+                if ($default OR $default === '0') {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
