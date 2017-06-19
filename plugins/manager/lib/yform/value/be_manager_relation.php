@@ -160,6 +160,16 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return;
         }
 
+        if(!$post_tablename = rex_post('table_name', 'string', null))
+        {
+            return;
+        }
+
+        if(!in_array($post_tablename, [$this->relation['source_table'], $this->relation['target_table'], $relationTable]))
+        {
+            return;
+        }
+
         // $this->params["debug"] = TRUE;
 
         $source_id = -1;
