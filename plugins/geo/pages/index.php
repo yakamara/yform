@@ -17,11 +17,11 @@ $geo_tables = [];
 foreach ($tables as $i_table) {
     $fields = $i_table->getValueFields(['type_name' => 'google_geocode']);
     if (count($fields) > 0) {
+        $geo_tables[] = $i_table;
         if ($table_name == $i_table->getTableName()) {
             $table = $i_table;
             break;
         }
-        $geo_tables[] = $i_table;
     }
 }
 
@@ -38,7 +38,7 @@ if (count($geo_tables) == 0) {
     $fragment->setVar('title', $this->i18n('geo_choosetable'), false);
     $fragment->setVar('body', $content, false);
     echo $fragment->parse('core/page/section.php');
-} else {
+} elseif ($table) {
     $func = rex_request('geo_func', 'string');
     $field = rex_request('geo_field', 'string');
 
