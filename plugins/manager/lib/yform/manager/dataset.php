@@ -291,7 +291,7 @@ class rex_yform_manager_dataset
             $this->loadData();
         }
 
-        return $this->data[$key];
+        return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 
     /**
