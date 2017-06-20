@@ -20,6 +20,36 @@ oder
 Last Changes
 -------
 
+### Version 2.2 // 21.04.2017
+
+### Änderungen
+
+* DE/EN Inhalte vervollständigt
+* Extension Point YFORM_EMAIL_SEND ergänzt
+* bug bei submit und BC korrigiert
+* datestamp-Feld um Text-Ansicht ergänzt
+* generate_key um Text-Ansicht ergänzt
+* generate_key um Definitionen ergänzt
+* showvalue auch im Backend nutzbar
+* BUG: value.be_manager_relation.tpl.php l78 warning cause of array passed into htmlspecialchars()
+* preg_match auch im Backend nutzbar
+* checkbox: erlaubte attribute ergänzt
+* BUG: YForm: Exception vermeiden bei getRelatedDataset mit optionalem Relationsfeld
+* YOrm: Neue Methode getRelatedQuery()
+* YOrm: rex_yform_manager_table->table ergänzt
+* be_relation: bei popup single, war die ausgabe beim suchfeld falsch
+* Dataset-Cache: Klassen korrekt beachten
+* BUG: getRelatedQuery: Verwechslung bei Relationstypen
+* select_sql: Text Leeroption auf string casten
+* YORM: Bei Abfrage einer einzelnen ID, orderBy nicht setzen
+* YORM: weitere where-Methoden (whereNot, whereNull etc.)
+* YORM: Methoden zum direkten Abfragen einer einzelnen Column
+* notice: an verschiedenen Feldern sind notices übersetzbar
+* index-Feld: ID kann nun mit aufgenommen werden
+* be_manager_relation popup (single) warning entfernt
+
+
+
 ### Version 2.1 // 26.01.2017
 
 #### Achtung !! Bitte genau anschauen und vor dem Update anpassen !! BItte auch Hinweise der Version 2.0 beachten wenn ein Updaten von 1.x erfolgen soll

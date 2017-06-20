@@ -71,3 +71,10 @@ body#rex-page-yform .yform-manager-searchfield{
 .rex-navi-piped > *:first-child {
     background: none;
 }
+
+.be-value-input .form-group {
+    margin: 0;
+}
+.be-value-input label {
+    display: none;
+}
