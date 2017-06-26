@@ -20,6 +20,26 @@ oder
 Last Changes
 -------
 
+
+### Version 2.3 // xx.xx.2017
+
+### Änderungen
+
+* Manager Upload: Feld speicherte bei YORM nicht richtig
+* Manager Upload: Fehlermeldung bei Typefehler erschien nicht
+* YFORM: Nested Wheres korrigiert
+* Tools: Timepicker angepasst
+* geo locations: fixed
+
+#### Neu
+
+* YFORM: populateRelation() für weniger Queries bei Relationen
+* be_media_category Feld ergänzt
+* email Feld ist nun durchsuchbar
+* notices können als HTML notiert werden
+
+
+
 ### Version 2.2 // 21.04.2017
 
 ### Änderungen
