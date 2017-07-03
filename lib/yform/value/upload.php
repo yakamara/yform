@@ -152,25 +152,23 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             }
         }
 
-        /*
         if (rex::isBackend()) {
 
             $link_params = [];
             $link_params['page'] = 'yform/manager/data_edit';
             $link_params['table_name'] = rex_request('table_name','string');
-            $link_params['func'] = rex_request('func', 'string');
+            $link_params['func'] = 'edit';
 
             if ($this->getParam('main_id') != "") {
                 $link_params['data_id'] = $this->getParam('main_id');
             }
 
             $link_params[$this->getFieldName('unique')] = $unique;
-            $link_params['rex_upload_download'] = $this->getName();
+            $link_params['rex_upload_downloadfile'] = $this->getName();
 
-            $download_link = '/redaxo/index.php?'.http_build_query($link_params);
+            $download_link = 'index.php?'.http_build_query($link_params);
 
         }
-        */
 
         // Download starten - wenn Dateinamen übereinstimmen
         if (rex::isBackend() && (rex_request('rex_upload_downloadfile', 'string') == $this->getName()) && $filename != '' && $filepath != '') {
@@ -185,12 +183,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $this->setValue($filename);
 
         $this->params['value_pool']['email'][$this->getName()] = $filename;
-        $this->params['value_pool']['email'][$this->getName().'_folder'] = $filename;
         $this->params['value_pool']['sql'][$this->getName()] = $filename;
-
-        if ($filepath != '') {
-            $this->params['value_pool']['files'][$this->getName()] = [$filename, $filepath, $real_filepath];
-        }
 
         if (count($errors) == 0 && $this->params['send'] && $this->getElement('required') == 1 && $filename == '') {
             $errors[] = $error_messages['empty_error'];
@@ -264,6 +257,9 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
                 $upload_filefolder = $FILE['upload_folder'].'/'.$FILE['upload_name'];
 
+                $this->params['value_pool']['email'][$this->getName().'_folder'] = $FILE['upload_folder'];
+                $this->params['value_pool']['files'][$this->getName()] = [$FILE['upload_name'], $FILE['upload_folder'], $upload_filefolder];
+
                 if (!move_uploaded_file($FILE['tmp_yform_name'], $upload_filefolder)) {
                     if (!copy($FILE['tmp_yform_name'], $upload_filefolder)) {
                         echo 'Uploadproblem: Code-YForm-Upload-Target';
@@ -330,7 +326,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         if (rex::isBackend()) {
             $field = new rex_yform_manager_field($params['params']['field']);
             if ($params['value'] != '') {
-                $return = '<a href="/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'">'.$params['value'].'</a>';
+                $return = '<a href="index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'">'.$params['value'].'</a>';
             }
         }
 
