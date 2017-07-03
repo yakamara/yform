@@ -1,39 +1,37 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 abstract class rex_yform_validate_abstract extends rex_yform_base_abstract
 {
-    var $validateObjects = [];
+    public $validateObjects = [];
 
-
-
-    function getValueObjects($valueNames) {
-
+    public function getValueObjects($valueNames)
+    {
         $Objects = [];
         $valueNames = explode(',', $valueNames);
 
         foreach ($valueNames as $valueName) {
-            if ( ($Object == $this->getValueObject($valueName)) ) {
+            if (($Object == $this->getValueObject($valueName))) {
                 $Objects[] = $Object;
             }
         }
 
         return $Objects;
-
     }
 
-    function getValueObject($valueName = "") {
-
-        if ($valueName == "") {
-            $valueName = $this->getElement("name");
+    public function getValueObject($valueName = '')
+    {
+        if ($valueName == '') {
+            $valueName = $this->getElement('name');
         }
 
-        if ($valueName == "") {
+        if ($valueName == '') {
             $valueName = $this->getElement(2);
         }
 
@@ -43,20 +41,16 @@ abstract class rex_yform_validate_abstract extends rex_yform_base_abstract
             }
         }
 
-        return NULL;
-
+        return null;
     }
-
-
 
     protected function getElementMappingOffset()
     {
         return 2;
     }
 
-    function enterObject()
+    public function enterObject()
     {
         return '';
     }
-
 }

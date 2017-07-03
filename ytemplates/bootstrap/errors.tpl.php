@@ -16,12 +16,12 @@ if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
     foreach ($this->objparams['warning_messages'] as $k => $v) {
         $warning_messages[rex_i18n::translate("$v", null)] = '<li>'.rex_i18n::translate("$v", null).'</li>';
     }
-    if (count($warning_messages)>0) {
+    if (count($warning_messages) > 0) {
         echo implode('', $warning_messages);
     }
 
     if ($this->objparams['unique_error'] != '') {
-        echo '<li>'.rex_i18n::translate(preg_replace("~\\*|:|\\(.*\\)~Usim", '', $this->objparams['unique_error'])).'</li>';
+        echo '<li>'.rex_i18n::translate(preg_replace('~\\*|:|\\(.*\\)~Usim', '', $this->objparams['unique_error'])).'</li>';
     }
 
     ?>

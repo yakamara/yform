@@ -1,24 +1,21 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_hidden extends rex_yform_value_abstract
 {
-
     public function setValue($value)
     {
         if ($this->getElement(3) == 'REQUEST' && isset($_REQUEST[$this->getElement(2)])) {
             $this->value = rex_request($this->getElement(2));
-
         } else {
             $this->value = $this->getElement(2);
-
         }
-
     }
 
     public function enterObject()
@@ -37,5 +34,4 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
     {
         return 'hidden|name|(default)value||[no_db]'."\n".'hidden|job_id|my_id|REQUEST|[no_db]';
     }
-
 }

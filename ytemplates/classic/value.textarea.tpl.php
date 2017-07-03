@@ -6,10 +6,10 @@ if (!$rows) {
 }
 
 $attributes = [
-    "class" => trim('textarea ' . $this->getWarningClass()),
-    "name" => $this->getFieldName(),
-    "id" => $this->getFieldId(),
-    "rows" => $rows
+    'class' => trim('textarea ' . $this->getWarningClass()),
+    'name' => $this->getFieldName(),
+    'id' => $this->getFieldId(),
+    'rows' => $rows,
 ];
 
 $attributes = $this->getAttributeElements($attributes, ['placeholder', 'pattern', 'required', 'disabled', 'readonly']);

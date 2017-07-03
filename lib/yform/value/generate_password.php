@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_generate_password extends rex_yform_value_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         $this->setValue(substr(md5(microtime() . rand(1000, getrandmax())), 0, 6));
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -18,7 +18,7 @@ class rex_yform_value_generate_password extends rex_yform_value_abstract
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'generate_password|name|[no_db]';
     }

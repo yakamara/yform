@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_createdb extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
         $table_name = $this->getElement(2);
         $table_exists = false;
@@ -35,12 +35,10 @@ class rex_yform_action_createdb extends rex_yform_action_abstract
                 rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` ADD `' . $key . '` TEXT NOT NULL;');
             }
         }
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|createdb|tblname';
     }
-
 }

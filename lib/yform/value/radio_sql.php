@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_radio_sql extends rex_yform_value_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         $sql = $this->getElement('query');
 
@@ -17,7 +17,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         $teams->setDebug($this->params['debug']);
         $teams->setQuery($sql);
 
-        $options = array();
+        $options = [];
         foreach ($teams->getArray() as $t) {
             $v = $t['name'];
             $k = $t['id'];
@@ -27,7 +27,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         if (!array_key_exists($this->getValue(), $options)) {
             $this->setValue('');
             $default = $this->getElement('default');
-            if($default && array_key_exists($default, $options)) {
+            if ($default && array_key_exists($default, $options)) {
                 $this->setValue($default);
             }
         }
@@ -42,43 +42,43 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'radio_sql|name|label|select id,name from table order by name|[defaultvalue]|';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'radio_sql',
-            'values' => array(
-                'name'      => array( 'type' => 'name', 'label' => rex_i18n::msg("yform_values_defaults_name") ),
-                'label'     => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_label")),
-                'query'     => array( 'type' => 'text', 'label' => 'Query mit "select id, name from .."'),
-                'default'   => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_radio_default")),
-                'attributes'=> array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_attributes"), 'notice' => rex_i18n::msg("yform_values_defaults_attributes_notice")),
-                'notice'    => array( 'type' => 'text', 'label' => rex_i18n::msg("yform_values_defaults_notice")),
-                'no_db'     => array( 'type' => 'no_db', 'label' => rex_i18n::msg("yform_values_defaults_table"), 'default' => 0),
-            ),
+            'values' => [
+                'name' => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'query' => ['type' => 'text', 'label' => 'Query mit "select id, name from .."'],
+                'default' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_radio_default')],
+                'attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
+                'notice' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
+            ],
             'description' => 'Hiermit kann man SQL Abfragen als Radioliste nutzen',
-            'dbtype' => 'text'
-        );
+            'dbtype' => 'text',
+        ];
     }
 
-    static function getListValue($params)
+    public static function getListValue($params)
     {
-        $return = array();
+        $return = [];
 
         $query = $params['params']['field']['query'];
         $query_params = [];
         $pos = strrpos(strtoupper($query), 'ORDER BY ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos);
         }
 
         $pos = strrpos(strtoupper($query), 'LIMIT ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos);
         }
 
@@ -86,12 +86,10 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         $query_params[] = $params['value'];
 
         $pos = strrpos(strtoupper($query), 'WHERE ');
-        if ( $pos !== false) {
+        if ($pos !== false) {
             $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
-
         } else {
             $query .= ' WHERE ' . $where;
-
         }
 
         $db = rex_sql::factory();
@@ -110,9 +108,9 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        $options = array();
-        $options['(empty)'] = "(empty)";
-        $options['!(empty)'] = "!(empty)";
+        $options = [];
+        $options['(empty)'] = '(empty)';
+        $options['!(empty)'] = '!(empty)';
 
         $options_sql = rex_sql::factory();
         $options_sql->setQuery($params['field']['query']);
@@ -121,13 +119,13 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             $options[$t['id']] = $t['name'];
         }
 
-        $params['searchForm']->setValueField('select', array(
+        $params['searchForm']->setValueField('select', [
         'name' => $params['field']->getName(),
         'label' => $params['field']->getLabel(),
         'options' => $options,
         'multiple' => 1,
         'size' => 5,
-        )
+        ]
         );
     }
 
@@ -137,13 +135,13 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
-        $where = array();
-        foreach($values as $value) {
-            switch($value){
-                case("(empty)"):
+        $where = [];
+        foreach ($values as $value) {
+            switch ($value) {
+                case '(empty)':
                     $where[] = $sql->escapeIdentifier($field).' = ""';
                     break;
-                case("!(empty)"):
+                case '!(empty)':
                     $where[] = $sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
@@ -153,10 +151,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         }
 
         if (count($where) > 0) {
-            return ' ( ' . implode(" or ", $where) . ' )';
-
+            return ' ( ' . implode(' or ', $where) . ' )';
         }
-
     }
-
 }

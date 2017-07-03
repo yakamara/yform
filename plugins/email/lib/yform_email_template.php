@@ -1,18 +1,18 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_email_template
 {
-    static function getTemplate($name)
+    public static function getTemplate($name)
     {
-
         $gt = rex_sql::factory();
-        $gt->setQuery('select * from ' . rex::getTablePrefix() . 'yform_email_template where name=:name',[':name' => $name]);
+        $gt->setQuery('select * from ' . rex::getTablePrefix() . 'yform_email_template where name=:name', [':name' => $name]);
         if ($gt->getRows() == 1) {
             $b = $gt->getArray();
             return current($b);
@@ -20,14 +20,13 @@ class rex_yform_email_template
         return false;
     }
 
-    static function replaceVars($template, $er = array())
+    public static function replaceVars($template, $er = [])
     {
-
         $r = rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_BEFORE_REPLACEVARS',
             [
                 'template' => $template,
                 'search_replace' => $er,
-                'status' => false
+                'status' => false,
             ]
         ));
 
@@ -50,13 +49,13 @@ class rex_yform_email_template
         // $template['body_html'] = rex_var::parse($template['body_html'],'','yform_email_template', $er);
 
         // BC < 2.0
-        foreach($template as $k => $v) {
-            foreach($er as $er_key => $er_value) {
+        foreach ($template as $k => $v) {
+            foreach ($er as $er_key => $er_value) {
                 $template[$k] = str_replace('###' . $er_key . '###', $er_value, $template[$k]);
                 $template[$k] = str_replace('***' . $er_key . '***', urlencode($er_value), $template[$k]);
                 $template[$k] = str_replace('+++' . $er_key . '+++', self::makeSingleLine($er_value), $template[$k]);
             }
-            $template[$k] = rex_var::parse($template[$k],'','yform_email_template', $er);
+            $template[$k] = rex_var::parse($template[$k], '', 'yform_email_template', $er);
         }
 
         // rex_vars bug: sonst wird der Zeilenumbruch entfernt - wenn DATA_VAR am Ende einer Zeile
@@ -77,24 +76,22 @@ class rex_yform_email_template
         $template['subject'] = self::makeSingleLine($template['subject']);
 
         return $template;
-
     }
 
-    static function makeSingleLine($str)
+    public static function makeSingleLine($str)
     {
         $str = str_replace("\n", '', $str);
         $str = str_replace("\r", '', $str);
         return $str;
     }
 
-    static function sendMail($template, $template_name = '')
+    public static function sendMail($template, $template_name = '')
     {
-
         $r = rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_BEFORE_SEND',
             [
                 'template' => $template,
                 'template_name' => $template_name,
-                'status' => false
+                'status' => false,
             ]
         ));
 
@@ -123,7 +120,7 @@ class rex_yform_email_template
                 $mail->AddAttachment($f['path'], $f['name']);
             }
         }
-        
+
         rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SEND', $mail, $template));
 
         rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SEND', $mail, $template)); // read only
@@ -132,14 +129,9 @@ class rex_yform_email_template
             $template['email_subject'] = $template['subject'];
             rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT', $template_name, $template, true)); // read only
             return true;
-
-        } else {
-            $template['email_subject'] = $template['subject'];
-            rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT_FAILED', $template_name, $template, true)); // read only
-            return false;
-
         }
-
+        $template['email_subject'] = $template['subject'];
+        rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT_FAILED', $template_name, $template, true)); // read only
+            return false;
     }
-
 }

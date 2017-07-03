@@ -1,22 +1,20 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_uniqueform extends rex_yform_value_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
-
         $table = $this->getElement(2);
 
         if (!$this->params['send']) {
             $this->setValue(md5($_SERVER['REMOTE_ADDR'] . time()));
-
         } else {
             $sql = 'select ' . $this->getName() . ' from ' . $table . ' WHERE ' . $this->getName() . '="' . $this->getValue() . '" LIMIT 1';
             $cd = rex_sql::factory();
@@ -27,7 +25,6 @@ class rex_yform_value_uniqueform extends rex_yform_value_abstract
                 $this->params['warning'][$this->getId()] = $this->getElement(3);
                 $this->params['warning_messages'][$this->getId()] = $this->getElement(3);
             }
-
         }
 
         if ($this->needsOutput()) {
@@ -36,10 +33,9 @@ class rex_yform_value_uniqueform extends rex_yform_value_abstract
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'uniqueform|name|table|Fehlermeldung';
     }

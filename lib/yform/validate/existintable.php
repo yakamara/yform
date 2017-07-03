@@ -1,18 +1,17 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_validate_existintable extends rex_yform_validate_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
         if ($this->params['send'] == '1') {
-
             $db = rex_sql::factory();
             $db->setDebug($this->params['debug']);
 
@@ -20,22 +19,20 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
             $labels = $this->getElement(2);
             $fields = $this->getElement(4);
 
-
             $labels = explode(',', $labels);
             $fields = explode(',', $fields);
 
-            $qfields = array();
+            $qfields = [];
             foreach ($this->getObjects() as $k => $o) {
                 if (in_array($o->getName(), $labels)) {
-
-                    $label_key = array_search ($o->getName(), $labels);
+                    $label_key = array_search($o->getName(), $labels);
                     $name = $fields[$label_key]; // $o->getName()
                     $value = $o->getValue();
 
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $qfields[$o->getId()] =  $db->escapeIdentifier($name) . ' = ' . $db->escape($value);
+                    $qfields[$o->getId()] = $db->escapeIdentifier($name) . ' = ' . $db->escape($value);
                 }
             }
 
@@ -55,11 +52,10 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
                 }
                 $this->params['warning_messages'][] = $this->getElement(5);
             }
-
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'validate|existintable|label,label2|tablename|feldname,feldname2|warning_message';
     }

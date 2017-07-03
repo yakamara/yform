@@ -4,16 +4,15 @@ $class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . 
 
 $id = crc32($this->params['form_name']) . rand(0, 10000) . $this->getId();
 
-$notice = array();
+$notice = [];
 if ($this->getElement('notice') != '') {
-    $notice[] = rex_i18n::translate($this->getElement('notice'));
+    $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notice[] =  '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
+    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
-
 } else {
     $notice = '';
 }
@@ -34,15 +33,12 @@ if (count($notice) > 0) {
             $select->setName($this->getFieldName() . '[]');
             $select->setMultiple();
             $select->setSize($this->relation['size']);
-
         } else {
             $select->setName($this->getFieldName());
-
         }
 
         if ($this->relation['disabled']) {
             $select->setAttribute('disabled', 'disabled');
-
         }
 
         $attributes = $this->getAttributeArray($attributes, ['required', 'readonly']);
@@ -73,7 +69,6 @@ if (count($notice) > 0) {
             $fragment = new rex_fragment();
             $fragment->setVar('elements', [$e], false);
             echo $fragment->parse('core/form/widget.php');
-
         } elseif ($this->relation['relation_type'] == 2) {
             $e['field'] = '<input class="form-control" type="text" name="yform_MANAGER_DATANAME[' . $id . ']" value="' .  htmlspecialchars($valueName) . '" id="yform_MANAGER_DATANAME_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $this->getFieldName() . '" id="yform_MANAGER_DATA_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
             $e['functionButtons'] = '
@@ -83,9 +78,7 @@ if (count($notice) > 0) {
             $fragment = new rex_fragment();
             $fragment->setVar('elements', [$e], false);
             echo $fragment->parse('core/form/widget.php');
-
         } else {
-
             $attributes = [];
             $attributes['class'] = 'form-control';
             $attributes = $this->getAttributeArray($attributes, ['required', 'readonly']);

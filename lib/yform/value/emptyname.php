@@ -1,37 +1,35 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_emptyname extends rex_yform_value_abstract
 {
-
-    function enterObject()
+    public function enterObject()
     {
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'emptyname|name|';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'emptyname',
-            'values' => array(
-                'name' => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
-                'label' => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label")),
-            ),
-            'description' => rex_i18n::msg("yform_values_emptyname_description"),
+            'values' => [
+                'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
+            ],
+            'description' => rex_i18n::msg('yform_values_emptyname_description'),
             'dbtype' => 'text',
             'multi_edit' => 'always',
-        );
-
+        ];
     }
 }

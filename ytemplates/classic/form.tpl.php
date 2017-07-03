@@ -8,8 +8,8 @@
             echo $field;
         endforeach ?>
 
-        <?php for ($i = 0; $i < $this->objparams['fieldsets_opened']; $i++):
-            echo $this->parse('value.fieldset.tpl.php', array('option' => 'close'));
+        <?php for ($i = 0; $i < $this->objparams['fieldsets_opened']; ++$i):
+            echo $this->parse('value.fieldset.tpl.php', ['option' => 'close']);
         endfor ?>
 
         <?php foreach ($this->objparams['form_hiddenfields'] as $k => $v): ?>

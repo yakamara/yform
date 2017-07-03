@@ -27,7 +27,6 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         if ($multiple) {
-
             $size = (int) $this->getElement('size');
             if ($size < 2) {
                 $size = count($options);
@@ -46,13 +45,11 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             }
 
             $this->setValue($real_values);
-
         } else {
-
             $size = 1;
 
             if ($this->getElement('empty_option') == 1) {
-                $options = ['0' => (string)$this->getElement('empty_value')] + $options;
+                $options = ['0' => (string) $this->getElement('empty_value')] + $options;
             }
 
             $default = null;
@@ -62,7 +59,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!array_key_exists($value, $options)) {
-                if ($default) {
+                if ($default OR $default === '0') {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -71,8 +68,6 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             } else {
                 $this->setValue([$value]);
             }
-
-
         }
 
         // ---------- rex_yform_set
@@ -96,7 +91,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         $this->params['value_pool']['email'][$this->getName() . '_NAME'] = isset($options[$this->getValue()]) ? $options[$this->getValue()] : null;
 
-        if ($this->getElement("no_db") != 'no_db') {
+        if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }

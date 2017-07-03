@@ -1,16 +1,18 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_prio extends rex_yform_value_abstract
 {
-    private $preEditScopeWhere, $debug = false;
+    private $preEditScopeWhere;
+    private $debug = false;
 
-    function enterObject()
+    public function enterObject()
     {
         $options[1] = rex_i18n::msg('yform_prio_top');
 
@@ -28,9 +30,9 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 $fields = array_filter(explode(',', $fields));
             }
             if (empty($fields)) {
-                $fields = array('id');
+                $fields = ['id'];
             }
-            $selectFields = array();
+            $selectFields = [];
             foreach ($fields as $field) {
                 $selectFields[] = $field;
             }
@@ -43,10 +45,9 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             ));
             $prio = 1;
             while ($sql->hasNext()) {
-
                 if ($sql->getValue('id') != $this->params['main_id']) {
                     $prio = $sql->getValue('prio') + 1;
-                    $label = array();
+                    $label = [];
                     foreach ($fields as $field) {
                         $label[] = rex_i18n::translate($sql->getValue($field));
                     }
@@ -69,7 +70,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         }
 
         if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', array('options' => $options, 'multiple' => false, 'size' => 1));
+            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', ['options' => $options, 'multiple' => false, 'size' => 1]);
         }
 
         $this->setValue(implode(',', $this->getValue()));
@@ -78,39 +79,38 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'prio|name|label|fields|scope|defaultwert';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'prio',
-            'values' => array(
-                'name'     => array( 'type' => 'name',         'label' => rex_i18n::msg("yform_values_defaults_name")),
-                'label'    => array( 'type' => 'text',         'label' => rex_i18n::msg("yform_values_defaults_label")),
-                'fields'   => array( 'type' => 'select_names', 'label' => rex_i18n::msg("yform_values_prio_fields")),
-                'scope'    => array( 'type' => 'select_names', 'label' => rex_i18n::msg("yform_values_prio_scope")),
-                'default'  => array( 'type' => 'select',       'label' => rex_i18n::msg("yform_values_prio_default"), 'options' => array(1 => 'Am Anfang', '' => 'Am Ende'), 'default' => ''),
-                'notice'    => array( 'type' => 'text',        'label' => rex_i18n::msg("yform_values_defaults_notice")),
-            ),
-            'description' => rex_i18n::msg("yform_values_prio_description"),
+            'values' => [
+                'name' => ['type' => 'name',         'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',         'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'fields' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_values_prio_fields')],
+                'scope' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_values_prio_scope')],
+                'default' => ['type' => 'select',       'label' => rex_i18n::msg('yform_values_prio_default'), 'options' => [1 => 'Am Anfang', '' => 'Am Ende'], 'default' => ''],
+                'notice' => ['type' => 'text',        'label' => rex_i18n::msg('yform_values_defaults_notice')],
+            ],
+            'description' => rex_i18n::msg('yform_values_prio_description'),
             'dbtype' => 'int',
             'multi_edit' => false,
-        );
-
+        ];
     }
 
-    function postAction()
+    public function postAction()
     {
         $sql = rex_sql::factory();
         if ($this->debug) {
             $sql->setDebug();
         }
         $scopeWhere = $this->getScopeWhere();
-        if (!is_null($this->preEditScopeWhere) && $scopeWhere !== $this->preEditScopeWhere) {
+        if (null !== $this->preEditScopeWhere && $scopeWhere !== $this->preEditScopeWhere) {
             $this->setValue($this->getElement('default'));
         }
 
@@ -138,7 +138,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         if (!$scope) {
             return '';
         }
-        $where = array();
+        $where = [];
         foreach ($scope as $column) {
             if (isset($this->params['value_pool']['sql'][$column])) {
                 $value = $this->params['value_pool']['sql'][$column];
@@ -164,5 +164,4 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         }
         return ' WHERE ' . implode(' AND ', $where);
     }
-
 }

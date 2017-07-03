@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_email extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         $mail_from = $this->getElement(2);
         $mail_to = $this->getElement(3);
         $mail_subject = $this->getElement(4);
@@ -39,9 +38,8 @@ class rex_yform_action_email extends rex_yform_action_abstract
         $mail->Send();
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|email|from@email.de|to@email.de|Mailsubject|Mailbody###name###';
     }
-
 }

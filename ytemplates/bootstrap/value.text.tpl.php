@@ -6,21 +6,20 @@ if (!isset($value)) {
     $value = $this->getValue();
 }
 
-$notice = array();
-if ($this->getElement('notice') != "") {
-  $notice[] = rex_i18n::translate($this->getElement('notice'));
+$notice = [];
+if ($this->getElement('notice') != '') {
+    $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notice[] =  '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()]) . '</span>'; //    var_dump();
+    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()]) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
-    $notice = '<p class="help-block">' . implode("<br />", $notice) . '</p>';
-
+    $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
 } else {
     $notice = '';
 }
 
-$class_group   = trim('form-group yform-element ' . $this->getWarningClass());
+$class_group = trim('form-group yform-element ' . $this->getWarningClass());
 
 $class_label[] = 'control-label';
 $field_before = '';
@@ -40,16 +39,16 @@ if (trim($this->getElement('grid')) != '') {
 }
 
 $attributes = [
-    "class" => 'form-control',
-    "name" => $this->getFieldName(),
-    "type" => $type,
-    "id" => $this->getFieldId(),
-    "value" => $value
+    'class' => 'form-control',
+    'name' => $this->getFieldName(),
+    'type' => $type,
+    'id' => $this->getFieldId(),
+    'value' => $value,
 ];
 
 $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
 
 echo '<div class="'.$class_group.'" id="'.$this->getHTMLId().'">
-<label class="'.implode(" ", $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
-'.$field_before.'<input '.implode(" ", $attributes).' />'.$notice . $field_after.'
+<label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
+'.$field_before.'<input '.implode(' ', $attributes).' />'.$notice . $field_after.'
 </div>';

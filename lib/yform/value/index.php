@@ -1,15 +1,15 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_index extends rex_yform_value_abstract
 {
-
-    function postFormAction()
+    public function postFormAction()
     {
         if ($this->params['send'] != 1) {
             return;
@@ -23,8 +23,8 @@ class rex_yform_value_index extends rex_yform_value_abstract
         foreach ($index_labels as $name) {
             $name = trim($name);
 
-            if ($name == "id" && $this->params["main_id"] > 0) {
-                $value .= $this->params["main_id"];
+            if ($name == 'id' && $this->params['main_id'] > 0) {
+                $value .= $this->params['main_id'];
             }
 
             if (isset($this->params['value_pool']['sql'][$name])) {
@@ -57,29 +57,28 @@ class rex_yform_value_index extends rex_yform_value_abstract
         }
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'index|label|name|name1,name2,name3|[no_db]|[func/md5/sha]';
     }
 
-    function getDefinitions()
+    public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'index',
-            'values' => array(
-                'name'     => array( 'type' => 'name',   'label' => rex_i18n::msg("yform_values_defaults_name")),
-                'label'    => array( 'type' => 'text',    'label' => rex_i18n::msg("yform_values_defaults_label") ),
-                'names'    => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_index_names"), 'notice' => rex_i18n::msg("yform_values_index_names_notice")),
-                'no_db'    => array( 'type' => 'no_db',   'label' => rex_i18n::msg("yform_values_defaults_table"),  'default' => 0),
-                'function' => array( 'type' => 'text',  'label' => rex_i18n::msg("yform_values_index_function"), 'notice' => rex_i18n::msg("yform_values_index_function_notice")),
-            ),
-            'description' => rex_i18n::msg("yform_values_index_description"),
+            'values' => [
+                'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'names' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_index_names'), 'notice' => rex_i18n::msg('yform_values_index_names_notice')],
+                'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'function' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_index_function'), 'notice' => rex_i18n::msg('yform_values_index_function_notice')],
+            ],
+            'description' => rex_i18n::msg('yform_values_index_description'),
             'is_hiddeninlist' => true,
             'dbtype' => 'text',
             'multi_edit' => false,
-        );
-
+        ];
     }
 
     private function addRelation(array &$relations, array $names)
@@ -178,7 +177,6 @@ class rex_yform_value_index extends rex_yform_value_abstract
                         $relation['relation_table'] = true;
 
                         $currentIndex = $addJoin($relationTable->getTableName(), $currentIndex, $columns['source'], 4);
-
                     }
 
                     if (4 == $relation->getElement('type')) {

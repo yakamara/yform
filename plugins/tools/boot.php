@@ -1,7 +1,8 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  *
@@ -24,7 +25,6 @@ if (rex::isBackend() && rex::getUser()) {
 
     rex_view::addJsFile($this->getAssetsUrl('tools.js'));
 
-
     rex_extension::register('PACKAGES_INCLUDED', function () {
         if ($this->getProperty('compile')) {
             $compiler = new rex_scss_compiler();
@@ -39,4 +39,3 @@ if (rex::isBackend() && rex::getUser()) {
     });
     rex_view::addCssFile($this->getAssetsUrl('css/styles.css'));
 }
-

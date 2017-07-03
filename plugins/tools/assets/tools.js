@@ -122,6 +122,7 @@ $(document).on('ready pjax:success',function() {
               .on('apply.daterangepicker', function(e, picker) {
 
                   var format = $(this).attr('data-yform-tools-datetimepicker');
+                  var format = format.replace("ii", "mm");
                   if (format != "") {
                       $(this).val(picker.startDate.format(format));
                   }

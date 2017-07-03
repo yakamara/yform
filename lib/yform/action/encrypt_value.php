@@ -1,17 +1,16 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_encrypt_value extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         $f = $this->getElement(3); // the function
         if (!function_exists($f)) {
             $f = 'md5';
@@ -38,16 +37,13 @@ class rex_yform_action_encrypt_value extends rex_yform_action_abstract
         }
 
         if ($k != '') {
-            $this->params['value_pool']['sql'][$ls] = $f($k); $this->params['value_pool']['email'][$ls] = $f($k);
+            $this->params['value_pool']['sql'][$ls] = $f($k);
+            $this->params['value_pool']['email'][$ls] = $f($k);
         }
-
-        return;
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|encrypt|label[,label2,label3]|md5|[save_in_this_label]';
     }
-
 }

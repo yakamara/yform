@@ -1,19 +1,18 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_action_db_query extends rex_yform_action_abstract
 {
-
-    function executeAction()
+    public function executeAction()
     {
-
         $query = trim($this->getElement(2));
-        $labels = explode(",",$this->getElement(3));
+        $labels = explode(',', $this->getElement(3));
 
         if ($query == '') {
             if ($this->params['debug']) {
@@ -28,18 +27,16 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
         }
 
         $params = [];
-        foreach($labels as $label) {
+        foreach ($labels as $label) {
             $label = trim($label);
             $params[] = $this->params['value_pool']['sql'][$label];
         }
 
         $sql->setQuery($query, $params);
-
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'action|db_query|query|labels[name,email,id]';
     }
-
 }

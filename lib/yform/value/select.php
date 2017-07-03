@@ -1,22 +1,20 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
 class rex_yform_value_select extends rex_yform_value_abstract
 {
-
     public function enterObject()
     {
-
         $multiple = $this->getElement('multiple') == 1;
         $options = $this->getArrayFromString($this->getElement('options'));
 
         if ($multiple) {
-
             $size = (int) $this->getElement('size');
             if ($size < 2) {
                 $size = count($options);
@@ -35,9 +33,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             }
 
             $this->setValue($real_values);
-
         } else {
-
             $size = 1;
             $default = null;
             if (array_key_exists((string) $this->getElement('default'), $options)) {
@@ -55,8 +51,6 @@ class rex_yform_value_select extends rex_yform_value_abstract
             } else {
                 $this->setValue([$value]);
             }
-
-
         }
 
         // ---------- rex_yform_set
@@ -68,7 +62,6 @@ class rex_yform_value_select extends rex_yform_value_abstract
             }
             $this->setValue($values);
             $this->setElement('disabled', true);
-
         }
 
         if ($this->needsOutput()) {
@@ -92,30 +85,29 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
     public function getDefinitions()
     {
-        return array(
+        return [
             'type' => 'value',
             'name' => 'select',
-            'values' => array(
-                'name'     => array( 'type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')),
-                'label'    => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')),
-                'options'  => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_select_options')),
-                'no_db'    => array( 'type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),          'default' => 0),
-                'default'  => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_select_default')),
-                'multiple' => array( 'type' => 'boolean', 'label' => rex_i18n::msg('yform_values_select_multiple')),
-                'size'     => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_select_size')),
-                'attributes'   => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')),
-                'notice'    => array( 'type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')),
-            ),
+            'values' => [
+                'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'options' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_options')],
+                'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),          'default' => 0],
+                'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_default')],
+                'multiple' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_select_multiple')],
+                'size' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_select_size')],
+                'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
+                'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+            ],
             'description' => rex_i18n::msg('yform_values_select_description'),
             'dbtype' => 'text',
             'famous' => true,
-        );
-
+        ];
     }
 
     public static function getListValue($params)
     {
-        $return = array();
+        $return = [];
 
         $new_select = new self();
         $values = $new_select->getArrayFromString($params['params']['field']['options']);
@@ -131,20 +123,20 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        $options = array();
+        $options = [];
         $options['(empty)'] = '(empty)';
         $options['!(empty)'] = '!(empty)';
 
         $new_select = new self();
         $options += $new_select->getArrayFromString($params['field']['options']);
 
-        $params['searchForm']->setValueField('select', array(
+        $params['searchForm']->setValueField('select', [
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
             'options' => $options,
             'multiple' => 1,
             'size' => 5,
-        )
+        ]
         );
     }
 
@@ -155,7 +147,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
-        $where = array();
+        $where = [];
         foreach ($values as $value) {
             switch ($value) {
                 case '(empty)':
@@ -172,8 +164,6 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
         if (count($where) > 0) {
             return ' ( ' . implode(' or ', $where) . ' )';
-
         }
-
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  *
@@ -19,7 +20,7 @@ $divider = rex_request('divider', 'string', ';');
 $missing_columns = rex_request('missing_columns', 'int');
 $debug = rex_request('debug', 'string');
 
-if (!in_array($divider, array(';', ',', 'tab'))) {
+if (!in_array($divider, [';', ',', 'tab'])) {
     $divider = ',';
 }
 if ($missing_columns != 2 && $missing_columns != 3) {
@@ -29,19 +30,15 @@ if ($debug != 1) {
     $debug = 0;
 }
 
-
 if (rex_request('send', 'int', 0) == 1) {
-
     // Daten wurden übertragen
     if (!isset($_FILES['file_new']) || $_FILES['file_new']['tmp_name'] == '') {
         echo rex_view::error(rex_i18n::msg('yform_manager_import_error_missingfile'));
-
     } else {
-
         $func = '';
         $show_importform = false;
 
-        $fieldarray = array();
+        $fieldarray = [];
         $filename = $_FILES['file_new']['tmp_name'];
 
         $div = $divider;
@@ -70,18 +67,14 @@ if (rex_request('send', 'int', 0) == 1) {
             ));
 
         if ($import_start) {
-
-
-
             $fp = fopen($filename, 'r');
             $idColumn = null;
-            while ( ($line_array = fgetcsv($fp, 30384, $div)) !== false ) {
-
+            while (($line_array = fgetcsv($fp, 30384, $div)) !== false) {
                 if (count($fieldarray) == 0) {
                     // ******************* first line
                     $fieldarray = $line_array;
 
-                    $mc = array();
+                    $mc = [];
                     foreach ($fieldarray as $k => $v) {
                         if (!array_key_exists($fieldarray[$k], $rfields) && $fieldarray[$k] != 'id') {
                             $mc[$fieldarray[$k]] = $fieldarray[$k];
@@ -97,8 +90,7 @@ if (rex_request('send', 'int', 0) == 1) {
                             $show_importform = true;
                             $func = 'import';
                             break;
-
-                        } else if ($missing_columns == 2) {
+                        } elseif ($missing_columns == 2) {
                             $error = false;
                             $i = rex_sql::factory();
                             foreach ($mc as $mcc) {
@@ -109,12 +101,9 @@ if (rex_request('send', 'int', 0) == 1) {
                                 if ($upd->getError()) {
                                     $error = true;
                                     echo rex_view::error(rex_i18n::msg('yform_manager_import_error_field', $mcc, $upd->getError()));
-
                                 } else {
                                     echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
-
                                 }
-
                             }
                             if ($error) {
                                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_stopped'));
@@ -123,13 +112,11 @@ if (rex_request('send', 'int', 0) == 1) {
                             }
 
                             $rfields = $this->table->getColumns();
-
                         } else {
                             if (count($fieldarray) == count($mc)) {
-                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_min_missingfields', implode(", ", $mc)));
+                                echo rex_view::error(rex_i18n::msg('yform_manager_import_error_min_missingfields', implode(', ', $mc)));
                                 $show_importform = true;
                                 break;
-
                             }
 
                             foreach ($fieldarray as $k => $name) {
@@ -137,62 +124,53 @@ if (rex_request('send', 'int', 0) == 1) {
                                     unset($fieldarray[$k]);
                                 }
                             }
-
                         }
-
                     }
-
                 } else {
-
                     if (!$line_array) {
                         break;
+                    }
 
+                    if (null !== $idColumn && isset($line_array[$idColumn])) {
+                        $id = $line_array[$idColumn];
+                        $dataset = $this->table->getRawDataset($id);
                     } else {
+                        $id = null;
+                        $dataset = $this->table->createDataset();
+                    }
 
-                        if (null !== $idColumn && isset($line_array[$idColumn])) {
-                            $id = $line_array[$idColumn];
-                            $dataset = $this->table->getRawDataset($id);
-                        } else {
-                            $id = null;
-                            $dataset = $this->table->createDataset();
+                    $exists = $dataset->exists();
+
+                    foreach ($line_array as $k => $v) {
+                        if (empty($fieldarray[$k]) || 'id' === $fieldarray[$k]) {
+                            continue;
                         }
 
-                        $exists = $dataset->exists();
+                        $dataset->setValue($fieldarray[$k], $v);
+                    }
 
-                        foreach ($line_array as $k => $v) {
-                            if (empty($fieldarray[$k]) ||'id' === $fieldarray[$k]) {
-                                continue;
-                            }
+                    ++$counter;
 
-                            $dataset->setValue($fieldarray[$k], $v);
+                    $dataset->save();
+
+                    if ($messages = $dataset->getMessages()) {
+                        $error = '<ul>';
+                        foreach ($messages as $msg) {
+                            $error .= '<li>'.rex_i18n::translate($msg).'</li>';
                         }
+                        $error .= '</ul>';
 
-                        $counter++;
-
-                        $dataset->save();
-
-                        if ($messages = $dataset->getMessages()) {
-                            $error = '<ul>';
-                            foreach ($messages as $msg) {
-                                $error .= '<li>'.rex_i18n::translate($msg).'</li>';
-                            }
-                            $error .= '</ul>';
-
-                            $dcounter++;
-                            $dataId = 'ID: '.$id;
-                            echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, $error));
-
-                        } elseif ($exists) {
-                            $rcounter++;
-                        } else {
-                            $icounter++;
-                        }
-
+                        ++$dcounter;
+                        $dataId = 'ID: '.$id;
+                        echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, $error));
+                    } elseif ($exists) {
+                        ++$rcounter;
+                    } else {
+                        ++$icounter;
                     }
                 }
 
                 $show_list = true;
-
             }
 
             rex_extension::registerPoint(new rex_extension_point(
@@ -214,27 +192,15 @@ if (rex_request('send', 'int', 0) == 1) {
             ));
 
             echo rex_view::info(rex_i18n::msg('yform_manager_import_error_import', ($icounter + $rcounter), $icounter, $rcounter));
-
         } else {
-
             echo rex_view::info(rex_i18n::msg('yform_manager_import_error_not_started'));
-
         }
 
         if ($dcounter > 0) {
             echo rex_view::error(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
-
         }
-
     }
-
 }
-
-
-
-
-
-
 
 if ($show_importform) {
     $hidden = '
@@ -250,7 +216,6 @@ if ($show_importform) {
         <fieldset>
             ' . $hidden . '
     ';
-
 
     $formElements = [];
     $n = [];
@@ -278,7 +243,6 @@ if ($show_importform) {
     $n['field'] = $radios;
     $formElements[] = $n;
 
-
     $a = new rex_select();
     $a->setName('divider');
     $a->setId('divider');
@@ -297,13 +261,11 @@ if ($show_importform) {
     $n['field'] = '<input class="form-control" type="file" name="file_new" />';
     $formElements[] = $n;
 
-
     $fragment = new rex_fragment();
     $fragment->setVar('elements', $formElements, false);
     $content .= $fragment->parse('core/form/form.php');
 
     $content .= '</fieldset>';
-
 
     $formElements = [];
 

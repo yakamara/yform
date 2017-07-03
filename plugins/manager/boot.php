@@ -1,21 +1,20 @@
 <?php
 
 /**
- * yform
+ * yform.
+ *
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  *
  * @var rex_plugin $this
  */
 
-rex_yform::addTemplatePath(rex_path::plugin('yform','manager','ytemplates'));
+rex_yform::addTemplatePath(rex_path::plugin('yform', 'manager', 'ytemplates'));
 rex_complex_perm::register('yform_manager_table', 'rex_yform_manager_table_perm');
 
 if (rex::isBackend() && rex::getUser()) {
-
     rex_view::addJsFile($this->getAssetsUrl('manager.js'));
     rex_view::addCssFile($this->getAssetsUrl('manager.css'));
-
 
     if (!rex::getUser()->isAdmin()) {
         $page = $this->getProperty('page');
@@ -32,9 +31,7 @@ if (rex::isBackend() && rex::getUser()) {
 
     $prio = 1;
     foreach ($tables as $table) {
-
         if ($table->isActive() && rex::getUser()->getComplexPerm('yform_manager_table')->hasPerm($table->getTableName())) {
-
             $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), rex_i18n::translate($table->getName()));
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName());
             $be_page->setIcon('rex-icon rex-icon-module');
@@ -42,10 +39,9 @@ if (rex::isBackend() && rex::getUser()) {
 
             if ($table->isHidden()) {
                 $be_page->setHidden();
-
             }
 
-            if (rex_request('page','string') == 'yform/manager/data_edit' && rex_request('table_name', 'string') == $table->getTableName()) {
+            if (rex_request('page', 'string') == 'yform/manager/data_edit' && rex_request('table_name', 'string') == $table->getTableName()) {
                 $be_page->setIsActive();
 
                 $main_page = $this->getAddon()->getProperty('page');
@@ -57,22 +53,18 @@ if (rex::isBackend() && rex::getUser()) {
 
                 if (count($rex_yform_set) || (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '')) {
                     $main_page['popup'] = true;
-
                 }
 
                 $this->getAddon()->setProperty('page', $main_page);
-
             }
 
             $pages[] = $be_page;
 
-            $prio++;
-
+            ++$prio;
         }
     }
 
     $this->setProperty('pages', $pages);
-
 }
 
 rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {

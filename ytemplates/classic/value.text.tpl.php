@@ -4,11 +4,11 @@ $class = $type == 'text' ? '' : $type . ' ';
 $value = $this->getValue();
 
 $attributes = [
-    "class" => trim('text ' . $class . ' ' . $this->getWarningClass()),
-    "name" => $this->getFieldName(),
-    "type" => $type,
-    "id" => $this->getFieldId(),
-    "value" => $value
+    'class' => trim('text ' . $class . ' ' . $this->getWarningClass()),
+    'name' => $this->getFieldName(),
+    'type' => $type,
+    'id' => $this->getFieldId(),
+    'value' => $value,
 ];
 $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
 ?>
