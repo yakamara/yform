@@ -113,7 +113,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             if (isset($FILE)) {
                 if (!@move_uploaded_file($FILE['tmp_name'], $FILE['tmp_yform_name'])) {
                     if (!@copy($FILE['tmp_name'], $FILE['tmp_yform_name'])) {
-                        $error[] = 'upload failed: destination folder problem';
+                        $errors[] = 'upload failed: destination folder problem';
                         unset($FILE);
                     } else {
                         @chmod($FILE['tmp_yform_name'], rex::getFilePerm());
@@ -192,7 +192,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $this->params['value_pool']['files'][$this->getName()] = [$filename, $filepath, $real_filepath];
         }
 
-        if ($this->params['send'] && $this->getElement('required') == 1 && $filename == '') {
+        if (count($errors) == 0 && $this->params['send'] && $this->getElement('required') == 1 && $filename == '') {
             $errors[] = $error_messages['empty_error'];
         }
 
