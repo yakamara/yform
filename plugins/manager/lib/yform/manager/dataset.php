@@ -348,7 +348,8 @@ class rex_yform_manager_dataset
             return null;
         }
 
-        return self::get($id, $relation['table']);
+        // Does not work with self::get()
+        return rex_yform_manager_dataset::get($id, $relation['table']);
     }
 
     /**
