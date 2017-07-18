@@ -25,9 +25,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
                 $options[$k] = $v;
             }
         } catch (rex_sql_exception $e) {
-            if ($this->params['debug']) {
                 dump($e);
-            }
         }
 
         if (!array_key_exists($this->getValue(), $options)) {

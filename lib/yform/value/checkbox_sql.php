@@ -32,9 +32,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             }
 
         } catch(rex_sql_exception $e) {
-            if ($this->params['debug']) {
                 dump($e);
-            }
         }
 
         $proofed_values = [];
