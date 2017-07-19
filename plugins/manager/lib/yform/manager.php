@@ -1226,19 +1226,21 @@ class rex_yform_manager
             $notation_email = '';
 
             $notation_php_pre = [
-            '$yform = new rex_yform();',
-            '$yform->setObjectparams(\'form_action\',rex_getUrl(\'REX_ARTICLE_ID\'));',
-            '$yform->setObjectparams(\'form_ytemplate\', \'bootstrap\');',
-            '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
-            '$yform->setObjectparams(\'real_field_names\', true);',
+                '$yform = new rex_yform();',
+                '$yform->setObjectparams(\'form_name\', \'table-'.$table->getTableName().'\');',
+                '$yform->setObjectparams(\'form_action\',rex_getUrl(\'REX_ARTICLE_ID\'));',
+                '$yform->setObjectparams(\'form_ytemplate\', \'bootstrap\');',
+                '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
+                '$yform->setObjectparams(\'real_field_names\', true);',
             ];
 
             $notation_php .= implode("\n", $notation_php_pre) . "\n";
 
             $notation_pipe_pre = [
-            'objparams|form_ytemplate|bootstrap',
-            'objparams|form_showformafterupdate|0',
-            'objparams|real_field_names|true',
+                'objparams|form_name|table-'.$table->getTableName().'',
+                'objparams|form_ytemplate|bootstrap',
+                'objparams|form_showformafterupdate|0',
+                'objparams|real_field_names|true',
             ];
 
             $notation_pipe .= implode("\n", $notation_pipe_pre) . "\n";
