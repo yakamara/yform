@@ -64,6 +64,12 @@ class rex_yform_manager_dataset
 
         $table = $table ?: static::modelToTable();
 
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::get($id, $table);
+        }
+
         return static::getInstance([$table, $id], function ($table, $id) {
             return static::query($table)->findId($id);
         });
@@ -82,6 +88,12 @@ class rex_yform_manager_dataset
         }
 
         $table = $table ?: static::modelToTable();
+
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::getRaw($id, $table);
+        }
 
         return self::getInstance([$table, $id], function ($table, $id) {
             $class = self::tableToModel($table);
