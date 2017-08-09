@@ -19,11 +19,15 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $options_sql = rex_sql::factory();
         $options_sql->setDebug($this->params['debug']);
-        $options_sql->setQuery($sql);
 
         $options = [];
-        foreach ($options_sql->getArray() as $t) {
-            $options[$t['id']] = $t['name'];
+
+        try {
+            foreach ($options_sql->getArray($sql) as $t) {
+                $options[$t['id']] = $t['name'];
+            }
+        } catch (rex_sql_exception $e) {
+            dump($e);
         }
 
         if ($multiple) {

@@ -55,7 +55,7 @@ echo '
     <select '.implode(' ', $attributes).'>';
     foreach ($options as $key => $value):
         echo '<option value="'.htmlspecialchars($key).'" ';
-        if (in_array((string) $key, $this->getValue())) {
+        if (in_array((string) $key, $this->getValue(), true)) {
             echo ' selected="selected"';
         }
         echo '>';

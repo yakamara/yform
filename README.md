@@ -37,8 +37,15 @@ Last Changes
 * be_media_category Feld ergänzt
 * email Feld ist nun durchsuchbar
 * notices können als HTML notiert werden
+* Falsche Queries werden bei den _sql Feldern abgefangen
+* Form Notation verfeinert
 
+#### Fehler
 
+* YORM: getRelatedDataset fixed. Verursachte Problem mit z.B. YCom Verknüpfungen
+* Bei Update aus älteren YForms wird nun auch das be_medialist entfernt
+* select Feld: Falsche selected korrigiert, Defaultwert wird nun richtig übernommen
+* radio feld hat keinen Fehler ausgegeben.
 
 ### Version 2.2 // 21.04.2017
 

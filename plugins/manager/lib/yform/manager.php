@@ -1226,19 +1226,21 @@ class rex_yform_manager
             $notation_email = '';
 
             $notation_php_pre = [
-            '$yform = new rex_yform();',
-            '$yform->setObjectparams(\'form_action\',rex_getUrl(\'REX_ARTICLE_ID\'));',
-            '$yform->setObjectparams(\'form_ytemplate\', \'bootstrap\');',
-            '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
-            '$yform->setObjectparams(\'real_field_names\', true);',
+                '$yform = new rex_yform();',
+                '$yform->setObjectparams(\'form_name\', \'table-'.$table->getTableName().'\');',
+                '$yform->setObjectparams(\'form_action\',rex_getUrl(\'REX_ARTICLE_ID\'));',
+                '$yform->setObjectparams(\'form_ytemplate\', \'bootstrap\');',
+                '$yform->setObjectparams(\'form_showformafterupdate\', 0);',
+                '$yform->setObjectparams(\'real_field_names\', true);',
             ];
 
             $notation_php .= implode("\n", $notation_php_pre) . "\n";
 
             $notation_pipe_pre = [
-            'objparams|form_ytemplate|bootstrap',
-            'objparams|form_showformafterupdate|0',
-            'objparams|real_field_names|true',
+                'objparams|form_name|table-'.$table->getTableName().'',
+                'objparams|form_ytemplate|bootstrap',
+                'objparams|form_showformafterupdate|0',
+                'objparams|real_field_names|true',
             ];
 
             $notation_pipe .= implode("\n", $notation_pipe_pre) . "\n";
@@ -1266,7 +1268,7 @@ class rex_yform_manager
                 if ($field['type_id'] == 'value') {
                     $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array(\'' . rtrim(implode('\',\'', $values), '\',\'') . '\'));';
                     $notation_pipe .= "\n" . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
-                    $notation_email .= "\n" . $field['name'] . ': REX_YFORM_DATA[field="' . $field['name'] . '"]';
+                    $notation_email .= "\n" . rex_i18n::translate($field['label']) . ': REX_YFORM_DATA[field="' . $field['name'] . '"]';
                 } elseif ($field['type_id'] == 'validate') {
                     $notation_php .= "\n" . '$yform->setValidateField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $values), '","') . '"));';
                     $notation_pipe .= "\n" . $field['type_id'] . '|' . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';

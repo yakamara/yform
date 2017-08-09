@@ -25,8 +25,14 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         $options_sql = rex_sql::factory();
         $options_sql->setDebug($this->params['debug']);
         $options = [];
-        foreach ($options_sql->getArray($sql) as $option) {
-            $options[$option['id']] = $option['name'];
+
+        try {
+            foreach ($options_sql->getArray($sql) as $option) {
+                $options[$option['id']] = $option['name'];
+            }
+
+        } catch(rex_sql_exception $e) {
+                dump($e);
         }
 
         $proofed_values = [];

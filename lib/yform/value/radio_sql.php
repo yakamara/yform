@@ -13,15 +13,19 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
     {
         $sql = $this->getElement('query');
 
-        $teams = rex_sql::factory();
-        $teams->setDebug($this->params['debug']);
-        $teams->setQuery($sql);
+        $options_sql = rex_sql::factory();
+        $options_sql->setDebug($this->params['debug']);
 
         $options = [];
-        foreach ($teams->getArray() as $t) {
-            $v = $t['name'];
-            $k = $t['id'];
-            $options[$k] = $v;
+
+        try {
+            foreach ($options_sql->getArray($sql) as $t) {
+                $v = $t['name'];
+                $k = $t['id'];
+                $options[$k] = $v;
+            }
+        } catch (rex_sql_exception $e) {
+                dump($e);
         }
 
         if (!array_key_exists($this->getValue(), $options)) {

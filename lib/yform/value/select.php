@@ -27,7 +27,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
             $real_values = [];
             foreach ($values as $value) {
-                if (array_key_exists($value, $options)) {
+                if (isset($options[$value])) {
                     $real_values[] = $value;
                 }
             }
@@ -36,13 +36,14 @@ class rex_yform_value_select extends rex_yform_value_abstract
         } else {
             $size = 1;
             $default = null;
-            if (array_key_exists((string) $this->getElement('default'), $options)) {
+
+            if (isset($options[$this->getElement('default')])) {
                 $default = $this->getElement('default');
             }
             $value = (string) $this->getValue();
 
-            if ($value == '' || !array_key_exists($value, $options)) {
-                if ($default) {
+            if (!isset($options[$value])) {
+                if ($default !== null) {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -51,6 +52,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             } else {
                 $this->setValue([$value]);
             }
+
         }
 
         // ---------- rex_yform_set
@@ -58,7 +60,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             $value = $this->params['rex_yform_set'][$this->getName()];
             $values = [];
             if (array_key_exists($value, $options)) {
-                $values[] = $value;
+                $values[] = (string) $value;
             }
             $this->setValue($values);
             $this->setElement('disabled', true);
