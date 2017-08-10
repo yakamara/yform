@@ -736,7 +736,7 @@ class rex_yform_manager_dataset
         }
     }
 
-    private static function tableToModel($table)
+    protected static function tableToModel($table)
     {
         return self::getModelClass($table) ?: __CLASS__;
     }
