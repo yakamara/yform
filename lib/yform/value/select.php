@@ -13,6 +13,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
     {
         $multiple = $this->getElement('multiple') == 1;
         $options = $this->getArrayFromString($this->getElement('options'));
+        $lvalues = [];
 
         if ($multiple) {
             $size = (int) $this->getElement('size');
@@ -29,6 +30,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             foreach ($values as $value) {
                 if (isset($options[$value])) {
                     $real_values[] = $value;
+                    $lvalues[] = $options[$value];
                 }
             }
 
@@ -73,7 +75,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $this->setValue(implode(',', $this->getValue()));
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        $this->params['value_pool']['email'][$this->getName() . '_NAME'] = isset($options[$this->getValue()]) ? $options[$this->getValue()] : null;
+        $this->params['value_pool']['email'][$this->getName() . '_NAME'] = count($lvalues) ? implode(', ', $lvalues) : (isset($options[$this->getValue()]) ? $options[$this->getValue()] : null);
 
         if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
