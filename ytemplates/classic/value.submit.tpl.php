@@ -1,7 +1,5 @@
 <?php
 
-$labels = explode(',', $this->getElement('labels'));
-
 if (count($labels) == 1) {
     echo '<p class="formsubmit '.$this->getHTMLClass().'">';
 } else {
