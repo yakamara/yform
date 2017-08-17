@@ -62,6 +62,14 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 }
             }
 
+            $attachment_fields = explode(',', $this->getElement(6));
+            foreach ($attachment_fields as $attachment_field) {
+                if($this->params['value_pool']['email'][$attachment_field]) {
+                    $attachment = $this->params['value_pool']['email'][$attachment_field];
+                    $etpl['attachments'][] = ['name' => $attachment, 'path' => rex_path::media($attachment)];
+                }
+            }
+
             if ($this->params['debug']) {
                 echo '<hr /><pre>';
                 var_dump($etpl);
@@ -77,6 +85,16 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
             if ($this->params['debug']) {
                 echo 'email sent';
             }
+            
+            foreach($attachment_fields as $attachment_field) {
+                // rex_mediapool_deleteMedia nicht verfügbar. Lösche ohne Prüfung
+                $filename = $this->params['value_pool']['email'][$attachment_field];
+                $sql = rex_sql::factory();
+                $sql->setQuery('DELETE FROM ' . rex::getTable('media') . ' WHERE filename = ? LIMIT 1', [$filename]);
+                rex_file::delete(rex_path::media($filename));
+                rex_media_cache::delete($filename);
+            }
+            
             return true;
         }
         if ($this->params['debug']) {
@@ -88,6 +106,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]';
+        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]|[mediafile_label1,mediafile_label2]';
     }
 }
