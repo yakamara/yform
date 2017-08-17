@@ -26,6 +26,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $id = $this->getId();
 
             $columns = explode(',', $this->getElement('columns'));
+
             if (count($columns) == 0) {
                 return;
             }
@@ -36,7 +37,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             // Spalten durchgehen
             for ($c = 0; $c < count($columns); ++$c) {
                 for ($r = 0; $r < $rows; ++$r) {
-                    $table_array[$r][$c] = (isset($_REQUEST['v'][$id][$c][$r])) ? $_REQUEST['v'][$id][$c][$r] : '';
+                    $table_array[$r][$c] = (isset($form_data[$id .'.'. $c][$r])) ? $form_data[$id .'.'. $c][$r] : '';
                 }
             }
             $this->setValue(json_encode($table_array));
