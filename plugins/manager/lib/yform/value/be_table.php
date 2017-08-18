@@ -24,9 +24,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $table_array = [];
             $id          = $this->getId();
 
-            $_columns = str_replace('","', '^><^', $this->getElement('columns'));
-            $columns  = explode(',', $_columns);
-
+            $columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
             if (count($columns) == 0) {
                 return;
             }
@@ -55,8 +53,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
-        $_columns = str_replace('","', '^><^', $this->getElement('columns'));
-        $_columns = explode(',', $_columns);
+        $_columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
         if (count($_columns) == 0) {
             return;
         }
@@ -65,7 +62,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $yfparams = ['this' => \rex_yform::factory()];
 
         foreach ($_columns as $index => $col) {
-            $values = explode('|', trim(trim(rex_yform::unhtmlentities(str_replace('^><^', '","', $col))), '|'));
+            $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
 
             if (count($values) == 1) {
                 $values = ['text', 'text_' . $index, $values[0]];
