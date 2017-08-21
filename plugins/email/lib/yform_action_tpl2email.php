@@ -62,7 +62,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 }
             }
 
-            $attachment_fields = explode(',', $this->getElement(6));
+            $attachment_fields = array_filter(explode(',', $this->getElement(6)));
             foreach ($attachment_fields as $attachment_field) {
                 if($this->params['value_pool']['email'][$attachment_field]) {
                     $attachment = $this->params['value_pool']['email'][$attachment_field];
