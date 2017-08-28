@@ -10,7 +10,8 @@ if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['
 }
 if (count($notice) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
-} else {
+}
+else {
     $notice = '';
 }
 
@@ -32,11 +33,11 @@ if (count($notice) > 0) {
                 <?php foreach ($columns as $i => $column): ?>
                     <td class="be-value-input">
                         <?php
-                            $field = $column['field'];
-                            $field->setValue(htmlspecialchars($row[$i] ?: ''));
-                            $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
-                            $field->enterObject();
-                            echo $field->params['form_output'][$field->getId()]
+                        $field = $column['field'];
+                        $field->setValue(htmlspecialchars($row[$i] ?: ''));
+                        $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
+                        $field->enterObject();
+                        echo $field->params['form_output'][$field->getId()]
                         ?>
                     </td>
                 <?php endforeach ?>
@@ -48,30 +49,49 @@ if (count($notice) > 0) {
 
     <script type="text/javascript">
         (function () {
-            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>');
+            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
+                be_table_cnt = 0;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
-                $(this).closest('table').find('tbody').append('\
-                    <tr>\
-                        <?php foreach ($columns as $i => $column): ?>\
+                var tr = $('<tr/>'),
+                    regexp = [
+                        new RegExp("(REX_MEDIA_)", 'g'),
+                        new RegExp("(openREXMedia\\()", 'g'),
+                        new RegExp("(addREXMedia\\()", 'g'),
+                        new RegExp("(deleteREXMedia\\()", 'g'),
+                        new RegExp("(viewREXMedia\\()", 'g'),
+                    ],
+                    row_html = '\
+                    <?php foreach ($columns as $i => $column): ?>\
                             <td class="be-value-input"><?php
-                                $field = $columns[$i]['field'];
-                                $field->setValue(null);
-                                $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
-                                $field->enterObject();
-                                echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
-                            ?></td>\
+                        $field = $columns[$i]['field'];
+                        $field->setValue(null);
+                        $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
+                        $field->enterObject();
+                        echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
+                        ?></td>\
                         <?php endforeach ?>\
                         <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
-                    </tr>\
-                ');
+                ';
+
+                be_table_cnt++;
+
+                for (var i in regexp) {
+                    row_html = row_html.replace(regexp[i], '$1'+ be_table_cnt +'<?= $i ?>');
+                    console.debug(regexp[i]);
+                }
+                tr.html(row_html);
+                $(this).closest('table').find('tbody').append(tr);
+                $(document).trigger('be_table:row-added', [tr]);
                 return false;
             });
 
             wrapper.on('click', '.btn-delete', function () {
                 var tr = jQuery(this).closest('tr');
                 tr.fadeOut('normal', function () {
+                    $(document).trigger('be_table:before-row-remove', [tr]);
                     tr.remove();
+                    $(document).trigger('be_table:row-removed');
                 })
                 return false;
             });
