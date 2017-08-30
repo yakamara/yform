@@ -34,7 +34,7 @@ else {
                     <td class="be-value-input">
                         <?php
                         $field = $column['field'];
-                        $field->setValue(htmlspecialchars($row[$i] ?: ''));
+                        $field->setValue($row[$i] ?: '');
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
                         $field->enterObject();
                         echo $field->params['form_output'][$field->getId()]
@@ -55,11 +55,19 @@ else {
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
                 var tr = $('<tr/>'),
                     regexp = [
+                        // REX_MEDIA
                         new RegExp("(REX_MEDIA_)", 'g'),
                         new RegExp("(openREXMedia\\()", 'g'),
                         new RegExp("(addREXMedia\\()", 'g'),
                         new RegExp("(deleteREXMedia\\()", 'g'),
                         new RegExp("(viewREXMedia\\()", 'g'),
+                        // REX_MEDIALIST
+                        new RegExp("(REX_MEDIALIST_SELECT_)", 'g'),
+                        new RegExp("(moveREXMedialist\\()", 'g'),
+                        new RegExp("(openREXMedialist\\()", 'g'),
+                        new RegExp("(addREXMedialist\\()", 'g'),
+                        new RegExp("(deleteREXMedialist\\()", 'g'),
+                        new RegExp("(viewREXMedialist\\()", 'g'),
                     ],
                     row_html = '\
                     <?php foreach ($columns as $i => $column): ?>\
@@ -78,9 +86,19 @@ else {
 
                 for (var i in regexp) {
                     row_html = row_html.replace(regexp[i], '$1'+ be_table_cnt +'<?= $i ?>');
-                    console.debug(regexp[i]);
                 }
                 tr.html(row_html);
+
+                // replace be medialist
+                tr.find('select[id^="REX_MEDIALIST_"]').each(function() {
+                    var $select = $(this),
+                        $input  = $select.parent().children('input:first'),
+                        id = $select.prop('id').replace('REX_MEDIALIST_SELECT_', '');
+
+                    $input.prop('id', 'REX_MEDIALIST_'+ id);
+                });
+
+
                 $(this).closest('table').find('tbody').append(tr);
                 $(document).trigger('be_table:row-added', [tr]);
                 return false;
