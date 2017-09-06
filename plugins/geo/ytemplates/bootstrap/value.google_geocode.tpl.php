@@ -35,7 +35,7 @@ if ($googleapikey != '') {
         var myLatlng = new google.maps.LatLng(<?php echo $value; ?>);
 
         var myOptions = {
-            zoom: 8,
+            zoom: <?php echo $mapZoom ?>,
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }
