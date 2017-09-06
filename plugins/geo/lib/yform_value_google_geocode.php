@@ -31,6 +31,11 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
             $mapHeight = $this->getElement('height');
         }
 
+        $mapZoom = 8;
+        if ($this->getElement('zoom') != '') {
+            $mapZoom = $this->getElement('zoom');
+        }
+
         $googleapikey = $this->getElement('googleapikey');
 
         $address = str_replace(' ', '', $this->getElement('address'));
@@ -45,7 +50,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
         $this->params['form_output'][$this->getId()] .= $this->parse(
             'value.google_geocode.tpl.php',
-            compact('includeGoogleMaps', 'value', 'mapWidth', 'mapHeight', 'address', 'googleapikey')
+            compact('includeGoogleMaps', 'value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey')
         );
     }
 
@@ -66,6 +71,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
                 'width' => ['type' => 'text',     'label' => 'Map-Breite'],
                 'height' => ['type' => 'text',     'label' => 'Map-H&ouml;he'],
                 'googleapikey' => ['type' => 'text',     'label' => 'Google-Api-Key'],
+                'zoom' => ['type' => 'text',     'label' => 'Zoomstufe (Welt=1, Kontinent=5, Stadt=10, Straßen=15, Geb&auml;ude=20)'],
                 'default' => ['type' => 'text',     'label' => 'Default', 'notice' => '0.000,0.000'],
             ],
             'description' => 'GoogeMap Positionierung',
