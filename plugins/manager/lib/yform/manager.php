@@ -278,7 +278,7 @@ class rex_yform_manager
                 header('Content-Disposition: attachment; filename="' . $filename . '"');
                 header('Content-Description: "' . $filename . '"');
                 header('Content-Length: ' . $filesize);
-
+                echo pack('CCC', 0xef, 0xbb, 0xbf);
                 echo $data;
 
                 exit;
