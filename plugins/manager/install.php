@@ -24,6 +24,7 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_t
     `export` tinyint(1) NOT NULL,
     `import` tinyint(1) NOT NULL,
     `mass_deletion` tinyint(1) NOT NULL,
+    `mass_edit` tinyint(1) NOT NULL,
     `history` tinyint(1) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE(`table_name`)
@@ -63,8 +64,11 @@ $sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_h
 
 $table = rex_sql_table::get(rex::getTable('yform_table'));
 $hasMassDeletion = $table->hasColumn('mass_deletion');
+$hasMassEdit = $table->hasColumn('mass_edit');
+
 $table
     ->ensureColumn(new rex_sql_column('mass_deletion', 'tinyint(1)'))
+    ->ensureColumn(new rex_sql_column('mass_edit', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('history', 'tinyint(1)'))
     ->alter();
 
@@ -72,5 +76,12 @@ if (!$hasMassDeletion) {
     $sql
         ->setTable(rex::getTable('yform_table'))
         ->setValue('mass_deletion', 1)
+        ->update();
+}
+
+if (!$hasMassEdit) {
+    $sql
+        ->setTable(rex::getTable('yform_table'))
+        ->setValue('mass_edit', 1)
         ->update();
 }

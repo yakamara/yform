@@ -285,7 +285,7 @@ class rex_yform_manager
             }
 
             // -------------- form
-            if (($func == 'add' && $this->hasDataPageFunction('add')) || $func == 'edit' || $func == 'collection_edit') {
+            if (($func == 'add' && $this->hasDataPageFunction('add')) || $func == 'edit' || ($func == 'collection_edit' && $this->table->isMassEditAllowed())) {
                 $back = rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
                 if ('collection_edit' === $func) {
@@ -666,7 +666,7 @@ class rex_yform_manager
                 // INFO LINK
                 $dataset_links = [];
 
-                if (!$popup) {
+                if (!$popup && $this->table->isMassEditAllowed()) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_edit');
                     $item['url'] = 'index.php?' . $link_vars . '&func=collection_edit&' . $em_url . $em_rex_list;
