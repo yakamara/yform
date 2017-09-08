@@ -71,6 +71,14 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->values[$k];
     }
 
+    public function getDBType()
+    {
+        if (!isset($this->definitions['dbtype'])) {
+            return 'none';
+        }
+        return $this->definitions['dbtype'];
+    }
+
     public function isSearchableDisabled()
     {
         if (!isset($this->definitions['is_searchable'])) {
