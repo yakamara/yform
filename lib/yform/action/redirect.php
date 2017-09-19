@@ -41,7 +41,7 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
         }
 
         if ($url != '') {
-            ob_end_clean();
+            rex_response::cleanOutputBuffers();
             header('Location: ' . $url);
         }
     }

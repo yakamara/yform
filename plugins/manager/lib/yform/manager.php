@@ -239,31 +239,35 @@ class rex_yform_manager
 
                 $sql = $this->getDataListQuery($rex_yform_filter, $searchObject);
 
-                $data = '';
-                $fields = [];
                 $g = rex_sql::factory();
                 $g->setQuery($sql);
-                $array = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), ['table' => $this->table]));
+                $dataset = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), ['table' => $this->table]));
 
-                foreach ($array as $d) {
-                    if ($data == '') {
-                        foreach ($d as $a => $b) {
-                            $fields[] = '"' . $a . '"';
-                        }
-                        $data = implode(';', $fields);
+                $fields = ['id' => '"id"'];
+                foreach($this->table->getFields() as $field) {
+                    if ($field->getDBType() != 'none') {
+                        $fields[$field->getName()] = '"' . $field->getName() . '"';
                     }
-
-                    foreach ($d as $a => $b) {
-                        $d[$a] = '"' . str_replace('"', '""', $b) . '"';
-                    }
-                    $data .= "\n" . implode(';', $d);
                 }
+
+                $exportDataset = [];
+                foreach ($dataset as $data) {
+                    $exportData = [];
+                    foreach($fields as $fieldName => $fV)
+                    {
+                        $exportData[$fieldName] = '"' . str_replace('"', '""', $data[$fieldName]) . '"';
+                    }
+                    $exportDataset[] = implode(';', $exportData);
+                }
+
+                $fileContent =  implode(';', $fields);
+                $fileContent .= "\n".implode("\n", $exportDataset);
 
                 // ----- download - save as
 
-                $filename = 'export_data_' . date('YmdHis') . '.csv';
-                $filesize = strlen($data);
-                $filetype = 'application/octetstream';
+                $fileName = 'export_data_' . date('YmdHis') . '.csv';
+                $fileSize = strlen($fileContent);
+                $fileType = 'application/octetstream';
                 $expires = 'Mon, 01 Jan 2000 01:01:01 GMT';
                 $last_modified = 'Mon, 01 Jan 2000 01:01:01 GMT';
 
@@ -274,18 +278,18 @@ class rex_yform_manager
                 header('Pragma: no-cache');
                 header('Pragma: private');
                 header('Cache-control: private, must-revalidate');
-                header('Content-Type: ' . $filetype . '; name="' . $filename . '"');
-                header('Content-Disposition: attachment; filename="' . $filename . '"');
-                header('Content-Description: "' . $filename . '"');
-                header('Content-Length: ' . $filesize);
-
-                echo $data;
+                header('Content-Type: ' . $fileType . '; name="' . $fileName . '"');
+                header('Content-Disposition: attachment; filename="' . $fileName . '"');
+                header('Content-Description: "' . $fileName . '"');
+                header('Content-Length: ' . $fileSize);
+                echo pack('CCC', 0xef, 0xbb, 0xbf);
+                echo $fileContent;
 
                 exit;
             }
 
             // -------------- form
-            if (($func == 'add' && $this->hasDataPageFunction('add')) || $func == 'edit' || $func == 'collection_edit') {
+            if (($func == 'add' && $this->hasDataPageFunction('add')) || $func == 'edit' || ($func == 'collection_edit' && $this->table->isMassEditAllowed())) {
                 $back = rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
                 if ('collection_edit' === $func) {
@@ -666,7 +670,7 @@ class rex_yform_manager
                 // INFO LINK
                 $dataset_links = [];
 
-                if (!$popup) {
+                if (!$popup && $this->table->isMassEditAllowed()) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_edit');
                     $item['url'] = 'index.php?' . $link_vars . '&func=collection_edit&' . $em_url . $em_rex_list;

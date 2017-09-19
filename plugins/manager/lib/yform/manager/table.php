@@ -150,6 +150,11 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['mass_deletion'] == 1;
     }
 
+    public function isMassEditAllowed()
+    {
+        return $this->values['mass_edit'] == 1;
+    }
+
     public function hasHistory()
     {
         return $this->values['history'] == 1;

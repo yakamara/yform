@@ -69,6 +69,7 @@ yform_manager_table_hide = Don't show in menu
 yform_manager_table_allow_export = Allow data export
 yform_manager_table_allow_import = Allow data import
 yform_manager_table_allow_mass_deletion = Allow mass deletion
+yform_manager_table_allow_mass_edit = Allow mass edit
 yform_manager_table_history = Use History AddOn
 yform_manager_tablefield_overview = Field overview
 

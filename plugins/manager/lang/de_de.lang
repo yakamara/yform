@@ -70,6 +70,7 @@ yform_manager_table_allow_export = Export der Daten erlauben
 yform_manager_table_allow_add_new = Erlaube das Erstellen von neuen Datensätzen
 yform_manager_table_allow_import = Import von Daten erlauben
 yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
+yform_manager_table_allow_mass_edit = Massenbearbeitung erlauben
 yform_manager_table_history = Historie anlegen
 yform_manager_tablefield_overview = Feldübersicht
 
