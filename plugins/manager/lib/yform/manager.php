@@ -452,7 +452,7 @@ class rex_yform_manager
                     } elseif ($func == 'add') {
                         $title = rex_i18n::msg('yform_adddata');
                     } else {
-                        $title = rex_i18n::msg('yform_editdata');
+                        $title = rex_i18n::rawMsg('yform_editdata', $data_id);
                     }
 
                     $fragment = new rex_fragment();
