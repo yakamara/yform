@@ -272,3 +272,6 @@ yform_values_be_link_multiple = Multiselect
 yform_values_prio_fields = Display
 yform_values_prio_scope = Restriction
 yform_values_prio_default = At the top
+
+yform_is = is
+yform_will_set_to = will be
