@@ -1388,7 +1388,7 @@ class rex_yform_manager
                 $panel_options = $fragment->parse('core/buttons/button_group.php');
 
                 $sql = 'select id, prio, type_id, type_name, name from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
-                $list = rex_list::factory($sql, 30);
+                $list = rex_list::factory($sql, 100);
                 // $list->debug = 1;
                 // $list->setColumnFormat('id', 'Id');
 
