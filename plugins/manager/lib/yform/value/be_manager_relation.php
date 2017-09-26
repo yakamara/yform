@@ -475,7 +475,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             'empty_option' => true,
             'table' => $params['field']->getElement('table'),
             'field' => $params['field']->getElement('field'),
-            'type' => 2,
+            'type' => rex_get('rex_yform_manager_opener', 'string') != '' ? 0 : 2,
         ]
         );
     }
