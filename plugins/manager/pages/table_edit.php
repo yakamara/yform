@@ -131,6 +131,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
     $yform->setValueField('checkbox', ['export', rex_i18n::msg('yform_manager_table_allow_export')]);
     $yform->setValueField('checkbox', ['import', rex_i18n::msg('yform_manager_table_allow_import')]);
     $yform->setValueField('checkbox', ['mass_deletion', rex_i18n::msg('yform_manager_table_allow_mass_deletion')]);
+    $yform->setValueField('checkbox', ['mass_edit', rex_i18n::msg('yform_manager_table_allow_mass_edit')]);
     $yform->setValueField('checkbox', ['history', rex_i18n::msg('yform_manager_table_history')]);
 
     $form = $yform->getForm();
@@ -219,6 +220,9 @@ if ($show_list && rex::getUser()->isAdmin()) {
         if ($list->getValue('mass_deletion') == 1) {
             $info[] = 'mass_deletion';
         }
+        if ($list->getValue('mass_edit') == 1) {
+            $info[] = 'mass_edit';
+        }
         if ($list->getValue('history') == 1) {
             $info[] = 'history';
         }
@@ -241,7 +245,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $fragment->setVar('size', 'xs', false);
     $panel_options = $fragment->parse('core/buttons/button_group.php');
 
-    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, history  from `' . rex_yform_manager_table::table() . '` order by prio,table_name';
+    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, mass_edit, history  from `' . rex_yform_manager_table::table() . '` order by prio,table_name';
 
     $list = rex_list::factory($sql);
     $list->addParam('start', rex_request('start', 'int'));
@@ -256,6 +260,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->removeColumn('export');
     $list->removeColumn('search');
     $list->removeColumn('mass_deletion');
+    $list->removeColumn('mass_edit');
     $list->removeColumn('history');
 
     $list->setColumnLabel('prio', rex_i18n::msg('yform_manager_table_prio_short'));
