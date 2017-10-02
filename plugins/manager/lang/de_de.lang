@@ -122,7 +122,7 @@ yform_visible = sichtbar
 # edit.inc.php
 yform_thankyouforupdate = Datensatz wurde aktualisiert.
 yform_thankyouforentry = Datensatz wurde eingetragen.
-yform_editdata = Datensatz editieren
+yform_editdata = Datensatz editieren [id: {0}]
 yform_editdata_collection = {0} Datensätze editieren
 yform_adddata = Datensatz anlegen
 yform_searchtext = Suchbegriff
@@ -273,3 +273,6 @@ yform_values_be_link_multiple = Mehrfachauswahl
 yform_values_prio_fields = Anzeige
 yform_values_prio_scope = Beschränkung
 yform_values_prio_default = Am Anfang
+
+yform_is = ist
+yform_will_set_to = wird

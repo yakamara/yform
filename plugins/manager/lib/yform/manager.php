@@ -199,7 +199,7 @@ class rex_yform_manager
             }
 
             // -------------- History
-            if (!$popup && $func == 'history' && rex::getUser()->isAdmin()) {
+            if (!$popup && $func == 'history') {
                 echo rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
                 include rex_path::plugin('yform', 'manager', 'pages/data_history.php');
                 $show_list = false;
@@ -452,7 +452,7 @@ class rex_yform_manager
                     } elseif ($func == 'add') {
                         $title = rex_i18n::msg('yform_adddata');
                     } else {
-                        $title = rex_i18n::msg('yform_editdata');
+                        $title = rex_i18n::rawMsg('yform_editdata', $data_id);
                     }
 
                     $fragment = new rex_fragment();
@@ -618,7 +618,7 @@ class rex_yform_manager
                         $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
                     }
 
-                    if (!$popup && $this->table->hasHistory() && rex::getUser()->isAdmin()) {
+                    if (!$popup && $this->table->hasHistory()) {
                         ++$colspan;
 
                         $list->addColumn(rex_i18n::msg('yform_history'), '<i class="rex-icon fa-history"></i> ' . rex_i18n::msg('yform_history'));
@@ -724,7 +724,7 @@ class rex_yform_manager
                     $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_truncate_table_confirm') . '\');';
                     $table_links[] = $item;
                 }
-                if (!$popup && $this->table->hasHistory() && rex::getUser()->isAdmin()) {
+                if (!$popup && $this->table->hasHistory()) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_history');
                     $item['url'] = 'index.php?' . htmlspecialchars($link_vars) . '&amp;func=history';
@@ -1388,7 +1388,7 @@ class rex_yform_manager
                 $panel_options = $fragment->parse('core/buttons/button_group.php');
 
                 $sql = 'select id, prio, type_id, type_name, name from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
-                $list = rex_list::factory($sql, 30);
+                $list = rex_list::factory($sql, 100);
                 // $list->debug = 1;
                 // $list->setColumnFormat('id', 'Id');
 

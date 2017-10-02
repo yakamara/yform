@@ -41,21 +41,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
         $this->relation['disabled'] = false;
 
-        // ---------- Datensatz existiert bereits, Values aus verknüpfungstabelle holen
-        if ($this->params['main_id'] > 0 && $this->params['send'] == 0) {
-            $values = [];
-            if (trim($this->getValue()) != '') {
-                $values = explode(',', $this->getValue());
-            } elseif ($this->getElement('relation_table')) {
-                $values = $this->getRelationTableValues();
-            }
-            $this->setValue($values);
-            // echo '<pre>++ ';var_dump($this->getValue());echo '</pre>';
-        }
-
         // ---------- Value angleichen -> immer Array mit IDs daraus machen
         if (!is_array($this->getValue())) {
-            if (trim($this->getValue()) == '') {
+            $values = [];
+            if ($this->getElement('relation_table')) {
+                $this->setValue($this->getRelationTableValues());
+            } elseif (trim($this->getValue()) == '') {
                 $this->setValue([]);
             } else {
                 $this->setValue(explode(',', $this->getValue()));
