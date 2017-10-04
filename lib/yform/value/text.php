@@ -76,4 +76,15 @@ class rex_yform_value_text extends rex_yform_value_abstract
         }
         return $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value);
     }
+
+    public static function getListValue($params)
+    {
+        $value = $params['subject'];
+        $length = strlen($value);
+        $title = $value;
+        if ($length > 40) {
+            $value = substr($value, 0, 20).' ... '.substr($value, -20);
+        }
+        return '<span title="'.rex_escape($title).'">'.rex_escape($value).'</span>';
+    }
 }
