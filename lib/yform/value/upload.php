@@ -333,7 +333,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $value = substr($value, 0, 15).' ... '.substr($value, -15);
         }
 
-        $return = '***'.$value;
+        $return = $value;
         if (rex::isBackend()) {
             $field = new rex_yform_manager_field($params['params']['field']);
             if ($value != '') {
