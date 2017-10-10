@@ -90,7 +90,8 @@ if (rex_request('send', 'int', 0) == 1) {
                             $show_importform = true;
                             $func = 'import';
                             break;
-                        } elseif ($missing_columns == 2) {
+                        }
+                        if ($missing_columns == 2) {
                             $error = false;
                             $i = rex_sql::factory();
                             foreach ($mc as $mcc) {

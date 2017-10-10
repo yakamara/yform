@@ -31,12 +31,9 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                     }
                     if (count($fields) == 1 && $this->getElement('empty_option') == 1) {
                         $qfields[$Object->getId()] = $cd->escapeIdentifier($Object->getName()) . '=' . $cd->escape($value) . '  AND ' . $cd->escape($value) . '!=""';
-
                     } else {
                         $qfields[$Object->getId()] = $cd->escapeIdentifier($Object->getName()) . '=' . $cd->escape($value) . '';
-
                     }
-
                 }
             }
 
@@ -59,7 +56,6 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                     $this->params['warning_messages'][$qfield_id] = $this->getElement('message');
                 }
             }
-
         }
     }
 

@@ -130,6 +130,6 @@ class rex_yform_email_template
         }
         $template['email_subject'] = $template['subject'];
         rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT_FAILED', $template_name, $template, true)); // read only
-            return false;
+        return false;
     }
 }

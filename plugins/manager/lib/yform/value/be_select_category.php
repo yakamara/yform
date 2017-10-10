@@ -28,7 +28,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
 
         $options = [];
         if ($this->getElement('homepage')) {
-            $options[0] = rex_i18n::msg("yform_values_be_select_category_homepage_title");
+            $options[0] = rex_i18n::msg('yform_values_be_select_category_homepage_title');
         }
 
         $ignoreOfflines = $this->getElement('ignore_offlines');

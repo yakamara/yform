@@ -244,7 +244,7 @@ class rex_yform_manager
                 $dataset = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), ['table' => $this->table]));
 
                 $fields = ['id' => '"id"'];
-                foreach($this->table->getFields() as $field) {
+                foreach ($this->table->getFields() as $field) {
                     if ($field->getDBType() != 'none') {
                         $fields[$field->getName()] = '"' . $field->getName() . '"';
                     }
@@ -253,14 +253,13 @@ class rex_yform_manager
                 $exportDataset = [];
                 foreach ($dataset as $data) {
                     $exportData = [];
-                    foreach($fields as $fieldName => $fV)
-                    {
+                    foreach ($fields as $fieldName => $fV) {
                         $exportData[$fieldName] = '"' . str_replace('"', '""', $data[$fieldName]) . '"';
                     }
                     $exportDataset[] = implode(';', $exportData);
                 }
 
-                $fileContent =  implode(';', $fields);
+                $fileContent = implode(';', $fields);
                 $fileContent .= "\n".implode("\n", $exportDataset);
 
                 // ----- download - save as

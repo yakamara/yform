@@ -66,7 +66,8 @@ if (count($geo_tables) == 0) {
         }
         echo json_encode($data);
         exit;
-    } elseif ($func == 'save_data') {
+    }
+    if ($func == 'save_data') {
         ob_end_clean();
         $data = '0';
         if (array_key_exists($field, $fields)) {

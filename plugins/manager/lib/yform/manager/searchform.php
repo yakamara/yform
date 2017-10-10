@@ -24,7 +24,8 @@ class rex_yform_manager_searchform extends rex_yform
         }
         if ($k == '' && isset($_REQUEST['rex_yform_searchvars'][$label])) {
             return $_REQUEST['rex_yform_searchvars'][$label];
-        } elseif (isset($_REQUEST['rex_yform_searchvars'][$label][$k])) {
+        }
+        if (isset($_REQUEST['rex_yform_searchvars'][$label][$k])) {
             return $_REQUEST['rex_yform_searchvars'][$label][$k];
         }
         return '';

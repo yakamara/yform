@@ -33,7 +33,6 @@ if (trim($this->getElement('grid')) != '') {
 }
 
 if (trim($this->getLabel()) != '') {
-
     echo '<div class="'.$class_group.'">
     <label class="control-label'.$class_label.'">'.$this->getLabel().'</label>';
 }

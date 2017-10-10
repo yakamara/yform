@@ -361,7 +361,7 @@ class rex_yform_manager_dataset
         }
 
         // Does not work with self::get()
-        return rex_yform_manager_dataset::get($id, $relation['table']);
+        return self::get($id, $relation['table']);
     }
 
     /**

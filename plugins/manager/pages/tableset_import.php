@@ -52,7 +52,7 @@ if ($form != '') {
     $fragment->setVar('class', 'edit', false);
     $fragment->setVar('title', rex_i18n::msg('yform_manager_tableset_import'));
     $fragment->setVar('body', $form, false);
-// $fragment->setVar('buttons', $buttons, false);
+    // $fragment->setVar('buttons', $buttons, false);
     $form = $fragment->parse('core/page/section.php');
 
     echo $form;

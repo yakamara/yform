@@ -64,7 +64,8 @@ class rex_yform_value_email extends rex_yform_value_abstract
 
         if ($value == '(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        } elseif ($value == '!(empty)') {
+        }
+        if ($value == '!(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 

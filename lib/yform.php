@@ -480,13 +480,15 @@ class rex_yform
         if ($this->objparams['real_field_names'] && $label != '') {
             if ($k == '' && isset($_REQUEST[$label])) {
                 return $_REQUEST[$label];
-            } elseif (isset($_REQUEST[$label][$k])) {
+            }
+            if (isset($_REQUEST[$label][$k])) {
                 return $_REQUEST[$label][$k];
             }
         } else {
             if ($k == '' && isset($_REQUEST['FORM'][$this->objparams['form_name']][$id])) {
                 return $_REQUEST['FORM'][$this->objparams['form_name']][$id];
-            } elseif (isset($_REQUEST['FORM'][$this->objparams['form_name']][$id][$k])) {
+            }
+            if (isset($_REQUEST['FORM'][$this->objparams['form_name']][$id][$k])) {
                 return $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k];
             }
         }
