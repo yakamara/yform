@@ -870,7 +870,7 @@ class rex_yform_manager
         // ********************************** TABELLE HOLEN
         $table = $this->table;
 
-        $table_info = '<b>' . rex_i18n::translate($table->getName()) . ' [' . $table->getTableName() . ']</b> ';
+        $table_info = '<b>' . rex_i18n::translate($table->getName()) . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id='.$table->getId().'&func=edit">' . $table->getTableName() . '</a>]</b> ';
         echo rex_view::info($table_info);
 
         // ********************************************* Missing Fields
