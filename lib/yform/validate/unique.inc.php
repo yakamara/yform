@@ -30,11 +30,10 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                         $value = implode(',', $value);
                     }
                     if (count($fields) == 1 && $this->getElement('empty_option') == 1) {
-                        echo "OOO";
-                        $qfields[$Object->getId()] = '`' . $Object->getName() . '`=' . $cd->escape($value) . '  AND ' . $cd->escape($value) . '!=""';
+                        $qfields[$Object->getId()] = $cd->escapeIdentifier($Object->getName()) . '=' . $cd->escape($value) . '  AND ' . $cd->escape($value) . '!=""';
 
                     } else {
-                        $qfields[$Object->getId()] = '`' . $Object->getName() . '`=' . $cd->escape($value) . '';
+                        $qfields[$Object->getId()] = $cd->escapeIdentifier($Object->getName()) . '=' . $cd->escape($value) . '';
 
                     }
 
@@ -61,7 +60,6 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                 }
             }
 
-            return;
         }
     }
 
