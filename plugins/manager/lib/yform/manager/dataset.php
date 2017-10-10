@@ -443,9 +443,13 @@ class rex_yform_manager_dataset
             }
         }
 
+        $send = $yform->getFieldValue('send', '', 'send');
         $yform->setFieldValue('send', '1', '', 'send');
+
         $yform->executeFields();
         $this->messages = $yform->getObjectparams('warning_messages');
+
+        $yform->setFieldValue('send', $send, '', 'send');
 
         return empty($this->messages);
     }
@@ -472,9 +476,13 @@ class rex_yform_manager_dataset
             }
         }
 
+        $send = $yform->getFieldValue('send', '', 'send');
         $yform->setFieldValue('send', '1', '', 'send');
+
         $this->executeForm($yform);
         $this->messages = $yform->getObjectparams('warning_messages');
+
+        $yform->setFieldValue('send', $send, '', 'send');
 
         return empty($this->messages);
     }
