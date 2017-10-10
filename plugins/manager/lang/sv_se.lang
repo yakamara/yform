@@ -1,0 +1,277 @@
+yform_manager = Table Manager
+
+navigation_manager = Tabeller
+yform_manager_fields = Fält
+
+# yform manager
+yform_alltables = Alla tabeller
+yform_back_to_overview = Tillbaa till översikten
+yform_updatetable = aktualisera tabell/er
+yform_tablesupdated = Tabell/er aktualiserades
+
+yform_help_empty = Tomma inmatningar kan sökas med (empty)
+yform_help_multipleselect = Välj flera samtidigt genom att håller ned CTRL eller CMD
+yform_updatetable_with_delete = med fältradering
+yform_updatetable_with_delete_confirm = Vill du verkligen aktualisera med att fältradering?
+
+yform_relation_move_first_data = Flytta utvald datasats till början
+yform_relation_move_up_data = Flytta utvald datasats uppåt
+yform_relation_move_down_data = Flytta utvald datasats neråt
+yform_relation_move_last_data = Flytta utvald datasats till slutet
+yform_relation_choose_entry = Välj datasats
+yform_relation_delete_entry = Radera utvald datasats
+yform_relation_first_create_data = Var god skapa denna datasats först
+yform_relation_edit_relations = Förvalta förbindelsenar
+
+yform_prio_top = Vid början
+yform_prio_after = Efter "{0}"
+yform_prio_bottom = längs ner
+
+yform_truncate_table = tömma
+yform_table_truncated = Tabellen tömdes
+yform_table_not_found = Tabellen kunde inte hittas
+yform_truncate_table_confirm = Vll verkligen radera hela tabellen?
+yform_table_overview = Tabellöversikt
+
+yform_manager_edit_table = Redigera tabell
+yform_manager_add_table = Tillfoga tabell
+
+yform_add_row = Tillfoga rad
+
+# tables.inc.php
+yform_importcsv = Importera CSV
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_manager_table_updated = Tack för aktualiseringen
+yform_manager_table_entry_saved = Tack för  registreringen
+yform_manager_table_enter_name = Var god ange tabellnamnet
+yform_manager_table_enter_specialchars = Var god ange endast bokstäver och siffror vid tabellnamnet. Första tecknet måste vara en bokstav.
+yform_manager_table_exists = Tabellnamnet finns redan
+
+yform_manager_table_prio = Prioritet
+yform_manager_table_prio_short = Prio
+yform_manager_table_name = Namn
+yform_manager_table_status = Status
+yform_manager_name = Beteckning
+yform_manager_table_description = Beskrivning
+yform_manager_entries_per_page = Datasatser per sida
+yform_manager_sortfield = Standardsortering: fält
+yform_manager_sortorder = Standardsortering: riktning
+yform_manager_sortorder_asc = uppstigande
+yform_manager_sortorder_desc = nerstigande
+yform_manager_search_active = Sök aktiverad
+yform_manager_enter_number = Var god ange antalet datasatser per sida
+yform_manager_table_hide = Dölj i navigationen
+yform_manager_table_allow_export = Tillåt export från data
+yform_manager_table_allow_import = Tillåt import från data
+yform_manager_table_allow_mass_deletion = Tillåt mass radering
+yform_manager_table_allow_mass_edit = Tillåta massbearbetning
+yform_manager_table_history = Skapa historik
+yform_manager_tablefield_overview = Fältöversikt
+
+yform_manager_table_updated = Tack för aktualiseringen
+yform_manager_table_added = Tack för inlägget.
+yform_manager_table_deleted = Tabell raderades
+yform_manager_table_add = Skapa tabell
+yform_manager_table_update = Aktualisera tabeller och fält
+yform_manager_table_import = Importera tabellen
+yform_manager_table_features = Aktiverade optioner
+
+yform_manager_type_id = Typ
+yform_manager_type_name = Typnamn
+
+yform_manager_tableset = Tabellset
+yform_manager_table = Tabell
+yform_manager_tables = Tabeller
+
+yform_manager_import = importera
+yform_manager_export = exportera
+yform_manager_create = skapa
+yform_manager_migrate = migrera
+
+yform_manager_table_migrate = Migrera tabellen
+yform_manager_table_migrated_failed = Migrationen för {0} misslyckades. Fel: {1}
+yform_manager_table_migrate_info = Migrationsmanagern skapar från en befintlig tabell en tabell som kan förvaltas med tabellmanagern. För detta är i tabellen ett AUTOINCREMENT-fält med namnet 'id' nödvändigt. Utan detta fältet fungerar tabellmanagern inte. <br /> <br /> Optional kan ett befintligt AUTOINCREMENT-fält konverteras. Till exempel "Event_id" till "id".
+yform_manager_migrate_table_id_convert = Konvertera 'id'-fältet om det inte finns
+yform_manager_table_migrated_success = Tabellen migrerades.
+
+yform_manager_tableset_import = Importera tabellset
+yform_manager_tableset_import_jsonimportfile = Importera JSON fil
+yform_manager_tableset_import_info = Info
+yform_manager_tableset_import_warning_selectfile = Ingen .json fil användes eller filen var felaktig.
+yform_manager_tableset_import_warning_type = Fel typ av fil. Det måste vara en JSON fil.
+yform_manager_tableset_import_success = Tabell/er importerades
+yform_manager_tableset_import_failed = Import av tabellsetet misslyckades: <br/>{0}
+
+yform_manager_table_edit = Redigera tabeller
+
+yform_manager_tableset_export = Exportera tabellset
+yform_manager_tableset_export_info = Info
+yform_manager_export_error_empty = Var god välja ut minst en tabell till exporten
+
+yform_manager_table_hidden = Synlighet
+yform_hidden = Dold
+yform_visible = Synligt
+
+
+# edit.inc.php
+yform_thankyouforupdate = Datasatsen aktualiserades.
+yform_thankyouforentry = Datasatsen tillfogades.
+yform_editdata = Redigera datasats
+yform_editdata_collection = Redigera {0} datasatser
+yform_adddata = Skapa datasats
+yform_searchtext = Sökbegrepp
+yform_searchfields = Fälten som ska sökas igenom
+yform_id = ID
+yform_function = Funktion
+yform_add = tillfoga
+yform_add_apply = ta över
+yform_edit = redigera
+yform_save = spara
+yform_save_apply = ta över
+yform_delete = radera
+yform_search = sök
+yform_export = exportera
+yform_import = importera
+yform_datadeleted = Datasatsen readerades
+yform_openerinfo = Opener info
+
+yform_table_info = Info
+yform_dataset = Dataresultat
+
+yform_dataset_delete = Radera dataresultatet
+yform_dataset_deleted = Dataresultatet raderades
+yform_dataset_delete_confirm = Radera dataresultatet?
+
+yform_data = Datasats
+yform_manager_search = Sök
+
+yform_data_select = ta över
+
+# field.inc.php
+yform_tablenotexists = Denna tabell finns inte!
+yform_tablefield = Tabellfält
+yform_values = Värden
+yform_validates = Validering
+yform_actions = Aktioner
+yform_validatenamenotempty = Var god ange namnet
+yform_validatenamepregmatch = Var god och mata endast in bokstävar och "_"
+yform_validatenamecheck = Detta namnet finns redan
+yform_donotsaveindb = Spara inte i databasen
+yform_hideinlist = Dölj i lista
+yform_useassearchfieldalidatenamenotempty = Tillfoga till sökfält
+yform_tablefielddeleted = Tabellfält raderades
+yform_tablefieldnotfound = Tabellfält kunde inte hittas
+yform_addtablefield = Skapa tabellfält
+yform_table = Tabell
+yform_editfield = Redigera fält
+yform_choosenadd = Välj ut fält
+yform_choosenadd_description = Var god välj det fält som ska användas för din administration. Det finns värdefält som vanligtvis används för användarinmatning, men också validate-fält som används för att validera data som matas in i värdefält.
+yform_addfield = Tillfoga fält
+yform_editfields = Redigera fält
+
+yform_id_is_missing = ID saknas
+yform_id_missing_info = Tabellen har tyvärr inget ID-fält med AUTOINCREMENT. Således kan yform inte arbeta med det. Var god uppdatera tabellen och placera den nödvändiga ID:n manuellt.
+
+# import
+yform_manager_import_error_missingfile = Var god och ladda upp  importfilen
+yform_manager_import_error_missingfields = Det saknas följande fält: {0}
+yform_manager_import_error_min_missingfields = Det saknas minst ett fält: {0}
+yform_manager_import_error_field = Fält "{0}" kunde inte skapas: "{1}"
+yform_manager_import_field_added = Fält "{0}" har skapats
+yform_manager_import_error_import_stopped = Importen avbröts eftersom det uppstod fel.
+yform_manager_import_error_dataimport = Datasatts ({0}) kunde inte importeras: {1}
+yform_manager_import_error_import = {0} datasatser har importerats. Av det var {1} nya datasatser och {2} datasatser har ersätts.
+yform_manager_import_info_data_imported = {0} datasatser har INTE importerats.
+yform_manager_import_error_not_started = Import har inte startats
+yform_manager_import_csv = Importera CSV-fil
+yform_manager_import_csv_info = Detta kan användas för att importera data i denna tabell. Observera att du endast kan importera textfiler och att de måste finnas i </ b> första raden av fältdefinitionerna<b>. Vidare bör <b> kodningen av importfilen vara UTF-8 </ b>. Det kan betyda att du måste konvertera dem först.
+yform_manager_import_if_no_column = Om kolumen inte finns i tabellen
+yform_manager_import_if_no_column_ignore = Ignorera kolumnen
+yform_manager_import_if_no_column_addtext = Skapa sedan en textkolumn med samma namn (för att hantera detta senare måste dessa fält anges senare).
+yform_manager_import_if_no_column_break = avbryta importen.
+yform_manager_import_divider = Separator
+yform_manager_import_divider_semicolon = Semikolon
+yform_manager_import_divider_comma = Komma
+yform_manager_import_divider_tab = Tabulator
+yform_manager_import_unique_field = Om fältet är identisk kommer datasatsen att ersättas
+yform_manager_import_start = Tillfoga
+yform_manager_import_file = Fil
+
+# history
+yform_history = Historik
+yform_history_dataset_id = Datasats-ID
+yform_history_dataset = Datasats
+yform_history_action = Aktion
+yform_history_action_create = skapat
+yform_history_action_update = redigerat
+yform_history_action_delete = raderat
+yform_history_user = Användare
+yform_history_timestamp = Tidstämpel
+yform_history_view = visa
+yform_history_restore = återgå
+yform_history_restore_this = återställ datasatsen till den här versionen
+yform_history_restore_success = Data återställdes
+yform_history_restore_error = Data kunde inte återställas
+yform_history_delete = Radera historiken
+yform_history_delete_all = totalt
+yform_history_delete_older_3_months = äldre än 3 månader
+yform_history_delete_confirm = Vill du verkligen radera historiken?
+yform_history_delete_success = Poster från historiken raderades.
+
+yform_manager_show_form_notation = Formularkod
+
+navigation_yform_tables = Tabeller
+yform_tabledata_overview = Datatabell
+
+yform_manager_multi_edit_field = Redigera fält  "{0}"
+
+yform_values_be_link_description = 				Ett select-fält för att välja ut en <b>REDAXO-artikel</b>
+yform_values_be_manager_relation_description = 	Ett select-fält / popup till <b> länka flera poster </ b> med poster från en annan tabell.
+yform_values_be_media_description = 			Ett fält att välja på eller fler <b> filer från mediapoolen (filhanteraren) </ b>.
+yform_values_be_select_category_description =	Ett fält för att välja en eller flera <b> kategorier </ b> från REDAXO-strukturen.
+yform_values_be_table_description = 			En uppsättning inmatningsfält för att mata in <b> tabelldata</ b>.
+yform_values_prio_description =					Ett select-fält som används för att <b> sortera poster i en viss order </ b>.
+
+yform_values_defaults_prio = Prioritet
+yform_values_be_manager_relation_table = Måltabell
+yform_values_be_manager_relation_field = Mål kolumner för visning eller målfält
+yform_values_be_manager_relation_type = Multiselect
+yform_values_be_manager_relation_empty_option = Med "tom-option"
+yform_values_be_manager_relation_empty_value = Felmeddelande när "tom-option" är inte aktiv.
+yform_values_be_manager_relation_size = Höjd av select box
+yform_values_be_manager_relation_filter = Filter
+yform_values_be_manager_relation_relation_table = Relationstabell
+yform_values_be_media_preview = Preview
+yform_values_be_media_category = Medienpool (filhanterare) kategori
+yform_values_be_media_types = Types
+yform_values_be_media_types_notice = Format: jpg,gif
+yform_values_be_media_multiple = Multiselect
+yform_values_be_select_category_ignore_offlines = Ignorera offline kategorier
+yform_values_be_select_category_check_perms = Kontrollera behörigheter
+yform_values_be_select_category_homepage = Tillfoga "Homepage"-inlägg (Root)
+yform_values_be_select_category_homepage_title = Hemsida
+yform_values_be_select_category_category = Root-ID
+yform_values_be_select_category_clang = Språk
+yform_values_be_select_category_multiple = Multiselect möjligt
+yform_values_be_select_category_size = Höjd av select box
+yform_values_be_select_media_category_ignore_offlines = Ignorera offline kategorier
+yform_values_be_select_media_category_check_perms = Kontrollera rättigheterna
+yform_values_be_select_media_category_homepage = Skapa "top-level"-kategori (root)
+yform_values_be_select_media_category_homepage_title = Top-level (root)
+yform_values_be_select_media_category_category = Root-ID
+yform_values_be_select_media_category_clang = Språk
+yform_values_be_select_media_category_multiple = Fler urval möjligt
+yform_values_be_select_media_category_size = Höjd av urvalsmenyn
+yform_values_be_table_columns = Beteckning av kolumnerna (kvantitet, pris, någoting)
+yform_values_be_link_multiple = Multiselect
+yform_values_prio_fields = Display
+yform_values_prio_scope = Begränsning
+yform_values_prio_default = Till början
+
+yform_is = är
+yform_will_set_to = kommer att bli

@@ -322,11 +322,18 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $return = $params['value'];
+        $value = $params['subject'];
+        $length = strlen($value);
+        $title = $value;
+        if ($length > 30) {
+            $value = substr($value, 0, 15).' ... '.substr($value, -15);
+        }
+
+        $return = $value;
         if (rex::isBackend()) {
             $field = new rex_yform_manager_field($params['params']['field']);
-            if ($params['value'] != '') {
-                $return = '<a href="index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'">'.$params['value'].'</a>';
+            if ($value != '') {
+                $return = '<a href="/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
             }
         }
 
@@ -341,6 +348,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $sql = rex_sql::factory();
+
         $value = $params['value'];
         $field = $params['field']->getName();
 
