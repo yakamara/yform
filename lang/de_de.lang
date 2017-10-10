@@ -177,7 +177,6 @@ yform_validate_password_policy_description = Hiermit kann man ein Feld nach <b>P
 yform_validate_preg_match_description = PREG_MATCH Validierung
 yform_validate_password_policy_rules = Regelkonfiguration
 yform_validate_password_policy_rules_notice = Standard Regeln falls leer: {0}
-yform_validate_password_policy_message_notice = xxxx {0}
 
 yform_values_options_name = 	Name
 yform_values_options_label = 	Bezeichnung
