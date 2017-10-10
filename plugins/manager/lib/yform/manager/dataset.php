@@ -540,6 +540,7 @@ class rex_yform_manager_dataset
     public function executeForm(rex_yform $yform, callable $afterFieldsExecuted = null)
     {
         $exits = $this->exists();
+        $oldData = $this->getData();
 
         if ($exits) {
             /** @var rex_yform $yform */
@@ -579,7 +580,7 @@ class rex_yform_manager_dataset
 
         if ($yform->objparams['actions_executed']) {
             if ($exits) {
-                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
+                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this, 'old_data' => $oldData]));
             } else {
                 rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADDED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
             }
