@@ -168,6 +168,8 @@ yform_validate_unique_name = Name
 yform_validate_unique_message = Fehlermeldung
 yform_validate_unique_table = Tabelle
 yform_validate_unique_notice = Bitte kommasepariert die Liste der Felder eintragen. z.B. name,email
+yform_validate_unique_empty_option = Wert darf auch leer sein. (Funktioniert nur, wenn es sich um ein Feld handelt)
+
 yform_validate_preg_match_pattern = Suchmuster eingeben.
 yform_validate_preg_match_pattern_info = z.B. /^start/
 
