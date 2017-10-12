@@ -21,7 +21,7 @@ if (count($notice) > 0) {
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th><?php echo htmlspecialchars($column) ?></th>
+                <th><?php echo htmlspecialchars($column['label']) ?></th>
             <?php endforeach ?>
             <th class="rex-table-action"><a class="btn btn-xs btn-default" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>
@@ -29,8 +29,16 @@ if (count($notice) > 0) {
         <tbody>
         <?php foreach ($data as $row): ?>
             <tr>
-                <?php foreach ($row as $i => $column): ?>
-                    <td><input class="form-control" type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="<?php echo htmlspecialchars($column) ?>" /></td>
+                <?php foreach ($columns as $i => $column): ?>
+                    <td class="be-value-input">
+                        <?php
+                            $field = $column['field'];
+                            $field->setValue(htmlspecialchars($row[$i] ?: ''));
+                            $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
+                            $field->enterObject();
+                            echo $field->params['form_output'][$field->getId()]
+                        ?>
+                    </td>
                 <?php endforeach ?>
                 <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>
             </tr>
@@ -46,7 +54,13 @@ if (count($notice) > 0) {
                 $(this).closest('table').find('tbody').append('\
                     <tr>\
                         <?php foreach ($columns as $i => $column): ?>\
-                            <td><input class="form-control" type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="" /></td>\
+                            <td class="be-value-input"><?php
+                                $field = $columns[$i]['field'];
+                                $field->setValue(null);
+                                $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
+                                $field->enterObject();
+                                echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
+                            ?></td>\
                         <?php endforeach ?>\
                         <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
                     </tr>\
