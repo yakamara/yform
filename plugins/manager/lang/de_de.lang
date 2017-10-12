@@ -239,7 +239,7 @@ yform_values_prio_description =					Ein <b>Auswahlfeld</b>, um Datensätze in ei
 
 yform_values_defaults_prio = Priorität
 yform_values_be_manager_relation_table = Ziel Tabelle
-yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Zielfeld
+yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Feld, das die Relations-ID enthält.
 yform_values_be_manager_relation_type = Mehrfachauswahl
 yform_values_be_manager_relation_empty_option = Mit "Leer-Option"
 yform_values_be_manager_relation_empty_value = Fehlermeldung wenn "Leer-Option" nicht aktiviert ist.
