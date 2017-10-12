@@ -66,6 +66,10 @@ yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Wert anzeigen
 yform_validate_defaults_message = Fehlermeldung
 
+yform_search_defaults_wildcard_notice = Beispiele: *name / !(empty) / (empty)
+yform_search_integer_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
+yform_search_defaults_select_notice = Mit CTRL oder COMMAND mehrere auswählen
+
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_default = Defaultstatus

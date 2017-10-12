@@ -57,7 +57,7 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel()]);
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_search_defaults_wildcard_notice')]);
     }
 
     public static function getSearchFilter($params)

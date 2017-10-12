@@ -137,6 +137,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             'options' => $options,
             'multiple' => 1,
             'size' => 5,
+            'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
         ]
         );
     }
