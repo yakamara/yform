@@ -36,9 +36,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
             }
 
             if ($this->params['debug']) {
-                echo '<hr /><pre>';
-                var_dump($etpl);
-                echo '</pre><hr />';
+                dump($etpl);
             }
 
             $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
@@ -63,24 +61,25 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
             }
 
             if ($this->params['debug']) {
-                echo '<hr /><pre>';
-                var_dump($etpl);
-                echo '</pre><hr />';
+                dump($etpl);
             }
 
             if (!rex_yform_email_template::sendMail($etpl, $template_name)) {
                 if ($this->params['debug']) {
-                    echo 'email could not be sent';
+                    dump( 'email could not be sent');
+                }
+                if ($this->getElement(6) != false && $this->getElement(6) != '') {
+                    $this->params['output'] .= $this->getElement(6);
                 }
                 return false;
             }
             if ($this->params['debug']) {
-                echo 'email sent';
+                dump( 'email sent');
             }
             return true;
         }
         if ($this->params['debug']) {
-            echo '<p>Template: "' . htmlspecialchars($template_name) . '" not found';
+            dump( 'Template: "' . htmlspecialchars($template_name) . '" not found');
         }
 
         return false;
@@ -88,6 +87,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]';
+        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]|[Fehlermeldung wenn Versand fehgeschlagen ist/html]';
     }
 }
