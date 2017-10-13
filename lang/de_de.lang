@@ -187,3 +187,6 @@ yform_values_options_label = 	Bezeichnung
 yform_values_options_boolvalues	= 	Werte (0,1) (nicht angeklickt,angeklickt)
 
 yform_values_be_user_description = Backend User speichern
+yform_values_nonce_key = Eindeutigen Key für das Formular setzen
+yform_values_nonce_key_notice = Sofern es leer bleibt, wird der Formularname verwendet.
+yform_values_nonce_description = <b>CSRF Schutz</b>, durch Nonce Key.
