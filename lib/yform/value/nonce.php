@@ -11,37 +11,45 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        rex_login::startSession();
+        if ($this->params['csrf_protection']) {
+            rex_login::startSession();
 
-        $key = $this->getElement('nonce_key');
-        if ('' == $key) {
-            $key = $this->params['form_name'];
-        }
-        $timeKey = ceil(time() / (86400 / 2)); // One Day from now key
-
-        $toBeHashed = session_id().$key.$timeKey;
-
-        if (rex::isBackend() && rex::getUser()) {
-            $toBeHashed .= rex::getUser()->getId();
-        }
-
-        $hash = sha1($toBeHashed);
-        $value = (string) $this->getValue();
-
-        // validate
-        if ($this->needsOutput() && '1' == $this->params['send']) {
-            if ($value != $hash) {
-                $this->params['warning'][$this->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$this->getId()] = $this->getElement('message');
+            $key = $this->getElement('nonce_key');
+            if ('' == $key) {
+                $key = $this->params['form_name'];
             }
+            $timeKey = ceil(time() / (86400 / 2));
+
+            $toBeHashed = session_id().$key.$timeKey;
+
+            if (rex::isBackend() && rex::getUser()) {
+                $toBeHashed .= rex::getUser()->getId();
+            }
+
+            $hash = sha1($toBeHashed);
+            $value = (string) $this->getValue();
+
+            // validate
+            if ($this->needsOutput() && $this->params['send']) {
+                if ($value != $hash || 1==1) {
+                    $this->params['warning'][$this->getId()] = $this->params['error_class'];
+                    $error_message = $this->getElement('message');
+                    if ($error_message == "") {
+                        $error_message = $this->params['csrf_protection_error_message'];
+                    }
+                    $this->params['warning_messages'][$this->getId()] = $error_message;
+                }
+            }
+
+            $this->setValue($hash);
+
+            if ($this->needsOutput()) {
+                $this->setName($this->getFieldName());
+                $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
+            }
+
         }
 
-        $this->setValue($hash);
-
-        if ($this->needsOutput()) {
-            $this->setName($this->getFieldName());
-            $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
-        }
     }
 
     public function getDescription()
@@ -65,6 +73,9 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
             'multi_edit' => 'always',
             'is_searchable' => false,
             'is_hiddeninlist' => true,
+            'hidden' => true,
+            'formbuilder' => false,
+            'manager' => false
         ];
     }
 }

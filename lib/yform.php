@@ -58,6 +58,9 @@ class rex_yform
         $this->objparams['Error-Code-EntryNotFound'] = 'ErrorCode - EntryNotFound';
         $this->objparams['Error-Code-InsertQueryError'] = 'ErrorCode - InsertQueryError';
 
+        $this->objparams['csrf_protection'] = true;
+        $this->objparams['csrf_protection_error_message'] = 'CSRF - Error';
+
         $this->objparams['getdata'] = false;
 
         // --------------------------- do not edit
@@ -293,6 +296,8 @@ class rex_yform
         $this->objparams['send'] = 0;
 
         // *************************************************** VALUE OBJECT INIT
+
+        $this->setCSRFField();
 
         $rows = count($this->objparams['form_elements']);
 
@@ -599,7 +604,8 @@ class rex_yform
                     if ($name != 'abstract') {
                         $class = new $class();
                         $d = $class->getDefinitions();
-                        if (count($d) > 0) {
+                        if (isset($d['manager']) && !$d['manager']) {
+                        } else if (count($d) > 0) {
                             $return[$arr_key][$d['name']] = $d;
                         }
                     }
@@ -608,5 +614,10 @@ class rex_yform
         }
 
         return $return;
+    }
+
+    private function setCSRFField()
+    {
+        $this->objparams['form_elements'][] = ['nonce', 'name' => '_token'];
     }
 }
