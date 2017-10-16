@@ -21,7 +21,7 @@ if ($googleapikey != '') {
     var rex_geo_coder = function() {
 
         jQuery("#<?php echo $this->getFieldId() ?>").on("change", function(){
-            alert("set_position");
+            
         });
 
         jQuery("#<?php echo $this->getHTMLId('google') ?> .yform-google-btnbar .get-position").on("click", function(){
