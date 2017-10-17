@@ -931,7 +931,8 @@ class rex_yform_manager
                     $tmp_famous = '';
                     $tmp = '';
                     foreach ($types['value'] as $k => $v) {
-                        if (isset($v['famous']) && $v['famous']) {
+                        if (isset($v['manager']) && !$v['manager']) {
+                        } else if (isset($v['famous']) && $v['famous']) {
                             $tmp_famous .= '<tr class="yform-classes-famous"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                         } else {
                             $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';

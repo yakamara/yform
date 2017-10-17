@@ -604,8 +604,7 @@ class rex_yform
                     if ($name != 'abstract') {
                         $class = new $class();
                         $d = $class->getDefinitions();
-                        if (isset($d['manager']) && !$d['manager']) {
-                        } else if (count($d) > 0) {
+                        if (count($d) > 0) {
                             $return[$arr_key][$d['name']] = $d;
                         }
                     }
