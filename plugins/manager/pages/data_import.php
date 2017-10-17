@@ -68,18 +68,15 @@ if (rex_request('send', 'int', 0) == 1) {
 
         if ($import_start) {
             $fp = fopen($filename, 'r');
+            $firstbytes = fread($fp, 3);
+            $bom = pack("CCC", 0xef, 0xbb, 0xbf);
+            if ($bom != $firstbytes) {
+                rewind($fp);
+            }
+
             $idColumn = null;
             while (($line_array = fgetcsv($fp, 30384, $div)) !== false) {
                 if (count($fieldarray) == 0) {
-
-                    if (isset($line_array[0])) {
-                        $bom = pack("CCC", 0xef, 0xbb, 0xbf);
-                        if (0 == strncmp($line_array[0], $bom, 3)) {
-                            $line_array[0] = substr($line_array[0], 3);
-                        }
-                    }
-
-                    // ******************* first line
                     $fieldarray = $line_array;
 
                     $mc = [];
@@ -103,16 +100,13 @@ if (rex_request('send', 'int', 0) == 1) {
                             $error = false;
                             $i = rex_sql::factory();
                             foreach ($mc as $mcc) {
-                                $sql = 'ALTER TABLE ' . $i->escapeIdentifier($this->table->getTablename()) . ' ADD ' . $i->escapeIdentifier($mcc) . ' TEXT NOT NULL;';
-                                $upd = rex_sql::factory();
-                                $upd->setQuery($sql);
 
-                                if ($upd->getError()) {
-                                    $error = true;
-                                    echo rex_view::error(rex_i18n::msg('yform_manager_import_error_field', $mcc, $upd->getError()));
-                                } else {
-                                    echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
-                                }
+                                rex_sql_table::get($this->table->getTablename())
+                                    ->ensureColumn(new rex_sql_column($mcc, 'TEXT'))
+                                    ->alter();
+
+                                echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
+
                             }
                             if ($error) {
                                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_stopped'));
@@ -208,6 +202,8 @@ if (rex_request('send', 'int', 0) == 1) {
         if ($dcounter > 0) {
             echo rex_view::error(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
         }
+
+        rex_yform_manager_table::deleteCache();
     }
 }
 
