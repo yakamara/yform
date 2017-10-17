@@ -71,6 +71,14 @@ if (rex_request('send', 'int', 0) == 1) {
             $idColumn = null;
             while (($line_array = fgetcsv($fp, 30384, $div)) !== false) {
                 if (count($fieldarray) == 0) {
+
+                    if (isset($line_array[0])) {
+                        $bom = pack("CCC", 0xef, 0xbb, 0xbf);
+                        if (0 == strncmp($line_array[0], $bom, 3)) {
+                            $line_array[0] = substr($line_array[0], 3);
+                        }
+                    }
+
                     // ******************* first line
                     $fieldarray = $line_array;
 
