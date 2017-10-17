@@ -31,7 +31,7 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
 
             // validate
             if ($this->needsOutput() && $this->params['send']) {
-                if ($value != $hash || 1==1) {
+                if ($value != $hash) {
                     $this->params['warning'][$this->getId()] = $this->params['error_class'];
                     $error_message = $this->getElement('message');
                     if ($error_message == "") {
