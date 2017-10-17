@@ -131,6 +131,10 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $new_select = new self();
         $options += $new_select->getArrayFromString($params['field']['options']);
 
+        if (isset($options[''])) {
+            unset($options['']);
+        }
+
         $params['searchForm']->setValueField('select', [
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
@@ -149,6 +153,8 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
+        $multiple = $params['field']->getElement('multiple') == 1;
+
         $where = [];
         foreach ($values as $value) {
             switch ($value) {
@@ -159,7 +165,12 @@ class rex_yform_value_select extends rex_yform_value_abstract
                     $where[] = ' ' . $sql->escapeIdentifier($field) . ' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    if ($multiple) {
+                        $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    } else {
+                        $where[] = ' ( ' . $sql->escape($value) . ' = ' . $sql->escapeIdentifier($field) . ' )';
+                    }
+
                     break;
             }
         }
