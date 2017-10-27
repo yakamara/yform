@@ -1,8 +1,14 @@
 <?php
 
+/** @var rex_addon $this */
+
 rex_dir::copy($this->getPath('data'), $this->getDataPath());
 
-if ($this->getPlugin('manager')->isInstalled()) {
+foreach ($this->getInstalledPlugins() as $plugin) {
     // use path relative to __DIR__ to get correct path in update temp dir
-    $this->getPlugin('manager')->includeFile(__DIR__.'/plugins/manager/install.php');
+    $file = __DIR__.'/plugins/'.$plugin->getName().'/install.php';
+
+    if (file_exists($file)) {
+        $plugin->includeFile($file);
+    }
 }
