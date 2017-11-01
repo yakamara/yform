@@ -360,8 +360,12 @@ class rex_yform_manager_dataset
             return null;
         }
 
-        // Does not work with self::get()
-        return self::get($id, $relation['table']);
+        // php-cs-fixer would replace `rex_yform_manager_dataset::get()` by `self::get()`
+        // but it would not work in this case, so we are using `__CLASS__`.
+        $class = __CLASS__;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $class::get($id, $relation['table']);
     }
 
     /**
