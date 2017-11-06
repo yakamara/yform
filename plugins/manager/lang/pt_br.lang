@@ -120,7 +120,7 @@ yform_visible = visível
 # edit.inc.php
 yform_thankyouforupdate = Registro atualizado.
 yform_thankyouforentry = Registro adicionado.
-yform_editdata = Editar registro
+yform_editdata = Editar registro [id: {0}]
 yform_editdata_collection = Editar {0} registro
 yform_adddata = Criar registro
 yform_searchtext = Procurar termo

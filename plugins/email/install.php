@@ -7,15 +7,13 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-$sql = rex_sql::factory();
-$sql->setQuery('CREATE TABLE IF NOT EXISTS `' . rex::getTablePrefix() . 'yform_email_template` (
-    `id` int(11) NOT NULL auto_increment,
-    `name` varchar(255) NOT NULL default "",
-    `mail_from` varchar(255) NOT NULL default "",
-    `mail_from_name` varchar(255) NOT NULL default "",
-    `subject` varchar(255) NOT NULL default "",
-    `body` text NOT NULL,
-    `body_html` text NOT NULL,
-    `attachments` TEXT NOT NULL,
-    PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+rex_sql_table::get(rex::getTable('yform_email_template'))
+    ->ensurePrimaryIdColumn()
+    ->ensureColumn(new rex_sql_column('name', 'varchar(255)', false, ''))
+    ->ensureColumn(new rex_sql_column('mail_from', 'varchar(255)', false, ''))
+    ->ensureColumn(new rex_sql_column('mail_from_name', 'varchar(255)', false, ''))
+    ->ensureColumn(new rex_sql_column('subject', 'varchar(255)', false, ''))
+    ->ensureColumn(new rex_sql_column('body', 'text'))
+    ->ensureColumn(new rex_sql_column('body_html', 'text'))
+    ->ensureColumn(new rex_sql_column('attachments', 'text'))
+    ->ensure();

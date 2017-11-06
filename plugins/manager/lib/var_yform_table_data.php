@@ -16,7 +16,8 @@ class rex_var_yform_table_data extends rex_var
 
         if (!in_array($this->getContext(), ['module'])) {
             return self::quote('[context ?]');
-        } elseif (!is_numeric($id) || $id < 1 || $id > 20) {
+        }
+        if (!is_numeric($id) || $id < 1 || $id > 20) {
             return self::quote('[id ?]');
         }
 

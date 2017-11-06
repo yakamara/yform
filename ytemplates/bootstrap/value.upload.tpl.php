@@ -48,14 +48,14 @@ $value = $this->getValue();
 if ($filename != '') {
     $label = htmlspecialchars($filename);
 
-        /*
-        if (rex::isBackend() && $download_link != "") {
-            $label = '<a href="' . $download_link . '">' . $label . '</a>';
+    /*
+    if (rex::isBackend() && $download_link != "") {
+        $label = '<a href="' . $download_link . '">' . $label . '</a>';
 
-        }
-        */
+    }
+    */
 
-        echo '
+    echo '
         <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
             <label>
                 <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />

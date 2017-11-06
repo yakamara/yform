@@ -64,6 +64,12 @@ class rex_yform_manager_dataset
 
         $table = $table ?: static::modelToTable();
 
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::get($id, $table);
+        }
+
         return static::getInstance([$table, $id], function ($table, $id) {
             return static::query($table)->findId($id);
         });
@@ -82,6 +88,12 @@ class rex_yform_manager_dataset
         }
 
         $table = $table ?: static::modelToTable();
+
+        $class = self::getModelClass($table);
+        if ($class && __CLASS__ === get_called_class()) {
+            /** @noinspection PhpUndefinedMethodInspection */
+            return $class::getRaw($id, $table);
+        }
 
         return self::getInstance([$table, $id], function ($table, $id) {
             $class = self::tableToModel($table);
@@ -348,7 +360,12 @@ class rex_yform_manager_dataset
             return null;
         }
 
-        return self::get($id, $relation['table']);
+        // php-cs-fixer would replace `rex_yform_manager_dataset::get()` by `self::get()`
+        // but it would not work in this case, so we are using `__CLASS__`.
+        $class = __CLASS__;
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        return $class::get($id, $relation['table']);
     }
 
     /**
@@ -430,9 +447,13 @@ class rex_yform_manager_dataset
             }
         }
 
+        $send = $yform->getFieldValue('send', '', 'send');
         $yform->setFieldValue('send', '1', '', 'send');
+
         $yform->executeFields();
         $this->messages = $yform->getObjectparams('warning_messages');
+
+        $yform->setFieldValue('send', $send, '', 'send');
 
         return empty($this->messages);
     }
@@ -459,9 +480,13 @@ class rex_yform_manager_dataset
             }
         }
 
+        $send = $yform->getFieldValue('send', '', 'send');
         $yform->setFieldValue('send', '1', '', 'send');
+
         $this->executeForm($yform);
         $this->messages = $yform->getObjectparams('warning_messages');
+
+        $yform->setFieldValue('send', $send, '', 'send');
 
         return empty($this->messages);
     }
@@ -527,6 +552,7 @@ class rex_yform_manager_dataset
     public function executeForm(rex_yform $yform, callable $afterFieldsExecuted = null)
     {
         $exits = $this->exists();
+        $oldData = $this->getData();
 
         if ($exits) {
             /** @var rex_yform $yform */
@@ -566,7 +592,7 @@ class rex_yform_manager_dataset
 
         if ($yform->objparams['actions_executed']) {
             if ($exits) {
-                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
+                rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this, 'old_data' => $oldData]));
             } else {
                 rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADDED', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
             }

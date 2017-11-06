@@ -49,7 +49,7 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|size_range|label|[minsize]|[maxsize]|Fehlermeldung';
+        return 'validate|size_range|name|[minsize]|[maxsize]|Fehlermeldung';
     }
 
     public function getDefinitions()

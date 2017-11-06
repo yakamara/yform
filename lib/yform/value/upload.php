@@ -90,7 +90,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 ($this->getElement('types') != '*') &&
                 (!in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array))
             ) {
-                $error[] = $error_messages['type_error'];
+                $errors[] = $error_messages['type_error'];
                 unset($FILE);
             }
 
@@ -299,7 +299,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'upload|name | label | Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder leer lassen| pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg ';
+        return 'upload|name|label|Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder *| pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg ';
     }
 
     public function getDefinitions()
@@ -324,11 +324,18 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $return = $params['value'];
+        $value = $params['subject'];
+        $length = strlen($value);
+        $title = $value;
+        if ($length > 30) {
+            $value = substr($value, 0, 15).' ... '.substr($value, -15);
+        }
+
+        $return = $value;
         if (rex::isBackend()) {
             $field = new rex_yform_manager_field($params['params']['field']);
-            if ($params['value'] != '') {
-                $return = '<a href="/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'">'.$params['value'].'</a>';
+            if ($value != '') {
+                $return = '<a href="/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
             }
         }
 
@@ -348,7 +355,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         if ($value == '(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        } elseif ($value == '!(empty)') {
+        }
+        if ($value == '!(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 

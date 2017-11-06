@@ -27,7 +27,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
 
             $real_values = [];
             foreach ($values as $value) {
-                if (array_key_exists($value, $options)) {
+                if (isset($options[$value])) {
                     $real_values[] = $value;
                 }
             }
@@ -36,13 +36,14 @@ class rex_yform_value_select extends rex_yform_value_abstract
         } else {
             $size = 1;
             $default = null;
-            if (array_key_exists((string) $this->getElement('default'), $options)) {
+
+            if (isset($options[$this->getElement('default')])) {
                 $default = $this->getElement('default');
             }
             $value = (string) $this->getValue();
 
-            if (!array_key_exists($value, $options)) {
-                if ($default) {
+            if (!isset($options[$value])) {
+                if ($default !== null) {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -58,7 +59,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             $value = $this->params['rex_yform_set'][$this->getName()];
             $values = [];
             if (array_key_exists($value, $options)) {
-                $values[] = $value;
+                $values[] = (string) $value;
             }
             $this->setValue($values);
             $this->setElement('disabled', true);
@@ -130,12 +131,17 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $new_select = new self();
         $options += $new_select->getArrayFromString($params['field']['options']);
 
+        if (isset($options[''])) {
+            unset($options['']);
+        }
+
         $params['searchForm']->setValueField('select', [
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
             'options' => $options,
             'multiple' => 1,
             'size' => 5,
+            'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
         ]
         );
     }
@@ -147,6 +153,8 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $field = $params['field']->getName();
         $values = (array) $params['value'];
 
+        $multiple = $params['field']->getElement('multiple') == 1;
+
         $where = [];
         foreach ($values as $value) {
             switch ($value) {
@@ -157,7 +165,12 @@ class rex_yform_value_select extends rex_yform_value_abstract
                     $where[] = ' ' . $sql->escapeIdentifier($field) . ' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    if ($multiple) {
+                        $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    } else {
+                        $where[] = ' ( ' . $sql->escape($value) . ' = ' . $sql->escapeIdentifier($field) . ' )';
+                    }
+
                     break;
             }
         }

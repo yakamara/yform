@@ -30,7 +30,7 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|email|emaillabel|warning_message ';
+        return 'validate|email|emailname|warning_message ';
     }
 
     public function getDefinitions()

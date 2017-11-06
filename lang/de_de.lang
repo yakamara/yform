@@ -66,6 +66,10 @@ yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Wert anzeigen
 yform_validate_defaults_message = Fehlermeldung
 
+yform_search_defaults_wildcard_notice = Beispiele: *name / !(empty) / (empty)
+yform_search_integer_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
+yform_search_defaults_select_notice = Mit CTRL oder COMMAND mehrere auswählen
+
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_default = Defaultstatus
@@ -126,7 +130,7 @@ yform_values_textarea_classes = classes
 yform_values_time_hours = Stundenraster
 yform_values_time_minutes = Minutenraster
 yform_values_time_format = Anzeigeformat
-yform_values_time_format_notice = Default: HH:ii
+yform_values_time_format_notice = Default: HH:ii:ss
 yform_values_upload_sizes = Maximale Größe in Kb oder Range 100,500
 yform_values_upload_types = Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png" oder "*"
 yform_values_upload_required = Pflichtfeld
@@ -168,10 +172,21 @@ yform_validate_unique_name = Name
 yform_validate_unique_message = Fehlermeldung
 yform_validate_unique_table = Tabelle
 yform_validate_unique_notice = Bitte kommasepariert die Liste der Felder eintragen. z.B. name,email
+yform_validate_unique_empty_option = Wert darf auch leer sein. (Funktioniert nur, wenn es sich um ein Feld handelt)
+
 yform_validate_preg_match_pattern = Suchmuster eingeben.
 yform_validate_preg_match_pattern_info = z.B. /^start/
 
+yform_validate_password_policy_description = Hiermit kann man ein Feld nach <b>Passwortregeln</b> validieren
+yform_validate_preg_match_description = PREG_MATCH Validierung
+yform_validate_password_policy_rules = Regelkonfiguration
+yform_validate_password_policy_rules_notice = Standard Regeln falls leer: {0}
 
 yform_values_options_name = 	Name
 yform_values_options_label = 	Bezeichnung
 yform_values_options_boolvalues	= 	Werte (0,1) (nicht angeklickt,angeklickt)
+
+yform_values_be_user_description = Backend User speichern
+yform_values_nonce_key = Eindeutigen Key für das Formular setzen
+yform_values_nonce_key_notice = Sofern es leer bleibt, wird der Formularname verwendet.
+yform_values_nonce_description = <b>CSRF Schutz</b>, durch Nonce Key.

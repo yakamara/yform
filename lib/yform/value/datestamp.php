@@ -52,7 +52,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'datestamp|name| [YmdHis/U/dmy/mysql] | [no_db] | [0-wird immer neu gesetzt,1-nur wenn leer,2-nie],';
+        return 'datestamp|name|label|[YmdHis/U/dmy/mysql]|[no_db]|[0-wird immer neu gesetzt,1-nur wenn leer,2-nie]';
     }
 
     public function getDefinitions()

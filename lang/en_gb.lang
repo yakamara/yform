@@ -66,6 +66,10 @@ yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Show value
 yform_validate_defaults_message = Error message
 
+yform_search_defaults_wildcard_notice = Examples: *name / !(empty) / (empty)
+yform_search_integer_notice = Examples: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
+yform_search_defaults_select_notice = Please use CTRL or COMMAND to select more options
+
 yform_values_checkbox_values = Values (0,1 = unchecked, checked)
 yform_values_checkbox_values = Values (0,1 = unchecked, checked)
 yform_values_checkbox_default = Default status
@@ -126,7 +130,7 @@ yform_values_textarea_classes = Classes
 yform_values_time_hours = Hours
 yform_values_time_minutes = Minutes
 yform_values_time_format = Display format
-yform_values_time_format_notice = Default: HH:ii
+yform_values_time_format_notice = Default: HH:ii:ss
 yform_values_upload_sizes = Maximum size in kilobytes or a range, ex.: 100, 500
 yform_values_upload_types = Allowed file types, comma separated list. Ex. ".gif, .png" or "*"
 yform_values_upload_required = Required field

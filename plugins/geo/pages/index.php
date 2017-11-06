@@ -22,7 +22,7 @@ foreach ($tables as $i_table) {
             $table = $i_table;
             break;
         }
-    }    
+    }
 }
 
 if (count($geo_tables) == 0) {

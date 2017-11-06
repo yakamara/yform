@@ -19,11 +19,15 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $options_sql = rex_sql::factory();
         $options_sql->setDebug($this->params['debug']);
-        $options_sql->setQuery($sql);
 
         $options = [];
-        foreach ($options_sql->getArray() as $t) {
-            $options[$t['id']] = $t['name'];
+
+        try {
+            foreach ($options_sql->getArray($sql) as $t) {
+                $options[$t['id']] = $t['name'];
+            }
+        } catch (rex_sql_exception $e) {
+            dump($e);
         }
 
         if ($multiple) {
@@ -59,7 +63,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!array_key_exists($value, $options)) {
-                if ($default) {
+                if ($default or $default === '0') {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -98,7 +102,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'select_sql|label|Bezeichnung:| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
+        return 'select_sql|name|label| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
     }
 
     public function getDefinitions()
@@ -189,6 +193,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                 'options' => $options,
                 'multiple' => 1,
                 'size' => 5,
+                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
             ]
         );
     }
@@ -198,6 +203,8 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         $sql = rex_sql::factory();
         $field = $params['field']->getName();
         $values = (array) $params['value'];
+
+        $multiple = $params['field']->getElement('multiple') == 1;
 
         $where = [];
         foreach ($values as $value) {
@@ -209,7 +216,11 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                     $where[] = $sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    if ($multiple) {
+                        $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    } else {
+                        $where[] = ' ( ' . $sql->escape($value) . ' = ' . $sql->escapeIdentifier($field) . ' )';
+                    }
                     break;
             }
         }

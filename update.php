@@ -8,14 +8,18 @@ rex_extension::register('OUTPUT_FILTER', function () {
     rex_dir::copy($this->getPath('data'), $this->getDataPath());
 });
 
-if ($this->getPlugin('manager')->isInstalled()) {
+foreach ($this->getInstalledPlugins() as $plugin) {
     // use path relative to __DIR__ to get correct path in update temp dir
-    $this->getPlugin('manager')->includeFile(__DIR__.'/plugins/manager/install.php');
+    $file = __DIR__.'/plugins/'.$plugin->getName().'/install.php';
+
+    if (file_exists($file)) {
+        $plugin->includeFile($file);
+    }
 }
 
-if (rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
-    $fields_removed[] = ['submits'];
-    $fields_change = ['html', 'php', 'date', 'datetime', 'fieldset', 'time', 'upload', 'google_geocode', 'submit'];
+if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
+    $fields_removed = ['submits'];
+    $fields_change = ['html', 'php', 'date', 'datetime', 'fieldset', 'time', 'upload', 'google_geocode', 'submit', 'be_medialist'];
     $actions_removed = ['fulltext_value', 'wrapper_value'];
 
     foreach ($fields_removed as $field) {

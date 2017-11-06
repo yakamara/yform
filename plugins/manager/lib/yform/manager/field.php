@@ -71,11 +71,20 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->values[$k];
     }
 
+    public function getDBType()
+    {
+        if (!isset($this->definitions['dbtype'])) {
+            return 'none';
+        }
+        return $this->definitions['dbtype'];
+    }
+
     public function isSearchableDisabled()
     {
         if (!isset($this->definitions['is_searchable'])) {
             return false;
-        } elseif (!$this->definitions['is_searchable']) {
+        }
+        if (!$this->definitions['is_searchable']) {
             return true;
         }
         return false;
@@ -97,7 +106,8 @@ class rex_yform_manager_field implements ArrayAccess
     {
         if (!isset($this->definitions['is_hiddeninlist'])) {
             return false;
-        } elseif ($this->definitions['is_hiddeninlist']) {
+        }
+        if ($this->definitions['is_hiddeninlist']) {
             return true;
         }
         return false;
