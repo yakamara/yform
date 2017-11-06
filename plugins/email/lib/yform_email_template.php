@@ -110,7 +110,7 @@ class rex_yform_email_template
         $mail->Body = $template['body'];
         if ($template['body_html'] != '') {
             $mail->MsgHTML($template['body_html']);
-            if ($template['body'] != "") {
+            if ($template['body'] != '') {
                 $mail->AltBody = $template['body'];
             }
         } else {

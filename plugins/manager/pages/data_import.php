@@ -69,7 +69,7 @@ if (rex_request('send', 'int', 0) == 1) {
         if ($import_start) {
             $fp = fopen($filename, 'r');
             $firstbytes = fread($fp, 3);
-            $bom = pack("CCC", 0xef, 0xbb, 0xbf);
+            $bom = pack('CCC', 0xef, 0xbb, 0xbf);
             if ($bom != $firstbytes) {
                 rewind($fp);
             }
@@ -100,13 +100,11 @@ if (rex_request('send', 'int', 0) == 1) {
                             $error = false;
                             $i = rex_sql::factory();
                             foreach ($mc as $mcc) {
-
                                 rex_sql_table::get($this->table->getTablename())
                                     ->ensureColumn(new rex_sql_column($mcc, 'TEXT'))
                                     ->alter();
 
                                 echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
-
                             }
                             if ($error) {
                                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_stopped'));

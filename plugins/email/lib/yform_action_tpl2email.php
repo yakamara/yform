@@ -66,7 +66,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
             if (!rex_yform_email_template::sendMail($etpl, $template_name)) {
                 if ($this->params['debug']) {
-                    dump( 'email could not be sent');
+                    dump('email could not be sent');
                 }
                 if ($this->getElement(6) != false && $this->getElement(6) != '') {
                     $this->params['output'] .= $this->getElement(6);
@@ -74,12 +74,12 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 return false;
             }
             if ($this->params['debug']) {
-                dump( 'email sent');
+                dump('email sent');
             }
             return true;
         }
         if ($this->params['debug']) {
-            dump( 'Template: "' . htmlspecialchars($template_name) . '" not found');
+            dump('Template: "' . htmlspecialchars($template_name) . '" not found');
         }
 
         return false;

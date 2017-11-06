@@ -34,9 +34,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $rows = count($form_data[$id .'.0']);
 
             // Spalten durchgehen
-            for ($c = 0; $c < count($columns); $c++) {
-                for ($r = 0; $r < $rows; $r++) {
-                    $table_array[$r][$c] = (isset($form_data[$id .'.'. $c][$r])) ? $form_data[$id .'.'. $c][$r] : "" ;
+            for ($c = 0; $c < count($columns); ++$c) {
+                for ($r = 0; $r < $rows; ++$r) {
+                    $table_array[$r][$c] = (isset($form_data[$id .'.'. $c][$r])) ? $form_data[$id .'.'. $c][$r] : '';
                 }
             }
             $this->setValue(json_encode($table_array));
@@ -59,7 +59,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
-        $columns  = [];
+        $columns = [];
         $yfparams = ['this' => \rex_yform::factory()];
 
         foreach ($_columns as $index => $col) {
@@ -81,7 +81,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $columns[] = ['label' => $values[2], 'field' => $field];
         }
 
-        $data = json_decode($this->getValue(),true);
+        $data = json_decode($this->getValue(), true);
 
         if (!is_array($data)) {
             $data = [];

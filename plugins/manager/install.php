@@ -7,7 +7,6 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-
 $table = rex_sql_table::get(rex::getTable('yform_table'));
 $hasMassDeletion = $table->hasColumn('mass_deletion');
 $hasMassEdit = $table->hasColumn('mass_edit');

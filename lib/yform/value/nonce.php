@@ -34,7 +34,7 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
                 if ($value != $hash) {
                     $this->params['warning'][$this->getId()] = $this->params['error_class'];
                     $error_message = $this->getElement('message');
-                    if ($error_message == "") {
+                    if ($error_message == '') {
                         $error_message = $this->params['csrf_protection_error_message'];
                     }
                     $this->params['warning_messages'][$this->getId()] = $error_message;
@@ -47,9 +47,7 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
                 $this->setName($this->getFieldName());
                 $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
             }
-
         }
-
     }
 
     public function getDescription()
@@ -75,7 +73,7 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
             'is_hiddeninlist' => true,
             'hidden' => true,
             'formbuilder' => false,
-            'manager' => false
+            'manager' => false,
         ];
     }
 }
