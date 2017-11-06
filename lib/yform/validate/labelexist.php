@@ -49,6 +49,6 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|labelexist|label,label2,label3|[minlabels]|[maximallabels]|Fehlermeldung';
+        return 'validate|labelexist|name,name2,name3|[minnames]|[maximalnames]|Fehlermeldung';
     }
 }

@@ -34,7 +34,7 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'hashvalue|name|[title]|field|(md5/sha1/sha512/...)|[salt]|[no_db]';
+        return 'hashvalue|name|[label]|field|(md5/sha1/sha512/...)|[salt]|[no_db]';
     }
 
     public function getDefinitions()

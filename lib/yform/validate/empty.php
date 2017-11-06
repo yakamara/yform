@@ -23,7 +23,7 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|empty|label|warning_message ';
+        return 'validate|empty|name|warning_message ';
     }
 
     public function getDefinitions()

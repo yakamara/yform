@@ -59,7 +59,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'index|label|name|name1,name2,name3|[no_db]|[func/md5/sha]';
+        return 'index|name|label|name1,name2,name3|[no_db]|[func/md5/sha]';
     }
 
     public function getDefinitions()

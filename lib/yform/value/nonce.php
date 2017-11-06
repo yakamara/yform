@@ -52,7 +52,7 @@ class rex_yform_value_nonce extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return rex_escape('nonce|name|key|message]');
+        return rex_escape('nonce|name|label|nonce_key|message]');
     }
 
     public function getDefinitions()
