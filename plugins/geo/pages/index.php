@@ -60,7 +60,6 @@ if (count($geo_tables) == 0) {
             if (count($pos_fields) == 2) {
                 $pos_lat = $pos_fields[0];
                 $pos_lng = $pos_fields[1];
-//                $gd->setDebug();
                 $gd->setQuery('select id, ' . $concat . ' from ' . $table['table_name'] . ' where ' . $pos_lng . '="" or ' . $pos_lng . ' IS NULL or ' . $pos_lat . '="" or ' . $pos_lat . ' IS NULL LIMIT 200');
                 $data = ($gd->getArray());
             } elseif ($pos_field) {
