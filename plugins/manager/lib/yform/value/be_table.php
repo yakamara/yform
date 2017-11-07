@@ -25,7 +25,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $table_array = [];
             $id = $this->getId();
 
-            $columns = explode(',', $this->getElement('columns'));
+            $columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
             if (count($columns) == 0) {
                 return;
             }
@@ -54,7 +54,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
-        $_columns = explode(',', $this->getElement('columns'));
+        $_columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
         if (count($_columns) == 0) {
             return;
         }
