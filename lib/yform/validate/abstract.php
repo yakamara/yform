@@ -11,20 +11,6 @@ abstract class rex_yform_validate_abstract extends rex_yform_base_abstract
 {
     public $validateObjects = [];
 
-    public function getValueObjects($valueNames)
-    {
-        $Objects = [];
-        $valueNames = explode(',', $valueNames);
-
-        foreach ($valueNames as $valueName) {
-            if (($Object == $this->getValueObject($valueName))) {
-                $Objects[] = $Object;
-            }
-        }
-
-        return $Objects;
-    }
-
     public function getValueObject($valueName = '')
     {
         if ($valueName == '') {
