@@ -75,6 +75,11 @@ class rex_yform_manager
             $popup = true; // id, field, multiple
         }
 
+        $rex_yform_manager_popup = rex_request('rex_yform_manager_popup', 'int');
+        if ($rex_yform_manager_popup == 1) {
+            $popup = true;
+        }
+
         // SearchObject
         $searchObject = new rex_yform_manager_search($this->table);
         $searchObject->setLinkVars(['list' => rex_request('list', 'string', '')]);
@@ -110,6 +115,8 @@ class rex_yform_manager
                 $searchObject->setLinkVars(['rex_yform_manager_opener[' . $k . ']' => $v]);
             }
         }
+
+        $searchObject->setLinkVars(['rex_yform_manager_popup' => $rex_yform_manager_popup]);
 
         $searchform = '';
         if ($this->hasDataPageFunction('search')) {
@@ -163,6 +170,8 @@ class rex_yform_manager
                 $link_vars .= '&rex_yform_manager_opener[' . $k . ']=' . urlencode($v);
             }
 
+            $link_vars .= '&rex_yform_manager_popup=' . $rex_yform_manager_popup;
+
             // -------------- Searchfields / Searchtext
             $link_vars .= '&' . http_build_query($searchObject->getSearchVars());
 
@@ -214,7 +223,7 @@ class rex_yform_manager
             }
 
             // -------------- delete dataset
-            if ($func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
+            if (!$popup && $func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
                 $query = $this->table->query();
                 $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject);
                 if ($where) {
@@ -227,14 +236,14 @@ class rex_yform_manager
             }
 
             // -------------- truncate table
-            if ($func == 'truncate_table' && $this->hasDataPageFunction('truncate_table')) {
+            if (!$popup && $func == 'truncate_table' && $this->hasDataPageFunction('truncate_table')) {
                 $this->table->query()->find()->delete();
                 echo rex_view::success(rex_i18n::msg('yform_table_truncated'));
                 $func = '';
             }
 
             // -------------- export dataset
-            if ($func == 'dataset_export' && $this->hasDataPageFunction('export')) {
+            if (!$popup && $func == 'dataset_export' && $this->hasDataPageFunction('export')) {
                 ob_end_clean();
 
                 $sql = $this->getDataListQuery($rex_yform_filter, $searchObject);
@@ -312,6 +321,8 @@ class rex_yform_manager
                         $yform->setHiddenField('rex_yform_manager_opener[' . $k . ']', $v);
                     }
                 }
+
+                $yform->setHiddenField('rex_yform_manager_popup', $rex_yform_manager_popup);
 
                 if (count($rex_yform_filter) > 0) {
                     foreach ($rex_yform_filter as $k => $v) {
@@ -532,6 +543,8 @@ class rex_yform_manager
                     }
                 }
 
+                $list->addParam('rex_yform_manager_popup', $rex_yform_manager_popup);
+
                 foreach ($searchObject->getSearchVars() as $s_var => $values) {
                     foreach ($values as $k => $v) {
                         $list->addParam($s_var.'['.$k.']', $v);
@@ -714,7 +727,7 @@ class rex_yform_manager
                     $item['attributes']['class'][] = 'btn-default';
                     $table_links[] = $item;
                 }
-                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
+                if (!$popup && $this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_truncate_table');
                     $item['url'] = 'index.php?' . $link_vars . '&func=truncate_table&' . $em_url . $em_rex_list;

@@ -135,6 +135,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
             self::addFilterParams($link, $filter);
             $link = self::addOpenerParams($link);
+            $link .= '&rex_yform_manager_popup=1';
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
         }
     }
