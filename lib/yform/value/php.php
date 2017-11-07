@@ -28,7 +28,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return htmlspecialchars('php|name|<?php echo date("mdY"); ?>');
+        return rex_escape('php|name|label|<?php echo date("mdY"); ?>');
     }
 
     public function getDefinitions()

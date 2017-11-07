@@ -81,7 +81,7 @@ rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
     if (!$dataset) {
         $dataset = rex_yform_manager_dataset::getRaw($ep->getParam('id'), $table->getTableName());
     }
-    // $dataset->invalidateData();
+    $dataset->invalidateData();
 
     if ($table->hasHistory()) {
         $action = 'insert' === $ep->getParam('action') ? rex_yform_manager_dataset::ACTION_CREATE : rex_yform_manager_dataset::ACTION_UPDATE;

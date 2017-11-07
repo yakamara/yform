@@ -53,7 +53,7 @@ class rex_yform_value_email extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel()]);
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_search_defaults_wildcard_notice')]);
     }
 
     public static function getSearchFilter($params)
@@ -64,7 +64,8 @@ class rex_yform_value_email extends rex_yform_value_abstract
 
         if ($value == '(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        } elseif ($value == '!(empty)') {
+        }
+        if ($value == '!(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 

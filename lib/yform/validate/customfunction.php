@@ -36,7 +36,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|customfunction|label|[!]function/class::method|weitere_parameter|warning_message';
+        return 'validate|customfunction|name|[!]function/class::method|weitere_parameter|warning_message';
     }
 
     public function getDefinitions()

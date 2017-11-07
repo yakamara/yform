@@ -35,7 +35,7 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
             'name' => 'password_policy',
             'values' => [
                 'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
-                'message' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_defaults_message'), 'notice' => rex_i18n::msg('yform_validate_password_policy_message_notice')],
+                'message' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_defaults_message')],
                 'rules' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_password_policy_rules'), 'notice' => rex_i18n::msg('yform_validate_password_policy_rules_notice', self::PASSWORD_POLICY_DEFAULT_RULES)],
             ],
             'description' => rex_i18n::msg('yform_validate_password_policy_description'),

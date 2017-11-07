@@ -19,20 +19,20 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
         $user = rex::getUser();
         $user_login = '';
         if ($user) {
-            $user_login =  $user->getLogin();
+            $user_login = $user->getLogin();
         }
         switch ($only_empty) {
-            case("0"):
+            case '0':
                 // always change. update
                 $value = $user_login;
-                if ($showValue != "") {
+                if ($showValue != '') {
                     $showValue = rex_i18n::msg('yform_is').': '.$showValue."\n";
                 }
                 $showValue .= rex_i18n::msg('yform_will_set_to').': '.$value;
                 break;
-            case("1"):
+            case '1':
                 // if empty / bei create
-                if ($showValue == "") {
+                if ($showValue == '') {
                     $value = $user_login;
                     $showValue = 'will be set to: '.$value;
                 }
@@ -50,8 +50,6 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-
-
     }
 
     public function getDefinitions()

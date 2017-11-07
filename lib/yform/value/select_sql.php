@@ -63,7 +63,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!array_key_exists($value, $options)) {
-                if ($default OR $default === '0') {
+                if ($default or $default === '0') {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -102,7 +102,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'select_sql|label|Bezeichnung:| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
+        return 'select_sql|name|label| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
     }
 
     public function getDefinitions()
@@ -193,6 +193,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                 'options' => $options,
                 'multiple' => 1,
                 'size' => 5,
+                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
             ]
         );
     }
@@ -202,6 +203,8 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         $sql = rex_sql::factory();
         $field = $params['field']->getName();
         $values = (array) $params['value'];
+
+        $multiple = $params['field']->getElement('multiple') == 1;
 
         $where = [];
         foreach ($values as $value) {
@@ -213,7 +216,11 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                     $where[] = $sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    if ($multiple) {
+                        $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    } else {
+                        $where[] = ' ( ' . $sql->escape($value) . ' = ' . $sql->escapeIdentifier($field) . ' )';
+                    }
                     break;
             }
         }

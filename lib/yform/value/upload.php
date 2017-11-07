@@ -64,7 +64,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             unset($_SESSION[$unique]);
         }
 
-
         if (!$this->params['send']) {
             // Erster Aufruf. Ist File vorhanden ? dann Dateinamen setzen.
             $_SESSION[$unique]['value'] = (string) $this->getValue();
@@ -72,7 +71,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         // Datei wurde hochgeladen - mit dem entsprechenden UniqueKey
         if (isset($_FILES[$unique]) && $_FILES[$unique]['name'] != '') {
-
             $FILE['size'] = $_FILES[$unique]['size'];
             $FILE['name'] = $_FILES[$unique]['name'];
             $FILE['name'] = strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILE['name']));
@@ -297,7 +295,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'upload|name | label | Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder *| pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg ';
+        return 'upload|name|label|Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder *| pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg ';
     }
 
     public function getDefinitions()
@@ -354,7 +352,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         if ($value == '(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        } elseif ($value == '!(empty)') {
+        }
+        if ($value == '!(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 

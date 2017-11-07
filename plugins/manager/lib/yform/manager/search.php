@@ -35,7 +35,7 @@ class rex_yform_manager_search
             'id' => 0,
             'table_name' => $this->table->getTableName(),
             'type_id' => 'value',
-            'type_name' => 'text',
+            'type_name' => 'integer',
             'search' => 1,
             'label' => 'ID',
             'name' => 'id',

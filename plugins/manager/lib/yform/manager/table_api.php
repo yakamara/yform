@@ -183,7 +183,8 @@ class rex_yform_manager_table_api
 
         if (count($currentFields) > 1) {
             throw new Exception('more than one field found for table: ' . $table_name . ' with Fieldidentifier: ' . implode(', ', $fieldIdentifier) . '');
-        } elseif (count($currentFields) == 0) {
+        }
+        if (count($currentFields) == 0) {
             // Insert
             $field_insert = rex_sql::factory();
             $field_insert->setDebug(self::$debug);
@@ -565,7 +566,8 @@ class rex_yform_manager_table_api
                             $result = call_user_func($types[$type_id][$type_name]['hooks']['preCreate'], $field);
                             if (false === $result) {
                                 continue;
-                            } elseif (is_string($result)) {
+                            }
+                            if (is_string($result)) {
                                 $dbtype = $result;
                             }
                         }

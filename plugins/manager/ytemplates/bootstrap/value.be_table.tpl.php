@@ -33,11 +33,11 @@ else {
                 <?php foreach ($columns as $i => $column): ?>
                     <td class="be-value-input">
                         <?php
-                        $field = $column['field'];
-                        $field->setValue($row[$i] ?: '');
-                        $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
-                        $field->enterObject();
-                        echo $field->params['form_output'][$field->getId()]
+                            $field = $column['field'];
+                            $field->setValue(htmlspecialchars($row[$i] ?: ''));
+                            $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
+                            $field->enterObject();
+                            echo $field->params['form_output'][$field->getId()]
                         ?>
                     </td>
                 <?php endforeach ?>
@@ -78,8 +78,8 @@ else {
                         $field->enterObject();
                         echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
                         ?></td>\
-                        <?php endforeach ?>\
-                        <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
+                    <?php endforeach ?>\
+                    <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
                 ';
 
                 be_table_cnt++;

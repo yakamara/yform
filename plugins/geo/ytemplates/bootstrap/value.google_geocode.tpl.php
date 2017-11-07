@@ -21,7 +21,7 @@ if ($googleapikey != '') {
     var rex_geo_coder = function() {
 
         jQuery("#<?php echo $this->getFieldId() ?>").on("change", function(){
-            alert("set_position");
+            
         });
 
         jQuery("#<?php echo $this->getHTMLId('google') ?> .yform-google-btnbar .get-position").on("click", function(){
@@ -35,7 +35,7 @@ if ($googleapikey != '') {
         var myLatlng = new google.maps.LatLng(<?php echo $value; ?>);
 
         var myOptions = {
-            zoom: 8,
+            zoom: <?php echo $mapZoom ?>,
             center: myLatlng,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         }

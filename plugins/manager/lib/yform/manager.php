@@ -244,7 +244,7 @@ class rex_yform_manager
                 $dataset = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $g->getArray(), ['table' => $this->table]));
 
                 $fields = ['id' => '"id"'];
-                foreach($this->table->getFields() as $field) {
+                foreach ($this->table->getFields() as $field) {
                     if ($field->getDBType() != 'none') {
                         $fields[$field->getName()] = '"' . $field->getName() . '"';
                     }
@@ -253,14 +253,13 @@ class rex_yform_manager
                 $exportDataset = [];
                 foreach ($dataset as $data) {
                     $exportData = [];
-                    foreach($fields as $fieldName => $fV)
-                    {
+                    foreach ($fields as $fieldName => $fV) {
                         $exportData[$fieldName] = '"' . str_replace('"', '""', $data[$fieldName]) . '"';
                     }
                     $exportDataset[] = implode(';', $exportData);
                 }
 
-                $fileContent =  implode(';', $fields);
+                $fileContent = implode(';', $fields);
                 $fileContent .= "\n".implode("\n", $exportDataset);
 
                 // ----- download - save as
@@ -871,7 +870,7 @@ class rex_yform_manager
         // ********************************** TABELLE HOLEN
         $table = $this->table;
 
-        $table_info = '<b>' . rex_i18n::translate($table->getName()) . ' [' . $table->getTableName() . ']</b> ';
+        $table_info = '<b>' . rex_i18n::translate($table->getName()) . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id='.$table->getId().'&func=edit">' . $table->getTableName() . '</a>]</b> ';
         echo rex_view::info($table_info);
 
         // ********************************************* Missing Fields
@@ -932,7 +931,8 @@ class rex_yform_manager
                     $tmp_famous = '';
                     $tmp = '';
                     foreach ($types['value'] as $k => $v) {
-                        if (isset($v['famous']) && $v['famous']) {
+                        if (isset($v['manager']) && !$v['manager']) {
+                        } elseif (isset($v['famous']) && $v['famous']) {
                             $tmp_famous .= '<tr class="yform-classes-famous"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                         } else {
                             $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
@@ -1020,7 +1020,7 @@ class rex_yform_manager
                     case 'name':
                         $v['notice'] = (isset($v['notice']) ? $v['notice'] : '');
                         if ($func == 'edit') {
-                            $yform->setValueField('showvalue', [$k_field, 'Name', 'notice' => $v['notice']]);
+                            $yform->setValueField('showvalue', [$k_field, rex_i18n::msg('yform_values_defaults_name'), 'notice' => $v['notice']]);
                         } else {
                             if (!isset($v['value']) && $type_real_field != '') {
                                 $v['value'] = $type_real_field;
@@ -1028,7 +1028,7 @@ class rex_yform_manager
                                 $v['value'] = '';
                             }
 
-                            $yform->setValueField('text', [$k_field, 'Name', $v['value'], 'notice' => $v['notice']]);
+                            $yform->setValueField('text', [$k_field, rex_i18n::msg('yform_values_defaults_name'), $v['value'], 'notice' => $v['notice']]);
                             $yform->setValidateField('empty', [$k_field, rex_i18n::msg('yform_validatenamenotempty')]);
                             $yform->setValidateField('preg_match', [$k_field, "/(([a-zA-Z])+([a-zA-Z0-9\_])*)/", rex_i18n::msg('yform_validatenamepregmatch')]);
                             $yform->setValidateField('customfunction', [$k_field, 'rex_yform_manager_checkField', ['table_name' => $table->getTableName()], rex_i18n::msg('yform_validatenamecheck')]);
@@ -1336,6 +1336,11 @@ class rex_yform_manager
                             $style = 'background-color:#eff9f9;';
                             break;
                     }
+
+                    if ($p['field'] == 'label') {
+                        $p['value'] = rex_i18n::translate($p['value']);
+                    }
+
                     return '<td style="' . $style . '">' . $p['value'] . '</td>';
                 }
 
@@ -1387,8 +1392,8 @@ class rex_yform_manager
                 $fragment->setVar('size', 'xs', false);
                 $panel_options = $fragment->parse('core/buttons/button_group.php');
 
-                $sql = 'select id, prio, type_id, type_name, name from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
-                $list = rex_list::factory($sql, 100);
+                $sql = 'select id, prio, type_id, type_name, name, label from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
+                $list = rex_list::factory($sql, 200);
                 // $list->debug = 1;
                 // $list->setColumnFormat('id', 'Id');
 
@@ -1419,9 +1424,13 @@ class rex_yform_manager
                 $list->setColumnLayout('type_name', ['<th>###VALUE###</th>', '###VALUE###']);
                 $list->setColumnFormat('type_name', 'custom', 'rex_yform_list_format');
 
-                $list->setColumnLabel('name', rex_i18n::msg('yform_manager_name'));
+                $list->setColumnLabel('name', rex_i18n::msg('yform_values_defaults_name'));
                 $list->setColumnLayout('name', ['<th>###VALUE###</th>', '###VALUE###']); // ###VALUE###
                 $list->setColumnFormat('name', 'custom', 'rex_yform_list_format');
+
+                $list->setColumnLabel('label', rex_i18n::msg('yform_values_defaults_label'));
+                $list->setColumnLayout('label', ['<th>###VALUE###</th>', '###VALUE###']); // ###VALUE###
+                $list->setColumnFormat('label', 'custom', 'rex_yform_list_format');
 
                 $list->addColumn(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
                 $list->setColumnParams(rex_i18n::msg('yform_function'), ['field_id' => '###id###', 'func' => 'edit', 'type_name' => '###type_name###', 'type_id' => '###type_id###']);

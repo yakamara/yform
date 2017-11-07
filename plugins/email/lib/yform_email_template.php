@@ -109,8 +109,10 @@ class rex_yform_email_template
         $mail->Subject = $template['subject'];
         $mail->Body = $template['body'];
         if ($template['body_html'] != '') {
-            $mail->AltBody = $template['body'];
             $mail->MsgHTML($template['body_html']);
+            if ($template['body'] != '') {
+                $mail->AltBody = $template['body'];
+            }
         } else {
             $mail->Body = strip_tags($template['body']);
         }
@@ -132,6 +134,6 @@ class rex_yform_email_template
         }
         $template['email_subject'] = $template['subject'];
         rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_SENT_FAILED', $template_name, $template, true)); // read only
-            return false;
+        return false;
     }
 }
