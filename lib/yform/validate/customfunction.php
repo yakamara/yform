@@ -17,9 +17,9 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             $parameter = $this->getElement('params');
 
             $comparator = true;
-            if (is_string($func) && substr($func, 0, 1) == '!') {
+            if (is_string($func) && mb_substr($func, 0, 1) == '!') {
                 $comparator = false;
-                $func = substr($func, 1);
+                $func = mb_substr($func, 1);
             }
 
             $Object = $this->getValueObject($label);

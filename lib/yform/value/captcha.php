@@ -24,7 +24,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
             exit;
         }
 
-        if ($this->params['send'] == 1 && $_SESSION['captcha'] != '' && md5(strtolower($this->getValue())) == $_SESSION['captcha']) {
+        if ($this->params['send'] == 1 && $_SESSION['captcha'] != '' && md5(mb_strtolower($this->getValue())) == $_SESSION['captcha']) {
             $_SESSION['captcha'] = '';
         } elseif ($this->params['send'] == 1) {
             // Error. Fehlermeldung ausgeben
@@ -39,7 +39,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
         if ($this->getElement(3) != '') {
             $link = $this->getElement(3);
             if (preg_match("/\?/", $link)) {
-                if (substr($link, -1) != '&') {
+                if (mb_substr($link, -1) != '&') {
                     $link .= '&';
                 }
             } else {
@@ -211,7 +211,7 @@ fg_color_4          = 255,221,0';
     {
         extract($this->captcha_ini);
         $string = implode('', $this->captcha_letters);
-        $string = strtolower($string);
+        $string = mb_strtolower($string);
         $string = md5($string);
         $_SESSION['captcha'] = $string;
     }

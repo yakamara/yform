@@ -84,7 +84,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
         $length = strlen($value);
         $title = $value;
         if ($length > 40) {
-            $value = substr($value, 0, 20).' ... '.substr($value, -20);
+            $value = mb_substr($value, 0, 20).' ... '.mb_substr($value, -20);
         }
         return '<span title="'.rex_escape($title).'">'.rex_escape($value).'</span>';
     }

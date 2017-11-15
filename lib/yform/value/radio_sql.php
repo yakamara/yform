@@ -76,22 +76,22 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
 
         $query = $params['params']['field']['query'];
         $query_params = [];
-        $pos = strrpos(strtoupper($query), 'ORDER BY ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'ORDER BY ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos);
+            $query = mb_substr($query, 0, $pos);
         }
 
-        $pos = strrpos(strtoupper($query), 'LIMIT ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'LIMIT ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos);
+            $query = mb_substr($query, 0, $pos);
         }
 
         $where = ' `id` = ?';
         $query_params[] = $params['value'];
 
-        $pos = strrpos(strtoupper($query), 'WHERE ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'WHERE ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
+            $query = mb_substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . mb_substr($query, $pos + mb_strlen('WHERE '));
         } else {
             $query .= ' WHERE ' . $where;
         }
