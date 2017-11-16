@@ -1,4 +1,4 @@
-YForm für REDAXO 5.2
+YForm für REDAXO 5.4
 =============
 
 ![Screenshot](https://raw.githubusercontent.com/yakamara/redaxo_yform/assets/manager_editdata.png)
