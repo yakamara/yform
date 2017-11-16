@@ -28,7 +28,7 @@ class rex_yform_manager_dataset
 
     private $messages = [];
 
-    private function __construct($table, $id = null)
+    function __construct($table, $id = null)
     {
         $this->table = $table;
         $this->id = $id;
@@ -745,12 +745,12 @@ class rex_yform_manager_dataset
         }
     }
 
-    private static function tableToModel($table)
+    static function tableToModel($table)
     {
         return self::getModelClass($table) ?: __CLASS__;
     }
 
-    private static function modelToTable()
+    static function modelToTable()
     {
         $class = get_called_class();
 
@@ -771,7 +771,7 @@ class rex_yform_manager_dataset
      *
      * @return static
      */
-    private static function fromSqlData(array $data, $table)
+    static function fromSqlData(array $data, $table)
     {
         $id = $data['id'];
         $class = self::tableToModel($table);
