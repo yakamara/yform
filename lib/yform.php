@@ -59,7 +59,7 @@ class rex_yform
         $this->objparams['Error-Code-InsertQueryError'] = 'ErrorCode - InsertQueryError';
 
         $this->objparams['csrf_protection'] = true;
-        $this->objparams['csrf_protection_error_message'] = 'CSRF - Error';
+        $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
 
         $this->objparams['getdata'] = false;
 
