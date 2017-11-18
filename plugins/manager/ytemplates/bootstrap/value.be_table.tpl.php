@@ -48,7 +48,8 @@ if (count($notice) > 0) {
 
     <script type="text/javascript">
         (function () {
-            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>');
+            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
+                be_table_cnt = 0;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
                 var tr = $('<tr/>'),
@@ -105,7 +106,9 @@ if (count($notice) > 0) {
             wrapper.on('click', '.btn-delete', function () {
                 var tr = jQuery(this).closest('tr');
                 tr.fadeOut('normal', function () {
+                    $(document).trigger('be_table:before-row-remove', [tr]);
                     tr.remove();
+                    $(document).trigger('be_table:row-removed');
                 })
                 return false;
             });
