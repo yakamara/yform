@@ -27,14 +27,16 @@ if (count($notice) > 0) {
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($data as $row): ?>
+        <?php foreach ($data as $data_index => $row): ?>
             <tr>
                 <?php foreach ($columns as $i => $column): ?>
                     <td class="be-value-input">
                         <?php
                             $field = $column['field'];
-                            $field->setValue(htmlspecialchars($row[$i] ?: ''));
                             $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
+                            $field->params['form_name'] = $field->getName();
+                            $field->setValue($row[$i] ?: '');
+                            $field->setId($data_index);
                             $field->enterObject();
                             echo $field->params['form_output'][$field->getId()]
                         ?>
@@ -48,7 +50,8 @@ if (count($notice) > 0) {
 
     <script type="text/javascript">
         (function () {
-            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>');
+            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
+            	be_table_cnt = <?= (int) $data_index ?>;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
                 var tr = $('<tr/>'),
@@ -71,8 +74,10 @@ if (count($notice) > 0) {
                     <?php foreach ($columns as $i => $column): ?>\
                             <td class="be-value-input"><?php
                         $field = $columns[$i]['field'];
-                        $field->setValue(null);
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
+                        $field->params['form_name'] = $field->getName();
+                        $field->setValue(null);
+                        $field->setId('{{FIELD_ID}}');
                         $field->enterObject();
                         echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
                         ?></td>\
@@ -81,6 +86,8 @@ if (count($notice) > 0) {
                 ';
 
                 be_table_cnt++;
+                // set new row field ids
+                row_html = row_html.replace(new RegExp('{{FIELD_ID}}', 'g'), be_table_cnt);
 
                 for (var i in regexp) {
                     row_html = row_html.replace(regexp[i], '$1'+ be_table_cnt +'<?= $i ?>');
@@ -105,7 +112,9 @@ if (count($notice) > 0) {
             wrapper.on('click', '.btn-delete', function () {
                 var tr = jQuery(this).closest('tr');
                 tr.fadeOut('normal', function () {
+                    $(document).trigger('be_table:before-row-remove', [tr]);
                     tr.remove();
+                    $(document).trigger('be_table:row-removed');
                 })
                 return false;
             });
