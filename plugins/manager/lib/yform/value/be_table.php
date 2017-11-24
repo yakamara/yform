@@ -74,7 +74,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $field = new $class();
 
             $field->loadParams($yfparams, $values);
-            $field->setId($field->name);
+            $field->setName($this->getName());
             $field->init();
             $field->setLabel('');
 
