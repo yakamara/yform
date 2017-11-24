@@ -685,7 +685,7 @@ class rex_yform_manager_dataset
     private function getInternalForm()
     {
         if (isset(self::$internalForms[$this->table])) {
-            return self::$internalForms[$this->table];
+            // return self::$internalForms[$this->table];
         }
 
         /** @var self $dummy */
