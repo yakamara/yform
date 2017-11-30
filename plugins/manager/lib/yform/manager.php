@@ -263,7 +263,7 @@ class rex_yform_manager
                 foreach ($dataset as $data) {
                     $exportData = [];
                     foreach ($fields as $fieldName => $fV) {
-                        $exportData[$fieldName] = '"' . str_replace('"', '""', $data[$fieldName]) . '"';
+                        $exportData[$fieldName] = '"' . str_replace(['"',"\n", "\r"], ['""', "", ""], $data[$fieldName]) . '"';
                     }
                     $exportDataset[] = implode(';', $exportData);
                 }
