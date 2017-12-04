@@ -28,7 +28,7 @@ class rex_yform_manager_dataset
 
     private $messages = [];
 
-    function __construct($table, $id = null)
+    private function __construct($table, $id = null)
     {
         $this->table = $table;
         $this->id = $id;
@@ -95,10 +95,14 @@ class rex_yform_manager_dataset
             return $class::getRaw($id, $table);
         }
 
-        return self::getInstance([$table, $id], function ($table, $id) {
+        $callback = function ($table, $id) {
             $class = self::tableToModel($table);
             return new $class($table, $id);
-        });
+        };
+        // needed for php 5
+        $callback = $callback->bindTo(null, __CLASS__);
+
+        return static::getInstance([$table, $id], $callback);
     }
 
     /**
@@ -745,12 +749,12 @@ class rex_yform_manager_dataset
         }
     }
 
-    static function tableToModel($table)
+    private static function tableToModel($table)
     {
         return self::getModelClass($table) ?: __CLASS__;
     }
 
-    static function modelToTable()
+    private static function modelToTable()
     {
         $class = get_called_class();
 
@@ -771,7 +775,7 @@ class rex_yform_manager_dataset
      *
      * @return static
      */
-    static function fromSqlData(array $data, $table)
+    private static function fromSqlData(array $data, $table)
     {
         $id = $data['id'];
         $class = self::tableToModel($table);
