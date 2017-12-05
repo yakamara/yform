@@ -429,11 +429,14 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $source = $table->getRelationsTo($this->params['main_table']);
         $target = $table->getRelationsTo($this->getElement('table'));
         if (!empty($source) && !empty($target)) {
+            if (reset($source)->getName() == reset($target)->getName()) {
+               return ['source' => reset($source)->getName(), 'target' => next($target)->getName()];
+            } 
             return ['source' => reset($source)->getName(), 'target' => reset($target)->getName()];
         }
         return ['source' => null, 'target' => null];
     }
-
+    
     protected function getRelationTableValues()
     {
         $values = [];
