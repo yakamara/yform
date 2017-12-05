@@ -439,6 +439,7 @@ class rex_yform_manager_dataset
     {
         $yform = clone $this->getInternalForm();
         $this->setFormMainId($yform);
+        $yform->initializeFields();
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -469,6 +470,7 @@ class rex_yform_manager_dataset
     {
         $yform = clone $this->getInternalForm();
         $this->setFormMainId($yform);
+        $yform->initializeFields();
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -689,7 +691,7 @@ class rex_yform_manager_dataset
     private function getInternalForm()
     {
         if (isset(self::$internalForms[$this->table])) {
-            // return self::$internalForms[$this->table];
+            return self::$internalForms[$this->table];
         }
 
         /** @var self $dummy */
@@ -698,7 +700,6 @@ class rex_yform_manager_dataset
         $yform = $dummy->createForm();
         $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('form_needs_output', false);
-        $yform->initializeFields();
 
         return self::$internalForms[$this->table] = $yform;
     }
