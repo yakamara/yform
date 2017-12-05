@@ -425,18 +425,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     protected function getRelationTableFields()
     {
-        $table = rex_yform_manager_table::get($this->getElement('relation_table'));
-        $source = $table->getRelationsTo($this->params['main_table']);
-        $target = $table->getRelationsTo($this->getElement('table'));
-        if (!empty($source) && !empty($target)) {
-            if (reset($source)->getName() == reset($target)->getName()) {
-               return ['source' => reset($source)->getName(), 'target' => next($target)->getName()];
-            } 
-            return ['source' => reset($source)->getName(), 'target' => reset($target)->getName()];
-        }
-        return ['source' => null, 'target' => null];
+        return self::getRelationTableFieldsForTables($this->params['main_table'], $this->getElement('relation_table'), $this->getElement('table'));
     }
-    
+
     protected function getRelationTableValues()
     {
         $values = [];
@@ -460,29 +451,64 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        if ($params['field']->getElement('relation_table') != '' || 4 == $params['field']->getElement('type')) {
+        if (4 == $params['field']->getElement('type')) {
             return;
         }
 
         $params['searchForm']->setValueField('be_manager_relation', [
-                'name' => $params['field']->getName(),
-                'label' => $params['field']->getLabel(),
-                'empty_option' => true,
-                'table' => $params['field']->getElement('table'),
-                'field' => $params['field']->getElement('field'),
-                'type' => 2,
-            ]
-        );
+            'name' => $params['field']->getName(),
+            'label' => $params['field']->getLabel(),
+            'empty_option' => true,
+            'table' => $params['field']->getElement('table'),
+            'field' => $params['field']->getElement('field'),
+            'type' => 2,
+        ]);
     }
 
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
         $value = $params['value'];
-        $field = $params['field']->getName();
 
-        if ($value != '') {
-            return ' ( FIND_IN_SET(' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+        if ($value == '') {
+            return null;
         }
+
+        /** @var rex_yform_manager_field $field */
+        $field = $params['field'];
+        $sql = rex_sql::factory();
+
+        if (!$field->getElement('relation_table')) {
+            return 'FIND_IN_SET(' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ')';
+        }
+
+        $relationTableFields = self::getRelationTableFieldsForTables($field->getElement('table_name'), $field->getElement('relation_table'), $field->getElement('table'));
+        if (!$relationTableFields['source'] || !$relationTableFields['target']) {
+            return null;
+        }
+
+        return sprintf(
+            'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
+            $sql->escapeIdentifier($field->getElement('relation_table')),
+            $sql->escapeIdentifier($relationTableFields['source']),
+            $sql->escapeIdentifier($relationTableFields['target']),
+            (int) $value
+        );
+    }
+
+    private static function getRelationTableFieldsForTables($mainTable, $relationTable, $targetTable)
+    {
+        $table = rex_yform_manager_table::get($relationTable);
+        $source = $table->getRelationsTo($mainTable);
+        $target = $table->getRelationsTo($targetTable);
+
+        if (empty($source) || empty($target)) {
+            return ['source' => null, 'target' => null];
+        }
+
+        if (reset($source)->getName() == reset($target)->getName()) {
+            return ['source' => reset($source)->getName(), 'target' => next($target)->getName()];
+        }
+
+        return ['source' => reset($source)->getName(), 'target' => reset($target)->getName()];
     }
 }
