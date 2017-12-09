@@ -73,7 +73,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         if (isset($_FILES[$unique]) && $_FILES[$unique]['name'] != '') {
             $FILE['size'] = $_FILES[$unique]['size'];
             $FILE['name'] = $_FILES[$unique]['name'];
-            $FILE['name'] = strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILE['name']));
+            $FILE['name'] = mb_strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILE['name']));
             $FILE['type'] = $_FILES[$unique]['type'];
             $FILE['error'] = $_FILES[$unique]['error'];
             $FILE['tmp_name'] = $_FILES[$unique]['tmp_name'];
@@ -88,7 +88,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
             if (
                 ($this->getElement('types') != '*') &&
-                (!in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array))
+                (!in_array(mb_strtolower($ext), $extensions_array) && !in_array(mb_strtoupper($ext), $extensions_array))
             ) {
                 $errors[] = $error_messages['type_error'];
                 unset($FILE);
@@ -324,7 +324,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $length = strlen($value);
         $title = $value;
         if ($length > 30) {
-            $value = substr($value, 0, 15).' ... '.substr($value, -15);
+            $value = mb_substr($value, 0, 15).' ... '.mb_substr($value, -15);
         }
 
         $return = $value;

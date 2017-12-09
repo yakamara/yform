@@ -251,7 +251,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         if ($column1 && $column2) {
             $column1 = $this->quoteIdentifier($column1);
             $column2 = $this->quoteIdentifier($column2);
-            $operator = strtoupper($operator) ?: '=';
+            $operator = mb_strtoupper($operator) ?: '=';
             if ('FIND_IN_SET' === $operator) {
                 $condition = sprintf('FIND_IN_SET(%s, %s)', $column1, $column2);
             } else {
@@ -272,7 +272,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function joinRaw($type, $table, $alias = null, $condition = null)
     {
-        $join = sprintf('%s JOIN `%s`', strtoupper($type), $table);
+        $join = sprintf('%s JOIN `%s`', mb_strtoupper($type), $table);
         if ($alias) {
             $join .= ' AS '.$alias;
         }
@@ -423,7 +423,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereNested($nested, $operator = 'AND')
     {
-        $operator = strtoupper(trim($operator));
+        $operator = mb_strtoupper(trim($operator));
 
         if (is_array($nested)) {
             $this->where[] = $this->buildNestedWhere($nested, $operator);

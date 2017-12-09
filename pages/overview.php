@@ -7,7 +7,7 @@ if (rex::getUser()->isAdmin()) {
     $searchtext = 'module:yform_basic_output';
 
     $gm = rex_sql::factory();
-    $gm->setQuery('select * from rex_module where output LIKE "%' . $searchtext . '%"');
+    $gm->setQuery('select * from '.rex::getTable('module').' where output LIKE "%' . $searchtext . '%"');
 
     $module_id = 0;
     $module_name = '';
@@ -24,7 +24,7 @@ if (rex::getUser()->isAdmin()) {
 
         $mi = rex_sql::factory();
         // $mi->debugsql = 1;
-        $mi->setTable('rex_module');
+        $mi->setTable(rex::getTable("module"));
         $mi->setValue('input', $input);
         $mi->setValue('output', $output);
 

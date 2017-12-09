@@ -95,10 +95,14 @@ class rex_yform_manager_dataset
             return $class::getRaw($id, $table);
         }
 
-        return self::getInstance([$table, $id], function ($table, $id) {
+        $callback = function ($table, $id) {
             $class = self::tableToModel($table);
             return new $class($table, $id);
-        });
+        };
+        // needed for php 5
+        $callback = $callback->bindTo(null, __CLASS__);
+
+        return static::getInstance([$table, $id], $callback);
     }
 
     /**
@@ -435,6 +439,7 @@ class rex_yform_manager_dataset
     {
         $yform = clone $this->getInternalForm();
         $this->setFormMainId($yform);
+        $yform->initializeFields();
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -465,6 +470,7 @@ class rex_yform_manager_dataset
     {
         $yform = clone $this->getInternalForm();
         $this->setFormMainId($yform);
+        $yform->initializeFields();
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -694,7 +700,6 @@ class rex_yform_manager_dataset
         $yform = $dummy->createForm();
         $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('form_needs_output', false);
-        $yform->initializeFields();
 
         return self::$internalForms[$this->table] = $yform;
     }

@@ -11,7 +11,7 @@ class rex_yform_value_generate_password extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $this->setValue(substr(md5(microtime() . rand(1000, getrandmax())), 0, 6));
+        $this->setValue(mb_substr(md5(microtime() . rand(1000, getrandmax())), 0, 6));
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(2) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();

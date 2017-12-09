@@ -51,7 +51,7 @@ if (count($notice) > 0) {
     <script type="text/javascript">
         (function () {
             var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
-                be_table_cnt = <?= (int) $data_index ?>;
+            	be_table_cnt = <?= (int) $data_index ?>;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
                 var tr = $('<tr/>'),

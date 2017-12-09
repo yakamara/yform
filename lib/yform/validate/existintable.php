@@ -43,7 +43,12 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
                 return;
             }
 
-            $sql = 'select * from ' . $table . ' WHERE ' . implode(' AND ', $qfields) . ' LIMIT 2';
+            $sql = 'select * from ' . $table . ' WHERE (' . implode(' AND ', $qfields) . ')';
+            $extras = trim($this->getElement(6));
+            if ($extras != "") {
+                $sql .= ' and ('.$extras.')';
+            }
+            $sql .= ' LIMIT 2';
 
             $db->setQuery($sql);
             if ($db->getRows() == 0) {
@@ -57,6 +62,6 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|existintable|name,name2|tablename|fieldname,fieldname2|warning_message';
+        return 'validate|existintable|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
     }
 }

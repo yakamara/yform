@@ -1,4 +1,4 @@
-YForm für REDAXO 5.2
+YForm für REDAXO 5.4
 =============
 
 ![Screenshot](https://raw.githubusercontent.com/yakamara/redaxo_yform/assets/manager_editdata.png)
@@ -31,6 +31,9 @@ Last Changes
 * Tools: Timepicker angepasst
 * geo locations: fixed
 * Abhängigkeit ist nun REDAXO 5.4
+* Benennungen angepasst name, label .. 
+* uniqueform entfernt
+* Umbau auf rex_sql_table
 
 #### Neu
 
@@ -66,6 +69,9 @@ Last Changes
 * Manager: Historieeinträge konnten bei bestimmten Relationen nicht wieder zurückgesetzt werden
 * YOrm: Durch Nutzung von YORM, wurde immer der Send Status für alle Formulare gesetzt.
 * EMail-Versand: Es konnte passieren, dass der AltBody nicht richtig gesetzt wurde (Danke Andreas Eberhard)
+* Geokodierung war fehlerhaft (Danke Wolfgang)
+* Darstellung war im Popup zum Teil noch miz Hauptnavi und REX-Header
+
 
 
 ### Version 2.2 // 21.04.2017

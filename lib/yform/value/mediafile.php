@@ -70,7 +70,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                 // EXTENSION CHECK
                 $extensions_array = explode(',', $this->getElement(4));
                 $ext = '.' . pathinfo($FILE['name'], PATHINFO_EXTENSION);
-                if (!in_array(strtolower($ext), $extensions_array) && !in_array(strtoupper($ext), $extensions_array)) {
+                if (!in_array(mb_strtolower($ext), $extensions_array) && !in_array(mb_strtoupper($ext), $extensions_array)) {
                     $error[] = $err_msgs['type_err'];
                 } else {
                     $NEWFILE = $this->saveMedia($FILE, rex_path::media(), $extensions_array, $mediacatid, $mediapool_user);
@@ -144,10 +144,10 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         $message = '';
 
         // ----- neuer filename und extension holen
-        $NFILENAME = strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILENAME));
+        $NFILENAME = mb_strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILENAME));
         if (strrpos($NFILENAME, '.') != '') {
-            $NFILE_NAME = substr($NFILENAME, 0, strlen($NFILENAME) - (strlen($NFILENAME) - strrpos($NFILENAME, '.')));
-            $NFILE_EXT = substr($NFILENAME, strrpos($NFILENAME, '.'), strlen($NFILENAME) - strrpos($NFILENAME, '.'));
+            $NFILE_NAME = mb_substr($NFILENAME, 0, mb_strlen($NFILENAME) - (mb_strlen($NFILENAME) - mb_strrpos($NFILENAME, '.')));
+            $NFILE_EXT = mb_substr($NFILENAME, mb_strrpos($NFILENAME, '.'), mb_strlen($NFILENAME) - mb_strrpos($NFILENAME, '.'));
         } else {
             $NFILE_NAME = $NFILENAME;
             $NFILE_EXT = '';
