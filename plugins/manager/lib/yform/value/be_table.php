@@ -59,29 +59,63 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
+
+        $data = json_decode($this->getValue(), true);
         $columns = [];
+        $objs = [];
+        $columnIndex = [];
         $yfparams = ['this' => \rex_yform::factory()];
+
+        /* TODO
+         * error class von validierung ans Eingabefeld übergeben
+         */
 
         foreach ($_columns as $index => $col) {
             $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
-
             if (count($values) == 1) {
                 $values = ['text', 'text_'. $index, $values[0]];
             }
 
-            $values[1] = '';
             $class = 'rex_yform_value_' . trim($values[0]);
-            $field = new $class();
+            if(class_exists($class)) {
+                $name = $values[1];
+                $values[1] = '';
+                $field = new $class();
 
-            $field->loadParams($yfparams, $values);
-            $field->setName($this->getName());
-            $field->init();
-            $field->setLabel('');
+                $field->loadParams($yfparams, $values);
+                $field->setName($this->getName());
+                $field->init();
+                $field->setLabel('');
 
-            $columns[] = ['label' => $values[2], 'field' => $field];
+                $columnIndex[$name] = $index;
+                $columns[] = ['label' => $values[2], 'field' => $field];
+
+
+                foreach($data as $rowCount => $row) {
+                    $obj = clone $field;
+                    $obj->setName($name.$rowCount.$index);
+                    $obj->setValue($data[$rowCount][$index]);
+                    $objs[]= $obj;
+                }
+
+            }
         }
 
-        $data = json_decode($this->getValue(), true);
+        foreach ($_columns as $index => $col) {
+            $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
+            $name = $values[2];
+            $class = 'rex_yform_validate_' . trim($values[1]);
+            if(class_exists($class)) {
+                $validate = new $class();
+                $validate->setObjects($objs);
+                foreach($data as $rowCount => $row) {
+                    $values[2] = $name.$rowCount.$columnIndex[$name];
+                    $validate->loadParams($this->params, $values);
+                    $validate->init();
+                    $validate->enterObject();
+                }
+            }
+        }
 
         if (!is_array($data)) {
             $data = [];
