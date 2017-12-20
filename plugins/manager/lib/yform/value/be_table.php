@@ -6,7 +6,6 @@
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
-
 class rex_yform_value_be_table extends rex_yform_value_abstract
 {
     public function preValidateAction()
@@ -23,6 +22,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         if ($this->getParam('send') && isset($_POST['FORM'])) {
             // Cleanup Array
             $table_array = [];
+
             $id = $this->getId();
 
             $columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
@@ -31,12 +31,12 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             }
 
             $form_data = rex_post('FORM', 'array');
-            $rows = count($form_data[$id .'.0']);
+            $rowKeys   = array_keys($form_data[$id . '.0']);
 
             // Spalten durchgehen
-            for ($c = 0; $c < count($columns); ++$c) {
-                for ($r = 0; $r < $rows; ++$r) {
-                    $table_array[$r][$c] = (isset($form_data[$id .'.'. $c][$r])) ? $form_data[$id .'.'. $c][$r] : '';
+            for ($c = 0; $c < count($columns); $c++) {
+                foreach ($rowKeys as $r) {
+                    $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
                 }
             }
             $this->setValue(json_encode($table_array));
@@ -59,29 +59,67 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
+
+        $data = json_decode($this->getValue(), true);
         $columns = [];
+        $objs = [];
+        $columnIndex = [];
         $yfparams = ['this' => \rex_yform::factory()];
+
+        /* TODO
+         * error class von validierung ans Eingabefeld übergeben
+         */
 
         foreach ($_columns as $index => $col) {
             $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
-
             if (count($values) == 1) {
                 $values = ['text', 'text_'. $index, $values[0]];
             }
 
-            $values[1] = '';
             $class = 'rex_yform_value_' . trim($values[0]);
-            $field = new $class();
+            if(class_exists($class)) {
+                $name = $values[1];
+                $values[1] = '';
+                $field = new $class();
 
-            $field->loadParams($yfparams, $values);
-            $field->setName($this->getName());
-            $field->init();
-            $field->setLabel('');
+                $field->loadParams($yfparams, $values);
+                $field->setName($this->getName());
+                $field->init();
+                $field->setLabel('');
 
-            $columns[] = ['label' => $values[2], 'field' => $field];
+                $columnIndex[$name] = $index;
+                $columns[] = ['label' => $values[2], 'field' => $field];
+
+
+                foreach($data as $rowCount => $row) {
+                    $obj = clone $field;
+                    $obj->setName($name.$rowCount.$index);
+                    $obj->setValue($data[$rowCount][$index]);
+                    $objs[]= $obj;
+                }
+
+            }
         }
 
-        $data = json_decode($this->getValue(), true);
+        foreach ($_columns as $index => $col) {
+            if ($values[0] != 'validate') {
+                continue;
+            }
+
+            $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
+            $name = $values[2];
+            $class = 'rex_yform_validate_' . trim($values[1]);
+            if(class_exists($class)) {
+                $validate = new $class();
+                $validate->setObjects($objs);
+                foreach($data as $rowCount => $row) {
+                    $values[2] = $name.$rowCount.$columnIndex[$name];
+                    $validate->loadParams($this->params, $values);
+                    $validate->init();
+                    $validate->enterObject();
+                }
+            }
+        }
 
         if (!is_array($data)) {
             $data = [];
@@ -93,17 +131,17 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
     public function getDefinitions()
     {
         return [
-            'type' => 'value',
-            'name' => 'be_table',
-            'values' => [
-                'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
-                'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'columns' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_table_columns')],
-                'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+            'type'        => 'value',
+            'name'        => 'be_table',
+            'values'      => [
+                'name'    => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label'   => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'columns' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_be_table_columns')],
+                'notice'  => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_be_table_description'),
             'formbuilder' => false,
-            'dbtype' => 'text',
+            'dbtype'      => 'text',
         ];
     }
 }
