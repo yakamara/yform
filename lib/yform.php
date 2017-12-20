@@ -497,7 +497,7 @@ class rex_yform
                 return $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k];
             }
         }
-        return '';
+        return null;
     }
 
     public function setFieldValue($id = '', $value = '', $k = '', $label = '')
