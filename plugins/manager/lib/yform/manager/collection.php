@@ -227,6 +227,11 @@ class rex_yform_manager_collection extends \SplFixedArray
         return $this;
     }
 
+    /**
+     * @param string $key
+     *
+     * @return self A new collection containing all datasets related to this collection by $key relation
+     */
     public function populateRelation($key)
     {
         $relation = $this->getTable()->getRelation($key);
@@ -236,16 +241,15 @@ class rex_yform_manager_collection extends \SplFixedArray
         }
 
         if ($this->isEmpty()) {
-            return;
+            return new self($relation['table']);
         }
 
         $query = rex_yform_manager_dataset::query($relation['table']);
 
         if (0 == $relation['type'] || 2 == $relation['type']) {
             $query->where('id', $this->getValues($key));
-            $query->find();
 
-            return;
+            return $query->find();
         }
 
         $relatedDatasets = [];
@@ -256,7 +260,9 @@ class rex_yform_manager_collection extends \SplFixedArray
         if (4 == $relation['type']) {
             $query->where($relation['field'], $this->getIds());
 
-            foreach ($query->find() as $dataset) {
+            $allRelatedDatasets = $query->find();
+
+            foreach ($allRelatedDatasets as $dataset) {
                 $relatedDatasets[$dataset->getValue($relation['field'])][] = $dataset;
             }
         } elseif (empty($relation['relation_table'])) {
@@ -275,7 +281,9 @@ class rex_yform_manager_collection extends \SplFixedArray
 
             $query->where('id', array_keys($relatedIds));
 
-            foreach ($query->find() as $dataset) {
+            $allRelatedDatasets = $query->find();
+
+            foreach ($allRelatedDatasets as $dataset) {
                 foreach ($relatedIds[$dataset->getId()] as $id => $_) {
                     $relatedDatasets[$id][] = $dataset;
                 }
@@ -289,7 +297,9 @@ class rex_yform_manager_collection extends \SplFixedArray
                 ->selectRaw(sprintf('GROUP_CONCAT(%s SEPARATOR ",")', $query->quoteIdentifier($relation['relation_table'].'.'.$columns['source'])), '__related_ids')
             ;
 
-            foreach ($query->find() as $dataset) {
+            $allRelatedDatasets = $query->find();
+
+            foreach ($allRelatedDatasets as $dataset) {
                 foreach (explode(',', $dataset->getValue('__related_ids')) as $relatedId) {
                     $relatedDatasets[$relatedId][] = $dataset;
                 }
@@ -299,6 +309,8 @@ class rex_yform_manager_collection extends \SplFixedArray
         foreach ($this as $dataset) {
             $dataset->setRelatedCollection($key, new self($relation['table'], $relatedDatasets[$dataset->getId()]));
         }
+
+        return $allRelatedDatasets;
     }
 
     /**
