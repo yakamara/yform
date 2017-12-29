@@ -43,8 +43,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // ---------- Value angleichen -> immer Array mit IDs daraus machen
         if (!is_array($this->getValue())) {
-            $values = [];
-            if ($this->getElement('relation_table')) {
+            if ($this->getElement('relation_table') && (!$this->params['send'] || null === $this->getValue())) {
                 $this->setValue($this->getRelationTableValues());
             } elseif (trim($this->getValue()) == '') {
                 $this->setValue([]);
