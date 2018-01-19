@@ -58,7 +58,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $_SESSION[$unique] = [];
         }
 
-        $delete = (bool) @$this->params['this']->getFieldValue($this->getId(), 'delete');
+        $delete = (bool) @$this->params['this']->getFieldValue($this->getId(), 'delete', $this->getName());
         if ($delete) {
             unset($_FILES[$unique]);
             unset($_SESSION[$unique]);
