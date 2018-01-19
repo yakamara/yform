@@ -39,7 +39,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
                     $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
                 }
             }
-            $this->setValue(json_encode($table_array));
+            $this->setValue(json_encode(array_values($table_array)));
         }
     }
 
