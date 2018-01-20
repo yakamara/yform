@@ -48,9 +48,10 @@ if (rex::isBackend() && rex::getUser()) {
                 $main_page['isActive'] = false;
 
                 $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
+                $rex_yform_manager_popup = rex_request('rex_yform_manager_popup', 'int');
                 $rex_yform_filter = rex_request('rex_yform_filter', 'array');
 
-                if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
+                if ((isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') || $rex_yform_manager_popup == 1) {
                     $main_page['popup'] = true;
                 }
 
@@ -80,7 +81,7 @@ rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
     if (!$dataset) {
         $dataset = rex_yform_manager_dataset::getRaw($ep->getParam('id'), $table->getTableName());
     }
-    // $dataset->invalidateData();
+    $dataset->invalidateData();
 
     if ($table->hasHistory()) {
         $action = 'insert' === $ep->getParam('action') ? rex_yform_manager_dataset::ACTION_CREATE : rex_yform_manager_dataset::ACTION_UPDATE;

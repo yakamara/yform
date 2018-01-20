@@ -29,7 +29,7 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|intfromto|label|from|to|warning_message';
+        return 'validate|intfromto|name|from|to|warning_message';
     }
 
     public function getDefinitions()

@@ -5,7 +5,7 @@ if ($this->getElement('notice') != '') {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
+    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], false) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
@@ -48,14 +48,14 @@ $value = $this->getValue();
 if ($filename != '') {
     $label = htmlspecialchars($filename);
 
-        /*
-        if (rex::isBackend() && $download_link != "") {
-            $label = '<a href="' . $download_link . '">' . $label . '</a>';
+    /*
+    if (rex::isBackend() && $download_link != "") {
+        $label = '<a href="' . $download_link . '">' . $label . '</a>';
 
-        }
-        */
+    }
+    */
 
-        echo '
+    echo '
         <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
             <label>
                 <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />

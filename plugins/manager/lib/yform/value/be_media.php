@@ -49,14 +49,14 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         if (count($files) == 1) {
             $filename = $params['subject'];
             if (strlen($params['subject']) > 16) {
-                $filename = substr($params['subject'], 0, 6) . ' ... ' . substr($params['subject'], -6);
+                $filename = mb_substr($params['subject'], 0, 6) . ' ... ' . mb_substr($params['subject'], -6);
             }
-            $return[] = '<span style="white-space:nowrap;" title="' . htmlspecialchars($params['subject']) . '">' . $filename . '</span>';
+            $return[] = '<span style="white-space:nowrap;" title="' . rex_escape($params['subject']) . '">' . $filename . '</span>';
         } else {
             foreach ($files as $file) {
                 $filename = $file;
                 if (strlen($file) > 16) {
-                    $filename = substr($file, 0, 6) . ' ... ' . substr($file, -6) . '</span>';
+                    $filename = mb_substr($file, 0, 6) . ' ... ' . mb_substr($file, -6) . '</span>';
                 }
                 $return[] = '<span style="white-space:nowrap;" title="' . htmlspecialchars($file) . '">' . $filename . '</span>';
             }
@@ -78,7 +78,8 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
 
         if ($value == '(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        } elseif ($value == '!(empty)') {
+        }
+        if ($value == '!(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 

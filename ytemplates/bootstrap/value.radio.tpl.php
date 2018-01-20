@@ -5,7 +5,7 @@ if ($this->getElement('notice') != '') {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notices[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
+    $notices[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], false) . '</span>'; //    var_dump();
 }
 
 $notice = '';
@@ -33,7 +33,6 @@ if (trim($this->getElement('grid')) != '') {
 }
 
 if (trim($this->getLabel()) != '') {
-
     echo '<div class="'.$class_group.'">
     <label class="control-label'.$class_label.'">'.$this->getLabel().'</label>';
 }

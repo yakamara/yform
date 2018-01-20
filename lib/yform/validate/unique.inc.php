@@ -21,6 +21,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
 
             $fields = explode(',', $this->getElement('name'));
             $qfields = [];
+
             foreach ($this->getObjects() as $Object) {
                 if (in_array($Object->getName(), $fields)) {
                     $value = $Object->getValue();
@@ -28,7 +29,11 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                     if (is_array($value)) {
                         $value = implode(',', $value);
                     }
-                    $qfields[$Object->getId()] = '`' . $Object->getName() . '`=' . $cd->escape($value) . '';
+                    if (count($fields) == 1 && $this->getElement('empty_option') == 1) {
+                        $qfields[$Object->getId()] = $cd->escapeIdentifier($Object->getName()) . '=' . $cd->escape($value) . '  AND ' . $cd->escape($value) . '!=""';
+                    } else {
+                        $qfields[$Object->getId()] = $cd->escapeIdentifier($Object->getName()) . '=' . $cd->escape($value) . '';
+                    }
                 }
             }
 
@@ -51,14 +56,12 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                     $this->params['warning_messages'][$qfield_id] = $this->getElement('message');
                 }
             }
-
-            return;
         }
     }
 
     public function getDescription()
     {
-        return 'validate|unique|dbfeldname[,dbfeldname2]|Dieser Name existiert schon|[table]';
+        return 'validate|unique|name[,name2]|warning_message|[table]|emptyoption[1/0]';
     }
 
     public function getDefinitions()
@@ -70,6 +73,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
                 'name' => ['type' => 'text',       'label' => rex_i18n::msg('yform_validate_unique_name'), 'notice' => rex_i18n::msg('yform_validate_unique_notice')],
                 'message' => ['type' => 'text',      'label' => rex_i18n::msg('yform_validate_unique_message')],
                 'table' => ['type' => 'text',      'label' => rex_i18n::msg('yform_validate_unique_table')],
+                'empty_option' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_validate_unique_empty_option')],
             ],
             'description' => rex_i18n::msg('yform_validate_unique_description'),
             'multi_edit' => false,

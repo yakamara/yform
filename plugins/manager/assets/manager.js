@@ -54,7 +54,15 @@ function yform_manager_writeDatalist(id){
     writeREX(id, 'yform_MANAGER_DATALIST_', 'yform_MANAGER_DATALIST_SELECT_');
 }
 
+rex_retain_popup_event_handlers("rex:YForm_selectData");
+
 function yform_manager_setData(id, data_id, data_name, multiple){
+
+    var event = opener.jQuery.Event("rex:YForm_selectData");
+    opener.jQuery(window).trigger(event, [data_id, data_name, multiple]);
+    if (!event.isDefaultPrevented()) {
+        self.close();
+    }
 
     if(multiple == 1) {
         var datalist = "yform_MANAGER_DATALIST_SELECT_"+id;

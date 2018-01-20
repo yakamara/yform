@@ -67,6 +67,6 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'remembervalues|name|label|label1,label2,label3,label4|opt:default:1/0|opt:dauerinsekunden';
+        return 'remembervalues|name|label|name1,name2,name3,name4|opt:default:1/0|opt:dauerinsekunden';
     }
 }

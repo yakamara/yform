@@ -69,6 +69,7 @@ yform_manager_table_hide = In Navigation versteckt
 yform_manager_table_allow_export = Export der Daten erlauben
 yform_manager_table_allow_import = Import von Daten erlauben
 yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
+yform_manager_table_allow_mass_edit = Massenbearbeitung erlauben
 yform_manager_table_history = Historie anlegen
 yform_manager_tablefield_overview = Feldübersicht
 
@@ -120,7 +121,7 @@ yform_visible = sichtbar
 # edit.inc.php
 yform_thankyouforupdate = Datensatz wurde aktualisiert.
 yform_thankyouforentry = Datensatz wurde eingetragen.
-yform_editdata = Datensatz editieren
+yform_editdata = Datensatz editieren [id: {0}]
 yform_editdata_collection = {0} Datensätze editieren
 yform_adddata = Datensatz anlegen
 yform_searchtext = Suchbegriff
@@ -238,7 +239,7 @@ yform_values_prio_description =					Ein <b>Auswahlfeld</b>, um Datensätze in ei
 
 yform_values_defaults_prio = Priorität
 yform_values_be_manager_relation_table = Ziel Tabelle
-yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Zielfeld
+yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Feld, das die Relations-ID enthält.
 yform_values_be_manager_relation_type = Mehrfachauswahl
 yform_values_be_manager_relation_empty_option = Mit "Leer-Option"
 yform_values_be_manager_relation_empty_value = Fehlermeldung wenn "Leer-Option" nicht aktiviert ist.
@@ -271,3 +272,6 @@ yform_values_be_link_multiple = Mehrfachauswahl
 yform_values_prio_fields = Anzeige
 yform_values_prio_scope = Beschränkung
 yform_values_prio_default = Am Anfang
+
+yform_is = ist
+yform_will_set_to = wird

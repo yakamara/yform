@@ -30,9 +30,8 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             foreach ($options_sql->getArray($sql) as $option) {
                 $options[$option['id']] = $option['name'];
             }
-
-        } catch(rex_sql_exception $e) {
-                dump($e);
+        } catch (rex_sql_exception $e) {
+            dump($e);
         }
 
         $proofed_values = [];
@@ -58,7 +57,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'checkbox_sql|label|Bezeichnung:|select id,name from table order by name|';
+        return 'checkbox_sql|name|label:|select id,name from table order by name|';
     }
 
     public function getDefinitions()
@@ -85,14 +84,14 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         // $db->debugsql = 1;
 
         $query = $params['params']['field']['query'];
-        $pos = strrpos(strtoupper($query), 'ORDER BY ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'ORDER BY ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos);
+            $query = mb_substr($query, 0, $pos);
         }
 
-        $pos = strrpos(strtoupper($query), 'LIMIT ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'LIMIT ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos);
+            $query = mb_substr($query, 0, $pos);
         }
 
         $multiple = (int) $params['params']['field']['multiple'];
@@ -102,9 +101,9 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             $where = ' FIND_IN_SET(`id`, ' . $db->escape($params['value']) . ')';
         }
 
-        $pos = strrpos(strtoupper($query), 'WHERE ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'WHERE ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
+            $query = mb_substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . mb_substr($query, $pos + mb_strlen('WHERE '));
         } else {
             $query .= ' WHERE ' . $where;
         }

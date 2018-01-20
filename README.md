@@ -1,4 +1,4 @@
-YForm für REDAXO 5.2
+YForm für REDAXO 5.4
 =============
 
 ![Screenshot](https://raw.githubusercontent.com/yakamara/redaxo_yform/assets/manager_editdata.png)
@@ -30,6 +30,10 @@ Last Changes
 * YFORM: Nested Wheres korrigiert
 * Tools: Timepicker angepasst
 * geo locations: fixed
+* Abhängigkeit ist nun REDAXO 5.4
+* Benennungen angepasst name, label .. 
+* uniqueform entfernt
+* Umbau auf rex_sql_table
 
 #### Neu
 
@@ -39,13 +43,36 @@ Last Changes
 * notices können als HTML notiert werden
 * Falsche Queries werden bei den _sql Feldern abgefangen
 * Form Notation verfeinert
+* Geo Plugin: Map Zoom nun einstellbar (danke alexplusde)
+* Manager: Massenbearbeitung nun pro Tabelle setzbar
+* Manager: Fieldpage optimiert. 100 Einträge pro Seite, Label aufgenommen in Übersicht
+* Manager: Datensatz ID nun angezeigt
+* Manager: Historie nun für alle User verfügbar (die Rechte auf die Tabelle haben)
+* Docs aktualisiert
+* Schwedische Sprache ergänzt
+* Passwort Policy Field ergänzt. Durch REDAXO 5.4 Passwort Policy
+* Unique: Leerfeldoption ergänzt
+* be_table: kann nun auch REX Felder nutzen wie REX_MEDIA_WIDGET etc. (Danke Alex Platter)
+* Action: tpl2email kann nun auch Fehlermeldungen ausgeben, wenn Versand schief lief.
+* Manager: Suchmaske. Für die wichtigsten Felder wurden Infotexte ergänzt
+* CSRF Schutz durch Nonce Feld gesetzt. Ist nun default aktiv. Über objparams['csrf_protection'] deaktivierbar
+* select/_sql: Leerstrings werden bei der Suche ignoriert.
 
 #### Fehler
 
 * YORM: getRelatedDataset fixed. Verursachte Problem mit z.B. YCom Verknüpfungen
-* Bei Update aus älteren YForms wird nun auch das be_medialist entfernt
+* Bei Update aus älteren YForms wird nun auch das be_medialist und submits entfernt
 * select Feld: Falsche selected korrigiert, Defaultwert wird nun richtig übernommen
 * radio feld hat keinen Fehler ausgegeben.
+* Manager: CSV Import/Export optimiert. BOM gesetzt und entfernt. Unnötige Felder werden ignoriert, EnsureColumne bei AlterTable .. 
+* redirect geht nun richtig mit REDAXO 5.4 Version
+* Manager: Historieeinträge konnten bei bestimmten Relationen nicht wieder zurückgesetzt werden
+* YOrm: Durch Nutzung von YORM, wurde immer der Send Status für alle Formulare gesetzt.
+* EMail-Versand: Es konnte passieren, dass der AltBody nicht richtig gesetzt wurde (Danke Andreas Eberhard)
+* Geokodierung war fehlerhaft (Danke Wolfgang)
+* Darstellung war im Popup zum Teil noch miz Hauptnavi und REX-Header
+
+
 
 ### Version 2.2 // 21.04.2017
 

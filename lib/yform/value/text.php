@@ -53,7 +53,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel()]);
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_search_defaults_wildcard_notice')]);
     }
 
     public static function getSearchFilter($params)
@@ -64,7 +64,8 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
         if ($value == '(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        } elseif ($value == '!(empty)') {
+        }
+        if ($value == '!(empty)') {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 
@@ -75,5 +76,16 @@ class rex_yform_value_text extends rex_yform_value_abstract
             return $sql->escapeIdentifier($field) . ' LIKE ' . $sql->escape($value);
         }
         return $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value);
+    }
+
+    public static function getListValue($params)
+    {
+        $value = $params['subject'];
+        $length = strlen($value);
+        $title = $value;
+        if ($length > 40) {
+            $value = mb_substr($value, 0, 20).' ... '.mb_substr($value, -20);
+        }
+        return '<span title="'.rex_escape($title).'">'.rex_escape($value).'</span>';
     }
 }

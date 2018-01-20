@@ -63,7 +63,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!array_key_exists($value, $options)) {
-                if ($default OR $default === '0') {
+                if ($default or $default === '0') {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -102,7 +102,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'select_sql|label|Bezeichnung:| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
+        return 'select_sql|name|label| select id,name from table order by name | [defaultvalue] | [no_db] |1/0 Leeroption|Leeroptionstext|1/0 Multiple Feld|selectsize';
     }
 
     public function getDefinitions()
@@ -134,14 +134,14 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
 
         $query = $params['params']['field']['query'];
         $query_params = [];
-        $pos = strrpos(strtoupper($query), 'ORDER BY ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'ORDER BY ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos);
+            $query = mb_substr($query, 0, $pos);
         }
 
-        $pos = strrpos(strtoupper($query), 'LIMIT ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'LIMIT ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos);
+            $query = mb_substr($query, 0, $pos);
         }
 
         $multiple = (isset($params['params']['field']['multiple'])) ? (int) $params['params']['field']['multiple'] : 0;
@@ -153,9 +153,9 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $query_params[] = $params['value'];
         }
 
-        $pos = strrpos(strtoupper($query), 'WHERE ');
+        $pos = mb_strrpos(mb_strtoupper($query), 'WHERE ');
         if ($pos !== false) {
-            $query = substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . substr($query, $pos + strlen('WHERE '));
+            $query = mb_substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . mb_substr($query, $pos + strlen('WHERE '));
         } else {
             $query .= ' WHERE ' . $where;
         }
@@ -193,6 +193,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                 'options' => $options,
                 'multiple' => 1,
                 'size' => 5,
+                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
             ]
         );
     }
@@ -202,6 +203,8 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         $sql = rex_sql::factory();
         $field = $params['field']->getName();
         $values = (array) $params['value'];
+
+        $multiple = $params['field']->getElement('multiple') == 1;
 
         $where = [];
         foreach ($values as $value) {
@@ -213,7 +216,11 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
                     $where[] = $sql->escapeIdentifier($field).' != ""';
                     break;
                 default:
-                    $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    if ($multiple) {
+                        $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    } else {
+                        $where[] = ' ( ' . $sql->escape($value) . ' = ' . $sql->escapeIdentifier($field) . ' )';
+                    }
                     break;
             }
         }

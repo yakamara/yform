@@ -53,7 +53,8 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         if ($suffix != '') {
             return 'yform-' . $this->params['form_name'] . '-' . $this->getName() . '-' . $suffix;
-        } elseif ($this->getName() != '') {
+        }
+        if ($this->getName() != '') {
             return 'yform-' . $this->params['form_name'] . '-' . $this->getName();
         }
 
@@ -247,9 +248,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         if (isset($this->params['value_pool']['sql'][$key])) {
             return $this->params['value_pool']['sql'][$key];
-        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->hasValue($key)) {
+        }
+        if (isset($this->params['sql_object']) && $this->params['sql_object']->hasValue($key)) {
             return $this->params['sql_object']->getValue($key);
-        } elseif (isset($this->params['rex_yform_set'][$key])) {
+        }
+        if (isset($this->params['rex_yform_set'][$key])) {
             return $this->params['rex_yform_set'][$key];
         }
         return null;

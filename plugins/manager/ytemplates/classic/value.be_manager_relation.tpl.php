@@ -27,7 +27,6 @@
                         if ($this->params['main_id'] > 0) {
                             ?><a href="javascript:void(0);" onclick="newPoolWindow('<?php echo $link ?>');return false;"><?php echo rex_i18n::msg('yform_relation_edit_relations'); ?></a>
                             <?php
-
                         } else {
                             echo rex_i18n::msg('yform_relation_first_create_data');
                         } ?>
@@ -35,9 +34,9 @@
                     </p>
                 </div>
 
-            <?php 
+            <?php
 } elseif ($this->relation['relation_type'] == 2) {
-    ?>
+                            ?>
 
                 <div class="rex-widget-data">
 
@@ -53,9 +52,9 @@
                     </p>
                 </div>
 
-            <?php 
-} else {
-    ?>
+            <?php
+                        } else {
+                            ?>
 
                 <div class="rex-widget-yform-manager-datalist">
                     <input type="hidden" name="<?php echo $this->getFieldName() ?>" id="yform_MANAGER_DATALIST_<?php echo $this->getId() ?>" value="<?php echo implode(',', $this->getValue()) ?>" />
@@ -80,8 +79,8 @@
                     </p>
                 </div>
 
-            <?php 
-} ?>
+            <?php
+                        } ?>
 
         </div>
         <div class="rex-clearer"></div>

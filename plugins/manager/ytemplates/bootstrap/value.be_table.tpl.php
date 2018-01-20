@@ -6,7 +6,7 @@ if ($this->getElement('notice') != '') {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
+    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], false) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
@@ -21,16 +21,26 @@ if (count($notice) > 0) {
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th><?php echo htmlspecialchars($column) ?></th>
+                <th><?php echo htmlspecialchars($column['label']) ?></th>
             <?php endforeach ?>
             <th class="rex-table-action"><a class="btn btn-xs btn-default" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($data as $row): ?>
+        <?php foreach ($data as $data_index => $row): ?>
             <tr>
-                <?php foreach ($row as $i => $column): ?>
-                    <td><input class="form-control" type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="<?php echo htmlspecialchars($column) ?>" /></td>
+                <?php foreach ($columns as $i => $column): ?>
+                    <td class="be-value-input">
+                        <?php
+                            $field = $column['field'];
+                            $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
+                            $field->params['form_name'] = $field->getName();
+                            $field->setValue($row[$i] ?: '');
+                            $field->setId($data_index);
+                            $field->enterObject();
+                            echo $field->params['form_output'][$field->getId()]
+                        ?>
+                    </td>
                 <?php endforeach ?>
                 <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>
             </tr>
@@ -40,24 +50,71 @@ if (count($notice) > 0) {
 
     <script type="text/javascript">
         (function () {
-            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>');
+            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
+            	be_table_cnt = <?= (int) $data_index ?>;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
-                $(this).closest('table').find('tbody').append('\
-                    <tr>\
-                        <?php foreach ($columns as $i => $column): ?>\
-                            <td><input class="form-control" type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="" /></td>\
-                        <?php endforeach ?>\
-                        <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
-                    </tr>\
-                ');
+                var tr = $('<tr/>'),
+                    regexp = [
+                        // REX_MEDIA
+                        new RegExp("(REX_MEDIA_)", 'g'),
+                        new RegExp("(openREXMedia\\()", 'g'),
+                        new RegExp("(addREXMedia\\()", 'g'),
+                        new RegExp("(deleteREXMedia\\()", 'g'),
+                        new RegExp("(viewREXMedia\\()", 'g'),
+                        // REX_MEDIALIST
+                        new RegExp("(REX_MEDIALIST_SELECT_)", 'g'),
+                        new RegExp("(moveREXMedialist\\()", 'g'),
+                        new RegExp("(openREXMedialist\\()", 'g'),
+                        new RegExp("(addREXMedialist\\()", 'g'),
+                        new RegExp("(deleteREXMedialist\\()", 'g'),
+                        new RegExp("(viewREXMedialist\\()", 'g'),
+                    ],
+                    row_html = '\
+                    <?php foreach ($columns as $i => $column): ?>\
+                            <td class="be-value-input"><?php
+                        $field = $columns[$i]['field'];
+                        $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
+                        $field->params['form_name'] = $field->getName();
+                        $field->setValue(null);
+                        $field->setId('{{FIELD_ID}}');
+                        $field->enterObject();
+                        echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
+                        ?></td>\
+                    <?php endforeach ?>\
+                    <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
+                ';
+
+                be_table_cnt++;
+                // set new row field ids
+                row_html = row_html.replace(new RegExp('{{FIELD_ID}}', 'g'), be_table_cnt);
+
+                for (var i in regexp) {
+                    row_html = row_html.replace(regexp[i], '$1'+ be_table_cnt +'<?= $i ?>');
+                }
+                tr.html(row_html);
+
+                // replace be medialist
+                tr.find('select[id^="REX_MEDIALIST_"]').each(function() {
+                    var $select = $(this),
+                        $input  = $select.parent().children('input:first'),
+                        id = $select.prop('id').replace('REX_MEDIALIST_SELECT_', '');
+
+                    $input.prop('id', 'REX_MEDIALIST_'+ id);
+                });
+
+
+                $(this).closest('table').find('tbody').append(tr);
+                $(document).trigger('be_table:row-added', [tr]);
                 return false;
             });
 
             wrapper.on('click', '.btn-delete', function () {
                 var tr = jQuery(this).closest('tr');
                 tr.fadeOut('normal', function () {
+                    $(document).trigger('be_table:before-row-remove', [tr]);
                     tr.remove();
+                    $(document).trigger('be_table:row-removed');
                 })
                 return false;
             });

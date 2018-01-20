@@ -27,7 +27,7 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|size|plz|6|warning_message';
+        return 'validate|size|name|size|warning_message';
     }
 
     public function getDefinitions()
