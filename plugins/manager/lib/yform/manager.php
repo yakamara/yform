@@ -1264,16 +1264,17 @@ class rex_yform_manager
                     }
                     ++$i;
                 }
+                $php_values = array_map(function($v) { return str_replace("'","\'", $v); }, $values);
 
                 if ($field['type_id'] == 'value') {
-                    $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array(\'' . rtrim(implode('\',\'', $values), '\',\'') . '\'));';
+                    $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array(\'' . rtrim(implode('\',\'', $php_values), '\',\'') . '\'));';
                     $notation_pipe .= "\n" . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                     $notation_email .= "\n" . rex_i18n::translate($field['label']) . ': REX_YFORM_DATA[field="' . $field['name'] . '"]';
                 } elseif ($field['type_id'] == 'validate') {
-                    $notation_php .= "\n" . '$yform->setValidateField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $values), '","') . '"));';
+                    $notation_php .= "\n" . '$yform->setValidateField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $php_values), '","') . '"));';
                     $notation_pipe .= "\n" . $field['type_id'] . '|' . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                 } elseif ($field['type_id'] == 'action') {
-                    $notation_php .= "\n" . '$yform->setActionField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $values), '","') . '"));';
+                    $notation_php .= "\n" . '$yform->setActionField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $php_values), '","') . '"));';
                     $notation_pipe .= "\n" . $field['type_id'] . '|' . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                 }
             }
