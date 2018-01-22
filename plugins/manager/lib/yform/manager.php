@@ -268,30 +268,13 @@ class rex_yform_manager
                     $exportDataset[] = implode(';', $exportData);
                 }
 
-                $fileContent = implode(';', $fields);
+                $fileContent = pack('CCC', 0xef, 0xbb, 0xbf);
+                $fileContent .= implode(';', $fields);
                 $fileContent .= "\n".implode("\n", $exportDataset);
 
-                // ----- download - save as
-
                 $fileName = 'export_data_' . date('YmdHis') . '.csv';
-                $fileSize = strlen($fileContent);
-                $fileType = 'application/octetstream';
-                $expires = 'Mon, 01 Jan 2000 01:01:01 GMT';
-                $last_modified = 'Mon, 01 Jan 2000 01:01:01 GMT';
-
-                header('Expires: ' . $expires); // Date in the past
-                header('Last-Modified: ' . $last_modified); // always modified
-                header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
-                header('Cache-Control: post-check=0, pre-check=0', false);
-                header('Pragma: no-cache');
-                header('Pragma: private');
-                header('Cache-control: private, must-revalidate');
-                header('Content-Type: ' . $fileType . '; name="' . $fileName . '"');
-                header('Content-Disposition: attachment; filename="' . $fileName . '"');
-                header('Content-Description: "' . $fileName . '"');
-                header('Content-Length: ' . $fileSize);
-                echo pack('CCC', 0xef, 0xbb, 0xbf);
-                echo $fileContent;
+                header('Content-Disposition: attachment; filename="' . $fileName . '"; charset=utf-8');
+                rex_response::sendContent($fileContent, 'application/octetstream');
 
                 exit;
             }
