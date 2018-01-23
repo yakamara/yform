@@ -30,10 +30,11 @@ Last Changes
 * YFORM: Nested Wheres korrigiert
 * Tools: Timepicker angepasst
 * geo locations: fixed
-* Abhängigkeit ist nun REDAXO 5.4
+* Abhängigkeit ist nun REDAXO 5.5
 * Benennungen angepasst name, label .. 
 * uniqueform entfernt
 * Umbau auf rex_sql_table
+* GEO Plugin gelöscht, google_geo feld verschoben und bleibt
 
 #### Neu
 
@@ -71,8 +72,11 @@ Last Changes
 * EMail-Versand: Es konnte passieren, dass der AltBody nicht richtig gesetzt wurde (Danke Andreas Eberhard)
 * Geokodierung war fehlerhaft (Danke Wolfgang)
 * Darstellung war im Popup zum Teil noch miz Hauptnavi und REX-Header
-
-
+* Upload Feld: min_error und max_error waren vertauscht
+* datestamp feld. Werte anzeigen, es wurde nicht die aktuellen Felder, sondern nur die neuen angezeigt
+* Manager: Exportdownload korrigiert
+* ytemplates, bootstrap: translate meldungen nun auch mit html
+* manager: popup bei relationen korrigiert
 
 ### Version 2.2 // 21.04.2017
 
