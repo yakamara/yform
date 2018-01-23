@@ -75,7 +75,7 @@ yform_manager_tablefield_overview = Feldübersicht
 
 yform_manager_table_updated = Vielen Dank für die Aktualisierung.
 yform_manager_table_added = Vielen Dank für den Eintrag.
-yform_manager_table_deleted = Tabellendefinitionen wurde gelöscht [Tabelle wurde nicht gelöscht]
+yform_manager_table_deleted = Tabellendefinitionen wurden gelöscht [Tabelle wurde nicht gelöscht]
 yform_manager_table_add = Tabelle anlegen
 yform_manager_table_update = Tabellen und Felder updaten
 yform_manager_table_import = Tabelle importieren
