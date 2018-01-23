@@ -134,6 +134,7 @@ yform_edit = editieren
 yform_save = speichern
 yform_save_apply = übernehmen
 yform_delete = löschen
+yform_delete_definitions = Definitionen löschen
 yform_search = suchen
 yform_export = exportieren
 yform_import = importieren

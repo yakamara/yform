@@ -8,6 +8,8 @@
  */
 
 echo rex_view::title(rex_i18n::msg('yform'));
+$_csrf_key = 'yform_table_edit';
+
 
 // ********************************************* TABLE ADD/EDIT/LIST
 
@@ -66,6 +68,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
 } elseif (($func == 'add' || $func == 'edit') && rex::getUser()->isAdmin()) {
     $yform = new rex_yform();
     // $yform->setDebug(TRUE);
+    $yform->setObjectparams('form_name', $_csrf_key);
     $yform->setHiddenField('page', $page);
     $yform->setHiddenField('func', $func);
 
@@ -182,11 +185,16 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
 }
 
 if ($func == 'delete' && rex::getUser()->isAdmin()) {
-    $table_name = rex_request('table_name', 'string');
-    echo rex_yform_manager_table_api::removeTable($table_name);
 
-    $func = '';
-    echo rex_view::success(rex_i18n::msg('yform_manager_table_deleted'));
+    if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
+        echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+    } else {
+        $table_name = rex_request('table_name', 'string');
+        echo rex_yform_manager_table_api::removeTable($table_name);
+
+        $func = '';
+        echo rex_view::success(rex_i18n::msg('yform_manager_table_deleted'));
+    }
 }
 
 if ($show_list && rex::getUser()->isAdmin()) {
@@ -286,10 +294,10 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->setColumnLayout(rex_i18n::msg('yform_edit'), ['<th class="rex-table-action" colspan="3">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
     $list->setColumnParams(rex_i18n::msg('yform_edit'), ['table_id' => '###id###', 'func' => 'edit']);
 
-    $list->addColumn(rex_i18n::msg('yform_delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete'));
-    $list->setColumnLayout(rex_i18n::msg('yform_delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('yform_delete'), ['table_name' => '###table_name###', 'func' => 'delete']);
-    $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' [###table_name###] ' . rex_i18n::msg('yform_delete') . ' ?\')');
+    $list->addColumn(rex_i18n::msg('yform_delete_definitions'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete_definitions'));
+    $list->setColumnLayout(rex_i18n::msg('yform_delete_definitions'), ['', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams(rex_i18n::msg('yform_delete_definitions'), ['table_name' => '###table_name###', 'func' => 'delete'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
+    $list->addLinkAttribute(rex_i18n::msg('yform_delete_definitions'), 'onclick', 'return confirm(\' [###table_name###] ' . rex_i18n::msg('yform_delete_definitions') . ' ?\')');
 
     $list->addColumn(rex_i18n::msg('yform_editfields'), rex_i18n::msg('yform_editfields'));
     $list->setColumnLayout(rex_i18n::msg('yform_editfields'), ['', '<td class="rex-table-action">###VALUE###</td>']);

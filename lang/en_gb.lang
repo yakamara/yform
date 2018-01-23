@@ -179,3 +179,5 @@ yform_validate_preg_match_pattern_info = Ex.: /^start/
 yform_values_options_name = 	Name
 yform_values_options_label = 	Description
 yform_values_options_boolvalues	= 	Values (0,1 = unchecked, checked)
+
+yform_values_csrf_description = CSRF Protection
