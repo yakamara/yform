@@ -175,3 +175,6 @@ yform_validate_preg_match_pattern_info = T.ex.: /^start/
 yform_values_options_name = 	Namn
 yform_values_options_label = 	Beskrivning
 yform_values_options_boolvalues	= 	Värden (0,1 = unchecked, checked)
+
+yform_geo_get_position = Hämta position
+yform_geo_clear_position = Radera position

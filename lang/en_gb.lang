@@ -181,3 +181,6 @@ yform_values_options_label = 	Description
 yform_values_options_boolvalues	= 	Values (0,1 = unchecked, checked)
 
 yform_values_csrf_description = CSRF Protection
+
+yform_geo_get_position = Get location
+yform_geo_clear_position = Clear location

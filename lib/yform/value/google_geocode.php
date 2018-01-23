@@ -73,6 +73,9 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
                 'googleapikey' => ['type' => 'text',     'label' => 'Google-Api-Key'],
                 'zoom' => ['type' => 'text',     'label' => 'Zoomstufe (Welt=1, Kontinent=5, Stadt=10, Straßen=15, Geb&auml;ude=20)'],
                 'default' => ['type' => 'text',     'label' => 'Default', 'notice' => '0.000,0.000'],
+                'infotext_1' => ['type' => 'text',     'label' => 'Text: Hole Position', 'default' => 'translate:yform_geo_get_position'],
+                'infotext_2' => ['type' => 'text',     'label' => 'Text: Lösche Position', 'default' => 'translate:yform_geo_clear_position'],
+
             ],
             'description' => 'GoogeMap Positionierung',
             'dbtype' => 'text',
