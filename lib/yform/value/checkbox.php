@@ -28,7 +28,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         }
 
         // first time and default is true -> checked
-        if ($this->params['send'] != 1 && $this->getElement('default') == 1 && $this->getValue() === '') {
+        if ($this->params['send'] != 1 && $this->getElement('default') == 1 && ($this->getValue() === '' || !$this->getValue())) {
             $this->setValue($v);
 
             // if check value is given -> checked
