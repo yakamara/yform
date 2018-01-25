@@ -77,6 +77,7 @@ Last Changes
 * Manager: Exportdownload korrigiert
 * ytemplates, bootstrap: translate meldungen nun auch mit html
 * manager: popup bei relationen korrigiert
+* checkbox field überarbeitet und korrigiert
 
 ### Version 2.2 // 21.04.2017
 
