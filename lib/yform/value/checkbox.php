@@ -11,31 +11,32 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        //# set default value attribute
-        if ($this->getElement('values') == '') {
-            $v = 1; // gecheckt
-            $w = 0; // nicht gecheckt
+
+        if (is_array($this->getElement('values'))) {
+            $values = $this->getElement('values');
+            $w = $values[0];
+            $v = $values[1];
+        } else if ($this->getElement('values') == '') {
+            $w = 0;
+            $v = 1;
         } else {
             $values = explode(',', $this->getElement('values'));
-
             if (count($values) == 1) {
-                $v = $values[0];
                 $w = '';
+                $v = $values[0];
             } else {
-                $v = $values[1];
                 $w = $values[0];
+                $v = $values[1];
             }
         }
+        $values = [$w,$v];
 
-        // first time and default is true -> checked
-        if ($this->params['send'] != 1 && $this->getElement('default') == 1 && ($this->getValue() === '' || !$this->getValue())) {
+        if ($this->params['send'] != 1 && $this->getElement('default') == 1 && !in_array($this->getValue() , $values) ) {
             $this->setValue($v);
 
-            // if check value is given -> checked
         } elseif ($this->getValue() == $v) {
             $this->setValue($v);
 
-            // not checked
         } else {
             $this->setValue($w);
         }
@@ -44,7 +45,6 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', ['value' => $v]);
         }
 
-        //# set values
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement(5) != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
@@ -65,7 +65,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
                 'name' => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'values' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_checkbox_values'), 'default' => '0,1'],
-                'default' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_checkbox_default'), 'default' => 0],
+                'default' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_checkbox_default'), 'default' => 0, 'values' => '0,1'],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],

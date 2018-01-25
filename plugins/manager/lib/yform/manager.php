@@ -1042,20 +1042,24 @@ class rex_yform_manager
                         break;
 
                     case 'no_db':
+                        if (!isset($v['values'])) {
+                            $v['values'] = [0,1];
+                        }
                         if (!isset($v['default']) || $v['default'] != 1) {
                             $v['default'] = 0;
                         }
-
-                        $yform->setValueField('checkbox', [$k_field, rex_i18n::msg('yform_donotsaveindb'), 'no_db', $v['default']]);
+                        $yform->setValueField('checkbox', ['name' => $k_field, 'label' => rex_i18n::msg('yform_donotsaveindb'), 'values' => 'no_db', 'default' => $v['default']]);
                         break;
 
                     case 'boolean':
-                        // checkbox|check_design|Bezeichnung|Value|1/0|[no_db]
+                        if (!isset($v['values'])) {
+                            $v['values'] = [0,1];
+                        }
                         if (!isset($v['default'])) {
-                            $v['default'] = '';
+                            $v['default'] = "";
                         }
                         $v['notice'] = (isset($v['notice']) ? $v['notice'] : '');
-                        $yform->setValueField('checkbox', [$k_field, $v['label'], '', $v['default'], 'notice' => $v['notice']]);
+                        $yform->setValueField('checkbox', ['name' => $k_field, 'label' => $v['label'], 'default' => $v['default'], 'notice' => $v['notice']]);
                         break;
 
                     case 'table':
@@ -1150,11 +1154,11 @@ class rex_yform_manager
 
             if ($type_id == 'value') {
                 if (!$field->isHiddenInListDisabled()) {
-                    $yform->setValueField('checkbox', ['list_hidden', rex_i18n::msg('yform_hideinlist'), 1, '1']);
+                    $yform->setValueField('checkbox', ['name' => 'list_hidden', 'label' => rex_i18n::msg('yform_hideinlist'), 'default' => '1']);
                 }
 
                 if (!$field->isSearchableDisabled()) {
-                    $yform->setValueField('checkbox', ['search', rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 1, '1']);
+                    $yform->setValueField('checkbox', ['name' => 'search', 'label' => rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 'default' => '1']);
                 }
             } elseif ($type_id == 'validate') {
                 $yform->setValueField('hidden', ['list_hidden', 1]);
