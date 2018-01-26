@@ -1,4 +1,4 @@
-YForm für REDAXO 5.4
+YForm für REDAXO 5.5
 =============
 
 ![Screenshot](https://raw.githubusercontent.com/yakamara/redaxo_yform/assets/manager_editdata.png)
@@ -21,7 +21,7 @@ Last Changes
 -------
 
 
-### Version 2.3 // xx.xx.2017
+### Version 2.3 // 26.01.2018
 
 ### Änderungen
 
