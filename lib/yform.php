@@ -41,7 +41,7 @@ class rex_yform
         $this->objparams['form_anchor'] = '';
         $this->objparams['form_showformafterupdate'] = 0;
         $this->objparams['form_show'] = true;
-        $this->objparams['form_name'] = 'form';
+        $this->objparams['form_name'] = 'formular';
         $this->objparams['form_class'] = 'rex-yform';
         $this->objparams['form_wrap_id'] = 'rex-yform';
         $this->objparams['form_wrap_class'] = 'yform';
