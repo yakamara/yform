@@ -1,0 +1,277 @@
+yform_manager = Gestor de tabla
+
+navigation_manager = Tablas
+yform_manager_fields = Campos
+
+# yform manager
+yform_alltables = Todas las tablas
+yform_back_to_overview = Volver al resumen
+yform_updatetable = Actualizar tabla (s)
+yform_tablesupdated = Table/n ha sido actualizado
+
+yform_help_empty = Las entradas vacías se pueden buscar con <br/> "(vacío)"
+yform_help_multipleselect = Selección múltiple con tecla CTRL/CMD presionada
+yform_updatetable_with_delete = con eliminación de campo
+yform_updatetable_with_delete_confirm = Esta seguro de actualizar con eliminación de campo?
+
+yform_relation_move_first_data = Mueva el registro seleccionado al principio
+yform_relation_move_up_data = Mover el registro seleccionado hacia arriba
+yform_relation_move_down_data = Mover el registro seleccionado hacia abajo
+yform_relation_move_last_data = Mover el registro seleccionado al final
+yform_relation_choose_entry = Seleccionar registro
+yform_relation_delete_entry = Eliminar el registro seleccionado
+yform_relation_first_create_data = Por favor crea este registro primero
+yform_relation_edit_relations = Administrar accesos directos
+
+yform_prio_top = En el comienzo
+yform_prio_after = Después de "{0}"
+yform_prio_bottom = Al final
+
+yform_truncate_table = Vacía
+yform_table_truncated = La tabla fue vaciada
+yform_table_not_found = La tabla no fue encontrada
+yform_truncate_table_confirm = ¿De verdad vaciar la tabla completa?
+yform_table_overview = Tabla de resumen
+
+yform_manager_edit_table = Editar tabla
+yform_manager_add_table = Agrega una tabla
+
+yform_add_row = Agregar fila
+
+# tables.inc.php
+yform_importcsv = Importar CSV
+yform_tbl_active = Activamente
+yform_tbl_inactive = Inactivo
+
+yform_tbl_active = Activamente
+yform_tbl_inactive = Inactivo
+
+yform_manager_table_updated = Tabla y campos han sido creados y / o actualizados
+yform_manager_table_entry_saved = Gracias por el registro
+yform_manager_table_enter_name = Por favor ingrese el nombre de la tabla
+yform_manager_table_enter_specialchars = Por favor ingrese solo letras y números para el nombre de la tabla. El primer personaje debe ser una letra
+yform_manager_table_exists = Este nombre de tabla ya existe
+
+yform_manager_table_prio = Prioridad
+yform_manager_table_prio_short = Prio
+yform_manager_table_name = Nombre
+yform_manager_table_status = Estado
+yform_manager_name = Designación
+yform_manager_table_description = Descripción
+yform_manager_entries_per_page = Registros por página
+yform_manager_sortfield = Clasificación estándar: campo
+yform_manager_sortorder = Clasificación estándar: dirección
+yform_manager_sortorder_asc = Ascendente
+yform_manager_sortorder_desc = Descendente
+yform_manager_search_active = Búsqueda activa
+yform_manager_enter_number = Por favor ingrese un número para los registros por página
+yform_manager_table_hide = Escondido en la navegación
+yform_manager_table_allow_export = Permitir la exportación de datos
+yform_manager_table_allow_import = Permitir la importación de datos
+yform_manager_table_allow_mass_deletion = Permitir eliminación masiva
+yform_manager_table_allow_mass_edit = Permitir procesamiento masivo
+yform_manager_table_history = Crear historial
+yform_manager_tablefield_overview = Resumen campo
+
+yform_manager_table_updated = Gracias por la actualización.
+yform_manager_table_added = Gracias por la entrada.
+yform_manager_table_deleted = Se eliminaron las definiciones de la tabla [la tabla no se eliminó]
+yform_manager_table_add = Crea una tabla
+yform_manager_table_update = Actualizar tablas y campos
+yform_manager_table_import = Tabla de importación
+yform_manager_table_features = Opciones activadas
+
+yform_manager_type_id = Tipo
+yform_manager_type_name = Nombre tipo
+
+yform_manager_tableset = Tableset
+yform_manager_table = Tabla
+yform_manager_tables = Tablas
+
+yform_manager_import = Importación
+yform_manager_export = Exportación
+yform_manager_create = Invertir
+yform_manager_migrate = Emigrar
+
+yform_manager_table_migrate = Migrar una tabla
+yform_manager_table_migrated_failed = La migración de `{0}` falló. Error: {1}
+yform_manager_table_migrate_info = El administrador de migración crea a partir de una tabla existente, una que se puede gestionar a través del gestor de tablas. Esto requiere un campo de autoincremento llamado `id` en la tabla. El administrador de tablas no funciona sin este campo. <br /> <br /> Opcionalmente, la decisión es convertir un campo de autoincrecimiento existente. Por ejemplo, "event_id" a "id".
+yform_manager_migrate_table_id_convert = Convierte el campo 'id' si no está disponible
+yform_manager_table_migrated_success = La tabla ha sido migrada con éxito.
+
+yform_manager_tableset_import = Importar grupo de tabla
+yform_manager_tableset_import_jsonimportfile = Importar archivo JSON
+yform_manager_tableset_import_info = Info
+yform_manager_tableset_import_warning_selectfile = No se utilizó ningún archivo .json o el archivo estaba dañado.
+yform_manager_tableset_import_warning_type = El tipo de archivo es incorrecto. Debe ser un archivo JSON.
+yform_manager_tableset_import_success = Tabla/s se importó con éxito
+yform_manager_tableset_import_failed = La importación de tablas falló: <br /> {0}
+
+yform_manager_table_edit = Editar tablas
+
+yform_manager_tableset_export = Exportar grupo de tabla
+yform_manager_tableset_export_info = Info
+yform_manager_export_error_empty = Seleccione al menos una tabla para exportar
+
+yform_manager_table_hidden = Visibilidad
+yform_hidden = Oculto
+yform_visible = Visible
+
+# edit.inc.php
+yform_thankyouforupdate = Record ha sido actualizado.
+yform_thankyouforentry = Registro fue ingresado
+yform_editdata = Editar registro [id: {0}]
+yform_editdata_collection = {0} editar registros
+yform_adddata = Crear registro de datos
+yform_searchtext = Palabra clave
+yform_searchfields = Campos de tabla para buscar
+yform_id = Identificación
+yform_function = Función
+yform_add = Añadir
+yform_add_apply = Tomar el relevo
+yform_edit = Editar
+yform_save = Guardar
+yform_save_apply = Tomar el relevo
+yform_delete = Borrar
+yform_delete_definitions = Eliminar definiciones
+yform_search = Búsqueda
+yform_export = Exportación
+yform_import = Importación
+yform_datadeleted = El registro ha sido eliminado
+yform_openerinfo = Abridor de Información
+
+yform_table_info = Info
+yform_dataset = Resultado de datos
+
+yform_dataset_delete = Eliminar resultado de datos
+yform_dataset_deleted = El resultado de los datos fue vaciado
+yform_dataset_delete_confirm = ¿Realmente vaciar el resultado de los datos?
+
+yform_data = Registro
+yform_manager_search = Búsqueda
+
+yform_data_select = Tomar el relevo
+
+# field.inc.php
+yform_tablenotexists = ¡Esta tabla no existe!
+yform_tablefield = Campo de tabla
+yform_values = Valores
+yform_validates = Validación/verificación
+yform_actions = Acciones
+yform_validatenamenotempty = Por favor ingrese el nombre
+yform_validatenamepregmatch = Ingrese solo letras y "_" en el nombre
+yform_validatenamecheck = Este nombre ya existe
+yform_donotsaveindb = No guardar en la base de datos
+yform_hideinlist = Ocultar en la lista
+yform_useassearchfieldalidatenamenotempty = Grabar como campo de búsqueda
+yform_tablefielddeleted = El campo de tabla fue eliminado
+yform_tablefieldnotfound = No se encontró el campo de tabla
+yform_addtablefield = Crear campo de tabla
+yform_table = Tabla
+yform_editfield = Campo de edición
+yform_choosenadd = Seleccionar campos
+yform_choosenadd_description = Seleccione el campo que desea usar en su administración. Hay campos de valor, con los que generalmente se realizan las entradas, así como también campos de validación, con los cuales se pueden examinar los campos de valor según diversos criterios.
+yform_addfield = Agregar campo
+yform_editfields = Editar campos
+
+yform_id_is_missing = ID falta
+yform_id_missing_info = Desafortunadamente, la tabla no tiene campo ID con autoincrement. Por lo tanto, yform no puede trabajar con eso. Actualice la tabla y cree la ID manualmente si es necesario.
+
+# import
+yform_manager_import_error_missingfile = Por favor cargue un archivo de importación
+yform_manager_import_error_missingfields = Faltan los siguientes campos: {0}
+yform_manager_import_error_min_missingfields = Al menos falta un campo: {0}
+yform_manager_import_error_field = No se pudo crear el campo "{0}": "{1}"
+yform_manager_import_field_added = El campo "{0}" ha sido creado
+yform_manager_import_error_import_stopped = La importación fue abortada porque aparecieron errores.
+yform_manager_import_error_dataimport = El registro ({0}) no se pudo importar: {1}
+yform_manager_import_error_import = {0} registros fueron importados De estos, {1} nuevos registros y {2} registros fueron reemplazados.
+yform_manager_import_info_data_imported = {0} registros no fueron importados
+yform_manager_import_error_not_started = La importación no se inició.
+yform_manager_import_csv = Importar archivo CSV
+yform_manager_import_csv_info = Con esto puedes importar datos en esta tabla. Tenga en cuenta que solo puede importar archivos de texto y que la <b>primera línea debe contener las definiciones de campo</b>. A continuación debería estar la codificación <b>del archivo de importación UTF-8</b>. que puede ser que tengas que convertirlos antes.
+yform_manager_import_if_no_column = Si la columna no existe en la base de datos,
+yform_manager_import_if_no_column_ignore = luego ignora la columna.
+yform_manager_import_if_no_column_addtext = luego crea una columna como TEXTO en la base de datos (estos campos deben determinarse más tarde para gestionarlos).
+yform_manager_import_if_no_column_break = luego cancela la importación.
+yform_manager_import_divider = Separador
+yform_manager_import_divider_semicolon = Punto y coma
+yform_manager_import_divider_comma = Coma
+yform_manager_import_divider_tab = Tabulador
+yform_manager_import_unique_field = Si este campo es idéntico, el registro será reemplazado
+yform_manager_import_start = Añadir
+yform_manager_import_file = Expediente
+
+# history
+yform_history = historia
+yform_history_dataset_id = Identificación del registro
+yform_history_dataset = registro
+yform_history_action = Acción
+yform_history_action_create = Creado
+yform_history_action_update = Editado
+yform_history_action_delete = Suprimido
+yform_history_user = Usuario
+yform_history_timestamp = Fecha y hora
+yform_history_view = Vista
+yform_history_restore = Regreso
+yform_history_restore_this = Restablecer registro a esta versión
+yform_history_restore_success = El registro ha sido reiniciado.
+yform_history_restore_error = El registro no se pudo restablecer.
+yform_history_delete = Eliminar historial
+yform_history_delete_all = Completo
+yform_history_delete_older_3_months = Más de 3 meses
+yform_history_delete_confirm = ¿Realmente borras la historia?
+yform_history_delete_success = Los registros de historial han sido eliminados.
+
+yform_manager_show_form_notation = Código del formulario
+
+navigation_yform_tables = Tablas
+yform_tabledata_overview = Tabla de datos
+
+yform_manager_multi_edit_field = Editar campo "{0}"
+
+yform_values_be_link_description = Un campo de Redaxo para seleccionar un <b>artículo de Redaxo</b>.
+yform_values_be_manager_relation_description = Una casilla de verificación / ventana emergente para <b>vincular</b> uno o más <b>registros</b> a una hoja de cálculo extranjera.
+yform_values_be_media_description = Un campo Redaxo para seleccionar uno o varios <b>archivos de grupo de medios</b>.
+yform_values_be_select_category_description = Un campo redaxo para seleccionar una o más <b>categorías</b> del árbol.
+yform_values_be_table_description = Una serie de campos de entrada para ingresar <b>datos tabulares</b>.
+yform_values_prio_description = Un <b>cuadro de selección</b> para ordenar registros en un <b>orden específico</b>.
+
+yform_values_defaults_prio = Prioridad
+yform_values_be_manager_relation_table = Tabla de objetivos
+yform_values_be_manager_relation_field = Campo(s) de tabla de destino para mostrar o campo que contiene la relación ID.
+yform_values_be_manager_relation_type = La selección múltiple
+yform_values_be_manager_relation_empty_option = Con "opción vacía"
+yform_values_be_manager_relation_empty_value = Mensaje de error si la "opción vacía" no está activada.
+yform_values_be_manager_relation_size = Altura del cuadro de selección
+yform_values_be_manager_relation_filter = Filtro
+yform_values_be_manager_relation_relation_table = Tabla de relaciones
+yform_values_be_media_preview = Preestreno
+yform_values_be_media_category = Categoría de grupo de medios
+yform_values_be_media_types = Tipos
+yform_values_be_media_types_notice = Formato: jpg, gif
+yform_values_be_media_multiple = La selección múltiple
+yform_values_be_select_category_ignore_offlines = Ignorar categorías fuera de línea
+yform_values_be_select_category_check_perms = Verifique los derechos
+yform_values_be_select_category_homepage = Agregar entrada de "Página de inicio" (raíz)
+yform_values_be_select_category_homepage_title = página principal
+yform_values_be_select_category_category = ID de raíz
+yform_values_be_select_category_clang = Idioma
+yform_values_be_select_category_multiple = Varios campos posibles
+yform_values_be_select_category_size = Altura del cuadro de selección
+yform_values_be_select_media_category_ignore_offlines = Ignorar categorías fuera de línea
+yform_values_be_select_media_category_check_perms = Verifique los derechos
+yform_values_be_select_media_category_homepage = Agregar entrada de "nivel superior" (raíz)
+yform_values_be_select_media_category_homepage_title = Nivel superior (raíz)
+yform_values_be_select_media_category_category = ID de raíz
+yform_values_be_select_media_category_clang = Idioma
+yform_values_be_select_media_category_multiple = Varios campos posibles
+yform_values_be_select_media_category_size = Altura del cuadro de selección
+yform_values_be_table_columns = Nombre de las columnas (cantidad, precio, cualquier cosa)
+yform_values_be_link_multiple = La selección múltiple
+yform_values_prio_fields = Visualización
+yform_values_prio_scope = Restricción
+yform_values_prio_default = En el comienzo
+
+yform_is = Es
+yform_will_set_to = Deberá
