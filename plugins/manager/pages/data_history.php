@@ -9,6 +9,15 @@ $datasetId = rex_request('dataset_id', 'int');
 $filterDataset = rex_request('filter_dataset', 'bool');
 $historyId = rex_request('history_id', 'int');
 
+$_csrf_key = 'data_edit_history-'.$this->table->getTableName();
+
+if ($subfunc != "" && in_array($subfunc, ['restore','delete_old','delete_all'])) {
+    if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
+        echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+        $subfunc = '';
+    }
+}
+
 $dataset = null;
 if ($datasetId) {
     $dataset = rex_yform_manager_dataset::getRaw($datasetId, $this->table->getTableName());
@@ -75,7 +84,7 @@ if ('view' === $subfunc && $dataset && $historyId) {
             </table>
         </div>
         <div class="modal-footer">
-            <a href="index.php?page=yform/manager/data_edit&amp;table_name='.$this->table->getTableName().'&amp;func=history&amp;subfunc=restore&amp;filter_dataset='.((int) $filterDataset).'&amp;dataset_id='.$datasetId.'&amp;history_id='.$historyId.'" class="btn btn-warning">'.rex_i18n::msg('yform_history_restore_this').'</a>
+            <a href="index.php?page=yform/manager/data_edit&amp;table_name='.$this->table->getTableName().'&amp;func=history&amp;subfunc=restore&amp;filter_dataset='.((int) $filterDataset).'&amp;dataset_id='.$datasetId.'&amp;history_id='.$historyId.'&amp;'.http_build_query(rex_csrf_token::factory($_csrf_key)->getUrlParams()).'" class="btn btn-warning">'.rex_i18n::msg('yform_history_restore_this').'</a>
             <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
     ';
@@ -168,7 +177,7 @@ $list->addLinkAttribute('view', 'data-toggle', 'modal');
 $list->addLinkAttribute('view', 'data-target', '#rex-yform-history-modal');
 
 $list->addColumn('restore', '<i class="rex-icon fa-undo"></i> '.rex_i18n::msg('yform_history_restore'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
-$list->setColumnParams('restore', ['subfunc' => 'restore', 'dataset_id' => '###dataset_id###', 'history_id' => '###id###']);
+$list->setColumnParams('restore', ['subfunc' => 'restore', 'dataset_id' => '###dataset_id###', 'history_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
 
 $content = $list->get();
 
@@ -179,14 +188,14 @@ if (rex::getUser()->isAdmin()) {
 
     $item = [];
     $item['label'] = rex_i18n::msg('yform_history_delete_older_3_months');
-    $item['url'] = $list->getUrl(['subfunc' => 'delete_old']);
+    $item['url'] = $list->getUrl(['subfunc' => 'delete_old'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
     $item['attributes']['class'][] = 'btn-delete';
     $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_history_delete_confirm') . '\');';
     $buttons[] = $item;
 
     $item = [];
     $item['label'] = rex_i18n::msg('yform_history_delete_all');
-    $item['url'] = $list->getUrl(['subfunc' => 'delete_all']);
+    $item['url'] = $list->getUrl(['subfunc' => 'delete_all'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
     $item['attributes']['class'][] = 'btn-delete';
     $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_history_delete_confirm') . '\');';
     $buttons[] = $item;

@@ -21,6 +21,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
         $default_value = date($format);
         $value = $this->getValue();
+        $this->showValue = $value;
 
         if ($this->getElement('only_empty') == 2) {
             // wird nicht gesetzt
@@ -40,8 +41,12 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->needsOutput() && $this->getElement('show_value') == 1 && $this->getValue() != '') {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php');
+        if ($this->needsOutput() && $this->getElement('show_value') == 1) {
+            if ($this->showValue != '') {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php', ['showValue' => $this->showValue]);
+            } elseif ($this->getValue() != '') {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
+            }
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();

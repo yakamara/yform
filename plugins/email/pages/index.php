@@ -7,6 +7,8 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
+$_csrf_key = 'yform_email';
+
 echo rex_view::title(rex_i18n::msg('yform_email_templates'));
 
 $table = rex::getTablePrefix() . 'yform_email_template';
@@ -19,7 +21,15 @@ $template_id = rex_request('template_id', 'int');
 $content = '';
 $show_list = true;
 
-if ($func == 'edit' || $func == 'add') {
+if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
+    echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
+}  elseif ($func == 'delete') {
+    $query = "delete from $table where id='" . $template_id . "' ";
+    $delsql = rex_sql::factory();
+    $delsql->setQuery($query);
+
+    $content = rex_view::success(rex_i18n::msg('yform_email_info_template_deleted'));
+} elseif ($func == 'edit' || $func == 'add') {
     echo rex_view::info(rex_i18n::rawMsg('yform_email_info_text'));
     $form_data = [];
 
@@ -124,12 +134,6 @@ if ($func == 'edit' || $func == 'add') {
 
         $show_list = false;
     }
-} elseif ($func == 'delete') {
-    $query = "delete from $table where id='" . $template_id . "' ";
-    $delsql = rex_sql::factory();
-    $delsql->setQuery($query);
-
-    $content = rex_view::success(rex_i18n::msg('yform_email_info_template_deleted'));
 }
 
 echo $content;
@@ -165,7 +169,7 @@ if ($show_list) {
     $list->removeColumn('attachments');
 
     $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
-    $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'template_id' => '###id###']);
+    $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'template_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
     $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
 
     $list->setNoRowsMessage(rex_i18n::msg('yform_email_templates_not_found'));

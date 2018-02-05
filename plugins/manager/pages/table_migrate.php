@@ -8,6 +8,7 @@
  */
 
 echo rex_view::title(rex_i18n::msg('yform'));
+$_csrf_key = 'table_migrate';
 
 $page = rex_request('page', 'string', '');
 
@@ -27,6 +28,7 @@ foreach ($available_tables as $a_table) {
 
 $yform = new rex_yform();
 $yform->setObjectparams('form_showformafterupdate', 1);
+$yform->setObjectparams('form_name', $_csrf_key);
 $yform->setHiddenField('page', $page);
 $yform->setValueField('select', ['table_name', rex_i18n::msg('yform_table'), $missing_tables]);
 $yform->setValueField('checkbox', ['convert_id', rex_i18n::msg('yform_manager_migrate_table_id_convert')]);

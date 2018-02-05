@@ -58,7 +58,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $_SESSION[$unique] = [];
         }
 
-        $delete = (bool) @$this->params['this']->getFieldValue($this->getId(), 'delete');
+        $delete = (bool) @$this->params['this']->getFieldValue($this->getId(), 'delete', $this->getName());
         if ($delete) {
             unset($_FILES[$unique]);
             unset($_SESSION[$unique]);
@@ -100,10 +100,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $max_size = count($sizes) > 1 ? (int) ($sizes[1] * 1024) : (int) ($sizes[0] * 1024);
 
                 if ($this->getElement('sizes') != '' && $FILE['size'] > $max_size) {
-                    $errors[] = $error_messages['min_error'];
+                    $errors[] = $error_messages['max_error'];
                     unset($FILE);
                 } elseif ($this->getElement('sizes') != '' && $FILE['size'] < $min_size) {
-                    $errors[] = $error_messages['max_error'];
+                    $errors[] = $error_messages['min_error'];
                     unset($FILE);
                 }
             }
