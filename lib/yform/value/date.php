@@ -193,7 +193,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $format = $params['params']['field']['format'];
+        $format = '';
+
+        if (isset($params['params']['field']['format'])) {
+            $format = $params['params']['field']['format'];
+        }
+
         if ($format == '') {
             $format = self::VALUE_DATE_DEFAULT;
         }
