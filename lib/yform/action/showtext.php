@@ -23,18 +23,6 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
             $text = nl2br(htmlspecialchars($text));
         }
 
-        if ($this->getElement(5) == '2') {
-            $text = htmlspecialchars_decode($text);
-            $text = str_replace('<br />', '', $text);
-            $text = str_replace('&#039;', '\'', $text);
-            
-            if (rex_addon::get('markitup')->isAvailable()) {
-                $text = markitup::parseOutput('textile', $text);
-            } else {
-                $text = rex_textile::parse($text);
-            }
-        }
-
         $text = $this->getElement(3) . $text . $this->getElement(4);
 
         foreach ($this->params['value_pool']['email'] as $search => $replace) {
