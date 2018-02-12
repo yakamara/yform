@@ -31,7 +31,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             }
 
             $form_data = rex_post('FORM', 'array');
-            $rowKeys   = array_keys($form_data[$id . '.0']);
+            $rowKeys   = array_keys((array) $form_data[$id . '.0']);
 
             // Spalten durchgehen
             for ($c = 0; $c < count($columns); $c++) {
@@ -60,7 +60,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         }
 
 
-        $data = json_decode($this->getValue(), true);
+        $data = (array) json_decode($this->getValue(), true);
         $columns = [];
         $objs = [];
         $columnIndex = [];
@@ -89,7 +89,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
                 $columnIndex[$name] = $index;
                 $columns[] = ['label' => $values[2], 'field' => $field];
-
 
                 foreach($data as $rowCount => $row) {
                     $obj = clone $field;
