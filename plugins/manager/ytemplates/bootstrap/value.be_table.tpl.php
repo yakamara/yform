@@ -37,6 +37,7 @@ if (count($notice) > 0) {
                             $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
                             $field->params['form_name'] = $field->getName();
                             $field->params['form_label_type'] = 'html';
+                            $field->params['send'] = false;
                             $field->setValue($row[$i] ?: '');
                             $field->setId($data_index);
                             $field->enterObject();

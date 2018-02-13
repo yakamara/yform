@@ -67,7 +67,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $columns = [];
         $objs = [];
         $columnIndex = [];
-        $yfparams = ['this' => \rex_yform::factory()];
+        
+        $yfparams = \rex_yform::factory()->objparams;
+        $yfparams['this'] = \rex_yform::factory();
 
         /* TODO
          * error class von validierung ans Eingabefeld übergeben
