@@ -1,6 +1,7 @@
 <?php
 $class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
+$data_index = 0;
 $notice = [];
 if ($this->getElement('notice') != '') {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
@@ -35,6 +36,7 @@ if (count($notice) > 0) {
                             $field = $column['field'];
                             $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
                             $field->params['form_name'] = $field->getName();
+                            $field->params['form_label_type'] = 'html';
                             $field->setValue($row[$i] ?: '');
                             $field->setId($data_index);
                             $field->enterObject();
@@ -76,6 +78,8 @@ if (count($notice) > 0) {
                         $field = $columns[$i]['field'];
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
                         $field->params['form_name'] = $field->getName();
+                        $field->params['form_label_type'] = 'html';
+                        $field->params['send'] = false;
                         $field->setValue(null);
                         $field->setId('{{FIELD_ID}}');
                         $field->enterObject();
