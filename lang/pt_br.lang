@@ -175,3 +175,6 @@ yform_validate_preg_match_pattern_info = Ex.: /^start/
 yform_values_options_name = 	Nome
 yform_values_options_label = 	Descrição
 yform_values_options_boolvalues	= 	Valores  Values (0,1 = não selecionado, selecionado)
+
+yform_geo_get_position = Obter a localização
+yform_geo_clear_position = Criar localização

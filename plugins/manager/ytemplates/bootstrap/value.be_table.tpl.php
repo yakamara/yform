@@ -1,12 +1,13 @@
 <?php
 $class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
+$data_index = 0;
 $notice = [];
 if ($this->getElement('notice') != '') {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], null, false) . '</span>'; //    var_dump();
+    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], false) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
@@ -35,6 +36,8 @@ if (count($notice) > 0) {
                             $field = $column['field'];
                             $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
                             $field->params['form_name'] = $field->getName();
+                            $field->params['form_label_type'] = 'html';
+                            $field->params['send'] = false;
                             $field->setValue($row[$i] ?: '');
                             $field->setId($data_index);
                             $field->enterObject();
@@ -76,6 +79,8 @@ if (count($notice) > 0) {
                         $field = $columns[$i]['field'];
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
                         $field->params['form_name'] = $field->getName();
+                        $field->params['form_label_type'] = 'html';
+                        $field->params['send'] = false;
                         $field->setValue(null);
                         $field->setId('{{FIELD_ID}}');
                         $field->enterObject();

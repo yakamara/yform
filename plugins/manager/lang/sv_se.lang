@@ -75,7 +75,7 @@ yform_manager_tablefield_overview = Fältöversikt
 
 yform_manager_table_updated = Tack för aktualiseringen
 yform_manager_table_added = Tack för inlägget.
-yform_manager_table_deleted = Tabell raderades
+yform_manager_table_deleted = Tabell raderades [Table definitions deleted, not table]
 yform_manager_table_add = Skapa tabell
 yform_manager_table_update = Aktualisera tabeller och fält
 yform_manager_table_import = Importera tabellen

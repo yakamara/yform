@@ -8,13 +8,14 @@
  */
 
 echo rex_view::title(rex_i18n::msg('yform'));
+$_csrf_key = 'tableset_import';
 
 $page = rex_request('page', 'string', '');
 
 $yform = new rex_yform();
 $yform->setHiddenField('page', $page);
 $yform->setObjectparams('real_field_names', true);
-$yform->setObjectparams('hide_top_warning_messages', false);
+$yform->setObjectparams('form_name', $_csrf_key);
 $yform->setValueField('upload', [
     'name' => 'importfile',
     'label' => rex_i18n::msg('yform_manager_tableset_import_jsonimportfile'),
@@ -25,7 +26,7 @@ $yform->setValueField('upload', [
         rex_i18n::msg('yform_manager_table_importset_warning_min'),
         rex_i18n::msg('yform_manager_table_importset_warning_max'),
         rex_i18n::msg('yform_manager_table_importset_warning_type'),
-        rex_i18n::msg('yform_manager_table_importset_warning_selectfile'),
+        rex_i18n::msg('yform_manager_tableset_import_warning_selectfile'),
     ],
 ]);
 
@@ -43,8 +44,6 @@ if ($yform->objparams['actions_executed']) {
     }
 
     rex_file::delete($filder);
-} elseif ($yform->objparams['send']) {
-    echo rex_view::warning(rex_i18n::msg('yform_manager_tableset_import_warning_selectfile'));
 }
 
 if ($form != '') {

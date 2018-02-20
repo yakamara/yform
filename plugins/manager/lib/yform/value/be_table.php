@@ -31,12 +31,15 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             }
 
             $form_data = rex_post('FORM', 'array');
-            $rowKeys   = array_keys($form_data[$id . '.0']);
 
-            // Spalten durchgehen
-            for ($c = 0; $c < count($columns); $c++) {
-                foreach ($rowKeys as $r) {
-                    $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
+            if (isset($form_data[$id . '.0'])) {
+                $rowKeys   = array_keys((array) $form_data[$id . '.0']);
+
+                // Spalten durchgehen
+                for ($c = 0; $c < count($columns); $c++) {
+                    foreach ($rowKeys as $r) {
+                        $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
+                    }
                 }
             }
             $this->setValue(json_encode(array_values($table_array)));
@@ -60,11 +63,13 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         }
 
 
-        $data = json_decode($this->getValue(), true);
+        $data = (array) json_decode($this->getValue(), true);
         $columns = [];
         $objs = [];
         $columnIndex = [];
-        $yfparams = ['this' => \rex_yform::factory()];
+        
+        $yfparams = \rex_yform::factory()->objparams;
+        $yfparams['this'] = \rex_yform::factory();
 
         /* TODO
          * error class von validierung ans Eingabefeld übergeben
@@ -89,7 +94,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
                 $columnIndex[$name] = $index;
                 $columns[] = ['label' => $values[2], 'field' => $field];
-
 
                 foreach($data as $rowCount => $row) {
                     $obj = clone $field;

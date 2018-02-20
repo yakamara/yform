@@ -617,6 +617,6 @@ class rex_yform
 
     private function setCSRFField()
     {
-        $this->objparams['form_elements'][] = ['nonce', 'name' => '_token'];
+        $this->objparams['form_elements'][] = ['csrf', 'name' => '_csrf_token'];
     }
 }
