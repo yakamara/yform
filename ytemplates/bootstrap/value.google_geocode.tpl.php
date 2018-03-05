@@ -21,7 +21,7 @@ if ($googleapikey != '') {
     var rex_geo_coder = function() {
 
         jQuery("#<?php echo $this->getFieldId() ?>").on("change", function(){
-            
+
         });
 
         jQuery("#<?php echo $this->getHTMLId('google') ?> .yform-google-btnbar .get-position").on("click", function(){
@@ -139,7 +139,7 @@ if ((string) (int) $mapHeight == (string) $mapHeight) {
 
 ?>
 
-<div class="<?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId('google') ?>">
+<div class="<?php echo $this->getHTMLClass() ?> yform-element" id="<?php echo $this->getHTMLId('google') ?>">
     <label class="text <?php echo $this->getWarningClass() ?>"><?php echo $this->getElement('label') ?></label>
     <p class="yform-google-btnbar">
         <a class="get-position" href="javascript:void(0);"><?php echo rex_i18n::msg('yform_geo_get_position'); ?></a> |
