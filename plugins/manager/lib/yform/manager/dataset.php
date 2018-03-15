@@ -27,6 +27,7 @@ class rex_yform_manager_dataset
     private $relatedCollections = [];
 
     private $messages = [];
+    protected $excludedFields = [];
 
     protected function __construct($table, $id = null)
     {
@@ -704,9 +705,9 @@ class rex_yform_manager_dataset
         return self::$internalForms[$this->table] = $yform;
     }
 
-    private function createForm()
+    protected function createForm($yform = null)
     {
-        $yform = new rex_yform();
+        $yform = $yform ?: new rex_yform();
         $fields = $this->getFields();
         $yform->setDebug(self::$debug);
 
@@ -725,9 +726,23 @@ class rex_yform_manager_dataset
             }
 
             if ($field->getType() == 'value') {
-                $yform->setValueField($field->getTypeName(), $values);
+                $values = rex_extension::registerPoint(new rex_extension_point('YFORM_DATASET_FORM_SETVALUEFIELD', $values, [
+                    'type_name' => $field->getTypeName(),
+                    'object' => $this,
+                    'excluded_fields' => $this->excludedFields
+                ]));
+                if ($values) {
+                    $yform->setValueField($field->getTypeName(), $values);
+                }
             } elseif ($field->getType() == 'validate') {
-                $yform->setValidateField($field->getTypeName(), $values);
+                $values = rex_extension::registerPoint(new rex_extension_point('YFORM_DATASET_FORM_SETVALIDATEFIELD', $values, [
+                    'type_name' => $field->getTypeName(),
+                    'object' => $this,
+                    'excluded_fields' => $this->excludedFields
+                ]));
+                if ($values) {
+                    $yform->setValidateField($field->getTypeName(), $values);
+                }
             } elseif ($field->getType() == 'action') {
                 $yform->setActionField($field->getTypeName(), $values);
             }
@@ -739,7 +754,7 @@ class rex_yform_manager_dataset
         return $yform;
     }
 
-    private function setFormMainId(rex_yform $yform)
+    protected function setFormMainId(rex_yform $yform)
     {
         if ($this->exists()) {
             $where = 'id = ' . (int) $this->id;

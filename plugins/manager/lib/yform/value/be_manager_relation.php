@@ -113,7 +113,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 if (strlen($name) > 50) {
                     $name = mb_substr($name, 0, 45) . ' ... ';
                 }
-                $options[] = ['id' => $id, 'name' => $name . ' [id=' . $id . ']'];
+                if (!$this->getElement('just_names')) {
+                    $name = $name . ' [id=' . $id . ']';
+                }
+                $options[] = ['id' => $id, 'name' => $name];
             }
 
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('options'));
