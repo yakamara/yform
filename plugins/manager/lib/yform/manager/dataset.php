@@ -707,7 +707,9 @@ class rex_yform_manager_dataset
 
     protected function createForm($yform = null)
     {
-        $yform = $yform ?: new rex_yform();
+        if ($yform === null || rex::isBackend()) {
+            $yform = new rex_yform();
+        }
         $fields = $this->getFields();
         $yform->setDebug(self::$debug);
 
