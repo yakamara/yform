@@ -15,7 +15,7 @@ if (count($notices) > 0) {
 
 $class_label = '';
 $class = $this->getElement('required') ? 'form-is-required ' : '';
-$class_group = trim('radio-group form-group ' . $class . $this->getWarningClass());
+$class_group = trim('radio-group form-group yform-element ' . $class . $this->getWarningClass());
 $field_before = '';
 $field_after = '';
 
