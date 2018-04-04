@@ -108,7 +108,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
     {
         extract($this->captcha_ini);
 
-        $font_path = rex_addon::get('yform')->getDataPath('fonts');
+        $font_path = rex_addon::get('yform')->getPath('data/fonts');
 
         list($padding_top, $padding_right, $padding_bottom, $padding_left) = $this->captcha_split($padding);
         $box_width = ($width - ($padding_left + $padding_right)) / $letters_no;
