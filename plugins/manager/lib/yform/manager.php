@@ -595,7 +595,7 @@ class rex_yform_manager
                                 }
                             }
                         }
-                        return '<a href="javascript:yform_manager_setData(' . $params['params']['opener_id'] . ',###id###,\''.htmlspecialchars($value).' [id=###id###]\',' . $params['params']['opener_multiple'] . ')">'.rex_i18n::msg('yform_data_select').'</a>';
+                        return '<a href="javascript:yform_manager_setData(' . $params['params']['opener_id'] . ',###id###,\''.rex_escape($value, 'js').' [id=###id###]\',' . $params['params']['opener_multiple'] . ')">'.rex_i18n::msg('yform_data_select').'</a>';
                     },
                     [
                     'opener_id' => $rex_yform_manager_opener['id'],
