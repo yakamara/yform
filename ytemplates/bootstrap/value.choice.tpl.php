@@ -1,20 +1,36 @@
 <?php
-
-$getAttributes = function ($element, array $attributes) {
+$getAttributes = function ($element, array $attributes = [], $value = null, $label = null, array $directAttributes = []) {
     $additionalAttributes = $this->getElement($element);
     if ($additionalAttributes) {
-        if (!is_array($additionalAttributes)) {
+        if (is_callable($additionalAttributes)) {
+            $additionalAttributes = call_user_func($additionalAttributes, $attributes, $value, $label);
+        } elseif (!is_array($additionalAttributes)) {
             $additionalAttributes = json_decode(trim($additionalAttributes), true);
         }
         if ($additionalAttributes && is_array($additionalAttributes)) {
-            foreach ($additionalAttributes as $attribute => $value) {
-                $attributes[$attribute] = $value;
+            foreach ($additionalAttributes as $attribute => $attributeValue) {
+                $attributes[$attribute] = $attributeValue;
             }
         }
     }
+
+    foreach ($directAttributes as $attribute) {
+        if (($element = $this->getElement($attribute))) {
+            $attributes[$attribute] = $element;
+        }
+    }
+
+    if (null !== $value && isset($attributes[$value]) && is_array($attributes[$value])) {
+        foreach ($attributes[$value] as $attribute => $attributeValue) {
+            $attributes[$attribute] = $attributeValue;
+        }
+    }
     $return = [];
-    foreach ($attributes as $attribute => $value) {
-        $return[] = $attribute.'="'.htmlspecialchars($value).'"';
+    foreach ($attributes as $attribute => $attributeValue) {
+        if (is_array($attributeValue)) {
+            continue;
+        }
+        $return[] = $attribute.'="'.htmlspecialchars($attributeValue).'"';
     }
 
     return $return;
@@ -37,30 +53,30 @@ if (count($notices) > 0) {
 
 if ($options['expanded']) {
     // Aufbau von  `radio` oder `checkbox`
-    $choiceAttributes = $getAttributes('choice_attributes', ['class' => trim(($options['multiple'] ? 'checkbox' : 'radio').' '.$this->getWarningClass())]);
+    $elementAttributes = $getAttributes('attributes', ['class' => trim(($options['multiple'] ? 'checkbox' : 'radio').' '.$this->getWarningClass())]);
 
     $choiceElements = [];
     $preferredElements = [];
     foreach ($options['choices'] as $label => $value) {
-        $elementAttributes = [
+        $choiceAttributes = [
             'id' => $this->getFieldId(),
             'name' => $this->getFieldName(),
             'type' => 'radio',
         ];
 
         if ($options['multiple']) {
-            $elementAttributes['name'] .= '[]';
-            $elementAttributes['type'] = 'checkbox';
+            $choiceAttributes['name'] .= '[]';
+            $choiceAttributes['type'] = 'checkbox';
         }
 
-        $elementAttributes['value'] = $value;
+        $choiceAttributes['value'] = $value;
         if (in_array((string) $value, $this->getValue(), true)) {
-            $elementAttributes['checked'] = 'checked';
+            $choiceAttributes['checked'] = 'checked';
         }
 
-        $elementAttributes = $this->getAttributeElements($elementAttributes, ['autofocus', 'disabled', 'required']);
+        $choiceAttributes = $getAttributes('choice_attributes', $choiceAttributes, $value, $label, ['autofocus', 'disabled', 'required']);
 
-        $element = sprintf('<div %s><label><input %s /><i class="form-helper"></i>%s</label></div>', implode(' ', $choiceAttributes), implode(' ', $elementAttributes), $this->getLabelStyle($label));
+        $element = sprintf('<div %s><label><input %s /><i class="form-helper"></i>%s</label></div>', implode(' ', $elementAttributes), implode(' ', $choiceAttributes), $this->getLabelStyle($label));
 
         if (in_array($value, $options['preferred_choices'])) {
             $preferredElements[] = $element;
@@ -101,7 +117,7 @@ if ($options['expanded']) {
     }
 
     $groupAttributes = $getAttributes('group_attributes', ['class' => trim('form-group '.$this->getWarningClass())]);
-    $elementAttributes = $this->getAttributeElements($elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
+    $elementAttributes = $getAttributes('attributes', $elementAttributes, null, null, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
 
     $choiceElements = [];
     $preferredElements = [];
@@ -110,8 +126,14 @@ if ($options['expanded']) {
         $preferredOptGroups = [];
         foreach ($options['group_choices'] as $optGroupLabel => $choices) {
             foreach ($choices as $label => $value) {
-                $selected = in_array($value, $this->getValue(), true) ? ' selected="selected"' : '';
-                $option = sprintf('<option value="%s"%s>%s</option>', $value, $selected, $this->getLabelStyle($label));
+                $choiceAttributes = [
+                    'value' => $value,
+                ];
+                if (in_array((string) $value, $this->getValue(), true)) {
+                    $choiceAttributes['selected'] = 'selected';
+                }
+                $choiceAttributes = $getAttributes('choice_attributes', $choiceAttributes, $value, $label);
+                $option = sprintf('<option %s>%s</option>', implode(' ', $choiceAttributes), $this->getLabelStyle($label));
 
                 if (in_array($value, $options['preferred_choices'])) {
                     $preferredOptGroups[$optGroupLabel][] = $option;
@@ -133,8 +155,14 @@ if ($options['expanded']) {
         }
     } else {
         foreach ($options['choices'] as $label => $value) {
-            $selected = in_array($value, $this->getValue(), true) ? ' selected="selected"' : '';
-            $option = sprintf('<option value="%s"%s>%s</option>', $value, $selected, $this->getLabelStyle($label));
+            $choiceAttributes = [
+                'value' => $value,
+            ];
+            if (in_array((string) $value, $this->getValue(), true)) {
+                $choiceAttributes['selected'] = 'selected';
+            }
+            $choiceAttributes = $getAttributes('choice_attributes', $choiceAttributes, $value, $label);
+            $option = sprintf('<option %s>%s</option>', implode(' ', $choiceAttributes), $this->getLabelStyle($label));
 
             if (in_array($value, $options['preferred_choices'])) {
                 $preferredElements[] = $option;
