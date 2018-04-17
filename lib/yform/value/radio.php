@@ -52,6 +52,7 @@ class rex_yform_value_radio extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_radio_description'),
             'dbtype' => 'text',
+            'deprecated' => rex_i18n::msg('yform_values_deprecated_radio'),
         ];
     }
 
