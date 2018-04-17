@@ -72,15 +72,15 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             }
 
             foreach ($results as $label => $value) {
-                if (is_array($value)) {
-                    foreach ($value as $optionLabel => $optionValue) {
-                        // Im Template werden im `select` optgroup erstellt
-                        $options['group_choices'][$label][$optionLabel] = $optionValue;
-                        $options['choices'][trim($optionLabel)] = trim($optionValue);
-                    }
+                if (!is_array($value)) {
+                    $options['choices'][trim($label)] = trim($value);
                     continue;
                 }
-                $options['choices'][trim($label)] = trim($value);
+                foreach ($value as $optionLabel => $optionValue) {
+                    // Im Template werden im `select` optgroup erstellt
+                    $options['group_choices'][$label][$optionLabel] = $optionValue;
+                    $options['choices'][trim($optionLabel)] = trim($optionValue);
+                }
             }
         }
 
