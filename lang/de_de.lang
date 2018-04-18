@@ -217,4 +217,8 @@ yform_values_choice_placeholder_notice = Diese Option legt fest, ob eine speziel
 yform_values_choice_preferred_choices = Bevorzugte Auswahlmöglichkeiten (preferred_choices)
 yform_values_choice_preferred_choices_notice = Mit dieser Option werden bestimmte Auswahlmöglichkeiten an den Anfang der Liste verschoben, wobei ein optisches Trennzeichen zwischen ihnen und dem Rest der Optionen gesetzt wird.
 
-
+yform_values_deprecated_checkbox_sql = Deprecated; Verwende das Choice value
+yform_values_deprecated_radio = Deprecated; Verwende das Choice value
+yform_values_deprecated_radio_sql = Deprecated; Verwende das Choice value
+yform_values_deprecated_select = Deprecated; Verwende das Choice value
+yform_values_deprecated_select_sql = Deprecated; Verwende das Choice value
