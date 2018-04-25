@@ -1,5 +1,4 @@
 <?php
-
 /**
  * yform.
  *
@@ -19,6 +18,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             'multiple' => false,
             'group_by' => null,
             'placeholder' => null,
+            'choice_attributes' => [],
         ];
 
         if ($this->getElement('expanded') == '1') {
@@ -33,55 +33,28 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         if ($this->getElement('preferred_choices') !== false) {
             $options['preferred_choices'] = $this->getArrayFromString($this->getElement('preferred_choices'));
         }
-        if ($this->getElement('placeholder') !== false) {
+        if ($this->getElement('placeholder') !== false && trim($this->getElement('placeholder')) !== '') {
             $options['placeholder'] = $this->getElement('placeholder');
         }
+        if ($this->getElement('choice_attributes') !== false) {
+            $options['choice_attributes'] = $this->getElement('choice_attributes');
+        }
 
-        $choicesString = $this->getElement('choices');
-        if (rex_sql::getQueryType($choicesString) == 'SELECT') {
+        $choiceList = new ChoiceList($options);
+
+        $choicesElement = $this->getElement('choices');
+        if (rex_sql::getQueryType($choicesElement) == 'SELECT') {
             $sql = rex_sql::factory();
             $sql->setDebug($this->params['debug']);
-
-            try {
-                foreach ($sql->getArray($choicesString) as $result) {
-                    $value = isset($result['value']) ? $result['value'] : $result['id'];
-                    $label = isset($result['label']) ? $result['label'] : $result['name'];
-                    $options['choices'][$label] = $value;
-
-                    if (!$options['expanded'] && null !== $options['group_by']) {
-                        // Im Template werden im `select` optgroup erstellt
-                        if (isset($result[$options['group_by']])) {
-                            $options['group_choices'][$result[$options['group_by']]][$label] = $value;
-                        }
-                    }
-                }
-            } catch (rex_sql_exception $e) {
-                dump($e);
-            }
+            $choiceList->createListFromSqlArray(
+                $sql->getArray($choicesElement)
+            );
+        } elseif (is_string($choicesElement) && trim($choicesElement){0} == '{') {
+            $choiceList->createListFromJson($choicesElement);
         } else {
-            if (is_string($choicesString) && trim($choicesString){0} == '{') {
-                $choicesString = json_decode(trim($choicesString), true);
-            }
-
-            $flip = is_array($choicesString) ? false : true;
-            $results = $this->getArrayFromString($choicesString);
-            if ($flip) {
-                // Sicherstellen, dass das Array Label => Value enthaelt
-                // ist bei normaler kommaseparierte Schreibweise vertauscht
-                $results = array_flip($results);
-            }
-
-            foreach ($results as $label => $value) {
-                if (!is_array($value)) {
-                    $options['choices'][trim($label)] = trim($value);
-                    continue;
-                }
-                foreach ($value as $optionLabel => $optionValue) {
-                    // Im Template werden im `select` optgroup erstellt
-                    $options['group_choices'][$label][$optionLabel] = $optionValue;
-                    $options['choices'][trim($optionLabel)] = trim($optionValue);
-                }
-            }
+            $choiceList->createListFromStringArray(
+                $this->getArrayFromString($choicesElement)
+            );
         }
 
         if (null === $this->getValue()) {
@@ -99,42 +72,56 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 throw new InvalidArgumentException('Expecting one default value for '.$this->getFieldName().', but '.count($defaultChoices).' given!');
             }
 
-            if ($defaultChoices) {
-                $defaultValues = [];
-                foreach ($defaultChoices as $defaultChoice) {
-                    if (in_array($defaultChoice, $options['choices'])) {
-                        $defaultValues[] = $defaultChoice;
-                    }
-                }
-                $this->setValue($defaultValues);
-            }
+            $this->setValue($choiceList->getDefaultValues($defaultChoices));
         }
 
-        $proofedLabels = [];
-        $proofedValues = [];
-        foreach ($values as $value) {
-            if (in_array($value, $options['choices'])) {
-                $proofedLabels[$value] = array_search($value, $options['choices']);
-                $proofedValues[$value] = $value;
-            }
-        }
-        $proofedList = [];
-        foreach ($options['choices'] as $label => $value) {
-            $prefix = '[ ]';
-            if (in_array($value, $values)) {
-                $prefix = '[⨉]';
-            }
-            $proofedList[$value] = sprintf('%s %s', $prefix, $label);
-        }
+        $proofedValues = $choiceList->getProofedValues($values);
 
         if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.choice.tpl.php', compact('options'));
+            $groupAttributes = [];
+            if ($this->getElement('group_attributes') !== false) {
+                $groupAttributes = $this->getAttributes('group_attributes', $groupAttributes);
+            }
+
+            $choiceAttributes = [];
+            $elementAttributes = [];
+            if ($options['expanded']) {
+                if ($this->getElement('attributes') !== false) {
+                    $elementAttributes = $this->getAttributes('attributes', $elementAttributes);
+                }
+
+                $choiceAttributes = [
+                    'id' => $this->getFieldId(),
+                    'name' => $this->getFieldName(),
+                    'type' => 'radio',
+                ];
+                if ($options['multiple']) {
+                    $choiceAttributes['name'] .= '[]';
+                    $choiceAttributes['type'] = 'checkbox';
+                }
+            } else {
+                $elementAttributes['id'] = $this->getFieldId();
+                $elementAttributes['name'] = $this->getFieldName();
+
+                if ($options['multiple']) {
+                    $elementAttributes['name'] .= '[]';
+                    $elementAttributes['multiple'] = 'multiple';
+                    $elementAttributes['size'] = count($choiceList->getChoices());
+                }
+                if ($this->getElement('attributes') !== false) {
+                    $elementAttributes = $this->getAttributes('attributes', $elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
+                }
+            }
+
+            $choiceListView = $choiceList->createView($choiceAttributes);
+
+            $this->params['form_output'][$this->getId()] = $this->parse('value.choice.tpl.php', compact('options', 'choiceListView', 'elementAttributes', 'groupAttributes'));
         }
 
         $this->setValue(implode(',', $proofedValues));
 
-        $this->params['value_pool']['email'][$this->getName()] = implode(', ', $proofedLabels);
-        $this->params['value_pool']['email'][$this->getName().'_LIST'] = implode("\n", $proofedList);
+        $this->params['value_pool']['email'][$this->getName()] = implode(', ', $choiceList->getSelectedListForEmail($values));
+        $this->params['value_pool']['email'][$this->getName().'_LIST'] = implode("\n", $choiceList->getCompleteListForEmail($values));
 
         if ($this->getElement('no_db') != 1) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
@@ -187,5 +174,30 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         }
 
         return implode('<br />', $return);
+    }
+
+    public function getAttributes($element, array $attributes = [], array $directAttributes = [])
+    {
+        $additionalAttributes = $this->getElement($element);
+        if ($additionalAttributes) {
+            if (is_callable($additionalAttributes)) {
+                $additionalAttributes = call_user_func($additionalAttributes, $attributes, $this->getValue());
+            } elseif (!is_array($additionalAttributes)) {
+                $additionalAttributes = json_decode(trim($additionalAttributes), true);
+            }
+            if ($additionalAttributes && is_array($additionalAttributes)) {
+                foreach ($additionalAttributes as $attribute => $attributeValue) {
+                    $attributes[$attribute] = $attributeValue;
+                }
+            }
+        }
+
+        foreach ($directAttributes as $attribute) {
+            if (($element = $this->getElement($attribute))) {
+                $attributes[$attribute] = $element;
+            }
+        }
+
+        return $attributes;
     }
 }
