@@ -143,9 +143,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $seconds[$i] = str_pad($i, 2, '0', STR_PAD_LEFT);
         }
 
-        $hour = (int) substr($this->getValue(), 11, 2);
-        $minute = (int) substr($this->getValue(), 14, 2);
-        $second = (int) substr($this->getValue(), 17, 2);
+        $hour = (int) substr($this->getValue(), 0, 2);
+        $minute = (int) substr($this->getValue(), 3, 2);
+        $second = (int) substr($this->getValue(), 6, 2);
 
         $input_value = self::time_convertIsoTimeToFormat($this->getValue(), $format);
 
