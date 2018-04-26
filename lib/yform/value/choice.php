@@ -116,7 +116,9 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $choiceListView = $choiceList->createView($choiceAttributes);
 
             $template = $choiceList->isExpanded() ? 'value.choice.check.tpl.php' : 'value.choice.select.tpl.php';
-            $this->params['form_output'][$this->getId()] = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            $html = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            $html = trim(preg_replace(['/\s{2,}/', '/>\s+/', '/\s+</'], [' ', '>', '<'], $html));
+            $this->params['form_output'][$this->getId()] = $html;
         }
 
         $this->setValue(implode(',', $proofedValues));
