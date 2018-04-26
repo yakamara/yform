@@ -25,14 +25,14 @@ $elementAttributes['class'] = trim(($choiceList->isMultiple() ? 'checkbox' : 'ra
                 <?= $view->getAttributesAsString() ?>
             />
             <i class="form-helper"></i>
-            <?= $view->getLabel() ?>
+            <?= rex_escape($view->getLabel()) ?>
         </label>
     </div>
 <?php } ?>
 
 <?php $choiceGroupOutput = function (rex_yform_choice_group_view $view) use ($choiceOutput) { ?>
     <div class="form-check-group">
-        <label><?= $view->getLabel() ?></label>
+        <label><?= rex_escape($view->getLabel()) ?></label>
         <?php foreach ($view->getChoices() as $choiceView): ?>
             <?php $choiceOutput($choiceView) ?>
         <?php endforeach ?>
@@ -42,7 +42,7 @@ $elementAttributes['class'] = trim(($choiceList->isMultiple() ? 'checkbox' : 'ra
 <div<?= rex_string::buildAttributes($groupAttributes) ?>>
     <?php if ($this->getLabel()): ?>
         <label class="form-control-label" for="<?= $this->getFieldId() ?>">
-            <?= $this->getLabelStyle($this->getLabel()) ?>
+            <?= rex_escape($this->getLabelStyle($this->getLabel())) ?>
         </label>
     <?php endif ?>
 

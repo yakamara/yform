@@ -22,7 +22,7 @@ $elementAttributes['class'] = 'form-control';
         <?= in_array($view->getValue(), $this->getValue(), true) ? ' selected="selected"' : '' ?>
         <?= $view->getAttributesAsString() ?>
     >
-        <?= $view->getLabel() ?>
+        <?= rex_escape($view->getLabel()) ?>
     </option>
 <?php } ?>
 
@@ -37,13 +37,13 @@ $elementAttributes['class'] = 'form-control';
 <div<?= rex_string::buildAttributes($groupAttributes) ?>>
     <?php if ($this->getLabel()): ?>
         <label class="form-control-label" for="<?= $this->getFieldId() ?>">
-            <?= $this->getLabelStyle($this->getLabel()) ?>
+            <?= rex_escape($this->getLabelStyle($this->getLabel())) ?>
         </label>
     <?php endif ?>
 
     <select<?= rex_string::buildAttributes($elementAttributes) ?>>
         <?php if ($choiceList->getPlaceholder() && !$choiceList->isMultiple()): ?>
-            <option value=""><?= $choiceList->getPlaceholder() ?></option>
+            <option value=""><?= rex_escape($choiceList->getPlaceholder()) ?></option>
         <?php endif ?>
 
         <?php foreach ($choiceListView->getPreferredChoices() as $view): ?>
