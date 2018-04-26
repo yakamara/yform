@@ -19,7 +19,7 @@ $elementAttributes['class'] = trim(($options['multiple'] ? 'checkbox' : 'radio')
     <div<?= rex_string::buildAttributes($elementAttributes) ?>>
         <label>
             <input
-                value="<?= $view->getValue() ?>"
+                value="<?= rex_escape($view->getValue()) ?>"
                 <?= (in_array($view->getValue(), $this->getValue(), true) ? ' checked="checked"' : '') ?>
                 <?= $view->getAttributesAsString() ?>
             />

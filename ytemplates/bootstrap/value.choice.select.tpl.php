@@ -17,7 +17,7 @@ $elementAttributes['class'] = 'form-control';
 
 <?php $choiceOutput = function (rex_yform_choice_view $view) { ?>
     <option
-        value="<?= $view->getValue() ?>"
+        value="<?= rex_escape($view->getValue()) ?>"
         <?= in_array($view->getValue(), $this->getValue(), true) ? ' selected="selected"' : '' ?>
         <?= $view->getAttributesAsString() ?>
     >
@@ -26,7 +26,7 @@ $elementAttributes['class'] = 'form-control';
 <?php } ?>
 
 <?php $choiceGroupOutput = function (rex_yform_choice_group_view $view) use ($choiceOutput) { ?>
-    <optgroup label="<?= $view->getLabel() ?>">
+    <optgroup label="<?= rex_escape($view->getLabel()) ?>">
         <?php foreach ($view->getChoices() as $choiceView): ?>
             <?php $choiceOutput($choiceView) ?>
         <?php endforeach ?>
