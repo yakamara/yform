@@ -68,7 +68,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         if (!$values) {
             $defaultChoices = explode(',', $this->getElement('default'));
 
-            if (!$options['multiple'] && count($defaultChoices) >= 2) {
+            if (!$choiceList->isMultiple() && count($defaultChoices) >= 2) {
                 throw new InvalidArgumentException('Expecting one default value for '.$this->getFieldName().', but '.count($defaultChoices).' given!');
             }
 
@@ -85,7 +85,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
             $choiceAttributes = [];
             $elementAttributes = [];
-            if ($options['expanded']) {
+            if ($choiceList->isExpanded()) {
                 if ($this->getElement('attributes') !== false) {
                     $elementAttributes = $this->getAttributes('attributes', $elementAttributes);
                 }
@@ -95,7 +95,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                     'name' => $this->getFieldName(),
                     'type' => 'radio',
                 ];
-                if ($options['multiple']) {
+                if ($choiceList->isMultiple()) {
                     $choiceAttributes['name'] .= '[]';
                     $choiceAttributes['type'] = 'checkbox';
                 }
@@ -103,7 +103,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 $elementAttributes['id'] = $this->getFieldId();
                 $elementAttributes['name'] = $this->getFieldName();
 
-                if ($options['multiple']) {
+                if ($choiceList->isMultiple()) {
                     $elementAttributes['name'] .= '[]';
                     $elementAttributes['multiple'] = 'multiple';
                     $elementAttributes['size'] = count($choiceList->getChoices());
@@ -115,8 +115,8 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
             $choiceListView = $choiceList->createView($choiceAttributes);
 
-            $template = $options['expanded'] ? 'value.choice.check.tpl.php' : 'value.choice.select.tpl.php';
-            $this->params['form_output'][$this->getId()] = $this->parse($template, compact('options', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            $template = $choiceList->isExpanded() ? 'value.choice.check.tpl.php' : 'value.choice.select.tpl.php';
+            $this->params['form_output'][$this->getId()] = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
         }
 
         $this->setValue(implode(',', $proofedValues));

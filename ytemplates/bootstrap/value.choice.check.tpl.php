@@ -1,5 +1,6 @@
 <?php
 
+/** @var rex_yform_choice_list $choiceList */
 /** @var rex_yform_choice_list_view $choiceListView */
 
 $notices = [];
@@ -11,7 +12,7 @@ if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['
 }
 
 $groupAttributes['class'] = 'form-check-group';
-$elementAttributes['class'] = trim(($options['multiple'] ? 'checkbox' : 'radio').' '.$this->getWarningClass());
+$elementAttributes['class'] = trim(($choiceList->isMultiple() ? 'checkbox' : 'radio').' '.$this->getWarningClass());
 
 ?>
 

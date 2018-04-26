@@ -174,4 +174,19 @@ class rex_yform_choice_list
     {
         return $this->choices;
     }
+
+    public function getPlaceholder()
+    {
+        return $this->options['placeholder'];
+    }
+
+    public function isExpanded()
+    {
+        return $this->options['expanded'];
+    }
+
+    public function isMultiple()
+    {
+        return $this->options['multiple'];
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+/** @var rex_yform_choice_list $choiceList */
 /** @var rex_yform_choice_list_view $choiceListView */
 
 $notices = [];
@@ -41,8 +42,8 @@ $elementAttributes['class'] = 'form-control';
     <?php endif ?>
 
     <select<?= rex_string::buildAttributes($elementAttributes) ?>>
-        <?php if ($options['placeholder'] && !$options['multiple']): ?>
-            <option value=""><?= $options['placeholder'] ?></option>
+        <?php if ($choiceList->getPlaceholder() && !$choiceList->isMultiple()): ?>
+            <option value=""><?= $choiceList->getPlaceholder() ?></option>
         <?php endif ?>
 
         <?php foreach ($choiceListView->getPreferredChoices() as $view): ?>
