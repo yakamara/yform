@@ -1,20 +1,22 @@
 <?php
 
-class ChoiceListView
+class rex_yform_choice_list_view
 {
     public $choices;
     public $preferredChoices;
+
     /**
      * Creates a new choice list view.
      *
-     * @param ChoiceGroupView[]|ChoiceView[] $choices          The choice views
-     * @param ChoiceGroupView[]|ChoiceView[] $preferredChoices the preferred choice views
+     * @param rex_yform_choice_group_view[]|rex_yform_choice_view[] $choices          The choice views
+     * @param rex_yform_choice_group_view[]|rex_yform_choice_view[] $preferredChoices the preferred choice views
      */
-    public function __construct(array $choices = array(), array $preferredChoices = array())
+    public function __construct(array $choices = [], array $preferredChoices = [])
     {
         $this->choices = $choices;
         $this->preferredChoices = $preferredChoices;
     }
+
     /**
      * Returns whether a placeholder is in the choices.
      *
@@ -26,10 +28,10 @@ class ChoiceListView
     {
         if ($this->preferredChoices) {
             $firstChoice = reset($this->preferredChoices);
-            return $firstChoice instanceof ChoiceView && '' === $firstChoice->value;
+            return $firstChoice instanceof rex_yform_choice_view && '' === $firstChoice->value;
         }
         $firstChoice = reset($this->choices);
-        return $firstChoice instanceof ChoiceView && '' === $firstChoice->value;
+        return $firstChoice instanceof rex_yform_choice_view && '' === $firstChoice->value;
     }
 
     public function getChoices()

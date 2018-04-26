@@ -1,6 +1,6 @@
 <?php
 
-class ChoiceList
+class rex_yform_choice_list
 {
     public $choices = [];
 
@@ -80,7 +80,7 @@ class ChoiceList
                 $otherGroupChoices = [];
                 $preferredGroupChoices = [];
                 foreach ($value as $nestedLabel => $nestedValue) {
-                    $view = new ChoiceView($nestedValue, $nestedLabel, $choiceAttributes, $requiredAttributes);
+                    $view = new rex_yform_choice_view($nestedValue, $nestedLabel, $choiceAttributes, $requiredAttributes);
 
                     if ($preferredChoices && call_user_func($preferredChoices, $nestedValue, $nestedLabel)) {
                         $preferredGroupChoices[] = $view;
@@ -90,16 +90,16 @@ class ChoiceList
                 }
 
                 if (count($preferredGroupChoices)) {
-                    $preferredViews[] = new ChoiceGroupView($label, $preferredGroupChoices);
+                    $preferredViews[] = new rex_yform_choice_group_view($label, $preferredGroupChoices);
                 }
                 if (count($otherGroupChoices)) {
-                    $otherViews[] = new ChoiceGroupView($label, $otherGroupChoices);
+                    $otherViews[] = new rex_yform_choice_group_view($label, $otherGroupChoices);
                 }
 
                 continue;
             }
 
-            $view = new ChoiceView($value, $label, $choiceAttributes, $requiredAttributes);
+            $view = new rex_yform_choice_view($value, $label, $choiceAttributes, $requiredAttributes);
 
             if ($preferredChoices && call_user_func($preferredChoices, $value, $label)) {
                 $preferredViews[] = $view;
@@ -109,17 +109,17 @@ class ChoiceList
         }
 
         foreach ($preferredViews as $index => $view) {
-            if ($view instanceof ChoiceGroupView && 0 === count($view->getChoices())) {
+            if ($view instanceof rex_yform_choice_group_view && 0 === count($view->getChoices())) {
                 unset($preferredViews[$index]);
             }
         }
         foreach ($otherViews as $index => $view) {
-            if ($view instanceof ChoiceGroupView && 0 === count($view->getChoices())) {
+            if ($view instanceof rex_yform_choice_group_view && 0 === count($view->getChoices())) {
                 unset($otherViews[$index]);
             }
         }
 
-        return new ChoiceListView($otherViews, $preferredViews);
+        return new rex_yform_choice_list_view($otherViews, $preferredViews);
     }
 
     public function getDefaultValues(array $defaultChoices = [])

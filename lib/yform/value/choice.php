@@ -40,7 +40,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $options['choice_attributes'] = $this->getElement('choice_attributes');
         }
 
-        $choiceList = new ChoiceList($options);
+        $choiceList = new rex_yform_choice_list($options);
 
         $choicesElement = $this->getElement('choices');
         if (rex_sql::getQueryType($choicesElement) == 'SELECT') {

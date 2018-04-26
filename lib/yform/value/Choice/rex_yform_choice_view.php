@@ -1,6 +1,6 @@
 <?php
 
-class ChoiceView
+class rex_yform_choice_view
 {
     public $label;
     public $value;
@@ -14,10 +14,10 @@ class ChoiceView
     /**
      * Creates a new choice view.
      *
-     * @param string $value The view representation of the choice
-     * @param string $label The label displayed to humans
-     * @param callable|string $attributes Additional attributes for the HTML tag
-     * @param array $requiredAttributes Required attributes for the HTML tag
+     * @param string          $value              The view representation of the choice
+     * @param string          $label              The label displayed to humans
+     * @param callable|string $attributes         Additional attributes for the HTML tag
+     * @param array           $requiredAttributes Required attributes for the HTML tag
      */
     public function __construct($value, $label, $attributes = null, array $requiredAttributes = [])
     {
