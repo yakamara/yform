@@ -175,6 +175,11 @@ class rex_yform_choice_list
         return $this->choices;
     }
 
+    public function getChoicesByValues()
+    {
+        return $this->choicesByValues;
+    }
+
     public function getPlaceholder()
     {
         return $this->options['placeholder'];

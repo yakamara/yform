@@ -8,54 +8,19 @@
 
 class rex_yform_value_choice extends rex_yform_value_abstract
 {
+    public static $yform_list_values = [];
+
     public function enterObject()
     {
-        $options = [
-            'choices' => [],
-            'group_choices' => [],
-            'preferred_choices' => [],
-            'expanded' => false,
-            'multiple' => false,
-            'group_by' => null,
-            'placeholder' => null,
-            'choice_attributes' => [],
-        ];
-
-        if ($this->getElement('expanded') == '1') {
-            $options['expanded'] = true;
-        }
-        if ($this->getElement('multiple') == '1') {
-            $options['multiple'] = true;
-        }
-        if ($this->getElement('group_by') !== false) {
-            $options['group_by'] = $this->getElement('group_by');
-        }
-        if ($this->getElement('preferred_choices') !== false) {
-            $options['preferred_choices'] = $this->getArrayFromString($this->getElement('preferred_choices'));
-        }
-        if ($this->getElement('placeholder') !== false && trim($this->getElement('placeholder')) !== '') {
-            $options['placeholder'] = $this->getElement('placeholder');
-        }
-        if ($this->getElement('choice_attributes') !== false) {
-            $options['choice_attributes'] = $this->getElement('choice_attributes');
-        }
-
-        $choiceList = new rex_yform_choice_list($options);
-
-        $choicesElement = $this->getElement('choices');
-        if (rex_sql::getQueryType($choicesElement) == 'SELECT') {
-            $sql = rex_sql::factory();
-            $sql->setDebug($this->params['debug']);
-            $choiceList->createListFromSqlArray(
-                $sql->getArray($choicesElement)
-            );
-        } elseif (is_string($choicesElement) && trim($choicesElement){0} == '{') {
-            $choiceList->createListFromJson($choicesElement);
-        } else {
-            $choiceList->createListFromStringArray(
-                $this->getArrayFromString($choicesElement)
-            );
-        }
+        $choiceList = self::createChoiceList([
+            'choice_attributes' => $this->getElement('choice_attributes'),
+            'choices' => $this->getElement('choices'),
+            'expanded' => $this->getElement('expanded'),
+            'group_by' => $this->getElement('group_by'),
+            'multiple' => $this->getElement('multiple'),
+            'placeholder' => $this->getElement('placeholder'),
+            'preferred_choices' => $this->getElement('preferred_choices'),
+        ]);
 
         if (null === $this->getValue()) {
             $this->setValue([]);
@@ -163,20 +128,97 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         ];
     }
 
+
+    private static function createChoiceList($elements)
+    {
+        $self = new self();
+
+        $options = [
+            'choices' => [],
+            'group_choices' => [],
+            'preferred_choices' => [],
+            'expanded' => false,
+            'multiple' => false,
+            'group_by' => null,
+            'placeholder' => null,
+            'choice_attributes' => [],
+        ];
+
+        if ($elements['expanded'] == '1') {
+            $options['expanded'] = true;
+        }
+        if ($elements['multiple'] == '1') {
+            $options['multiple'] = true;
+        }
+        if ($elements['group_by'] !== false) {
+            $options['group_by'] = $elements['group_by'];
+        }
+        if ($elements['preferred_choices'] !== false) {
+            $options['preferred_choices'] = $self->getArrayFromString($elements['preferred_choices']);
+        }
+        if ($elements['placeholder'] !== false && trim($elements['placeholder']) !== '') {
+            $options['placeholder'] = $elements['placeholder'];
+        }
+        if ($elements['choice_attributes'] !== false) {
+            $options['choice_attributes'] = $elements['choice_attributes'];
+        }
+        $choicesElement = $elements['choices'];
+
+        $choiceList = new rex_yform_choice_list($options);
+        if (rex_sql::getQueryType($choicesElement) == 'SELECT') {
+            $sql = rex_sql::factory();
+            $sql->setDebug($self->getParam('debug'));
+            $choiceList->createListFromSqlArray(
+                $sql->getArray($choicesElement)
+            );
+        } elseif (is_string($choicesElement) && trim($choicesElement){0} == '{') {
+            $choiceList->createListFromJson($choicesElement);
+        } else {
+            $choiceList->createListFromStringArray(
+                $self->getArrayFromString($choicesElement)
+            );
+        }
+
+        return $choiceList;
+    }
+
+
     public static function getListValue($params)
     {
+        $listValues = self::getListValues($params);
         $return = [];
-
-        $new_select = new self();
-        $choices = $new_select->getArrayFromString($params['params']['field']['choices']);
-
         foreach (explode(',', $params['value']) as $value) {
-            if (in_array($value, $choices)) {
-                $return[] = rex_i18n::translate(array_search($value, $choices));
+            if (isset($listValues[$value])) {
+                $return[] = rex_i18n::translate($listValues[$value]);
             }
         }
 
         return implode('<br />', $return);
+    }
+
+
+    public static function getListValues($params)
+    {
+        $fieldName = $params['field'];
+        if (!isset(self::$yform_list_values[$fieldName])) {
+            $field = $params['params']['field'];
+
+            $choiceList = self::createChoiceList([
+                'choice_attributes' => $field['choice_attributes'],
+                'choices' => $field['choices'],
+                'expanded' => $field['expanded'],
+                'group_by' => $field['group_by'],
+                'multiple' => $field['multiple'],
+                'placeholder' => $field['placeholder'],
+                'preferred_choices' => $field['preferred_choices'],
+            ]);
+
+            $choices = $choiceList->getChoicesByValues();
+            foreach ($choices as $value => $label) {
+                self::$yform_list_values[$fieldName][$value] = $label;
+            }
+        }
+        return self::$yform_list_values[$fieldName];
     }
 
     public function getAttributes($element, array $attributes = [], array $directAttributes = [])
