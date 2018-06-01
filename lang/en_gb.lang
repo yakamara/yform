@@ -172,14 +172,21 @@ yform_validate_unique_name = Name
 yform_validate_unique_message = Error message
 yform_validate_unique_table = Table
 yform_validate_unique_notice = Please specify field names in a comma separated list. Ex: name, email
+yform_validate_unique_empty_option = Value can be empty. (Only works if this is a field)
+
 yform_validate_preg_match_pattern = Specify search pattern
 yform_validate_preg_match_pattern_info = Ex.: /^start/
 
+yform_validate_password_policy_description = Used to validate a field according to <b>password rules</b>
+yform_validate_preg_match_description = PREG_MATCH validation
+yform_validate_password_policy_rules = Configure rules
+yform_validate_password_policy_rules_notice = Default rules if empty: {0}
 
 yform_values_options_name = 	Name
 yform_values_options_label = 	Description
 yform_values_options_boolvalues	= 	Values (0,1 = unchecked, checked)
 
+yform_values_be_user_description = Save backend user
 yform_values_csrf_description = CSRF Protection
 
 yform_geo_get_position = Get location
