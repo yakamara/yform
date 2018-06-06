@@ -32,7 +32,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
         return 'text|name|label|defaultwert|[no_db]|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

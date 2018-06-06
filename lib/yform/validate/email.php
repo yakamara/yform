@@ -33,7 +33,7 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
         return 'validate|email|emailname|warning_message ';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

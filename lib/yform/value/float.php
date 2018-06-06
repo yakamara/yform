@@ -32,7 +32,7 @@ class rex_yform_value_float extends rex_yform_value_abstract
         return 'float|name|label|scale|defaultwert|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

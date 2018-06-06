@@ -31,7 +31,7 @@ class rex_yform_value_html extends rex_yform_value_abstract
         return htmlspecialchars('html|name|<div class="block"></div>');
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

@@ -57,7 +57,7 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
         return 'fieldset|name|label|[class]|[onlyclose/onlycloseall/onlyopen/closeandopen]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

@@ -18,7 +18,7 @@ class rex_yform_value_emptyname extends rex_yform_value_abstract
         return 'emptyname|name|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

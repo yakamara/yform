@@ -26,7 +26,7 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
         return 'validate|empty|name|warning_message ';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

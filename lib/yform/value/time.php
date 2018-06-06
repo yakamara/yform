@@ -164,7 +164,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
         return 'time|name|label|[stundenraster 0,1,2,3,4,5]|[minutenraster 00,15,30,45]|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

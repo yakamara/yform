@@ -32,7 +32,7 @@ class rex_yform_value_email extends rex_yform_value_abstract
         return 'email|name|label|defaultwert|[no_db]|cssclassname';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

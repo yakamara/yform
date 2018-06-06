@@ -51,7 +51,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         return 'radio_sql|name|label|select id,name from table order by name|[defaultvalue]|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

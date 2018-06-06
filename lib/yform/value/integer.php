@@ -36,7 +36,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         return 'integer|name|label|defaultwert|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

@@ -100,7 +100,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
         return 'validate|type|name|int/float/numeric/string/email/url/date/datetime|warning_messageg|[1=field not empty]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
                 'type' => 'validate',

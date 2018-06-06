@@ -42,7 +42,7 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
         return 'generate_key|name|label|[no_db][0-wird immer neu gesetzt,1-nur wenn leer]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

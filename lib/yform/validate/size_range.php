@@ -52,7 +52,7 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
         return 'validate|size_range|name|[minsize]|[maxsize]|Fehlermeldung';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

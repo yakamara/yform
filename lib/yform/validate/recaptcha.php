@@ -53,7 +53,7 @@ class rex_yform_validate_recaptcha extends rex_yform_validate_abstract
 		return 'validate|recaptcha|label|private_key|warning_message';
 	}
 	
-	function getDefinitions()
+	function getDefinitions($values = [])
 	{
 		return array(
 			'type' => 'validate',

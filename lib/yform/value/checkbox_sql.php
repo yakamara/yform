@@ -60,7 +60,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         return 'checkbox_sql|name|label:|select id,name from table order by name|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

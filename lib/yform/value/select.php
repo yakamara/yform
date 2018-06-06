@@ -86,7 +86,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
         return 'select|name|label|Frau=w,Herr=m|[no_db]|defaultwert|multiple=1|selectsize';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

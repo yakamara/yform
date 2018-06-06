@@ -59,7 +59,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
         return 'google_geocode|name|label|pos_lat,pos_lng|[street,zip,city]|width|height|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

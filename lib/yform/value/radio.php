@@ -38,7 +38,7 @@ class rex_yform_value_radio extends rex_yform_value_abstract
         return 'radio|name|label|Frau=w,Herr=m|[defaultwert]|[attributes]|[notice]|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',
