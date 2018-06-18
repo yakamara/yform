@@ -21,8 +21,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
 
         ob_start();
         eval('?>' . $php);
-        $out = ob_get_contents();
-        ob_end_clean();
+        $out = ob_get_clean();
         $this->params['form_output'][$this->getId()] = $out;
     }
 
@@ -62,8 +61,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
 
         ob_start();
         eval('?>' . $php);
-        $out = ob_get_contents();
-        ob_end_clean();
+        $out = ob_get_clean();
 
         return $out;
     }
