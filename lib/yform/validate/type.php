@@ -46,8 +46,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     }
                     break;
                 case 'url':
-                    $xsRegEx_url = '/^(?:http[s]?:\/\/)[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:[a-zA-Z0-9][a-zA-Z0-9._-]*\.)*[a-zA-Z]{2,5}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/';
-                    if (preg_match($xsRegEx_url, $Object->getValue()) == 0) {
+                    if (!filter_var($Object->getValue(), FILTER_VALIDATE_URL)) {
                         $w = true;
                     }
                     break;
