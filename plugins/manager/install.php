@@ -17,7 +17,7 @@ $table
     ->ensureColumn(new rex_sql_column('table_name', 'varchar(100)'))
     ->ensureColumn(new rex_sql_column('name', 'varchar(100)'))
     ->ensureColumn(new rex_sql_column('description', 'text'))
-    ->ensureColumn(new rex_sql_column('list_amount', 'tinyint(3) unsigned', false, '50'))
+    ->ensureColumn(new rex_sql_column('list_amount', 'int(11)', false, '50'))
     ->ensureColumn(new rex_sql_column('list_sortfield', 'varchar(255)', false, 'id'))
     ->ensureColumn(new rex_sql_column('list_sortorder', 'enum(\'ASC\',\'DESC\')', false, 'ASC'))
     ->ensureColumn(new rex_sql_column('prio', 'int(11)'))
