@@ -60,7 +60,7 @@ class rex_yform_list extends rex_list
 
                 $pageLink = $i;
                 if ($start != $first) {
-                    $pageLink = '<a href="' . $this->getUrl(['start' => $first]) . '"><span>' . $pageLink . '</span></a>';
+                    $pageLink = '<a href="' . $this->getUrl([$this->getPager()->getCursorName() => $first]) . '"><span>' . $pageLink . '</span></a>';
                 } else {
                     $pageLink = '<a class="rex-active" href="' . $this->getUrl(['start' => $first]) . '"><span>' . $pageLink . '</span></a>';
                 }
@@ -68,7 +68,7 @@ class rex_yform_list extends rex_list
                 $s .= '<li class="rex-navi-paginate-page">' . $pageLink . '</li>';
             }
         }
-        $s .= '<li class="rex-navi-paginate-next"><a href="' . $this->getUrl(['start' => $start + $rowsPerPage]) . '" title="' . rex_i18n::msg('list_next') . '"><span>' . rex_i18n::msg('list_next') . '</span></a></li>';
+        $s .= '<li class="rex-navi-paginate-next"><a href="' . $this->getUrl([$this->getPager()->getCursorName() => $start + $rowsPerPage]) . '" title="' . rex_i18n::msg('list_next') . '"><span>' . rex_i18n::msg('list_next') . '</span></a></li>';
         $s .= '<li class="rex-navi-paginate-message"><span>' . rex_i18n::msg('list_rows_found', $this->getRows()) . '</span></li>';
         $s .= '</ul>' . "\n";
 
@@ -102,7 +102,7 @@ class rex_yform_list extends rex_list
 
         $return = '';
         if ($prev !== '') {
-            $return .= '<li class="rex-navi-paginate-prev"><a class="rex-active" href="' . $this->getUrl(['start' => $prev]) . '" title="'.rex_i18n::msg('list_previous').'"><span>' . rex_i18n::msg('list_previous') . '</span></a></li>';
+            $return .= '<li class="rex-navi-paginate-prev"><a class="rex-active" href="' . $this->getUrl([$this->getPager()->getCursorName() => $prev]) . '" title="'.rex_i18n::msg('list_previous').'"><span>' . rex_i18n::msg('list_previous') . '</span></a></li>';
         } else {
             $return .= '<li class="rex-navi-paginate-prev"><a href="javascript:void(0);"><span>' . rex_i18n::msg('list_previous') . '</span></a></li>';
         }
@@ -130,10 +130,10 @@ class rex_yform_list extends rex_list
         $dot = true;
         for ($i = 0; $i <= $page_all; ++$i) {
             if ($page_current == $i) {
-                $return .= '<li class="rex-navi-paginate-page"><a class="rex-active" href="' . $this->getUrl(['start' => ($i * $this->getRowsPerPage())]) . '"><span>' . ($i + 1) . '</span></a></li>';
+                $return .= '<li class="rex-navi-paginate-page"><a class="rex-active" href="' . $this->getUrl([$this->getPager()->getCursorName() => ($i * $this->getRowsPerPage())]) . '"><span>' . ($i + 1) . '</span></a></li>';
                 $dot = true;
             } elseif (in_array($i, $show_pages)) {
-                $return .= '<li class="rex-navi-paginate-page"><a href="' . $this->getUrl(['start' => ($i * $this->getRowsPerPage())]) . '"><span>' . ($i + 1) . '</span></a></li>';
+                $return .= '<li class="rex-navi-paginate-page"><a href="' . $this->getUrl([$this->getPager()->getCursorName() => ($i * $this->getRowsPerPage())]) . '"><span>' . ($i + 1) . '</span></a></li>';
                 $dot = true;
             } elseif ($dot) {
                 $return .= '<li class="rex-navi-paginate-page"><a href="javascript:void(0);"><span>&nbsp;...&nbsp;</span></a></li>';
@@ -142,7 +142,7 @@ class rex_yform_list extends rex_list
         }
 
         if ($next !== '') {
-            $return .= '<li class="rex-navi-paginate-next"><a class="rex-active" href="' . $this->getUrl(['start' => $next]) . '" title="' . rex_i18n::msg('list_next') . '"><span>' . rex_i18n::msg('list_next') . '</span></a></li>';
+            $return .= '<li class="rex-navi-paginate-next"><a class="rex-active" href="' . $this->getUrl([$this->getPager()->getCursorName() => $next]) . '" title="' . rex_i18n::msg('list_next') . '"><span>' . rex_i18n::msg('list_next') . '</span></a></li>';
         } else {
             $return .= '<li class="rex-navi-paginate-next"><a href="javascript:void(0);"><span>' . rex_i18n::msg('list_next') . '</span></a></li>';
         }
