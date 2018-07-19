@@ -579,7 +579,7 @@ class rex_yform_manager_table_api
                                 $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
                                 $EnsureTable
                                     ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
-                                    ->ensure();
+                                    ->alter();
                                 unset($saved_columns[$uu]);
                                 break;
                             }
