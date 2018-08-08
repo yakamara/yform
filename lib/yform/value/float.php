@@ -43,6 +43,7 @@ class rex_yform_value_float extends rex_yform_value_abstract
                 'scale' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_float_scale')],
                 'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_float_default')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_float_description'),
