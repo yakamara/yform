@@ -134,6 +134,7 @@ yform_edit = redigera
 yform_save = spara
 yform_save_apply = ta över
 yform_delete = radera
+yform_delete_definitions = Radera definitioner
 yform_search = sök
 yform_export = exportera
 yform_import = importera

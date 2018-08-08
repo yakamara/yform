@@ -553,6 +553,8 @@ class rex_yform_manager_table_api
             $c->setQuery('SHOW COLUMNS FROM `' . $table['table_name'] . '`');
             $saved_columns = $c->getArray();
 
+            $EnsureTable = rex_sql_table::get($table['table_name']);
+
             foreach ($table->getFields() as $field) {
                 $type_name = $field['type_name'];
                 $type_id = $field['type_id'];
@@ -575,6 +577,10 @@ class rex_yform_manager_table_api
                         foreach ($saved_columns as $uu => $vv) {
                             if ($vv['Field'] == $type_label) {
                                 $add_column = false;
+                                $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
+                                $EnsureTable
+                                    ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
+                                    ->alter();
                                 unset($saved_columns[$uu]);
                                 break;
                             }
@@ -586,6 +592,7 @@ class rex_yform_manager_table_api
                             $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` ADD `' . $type_label . '` ' . $dbtype . $null);
                         }
                     }
+
                 }
             }
 
