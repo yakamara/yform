@@ -624,7 +624,7 @@ class rex_yform_manager_dataset
             ->setValue('dataset_id', $this->id)
             ->setValue('action', $action)
             ->setValue('user', rex::isBackend() ? rex::getUser()->getLogin() : 'frontend')
-            ->setRawValue('timestamp', 'NOW()')
+            ->setValue('timestamp', $sql::datetime())
             ->insert();
 
         $historyId = $sql->getLastId();
