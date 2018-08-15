@@ -15,45 +15,49 @@ class rex_yform_value_index extends rex_yform_value_abstract
             return;
         }
 
-        $index_labels = explode(',', $this->getElement('names'));
+        if ($this->getElement('names') != "") {
 
-        $value = '';
-        $relations = [];
+            $index_labels = explode(',', $this->getElement('names'));
 
-        foreach ($index_labels as $name) {
-            $name = trim($name);
+            $value = '';
+            $relations = [];
 
-            if ($name == 'id' && $this->params['main_id'] > 0) {
-                $value .= $this->params['main_id'];
+            foreach ($index_labels as $name) {
+                $name = trim($name);
+
+                if ($name == 'id' && $this->params['main_id'] > 0) {
+                    $value .= $this->params['main_id'];
+                }
+
+                if (isset($this->params['value_pool']['sql'][$name])) {
+                    $value .= ' '.$this->params['value_pool']['sql'][$name];
+                    continue;
+                }
+
+                $name = explode('.', $name);
+                if (count($name) > 1) {
+                    $this->addRelation($relations, $name);
+                }
             }
 
-            if (isset($this->params['value_pool']['sql'][$name])) {
-                $value .= ' '.$this->params['value_pool']['sql'][$name];
-                continue;
+            if ($relations) {
+                foreach ($this->getRelationValues($relations) as $v) {
+                    $value .= ' '.$v;
+                }
             }
 
-            $name = explode('.', $name);
-            if (count($name) > 1) {
-                $this->addRelation($relations, $name);
+            $fnc = trim($this->getElement('function'));
+            if (function_exists($fnc)) {
+                $value = call_user_func($fnc, $value);
             }
+
+            $this->setValue($value);
+
         }
 
-        if ($relations) {
-            foreach ($this->getRelationValues($relations) as $v) {
-                $value .= ' '.$v;
-            }
-        }
-
-        $fnc = trim($this->getElement('function'));
-        if (function_exists($fnc)) {
-            $value = call_user_func($fnc, $value);
-        }
-
-        $this->setValue($value);
-
-        $this->params['value_pool']['email'][$this->getName()] = $value;
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();;
         if ($this->getElement('no_db') != 'no_db') {
-            $this->params['value_pool']['sql'][$this->getName()] = $value;
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();;
         }
     }
 
