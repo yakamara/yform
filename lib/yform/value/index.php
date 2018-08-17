@@ -15,6 +15,11 @@ class rex_yform_value_index extends rex_yform_value_abstract
             return;
         }
 
+        $value = $this->getValue();
+        if (!$value) {
+            $value = "";
+        }
+
         if ($this->getElement('names') != "") {
 
             $index_labels = explode(',', $this->getElement('names'));
@@ -51,9 +56,9 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 $value = call_user_func($fnc, $value);
             }
 
-            $this->setValue($value);
-
         }
+
+        $this->setValue($value);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();;
         if ($this->getElement('no_db') != 'no_db') {
