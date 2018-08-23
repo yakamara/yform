@@ -174,7 +174,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
 
         // billiger hack, damit bei yorm save(), der wert nicht gelöhsct wird
-        if (!$delete && $this->params['send'] && $this->getValue() != '' && is_string($this->getValue()) && !isset($_SESSION[$unique]['file']) && $_SESSION[$unique]['file'] == '') {
+        if (!$delete && $this->params['send'] && $this->getValue() != '' && is_string($this->getValue()) && (!isset($_SESSION[$unique]['file']) || $_SESSION[$unique]['file'] == '')) {
             $filename = $this->getValue();
         }
 
@@ -283,11 +283,16 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         // delete old files from cache
         $cu = date('U');
         $offset = (60 * 60 * 3); // 3 hours
-        foreach (glob($temp_folder .'/*') as $f) {
-            $fu = date('U', filectime($f));
-            if (($cu - $fu) > $offset) {
-                unlink($f);
+        $dir = $temp_folder."/";
+        if ($dh = opendir($dir)) {
+            while (($file = readdir($dh)) !== false) {
+                $f = $dir.$file;
+                $fu = date('U', filectime($f));
+                if (($cu - $fu) > $offset) {
+                    unlink($f);
+                }
             }
+
         }
 
         parent::postAction();

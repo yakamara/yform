@@ -15,45 +15,54 @@ class rex_yform_value_index extends rex_yform_value_abstract
             return;
         }
 
-        $index_labels = explode(',', $this->getElement('names'));
-
-        $value = '';
-        $relations = [];
-
-        foreach ($index_labels as $name) {
-            $name = trim($name);
-
-            if ($name == 'id' && $this->params['main_id'] > 0) {
-                $value .= $this->params['main_id'];
-            }
-
-            if (isset($this->params['value_pool']['sql'][$name])) {
-                $value .= ' '.$this->params['value_pool']['sql'][$name];
-                continue;
-            }
-
-            $name = explode('.', $name);
-            if (count($name) > 1) {
-                $this->addRelation($relations, $name);
-            }
+        $value = $this->getValue();
+        if (!$value) {
+            $value = "";
         }
 
-        if ($relations) {
-            foreach ($this->getRelationValues($relations) as $v) {
-                $value .= ' '.$v;
-            }
-        }
+        if ($this->getElement('names') != "") {
 
-        $fnc = trim($this->getElement('function'));
-        if (function_exists($fnc)) {
-            $value = call_user_func($fnc, $value);
+            $index_labels = explode(',', $this->getElement('names'));
+
+            $value = '';
+            $relations = [];
+
+            foreach ($index_labels as $name) {
+                $name = trim($name);
+
+                if ($name == 'id' && $this->params['main_id'] > 0) {
+                    $value .= $this->params['main_id'];
+                }
+
+                if (isset($this->params['value_pool']['sql'][$name])) {
+                    $value .= ' '.$this->params['value_pool']['sql'][$name];
+                    continue;
+                }
+
+                $name = explode('.', $name);
+                if (count($name) > 1) {
+                    $this->addRelation($relations, $name);
+                }
+            }
+
+            if ($relations) {
+                foreach ($this->getRelationValues($relations) as $v) {
+                    $value .= ' '.$v;
+                }
+            }
+
+            $fnc = trim($this->getElement('function'));
+            if (function_exists($fnc)) {
+                $value = call_user_func($fnc, $value);
+            }
+
         }
 
         $this->setValue($value);
 
-        $this->params['value_pool']['email'][$this->getName()] = $value;
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();;
         if ($this->getElement('no_db') != 'no_db') {
-            $this->params['value_pool']['sql'][$this->getName()] = $value;
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();;
         }
     }
 
@@ -76,7 +85,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_index_description'),
             'is_hiddeninlist' => true,
-            'dbtype' => 'text',
+            'dbtype' => 'text', // text (65kb) mediumtext (16Mb)
             'multi_edit' => false,
         ];
     }
