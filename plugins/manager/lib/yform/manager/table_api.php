@@ -578,9 +578,9 @@ class rex_yform_manager_table_api
                             if ($vv['Field'] == $type_label) {
                                 $add_column = false;
                                 $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
-                                $EnsureTable
-                                    ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
-                                    ->alter();
+//                                $EnsureTable
+//                                    ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
+//                                    ->alter();
                                 unset($saved_columns[$uu]);
                                 break;
                             }
