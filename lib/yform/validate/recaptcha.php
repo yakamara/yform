@@ -16,7 +16,11 @@ class rex_yform_validate_recaptcha extends rex_yform_validate_abstract
 			$privateKey = $this->getElement('private_key');
 
 			$Object = $this->getValueObject();
-			
+
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
 			if ($privateKey == "") {
 				$this->params['warning'][$Object->getId()] = $this->params['error_class'];
 				$this->params['warning_messages'][$Object->getId()] = 'ERROR: private key for element '.$Object->getId().' not provided!';

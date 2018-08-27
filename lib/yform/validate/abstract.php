@@ -39,4 +39,14 @@ abstract class rex_yform_validate_abstract extends rex_yform_base_abstract
     {
         return '';
     }
+
+    public function isObject($Object)
+    {
+        if (!$Object) {
+            $this->params['warning'][] = $this->params['error_class'];
+            $this->params['warning_messages'][] = rex_addon::get('yform')->i18n('yform_validate_object_is_missing', $this->getElement('2'), $this->getElement('name'));
+            return false;
+        }
+        return true;
+    }
 }

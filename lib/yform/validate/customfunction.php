@@ -24,6 +24,10 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 
             $Object = $this->getValueObject($label);
 
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             if (!is_callable($func)) {
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';

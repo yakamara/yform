@@ -14,6 +14,10 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
         if ($this->params['send'] == '1') {
             $Object = $this->getValueObject($this->getElement('name'));
 
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             if ($Object->getValue() == '') {
                 return;
             }

@@ -16,6 +16,11 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
             $compare_value = $this->getElement('compare_value');
 
             $Object = $this->getValueObject($this->getElement('name'));
+
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             $field_value = $Object->getValue();
 
             $error = false;
