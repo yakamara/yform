@@ -1,35 +1,4 @@
 
-/*
-function em_openRelation(id,subpage,fieldname)
-{
-    var value = document.getElementById("REX_RELATION_"+id).value;
-    newWindow('index.php?page=editme&subpage=' + subpage + '&rex_em_opener_field=' + id + '&rex_em_opener_fieldname=' + fieldname);
-}
-
-function em_deleteRelation(id,subpage,fieldname)
-{
-    document.getElementById("REX_RELATION_" + id).value = "";
-    document.getElementById("REX_RELATION_TITLE_" + id).value = "";
-}
-
-function em_addRelation(id,subpage,fieldname)
-{
-    newPoolWindow('index.php?page=editme&subpage=' + subpage + '&func=add&rex_em_opener_field=' + id + '&rex_em_opener_fieldname=' + fieldname);
-}
-
-function em_setData(id,data_id,data_name)
-{
-    if ( typeof(data_name) == 'undefined')
-    {
-        data_name = '';
-    }
-    opener.document.getElementById("REX_RELATION_" + id).value = data_id;
-    opener.document.getElementById("REX_RELATION_TITLE_" + id).value = data_name;
-    self.close();
-}
-*/
-
-
 function yform_manager_openDatalist(id, field, link, multiple)
 {
     newLinkMapWindow(link+'&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field+'&rex_yform_manager_opener[multiple]='+multiple);
@@ -118,4 +87,70 @@ $(document).on('rex:ready', function (event, container) {
     container.find('#rex-yform-history-modal').on('hidden.bs.modal', function () {
         $(this).removeData('bs.modal').find(".modal-content").empty();
     });
+
+
+    container.find('[data-yform-be-relation-moveup]').each(function() {
+        $(this).on('click', function() {
+            var $thisElement = $(this).closest('[data-yform-be-relation-item]');
+            var $prev = $thisElement.prev();
+            if($prev) {
+                $prev.before($thisElement);
+            }
+        });
+    });
+
+    container.find('[data-yform-be-relation-movedown]').each(function() {
+        $(this).on('click', function() {
+            var $thisElement = $(this).closest('[data-yform-be-relation-item]');
+            var $next = $thisElement.next();
+            if($next) {
+                $next.after($thisElement);
+            }
+        });
+    });
+
+    container.find('[data-yform-be-relation-delete]').each(function() {
+        $(this).on('click', function() {
+            $('#'+$(this).attr('data-yform-be-relation-delete')).remove();
+        })
+    });
+
+    container.find('[data-yform-be-relation-sortable]').each(function() {
+        $(this).sortable();
+    });
+
+    container.find('[data-yform-be-relation-add]').each(function() {
+        $(this).on('click', function() {
+
+            var $wrapper = $(this).closest('[data-yform-be-relation-form]');
+            var id = $wrapper.attr('id');
+
+            var prototypeForm = $wrapper.attr('data-yform-be-relation-form');
+            var index = $wrapper.attr('data-yform-be-relation-index');
+
+            ++index;
+            $wrapper.attr('data-yform-be-relation-index',index);
+
+            prototypeForm = prototypeForm.replace(/__name__/g, index);
+            var $prototypeForm = $(prototypeForm);
+
+            var dataItems = $(this).attr('data-yform-be-relation-add-position');
+
+            if (typeof dataItems !== "undefined") {
+                var $dataItems = $wrapper.find('[data-yform-be-relation-item='+dataItems+']'); // id matchen
+                $dataItems.after($prototypeForm);
+
+            } else {
+                var $dataItems = $wrapper.find('[data-yform-be-relation-item='+id+']'); // id matchen
+                $dataItems.append($prototypeForm);
+
+            }
+
+            $prototypeForm.trigger('rex:ready', [$prototypeForm]);
+
+        })
+    })
+
 });
+
+

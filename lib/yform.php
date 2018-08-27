@@ -62,6 +62,8 @@ class rex_yform
         $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
 
         $this->objparams['getdata'] = false;
+        $this->objparams['data'] = false;
+
 
         // --------------------------- do not edit
 
@@ -94,9 +96,11 @@ class rex_yform
         $this->objparams['value_pool']['sql'] = [];
         $this->objparams['value_pool']['files'] = [];
 
-        $this->objparams['value'] = []; // reserver for classes - $this->objparams["value"]["text"] ...
-        $this->objparams['validate'] = []; // reserver for classes
-        $this->objparams['action'] = []; // reserver for classes
+        $this->objparams['value'] = [];
+        $this->objparams['validate'] = [];
+        $this->objparams['action'] = [];
+
+        $this->objparams['form_array'] = '';
 
         $this->objparams['this'] = $this;
     }
@@ -240,6 +244,16 @@ class rex_yform
                     }
                 }
                 $valueObject->setValue($this->getFieldValue($i, '', $valueObject->getName()));
+            }
+        }
+
+
+        // FORM DATA individuell einspielen
+        if (isset($this->objparams['data']) && is_array($this->objparams['data']) && count($this->objparams['data'])>0)  {
+            foreach ($this->objparams['values'] as $i => $valueObject) {
+                if (isset($this->objparams['data'][$valueObject->getName()])) {
+                    $valueObject->setValue($this->objparams['data'][$valueObject->getName()]);
+                }
             }
         }
 
@@ -466,6 +480,15 @@ class rex_yform
     {
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
+
+        if (@$this->objparams['form_array'] != "") {
+            if ($k == '') {
+                return 'FORM[' . $this->objparams['form_name'] . ']['.$this->objparams['form_array'].'][' . $id . ']';
+            }
+            return 'FORM[' . $this->objparams['form_name'] . ']['.$this->objparams['form_array'].'][' . $id . '][' . $k . ']';
+
+        }
+
         if ($this->objparams['real_field_names'] && $label != '') {
             if ($k == '') {
                 return $label;
@@ -482,7 +505,16 @@ class rex_yform
     {
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
-        if ($this->objparams['real_field_names'] && $label != '') {
+
+        if (@$this->objparams['form_array'] != "") {
+            if ($k == '' && isset($_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id])) {
+                return $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id];
+            }
+            if (isset($_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k])) {
+                return $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k];
+            }
+
+        } else if ($this->objparams['real_field_names'] && $label != '') {
             if ($k == '' && isset($_REQUEST[$label])) {
                 return $_REQUEST[$label];
             }
@@ -504,6 +536,18 @@ class rex_yform
     {
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
+
+        if (@$this->objparams['form_array'] != "") {
+
+            if ($k == '') {
+                $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id] = $value;
+            } else {
+                $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k] = $value;
+            }
+            return;
+
+        }
+
         if ($this->objparams['real_field_names'] && $label != '') {
             if ($k == '') {
                 $_REQUEST[$label] = $value;

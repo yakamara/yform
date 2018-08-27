@@ -1,6 +1,10 @@
 <div id="<?php echo $this->objparams['form_wrap_id'] ?>" class="<?php echo $this->objparams['form_wrap_class'] ?>">
 
-    <form action="<?php echo $this->objparams['form_action'] ?>" method="<?php echo $this->objparams['form_method'] ?>" id="<?php echo  $this->objparams['form_name'] ?>" class="<?php echo $this->objparams['form_class'] ?>" enctype="multipart/form-data">
+    <?php
+    if ($this->objparams['form_action'] != "") {
+        echo '<form action="'.$this->objparams['form_action'].'" method="'.$this->objparams['form_method'].'" id="'.$this->objparams['form_name'].'>" class="'.$this->objparams['form_class'].'" enctype="multipart/form-data">';
+    }
+    ?>
 
         <?php
         if (!$this->objparams['hide_top_warning_messages']) {
@@ -25,5 +29,11 @@
                 <input type="hidden" name="<?php echo $k ?>" value="<?php echo htmlspecialchars($v) ?>" />
             <?php endif; ?>
         <?php endforeach ?>
-    </form>
+
+    <?php
+    if ($this->objparams['form_action'] != "") {
+        echo '</form>';
+    }
+    ?>
+
 </div>

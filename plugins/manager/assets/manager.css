@@ -71,9 +71,101 @@ body#rex-page-yform .yform-manager-searchfield{
 .rex-navi-piped > *:first-child {
     background: none;
 }
-.be-value-input .form-group {
-    margin: 0;
+
+
+
+
+
+
+/* be-relation 1-n
+*/
+
+.yform-be-relation-wrapper {
+    margin: auto;
+    padding: 0
 }
-.be-value-input label {
+
+.yform-be-relation-wrapper > div {
+    border: 1px solid #bfe0d8;
+    background: #f1fcfa;
+    /*color: #1C94C4;*/
+    margin: 0 0 10px 0;
+    padding: 20px 15px 15px 25px;
+    position: relative
+}
+
+.yform-be-relation-wrapper span.sorthandle {
+    cursor: move;
+    position: absolute;
+    opacity: .5;
+    top: 5px;
+    bottom: 5px;
+    left: 4px;
+    width: 8px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAB3RJTUUH3wIDBycZ/Cj09AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAAWSURBVHjaY2DABhoaGupBGMRmYiAEAKo2BAFbROu9AAAAAElFTkSuQmCC)
+}
+
+.yform-be-relation-wrapper span.sorthandle:hover {
+    opacity: .8
+}
+
+div.sortable-ghost {
+    border: 1px dashed #CCC;
+    opacity: .4
+}
+
+.yform-be-relation-wrapper span.removeadded {
+    position: absolute;
+    right: 15px;
+    top: 9px;
+}
+
+.yform-be-relation-wrapper span.removeadded .btn {
+    cursor: pointer;
+}
+
+.yform-be-relation-wrapper span.removeadded .btn[disabled] {
+    cursor: default;
+}
+
+.yform-be-relation-wrapper span.removeadded .btn .rex-icon {
+    margin: 0 !important;
+}
+
+.yform-be-relation-wrapper > div:after, .yform-be-relation-wrapper-wrapper > div:before {
+    content: "";
+    display: table
+}
+
+.yform-be-relation-wrapper > div:after {
+    clear: both
+}
+
+.yform-be-relation-wrapper > div {
+    zoom: 1
+}
+
+.yform-be-relation-animate {
+    -webkit-transition: opacity 249ms linear, top 149ms ease;
+    -moz-transition: opacity 249ms linear, top 149ms ease;
+    transition: opacity 249ms linear, top 149ms ease;
+}
+
+.panel.yform-be-relation-hidden-panel {
+    background: inherit;
+    border: inherit;
+    margin: inherit;
+}
+
+.hide_sorthandle .sorthandle,
+.hide_removeadded .removeadded {
     display: none;
-} 
+}
+
+.yform-be-relation-wrapper.hide_sorthandle > div {
+    padding-left: 15px;
+}
+.yform-be-relation-wrapper.hide_removeadded > div {
+    padding-top: 15px;
+}
+
