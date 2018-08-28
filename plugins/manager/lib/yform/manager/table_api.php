@@ -546,7 +546,11 @@ class rex_yform_manager_table_api
         foreach (rex_yform_manager_table::getAll() as $table) {
             $c = rex_sql::factory();
             $c->setDebug(self::$debug);
-            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
+
+
+
+
 
             // remember fields, create and in case delete
             $c->setQuery('SHOW COLUMNS FROM `' . $table['table_name'] . '`');

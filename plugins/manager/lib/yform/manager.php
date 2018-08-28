@@ -1508,7 +1508,7 @@ class rex_yform_manager
         // Tabelle erstellen wenn noch nicht vorhanden
         $c = rex_sql::factory();
         $c->setDebug($debug);
-        $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $data_table . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+        $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $data_table . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 
         // Tabellenset in die Basics einbauen, wenn noch nicht vorhanden
         $c = rex_sql::factory();
