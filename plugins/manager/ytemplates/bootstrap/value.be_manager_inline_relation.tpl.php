@@ -17,30 +17,32 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
-$prototypeForm = $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-__name__', 'form' => $prototypeForm]);
+$prototypeForm = $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-__name__', 'form' => $prototypeForm, 'prioFieldName' => $prioFieldName]);
 
-?>
+$sortable = 'data-yform-be-relation-sortable';
+if ($prioFieldName == ''){
+    $sortable = '';
+}
 
-    <div class="<?php echo $class_group ?>" id="<?php echo $fieldkey; ?>" data-yform-be-relation-form="<?php echo rex_escape($prototypeForm) ?>" data-yform-be-relation-index="<?php echo count($forms); ?>">
-        <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabelStyle($this->relation['label']) ?> </label>
+echo '
 
-        <div data-yform-be-relation-item="<?php echo $fieldkey; ?>" data-yform-be-relation-sortable class="yform-be-relation-wrapper">
-        <?php
+    <div class="'.$class_group.'" id="'.$fieldkey.'" data-yform-be-relation-form="'.rex_escape($prototypeForm).'" data-yform-be-relation-index="'.count($forms).'">
+        <label class="control-label" for="'.$this->getFieldId().'">'.$this->getLabelStyle($this->relation['label']).' </label>
+
+        <div data-yform-be-relation-item="'.$fieldkey.'" '.$sortable.' class="yform-be-relation-wrapper">';
 
         $counter = 1;
         foreach ($forms as $form) {
-            echo $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-'.$counter, 'form' => $form]);
+            echo $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-'.$counter, 'form' => $form, 'prioFieldName' => $prioFieldName]);
             ++$counter;
         }
 
-        ?>
+echo '
         </div>
 
-        <?php
-        echo '<div class="btn-group btn-group-xs">
+        <div class="btn-group btn-group-xs">
             <button type="button" class="btn btn-default addme" title="add" data-yform-be-relation-add="'.$fieldkey.'-'.$counter.'"><i class="rex-icon rex-icon-add-module"></i></button>
-        </div>';
-        ?>
+        </div>
 
-        <?php echo $notice ?>
-    </div>
+        '.$notice.'
+    </div>';

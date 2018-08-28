@@ -254,17 +254,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
             }
 
-            // TODO: IDs mit übergeben, wenn vorhanden, dann entsprechend setzen und Datensatz updaten
-            // TODO: Post Aktion über Yorm.
-
-            // TODO: History
-
-            // TODO: YFormInputSchema erstellen
-            // prepare Label ansehen
-            // data vs sql Object etc ansehen -> eventuell in get field scheme value
-            // Logik für weitere untere be_relations prüfen
-
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey'));
+            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName'));
         }
     }
 
