@@ -418,7 +418,7 @@ class rex_yform_manager_dataset
 
         if (0 == $relation['type'] || 2 == $relation['type']) {
             $query->where('id', $this->getValue($key));
-        } elseif (4 == $relation['type']) {
+        } elseif (4 == $relation['type'] || 5 == $relation['type']) {
             $query->where($relation['field'], $this->getId());
         } elseif (empty($relation['relation_table'])) {
             $query->where('id', explode(',', $this->getValue($key)));
