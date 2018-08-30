@@ -60,7 +60,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         return 'checkbox_sql|name|label:|select id,name from table order by name|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',
@@ -73,6 +73,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_checkbox_sql_description'),
             'dbtype' => 'text',
+            'deprecated' => rex_i18n::msg('yform_values_deprecated_checkbox_sql'),
         ];
     }
 

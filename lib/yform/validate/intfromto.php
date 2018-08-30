@@ -32,7 +32,7 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
         return 'validate|intfromto|name|from|to|warning_message';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

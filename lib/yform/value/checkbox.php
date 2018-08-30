@@ -56,7 +56,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         return 'checkbox|name|label|Values(0,1)|default clicked (0/1)|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

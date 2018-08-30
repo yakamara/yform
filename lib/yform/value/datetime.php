@@ -216,7 +216,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         return 'datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat YYYY/MM/DD HH:ii:ss] |[1/Aktuelles Datum voreingestellt]|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

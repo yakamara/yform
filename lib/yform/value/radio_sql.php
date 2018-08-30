@@ -51,7 +51,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         return 'radio_sql|name|label|select id,name from table order by name|[defaultvalue]|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',
@@ -67,6 +67,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             ],
             'description' => 'Hiermit kann man SQL Abfragen als Radioliste nutzen',
             'dbtype' => 'text',
+            'deprecated' => rex_i18n::msg('yform_values_deprecated_radio_sql'),
         ];
     }
 

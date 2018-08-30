@@ -30,7 +30,7 @@ class rex_yform_validate_size extends rex_yform_validate_abstract
         return 'validate|size|name|size|warning_message';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

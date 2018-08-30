@@ -6,7 +6,6 @@
  * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
-
 class rex_yform_validate_empty extends rex_yform_validate_abstract
 {
     public function enterObject()
@@ -15,8 +14,12 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
             $Object = $this->getValueObject();
 
             if ($Object->getValue() == '') {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+                $Value = $this->getValueObject();
+                $label = $Value->getElement('label');
+                $msg   = Wildcard::get(str_replace('###', '', $this->getElement('message')));
+
+                $this->params['warning'][$Object->getId()]          = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = str_replace('{{fieldname}}', $label, $msg);
             }
         }
     }
@@ -26,17 +29,17 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
         return 'validate|empty|name|warning_message ';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
-            'type' => 'validate',
-            'name' => 'empty',
-            'values' => [
-                'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_empty_name')],
-                'message' => ['type' => 'text',        'label' => rex_i18n::msg('yform_validate_empty_message')],
+            'type'        => 'validate',
+            'name'        => 'empty',
+            'values'      => [
+                'name'    => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_empty_name')],
+                'message' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_empty_message')],
             ],
             'description' => rex_i18n::msg('yform_validate_empty_description'),
-            'famous' => true,
+            'famous'      => true,
         ];
     }
 }

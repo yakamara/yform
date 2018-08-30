@@ -6,3 +6,4 @@ supportpage: 'https://github.com/yakamara/redaxo_yform_docs'
 page:
     title: 'translate:yform_docs'
     perm: admin
+    itemclass: pull-right 

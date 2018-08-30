@@ -617,6 +617,11 @@ class rex_yform_manager_dataset
             throw new InvalidArgumentException(sprintf('Unknown action "%s", allowed actions are %s::ACTION_CREATE, ::ACTION_UPDATE and ::ACTION_DELETE', $action, __CLASS__));
         }
 
+        $user = rex::getEnvironment();
+        if ($user == 'backend' && rex::getUser()) {
+            $user = rex::getUser()->getLogin();
+        }
+
         $sql = rex_sql::factory();
         $sql->setDebug(self::$debug);
         $sql
@@ -624,8 +629,8 @@ class rex_yform_manager_dataset
             ->setValue('table_name', $this->table)
             ->setValue('dataset_id', $this->id)
             ->setValue('action', $action)
-            ->setValue('user', rex::isBackend() ? rex::getUser()->getLogin() : 'frontend')
-            ->setRawValue('timestamp', 'NOW()')
+            ->setValue('user', $user)
+            ->setValue('timestamp', $sql::datetime())
             ->insert();
 
         $historyId = $sql->getLastId();

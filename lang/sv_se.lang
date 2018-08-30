@@ -66,6 +66,10 @@ yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Visa värde
 yform_validate_defaults_message = Felmeddelande
 
+yform_search_defaults_wildcard_notice = Exempel: * namn /! (empty) / (empty)
+yform_search_integer_notice = Exempel:> 5 /! = 5 / 3-5 / 2..5 /! (empty) / (empty)
+yform_search_defaults_select_notice = Använd CTRL eller COMMAND för att välja fler alternativ
+
 yform_values_checkbox_values = Värden (0,1 = unchecked, checked)
 yform_values_checkbox_values = Värden (0,1 = unchecked, checked)
 yform_values_checkbox_default = Default status
@@ -168,13 +172,22 @@ yform_validate_unique_name = Namn
 yform_validate_unique_message = Felmeddelande
 yform_validate_unique_table = Tabell
 yform_validate_unique_notice = Ange fältnamn i en kommaseparerad lista. Ex: namn, email
+yform_validate_unique_empty_option = Värdet kan också vara tomt. (Fungerar bara om det är ett fält)
+
 yform_validate_preg_match_pattern = Ange sökmönster
 yform_validate_preg_match_pattern_info = T.ex.: /^start/
 
+yform_validate_password_policy_description = Med detta kan du validera ett fält enligt <b> lösenordsregler </ b>
+yform_validate_preg_match_description = PREG_MATCH validerung
+yform_validate_password_policy_rules = Regelkonfiguration
+yform_validate_password_policy_rules_notice = Standardregler om det är tomt: {0}
 
 yform_values_options_name = 	Namn
 yform_values_options_label = 	Beskrivning
 yform_values_options_boolvalues	= 	Värden (0,1 = unchecked, checked)
+
+yform_values_be_user_description = Spara backend-användaren
+yform_values_csrf_description = CSRF skydd
 
 yform_geo_get_position = Hämta position
 yform_geo_clear_position = Radera position

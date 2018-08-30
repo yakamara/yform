@@ -64,7 +64,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
         return 'validate|unique|name[,name2]|warning_message|[table]|emptyoption[1/0]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

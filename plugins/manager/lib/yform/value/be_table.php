@@ -132,7 +132,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type'        => 'value',

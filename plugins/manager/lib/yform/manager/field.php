@@ -16,7 +16,7 @@ class rex_yform_manager_field implements ArrayAccess
         }
 
         $object = new $class();
-        $this->definitions = $object->getDefinitions();
+        $this->definitions = $object->getDefinitions($values);
         if (isset($this->definitions['values'])) {
             $i = 'validate' === $values['type_id'] ? 2 : 1;
             foreach ($this->definitions['values'] as $key => $value) {

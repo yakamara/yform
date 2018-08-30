@@ -28,7 +28,7 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
         return 'password_policy -> validate|password_policy|pswfield|warning_message|[config]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'validate',

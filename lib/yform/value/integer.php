@@ -36,7 +36,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         return 'integer|name|label|defaultwert|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',
@@ -46,6 +46,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_integer_default')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_integer_description'),

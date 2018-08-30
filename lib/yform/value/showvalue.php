@@ -27,7 +27,7 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
         return 'showvalue|name|label|defaultwert|notice';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',

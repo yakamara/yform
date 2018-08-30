@@ -84,7 +84,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         return 'prio|name|label|fields|scope|defaultwert';
     }
 
-    public function getDefinitions()
+    public function getDefinitions($values = [])
     {
         return [
             'type' => 'value',
