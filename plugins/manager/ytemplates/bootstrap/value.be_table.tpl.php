@@ -2,7 +2,7 @@
 $class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $data_index = 0;
-$notice = [];
+$notice     = [];
 if ($this->getElement('notice') != '') {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
@@ -14,6 +14,9 @@ if (count($notice) > 0) {
 } else {
     $notice = '';
 }
+
+$ytemplates = $this->params['this']->getObjectparams('form_ytemplate');
+$main_id    = $this->params['this']->getObjectparams('main_id');
 
 ?>
 <div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
@@ -33,15 +36,17 @@ if (count($notice) > 0) {
                 <?php foreach ($columns as $i => $column): ?>
                     <td class="be-value-input">
                         <?php
-                            $field = $column['field'];
-                            $field->params['this']->setObjectparams('form_name', $this->getId() .'.'. $i);
-                            $field->params['form_name'] = $field->getName();
-                            $field->params['form_label_type'] = 'html';
-                            $field->params['send'] = false;
-                            $field->setValue($row[$i] ?: '');
-                            $field->setId($data_index);
-                            $field->enterObject();
-                            echo $field->params['form_output'][$field->getId()]
+                        $field = $column['field'];
+                        $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
+                        $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
+                        $field->params['this']->setObjectparams('main_id', $main_id);
+                        $field->params['form_name']       = $field->getName();
+                        $field->params['form_label_type'] = 'html';
+                        $field->params['send']            = false;
+                        $field->setValue($row[$i] ?: '');
+                        $field->setId($data_index);
+                        $field->enterObject();
+                        echo $field->params['form_output'][$field->getId()]
                         ?>
                     </td>
                 <?php endforeach ?>
@@ -54,7 +59,7 @@ if (count($notice) > 0) {
     <script type="text/javascript">
         (function () {
             var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
-            	be_table_cnt = <?= (int) $data_index ?>;
+                be_table_cnt = <?= (int)$data_index ?>;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
                 var tr = $('<tr/>'),
@@ -78,6 +83,8 @@ if (count($notice) > 0) {
                             <td class="be-value-input"><?php
                         $field = $columns[$i]['field'];
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
+                        $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
+                        $field->params['this']->setObjectparams('main_id', $main_id);
                         $field->params['form_name'] = $field->getName();
                         $field->params['form_label_type'] = 'html';
                         $field->params['send'] = false;
@@ -95,17 +102,17 @@ if (count($notice) > 0) {
                 row_html = row_html.replace(new RegExp('{{FIELD_ID}}', 'g'), be_table_cnt);
 
                 for (var i in regexp) {
-                    row_html = row_html.replace(regexp[i], '$1'+ be_table_cnt +'<?= $i ?>');
+                    row_html = row_html.replace(regexp[i], '$1' + be_table_cnt + '<?= $i ?>');
                 }
                 tr.html(row_html);
 
                 // replace be medialist
-                tr.find('select[id^="REX_MEDIALIST_"]').each(function() {
+                tr.find('select[id^="REX_MEDIALIST_"]').each(function () {
                     var $select = $(this),
-                        $input  = $select.parent().children('input:first'),
+                        $input = $select.parent().children('input:first'),
                         id = $select.prop('id').replace('REX_MEDIALIST_SELECT_', '');
 
-                    $input.prop('id', 'REX_MEDIALIST_'+ id);
+                    $input.prop('id', 'REX_MEDIALIST_' + id);
                 });
 
 

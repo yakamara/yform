@@ -8,6 +8,8 @@
  */
 class rex_yform_value_be_table extends rex_yform_value_abstract
 {
+    protected $fieldData = [];
+
     public function preValidateAction()
     {
         // bc service for Version < 1.1
@@ -48,11 +50,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement(5) != 'no_db') {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-        }
-
         if (!$this->needsOutput()) {
             return;
         }
@@ -67,7 +64,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $columns = [];
         $objs = [];
         $columnIndex = [];
-        
+
+        $this->fieldData = $data;
+
         $yfparams = \rex_yform::factory()->objparams;
         $yfparams['this'] = \rex_yform::factory();
 
@@ -130,6 +129,19 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
+
+        if ($this->getParam('send')) {
+            $this->setValue(json_encode($this->fieldData));
+
+            if ($this->getElement(5) != 'no_db') {
+                $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+            }
+            $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        }
+    }
+
+    public function setFieldData($index, $key, $value) {
+        $this->fieldData[$index][$key] = $value;
     }
 
     public function getDefinitions($values = [])
