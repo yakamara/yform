@@ -608,6 +608,17 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
     }
 
+    public function fetchColumn($column = 'id')
+    {
+        $result = [];
+        $collection = $this->find();
+
+        foreach ($collection as $item) {
+            $result[] = $item->getValue($column);
+        }
+        return $result;
+    }
+
     /**
      * @param rex_pager $pager
      *
