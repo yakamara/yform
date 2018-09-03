@@ -7,7 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_validate_existintable extends rex_yform_validate_abstract
+class rex_yform_validate_exists_in_table extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
@@ -63,6 +63,6 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|existintable|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
+        return 'validate|exists_in_table|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
     }
 }
