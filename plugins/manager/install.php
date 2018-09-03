@@ -74,3 +74,10 @@ if (!$hasMassEdit) {
         ->setValue('mass_edit', 1)
         ->update();
 }
+
+$c = rex_sql::factory();
+$c->setQuery('ALTER TABLE `' . rex::getTable('yform_table') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+$c->setQuery('ALTER TABLE `' . rex::getTable('yform_field') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+$c->setQuery('ALTER TABLE `' . rex::getTable('yform_history') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+$c->setQuery('ALTER TABLE `' . rex::getTable('yform_history_field') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
