@@ -292,7 +292,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             while (($file = readdir($dh)) !== false) {
                 $f = $dir.$file;
                 $fu = date('U', filectime($f));
-                if (($cu - $fu) > $offset) {
+                if (($cu - $fu) > $offset && $file != '.' && $file != '..') {
                     unlink($f);
                 }
             }
