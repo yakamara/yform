@@ -7,7 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_validate_name_exists extends rex_yform_validate_abstract
+class rex_yform_validate_in_names extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
@@ -50,6 +50,6 @@ class rex_yform_validate_name_exists extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|name_exists|name,name2,name3|[minnames]|[maximalnames]|Fehlermeldung';
+        return 'validate|in_names|name,name2,name3|[minnames]|[maximalnames]|Fehlermeldung';
     }
 }
