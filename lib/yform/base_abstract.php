@@ -131,6 +131,11 @@ abstract class rex_yform_base_abstract
     {
     }
 
+    /* deprecated */
+    public function execute()
+    {
+    }
+
     public function init()
     {
     }
