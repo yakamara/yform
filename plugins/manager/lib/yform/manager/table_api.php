@@ -541,16 +541,14 @@ class rex_yform_manager_table_api
 
     public static function generateTablesAndFields($delete_old = false)
     {
+
         rex_yform_manager_table::deleteCache();
         $types = rex_yform::getTypeArray();
         foreach (rex_yform_manager_table::getAll() as $table) {
             $c = rex_sql::factory();
             $c->setDebug(self::$debug);
             $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
-
-
-
-
+            $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             // remember fields, create and in case delete
             $c->setQuery('SHOW COLUMNS FROM `' . $table['table_name'] . '`');
@@ -576,24 +574,19 @@ class rex_yform_manager_table_api
                                 $dbtype = $result;
                             }
                         }
-                        $add_column = true;
+
                         foreach ($saved_columns as $uu => $vv) {
                             if ($vv['Field'] == $type_label) {
-                                $add_column = false;
-                                $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
-                                $EnsureTable
-                                    ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
-                                    ->alter();
                                 unset($saved_columns[$uu]);
                                 break;
                             }
                         }
 
-                        if ($add_column) {
-                            $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
-                            $null = $null ? '' : ' NOT NULL';
-                            $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` ADD `' . $type_label . '` ' . $dbtype . $null);
-                        }
+                        $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
+                        $EnsureTable
+                            ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
+                            ->ensure();
+
                     }
 
                 }
