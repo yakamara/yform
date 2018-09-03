@@ -1553,14 +1553,6 @@ class rex_yform_manager
     /**
      * @deprecated
      */
-    public function addDataFields($data_table, $fields, $debug = false)
-    {
-        rex_yform_manager_table_api::generateTablesAndFields();
-    }
-
-    /**
-     * @deprecated
-     */
     public function generateAll($f = [])
     {
         rex_yform_manager_table_api::generateTablesAndFields(isset($f['delete_fields']) ? $f['delete_fields'] : false);
