@@ -16,7 +16,7 @@ foreach ($this->getInstalledPlugins() as $plugin) {
 }
 
 if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
-    $fields_removed = ['submits', 'uniqueform'];
+    $fields_removed = ['submits', 'uniqueform', 'select', 'select_sql', 'checkbox_sql', 'radio', 'radio_sql'];
     $fields_change = ['html', 'php', 'date', 'datetime', 'fieldset', 'time', 'upload', 'google_geocode', 'submit', 'be_medialist'];
     $actions_removed = ['fulltext_value', 'wrapper_value'];
 
