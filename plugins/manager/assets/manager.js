@@ -29,7 +29,7 @@ function yform_manager_setData(id, data_id, data_name, multiple){
 
     var event = opener.jQuery.Event("rex:YForm_selectData");
     opener.jQuery(window).trigger(event, [data_id, data_name, multiple]);
-    if (!event.isDefaultPrevented()) {
+    if (event.isDefaultPrevented()) {
         self.close();
     }
 
