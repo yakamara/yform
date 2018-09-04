@@ -65,7 +65,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_be_user_description'),
             'formbuilder' => false,
-            'dbtype' => 'varchar(191)',
+            'db_type' => ['varchar(191)'],
         ];
     }
 

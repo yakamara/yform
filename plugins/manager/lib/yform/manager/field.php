@@ -15,8 +15,8 @@ class rex_yform_manager_field implements ArrayAccess
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
-        $object = new $class();
-        $this->definitions = $object->getDefinitions();
+        $this->object = new $class();
+        $this->definitions = $this->object->getDefinitions();
         if (isset($this->definitions['values'])) {
             $i = 'validate' === $values['type_id'] ? 2 : 1;
             foreach ($this->definitions['values'] as $key => $value) {
@@ -71,46 +71,27 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->values[$k];
     }
 
-    public function getDBType()
+    public function getDatabaseFieldType()
     {
-        if (!isset($this->value['db_type'])) {
-            return $this->getDBDefaultType();
+        if (!isset($this->values['db_type']) || $this->values['db_type'] == '') {
+            return $this->object->getDatabaseFieldDefaultType();
         }
-        return $this->value['db_type'];
+        return $this->values['db_type'];
     }
 
-    public function getDBTypes()
+    public function getDatabaseFieldTypes()
     {
-        $db_types = [];
-        if (isset($this->definitions['dbtype'])) {
-            $this->definitions['db_type'] = [$this->definitions['dbtype']];
-        }
-
-        if (!isset($this->definitions['db_type'])) {
-            $this->definitions['db_type'] = [];
-        } else if (!is_array($this->definitions['db_type'])) {
-            $this->definitions['db_type'] = [$this->definitions['db_type']];
-        }
-        foreach($this->definitions['db_type'] as $db_type){
-            $db_types[$db_type] = $db_type;
-        }
-        $db_types['none'] = '[none]';
-        return $db_types;
+        return $this->object->getDatabaseFieldTypes();
     }
 
-    public function getDBDefaultType()
+    public function getDatabaseFieldDefaultType()
     {
-        $db_types = $this->getDBTypes();
-        reset($db_types);
-        return key($db_types);
+        return $this->object->getDatabaseFieldDefaultType();
     }
 
-    public function getDBNull()
+    public function getDatabaseFieldNull()
     {
-        if (isset($this->definitions['db_null']) && $this->definitions['db_null']) {
-            return true;
-        }
-        return false;
+        return $this->object->getDatabaseFieldNull();
     }
 
     public function getHooks()

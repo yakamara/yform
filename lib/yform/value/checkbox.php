@@ -70,7 +70,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_checkbox_description'),
-            'dbtype' => 'varchar(191)',
+            'db_type' => ['varchar(191)'],
             'famous' => true,
         ];
     }

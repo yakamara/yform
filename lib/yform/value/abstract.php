@@ -248,6 +248,40 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return null;
     }
 
+    public function getDatabaseFieldTypes()
+    {
+        $definitions = $this->getDefinitions();
+        $db_types = [];
+
+        // deprecated
+        if (isset($definitions['dbtype'])) {
+            $definitions['db_type'] = [$definitions['dbtype']];
+        }
+
+        if (!isset($definitions['db_type'])) {
+            $definitions['db_type'] = [];
+        } else if (!is_array($definitions['db_type'])) {
+            $definitions['db_type'] = [$definitions['db_type']];
+        }
+        foreach($definitions['db_type'] as $db_type){
+            $db_types[$db_type] = $db_type;
+        }
+        return $db_types;
+    }
+
+    public function getDatabaseFieldDefaultType()
+    {
+        $db_types = $this->getDatabaseFieldTypes();
+        reset($db_types);
+        return key($db_types);
+    }
+
+    public function getDatabaseFieldNull()
+    {
+        $definitions = $this->getDefinitions();
+        return (isset($definitions['db_null']) && $definitions['db_null']) ? true : false;
+    }
+
     // ------------ Trigger
 
     public function enterObject()

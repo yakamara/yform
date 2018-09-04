@@ -558,7 +558,7 @@ class rex_yform_manager_table_api
             foreach ($table->getFields() as $field) {
 
                 if ($field->getType() == 'value') {
-                    $db_type = $field->getDBType();
+                    $db_type = $field->getDatabaseFieldType();
 
                     if ($db_type != 'none' && $db_type != '') {
 
@@ -581,7 +581,7 @@ class rex_yform_manager_table_api
                         }
 
                         $EnsureTable
-                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDBNull()))
+                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull()))
                             ->ensure();
 
                     }

@@ -67,7 +67,7 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
                 'label' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_defaults_label')],
             ],
             'description' => rex_i18n::msg('yform_values_fieldset_description'),
-            'dbtype' => 'none',
+            'db_type' => ['none'],
             'is_searchable' => false,
             'is_hiddeninlist' => true,
             'multi_edit' => 'always',

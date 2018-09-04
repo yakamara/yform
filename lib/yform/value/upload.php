@@ -182,9 +182,9 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         $this->setValue($filename);
 
-        $this->params['value_pool']['email'][$this->getName()] = $filename;
-        $this->params['value_pool']['email'][$this->getName().'_folder'] = $filename;
-        $this->params['value_pool']['sql'][$this->getName()] = $filename;
+        $this->setPoolValue('email', $this->getName(), $filename);
+        $this->setPoolValue('email', $this->getName().'_folder', $filename);
+        $this->setPoolValue('sql', $this->getName(), $filename);
 
         if ($filepath != '') {
             $this->params['value_pool']['files'][$this->getName()] = [$filename, $filepath, $real_filepath];
@@ -322,7 +322,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_upload_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'multi_edit' => true,
         ];
     }

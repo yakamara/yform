@@ -74,7 +74,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_datestamp_description'),
-            'dbtype' => 'varchar(191)',
+            'db_type' => ['varchar(191)'],
             'multi_edit' => 'always',
         ];
     }

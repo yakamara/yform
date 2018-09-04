@@ -51,7 +51,7 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db',  'label' => rex_i18n::msg('yform_values_defaults_table')],
             ],
             'description' => rex_i18n::msg('yform_values_hashvalue_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text', 'varchar(191)'],
             'multi_edit' => false,
         ];
     }

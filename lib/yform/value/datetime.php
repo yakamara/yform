@@ -235,7 +235,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => 'Datum & Uhrzeit Eingabe',
-            'dbtype' => 'datetime',
+            'db_type' => ['datetime'],
         ];
     }
 

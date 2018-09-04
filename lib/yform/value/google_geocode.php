@@ -78,7 +78,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 
             ],
             'description' => 'GoogeMap Positionierung',
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'formbuilder' => false,
             'multi_edit' => false,
         ];

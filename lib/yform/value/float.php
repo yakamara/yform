@@ -46,7 +46,7 @@ class rex_yform_value_float extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_float_description'),
-            'dbtype' => 'varchar(191)',
+            'db_type' => ['varchar(191)'],
         ];
     }
 

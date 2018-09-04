@@ -114,7 +114,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_be_select_category_description'),
             'formbuilder' => false,
-            'dbtype' => 'text',
+            'db_type' => ['text'],
         ];
     }
 

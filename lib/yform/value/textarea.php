@@ -48,7 +48,7 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_textarea_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'search' => true,
             'list_hidden' => false,
             'famous' => true,

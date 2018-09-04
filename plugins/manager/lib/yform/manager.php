@@ -260,7 +260,7 @@ class rex_yform_manager
 
                 $fields = ['id' => '"id"'];
                 foreach ($this->table->getFields() as $field) {
-                    if ($field->getDBType() != 'none') {
+                    if ($field->getDatabaseFieldType() != 'none') {
                         $fields[$field->getName()] = '"' . $field->getName() . '"';
                     }
                 }
@@ -1044,7 +1044,7 @@ class rex_yform_manager
                         }
                         break;
 
-/*                    case 'no_db':
+                    case 'no_db':
                         if (!isset($v['values'])) {
                             $v['values'] = [0,1];
                         }
@@ -1052,7 +1052,7 @@ class rex_yform_manager
                             $v['default'] = 0;
                         }
                         $yform->setValueField('checkbox', ['name' => $k_field, 'label' => rex_i18n::msg('yform_donotsaveindb'), 'values' => 'no_db', 'default' => $v['default']]);
-                        break;*/
+                        break;
 
                     case 'boolean':
                         if (!isset($v['values'])) {
@@ -1156,9 +1156,9 @@ class rex_yform_manager
 
             if ($type_id == 'value') {
 
-                $db_choices = $field->getDBTypes();
-                $default = $field->getDBDefaultType();
-                $yform->setValueField('choice', ['name' => 'db_type', 'label' => rex_i18n::msg('yform_db_type'), 'choices' => $db_choices, 'default' => $default]);
+                $db_choices = $field->getDatabaseFieldTypes();
+                $default = $field->getDatabaseFieldDefaultType();
+                $yform->setValueField('choice', ['name' => 'db_type', 'label' => rex_i18n::msg('yform_field_db_type'), 'choices' => $db_choices, 'default' => $default]);
 
                 if (!$field->isHiddenInListDisabled()) {
                     $yform->setValueField('checkbox', ['name' => 'list_hidden', 'label' => rex_i18n::msg('yform_hideinlist'), 'default' => '1']);

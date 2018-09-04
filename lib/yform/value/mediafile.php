@@ -131,7 +131,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_mediafile_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'multi_edit' => false,
         ];
     }

@@ -279,3 +279,4 @@ yform_will_set_to = wird
 
 yform_field_add = Feld hinzufügen
 yform_field_update = Feld aktualisieren
+yform_field_db_type = Datenbank-Feldtyp
