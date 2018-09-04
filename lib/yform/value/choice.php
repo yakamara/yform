@@ -205,13 +205,13 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $field = $params['params']['field'];
 
             $choiceList = self::createChoiceList([
-                'choice_attributes' => @$field['choice_attributes'],
-                'choices' => @$field['choices'],
-                'expanded' => @$field['expanded'],
-                'group_by' => @$field['group_by'],
-                'multiple' => @$field['multiple'],
-                'placeholder' => @$field['placeholder'],
-                'preferred_choices' => @$field['preferred_choices'],
+                'choice_attributes' => (isset($field['choice_attributes'])) ? $field['choice_attributes'] : '',
+                'choices' => (isset($field['choices'])) ? $field['choices'] : [],
+                'expanded' => (isset($field['expanded'])) ? $field['expanded'] : '',
+                'group_by' => (isset($field['group_by'])) ? $field['group_by'] : '',
+                'multiple' => (isset($field['multiple'])) ? $field['multiple'] : false,
+                'placeholder' => (isset($field['placeholder'])) ? $field['placeholder'] : '',
+                'preferred_choices' => (isset($field['preferred_choices'])) ? $field['preferred_choices'] : [],
             ]);
 
             $choices = $choiceList->getChoicesByValues();
@@ -249,16 +249,17 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
+
         $choiceList = self::createChoiceList([
-            'choice_attributes' => @$params['field']['choice_attributes'],
-            'choices' => @$params['field']['choices'],
-            'expanded' => @$params['field']['expanded'],
-            'group_by' => @$params['field']['group_by'],
-            'multiple' => @$params['field']['multiple'],
-            'placeholder' => @$params['field']['placeholder'],
-            'preferred_choices' => @$params['field']['preferred_choices'],
+            'choice_attributes' => (isset($params['field']['choice_attributes'])) ? $params['field']['choice_attributes'] : '',
+            'choices' => (isset($params['field']['choices'])) ? $params['field']['choices'] : [],
+            'expanded' => (isset($params['field']['expanded'])) ? $params['field']['expanded'] : '',
+            'group_by' => (isset($params['field']['group_by'])) ? $params['field']['group_by'] : '',
+            'multiple' => (isset($params['field']['multiple'])) ? $params['field']['multiple'] : false,
+            'placeholder' => (isset($params['field']['placeholder'])) ? $params['field']['placeholder'] : '',
+            'preferred_choices' => (isset($params['field']['preferred_choices'])) ? $params['field']['preferred_choices'] : [],
         ]);
-        
+
         $choices = [];
         $choices['(empty)'] = '(empty)';
         $choices['!(empty)'] = '!(empty)';
