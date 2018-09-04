@@ -205,13 +205,13 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $field = $params['params']['field'];
 
             $choiceList = self::createChoiceList([
-                'choice_attributes' => $field['choice_attributes'],
-                'choices' => $field['choices'],
-                'expanded' => $field['expanded'],
-                'group_by' => $field['group_by'],
-                'multiple' => $field['multiple'],
-                'placeholder' => $field['placeholder'],
-                'preferred_choices' => $field['preferred_choices'],
+                'choice_attributes' => @$field['choice_attributes'],
+                'choices' => @$field['choices'],
+                'expanded' => @$field['expanded'],
+                'group_by' => @$field['group_by'],
+                'multiple' => @$field['multiple'],
+                'placeholder' => @$field['placeholder'],
+                'preferred_choices' => @$field['preferred_choices'],
             ]);
 
             $choices = $choiceList->getChoicesByValues();
@@ -246,4 +246,71 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
         return $attributes;
     }
+
+    public static function getSearchField($params)
+    {
+        $choiceList = self::createChoiceList([
+            'choice_attributes' => @$params['field']['choice_attributes'],
+            'choices' => @$params['field']['choices'],
+            'expanded' => @$params['field']['expanded'],
+            'group_by' => @$params['field']['group_by'],
+            'multiple' => @$params['field']['multiple'],
+            'placeholder' => @$params['field']['placeholder'],
+            'preferred_choices' => @$params['field']['preferred_choices'],
+        ]);
+        
+        $choices = [];
+        $choices['(empty)'] = '(empty)';
+        $choices['!(empty)'] = '!(empty)';
+
+        $choices += $choiceList->getChoicesByValues();
+
+        if (isset($choices[''])) {
+            unset($choices['']);
+        }
+
+        $params['searchForm']->setValueField('choice', [
+                'name' => $params['field']->getName(),
+                'label' => $params['field']->getLabel(),
+                'choices' => $choices,
+                'multiple' => 1,
+                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
+            ]
+        );
+    }
+
+    public static function getSearchFilter($params)
+    {
+        $sql = rex_sql::factory();
+
+        $field = $params['field']->getName();
+        $values = (array) $params['value'];
+
+        $multiple = $params['field']->getElement('multiple') == 1;
+
+        $where = [];
+        foreach ($values as $value) {
+            switch ($value) {
+                case '(empty)':
+                    $where[] = ' ' . $sql->escapeIdentifier($field) . ' = ""';
+                    break;
+                case '!(empty)':
+                    $where[] = ' ' . $sql->escapeIdentifier($field) . ' != ""';
+                    break;
+                default:
+                    if ($multiple) {
+                        $where[] = ' ( FIND_IN_SET( ' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ') )';
+                    } else {
+                        $where[] = ' ( ' . $sql->escape($value) . ' = ' . $sql->escapeIdentifier($field) . ' )';
+                    }
+
+                    break;
+            }
+        }
+
+        if (count($where) > 0) {
+            return ' ( ' . implode(' or ', $where) . ' )';
+        }
+    }
+
 }
