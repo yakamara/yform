@@ -220,3 +220,9 @@ yform_values_choice_preferred_choices_notice = Mit dieser Option werden bestimmt
 yform_values_message_is_missing = [Warnmeldung für Feld `{1}` fehlt]
 
 yform_validate_object_is_missing = Object `{1}` zur Validierung `{1}` fehlt
+
+yform_values_deprecated_checkbox_sql = Deprecated; Verwende das Choice value
+yform_values_deprecated_radio = Deprecated; Verwende das Choice value
+yform_values_deprecated_radio_sql = Deprecated; Verwende das Choice value
+yform_values_deprecated_select = Deprecated; Verwende das Choice value
+yform_values_deprecated_select_sql = Deprecated; Verwende das Choice value

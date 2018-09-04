@@ -102,7 +102,6 @@ class rex_yform_value_select extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_select_description'),
             'dbtype' => 'text',
-            'famous' => true,
             'deprecated' => rex_i18n::msg('yform_values_deprecated_select'),
         ];
     }

@@ -585,9 +585,11 @@ class rex_yform
         natsort($classes);
         $classesDescription = [];
         $classesFamousDescription = [];
+        $classesDeprecatedDescription = [];
         foreach ($arr as $arr_key => $arr_split) {
             $classesDescription[$arr_key] = '';
             $classesFamousDescription[$arr_key] = '';
+            $classesDeprecatedDescription[$arr_key] = '';
             foreach ($classes as $class) {
                 $exploded = explode($arr_split, $class);
                 if (count($exploded) == 2) {
@@ -605,16 +607,23 @@ class rex_yform
                         }
 
                         if (isset($definitions['formbuilder']) && !$definitions['formbuilder']) {
+
+                        } elseif (isset($definitions['deprecated']) && $definitions['deprecated']) {
+                            $classesDeprecatedDescription[$arr_key] .= '<tr class="yform-classes-deprecated"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $definitions['deprecated'] . '<br />' . $desc . '</td></tr>';
+
                         } elseif (isset($definitions['famous']) && $definitions['famous']) {
                             $classesFamousDescription[$arr_key] .= '<tr class="yform-classes-famous"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+
                         } else {
                             $classesDescription[$arr_key] .= '<tr><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
+
                         }
                     }
                 }
             }
 
-            $classesDescription[$arr_key] = $classesFamousDescription[$arr_key] . $classesDescription[$arr_key];
+            $classesDescription[$arr_key] = $classesFamousDescription[$arr_key] . $classesDescription[$arr_key] . $classesDeprecatedDescription[$arr_key];
+
         }
 
         $return = '';

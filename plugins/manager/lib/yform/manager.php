@@ -935,16 +935,19 @@ class rex_yform_manager
                 if (isset($types['value'])) {
                     ksort($types['value']);
                     $tmp_famous = '';
+                    $tmp_deprecated = '';
                     $tmp = '';
                     foreach ($types['value'] as $k => $v) {
                         if (isset($v['manager']) && !$v['manager']) {
+                        } elseif (isset($v['deprecated']) && $v['deprecated']) {
+                            $tmp_deprecated .= '<tr class="yform-classes-deprecated"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['deprecated'] .'<br />' . $v['description'] . '</td></tr>';
                         } elseif (isset($v['famous']) && $v['famous']) {
                             $tmp_famous .= '<tr class="yform-classes-famous"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                         } else {
                             $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                         }
                     }
-                    $tmp = '<table class="table table-hover yform-table-help">'.$tmp_famous.$tmp.'</table>';
+                    $tmp = '<table class="table table-hover yform-table-help">'.$tmp_famous.$tmp.$tmp_deprecated.'</table>';
                 }
                 $fragment = new rex_fragment();
                 $fragment->setVar('title', $TYPE['value']);
