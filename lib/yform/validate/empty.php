@@ -16,7 +16,7 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
             if ($Object->getValue() == '') {
                 $Value = $this->getValueObject();
                 $label = $Value->getElement('label');
-                $msg   = Wildcard::get(str_replace('###', '', $this->getElement('message')));
+                $msg   = Wildcard::parse($this->getElement('message'));
 
                 $this->params['warning'][$Object->getId()]          = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = str_replace('{{fieldname}}', $label, $msg);
