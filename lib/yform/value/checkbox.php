@@ -97,10 +97,10 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         $options[$w] = 'not checked';
         $options[''] = '---';
 
-        $params['searchForm']->setValueField('select', [
+        $params['searchForm']->setValueField('choice', [
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
-            'options' => $options,
+            'choices' => $options,
         ]);
     }
 

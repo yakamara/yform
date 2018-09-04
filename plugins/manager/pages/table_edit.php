@@ -32,10 +32,10 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
     'types' => '.json', // allowed extensions ".gif,.png"
     'required' => 1,
     'messages' => [
-    rex_i18n::msg('yform_manager_table_import_warning_min'),
-    rex_i18n::msg('yform_manager_table_import_warning_max'),
-    rex_i18n::msg('yform_manager_table_import_warning_type'),
-    rex_i18n::msg('yform_manager_table_import_warning_selectfile'),
+        rex_i18n::msg('yform_manager_table_import_warning_min'),
+        rex_i18n::msg('yform_manager_table_import_warning_max'),
+        rex_i18n::msg('yform_manager_table_import_warning_type'),
+        rex_i18n::msg('yform_manager_table_import_warning_selectfile'),
     ],
     'modus' => 'no_save',
     'no_db' => 'no_db',
@@ -121,14 +121,15 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
             $sortFieldsSql->next();
         }
     }
-    $yform->setValueField('select', ['list_sortfield', rex_i18n::msg('yform_manager_sortfield'), implode(',', $sortFields)]);
-    $yform->setValueField('select', ['list_sortorder', rex_i18n::msg('yform_manager_sortorder'), [
-    'ASC' => rex_i18n::msg('yform_manager_sortorder_asc'),
-    'DESC' => rex_i18n::msg('yform_manager_sortorder_desc'),
+
+    $yform->setValueField('choice', ['name' => 'list_sortfield', 'label' => rex_i18n::msg('yform_manager_sortfield'), 'choices' => implode(',', $sortFields)]);
+
+    $yform->setValueField('choice', ['name' => 'list_sortorder', 'label' => rex_i18n::msg('yform_manager_sortorder'), 'choices' => [
+        'ASC' => rex_i18n::msg('yform_manager_sortorder_asc'),
+        'DESC' => rex_i18n::msg('yform_manager_sortorder_desc'),
     ]]);
 
     $yform->setValueField('checkbox', ['search', rex_i18n::msg('yform_manager_search_active')]);
-
     $yform->setValueField('checkbox', ['hidden', rex_i18n::msg('yform_manager_table_hide')]);
     $yform->setValueField('checkbox', ['export', rex_i18n::msg('yform_manager_table_allow_export')]);
     $yform->setValueField('checkbox', ['import', rex_i18n::msg('yform_manager_table_allow_import')]);

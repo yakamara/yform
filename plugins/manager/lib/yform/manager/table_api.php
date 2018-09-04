@@ -358,10 +358,10 @@ class rex_yform_manager_table_api
 
                 $fields[] = [
                     'type_id' => 'value',
-                    'type_name' => 'select',
+                    'type_name' => 'choice',
                     'name' => $column['name'],
                     'label' => $column['name'],
-                    'options' => implode(',', $options),
+                    'choices' => implode(',', $options),
                     'default' => (string) $column['default'],
                     'no_db' => 0,
                 ];
@@ -376,10 +376,10 @@ class rex_yform_manager_table_api
 
                 $fields[] = [
                     'type_id' => 'value',
-                    'type_name' => 'select',
+                    'type_name' => 'choice',
                     'name' => $column['name'],
                     'label' => $column['name'],
-                    'options' => implode(',', $options),
+                    'choices' => implode(',', $options),
                     'default' => (string) $column['default'],
                     'multiple' => 1,
                     'no_db' => 0,

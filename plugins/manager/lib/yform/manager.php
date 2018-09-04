@@ -1080,7 +1080,7 @@ class rex_yform_manager
                             if (!isset($v['default'])) {
                                 $v['default'] = '';
                             }
-                            $yform->setValueField('select', [$k_field, $v['label'], implode(',', $_options), '', $v['default'], 0]);
+                            $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_options), 'default' => $v['default']]);
                         }
                         break;
 
@@ -1093,7 +1093,7 @@ class rex_yform_manager
                             $_fields[] = $_k;
                         }
                         $v['notice'] = (isset($v['notice']) ? $v['notice'] : '');
-                        $yform->setValueField('select', [$k_field, $v['label'], implode(',', $_fields), '', '', 0, 'notice' => $v['notice']]);
+                        $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_fields), 'notice' => $v['notice']]);
                         break;
 
                     case 'select_names':
@@ -1102,7 +1102,7 @@ class rex_yform_manager
                             $_fields[] = $_k;
                         }
                         $v['notice'] = (isset($v['notice']) ? $v['notice'] : '');
-                        $yform->setValueField('select', [$k_field, $v['label'], implode(',', $_fields), '', '', 1, 5, 'notice' => $v['notice']]);
+                        $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_fields), 'multiple' => true, 'notice' => $v['notice']]);
                         break;
 
                     case 'text':
@@ -1117,8 +1117,7 @@ class rex_yform_manager
                         break;
 
                     case 'textarea':
-                    case 'select':
-                    case 'select_sql':
+                    case 'choice':
                     default:
                         $v['name'] = $k_field;
                         $yform->setValueField($v['type'], $v);

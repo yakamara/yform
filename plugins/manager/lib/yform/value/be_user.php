@@ -60,7 +60,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'only_empty' => ['type' => 'select',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'options' => 'immer=0,nur wenn leer=1, nie=2'],
+                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'immer=0,nur wenn leer=1, nie=2'],
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_be_user_description'),
