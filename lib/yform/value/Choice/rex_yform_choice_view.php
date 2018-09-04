@@ -21,9 +21,18 @@ class rex_yform_choice_view
      */
     public function __construct($value, $label, $attributes = null, array $requiredAttributes = [])
     {
+
         $this->value = $value;
         $this->label = $label;
-        $this->attributes = is_callable($attributes) ? call_user_func($attributes, $this->getValue(), $this->getLabel()) : json_decode(trim($attributes), true);
+
+        if (null === $this->attributes) {
+            $this->attributes = [];
+        } else if (is_callable($attributes)) {
+            $this->attributes = call_user_func($attributes, $this->getValue(), $this->getLabel());
+        } else if (!is_array($attributes)) {
+            $this->attributes = json_decode(trim($attributes), true);
+        }
+
         $this->requiredAttributes = $requiredAttributes;
 
         if (null === $this->attributes) {

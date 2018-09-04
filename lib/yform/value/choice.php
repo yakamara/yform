@@ -12,6 +12,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
     public function enterObject()
     {
+
         $choiceList = self::createChoiceList([
             'choice_attributes' => $this->getElement('choice_attributes'),
             'choices' => $this->getElement('choices'),
@@ -165,7 +166,8 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $choicesElement = $elements['choices'];
 
         $choiceList = new rex_yform_choice_list($options);
-        if (rex_sql::getQueryType($choicesElement) == 'SELECT') {
+
+        if (is_string($choicesElement) && rex_sql::getQueryType($choicesElement) == 'SELECT') {
             $sql = rex_sql::factory();
             $sql->setDebug($self->getParam('debug'));
             $choiceList->createListFromSqlArray(
@@ -178,7 +180,6 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 $self->getArrayFromString($choicesElement)
             );
         }
-
         return $choiceList;
     }
 
