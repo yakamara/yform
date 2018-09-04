@@ -73,10 +73,49 @@ class rex_yform_manager_field implements ArrayAccess
 
     public function getDBType()
     {
-        if (!isset($this->definitions['dbtype'])) {
-            return 'none';
+        if (!isset($this->value['db_type'])) {
+            return $this->getDBDefaultType();
         }
-        return $this->definitions['dbtype'];
+        return $this->value['db_type'];
+    }
+
+    public function getDBTypes()
+    {
+        $db_types = [];
+        if (isset($this->definitions['dbtype'])) {
+            $this->definitions['db_type'] = [$this->definitions['dbtype']];
+        }
+
+        if (!isset($this->definitions['db_type'])) {
+            $this->definitions['db_type'] = [];
+        } else if (!is_array($this->definitions['db_type'])) {
+            $this->definitions['db_type'] = [$this->definitions['db_type']];
+        }
+        foreach($this->definitions['db_type'] as $db_type){
+            $db_types[$db_type] = $db_type;
+        }
+        $db_types['none'] = '[none]';
+        return $db_types;
+    }
+
+    public function getDBDefaultType()
+    {
+        $db_types = $this->getDBTypes();
+        reset($db_types);
+        return key($db_types);
+    }
+
+    public function getDBNull()
+    {
+        if (isset($this->definitions['db_null']) && $this->definitions['db_null']) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getHooks()
+    {
+        return (isset($this->definitions['hooks'])) ? $this->definitions['hooks'] : [];
     }
 
     public function isSearchableDisabled()

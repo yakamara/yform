@@ -276,3 +276,6 @@ yform_values_prio_default = Am Anfang
 
 yform_is = ist
 yform_will_set_to = wird
+
+yform_field_add = Feld hinzufügen
+yform_field_update = Feld aktualisieren

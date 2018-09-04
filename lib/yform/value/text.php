@@ -46,7 +46,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_text_description'),
-            'dbtype' => 'text',
+            'db_type' => ['varchar(191)', 'text'],
             'famous' => true,
         ];
     }

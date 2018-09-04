@@ -543,48 +543,45 @@ class rex_yform_manager_table_api
     {
 
         rex_yform_manager_table::deleteCache();
-        $types = rex_yform::getTypeArray();
         foreach (rex_yform_manager_table::getAll() as $table) {
+
             $c = rex_sql::factory();
             $c->setDebug(self::$debug);
-            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
-            $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table->getTableName() . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
+            $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             // remember fields, create and in case delete
-            $c->setQuery('SHOW COLUMNS FROM `' . $table['table_name'] . '`');
-            $saved_columns = $c->getArray();
+            $savedColumns = $table->getColumns();
 
-            $EnsureTable = rex_sql_table::get($table['table_name']);
+            $EnsureTable = rex_sql_table::get($table->getTableName());
 
             foreach ($table->getFields() as $field) {
-                $type_name = $field['type_name'];
-                $type_id = $field['type_id'];
 
-                if ($type_id == 'value') {
-                    $type_label = $field['name'];
-                    $dbtype = $types[$type_id][$type_name]['dbtype'];
+                if ($field->getType() == 'value') {
+                    $db_type = $field->getDBType();
 
-                    if ($dbtype != 'none' && $dbtype != '') {
-                        if (isset($types[$type_id][$type_name]['hooks']['preCreate'])) {
-                            $result = call_user_func($types[$type_id][$type_name]['hooks']['preCreate'], $field);
+                    if ($db_type != 'none' && $db_type != '') {
+
+                        $hooks = $field->getHooks();
+                        if (isset($hooks['preCreate'])) {
+                            $result = call_user_func($hooks['preCreate'], $field);
                             if (false === $result) {
                                 continue;
                             }
                             if (is_string($result)) {
-                                $dbtype = $result;
+                                $db_type = $result;
                             }
                         }
 
-                        foreach ($saved_columns as $uu => $vv) {
-                            if ($vv['Field'] == $type_label) {
-                                unset($saved_columns[$uu]);
+                        foreach ($savedColumns as $savedColumn) {
+                            if ($savedColumn['name'] == $field->getName()) {
+                                unset($savedColumns[$savedColumn['name']]);
                                 break;
                             }
                         }
 
-                        $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
                         $EnsureTable
-                            ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
+                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDBNull()))
                             ->ensure();
 
                     }
@@ -593,9 +590,9 @@ class rex_yform_manager_table_api
             }
 
             if ($delete_old === true) {
-                foreach ($saved_columns as $uu => $vv) {
-                    if ($vv['Field'] != 'id') {
-                        $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` DROP `' . $vv['Field'] . '` ');
+                foreach ($savedColumns as $savedColumn) {
+                    if ($savedColumn['name'] != 'id') {
+                        $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` DROP `' . $savedColumn['name'] . '` ');
                     }
                 }
             }

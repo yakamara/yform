@@ -1044,7 +1044,7 @@ class rex_yform_manager
                         }
                         break;
 
-                    case 'no_db':
+/*                    case 'no_db':
                         if (!isset($v['values'])) {
                             $v['values'] = [0,1];
                         }
@@ -1052,7 +1052,7 @@ class rex_yform_manager
                             $v['default'] = 0;
                         }
                         $yform->setValueField('checkbox', ['name' => $k_field, 'label' => rex_i18n::msg('yform_donotsaveindb'), 'values' => 'no_db', 'default' => $v['default']]);
-                        break;
+                        break;*/
 
                     case 'boolean':
                         if (!isset($v['values'])) {
@@ -1132,7 +1132,7 @@ class rex_yform_manager
             $yform->setObjectparams('main_table', rex_yform_manager_field::table());
 
             if ($func == 'edit') {
-                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_save'));
+                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_update'));
                 $yform->setHiddenField('field_id', $field_id);
                 $yform->setActionField('manage_db', [rex_yform_manager_field::table(), "id=$field_id"]);
                 $yform->setObjectparams('main_id', $field_id);
@@ -1150,11 +1150,16 @@ class rex_yform_manager
                 $yform->setObjectparams('sql_object', $sql);
                 $yform->setObjectparams('getdata', true);
             } elseif ($func == 'add') {
-                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add'));
+                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_add'));
                 $yform->setActionField('manage_db', [rex_yform_manager_field::table()]);
             }
 
             if ($type_id == 'value') {
+
+                $db_choices = $field->getDBTypes();
+                $default = $field->getDBDefaultType();
+                $yform->setValueField('choice', ['name' => 'db_type', 'label' => rex_i18n::msg('yform_db_type'), 'choices' => $db_choices, 'default' => $default]);
+
                 if (!$field->isHiddenInListDisabled()) {
                     $yform->setValueField('checkbox', ['name' => 'list_hidden', 'label' => rex_i18n::msg('yform_hideinlist'), 'default' => '1']);
                 }
@@ -1162,6 +1167,7 @@ class rex_yform_manager
                 if (!$field->isSearchableDisabled()) {
                     $yform->setValueField('checkbox', ['name' => 'search', 'label' => rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 'default' => '1']);
                 }
+
             } elseif ($type_id == 'validate') {
                 $yform->setValueField('hidden', ['list_hidden', 1]);
                 $yform->setValueField('hidden', ['search', 0]);
