@@ -8,8 +8,7 @@ class rex_yform_choice_view
     /**
      * Additional attributes for the HTML tag.
      */
-    public $attributes;
-    public $requiredAttributes;
+    protected $attributes;
 
     /**
      * Creates a new choice view.
@@ -32,8 +31,6 @@ class rex_yform_choice_view
             $this->attributes = json_decode(trim($attributes), true);
         }
 
-        $this->requiredAttributes = $requiredAttributes;
-
         if (null === $this->attributes) {
             $this->attributes = [];
         }
@@ -47,11 +44,17 @@ class rex_yform_choice_view
             }
             unset($this->attributes[$index]);
         }
+
+        $this->attributes = array_merge($this->attributes, $requiredAttributes);
+
+        if (isset($this->attributes['id'])) {
+            $this->attributes['id'] .= '-'.rex_string::normalize($this->value, '-');
+        }
     }
 
     public function getAttributes()
     {
-        return array_merge($this->attributes, $this->requiredAttributes);
+        return $this->attributes;
     }
 
     public function getAttributesAsString()
