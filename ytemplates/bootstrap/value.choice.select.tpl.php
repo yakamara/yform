@@ -11,9 +11,31 @@ if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['
     $notices[] = '<span class="text-warning">'.rex_i18n::translate($this->params['warning_messages'][$this->getId()], false).'</span>';
 }
 
-$groupAttributes['class'] = trim('form-group '.$this->getWarningClass());
-$elementAttributes['class'] = 'form-control';
+if (!isset($groupAttributes)) {
+    $groupAttributes = [];
+}
 
+$groupClass = trim('form-group '.$this->getWarningClass());
+if (isset($groupAttributes['class']) && is_array($groupAttributes['class'])) {
+    $groupAttributes['class'][] = $groupClass;
+} elseif (isset($groupAttributes['class'])) {
+    $groupAttributes['class'] .= ' '.$groupClass;
+} else {
+    $groupAttributes['class'] = $groupClass;
+}
+
+
+if (!isset($elementAttributes)) {
+    $elementAttributes = [];
+}
+$elementClass = 'form-control';
+if (isset($elementAttributes['class']) && is_array($elementAttributes['class'])) {
+    $elementAttributes['class'][] = $elementClass;
+} elseif (isset($elementAttributes['class'])) {
+    $elementAttributes['class'] .= ' '.$elementClass;
+} else {
+    $elementAttributes['class'] = $elementClass;
+}
 ?>
 
 <?php $choiceOutput = function (rex_yform_choice_view $view) { ?>

@@ -23,9 +23,8 @@ class rex_yform_choice_view
         $this->value = $value;
         $this->label = $label;
 
-        if (null === $this->attributes) {
-            $this->attributes = [];
-        } elseif (is_callable($attributes)) {
+        $this->attributes = $attributes;
+        if (is_callable($attributes)) {
             $this->attributes = call_user_func($attributes, $this->getValue(), $this->getLabel());
         } elseif (!is_array($attributes)) {
             $this->attributes = json_decode(trim($attributes), true);
@@ -34,6 +33,7 @@ class rex_yform_choice_view
         if (null === $this->attributes) {
             $this->attributes = [];
         }
+        
         // Remove foreign attributes
         foreach ($this->attributes as $index => $attributeValue) {
             if (!is_array($attributeValue)) {
