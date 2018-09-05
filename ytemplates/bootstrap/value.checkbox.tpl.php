@@ -15,7 +15,7 @@ if (count($notices) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notices) . '</p>';
 }
 
-$class_group = trim('checkbox yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
+$class_group = trim('checkbox ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $value = isset($value) ? $value : 1;
 

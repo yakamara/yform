@@ -13,7 +13,7 @@ if (count($notices) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notices) . '</p>';
 }
 
-$class_group = trim('form-group yform-element ' . $this->getWarningClass());
+$class_group = trim('form-group ' . $this->getWarningClass());
 
 $class_label[] = 'control-label';
 $field_before = '';

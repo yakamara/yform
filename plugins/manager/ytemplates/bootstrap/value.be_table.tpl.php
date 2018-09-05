@@ -1,5 +1,5 @@
 <?php
-$class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
+$class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $data_index = 0;
 $notice = [];

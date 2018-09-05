@@ -20,7 +20,7 @@ if ($this->getElement('multiple') == 1) {
     $widget = rex_var_media::getWidget($buttonId, $name, $value, $widget_params);
 }
 
-$class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
+$class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $notice = [];
 if ($this->getElement('notice') != '') {
