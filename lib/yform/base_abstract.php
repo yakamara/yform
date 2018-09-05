@@ -140,28 +140,4 @@ abstract class rex_yform_base_abstract
     {
     }
 
-    public function setPoolValue($pool, $key, $value)
-    {
-        switch($pool){
-            case 'sql':
-                if ($this->getElement('no_db') != 'no_db') {
-                    $this->params['value_pool'][$pool][$key] = $value;
-                }
-                break;
-            case 'email':
-                $this->params['value_pool'][$pool][$key] = $value;
-                break;
-        }
-    }
-
-    public function getPoolValue($pool, $key)
-    {
-        return (isset($this->params['value_pool'][$pool][$key])) ? $this->params['value_pool'][$pool][$key] : '';
-    }
-
-    public function getPool($pool)
-    {
-        return $this->params['value_pool'][$pool];
-    }
-
 }

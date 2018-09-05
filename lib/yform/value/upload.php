@@ -182,9 +182,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         $this->setValue($filename);
 
-        $this->setPoolValue('email', $this->getName(), $filename);
-        $this->setPoolValue('email', $this->getName().'_folder', $filename);
-        $this->setPoolValue('sql', $this->getName(), $filename);
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName().'_folder'] = $this->getValue();
+        if ($this->getElement('no_db') != 'no_db') {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
 
         if ($filepath != '') {
             $this->params['value_pool']['files'][$this->getName()] = [$filename, $filepath, $real_filepath];
