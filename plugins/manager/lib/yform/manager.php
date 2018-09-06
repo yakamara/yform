@@ -1087,9 +1087,6 @@ class rex_yform_manager
                         }
                         break;
 
-                    case 'table.field':
-                        // Todo:
-
                     case 'select_name':
                         $_fields = [];
                         foreach ($table->getValueFields() as $_k => $_v) {
@@ -1128,6 +1125,10 @@ class rex_yform_manager
                 }
             }
 
+            foreach ($types[$type_id][$type_name]['validates'] as $k => $v) {
+                $yform->setValidateField($k, $v);
+            }
+
             $yform->setActionField('showtext', ['', '<p>' . rex_i18n::msg('yform_thankyouforentry') . '</p>']);
             $yform->setObjectparams('main_table', rex_yform_manager_field::table());
 
@@ -1149,9 +1150,11 @@ class rex_yform_manager
                 }
                 $yform->setObjectparams('sql_object', $sql);
                 $yform->setObjectparams('getdata', true);
+
             } elseif ($func == 'add') {
                 $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_add'));
                 $yform->setActionField('manage_db', [rex_yform_manager_field::table()]);
+
             }
 
             if ($type_id == 'value') {
