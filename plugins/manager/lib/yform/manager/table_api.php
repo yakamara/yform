@@ -564,13 +564,14 @@ class rex_yform_manager_table_api
 
                         $hooks = $field->getHooks();
                         if (isset($hooks['preCreate'])) {
-                            $result = call_user_func($hooks['preCreate'], $field);
+                            $result = call_user_func($hooks['preCreate'], $field, $db_type);
                             if (false === $result) {
                                 continue;
                             }
                             if (is_string($result)) {
                                 $db_type = $result;
                             }
+
                         }
 
                         foreach ($savedColumns as $savedColumn) {
