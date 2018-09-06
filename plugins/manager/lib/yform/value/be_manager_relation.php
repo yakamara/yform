@@ -161,7 +161,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $fieldkey = $this->relation['source_table'].'-'.$this->relation['target_table'].'-'.$this->relation['target_field'];
 
             $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
-                ->where($this->relation['target_field'], $this->params['main_id'])->find();
+                ->where($this->relation['target_field'], $this->params['main_id']);
+            if ($prioFieldName != '') {
+                $relations->orderBy($prioFieldName);
+            }
+            $relations = $relations->find();
 
             $relationIDs = [];
             foreach ($relations as $relation) {
@@ -260,22 +264,37 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     // -------------------------------------------------------------------------
 
-    /*
-     * postAction wird nach dem Speichern ausgef�hrt
-     * hier wird entsprechend der entities
-     */
     public function postAction()
     {
         if ($this->relation['relation_type'] == 5 && $this->params['main_id'] > 0) {
-            $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
-                ->where($this->relation['target_field'], $this->params['main_id'])->find();
-
-            foreach ($relations as $relation) {
-                $relation->delete();
-            }
 
             $fieldkey = $this->relation['source_table'].'-'.$this->relation['target_table'].'-'.$this->relation['target_field'];
             $table = rex_yform_manager_table::get($this->relation['target_table']);
+
+            $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
+            ->where($this->relation['target_field'], $this->params['main_id'])->find();
+
+            $relations_key = [];
+            foreach($relations as $relation) {
+                $relations_key[$relation->getId()] = $relation;
+            }
+
+            if (isset($_REQUEST['FORM'][$fieldkey]) && is_array($_REQUEST['FORM'][$fieldkey])) {
+                foreach ($_REQUEST['FORM'][$fieldkey] as $key => $form) {
+                    if (isset($form['id'])) {
+                        if (array_key_exists($form['id'], $relations_key)) {
+                            $_REQUEST['FORM'][$fieldkey][$key]['id'] = (int) $_REQUEST['FORM'][$fieldkey][$key]['id'];
+                            unset($relations_key[$form['id']]);
+                        } else {
+                            unset($_REQUEST['FORM'][$fieldkey][$key]['id']);
+                        }
+                    }
+                }
+            }
+
+            foreach ($relations_key as $relation) {
+                $relation->delete();
+            }
 
             $prioFieldName = '';
             foreach ($table->getFields() as $field) {
@@ -284,31 +303,34 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 }
             }
 
-            $data = $table->createDataset();
-            $yform = $data->getForm();
-            // $yform->setDebug(true);
-
             if (isset($_REQUEST['FORM'][$fieldkey]) && is_array($_REQUEST['FORM'][$fieldkey])) {
                 $counter = 0;
                 foreach ($_REQUEST['FORM'][$fieldkey] as $key => $form) {
+
                     ++$counter;
-                    if (isset($form['id'])) {
-                        // Todo: Datensatz ersetzen statt neu anlegen ?
-                    }
+                    $data = $table->createDataset();
+
+                    $yform = $data->getForm();
 
                     if ($prioFieldName != '') {
                         $form[$prioFieldName] = $counter;
                     }
 
                     $form[$this->relation['target_field']] = $this->params['main_id'];
+
+                    if (isset($form['id'])) {
+                        $yform->setObjectparams('main_id', $form['id']);
+                        $yform->setObjectparams('main_where', 'id='.$form['id']);
+                    }
+
                     $yform->setObjectparams('form_array', $key);
                     $yform->setObjectparams('data', $form);
                     $yform->setObjectparams('send', true);
                     $yform->setObjectparams('form_name', $fieldkey);
                     $yform->setObjectparams('csrf_protection', false);
+
                     $yform->getForm();
 
-                    // dump($yform->objparams['warning_messages']);
                 }
             }
         }
