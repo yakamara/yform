@@ -36,7 +36,11 @@ yform_table_overview = Tabellenübersicht
 yform_manager_edit_table = Tabelle editieren
 yform_manager_add_table = Tabelle hinzufügen
 
+yform_update_table = Tabelle aktualisieren
+yform_add_table = Tabelle hinzufügen
 yform_add_row = Reihe hinzufügen
+
+yform_edit_datatable = Daten verwalten
 
 # tables.inc.php
 yform_importcsv = CSV Importieren

@@ -83,7 +83,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
     $yform->setValueField('prio', ['prio', rex_i18n::msg('yform_manager_table_prio'), 'name']);
 
     if ($func == 'edit') {
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_save'));
+        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_update_table'));
         $yform->setValueField('showvalue', ['table_name', rex_i18n::msg('yform_manager_table_name')]);
         $yform->setHiddenField('table_id', $table_id);
         $yform->setActionField('db', [rex_yform_manager_table::table(), "id=$table_id"]);
@@ -91,7 +91,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
         $yform->setObjectparams('main_where', "id=$table_id");
         $yform->setObjectparams('getdata', true);
     } elseif ($func == 'add') {
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add'));
+        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add_table'));
         $yform->setValueField('text', ['table_name', rex_i18n::msg('yform_manager_table_name'), rex::getTablePrefix()]);
         $yform->setValidateField('empty', ['table_name', rex_i18n::msg('yform_manager_table_enter_name')]);
         $yform->setValidateField('customfunction', ['table_name', function ($label = '', $table = '', $params = '') {
@@ -270,14 +270,13 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->removeColumn('mass_deletion');
     $list->removeColumn('mass_edit');
     $list->removeColumn('history');
+    $list->removeColumn('table_name');
 
     $list->setColumnLabel('prio', rex_i18n::msg('yform_manager_table_prio_short'));
-    $list->setColumnLabel('name', rex_i18n::msg('yform_manager_name'));
-    $list->setColumnFormat('name', 'custom', 'rex_yform_list_translate');
 
-    $list->setColumnLabel('table_name', rex_i18n::msg('yform_manager_table_name'));
-    $list->setColumnFormat('table_name', 'custom', function ($params) {
-        return '<a href="index.php?page=yform/manager/data_edit&table_name=' . $params['value'] . '">' . $params['value'] . '</a>';
+    $list->setColumnLabel('name', rex_i18n::msg('yform_manager_name').' / '.rex_i18n::msg('yform_manager_table_name'));
+    $list->setColumnFormat('name', 'custom', function ($params) {
+        return rex_i18n::translate($params['value']).' [###table_name###]<p><a href="index.php?page=yform/manager/data_edit&table_name=###table_name###"><i class="rex-icon rex-icon-edit"></i> '.rex_i18n::msg('yform_edit_datatable').'</a></p>';
     });
 
     $list->setColumnLabel('status', rex_i18n::msg('yform_manager_table_status'));
@@ -290,10 +289,10 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->setColumnLabel('features', rex_i18n::msg('yform_manager_table_features'));
     $list->setColumnFormat('features', 'custom', 'rex_yform_features_col');*/
 
-    $list->addColumn(rex_i18n::msg('yform_edit'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
-    $list->setColumnLabel(rex_i18n::msg('yform_edit'), rex_i18n::msg('yform_function'));
-    $list->setColumnLayout(rex_i18n::msg('yform_edit'), ['<th class="rex-table-action" colspan="3">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
-    $list->setColumnParams(rex_i18n::msg('yform_edit'), ['table_id' => '###id###', 'func' => 'edit']);
+    $list->addColumn(rex_i18n::msg('yform_manager_edit_table'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_manager_edit_table'));
+    $list->setColumnLabel(rex_i18n::msg('yform_manager_edit_table'), rex_i18n::msg('yform_function'));
+    $list->setColumnLayout(rex_i18n::msg('yform_manager_edit_table'), ['<th class="rex-table-action" colspan="3">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+    $list->setColumnParams(rex_i18n::msg('yform_manager_edit_table'), ['table_id' => '###id###', 'func' => 'edit']);
 
     $list->addColumn(rex_i18n::msg('yform_delete_definitions'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete_definitions'));
     $list->setColumnLayout(rex_i18n::msg('yform_delete_definitions'), ['', '<td class="rex-table-action">###VALUE###<p class="help-block"><small>' . rex_i18n::msg('yform_delete_definitions_info') . '</small></p></td>']);
