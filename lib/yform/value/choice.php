@@ -31,12 +31,14 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $values = $this->getValue();
 
         if (!$values) {
-            $defaultChoices = explode(',', $this->getElement('default'));
-
+            if (in_array($this->getElement('default'), $choiceList->getChoices())) {
+                $defaultChoices = [$this->getElement('default')];
+            } else {
+                $defaultChoices = explode(',', $this->getElement('default'));
+            }
             if (!$choiceList->isMultiple() && count($defaultChoices) >= 2) {
                 throw new InvalidArgumentException('Expecting one default value for '.$this->getFieldName().', but '.count($defaultChoices).' given!');
             }
-
             $this->setValue($choiceList->getDefaultValues($defaultChoices));
         }
 
