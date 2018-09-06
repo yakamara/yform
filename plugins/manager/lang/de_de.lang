@@ -203,6 +203,8 @@ yform_manager_import_divider_tab = Tabulator
 yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
 yform_manager_import_start = Hinzufügen
 yform_manager_import_file = Datei
+yform_manager_import_error_missingfielddefinition = Es gibt Felder, welche leer sind und daher nicht zugewiesen werden können. Bitte die erste Zeile des Importes prüfen.
+yform_manager_import_error_duplicatefielddefinition = Es gibt Felder, welche identisch sind. Bitte die erste Zeile des Importes prüfen.
 
 # history
 yform_history = Historie

@@ -226,3 +226,7 @@ yform_values_deprecated_radio = Deprecated; Verwende das Choice value
 yform_values_deprecated_radio_sql = Deprecated; Verwende das Choice value
 yform_values_deprecated_select = Deprecated; Verwende das Choice value
 yform_values_deprecated_select_sql = Deprecated; Verwende das Choice value
+
+yform_always = immer
+yform_onlyifempty = nur wenn leer
+yform_never = nie
