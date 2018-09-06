@@ -14,7 +14,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
         $value = $this->getValue();
         $showValue = $this->getValue();
 
-        // immer=0,nur wenn leer=1, nie=2
+        // translate:yform_always=0,translate:yform_onlyifempty=1,translate:yform_never=2
         $only_empty = $this->getElement('only_empty');
         $user = rex::getUser();
         $user_login = '';
@@ -60,7 +60,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'immer=0,nur wenn leer=1, nie=2'],
+                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1,translate:yform_never=2'],
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_be_user_description'),

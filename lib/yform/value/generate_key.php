@@ -39,7 +39,7 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'generate_key|name|label|[no_db][0-wird immer neu gesetzt,1-nur wenn leer]';
+        return 'generate_key|name|label|[no_db][0-always,1-only if empty,2-never]';
     }
 
     public function getDefinitions()
@@ -50,7 +50,7 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'immer=0,nur wenn leer=1'],
+                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1'],
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_datestamp_description'),
