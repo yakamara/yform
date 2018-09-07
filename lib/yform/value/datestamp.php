@@ -11,17 +11,10 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
     public function preValidateAction()
     {
-        $format = 'Y-m-d';
-        if ($this->getElement('format') != '') {
-            $format = $this->getElement('format');
-            if ($format == 'mysql') {
-                $format = 'Y-m-d H:i:s';
-            }
-        }
-
+        $format = 'Y-m-d H:i:s';
         $default_value = date($format);
         $value = $this->getValue();
-        $this->showValue = $value;
+        $this->showValue = self::datestamp_getValueByFormat($value, $this->getElement('format'));
 
         if ($this->getElement('only_empty') == 2) {
             // wird nicht gesetzt
@@ -74,8 +67,32 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_datestamp_description'),
-            'db_type' => ['varchar(191)'],
+            'db_type' => ['datetime'],
             'multi_edit' => 'always',
         ];
+    }
+
+    public static function getListValue($params)
+    {
+        $return = self::datestamp_getValueByFormat($params['subject'], $params['params']['field']['format']);
+        return ($return == "") ? '-':$return;
+    }
+
+    public static function datestamp_getValueByFormat($value, $format)
+    {
+        if ($value == "0000-00-00 00:00:00") {
+            $return = '';
+        } else if ($format == "") {
+            $return = $value;
+        } else {
+            $date = DateTime::createFromFormat('Y-m-d H:i:s', $value);
+            if ($date) {
+                $return = $date->format($format);
+            } else {
+                $return = '';
+            }
+        }
+        return $return;
+
     }
 }
