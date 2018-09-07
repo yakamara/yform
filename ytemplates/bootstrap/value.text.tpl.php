@@ -19,24 +19,13 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
-$class_group = trim('form-group ' . $this->getWarningClass());
+$class_group = [];
+$class_group['form-group'] = 'form-group';
+if (!empty($this->getWarningClass())) {
+    $class_group[$this->getWarningClass()] = $this->getWarningClass();
+}
 
 $class_label[] = 'control-label';
-$field_before = '';
-$field_after = '';
-
-if (trim($this->getElement('grid')) != '') {
-    $grid = explode(',', trim($this->getElement('grid')));
-
-    if (isset($grid[0]) && $grid[0] != '') {
-        $class_label[] = trim($grid[0]);
-    }
-
-    if (isset($grid[1]) && $grid[1] != '') {
-        $field_before = '<div class="' . trim($grid[1]) . '">';
-        $field_after = '</div>';
-    }
-}
 
 $attributes = [
     'class' => 'form-control',
@@ -48,7 +37,27 @@ $attributes = [
 
 $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
 
-echo '<div class="'.$class_group.'" id="'.$this->getHTMLId().'">
-<label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
-'.$field_before.'<input '.implode(' ', $attributes).' />'.$notice . $field_after.'
-</div>';
+$input_group_start = '';
+$input_group_end = '';
+
+$prepend_view = '';
+if (!empty($prepend)) {
+    $prepend_view = '<span class="input-group-addon">'.$prepend.'</span>';
+    $input_group_start = '<div class="input-group">';
+    $input_group_end = '</div>';
+}
+
+$append_view = '';
+if (!empty($append)) {
+    $append_view = '<span class="input-group-addon">'.$append.'</span>';
+    $input_group_start = '<div class="input-group">';
+    $input_group_end = '</div>';
+}
+
+echo '<div class="'.implode( ' ', $class_group).'" id="'.$this->getHTMLId().'">
+        <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
+        ' . $input_group_start . $prepend_view . '<input '.implode(' ', $attributes).' />' . $append_view . $input_group_end . $notice .'
+        </div>';
+
+?>
+

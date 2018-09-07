@@ -65,6 +65,7 @@ yform_values_defaults_attributes_notice = Bitte als JSON schreiben. z.B. {"reado
 yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Wert anzeigen
 yform_validate_defaults_message = Fehlermeldung
+yform_values_defaults_unit = Maßeinheit (z.B. € $ m mm %)
 
 yform_search_defaults_wildcard_notice = Beispiele: *name / !(empty) / (empty)
 yform_search_integer_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)

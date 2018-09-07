@@ -18,7 +18,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
         }
 
         if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
+            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php',['prepend' => $this->getElement('prepend'), 'append' => $this->getElement('append')]);
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -45,6 +45,8 @@ class rex_yform_value_text extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'prepend' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_prepend')],
+                'append' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_append')],
             ],
             'description' => rex_i18n::msg('yform_values_text_description'),
             'db_type' => ['varchar(191)', 'text'],
