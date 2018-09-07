@@ -18,7 +18,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
         if ('' === $this->getValue()) {
             $this->setValue(null);
         } else {
-            $this->setValue((int) $this->getValue());
+            $this->setValue($this->getValue());
         }
 
         if ($this->needsOutput()) {
@@ -103,7 +103,8 @@ class rex_yform_value_number extends rex_yform_value_abstract
         }
         preg_match('/^\s*(<|<=|>|>=|<>|!=)?\s*(.*)$/', $value, $match);
         $comparator = $match[1] ?: '=';
-        $value = (int) $match[2];
+        $value = $match[2];
+        $value = $sql->escape($value);
         return ' ' . $field . ' ' . $comparator . ' ' . $value;
     }
 }
