@@ -14,23 +14,7 @@ if (count($notices) > 0) {
 }
 
 $class_group = trim('form-group ' . $this->getWarningClass());
-
 $class_label[] = 'control-label';
-$field_before = '';
-$field_after = '';
-
-if (trim($this->getElement('grid')) != '') {
-    $grid = explode(',', trim($this->getElement('grid')));
-
-    if (isset($grid[0]) && $grid[0] != '') {
-        $class_label[] = trim($grid[0]);
-    }
-
-    if (isset($grid[1]) && $grid[1] != '') {
-        $field_before = '<div class="' . trim($grid[1]) . '">';
-        $field_after = '</div>';
-    }
-}
 
 $output = $format;
 
@@ -118,6 +102,6 @@ $output = strtr($output, $replace);
 echo '
     <div class="' . $class_group . '" id="' . $this->getHTMLId() . '">
         <label class="' . implode(' ', $class_label) . '" for="' . $this->getFieldId() . '">' . $this->getLabel() . '</label>
-        ' . $field_before . '<div class="form-inline">' . $output . '</div>' . $notice . $field_after . '
+        <div class="form-inline">' . $output . '</div>' . $notice . '
     </div>
 ';
