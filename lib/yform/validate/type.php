@@ -26,6 +26,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
             switch (trim($this->getElement('type'))) {
                 case 'int':
+                case 'integer':
                     $xsRegEx_int = '/^[0-9]+$/i';
                     if (preg_match($xsRegEx_int, $Object->getValue()) == 0) {
                         $w = true;
