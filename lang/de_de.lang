@@ -44,7 +44,8 @@ yform_values_float_description =				Ein einfaches Eingabefeld für <b>Gleitkomma
 yform_values_hashvalue_description =			Ein Feld, das aus dem Wert eines anderen Feldes einen <b>Hashwert</b> erzeugt.
 yform_values_html_description =					Gibt <b>HTML-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
 yform_values_index_description =				Ein Feld, das einen <b>Index</b> / Schlüssel über mehrere Felder erzeugt.
-yform_values_integer_description =				Ein einfaches Eingabefeld für <b>ganze Zahlen.</b>
+yform_values_integer_description =				Ein Eingabefeld für <b>ganze Zahlen. (INTEGER)</b>
+yform_values_number_description =               Ein Eingabefeld für <b>Zahlen mit oder ohne Nachkommastellen. (DECIMAL)</b>
 yform_values_mediafile_description =			Ein <b>Upload-Feld</b>, mit dem eine Datei in den Medienpool hochgeladen wird.
 yform_values_php_description =					Führt <b>PHP-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
 yform_values_radio_description =				Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
@@ -67,8 +68,12 @@ yform_values_defaults_showvalue = Wert anzeigen
 yform_validate_defaults_message = Fehlermeldung
 yform_values_defaults_unit = Maßeinheit (z.B. € $ m mm %)
 
+yform_values_number_precision = Anzahl der Ziffern (23335443.23 wäre z.B. 10 Ziffern) (PRECISION)
+yform_values_number_scale = Anzahl der Nachkommastellen der Ziffern (23335443.23 wäre z.B. 2 Nachkommastellen) (SCALE)
+
 yform_search_defaults_wildcard_notice = Beispiele: *name / !(empty) / (empty)
 yform_search_integer_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
+yform_search_number_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
 yform_search_defaults_select_notice = Mit CTRL oder COMMAND mehrere auswählen
 
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
@@ -102,6 +107,7 @@ yform_values_index_names_notice = Kommasepariert, auch Felder aus Relationen mö
 yform_values_index_function = Optional Codierfunktion
 yform_values_index_function_notice = z.B. md5, sha1
 yform_values_integer_default = Defaultwert
+yform_values_number_default = Defaultwert
 yform_values_mediafile_max_size = Maximale Größe in Kb oder Range 100,500
 yform_values_mediafile_types = Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png"
 yform_values_mediafile_required = Pflichtfeld
@@ -232,3 +238,7 @@ yform_values_deprecated_float = Deprecated! Verwende das number Feld
 yform_always = immer
 yform_onlyifempty = nur wenn leer
 yform_never = nie
+
+yform_values_number_error_precision = Bitte gib bei der Anzahl der Ziffern (PRECISION) eine Zahl zwischen {0} und {1} ein
+yform_values_number_error_scale = Bitte gib bei der Anzahl der Nachkommastellen (SCALE) eine Zahl zwischen {0} und {1} ein
+yform_values_number_error_compare = Die Nachkommastellen dürfen nicht höher sein als die Anzahl der Ziffern.
