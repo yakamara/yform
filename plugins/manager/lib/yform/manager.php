@@ -1125,8 +1125,10 @@ class rex_yform_manager
                 }
             }
 
-            foreach ($types[$type_id][$type_name]['validates'] as $k => $v) {
-                $yform->setValidateField($k, $v);
+            if (isset($types[$type_id][$type_name]['validates']) && is_array($types[$type_id][$type_name]['validates'])) {
+                foreach ($types[$type_id][$type_name]['validates'] as $k => $v) {
+                    $yform->setValidateField($k, $v);
+                }
             }
 
             $yform->setActionField('showtext', ['', '<p>' . rex_i18n::msg('yform_thankyouforentry') . '</p>']);
