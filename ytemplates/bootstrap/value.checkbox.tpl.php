@@ -17,15 +17,13 @@ if (count($notices) > 0) {
 
 $class_group = trim('checkbox ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
-$value = isset($value) ? $value : 1;
-
 $attributes = [
     'type' => 'checkbox',
     'id' => $this->getFieldId(),
     'name' => $this->getFieldName(),
-    'value' => $value,
+    'value' => 1,
 ];
-if ($this->getValue() == $value) {
+if ($value == 1) {
     $attributes['checked'] = 'checked';
 }
 
