@@ -21,6 +21,8 @@ class rex_yform_value_number extends rex_yform_value_abstract
             $this->setValue($this->getValue());
         }
 
+        $this->setValue(str_replace(',', '.', $this->getValue()));
+
         if ($this->needsOutput()) {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
         }
