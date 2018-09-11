@@ -301,7 +301,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $choiceList->createListFromSqlArray(
                 $sql->getArray($choicesElement)
             );
-        } elseif (is_string($choicesElement) && trim($choicesElement){0} == '{') {
+        } elseif (is_string($choicesElement) && trim($choicesElement{0}) == '{') {
             $choiceList->createListFromJson($choicesElement);
         } else {
             $choiceList->createListFromStringArray(
