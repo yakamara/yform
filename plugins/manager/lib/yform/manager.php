@@ -593,6 +593,10 @@ class rex_yform_manager
                                     $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
                                     $value = $values[$params['list']->getValue('id')];
                                 }
+                                else {
+                                    $values = rex_yform_value_be_manager_relation::getListValues($table_name, $field_name);
+                                    $value = $values[$params['list']->getValue('id')];
+                                }
                             }
                         }
                         return '<a href="javascript:yform_manager_setData(' . $params['params']['opener_id'] . ',###id###,\''.rex_escape($value, 'js').' [id=###id###]\',' . $params['params']['opener_multiple'] . ')">'.rex_i18n::msg('yform_data_select').'</a>';

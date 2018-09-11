@@ -516,7 +516,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     private static function getNameConcatFields($field)
     {
-        preg_match_all('/(?:^|(?<=,))\s*((\'|")(.*?)\2|[^\'"\s].*?)\s*(?:(?=,)|$)/', $field, $matches, PREG_SET_ORDER);
+        preg_match_all('/(?:^|(?<=,))\s*((\'|")(.*?)\2|[^\'"\s].*?)\s*(?:(?=,)|$)/', strtr($field, ['+' => '," ",', ' ' => '," ",']), $matches, PREG_SET_ORDER);
         $concat = [];
         foreach ($matches as $match) {
             if (isset($match[2])) {
