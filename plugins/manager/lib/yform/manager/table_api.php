@@ -359,10 +359,10 @@ class rex_yform_manager_table_api
 
                 $fields[] = [
                     'type_id' => 'value',
-                    'type_name' => 'select',
+                    'type_name' => 'choice',
                     'name' => $column['name'],
                     'label' => $column['name'],
-                    'options' => implode(',', $options),
+                    'choices' => implode(',', $options),
                     'default' => (string) $column['default'],
                     'no_db' => 0,
                 ];
@@ -377,10 +377,10 @@ class rex_yform_manager_table_api
 
                 $fields[] = [
                     'type_id' => 'value',
-                    'type_name' => 'select',
+                    'type_name' => 'choice',
                     'name' => $column['name'],
                     'label' => $column['name'],
-                    'options' => implode(',', $options),
+                    'choices' => implode(',', $options),
                     'default' => (string) $column['default'],
                     'multiple' => 1,
                     'no_db' => 0,
@@ -542,64 +542,59 @@ class rex_yform_manager_table_api
 
     public static function generateTablesAndFields($delete_old = false)
     {
+
         rex_yform_manager_table::deleteCache();
-        $types = rex_yform::getTypeArray();
         foreach (rex_yform_manager_table::getAll() as $table) {
+
             $c = rex_sql::factory();
             $c->setDebug(self::$debug);
-            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table['table_name'] . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table->getTableName() . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
+            $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
             // remember fields, create and in case delete
-            $c->setQuery('SHOW COLUMNS FROM `' . $table['table_name'] . '`');
-            $saved_columns = $c->getArray();
+            $savedColumns = $table->getColumns();
 
-            $EnsureTable = rex_sql_table::get($table['table_name']);
+            $EnsureTable = rex_sql_table::get($table->getTableName());
 
             foreach ($table->getFields() as $field) {
-                $type_name = $field['type_name'];
-                $type_id = $field['type_id'];
 
-                if ($type_id == 'value') {
-                    $type_label = $field['name'];
-                    $dbtype = $types[$type_id][$type_name]['dbtype'];
+                if ($field->getType() == 'value') {
+                    $db_type = $field->getDatabaseFieldType();
 
-                    if ($dbtype != 'none' && $dbtype != '') {
-                        if (isset($types[$type_id][$type_name]['hooks']['preCreate'])) {
-                            $result = call_user_func($types[$type_id][$type_name]['hooks']['preCreate'], $field);
+                    if ($db_type != 'none' && $db_type != '') {
+
+                        $hooks = $field->getHooks();
+                        if (isset($hooks['preCreate'])) {
+                            $result = call_user_func($hooks['preCreate'], $field, $db_type);
                             if (false === $result) {
                                 continue;
                             }
                             if (is_string($result)) {
-                                $dbtype = $result;
+                                $db_type = $result;
                             }
+
                         }
-                        $add_column = true;
-                        foreach ($saved_columns as $uu => $vv) {
-                            if ($vv['Field'] == $type_label) {
-                                $add_column = false;
-                                $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
-//                                $EnsureTable
-//                                    ->ensureColumn(new rex_sql_column($type_label, $dbtype, $null))
-//                                    ->alter();
-                                unset($saved_columns[$uu]);
+
+                        foreach ($savedColumns as $savedColumn) {
+                            if ($savedColumn['name'] == $field->getName()) {
+                                unset($savedColumns[$savedColumn['name']]);
                                 break;
                             }
                         }
 
-                        if ($add_column) {
-                            $null = isset($types[$type_id][$type_name]['null']) && $types[$type_id][$type_name]['null'];
-                            $null = $null ? '' : ' NOT NULL';
-                            $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` ADD `' . $type_label . '` ' . $dbtype . $null);
-                        }
+                        $EnsureTable
+                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull()))
+                            ->ensure();
+
                     }
 
                 }
             }
 
             if ($delete_old === true) {
-                foreach ($saved_columns as $uu => $vv) {
-                    if ($vv['Field'] != 'id') {
-                        $c->setQuery('ALTER TABLE `' . $table['table_name'] . '` DROP `' . $vv['Field'] . '` ');
+                foreach ($savedColumns as $savedColumn) {
+                    if ($savedColumn['name'] != 'id') {
+                        $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` DROP `' . $savedColumn['name'] . '` ');
                     }
                 }
             }

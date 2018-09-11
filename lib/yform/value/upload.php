@@ -180,8 +180,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         $this->setValue($filename);
 
-        $this->params['value_pool']['email'][$this->getName()] = $filename;
-        $this->params['value_pool']['sql'][$this->getName()] = $filename;
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName().'_folder'] = $this->getValue();
+        if ($this->getElement('no_db') != 'no_db') {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
 
         if (count($errors) == 0 && $this->params['send'] && $this->getElement('required') == 1 && $filename == '') {
             $errors[] = $error_messages['empty_error'];
@@ -288,7 +291,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             while (($file = readdir($dh)) !== false) {
                 $f = $dir.$file;
                 $fu = date('U', filectime($f));
-                if (($cu - $fu) > $offset) {
+                if (($cu - $fu) > $offset && $file != '.' && $file != '..') {
                     unlink($f);
                 }
             }
@@ -318,7 +321,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_upload_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'multi_edit' => true,
         ];
     }

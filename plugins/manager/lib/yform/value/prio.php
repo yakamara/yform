@@ -94,11 +94,11 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 'label' => ['type' => 'text',         'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'fields' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_values_prio_fields')],
                 'scope' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_values_prio_scope')],
-                'default' => ['type' => 'select',       'label' => rex_i18n::msg('yform_values_prio_default'), 'options' => [1 => 'Am Anfang', '' => 'Am Ende'], 'default' => ''],
+                'default' => ['type' => 'choice',       'label' => rex_i18n::msg('yform_values_prio_default'), 'choices' => [1 => 'Am Anfang', '' => 'Am Ende']],
                 'notice' => ['type' => 'text',        'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_prio_description'),
-            'dbtype' => 'int',
+            'db_type' => ['int'],
             'multi_edit' => false,
         ];
     }

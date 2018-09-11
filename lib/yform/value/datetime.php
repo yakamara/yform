@@ -230,12 +230,12 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'format' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'notice' => rex_i18n::msg('yform_values_datetime_format_notice')],
                 'current_date' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_datetime_current_date')],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
-                'widget' => ['type' => 'select', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'options' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
+                'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => 'Datum & Uhrzeit Eingabe',
-            'dbtype' => 'datetime',
+            'db_type' => ['datetime'],
         ];
     }
 

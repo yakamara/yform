@@ -53,7 +53,7 @@ class rex_yform_value_radio extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),          'default' => 0],
             ],
             'description' => rex_i18n::msg('yform_values_radio_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'deprecated' => rex_i18n::msg('yform_values_deprecated_radio'),
         ];
     }

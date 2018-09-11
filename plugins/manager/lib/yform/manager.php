@@ -260,7 +260,7 @@ class rex_yform_manager
 
                 $fields = ['id' => '"id"'];
                 foreach ($this->table->getFields() as $field) {
-                    if ($field->getDBType() != 'none') {
+                    if ($field->getDatabaseFieldType() != 'none') {
                         $fields[$field->getName()] = '"' . $field->getName() . '"';
                     }
                 }
@@ -935,16 +935,19 @@ class rex_yform_manager
                 if (isset($types['value'])) {
                     ksort($types['value']);
                     $tmp_famous = '';
+                    $tmp_deprecated = '';
                     $tmp = '';
                     foreach ($types['value'] as $k => $v) {
                         if (isset($v['manager']) && !$v['manager']) {
+                        } elseif (isset($v['deprecated']) && $v['deprecated']) {
+                            $tmp_deprecated .= '<tr class="yform-classes-deprecated"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['deprecated'] .'<br />' . $v['description'] . '</td></tr>';
                         } elseif (isset($v['famous']) && $v['famous']) {
                             $tmp_famous .= '<tr class="yform-classes-famous"><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                         } else {
                             $tmp .= '<tr><th data-title="Value"><a class="btn btn-default btn-block" href="' . $link . 'type_id=value&type_name=' . $k . '&type_real_field=' . $type_real_field . '"><code>' . $k . '</code></a></th><td class="vertical-middle">' . $v['description'] . '</td></tr>';
                         }
                     }
-                    $tmp = '<table class="table table-hover yform-table-help">'.$tmp_famous.$tmp.'</table>';
+                    $tmp = '<table class="table table-hover yform-table-help">'.$tmp_famous.$tmp.$tmp_deprecated.'</table>';
                 }
                 $fragment = new rex_fragment();
                 $fragment->setVar('title', $TYPE['value']);
@@ -1080,12 +1083,9 @@ class rex_yform_manager
                             if (!isset($v['default'])) {
                                 $v['default'] = '';
                             }
-                            $yform->setValueField('select', [$k_field, $v['label'], implode(',', $_options), '', $v['default'], 0]);
+                            $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_options), 'default' => $v['default']]);
                         }
                         break;
-
-                    case 'table.field':
-                        // Todo:
 
                     case 'select_name':
                         $_fields = [];
@@ -1093,7 +1093,7 @@ class rex_yform_manager
                             $_fields[] = $_k;
                         }
                         $v['notice'] = (isset($v['notice']) ? $v['notice'] : '');
-                        $yform->setValueField('select', [$k_field, $v['label'], implode(',', $_fields), '', '', 0, 'notice' => $v['notice']]);
+                        $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_fields), 'notice' => $v['notice']]);
                         break;
 
                     case 'select_names':
@@ -1102,7 +1102,7 @@ class rex_yform_manager
                             $_fields[] = $_k;
                         }
                         $v['notice'] = (isset($v['notice']) ? $v['notice'] : '');
-                        $yform->setValueField('select', [$k_field, $v['label'], implode(',', $_fields), '', '', 1, 5, 'notice' => $v['notice']]);
+                        $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_fields), 'multiple' => true, 'notice' => $v['notice']]);
                         break;
 
                     case 'text':
@@ -1117,8 +1117,7 @@ class rex_yform_manager
                         break;
 
                     case 'textarea':
-                    case 'select':
-                    case 'select_sql':
+                    case 'choice':
                     default:
                         $v['name'] = $k_field;
                         $yform->setValueField($v['type'], $v);
@@ -1126,11 +1125,17 @@ class rex_yform_manager
                 }
             }
 
+            if (isset($types[$type_id][$type_name]['validates']) && is_array($types[$type_id][$type_name]['validates'])) {
+                foreach ($types[$type_id][$type_name]['validates'] as $k => $v) {
+                    $yform->setValidateField(key($v), current($v));
+                }
+            }
+
             $yform->setActionField('showtext', ['', '<p>' . rex_i18n::msg('yform_thankyouforentry') . '</p>']);
             $yform->setObjectparams('main_table', rex_yform_manager_field::table());
 
             if ($func == 'edit') {
-                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_save'));
+                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_update'));
                 $yform->setHiddenField('field_id', $field_id);
                 $yform->setActionField('manage_db', [rex_yform_manager_field::table(), "id=$field_id"]);
                 $yform->setObjectparams('main_id', $field_id);
@@ -1147,12 +1152,19 @@ class rex_yform_manager
                 }
                 $yform->setObjectparams('sql_object', $sql);
                 $yform->setObjectparams('getdata', true);
+
             } elseif ($func == 'add') {
-                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add'));
+                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_add'));
                 $yform->setActionField('manage_db', [rex_yform_manager_field::table()]);
+
             }
 
             if ($type_id == 'value') {
+
+                $db_choices = $field->getDatabaseFieldTypes();
+                $default = $field->getDatabaseFieldDefaultType();
+                $yform->setValueField('choice', ['name' => 'db_type', 'label' => rex_i18n::msg('yform_field_db_type'), 'choices' => $db_choices, 'default' => $default]);
+
                 if (!$field->isHiddenInListDisabled()) {
                     $yform->setValueField('checkbox', ['name' => 'list_hidden', 'label' => rex_i18n::msg('yform_hideinlist'), 'default' => '1']);
                 }
@@ -1160,6 +1172,7 @@ class rex_yform_manager
                 if (!$field->isSearchableDisabled()) {
                     $yform->setValueField('checkbox', ['name' => 'search', 'label' => rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 'default' => '1']);
                 }
+
             } elseif ($type_id == 'validate') {
                 $yform->setValueField('hidden', ['list_hidden', 1]);
                 $yform->setValueField('hidden', ['search', 0]);
@@ -1508,7 +1521,7 @@ class rex_yform_manager
         // Tabelle erstellen wenn noch nicht vorhanden
         $c = rex_sql::factory();
         $c->setDebug($debug);
-        $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $data_table . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+        $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $data_table . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 
         // Tabellenset in die Basics einbauen, wenn noch nicht vorhanden
         $c = rex_sql::factory();
@@ -1548,14 +1561,6 @@ class rex_yform_manager
         $c->insert();
 
         return true;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function addDataFields($data_table, $fields, $debug = false)
-    {
-        rex_yform_manager_table_api::generateTablesAndFields();
     }
 
     /**

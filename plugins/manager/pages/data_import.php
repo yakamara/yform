@@ -23,6 +23,10 @@ $debug = rex_request('debug', 'string');
 if (!in_array($divider, [';', ',', 'tab'])) {
     $divider = ',';
 }
+
+// 1 = ignore missing fields
+// 2 = addfield if missing
+// 3 = error if fields are missing
 if ($missing_columns != 2 && $missing_columns != 3) {
     $missing_columns = 1;
 }
@@ -79,8 +83,26 @@ if (rex_request('send', 'int', 0) == 1) {
                 if (count($fieldarray) == 0) {
                     $fieldarray = $line_array;
 
+                    $fieldarray = array_map('rex_string::normalize', $fieldarray);
+
+                    if (in_array('', $fieldarray)) {
+                        echo rex_view::error(rex_i18n::msg('yform_manager_import_error_missingfielddefinition'));
+                        $show_importform = true;
+                        $func = 'import';
+                        break;
+                    }
+
+                    if (count($fieldarray) != count(array_unique($fieldarray))) {
+                        echo rex_view::error(rex_i18n::msg('yform_manager_import_error_duplicatefielddefinition'));
+                        $show_importform = true;
+                        $func = 'import';
+                        break;
+                    }
+
                     $mc = [];
                     foreach ($fieldarray as $k => $v) {
+                        $v = rex_string::normalize($v);
+                        $fieldarray[$k] = $v;
                         if (!array_key_exists($fieldarray[$k], $rfields) && $fieldarray[$k] != 'id') {
                             $mc[$fieldarray[$k]] = $fieldarray[$k];
                         }
@@ -155,16 +177,19 @@ if (rex_request('send', 'int', 0) == 1) {
                     $dataset->save();
 
                     if ($messages = $dataset->getMessages()) {
-                        $error = '<ul>';
-                        foreach ($messages as $msg) {
-                            $error .= '<li>'.rex_i18n::translate($msg).'</li>';
+                        $messages = array_unique($messages);
+                        foreach ($messages as $key => $msg) {
+                            if ($msg == '') {
+                                $msg = rex_i18n::msg('yform_manager_import_error_messagemissing');
+                            } else {
+                                $msg = rex_i18n::translate($msg);
+                            }
                         }
-                        $error .= '</ul>';
 
                         ++$dcounter;
                         $dataId = 'ID: '.$id;
-                        echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, $error));
-                    } elseif ($exists) {
+                        echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, '<br />* ' .implode('<br />* ', $messages)));
+                    } else if ($exists) {
                         ++$rcounter;
                     } else {
                         ++$icounter;

@@ -30,7 +30,7 @@ $yform = new rex_yform();
 $yform->setObjectparams('form_showformafterupdate', 1);
 $yform->setObjectparams('form_name', $_csrf_key);
 $yform->setHiddenField('page', $page);
-$yform->setValueField('select', ['table_name', rex_i18n::msg('yform_table'), $missing_tables]);
+$yform->setValueField('choice', ['name' => 'table_name', 'label' => rex_i18n::msg('yform_table'), 'choices' => $missing_tables]);
 $yform->setValueField('checkbox', ['convert_id', rex_i18n::msg('yform_manager_migrate_table_id_convert')]);
 $form = $yform->getForm();
 
@@ -47,7 +47,7 @@ if ($yform->objparams['actions_executed']) {
         $yform = new rex_yform();
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setHiddenField('page', $page);
-        $yform->setValueField('select', ['table_name', rex_i18n::msg('yform_table'), $missing_tables]);
+        $yform->setValueField('choice', ['name' => 'table_name', 'label' => rex_i18n::msg('yform_table'), 'choices' => $missing_tables]);
         $yform->setValueField('checkbox', ['convert_id', rex_i18n::msg('yform_manager_migrate_table_id_convert')]);
         $form = $yform->getForm();
     } catch (Exception $e) {

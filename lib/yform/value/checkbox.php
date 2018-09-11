@@ -12,37 +12,16 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
     public function enterObject()
     {
 
-        if (is_array($this->getElement('values'))) {
-            $values = $this->getElement('values');
-            $w = $values[0];
-            $v = $values[1];
-        } else if ($this->getElement('values') == '') {
-            $w = 0;
-            $v = 1;
+        if ($this->params['send'] == 1 && $this->getValue() != 1) {
+            $this->setValue(0);
+        } else  if ($this->getValue() != '') {
+            $this->setValue(($this->getValue() != 1) ? "0": "1");
         } else {
-            $values = explode(',', $this->getElement('values'));
-            if (count($values) == 1) {
-                $w = '';
-                $v = $values[0];
-            } else {
-                $w = $values[0];
-                $v = $values[1];
-            }
-        }
-        $values = [$w,$v];
-
-        if ($this->params['send'] != 1 && $this->getElement('default') == 1 && !in_array($this->getValue() , $values) ) {
-            $this->setValue($v);
-
-        } elseif ($this->getValue() == $v) {
-            $this->setValue($v);
-
-        } else {
-            $this->setValue($w);
+            $this->setValue($this->getElement('default'));
         }
 
         if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', ['value' => $v]);
+            $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', ['value' => $this->getValue()]);
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -53,7 +32,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'checkbox|name|label|Values(0,1)|default clicked (0/1)|[no_db]';
+        return 'checkbox|name|label|default clicked (0/1)|[no_db]|[notice]';
     }
 
     public function getDefinitions($values = [])
@@ -64,43 +43,30 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'values' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_checkbox_values'), 'default' => '0,1'],
-                'default' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_checkbox_default'), 'default' => 0, 'values' => '0,1'],
+                'default' => ['type' => 'checkbox', 'label' => rex_i18n::msg('yform_values_checkbox_default'), 'default' => 0],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_checkbox_description'),
-            'dbtype' => 'varchar(255)',
+            'db_type' => ['tinyint'],
             'famous' => true,
         ];
     }
 
     public static function getSearchField($params)
     {
-        if ($params['field']->getElement('values') == '') {
-            $v = 1; // gecheckt
-            $w = 0; // nicht gecheckt
-        } else {
-            $values = explode(',', $params['field']->getElement('values'));
-
-            if (count($values) == 1) {
-                $v = $values[0];
-                $w = '';
-            } else {
-                $v = $values[1];
-                $w = $values[0];
-            }
-        }
+        $v = 1;
+        $w = 0;
 
         $options = [];
         $options[$v] = 'checked';
         $options[$w] = 'not checked';
         $options[''] = '---';
 
-        $params['searchForm']->setValueField('select', [
+        $params['searchForm']->setValueField('choice', [
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
-            'options' => $options,
+            'choices' => $options,
         ]);
     }
 

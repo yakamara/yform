@@ -20,6 +20,60 @@ oder
 Last Changes
 -------
 
+### Version 3.0 // xx.xx.2018
+
+#### Warnung - Bitte nicht von 2.x auf 3.x Update ohne sich genau informiert zu haben. Bei Updates von Majorversionen soll man immer Sicherungen machen
+
+### Änderungen
+
+* be_relations: 1-n Verknüpfungen nun über inline Modul möglich, inkl. Sortierung und überprüfung der verknüpften Formulare
+* Felder geben nun den Datenbankfeldtyp fest vor. D.h. nachträgliche Änderungen an der Datenbank werden angeglichen an YForm Definitionen
+* utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191)
+* choice Feld ergänzt: ersetzt radio, radio_sql, select, select_sql, checkbox_sql
+* Warnmeldungen ohne Inhalt werden nun um technische Infos ergänzt.
+* Snapshots über Console korrigiert, User wird nun auch richtig gesetzt
+* Tablesetimport verbessert
+* Dataimport verbessert und bessere Fehlermeldungen, Normalisierung der Feldnamen
+* E-Mail YFORM_DATA output korrigiert auf html und plain
+* MIT Lizenz ergänzt
+
+* Popupfenster schliesst nun bei Mehrfachselect nicht mehr direkt
+* Templates überarbeitet: Grid entfernt, diverse Anpassungen class und bootstrap
+* Diverse technische Optimierungen
+* integer: um Maßeinheit ergänzt
+* number: Neues Feld, mit Maßeinheit und richtigem DB Feldtyp
+* datestamp: wird nun als datetime gespeichert. format nun für Anzeige, nicht mehr als Speicherformat
+* type: url filter
+* checkbox: keine eigenen Werte mehr. Ausschliesslich 0,1. DB-Type: tinyint.
+* time: korrigiert
+* captcha: korrekturen
+* date: korrekturen
+* be_table: korrekturen
+* html: Infotext angepasst
+* index: Fehler bei der Speicherung behoben, null wird nun vermieden
+* upload: diverse anpassungen.
+* emptyname: wird nun auch an YOrm übergeben, null wird nun vermieden
+* Doku wurde aktualisiert
+* Übersetzungen ergänzt
+* UNIX Timestamp in historie auf serverdate geändert
+* yform-element in ytemplates komplett entfernt
+* Tabellenübersicht optimiert
+* YTemplates: Grid überall entfernt, da nicht genutzt und nicht klar verständlich
+
+#### deprecated
+
+* radio Feld
+* radio_select Feld
+* select Feld
+* select_sql Feld
+* checkbox_sql Feld
+* float Feld
+
+#### umbenannt und werden initial aus der YForm Definition entfernt
+
+* labelexist -> in_names
+* existintable -> in_table
+
 
 ### Version 2.3 // 26.01.2018
 

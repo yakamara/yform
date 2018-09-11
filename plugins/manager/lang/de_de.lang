@@ -36,7 +36,11 @@ yform_table_overview = Tabellenübersicht
 yform_manager_edit_table = Tabelle editieren
 yform_manager_add_table = Tabelle hinzufügen
 
+yform_update_table = Tabelle aktualisieren
+yform_add_table = Tabelle hinzufügen
 yform_add_row = Reihe hinzufügen
+
+yform_edit_datatable = Daten verwalten
 
 # tables.inc.php
 yform_importcsv = CSV Importieren
@@ -135,7 +139,8 @@ yform_edit = editieren
 yform_save = speichern
 yform_save_apply = übernehmen
 yform_delete = löschen
-yform_delete_definitions = Definitionen löschen
+yform_delete_definitions = Schema löschen
+yform_delete_definitions_info = Datenbanktabelle bleibt erhalten
 yform_search = suchen
 yform_export = exportieren
 yform_import = importieren
@@ -174,7 +179,7 @@ yform_editfield = Feld editieren
 yform_choosenadd = Felder auswählen
 yform_choosenadd_description = Bitte wählen Sie das Feld aus, welches Sie bei Ihrer Verwaltung verwenden wollen. Dabei gibt es Value-Felder, mit denen normalerweise Eingaben getätigt werden, wie auch Validate-Felder, mit denen die Value-Felder nach diversen Kriterien überprüft werden können.
 yform_addfield = Feld hinzufügen
-yform_editfields = Felder bearbeiten
+yform_editfields = Felder editieren
 
 yform_id_is_missing = ID fehlt
 yform_id_missing_info = Die Tabelle hat leider kein ID Feld mit autoincrement. Somit kann yform nicht damit arbeiten. Bitte aktualisieren Sie die Tabelle und legen notfalls die ID manuell an.
@@ -203,6 +208,8 @@ yform_manager_import_divider_tab = Tabulator
 yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
 yform_manager_import_start = Hinzufügen
 yform_manager_import_file = Datei
+yform_manager_import_error_missingfielddefinition = Es gibt Felder, welche leer sind und daher nicht zugewiesen werden können. Bitte die erste Zeile des Importes prüfen.
+yform_manager_import_error_duplicatefielddefinition = Es gibt Felder, welche identisch sind. Bitte die erste Zeile des Importes prüfen.
 
 # history
 yform_history = Historie
@@ -277,3 +284,7 @@ yform_values_prio_default = Am Anfang
 
 yform_is = ist
 yform_will_set_to = wird
+
+yform_field_add = Feld hinzufügen
+yform_field_update = Feld aktualisieren
+yform_field_db_type = Datenbank-Feldtyp

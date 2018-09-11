@@ -14,6 +14,10 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
         if ($this->params['send'] == '1') {
             $Object = $this->getValueObject();
 
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             if ($this->getElement('not_required') == 1 && $Object->getValue() == '') {
                 return;
             }
@@ -22,6 +26,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
             switch (trim($this->getElement('type'))) {
                 case 'int':
+                case 'integer':
                     $xsRegEx_int = '/^[0-9]+$/i';
                     if (preg_match($xsRegEx_int, $Object->getValue()) == 0) {
                         $w = true;
@@ -107,7 +112,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 'name' => 'type',
                 'values' => [
                     'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_type_name')],
-                    'type' => ['type' => 'select',    'label' => rex_i18n::msg('yform_validate_type_type'), 'default' => '', 'options' => 'int,float,numeric,string,email,url,date,datetime'],
+                    'type' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_validate_type_type'), 'choices' => 'int,float,numeric,string,email,url,date,datetime'],
                     'message' => ['type' => 'text',    'label' => rex_i18n::msg('yform_validate_type_message')],
                     'not_required' => ['type' => 'boolean',    'label' => rex_i18n::msg('yform_validate_type_not_required'), 'default' => 0],
                 ],

@@ -191,3 +191,7 @@ yform_values_csrf_description = CSRF Protection
 
 yform_geo_get_position = Get location
 yform_geo_clear_position = Clear location
+
+yform_values_message_is_missing = [Warningmessage for field `{1}` is missing]
+
+yform_validate_object_is_missing = Object `{1}` for validation `{1}` is missing

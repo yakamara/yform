@@ -257,7 +257,7 @@ class rex_yform_manager_collection extends \SplFixedArray
             $relatedDatasets[$dataset->getId()] = [];
         }
 
-        if (4 == $relation['type']) {
+        if (4 == $relation['type'] || 5 == $relation['type']) {
             $query->where($relation['field'], $this->getIds());
 
             $allRelatedDatasets = $query->find();

@@ -16,6 +16,10 @@ class rex_yform_validate_preg_match extends rex_yform_validate_abstract
 
             $Object = $this->getValueObject();
 
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             preg_match($pm, $Object->getValue(), $matches);
 
             if (count($matches) > 0 && current($matches) == $Object->getValue()) {

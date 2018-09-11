@@ -59,3 +59,7 @@ table.yform-table-help tr.yform-classes-famous .btn-default {
     background-color: #e1e9f4;
     border-color: #a1a9b4
 }
+
+table.yform-table-help tr.yform-classes-deprecated {
+    background: #f1a9b4;
+}

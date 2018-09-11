@@ -7,7 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_validate_existintable extends rex_yform_validate_abstract
+class rex_yform_validate_in_table extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
@@ -24,19 +24,20 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
 
             $qfields = [];
             foreach ($this->getObjects() as $k => $o) {
-                if (in_array($o->getName(), $labels)) {
-                    $label_key = array_search($o->getName(), $labels);
-                    $name = $fields[$label_key]; // $o->getName()
-                    $value = $o->getValue();
+                if ($this->isObject($o)) {
+                    if (in_array($o->getName(), $labels)) {
+                        $label_key = array_search($o->getName(), $labels);
+                        $name = $fields[$label_key]; // $o->getName()
+                        $value = $o->getValue();
 
-                    if (is_array($value)) {
-                        $value = implode(',', $value);
+                        if (is_array($value)) {
+                            $value = implode(',', $value);
+                        }
+                        $qfields[$o->getId()] = $db->escapeIdentifier($name) . ' = ' . $db->escape($value);
                     }
-                    $qfields[$o->getId()] = $db->escapeIdentifier($name) . ' = ' . $db->escape($value);
                 }
             }
 
-            // all fields available ?
             if (count($qfields) != count($fields)) {
                 $this->params['warning'][] = $this->params['error_class'];
                 $this->params['warning_messages'][] = $this->getElement(5);
@@ -45,7 +46,7 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
 
             $sql = 'select * from ' . $table . ' WHERE (' . implode(' AND ', $qfields) . ')';
             $extras = trim($this->getElement(6));
-            if ($extras != "") {
+            if ($extras != '') {
                 $sql .= ' and ('.$extras.')';
             }
             $sql .= ' LIMIT 2';
@@ -62,6 +63,6 @@ class rex_yform_validate_existintable extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|existintable|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
+        return 'validate|in_table|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
     }
 }

@@ -27,8 +27,8 @@ $yform = new rex_yform();
 $yform->setHiddenField('page', $page);
 $yform->setObjectparams('real_field_names', true);
 $yform->setObjectparams('form_name', $_csrf_key);
-$yform->setValueField('select', ['table_names', rex_i18n::msg('yform_manager_tables'), $yform_tables, 'multiple' => 1]);
-$yform->setValidateField('empty', ['table_names', rex_i18n::msg('yform_manager_export_error_empty')]);
+$yform->setValueField('choice', ['name' => 'table_names', 'label' => rex_i18n::msg('yform_manager_tables'), 'choices' => $yform_tables, 'multiple' => true]);
+$yform->setValidateField('empty', ['name' => 'table_names', 'label' => rex_i18n::msg('yform_manager_export_error_empty')]);
 $form = $yform->getForm();
 
 if ($yform->objparams['actions_executed']) {

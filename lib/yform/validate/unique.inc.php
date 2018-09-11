@@ -23,7 +23,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
             $qfields = [];
 
             foreach ($this->getObjects() as $Object) {
-                if (in_array($Object->getName(), $fields)) {
+                if ($this->isObject($Object) && in_array($Object->getName(), $fields)) {
                     $value = $Object->getValue();
                     // select array ? (special case)
                     if (is_array($value)) {

@@ -13,7 +13,7 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
-$class_group = trim('form-group yform-element ' . $this->getHTMLClass());
+$class_group = trim('form-group ' . $this->getHTMLClass());
 
 ?>
 <div class="<?= $class_group ?>"  id="<?php echo $this->getHTMLId() ?>">

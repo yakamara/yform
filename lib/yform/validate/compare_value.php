@@ -16,6 +16,11 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
             $compare_value = $this->getElement('compare_value');
 
             $Object = $this->getValueObject($this->getElement('name'));
+
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             $field_value = $Object->getValue();
 
             $error = false;
@@ -72,7 +77,7 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
             'values' => [
                 'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_compare_value_name')],
                 'compare_value' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_compare_value_compare_value')],
-                'compare_type' => ['type' => 'select', 'label' => rex_i18n::msg('yform_validate_compare_value_compare_type'), 'options' => '!\=,<,>,\=\=,>\=,<\=', 'default' => '!\='],
+                'compare_type' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_validate_compare_value_compare_type'), 'choices' => ['!=','<','>','==','>=','<='], 'default' => '!='],
                 'message' => ['type' => 'text',        'label' => rex_i18n::msg('yform_validate_compare_value_message')],
             ],
             'description' => rex_i18n::msg('yform_validate_compare_value_description'),
