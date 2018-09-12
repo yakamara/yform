@@ -18,9 +18,7 @@ foreach ($this->getInstalledPlugins() as $plugin) {
 
 if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '3', '<')) {
 
-    // TODO: choice feld setzen
-
-    $fields_removed = ['select', 'select_sql', 'checkbox_sql', 'radio', 'radio_sql'];
+    $fields_removed = [];
     $fields_renamed = ['labelexist' => 'in_names', 'existintable' => 'in_table'];
 
     foreach ($fields_renamed as $field_old_name => $field_new_name) {
