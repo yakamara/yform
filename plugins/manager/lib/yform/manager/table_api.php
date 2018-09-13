@@ -251,6 +251,7 @@ class rex_yform_manager_table_api
         $table = [
             'table_name' => $table_name,
             'status' => 1,
+            'schema_overwrite' => 0,
         ];
 
         $autoincrement = [];
