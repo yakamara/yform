@@ -215,12 +215,12 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         }
 
         $params['searchForm']->setValueField('choice', [
-                'name' => $params['field']->getName(),
-                'label' => $params['field']->getLabel(),
-                'choices' => $choices,
-                'multiple' => 1,
-                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
-            ]
+            'name' => $params['field']->getName(),
+            'label' => $params['field']->getLabel(),
+            'choices' => $choices,
+            'multiple' => 1,
+            'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
+        ]
         );
     }
 
@@ -301,7 +301,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $choiceList->createListFromSqlArray(
                 $sql->getArray($choicesElement)
             );
-        } elseif (is_string($choicesElement) && trim($choicesElement){0} == '{') {
+        } elseif (is_string($choicesElement) && strlen(trim($choicesElement)) > 0 && substr(trim($choicesElement), 0, 1) == '{') {
             $choiceList->createListFromJson($choicesElement);
         } else {
             $choiceList->createListFromStringArray(
