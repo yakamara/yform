@@ -557,7 +557,7 @@ class rex_yform_manager_table_api
 
             $EnsureTable
             ->ensurePrimaryIdColumn();
-            
+
             foreach ($table->getFields() as $field) {
 
                 if ($field->getType() == 'value') {
@@ -577,15 +577,20 @@ class rex_yform_manager_table_api
 
                         }
 
+                        $existingColumn = false;
+
                         foreach ($savedColumns as $savedColumn) {
                             if ($savedColumn['name'] == $field->getName()) {
                                 unset($savedColumns[$savedColumn['name']]);
+                                $existingColumn = true;
                                 break;
                             }
                         }
 
-                        $EnsureTable
-                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull()));
+                        if (!$existingColumn || ($existingColumn && $table->overwriteSchema())) {
+                            $EnsureTable
+                                ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull()));
+                        }
 
                     }
 

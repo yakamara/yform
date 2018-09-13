@@ -150,6 +150,11 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['mass_edit'] == 1;
     }
 
+    public function overwriteSchema()
+    {
+        return ($this->values['schema_overwrite'] == 1) ? true : false;
+    }
+
     public function hasHistory()
     {
         return $this->values['history'] == 1;
