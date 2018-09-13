@@ -555,6 +555,9 @@ class rex_yform_manager_table_api
 
             $EnsureTable = rex_sql_table::get($table->getTableName());
 
+            $EnsureTable
+            ->ensurePrimaryIdColumn();
+            
             foreach ($table->getFields() as $field) {
 
                 if ($field->getType() == 'value') {
@@ -582,13 +585,15 @@ class rex_yform_manager_table_api
                         }
 
                         $EnsureTable
-                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull()))
-                            ->ensure();
+                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull()));
 
                     }
 
                 }
             }
+
+            $EnsureTable
+                ->ensure();
 
             if ($delete_old === true) {
                 foreach ($savedColumns as $savedColumn) {
