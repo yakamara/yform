@@ -18,14 +18,13 @@ class rex_yform_value_text extends rex_yform_value_abstract
         }
 
         if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php',['prepend' => $this->getElement('prepend'), 'append' => $this->getElement('append')]);
+            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php', ['prepend' => $this->getElement('prepend'), 'append' => $this->getElement('append')]);
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
-
     }
 
     public function getDescription()
@@ -51,6 +50,11 @@ class rex_yform_value_text extends rex_yform_value_abstract
             'description' => rex_i18n::msg('yform_values_text_description'),
             'db_type' => ['varchar(191)', 'text'],
             'famous' => true,
+            'hooks' => [
+                'preDefault' => function (rex_yform_manager_field $field) {
+                    return $field->getElement('default');
+                },
+            ],
         ];
     }
 

@@ -260,10 +260,10 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
         if (!isset($definitions['db_type'])) {
             $definitions['db_type'] = [];
-        } else if (!is_array($definitions['db_type'])) {
+        } elseif (!is_array($definitions['db_type'])) {
             $definitions['db_type'] = [$definitions['db_type']];
         }
-        foreach($definitions['db_type'] as $db_type){
+        foreach ($definitions['db_type'] as $db_type) {
             $db_types[$db_type] = $db_type;
         }
         return $db_types;
@@ -280,6 +280,12 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         $definitions = $this->getDefinitions();
         return (isset($definitions['db_null']) && $definitions['db_null']) ? true : false;
+    }
+
+    public function getDatabaseFieldDefault()
+    {
+        $definitions = $this->getDefinitions();
+        return (isset($definitions['default']) && $definitions['default']) ? $definitions['default'] : null;
     }
 
     // ------------ Trigger
