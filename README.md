@@ -27,7 +27,7 @@ Last Changes
 ### Änderungen
 
 * be_relations: 1-n Verknüpfungen nun über inline Modul möglich, inkl. Sortierung und überprüfung der verknüpften Formulare
-* Felder geben nun den Datenbankfeldtyp fest vor. D.h. nachträgliche Änderungen an der Datenbank werden angeglichen an YForm Definitionen
+* Felder geben nun den Datenbankfeldtyp fest vor. Felder werden auch nachträglich an das Datenbankfeld angepasst. Nun auch optional
 * utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191)
 * choice Feld ergänzt: ersetzt radio, radio_sql, select, select_sql, checkbox_sql
 * Warnmeldungen ohne Inhalt werden nun um technische Infos ergänzt.
