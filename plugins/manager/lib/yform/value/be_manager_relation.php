@@ -151,10 +151,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $prioFieldName = '';
             $fields = [];
             foreach ($table->getFields() as $field) {
-                if ($field->getType() == 'value' && $field->getTypeName() == 'prio') {
-                    $prioFieldName = $field->getName();
-                } else {
-                    $fields[] = $field->getName();
+                if ($field->getType() == 'value') {
+                    if ($field->getTypeName() == 'prio') {
+                        $prioFieldName = $field->getName();
+                    } else {
+                        $fields[] = $field->getName();
+                    }
                 }
             }
 
@@ -176,8 +178,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $counter = 1;
                 foreach ($relations as $relation) {
                     $_REQUEST['FORM'][$fieldkey][$counter]['id'] = $relation->getId();
-                    foreach ($fields as $field) {
-                        $_REQUEST['FORM'][$fieldkey][$counter][$field] = $relation->getValue($field);
+                    foreach ($table->getFields() as $field) {
+                        if ($field->getType() == 'value' && !in_array($field->getDatabaseFieldDefaultType(), ['none', null])) {
+                            $_REQUEST['FORM'][$fieldkey][$counter][$field->getName()] = $relation->getValue($field->getName());
+                        }
                     }
                     ++$counter;
                 }
@@ -267,15 +271,14 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
     public function postAction()
     {
         if ($this->relation['relation_type'] == 5 && $this->params['main_id'] > 0) {
-
             $fieldkey = $this->relation['source_table'].'-'.$this->relation['target_table'].'-'.$this->relation['target_field'];
             $table = rex_yform_manager_table::get($this->relation['target_table']);
 
             $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
-            ->where($this->relation['target_field'], $this->params['main_id'])->find();
+                ->where($this->relation['target_field'], $this->params['main_id'])->find();
 
             $relations_key = [];
-            foreach($relations as $relation) {
+            foreach ($relations as $relation) {
                 $relations_key[$relation->getId()] = $relation;
             }
 
@@ -306,7 +309,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             if (isset($_REQUEST['FORM'][$fieldkey]) && is_array($_REQUEST['FORM'][$fieldkey])) {
                 $counter = 0;
                 foreach ($_REQUEST['FORM'][$fieldkey] as $key => $form) {
-
                     ++$counter;
                     $data = $table->createDataset();
 
@@ -330,7 +332,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform->setObjectparams('csrf_protection', false);
 
                     $yform->getForm();
-
                 }
             }
         }
