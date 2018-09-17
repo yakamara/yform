@@ -116,7 +116,9 @@ $(document).on('rex:ready', function (event, container) {
     });
 
     container.find('[data-yform-be-relation-sortable]').each(function() {
-        $(this).sortable();
+        $(this).sortable({
+            handle: ".sorthandle"
+        });
     });
 
     container.find('[data-yform-be-relation-add]').each(function() {
