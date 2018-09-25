@@ -7,7 +7,7 @@ $notice = $this->getElement('notice') != '' ? '<p class="help-block">' . $this->
 $class_group = trim('form-group ' . $class . $this->getWarningClass());
 $class_control = trim('form-control');
 
-?>2
+?>
 <div class="<?php echo $class_group ?>">
     <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabelStyle($this->getElement(1)) ?></label>
     <div class="input-group">
