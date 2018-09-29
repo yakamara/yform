@@ -15,9 +15,9 @@ class rex_yform_validate_json extends rex_yform_validate_abstract
             if ($Object->getValue() == '') {
                 return;
             }
-
+            json_decode($Object->getValue('name'));
             if ($Object->getValue()) {
-                if ((json_last_error() == JSON_ERROR_NONE)) {
+                if ((json_last_error() != JSON_ERROR_NONE)) {
                     $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                     $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
                 }
