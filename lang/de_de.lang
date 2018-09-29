@@ -196,7 +196,7 @@ yform_values_options_label = 	Bezeichnung
 yform_values_options_boolvalues	= 	Werte (0,1) (nicht angeklickt,angeklickt)
 
 yform_values_be_user_description = Backend User speichern
-yform_values_csrf_description = CSRF Schutz
+yform_values_csrf_description = CSRF-Schutz
 
 yform_geo_get_position = Hole Position
 yform_geo_clear_position = Lösche Position
@@ -230,12 +230,12 @@ yform_values_message_is_missing = [Warnmeldung für Feld `{1}` fehlt]
 
 yform_validate_object_is_missing = Object `{1}` zur Validierung `{1}` fehlt
 
-yform_values_deprecated_checkbox_sql = Deprecated! Verwende das Choice Feld
-yform_values_deprecated_radio = Deprecated! Verwende das Choice Feld
-yform_values_deprecated_radio_sql = Deprecated! Verwende das Choice Feld
-yform_values_deprecated_select = Deprecated! Verwende das Choice Feld
-yform_values_deprecated_select_sql = Deprecated! Verwende das Choice Feld
-yform_values_deprecated_float = Deprecated! Verwende das number Feld
+yform_values_deprecated_checkbox_sql = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_radio = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_radio_sql = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_select = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_select_sql = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_float = Deprecated! Verwende stattdessen das number-Feld
 
 yform_always = immer
 yform_onlyifempty = nur wenn leer
