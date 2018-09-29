@@ -32,7 +32,7 @@ class rex_yform_validate_json extends rex_yform_validate_abstract
     {
         return [
             'type' => 'validate',
-            'name' => 'size',
+            'name' => 'json',
             'values' => [
                 'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_json_name')],
                 'message' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_json_message')],
