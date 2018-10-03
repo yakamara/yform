@@ -35,7 +35,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'integer|name|label|defaultwert|[no_db]|[notice]|[unit]';
+        return 'number|name|label|precision|scale|defaultwert|[no_db]|[unit]|[notice]';
     }
 
     public function getDefinitions()

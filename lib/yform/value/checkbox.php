@@ -11,11 +11,10 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-
         if ($this->params['send'] == 1 && $this->getValue() != 1) {
             $this->setValue(0);
-        } else  if ($this->getValue() != '') {
-            $this->setValue(($this->getValue() != 1) ? "0": "1");
+        } elseif ($this->getValue() != '') {
+            $this->setValue(($this->getValue() != 1) ? '0' : '1');
         } else {
             $this->setValue($this->getElement('default'));
         }
@@ -48,8 +47,13 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_checkbox_description'),
-            'db_type' => ['tinyint'],
+            'db_type' => ['tinyint(1)'],
             'famous' => true,
+            'hooks' => [
+                'preDefault' => function (rex_yform_manager_field $field) {
+                    return ($field->getElement('default') == 1) ? '1' : '0';
+                },
+            ],
         ];
     }
 

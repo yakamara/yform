@@ -18,9 +18,8 @@ class rex_yform_choice_list
         // Sicherstellen, dass das Array Label => Value enthaelt
         // ist bei normaler kommaseparierte Schreibweise vertauscht
         $choices = array_flip($choices);
-
         foreach ($choices as $label => $value) {
-            $label = rex_i18n::translate($label, false);
+            $label = rex_i18n::translate((string)$label, false);
             $this->choices[trim($label)] = trim($value);
             $this->choicesByValues[trim($value)] = trim($label);
         }
@@ -32,14 +31,14 @@ class rex_yform_choice_list
 
         foreach ($choices as $label => $value) {
             if (!is_array($value)) {
-                $label = rex_i18n::translate($label, false);
+                $label = rex_i18n::translate((string)$label, false);
                 $this->choices[trim($label)] = trim($value);
                 $this->choicesByValues[trim($value)] = trim($label);
                 continue;
             }
             // Im Template werden im `select` optgroup erstellt
             foreach ($value as $nestedLabel => $nestedValue) {
-                $nestedLabel = rex_i18n::translate($nestedLabel, false);
+                $nestedLabel = rex_i18n::translate((string)$nestedLabel, false);
                 $this->choices[trim($label)][trim($nestedLabel)] = trim($nestedValue);
                 $this->choicesByValues[trim($nestedValue)] = trim($nestedLabel);
             }
@@ -51,7 +50,7 @@ class rex_yform_choice_list
         foreach ($choices as $choice) {
             $value = isset($choice['value']) ? $choice['value'] : $choice['id'];
             $label = isset($choice['label']) ? $choice['label'] : $choice['name'];
-            $label = rex_i18n::translate($label, false);
+            $label = rex_i18n::translate((string)$label, false);
 
             // Im Template werden im `select` optgroup erstellt
             if ($this->options['group_by'] && isset($choice[$this->options['group_by']])) {

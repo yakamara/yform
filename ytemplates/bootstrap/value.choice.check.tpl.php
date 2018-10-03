@@ -64,7 +64,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 
 <div<?= rex_string::buildAttributes($groupAttributes) ?>>
     <?php if ($this->getLabel()): ?>
-        <label class="form-control-label" for="<?= $this->getFieldId() ?>">
+        <label class="control-label" for="<?= $this->getFieldId() ?>">
             <?= rex_escape($this->getLabelStyle($this->getLabel())) ?>
         </label>
     <?php endif ?>

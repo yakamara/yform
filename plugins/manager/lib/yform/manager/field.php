@@ -94,6 +94,11 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->object->getDatabaseFieldNull();
     }
 
+    public function getDatabaseFieldDefault()
+    {
+        return $this->object->getDatabaseFieldDefault();
+    }
+
     public function getHooks()
     {
         return (isset($this->definitions['hooks'])) ? $this->definitions['hooks'] : [];
