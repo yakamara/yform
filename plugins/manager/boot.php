@@ -15,6 +15,7 @@ rex_complex_perm::register('yform_manager_table', 'rex_yform_manager_table_perm'
 if (rex::isBackend() && rex::getUser()) {
     rex_view::addJsFile($this->getAssetsUrl('manager.js'));
     rex_view::addCssFile($this->getAssetsUrl('manager.css'));
+    rex_view::addJsFile($this->getAssetsUrl('widget.js'));
 
     if (!rex::getUser()->isAdmin()) {
         $page = $this->getProperty('page');
