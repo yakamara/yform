@@ -59,6 +59,8 @@ Last Changes
 * yform-element in ytemplates komplett entfernt
 * Tabellenübersicht optimiert
 * YTemplates: Grid überall entfernt, da nicht genutzt und nicht klar verständlich
+* CSV Import mit fehlenden Feldern geht wieder. Fehlende Felder werden als TEXT angelegt
+
 
 #### deprecated
 
