@@ -2,7 +2,7 @@
 
     <?php
     if ($this->objparams['form_action'] != "") {
-        echo '<form action="'.$this->objparams['form_action'].'" method="'.$this->objparams['form_method'].'" id="'.$this->objparams['form_name'].'>" class="'.$this->objparams['form_class'].'" enctype="multipart/form-data">';
+        echo '<form action="'.$this->objparams['form_action'].'" method="'.$this->objparams['form_method'].'" id="'.$this->objparams['form_name'].'" class="'.$this->objparams['form_class'].'" enctype="multipart/form-data">';
     }
     ?>
 
