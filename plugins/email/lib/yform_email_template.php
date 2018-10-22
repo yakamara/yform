@@ -105,6 +105,11 @@ class rex_yform_email_template
 
         $mail = new rex_mailer();
         $mail->AddAddress($template['mail_to'], $template['mail_to_name']);
+
+        if($template['reply_to'] != '') {
+            $mail->AddReplyTo($template['reply_to'], $template['reply_to_name']);
+        }
+
         $mail->SetFrom($template['mail_from'], $template['mail_from_name']);
         $mail->Subject = $template['subject'];
         $mail->Body = $template['body'];

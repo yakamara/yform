@@ -35,6 +35,28 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $mail_to_name = $mail_to;
             }
 
+
+            $reply_to = ''; 
+            $reply_to_name = '';
+            if ($this->getElement(6) != false && $this->getElement(6) != '') {
+                foreach ($this->params['value_pool']['email'] as $key => $value) {
+                    if ($this->getElement(6) == $key) {
+                        $reply_to = $value;
+                    }
+                }
+            }
+
+            if ($this->getElement(7) != false && $this->getElement(7) != '') {
+                foreach ($this->params['value_pool']['email'] as $key => $value) {
+                    if ($this->getElement(7) == $key) {
+                        $reply_to_name = $value;
+                    }
+                }
+            } else {
+                $reply_to_name = $reply_to;
+            }
+
+
             if ($this->params['debug']) {
                 dump($etpl);
             }
@@ -43,6 +65,9 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
             $etpl['mail_to'] = $mail_to;
             $etpl['mail_to_name'] = $mail_to_name;
+
+            $etpl['reply_to'] = $reply_to;
+            $etpl['reply_to_name'] = $reply_to_name;
 
             if ($etpl['attachments'] != '') {
                 $f = explode(',', $etpl['attachments']);
@@ -68,8 +93,8 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 if ($this->params['debug']) {
                     dump('email could not be sent');
                 }
-                if ($this->getElement(6) != false && $this->getElement(6) != '') {
-                    $this->params['output'] .= $this->getElement(6);
+                if ($this->getElement(8) != false && $this->getElement(8) != '') {
+                    $this->params['output'] .= $this->getElement(8);
                 }
                 return false;
             }
@@ -87,6 +112,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]|[Fehlermeldung wenn Versand fehgeschlagen ist/html]';
+        return 'action|tpl2email_replyto|emailtemplate|emaillabel|[email_to]|[email_name_to]|[label_reply_to_email]|[label_reply_to_name]|[Fehlermeldung wenn Versand fehgeschlagen ist/html]';
     }
 }
