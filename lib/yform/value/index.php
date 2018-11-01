@@ -84,7 +84,6 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'function' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_index_function'), 'notice' => rex_i18n::msg('yform_values_index_function_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_index_description'),
-            'is_hiddeninlist' => true,
             'db_type' => ['mediumtext', 'varchar(191)'], // text (65kb) mediumtext (16Mb)
             'multi_edit' => false,
         ];
