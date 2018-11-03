@@ -1,7 +1,10 @@
 <?php
 
 /**
- * REX_YFORM_DATA[id=1 table="tablename"],.
+ * REX_YFORM_TABLE_DATA[id=1 table="tablename"],.
+ * REX_YFORM_TABLE_DATA[id=1 table="tablename" widget=1],.
+ * REX_YFORM_TABLE_DATA[id=1 table="tablename" field=name widget=1],.
+ * REX_YFORM_TABLE_DATA[id=1 table="tablename" field=name widget=1 multiple=1],.
  *
  * @package redaxo\yform\manager
  */
