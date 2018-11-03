@@ -108,9 +108,6 @@ $mail_display = ($sel=='' || $sel==0) ?' style="display:none"':'';
         <label class="radio-inline">
           <input type="radio" name="REX_INPUT_VALUE[11]" value="1"<?php if("REX_VALUE[11]" == '1') echo ' checked'; ?> /> HTML
         </label>
-        <label class="radio-inline">
-          <input type="radio" name="REX_INPUT_VALUE[11]" value="2"<?php if("REX_VALUE[11]" == '2') echo ' checked'; ?> /> Textile
-        </label>
       </div>
       <div class="col-md-offset-2 col-md-10">
         <textarea class="form-control" name="REX_INPUT_VALUE[6]" rows="<?php echo (count(explode("\r",'REX_VALUE[6]'))+$row_pad);?>">REX_VALUE[6]</textarea>
