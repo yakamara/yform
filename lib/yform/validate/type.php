@@ -85,6 +85,12 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         $w = true;
                     }
                     break;
+                case 'json':
+                    json_decode($Object->getValue());
+                    if (json_last_error() != JSON_ERROR_NONE) {
+                        $w = true;
+                    }
+                    break;
                 case '':
                     break;
                 default:
@@ -102,7 +108,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime|warning_messageg|[1=field not empty]';
+        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/json|warning_messageg|[1=field not empty]';
     }
 
     public function getDefinitions()
@@ -112,7 +118,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 'name' => 'type',
                 'values' => [
                     'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_type_name')],
-                    'type' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_validate_type_type'), 'choices' => 'int,float,numeric,string,email,url,date,datetime'],
+                    'type' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_validate_type_type'), 'choices' => 'int,float,numeric,string,email,url,time,date,datetime,hex,json'],
                     'message' => ['type' => 'text',    'label' => rex_i18n::msg('yform_validate_type_message')],
                     'not_required' => ['type' => 'boolean',    'label' => rex_i18n::msg('yform_validate_type_not_required'), 'default' => 0],
                 ],
