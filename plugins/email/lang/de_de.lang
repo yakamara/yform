@@ -1,8 +1,10 @@
 yform_email_templates = E-Mail Templates
 
 yform_email_key = Key - bitte nicht verändern
-yform_email_from = Absender-E-Mail [z.b.info@redaxo.de]
-yform_email_from_name = Absender-Name [z.b. REDAXO Server]
+yform_email_from = Absender-E-Mail [z.B.info@redaxo.de]
+yform_email_from_name = Absender-Name [z.B. REDAXO Server]
+yform_email_reply_to = Reply-To-E-Mail [z.B. thomas@redaxo.de]
+yform_email_reply_to_name = Reply-To-Name [z.B. Thomas Server]
 yform_email_subject = Betreff
 yform_email_body = Body
 yform_email_body_html = Body (Html)

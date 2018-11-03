@@ -36,8 +36,18 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'text|name|translate:yform_email_key';
     $form_data[] = 'validate|empty|name|Bitte key eintragen';
 
+    $form_data[] = 'html|html1|<div class="row"><div class="col-md-6">';
     $form_data[] = 'text|mail_from|translate:yform_email_from';
+    $form_data[] = 'html|html2|</div><div class="col-md-6">';
     $form_data[] = 'text|mail_from_name|translate:yform_email_from_name';
+    $form_data[] = 'html|html3|</div></div>';
+
+    $form_data[] = 'html|html1|<div class="row"><div class="col-md-6">';
+    $form_data[] = 'text|mail_reply_to|translate:yform_email_reply_to';
+    $form_data[] = 'html|html2|</div><div class="col-md-6">';
+    $form_data[] = 'text|mail_reply_to_name|translate:yform_email_reply_to_name';
+    $form_data[] = 'html|html3|</div></div>';
+
     $form_data[] = 'text|subject|translate:yform_email_subject';
     $form_data[] = 'textarea|body|translate:yform_email_body|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
     $form_data[] = 'textarea|body_html|translate:yform_email_body_html|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
