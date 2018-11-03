@@ -5,7 +5,7 @@
  *
  * @package redaxo\yform\manager
  */
-class rex_var_yform_dataset extends rex_var
+class rex_var_yform_table_data extends rex_var
 {
     protected function getOutput()
     {
