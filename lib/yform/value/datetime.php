@@ -9,7 +9,7 @@
 
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
-    const VALUE_DATETIME_DEFAULT = 'YYYY/MM/DD HH:ii:ss';
+    const VALUE_DATETIME_DEFAULT = 'YYYY-MM-DD HH:ii:ss';
 
     public function preValidateAction()
     {
@@ -213,7 +213,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat YYYY/MM/DD HH:ii:ss] |[1/Aktuelles Datum voreingestellt]|[no_db]';
+        return 'datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat YYYY-MM-DD HH:ii:ss] |[1/Aktuelles Datum voreingestellt]|[no_db]';
     }
 
     public function getDefinitions()
