@@ -471,6 +471,7 @@ class rex_yform_manager_dataset
         $yform = clone $this->getInternalForm();
         $this->setFormMainId($yform);
         $yform->initializeFields();
+        $yform->setObjectparams('get_field_type', '');
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -493,7 +494,7 @@ class rex_yform_manager_dataset
         $this->messages = $yform->getObjectparams('warning_messages');
 
         $yform->setFieldValue('send', $send, '', 'send');
-
+        
         return empty($this->messages);
     }
 
