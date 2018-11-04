@@ -59,7 +59,7 @@ Version 3.0 – xx.xx.2018
 
 * labelexist -> in_names
 * existintable -> in_table
-
+* REX_YFORM_TABLE_DATA[table="tablename" output="widget/widgetlist"] -> REX_YFORM_TABLE_DATA[table="tablename" widget="1" multiple="1"]
 
 Version 2.3 – 26.01.2018
 --------------------------
