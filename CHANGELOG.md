@@ -45,6 +45,12 @@ Version 3.0 – xx.xx.2018
 * Textkorrekturen (Alexander Walther, Wolfgang Bund)
 * Descriptions korrigiert (Alex Platter)
 * Danke auch an christophboecker, Jürgen Weiss, Fernando Averanga, Yves Torres, Alexander Walther  für Übersetzungen, kleinere Korrekturen, Doku, Anpassungen an Templates.
+* validate: type um json erweitert
+* README und CHANGELOG getrennt
+* value: date/datetime Standardformat auf YYYY-MM-DD und YYYY-MM-DD HH:ii:ss geändert
+* Bug: Mehrere YOrm Aufrufe konnten sich beeinflussen. REQUEST/YCom Problem
+* checkbox nun auch mit attributes
+* be_manager_relation nun auch mit zusätzlichen varchar(191) ergänzt
 
 #### deprecated
 
