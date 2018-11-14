@@ -63,19 +63,21 @@ class rex_yform
 
         $this->objparams['getdata'] = false;
         $this->objparams['data'] = false;
+        $this->objparams['get_field_type'] = 'request';
 
 
         // --------------------------- do not edit
 
         $this->objparams['debug'] = false;
 
-        $this->objparams['form_data'] = '';
-        $this->objparams['output'] = '';
+        $this->objparams['form_data'] = ''; // Forms with pipe notation
+        $this->objparams['output'] = ''; // Final output of form
 
-        $this->objparams['main_where'] = ''; // z.B. id=12
-        $this->objparams['main_id'] = -1; // unique ID
+        // predefined dataset via sql
+        $this->objparams['main_where'] = ''; // like "id=12" for db
+        $this->objparams['main_id'] = -1; // unique Dataset ID
         $this->objparams['main_table'] = ''; // for db and unique
-        $this->objparams['sql_object'] = null;
+        $this->objparams['sql_object'] = null; // rex_sql
 
         $this->objparams['form_hiddenfields'] = [];
 
@@ -486,6 +488,8 @@ class rex_yform
             return 'FORM[' . $this->objparams['form_name'] . '][' . $id . ']';
         }
         return 'FORM[' . $this->objparams['form_name'] . '][' . $id . '][' . $k . ']';
+
+
     }
 
     public function getFieldValue($id = '', $k = '', $label = '')
@@ -493,28 +497,36 @@ class rex_yform
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
 
-        if (@$this->objparams['form_array'] != "") {
-            if ($k == '' && isset($_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id])) {
-                return $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id];
-            }
-            if (isset($_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k])) {
-                return $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k];
+        if ($this->getObjectparams('get_field_type') == "") {
+            $k = ($k == '') ? '(empty)' : '';
+            return (isset($this->objparams['field_values'][$this->objparams['form_name']][$k][$label])) ? $this->objparams['field_values'][$this->objparams['form_name']][$k][$label] : '';
+
+        } else if ($this->getObjectparams('get_field_type') == "request") {
+
+            if (@$this->objparams['form_array'] != "") {
+                if ($k == '' && isset($_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id])) {
+                    return $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id];
+                }
+                if (isset($_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k])) {
+                    return $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k];
+                }
+
+            } else if ($this->objparams['real_field_names'] && $label != '') {
+                if ($k == '' && isset($_REQUEST[$label])) {
+                    return $_REQUEST[$label];
+                }
+                if (isset($_REQUEST[$label][$k])) {
+                    return $_REQUEST[$label][$k];
+                }
+            } else {
+                if ($k == '' && isset($_REQUEST['FORM'][$this->objparams['form_name']][$id])) {
+                    return $_REQUEST['FORM'][$this->objparams['form_name']][$id];
+                }
+                if (isset($_REQUEST['FORM'][$this->objparams['form_name']][$id][$k])) {
+                    return $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k];
+                }
             }
 
-        } else if ($this->objparams['real_field_names'] && $label != '') {
-            if ($k == '' && isset($_REQUEST[$label])) {
-                return $_REQUEST[$label];
-            }
-            if (isset($_REQUEST[$label][$k])) {
-                return $_REQUEST[$label][$k];
-            }
-        } else {
-            if ($k == '' && isset($_REQUEST['FORM'][$this->objparams['form_name']][$id])) {
-                return $_REQUEST['FORM'][$this->objparams['form_name']][$id];
-            }
-            if (isset($_REQUEST['FORM'][$this->objparams['form_name']][$id][$k])) {
-                return $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k];
-            }
         }
         return null;
     }
@@ -524,29 +536,36 @@ class rex_yform
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
 
-        if (@$this->objparams['form_array'] != "") {
+        if ($this->getObjectparams('get_field_type') == "") {
+            $k = ($k == '') ? '(empty)' : '';
+            $this->objparams['field_values'][$this->objparams['form_name']][$k][$label] = $value;
 
-            if ($k == '') {
-                $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id] = $value;
-            } else {
-                $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k] = $value;
+        } else if ($this->getObjectparams('get_field_type') == "request") {
+
+            if (@$this->objparams['form_array'] != "") {
+
+                if ($k == '') {
+                    $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id] = $value;
+                } else {
+                    $_REQUEST['FORM'][$this->objparams['form_name']][$this->objparams['form_array']][$id][$k] = $value;
+                }
+                return;
+
             }
-            return;
 
-        }
-
-        if ($this->objparams['real_field_names'] && $label != '') {
-            if ($k == '') {
-                $_REQUEST[$label] = $value;
-            } else {
-                $_REQUEST[$label][$k] = $value;
+            if ($this->objparams['real_field_names'] && $label != '') {
+                if ($k == '') {
+                    $_REQUEST[$label] = $value;
+                } else {
+                    $_REQUEST[$label][$k] = $value;
+                }
+                return;
             }
-            return;
-        }
-        if ($k == '') {
-            $_REQUEST['FORM'][$this->objparams['form_name']][$id] = $value;
-        } else {
-            $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k] = $value;
+            if ($k == '') {
+                $_REQUEST['FORM'][$this->objparams['form_name']][$id] = $value;
+            } else {
+                $_REQUEST['FORM'][$this->objparams['form_name']][$id][$k] = $value;
+            }
         }
     }
 
