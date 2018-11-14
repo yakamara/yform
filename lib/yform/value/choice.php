@@ -90,7 +90,8 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
         $this->setValue(implode(',', $proofedValues));
 
-        $this->params['value_pool']['email'][$this->getName()] = implode(', ', $choiceList->getSelectedListForEmail($values));
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName().'_LABELS'] = implode(', ', $choiceList->getSelectedListForEmail($values));
         $this->params['value_pool']['email'][$this->getName().'_LIST'] = implode("\n", $choiceList->getCompleteListForEmail($values));
 
         if ($this->getElement('no_db') != 1) {
