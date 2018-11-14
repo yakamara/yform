@@ -260,7 +260,7 @@ class rex_yform_manager
 
                 $fields = ['id' => '"id"'];
                 foreach ($this->table->getFields() as $field) {
-                    if ($field->getDatabaseFieldType() != 'none') {
+                    if ( $field->getType() == 'value' && $field->getDatabaseFieldType() != 'none') {
                         $fields[$field->getName()] = '"' . $field->getName() . '"';
                     }
                 }
