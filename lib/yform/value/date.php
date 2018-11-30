@@ -165,7 +165,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'date|name|label| jahrstart | [jahrsende/+5 ]| [Anzeigeformat YYYY-MM-DD] | [1/Aktuelles Datum voreingestellt] | [no_db] ';
+        return 'date|name|label| jahrstart | [jahrende/+5 ]| [Anzeigeformat YYYY-MM-DD] | [1/Aktuelles Datum voreingestellt] | [no_db] ';
     }
 
     public function getDefinitions()
