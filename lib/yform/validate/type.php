@@ -108,7 +108,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/json|warning_messageg|[1=field not empty]';
+        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/json|warning_message|[1=field not empty]';
     }
 
     public function getDefinitions()
