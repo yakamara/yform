@@ -44,7 +44,8 @@ yform_values_float_description =				Ein einfaches Eingabefeld für <b>Gleitkomma
 yform_values_hashvalue_description =			Ein Feld, das aus dem Wert eines anderen Feldes einen <b>Hashwert</b> erzeugt.
 yform_values_html_description =					Gibt <b>HTML-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
 yform_values_index_description =				Ein Feld, das einen <b>Index</b> / Schlüssel über mehrere Felder erzeugt.
-yform_values_integer_description =				Ein einfaches Eingabefeld für <b>ganze Zahlen.</b>
+yform_values_integer_description =				Ein Eingabefeld für <b>ganze Zahlen. (INTEGER)</b>
+yform_values_number_description =               Ein Eingabefeld für <b>Zahlen mit oder ohne Nachkommastellen. (DECIMAL)</b>
 yform_values_mediafile_description =			Ein <b>Upload-Feld</b>, mit dem eine Datei in den Medienpool hochgeladen wird.
 yform_values_php_description =					Führt <b>PHP-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
 yform_values_radio_description =				Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
@@ -65,9 +66,14 @@ yform_values_defaults_attributes_notice = Bitte als JSON schreiben. z.B. {"reado
 yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Wert anzeigen
 yform_validate_defaults_message = Fehlermeldung
+yform_values_defaults_unit = Maßeinheit (z.B. € $ m mm %)
+
+yform_values_number_precision = Anzahl der Ziffern (23335443.23 wäre z.B. 10 Ziffern) (PRECISION)
+yform_values_number_scale = Anzahl der Nachkommastellen der Ziffern (23335443.23 wäre z.B. 2 Nachkommastellen) (SCALE)
 
 yform_search_defaults_wildcard_notice = Beispiele: *name / !(empty) / (empty)
 yform_search_integer_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
+yform_search_number_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
 yform_search_defaults_select_notice = Mit CTRL oder COMMAND mehrere auswählen
 
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
@@ -77,16 +83,16 @@ yform_values_checkbox_sql_query = Query mit "select id, name from ..""
 yform_values_date_year_start = Startjahr
 yform_values_date_year_end = Endjahr
 yform_values_date_format = Anzeigeformat
-yform_values_date_format_notice = Default: YYYY/MM/DD
+yform_values_date_format_notice = Default: YYYY-MM-DD
 yform_values_date_current_date = Aktuelles Datum voreingestellt
 yform_values_date_search_notice = Format: {0} - {0}
-yform_values_datestamp_format = Format
+yform_values_datestamp_format = Anzeigeformat
 yform_values_datestamp_only_empty = Wann soll Wert gesetzt werden
 yform_values_datetime_year_start = Startjahr
 yform_values_datetime_year_end = Endjahr
 yform_values_datetime_minutes = Minutenformate
 yform_values_datetime_format = Anzeigeformat
-yform_values_datetime_format_notice = Default: YYYY/MM/DD HH:ii:ss
+yform_values_datetime_format_notice = Default: YYYY-MM-DD HH:ii:ss
 yform_values_datetime_current_date = Aktuelles Datum voreingestellt
 yform_values_email_default = Defaultstatus
 yform_values_email_classname = Klassenname
@@ -101,6 +107,7 @@ yform_values_index_names_notice = Kommasepariert, auch Felder aus Relationen mö
 yform_values_index_function = Optional Codierfunktion
 yform_values_index_function_notice = z.B. md5, sha1
 yform_values_integer_default = Defaultwert
+yform_values_number_default = Defaultwert
 yform_values_mediafile_max_size = Maximale Größe in Kb oder Range 100,500
 yform_values_mediafile_types = Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png"
 yform_values_mediafile_required = Pflichtfeld
@@ -125,6 +132,8 @@ yform_values_submit_default = Defaultwert
 yform_values_submit_css_classes = CSS Klassen (kommasepariert)
 yform_values_text_default = Defaultwert
 yform_values_text_css_class = cssclassname
+yform_values_defaults_prepend = Zeichenfolge davor anzeigen. z.B. EUR
+yform_values_defaults_append = Zeichenfolge davor anzeigen. z.B. .00
 yform_values_textarea_default = Defaultwert
 yform_values_textarea_classes = classes
 yform_values_time_hours = Stundenraster
@@ -187,7 +196,7 @@ yform_values_options_label = 	Bezeichnung
 yform_values_options_boolvalues	= 	Werte (0,1) (nicht angeklickt,angeklickt)
 
 yform_values_be_user_description = Backend User speichern
-yform_values_csrf_description = CSRF Schutz
+yform_values_csrf_description = CSRF-Schutz
 
 yform_geo_get_position = Hole Position
 yform_geo_clear_position = Lösche Position
@@ -199,28 +208,39 @@ yform_values_choice_choice_attributes = Attribute für jede Auswahl (choice_attr
 yform_values_choice_choice_attributes_notice = Mit dieser Option können zu jeder Auswahl zusätzliche HTML-Attribute hinzugefügt werden. Callable: <code>foo($attributes, $value, $label)</code>; <code>foo::bar($attributes, $value, $label)</code> oder JSON: <code>{"class": "choicable", "DE": {"data-language": "de-de"}}</code>
 yform_values_choice_choices = Auswahlmöglichkeiten (choices)
 yform_values_choice_choices_notice = Dies ist der einfachste Weg, um die Optionen festzulegen, die von diesem Feld verwendet werden sollen. Die Option choices ist entweder ein kommaseparierter String (Bezeichung=Wert), ein JSON-Array, wobei der Arrayschlüssel die Bezeichnung des Elements und der Arraywert der Wert des Elements ist, oder ein Query "SELECT id, name FROM table"
-yform_values_choice_choices_table = <table class="table"><colgroup><col width="32%" /><col width="69%" /></colgroup><thead valign="bottom"><tr><th>Beschreibung</th><th>Beispiel</th></tr></thead><tbody valign="top"><tr><td>kommaseparierter String</td><td><code>Dänemark=DK,Deutschland=DE,Österreich=AT,Schweiz=CH</code></td></tr><tr><td>JSON-Array</td><td><code>{"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}</code></td></tr><tr><td>JSON-Array mit <code>optgroup</code> für das select tag</td><td><code>{"Europa": {"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}, "Südamerika": {"Bolivien": "BO"}}</code></td></tr><tr><td>Query</td><td><code>SELECT id AS value, name AS label FROM country</code></td></tr><tr><td>Query mit <code>optgroup</code> für das select tag<br /> (In der Option <code>group_by</code> muss <code>group_label</code> notiert werden)</td><td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td></tr></tbody></table>
+yform_values_choice_choices_table = <table style="margin-bottom: 60px;" class="table"><colgroup><col width="32%" /><col width="69%" /></colgroup><thead valign="bottom"><tr><th>Beschreibung</th><th>Beispiel</th></tr></thead><tbody valign="top"><tr><td>kommaseparierter String</td><td><code>Dänemark=DK,Deutschland=DE,Österreich=AT,Schweiz=CH</code></td></tr><tr><td>JSON-Array</td><td><code>{"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}</code></td></tr><tr><td>JSON-Array mit <code>optgroup</code> für das select tag</td><td><code>{"Europa": {"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}, "Südamerika": {"Bolivien": "BO"}}</code></td></tr><tr><td>Query</td><td><code>SELECT id AS value, name AS label FROM country</code></td></tr><tr><td>Query mit <code>optgroup</code> für das select tag<br /> (In der Option <code>group_by</code> muss <code>group_label</code> notiert werden)</td><td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td></tr></tbody></table>
 yform_values_choice_default = Vorgabewerte (default)
 yform_values_choice_default_notice = Werden hier kommasepariert Werte angegeben, so werden diese bereits vorausgewählt
 yform_values_choice_description = Ein Mehrzweckfeld, mit dem der Benutzer eine oder mehrere Optionen "auswählen" kann. Es kann als Select-Tag, Radios oder Checkboxen dargestellt werden (Alternative zu <code>checkbox_sql</code>, <code>radio</code>, <code>radio_sql</code>, <code>select</code>, <code>select_sql</code>)
-yform_values_choice_expanded = Erweitert (expanded)
-yform_values_choice_expanded_notice = Wenn auf true gesetzt, werden Radios oder Checkboxen gerendert (abhängig von multiple). Wenn false, wird ein Select-Element gerendert.
-yform_values_choice_expanded_multiple_table = <table class="table"><colgroup><col width="69%" /><col width="16%" /><col width="16%" /></colgroup><thead valign="bottom"><tr><th>Element</th><th>Erweitert</th><th>Mehrfachauswahl</th></tr></thead><tbody valign="top"><tr><td>select tag</td><td><code>false</code></td><td><code>false</code></td></tr><tr><td>select tag (with <code>multiple</code> attribute)</td><td><code>false</code></td><td><code>true</code></td></tr><tr><td>radio buttons</td><td><code>true</code></td><td><code>false</code></td></tr><tr><td>checkboxes</td><td><code>true</code></td><td><code>true</code></td></tr></tbody></table>
+yform_values_choice_expanded = <b>Erweitert</b> (expanded)
+yform_values_choice_expanded_notice = Wenn auf <b>true</b> (aktiviert) gesetzt, werden Radios oder Checkboxen gerendert (abhängig von multiple). Wenn <b>false</b>, wird ein Select-Element gerendert.
+yform_values_choice_expanded_multiple_table = <style>label[for=yform-table_field-rex_choicetest-field-6] {margin-top: 40px;}</style><table style="margin-bottom: 60px;" class="table"><colgroup><col width="16%" /><col width="16%" /><col width="69%" /></colgroup><thead valign="bottom"><tr><th>Erweitert</th><th>Mehrfachauswahl</th><th>Element</th></tr></thead><tbody valign="top"><tr><td><code>false</code></td><td><code>false</code></td><td>select tag</td></tr><tr><td><code>false</code></td><td><code>true</code></td><td>select tag (with <code>multiple</code> attribute)</td></tr><tr><td><code>true</code></td><td><code>false</code></td><td>radio buttons</td></tr><tr><td><code>true</code></td><td><code>true</code></td><td>checkboxes</td></tr></tbody></table>
 yform_values_choice_group_attributes = Attribute für die Gruppe (group_attributes)
 yform_values_choice_group_attributes_notice = Mit dieser Option können zum Element zusätzliche HTML-Attribute hinzugefügt werden. Callable: <code>foo($attributes)</code>; <code>foo::bar($attributes)</code> oder JSON: <code>{"class": "group", "data-yform": "awesome"}</code>
 yform_values_choice_group_by = Gruppierungen (group_by)
 yform_values_choice_group_by_notice = Mit dieser Option können Auswahlmöglichkeiten in einem select "gruppiert" werden. (Aktuell nur via Query möglich, Fieldname angeben)
-yform_values_choice_multiple = Mehrfachauswahl (multiple)
-yform_values_choice_multiple_notice = Wenn true, kann der Benutzer mehrere Optionen auswählen (im Gegensatz zu nur einer Option). Abhängig vom Wert der expanded Option wird entweder ein Select-Tag oder Checkboxen (true) oder ein Select-Tag bzw. Radios (false) angezeigt.
+yform_values_choice_multiple = <b>Mehrfachauswahl</b> (multiple)
+yform_values_choice_multiple_notice = Wenn <b>true</b>, kann der Benutzer mehrere Optionen auswählen (im Gegensatz zu nur einer Option). Abhängig vom Wert der expanded Option wird entweder ein Select-Tag oder Checkboxen (<b>true</b>) oder ein Select-Tag bzw. Radios (<b>false</b>) angezeigt.
 yform_values_choice_placeholder = Platzhalter
 yform_values_choice_placeholder_notice = Diese Option legt fest, ob eine spezielle "leere" Option (z.B. "Wählen Sie eine Option") oben in einem Select-Widget erscheint. Diese Option gilt nur, wenn die Mehrfachoption auf false gesetzt ist.
 yform_values_choice_preferred_choices = Bevorzugte Auswahlmöglichkeiten (preferred_choices)
 yform_values_choice_preferred_choices_notice = Mit dieser Option werden bestimmte Auswahlmöglichkeiten an den Anfang der Liste verschoben, wobei ein optisches Trennzeichen zwischen ihnen und dem Rest der Optionen gesetzt wird.
 
-yform_values_deprecated_checkbox_sql = Deprecated; Verwende das Choice value
-yform_values_deprecated_radio = Deprecated; Verwende das Choice value
-yform_values_deprecated_radio_sql = Deprecated; Verwende das Choice value
-yform_values_deprecated_select = Deprecated; Verwende das Choice value
-yform_values_deprecated_select_sql = Deprecated; Verwende das Choice value
-
 yform_values_message_is_missing = [Warnmeldung für Feld `{1}` fehlt]
+
+yform_validate_object_is_missing = Object `{1}` zur Validierung `{1}` fehlt
+
+yform_values_deprecated_checkbox_sql = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_radio = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_radio_sql = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_select = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_select_sql = Deprecated! Verwende stattdessen das Choice-Feld
+yform_values_deprecated_float = Deprecated! Verwende stattdessen das number-Feld
+
+yform_always = immer
+yform_onlyifempty = nur wenn leer
+yform_never = nie
+
+yform_values_number_error_precision = Bitte gib bei der Anzahl der Ziffern (PRECISION) eine Zahl zwischen {0} und {1} ein
+yform_values_number_error_scale = Bitte gib bei der Anzahl der Nachkommastellen (SCALE) eine Zahl zwischen {0} und {1} ein
+yform_values_number_error_compare = Die Nachkommastellen dürfen nicht höher sein als die Anzahl der Ziffern.

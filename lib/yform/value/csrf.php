@@ -57,7 +57,7 @@ class rex_yform_value_csrf extends rex_yform_value_abstract
                 'message' => ['type' => 'text', 'label' => rex_i18n::msg('yform_validate_defaults_message')],
             ],
             'description' => rex_i18n::msg('yform_values_csrf_description'),
-            'dbtype' => 'none',
+            'db_type' => ['none'],
             'multi_edit' => 'always',
             'is_searchable' => false,
             'is_hiddeninlist' => true,

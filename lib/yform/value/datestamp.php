@@ -11,17 +11,10 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
     public function preValidateAction()
     {
-        $format = 'Y-m-d';
-        if ($this->getElement('format') != '') {
-            $format = $this->getElement('format');
-            if ($format == 'mysql') {
-                $format = 'Y-m-d H:i:s';
-            }
-        }
-
+        $format = 'Y-m-d H:i:s';
         $default_value = date($format);
         $value = $this->getValue();
-        $this->showValue = $value;
+        $this->showValue = self::datestamp_getValueByFormat($value, $this->getElement('format'));
 
         if ($this->getElement('only_empty') == 2) {
             // wird nicht gesetzt
@@ -57,7 +50,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'datestamp|name|label|[YmdHis/U/dmy/mysql]|[no_db]|[0-wird immer neu gesetzt,1-nur wenn leer,2-nie]';
+        return 'datestamp|name|label|[YmdHis/U/dmy/mysql]|[no_db]|[0-always,1-only if empty,2-never]';
     }
 
     public function getDefinitions($values = [])
@@ -70,12 +63,36 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'format' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_datestamp_format')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
-                'only_empty' => ['type' => 'select',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'options' => 'immer=0,nur wenn leer=1, nie=2'],
+                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1,translate:yform_never=2'],
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_datestamp_description'),
-            'dbtype' => 'varchar(255)',
+            'db_type' => ['datetime'],
             'multi_edit' => 'always',
         ];
+    }
+
+    public static function getListValue($params)
+    {
+        $return = self::datestamp_getValueByFormat($params['subject'], $params['params']['field']['format']);
+        return ($return == "") ? '-':$return;
+    }
+
+    public static function datestamp_getValueByFormat($value, $format)
+    {
+        if ($value == "0000-00-00 00:00:00") {
+            $return = '';
+        } else if ($format == "") {
+            $return = $value;
+        } else {
+            $date = DateTime::createFromFormat('Y-m-d H:i:s', $value);
+            if ($date) {
+                $return = $date->format($format);
+            } else {
+                $return = '';
+            }
+        }
+        return $return;
+
     }
 }

@@ -7,12 +7,12 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_validate_labelexist extends rex_yform_validate_abstract
+class rex_yform_validate_in_names extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
         if ($this->params['send'] == '1') {
-            // optional, ein oder mehrere felder müssen ausgefüllt sein
+
             if ($this->getElement(3) == '') {
                 $minamount = 1;
             } else {
@@ -25,7 +25,6 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
                 $maxamount = (int) $this->getElement(4);
             }
 
-            // labels auslesen
             $fields = explode(',', $this->getElement(2));
 
             $value = 0;
@@ -39,8 +38,10 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
                 $this->params['warning_messages'][] = $this->getElement(5);
 
                 foreach ($this->getObjects() as $Object) {
-                    if (in_array($Object->getName(), $fields)) {
-                        $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                    if ($this->isObject($Object)) {
+                        if (in_array($Object->getName(), $fields)) {
+                            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                        }
                     }
                 }
             }
@@ -49,6 +50,6 @@ class rex_yform_validate_labelexist extends rex_yform_validate_abstract
 
     public function getDescription()
     {
-        return 'validate|labelexist|name,name2,name3|[minnames]|[maximalnames]|Fehlermeldung';
+        return 'validate|in_names|name,name2,name3|[minnames]|[maximalnames]|Fehlermeldung';
     }
 }

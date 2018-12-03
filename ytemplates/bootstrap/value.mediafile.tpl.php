@@ -13,7 +13,7 @@ if (count($notice) > 0) {
     $notice = '';
 }
 
-$class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
+$class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 ?>
 

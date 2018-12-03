@@ -15,8 +15,8 @@ class rex_yform_manager_field implements ArrayAccess
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
-        $object = new $class();
-        $this->definitions = $object->getDefinitions($values);
+        $this->object = new $class();
+        $this->definitions = $this->object->getDefinitions($values);
         if (isset($this->definitions['values'])) {
             $i = 'validate' === $values['type_id'] ? 2 : 1;
             foreach ($this->definitions['values'] as $key => $value) {
@@ -71,12 +71,37 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->values[$k];
     }
 
-    public function getDBType()
+    public function getDatabaseFieldType()
     {
-        if (!isset($this->definitions['dbtype'])) {
-            return 'none';
+        if (!isset($this->values['db_type']) || $this->values['db_type'] == '') {
+            return $this->object->getDatabaseFieldDefaultType();
         }
-        return $this->definitions['dbtype'];
+        return $this->values['db_type'];
+    }
+
+    public function getDatabaseFieldTypes()
+    {
+        return $this->object->getDatabaseFieldTypes();
+    }
+
+    public function getDatabaseFieldDefaultType()
+    {
+        return $this->object->getDatabaseFieldDefaultType();
+    }
+
+    public function getDatabaseFieldNull()
+    {
+        return $this->object->getDatabaseFieldNull();
+    }
+
+    public function getDatabaseFieldDefault()
+    {
+        return $this->object->getDatabaseFieldDefault();
+    }
+
+    public function getHooks()
+    {
+        return (isset($this->definitions['hooks'])) ? $this->definitions['hooks'] : [];
     }
 
     public function isSearchableDisabled()

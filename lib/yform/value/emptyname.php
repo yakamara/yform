@@ -38,7 +38,7 @@ class rex_yform_value_emptyname extends rex_yform_value_abstract
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
             ],
             'description' => rex_i18n::msg('yform_values_emptyname_description'),
-            'dbtype' => 'text',
+            'db_type' => ['text'],
             'multi_edit' => 'always',
         ];
     }

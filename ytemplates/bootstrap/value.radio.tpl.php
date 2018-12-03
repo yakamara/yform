@@ -15,29 +15,12 @@ if (count($notices) > 0) {
 
 $class_label = '';
 $class = $this->getElement('required') ? 'form-is-required ' : '';
-$class_group = trim('radio-group form-group yform-element ' . $class . $this->getWarningClass());
-$field_before = '';
-$field_after = '';
-
-if (trim($this->getElement('grid')) != '') {
-    $grid = explode(',', trim($this->getElement('grid')));
-
-    if (isset($grid[0]) && $grid[0] != '') {
-        $class_label .= ' ' . trim($grid[0]);
-    }
-
-    if (isset($grid[1]) && $grid[1] != '') {
-        $field_before = '<div class="' . trim($grid[1]) . '">';
-        $field_after = '</div>';
-    }
-}
+$class_group = trim('radio-group form-group ' . $class . $this->getWarningClass());
 
 if (trim($this->getLabel()) != '') {
     echo '<div class="'.$class_group.'">
     <label class="control-label'.$class_label.'">'.$this->getLabel().'</label>';
 }
-
-echo $field_before;
 
 foreach ($options as $key => $value) {
     echo '<div class="radio';
@@ -66,7 +49,6 @@ foreach ($options as $key => $value) {
 }
 
 echo $notice;
-echo $field_after;
 
 if (trim($this->getLabel()) != '') {
     echo '</div>';

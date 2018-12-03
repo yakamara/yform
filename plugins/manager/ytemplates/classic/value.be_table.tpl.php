@@ -1,4 +1,4 @@
-<div class="yform-element <?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId() ?>">
+<div class="<?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId() ?>">
     <p class="formtable <?php echo $this->getWarningClass() ?>">
         <label class="table <?php echo $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>" ><?php echo $this->getLabel() ?></label>
         <a href="javascript:void(0);">+ <?php echo rex_i18n::msg('add_row') ?></a>

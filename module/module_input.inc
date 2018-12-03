@@ -7,7 +7,7 @@
  */
 
 // module:yform_basic_input
-// v1.0
+// v1.1
 // --------------------------------------------------------------------------------
 
 // DEBUG SELECT
@@ -107,9 +107,6 @@ $mail_display = ($sel=='' || $sel==0) ?' style="display:none"':'';
         </label>
         <label class="radio-inline">
           <input type="radio" name="REX_INPUT_VALUE[11]" value="1"<?php if("REX_VALUE[11]" == '1') echo ' checked'; ?> /> HTML
-        </label>
-        <label class="radio-inline">
-          <input type="radio" name="REX_INPUT_VALUE[11]" value="2"<?php if("REX_VALUE[11]" == '2') echo ' checked'; ?> /> Textile
         </label>
       </div>
       <div class="col-md-offset-2 col-md-10">

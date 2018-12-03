@@ -17,6 +17,10 @@ class rex_yform_validate_intfromto extends rex_yform_validate_abstract
 
             $Object = $this->getValueObject();
 
+            if (!$this->isObject($Object)) {
+                return;
+            }
+
             $value = $Object->getValue();
             $value_int = (int) $value;
 

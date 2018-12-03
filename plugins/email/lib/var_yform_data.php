@@ -23,10 +23,11 @@ class rex_var_yform_data extends rex_var
         }
 
         $output = $this->getArg('output');
-        if ($output == 'html') {
+        if ($output == 'plain' || $output == '') {
             $value = str_replace(['<?', '?>'], ['&lt;?', '?&gt;'], $value);
-        } elseif ($output == 'html') {
-            $value = htmlspecialchars($value);
+        } else {
+            // $output = html
+            $value = rex_escape($value);
             $value = nl2br($value);
         }
 

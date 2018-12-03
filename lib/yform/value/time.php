@@ -176,11 +176,11 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'minutes' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_time_minutes')],
                 'format' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_time_format'), 'notice' => rex_i18n::msg('yform_values_time_format_notice')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
-                'widget' => ['type' => 'select',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'options' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
+                'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_time_description'),
-            'dbtype' => 'time',
+            'db_type' => ['time'],
         ];
     }
 

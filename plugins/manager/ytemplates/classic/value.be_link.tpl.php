@@ -1,4 +1,4 @@
-<div class="yform-element formbe_mediapool <?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId() ?>">
+<div class="<?php echo $this->getHTMLClass() ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="text <?php echo $this->getWarningClass() ?>" for="<?php echo $this->getFieldId() ?>" ><?php echo $this->getLabel() ?></label>
     <div class="rex-widget">
         <div class="rex-widget-link">

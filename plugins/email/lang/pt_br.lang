@@ -27,5 +27,5 @@ yform_delete_template = Deletar template
 
 yform_email_caption = Lista de templates
 
-yform_email_info_text = <p> Campos que são usados pr outros campos podem ser exibidos/processados em um template. <mark>PHP é permitido para</mark> tornando possível o processamento de casos extremamente específicos. A saída normal de um campo é feito da seguinte forma:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-mail address was entered"]<br />REX_YFORM_DATA[field="name" instead="default value"]<br />REX_YFORM_DATA[field="name" prefix="\nMy name is:" suffix=""]</p>
+yform_email_info_text = <p> Campos que são usados pr outros campos podem ser exibidos/processados em um template. <mark>PHP é permitido para</mark> tornando possível o processamento de casos extremamente específicos. A saída normal de um campo é feito da seguinte forma:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-mail address was entered"]<br />REX_YFORM_DATA[field="name" instead="default value"]<br />REX_YFORM_DATA[field="name" prefix="My name is:" suffix=""]</p>
 

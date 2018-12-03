@@ -15,17 +15,15 @@ if (count($notices) > 0) {
     $notice = '<p class="help-block">' . implode('<br />', $notices) . '</p>';
 }
 
-$class_group = trim('checkbox yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
-
-$value = isset($value) ? $value : 1;
+$class_group = trim('checkbox ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $attributes = [
     'type' => 'checkbox',
     'id' => $this->getFieldId(),
     'name' => $this->getFieldName(),
-    'value' => $value,
+    'value' => 1,
 ];
-if ($this->getValue() == $value) {
+if ($value == 1) {
     $attributes['checked'] = 'checked';
 }
 

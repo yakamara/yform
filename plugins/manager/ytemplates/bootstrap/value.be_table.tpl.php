@@ -1,5 +1,5 @@
 <?php
-$class_group = trim('form-group yform-element ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
+$class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $data_index = 0;
 $notice     = [];
@@ -43,6 +43,11 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                         $field->params['form_name']       = $field->getName();
                         $field->params['form_label_type'] = 'html';
                         $field->params['send']            = false;
+
+                        if ($field->getElement(0) == 'be_manager_relation') {
+                            $field->params['main_table'] = $field->getElement('table');
+                            $field->setName($field->getElement('field'));
+                        }
                         $field->setValue($row[$i] ?: '');
                         $field->setId($data_index);
                         $field->enterObject();
@@ -88,6 +93,11 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                         $field->params['form_name'] = $field->getName();
                         $field->params['form_label_type'] = 'html';
                         $field->params['send'] = false;
+
+                        if ($field->getElement(0) == 'be_manager_relation') {
+                            $field->params['main_table'] = $field->getElement('table');
+                            $field->setName($field->getElement('field'));
+                        }
                         $field->setValue(null);
                         $field->setId('{{FIELD_ID}}');
                         $field->enterObject();

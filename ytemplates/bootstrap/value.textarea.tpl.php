@@ -14,25 +14,8 @@ if (count($notice) > 0) {
 }
 
 $class = $this->getElement('required') ? 'form-is-required ' : '';
-
-$class_group = trim('form-group yform-element ' . $this->getWarningClass());
-
+$class_group = trim('form-group ' . $this->getWarningClass());
 $class_label = ['control-label'];
-$field_before = '';
-$field_after = '';
-
-if (trim($this->getElement('grid')) != '') {
-    $grid = explode(',', trim($this->getElement('grid')));
-
-    if (isset($grid[0]) && $grid[0] != '') {
-        $class_label[] = trim($grid[0]);
-    }
-
-    if (isset($grid[1]) && $grid[1] != '') {
-        $field_before = '<div class="' . trim($grid[1]) . '">';
-        $field_after = '</div>';
-    }
-}
 
 $rows = $this->getElement('rows');
 if (!$rows) {
@@ -50,5 +33,5 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'pattern'
 
 echo '<div class="'.$class_group.'" id="'.$this->getHTMLId().'">
 <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
-'.$field_before.'<textarea '.implode(' ', $attributes).'>'.htmlspecialchars($this->getValue()).'</textarea>'.$notice.$field_after.
+<textarea '.implode(' ', $attributes).'>'.htmlspecialchars($this->getValue()).'</textarea>' . $notice .
 '</div>';

@@ -9,7 +9,7 @@
 
 class rex_yform_value_date extends rex_yform_value_abstract
 {
-    const VALUE_DATE_DEFAULT = 'YYYY/MM/DD';
+    const VALUE_DATE_DEFAULT = 'YYYY-MM-DD';
 
     public function preValidateAction()
     {
@@ -165,7 +165,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'date|name|label| jahrstart | [jahrsende/+5 ]| [Anzeigeformat YYYY/MM/DD] | [1/Aktuelles Datum voreingestellt] | [no_db] ';
+        return 'date|name|label| jahrstart | [jahrsende/+5 ]| [Anzeigeformat YYYY-MM-DD] | [1/Aktuelles Datum voreingestellt] | [no_db] ';
     }
 
     public function getDefinitions($values = [])
@@ -181,12 +181,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'format' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_date_format'), 'notice' => rex_i18n::msg('yform_values_date_format_notice')],
                 'current_date' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_date_current_date')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table')],
-                'widget' => ['type' => 'select', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'options' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
+                'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_date_description'),
-            'dbtype' => 'date',
+            'db_type' => ['date'],
             'famous' => true,
         ];
     }
