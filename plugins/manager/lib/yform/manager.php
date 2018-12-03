@@ -132,7 +132,9 @@ class rex_yform_manager
             $link_vars .= '&' . urlencode($k) . '=' . urlencode($v);
         }
 
-        echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']</small>', '');
+        $page_title = rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']</small>', '');
+        echo rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_PAGE_TITLE', $page_title, ['table' => $this->table]));
+
 
         $_csrf_key = 'table_field-'.$this->table->getTableName();
 
@@ -288,6 +290,7 @@ class rex_yform_manager
             // -------------- form
             if (($func == 'add' && $this->hasDataPageFunction('add')) || $func == 'edit' || ($func == 'collection_edit' && $this->table->isMassEditAllowed())) {
                 $back = rex_view::info('<a href="index.php?' . $link_vars . $em_url . $em_rex_list . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
+                $back = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_PAGE_BACK', $back, ['table' => $this->table]));
 
                 if ('collection_edit' === $func) {
                     $query = $this->table->query();
@@ -396,12 +399,18 @@ class rex_yform_manager
                 if ($func == 'edit') {
                     $yform->setHiddenField('data_id', $data_id);
                     $yform->setObjectparams('getdata', true);
-                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+
+                    // kreatif settings hack
+                    if (rex_request('prjstyle', 'int', 0) == 0) {
+                        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+                    }
                 } elseif ($func == 'add') {
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 } elseif ('collection_edit' === $func) {
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 }
+
+                rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_PAGE_EXECUTE_FORM', $yform, ['table' => $this->table]));
 
                 $form = $data->executeForm($yform, function (rex_yform $yform) {
                     /** @var rex_yform_value_abstract $f */
@@ -455,6 +464,8 @@ class rex_yform_manager
                     } else {
                         $title = rex_i18n::rawMsg('yform_editdata', $data_id);
                     }
+
+                    $title = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_PAGE_FORM_TITLE', $title, ['table' => $this->table]));
 
                     $fragment = new rex_fragment();
                     $fragment->setVar('class', 'edit', false);
