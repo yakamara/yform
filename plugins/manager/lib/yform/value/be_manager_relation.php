@@ -363,9 +363,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
                 $relationVars = $yform->getFieldValue();
 
-                dump($relationVars);
-                dump($_REQUEST);
-
                 if (is_array($relationVars)) {
 
                     $prio = 0;
