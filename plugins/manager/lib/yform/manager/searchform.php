@@ -2,21 +2,24 @@
 
 class rex_yform_manager_searchform extends rex_yform
 {
-    public function getFieldName($id = '', $k = '', $label = '')
+    public function getFieldName($label, array $params = [])
     {
+        return 'rex_yform_searchvars[' . $label . ']';
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
         if ($label == '') {
             $label = $id;
         }
+
         if ($k == '') {
             return 'rex_yform_searchvars[' . $label . ']';
         }
         return 'rex_yform_searchvars[' . $label . '][' . $k . ']';
     }
 
-    public function getFieldValue($id = '', $k = '', $label = '')
+    public function getFieldValue($label, array $params = []) // $id = '', $k = '', $label = ''
     {
+        return '';
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
         if ($label == '') {
@@ -31,8 +34,9 @@ class rex_yform_manager_searchform extends rex_yform
         return '';
     }
 
-    public function setFieldValue($id = '', $value = '', $k = '', $label = '')
+    public function setFieldValue($label, array $params = []) //$id = '', $value = '', $k = '', $label = ''
     {
+        return;
         $label = $this->prepareLabel($label);
         $k = $this->prepareLabel($k);
         if ($label == '') {

@@ -46,7 +46,12 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     public function getFieldName($k = '')
     {
-        return $this->params['this']->getFieldName($this->getId(), $k, $this->getName());
+        $params = [];
+        $params[] = $this->getId();
+        if ($k != '') {
+            $params[] = $k;
+        }
+        return $this->params['this']->getFieldName($this->getName(), $params);
     }
 
     public function getHTMLId($suffix = '')

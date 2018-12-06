@@ -448,17 +448,17 @@ class rex_yform_manager_dataset
                 continue;
             }
             if (isset($fields[$key])) {
-                $yform->setFieldValue(0, $value, '', $key);
+                $yform->setFieldValue($key,[ 0], $value);
             }
         }
 
-        $send = $yform->getFieldValue('send', '', 'send');
-        $yform->setFieldValue('send', '1', '', 'send');
+        $send = $yform->getFieldValue('send');
+        $yform->setFieldValue('send', [], '1');
 
         $yform->executeFields();
         $this->messages = $yform->getObjectparams('warning_messages');
 
-        $yform->setFieldValue('send', $send, '', 'send');
+        $yform->setFieldValue('send', [], $send);
 
         return empty($this->messages);
     }
@@ -481,19 +481,19 @@ class rex_yform_manager_dataset
                 continue;
             }
             if (isset($fields[$key])) {
-                $yform->setFieldValue(0, $value, '', $key);
+                $yform->setFieldValue($key, [0], $value);
             } elseif (isset($columns[$key])) {
                 $yform->objparams['value_pool']['sql'][$key] = $value;
             }
         }
 
-        $send = $yform->getFieldValue('send', '', 'send');
-        $yform->setFieldValue('send', '1', '', 'send');
+        $send = $yform->getFieldValue('send');
+        $yform->setFieldValue('send', [], '1');
 
         $this->executeForm($yform);
         $this->messages = $yform->getObjectparams('warning_messages');
 
-        $yform->setFieldValue('send', $send, '', 'send');
+        $yform->setFieldValue('send', [], $send);
         
         return empty($this->messages);
     }

@@ -5,15 +5,12 @@ $sortButtons = '';
 $sorthandle = '';
 
 if ($prioFieldName != '') {
-
     $sorthandle = '<span class="sorthandle"></span>';
-
     $sortButtons = '
             <div class="btn-group btn-group-xs">
              <button type="button" class="btn btn-move" data-yform-be-relation-moveup="' . $counterfieldkey . '" title="move up"><i class="rex-icon rex-icon-up"></i></button>
              <button type="button" class="btn btn-move" data-yform-be-relation-movedown="' . $counterfieldkey . '" title="move down"><i class="rex-icon rex-icon-down"></i></button>
             </div>';
-
 }
 
 echo '<div class="row" id="' . $counterfieldkey . '" data-yform-be-relation-item="' . $counterfieldkey . '">

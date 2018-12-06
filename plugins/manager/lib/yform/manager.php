@@ -434,7 +434,7 @@ class rex_yform_manager
                             $data_id = $yform->objparams['main_id'];
                             $func = 'edit';
                             $yform = $yform_clone;
-                            $yform->setFieldValue('send', '', '', 'send');
+                            $yform->setFieldValue('send', [], '');
                             $yform->setHiddenField('func', $func);
                             $yform->setHiddenField('data_id', $data_id);
                             $yform->setObjectparams('main_id', $data_id);
