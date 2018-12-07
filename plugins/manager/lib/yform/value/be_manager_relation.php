@@ -165,7 +165,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 }
             }
 
-
             // ----- Form Definitions
 
             $forms = [];
@@ -175,9 +174,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $fieldkey = $this->relation['source_table'] . '-' . $this->relation['target_table'] . '-' . $this->relation['target_field'];
             $relationKey = '__' . sha1($fieldkey) . '__';
-
-            $fieldkey = $this->params['this']->getObjectparams('form_name');
-
 
             // ----- Existing Relations
 
