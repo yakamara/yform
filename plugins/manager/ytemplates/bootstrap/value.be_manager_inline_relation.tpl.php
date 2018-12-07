@@ -24,7 +24,7 @@ if ($prioFieldName == ''){
     $sortable = '';
 }
 
-$fieldkey = sha1($fieldkey.'-'.rex_escape($relationKey));
+$fieldkey = 'y'.sha1($fieldkey.'-'.rex_escape($relationKey)); // no number first
 
 echo '
 
