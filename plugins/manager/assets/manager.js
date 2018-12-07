@@ -258,7 +258,7 @@ $(document).on('rex:ready', function (event, container) {
 
   container.find('[data-yform-be-relation-delete]').each(function() {
     $(this).on('click', function() {
-      $('#'+$(this).attr('data-yform-be-relation-delete')).remove();
+      $(this).closest('[data-yform-be-relation-item]').remove();
     })
   });
 
