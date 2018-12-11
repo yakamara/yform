@@ -706,6 +706,7 @@ class rex_yform_manager_dataset
         $yform = $dummy->createForm();
         $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('form_needs_output', false);
+        $yform->setObjectparams('csrf_protection', false);
 
         return self::$internalForms[$this->table] = $yform;
     }
