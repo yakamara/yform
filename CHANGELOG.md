@@ -67,6 +67,8 @@ Version 3.0 – xx.xx.2018
 * select_sql Feld
 * checkbox_sql Feld
 * float Feld
+* captcha
+* captcha_calc
 
 #### umbenannt und werden initial aus der YForm Definition entfernt
 
