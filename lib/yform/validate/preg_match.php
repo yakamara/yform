@@ -11,22 +11,20 @@ class rex_yform_validate_preg_match extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $pm = $this->getElement(3);
+        $pm = $this->getElement(3);
 
-            $Object = $this->getValueObject();
+        $Object = $this->getValueObject();
 
-            if (!$this->isObject($Object)) {
-                return;
-            }
+        if (!$this->isObject($Object)) {
+            return;
+        }
 
-            preg_match($pm, $Object->getValue(), $matches);
+        preg_match($pm, $Object->getValue(), $matches);
 
-            if (count($matches) > 0 && current($matches) == $Object->getValue()) {
-            } else {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = $this->getElement(4);
-            }
+        if (count($matches) > 0 && current($matches) == $Object->getValue()) {
+        } else {
+            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$Object->getId()] = $this->getElement(4);
         }
     }
 

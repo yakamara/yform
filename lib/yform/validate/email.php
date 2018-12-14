@@ -11,25 +11,24 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $Object = $this->getValueObject();
+        $Object = $this->getValueObject();
 
-            if (!$this->isObject($Object)) {
-                return;
-            }
+        if (!$this->isObject($Object)) {
+            return;
+        }
 
-            if ($Object->getValue() == '') {
-                return;
-            }
+        if ($Object->getValue() == '') {
+            return;
+        }
 
-            if ($Object->getValue()) {
-                // https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
-                if (!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
-                    $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-                }
+        if ($Object->getValue()) {
+            // https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
+            if (!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
         }
+
     }
 
     public function getDescription()
