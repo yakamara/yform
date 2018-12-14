@@ -535,11 +535,11 @@ class rex_yform
             }
         }
 
-        return (!$value) ? '' : $value;
+        return (is_null($value)) ? '' : $value;
 
     }
 
-    public function setFieldValue(string $label, array $params, $value) // $id = '', $value = '', $k = '', $label = ''
+    public function setFieldValue(string $label, array $params, $value)
     {
 
         if (count($params) == 0) {
