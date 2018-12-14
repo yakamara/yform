@@ -9,6 +9,13 @@ Version 3.0 – xx.xx.2018
 ### Änderungen
 
 * be_relations: 1-n Verknüpfungen nun über inline Modul möglich, inkl. Sortierung und überprüfung der verknüpften Formulare
+  * inline relations verschachtelbar
+  * entsprechend Felder wie be_media angepasst
+* Umbau des Feldnamenmanagements
+* Prio sql Injection behoben
+* Unnötige "Send" Abfragen in den validierungsklassen entfernt
+* Feldwertermittlung korrigiert. Bei "0" waren Ergebnisse fehlerhaft
+* internalForms (YORM) führte zu Problemen weil CSRF mit ausgeführt wurden und sessions erstellt wurden.
 * Felder geben nun den Datenbankfeldtyp fest vor. Felder werden auch nachträglich an das Datenbankfeld angepasst. Nun auch optional
 * utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191)
 * choice Feld ergänzt: ersetzt radio, radio_sql, select, select_sql, checkbox_sql
