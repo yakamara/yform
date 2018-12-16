@@ -7,5 +7,5 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-$sql = rex_sql::factory();
-$sql->setQuery('DROP TABLE IF EXISTS `' . rex::getTablePrefix() . 'yform_email_template`');
+rex_sql_table::get(rex::getTable('yform_email_template'))
+    ->drop();
