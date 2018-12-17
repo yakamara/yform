@@ -110,33 +110,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
 
     $yform->setValueField('text', ['name', rex_i18n::msg('yform_manager_name')]);
     $yform->setValidateField('empty', ['name', rex_i18n::msg('yform_manager_table_enter_name')]);
-
-    $yform->setValueField('text', ['list_amount', rex_i18n::msg('yform_manager_entries_per_page'), '50']);
-    $yform->setValidateField('type', ['list_amount', 'int', rex_i18n::msg('yform_manager_enter_number')]);
-
-    // $yform->setValueField('textarea', ['description', rex_i18n::msg('yform_manager_table_description'), 'css_class' => 'short1']);
-
-    $sortFields = ['id'];
-    if ($func === 'edit') {
-        $sortFieldsSql = rex_sql::factory();
-        $sortFieldsSql->setQuery('SELECT f.name FROM `' . rex_yform_manager_field::table() . '` f LEFT JOIN `' . rex_yform_manager_table::table() . '` t ON f.table_name = t.table_name WHERE t.id = ' . (int) $table_id . ' ORDER BY f.prio');
-        while ($sortFieldsSql->hasNext()) {
-            $sortFields[] = $sortFieldsSql->getValue('name');
-            $sortFieldsSql->next();
-        }
-    }
-
-    $yform->setValueField('html', ['html' => '<div class="row"><div class="col-md-6">']);
-
-    $yform->setValueField('choice', ['name' => 'list_sortfield', 'label' => rex_i18n::msg('yform_manager_sortfield'), 'choices' => implode(',', $sortFields)]);
-
-    $yform->setValueField('html', ['html' => '</div><div class="col-md-6">']);
-    $yform->setValueField('choice', ['name' => 'list_sortorder', 'label' => rex_i18n::msg('yform_manager_sortorder'), 'choices' => [
-        'ASC' => rex_i18n::msg('yform_manager_sortorder_asc'),
-        'DESC' => rex_i18n::msg('yform_manager_sortorder_desc'),
-    ]]);
-
-    $yform->setValueField('html', ['html' => '</div></div>']);
+    $yform->setValueField('textarea', ['description', '<br />'.rex_i18n::msg('yform_manager_table_description'), 'attributes' => '{"class":"form-control yform-textarea-short"}']);
 
     $yform->setValueField('html', ['html' => '</div><div class="col-md-6">']);
 
@@ -153,6 +127,34 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
     $yform->setValueField('checkbox', ['import', rex_i18n::msg('yform_manager_table_allow_import')]);
     $yform->setValueField('checkbox', ['mass_deletion', rex_i18n::msg('yform_manager_table_allow_mass_deletion')]);
     $yform->setValueField('checkbox', ['mass_edit', rex_i18n::msg('yform_manager_table_allow_mass_edit')]);
+
+    $yform->setValueField('html', ['html' => '']);
+
+    $yform->setValueField('text', ['name' => 'list_amount', 'label' => '<br />'.rex_i18n::msg('yform_manager_entries_per_page'), 'prepend' => 'sf','default' => '50']);
+    $yform->setValidateField('type', ['list_amount', 'int', rex_i18n::msg('yform_manager_enter_number')]);
+
+    $sortFields = ['id'];
+    if ($func === 'edit') {
+        $sortFieldsSql = rex_sql::factory();
+        $sortFieldsSql->setQuery('SELECT f.name FROM `' . rex_yform_manager_field::table() . '` f LEFT JOIN `' . rex_yform_manager_table::table() . '` t ON f.table_name = t.table_name WHERE t.id = ' . (int) $table_id . ' ORDER BY f.prio');
+        while ($sortFieldsSql->hasNext()) {
+            $sortFields[] = $sortFieldsSql->getValue('name');
+            $sortFieldsSql->next();
+        }
+    }
+
+    $yform->setValueField('html', ['html' => '<br /><div class="row"><div class="col-md-6">']);
+    $yform->setValueField('choice', ['name' => 'list_sortfield', 'label' => rex_i18n::msg('yform_manager_sortfield'), 'choices' => implode(',', $sortFields)]);
+    $yform->setValueField('html', ['html' => '</div><div class="col-md-6">']);
+    $yform->setValueField('choice', ['name' => 'list_sortorder', 'label' => rex_i18n::msg('yform_manager_sortorder'), 'choices' => [
+        'ASC' => rex_i18n::msg('yform_manager_sortorder_asc'),
+        'DESC' => rex_i18n::msg('yform_manager_sortorder_desc'),
+    ]]);
+
+    $yform->setValueField('html', ['html' => '</div></div>']);
+
+
+
 
     $yform->setValueField('html', ['html' => '</div></div>']);
 

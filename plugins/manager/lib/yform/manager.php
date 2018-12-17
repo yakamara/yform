@@ -132,7 +132,9 @@ class rex_yform_manager
             $link_vars .= '&' . urlencode($k) . '=' . urlencode($v);
         }
 
-        echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']</small>', '');
+        $description = ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
+
+        echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>','');
 
         $_csrf_key = 'table_field-'.$this->table->getTableName();
 
