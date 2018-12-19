@@ -33,7 +33,7 @@ Version 3.0 – xx.xx.2018
 * number: Neues Feld, mit Maßeinheit und richtigem DB Feldtyp
 * datestamp: wird nun als datetime gespeichert. format nun für Anzeige, nicht mehr als Speicherformat
 * type: url filter
-* checkbox: keine eigenen Werte mehr. Ausschliesslich 0,1. DB-Type: tinyint.
+* checkbox: keine eigenen Werte mehr. Ausschliesslich 0,1. DB-Type: tinyint. Deswegen unbedingt die Formulare entsprechend anpassen
 * time: korrigiert (Norbert Micheel )
 * captcha: korrekturen
 * date: korrekturen (RexDude )
