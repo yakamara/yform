@@ -1205,10 +1205,10 @@ class rex_yform_manager
                 $func = '';
             } else {
                 if ($func == 'edit') {
-                    $this->generateAll();
+                    rex_yform_manager_table_api::generateTableAndFields($table);
                     echo rex_view::success(rex_i18n::msg('yform_thankyouforupdate'));
                 } elseif ($func == 'add') {
-                    $this->generateAll();
+                    rex_yform_manager_table_api::generateTableAndFields($table);
                     echo rex_view::success(rex_i18n::msg('yform_thankyouforentry'));
                 }
                 $func = 'list';
@@ -1229,7 +1229,8 @@ class rex_yform_manager
                     $delsql->setDebug(self::$debug);
                     $delsql->setQuery($query);
                     echo rex_view::success(rex_i18n::msg('yform_tablefielddeleted'));
-                    $this->generateAll();
+                    rex_yform_manager_table_api::generateTableAndFields($table);
+
                 } else {
                     echo rex_view::warning(rex_i18n::msg('yform_tablefieldnotfound'));
                 }
@@ -1239,13 +1240,13 @@ class rex_yform_manager
 
         // ********************************************* CREATE/UPDATE FIELDS
         if ($func == 'updatetable') {
-            $this->generateAll();
+            rex_yform_manager_table_api::generateTableAndFields($table);
             echo rex_view::info(rex_i18n::msg('yform_tablesupdated'));
             $func = 'list';
         }
 
         if ($func == 'updatetablewithdelete') {
-            $this->generateAll(['delete_fields' => true]);
+            rex_yform_manager_table_api::generateTableAndFields($table, true);
             echo rex_view::info(rex_i18n::msg('yform_tablesupdated'));
             $func = 'list';
         }
@@ -1563,14 +1564,6 @@ class rex_yform_manager
         $c->insert();
 
         return true;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function generateAll($f = [])
-    {
-        rex_yform_manager_table_api::generateTablesAndFields(isset($f['delete_fields']) ? $f['delete_fields'] : false);
     }
 
     public static function checkMediaInUse($params)
