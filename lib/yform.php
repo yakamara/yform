@@ -469,7 +469,7 @@ class rex_yform
     {
 
         if ($this->objparams['real_field_names']) {
-            $label = $this->prepareLabel(array_shift($label));
+            $label = $this->prepareLabel($label);
             return $label ?? current($params);
         }
 
@@ -521,7 +521,7 @@ class rex_yform
         }
 
         if (in_array("", $params, true)) {
-            throw new \Whoops\Exception\ErrorException('yform::getFieldValue with empty $params element');
+            return '';
         }
 
         foreach($params as $counter => $param) {
