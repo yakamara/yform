@@ -19,7 +19,7 @@ requires:
         phpmailer: '^2.0.0'
     redaxo: '^5.6.0'
     php:
-        version: '>=7.0'
+        version: '^7.0'
         
 system_plugins:
     - docs
