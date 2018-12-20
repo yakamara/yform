@@ -15,8 +15,14 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $this->setValue('');
         }
 
-        // MEDIAPOOL
-        $mediacatid = ($this->getElement(8) == '') ? 0 : (int) $this->getElement(8);
+        $media_category_id = ($this->getElement(8) == '') ? 0 : (int) $this->getElement(8);
+        $media_category = rex_media_category::get($media_category_id);
+        if (is_null($media_category)) {
+            $media_category_id = 0;
+        }
+
+        dump($media_category_id);
+
         $mediapool_user = ($this->getElement(9) == '') ? 'yform::mediafile' : $this->getElement(9);
         $pool = $this->params['value_pool']['email'];
         $mediapool_user = preg_replace_callback('/###(\w+)###/',
@@ -73,7 +79,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                 if (!in_array(mb_strtolower($ext), $extensions_array) && !in_array(mb_strtoupper($ext), $extensions_array)) {
                     $error[] = $err_msgs['type_err'];
                 } else {
-                    $NEWFILE = $this->saveMedia($FILE, rex_path::media(), $extensions_array, $mediacatid, $mediapool_user);
+                    $NEWFILE = $this->saveMedia($FILE, rex_path::media(), $extensions_array, $media_category_id, $mediapool_user);
 
                     if ($NEWFILE['ok']) {
                         $this->setValue($NEWFILE['filename']);
@@ -136,14 +142,12 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         ];
     }
 
-    public function saveMedia($FILE, $filefolder, $extensions_array, $rex_file_category, $mediapool_user)
+    public function saveMedia($FILE, $filefolder, $extensions_array, $rex_media_category_id, $mediapool_user)
     {
         $FILENAME = $FILE['name'];
         $FILESIZE = $FILE['size'];
         $FILETYPE = $FILE['type'];
-        $message = '';
 
-        // ----- neuer filename und extension holen
         $NFILENAME = mb_strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILENAME));
         if (strrpos($NFILENAME, '.') != '') {
             $NFILE_NAME = mb_substr($NFILENAME, 0, mb_strlen($NFILENAME) - (mb_strlen($NFILENAME) - mb_strrpos($NFILENAME, '.')));
@@ -153,7 +157,6 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $NFILE_EXT = '';
         }
 
-        // ---- ext checken
         $ERROR_EXT = ['.php', '.php3', '.php4', '.php5', '.phtml', '.pl', '.asp', '.aspx', '.cfm'];
         if (in_array($NFILE_EXT, $ERROR_EXT)) {
             $NFILE_NAME .= $NFILE_EXT;
@@ -173,7 +176,6 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         $NFILENAME = $NFILE_NAME . $NFILE_EXT;
 
-        // ----- filexists ? -> _1 ..
         if (file_exists($filefolder . '/' . $NFILENAME)) {
             for ($cf = 1; $cf < 1000; ++$cf) {
                 $NFILENAME = $NFILE_NAME . '_' . $cf . $NFILE_EXT;
@@ -183,11 +185,10 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             }
         }
 
-        // ----- dateiupload
-        $upload = true;
+        $message = '';
         if (!move_uploaded_file($FILE['tmp_name'], $filefolder . "/$NFILENAME")) {
             if (!copy($FILE['tmp_name'], $filefolder . '/' . $NFILENAME)) {
-                $message .= 'move file $NFILENAME failed | ';
+                $message = 'move file $NFILENAME failed | ';
                 $RETURN = false;
                 $RETURN['ok'] = false;
                 return $RETURN;
@@ -200,19 +201,18 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         $RETURN['ok'] = true;
         $RETURN['filename'] = $NFILENAME;
 
-        $FILESQL = rex_sql::factory();
-        // $FILESQL->debugsql=1;
-        $FILESQL->setTable(rex::getTablePrefix() . 'media');
-        $FILESQL->setValue('filetype', $FILETYPE);
-        $FILESQL->setValue('filename', $NFILENAME);
-        $FILESQL->setValue('originalname', $FILENAME);
-        $FILESQL->setValue('filesize', $FILESIZE);
-        $FILESQL->setValue('category_id', $rex_file_category);
-        $FILESQL->setValue('createdate', time());
-        $FILESQL->setValue('createuser', $mediapool_user);
-        $FILESQL->setValue('updatedate', time());
-        $FILESQL->setValue('updateuser', $mediapool_user);
-        $FILESQL->insert();
+        rex_sql::factory()
+            ->setTable(rex::getTablePrefix() . 'media')
+            ->setValue('filetype', $FILETYPE)
+            ->setValue('filename', $NFILENAME)
+            ->setValue('originalname', $FILENAME)
+            ->setValue('filesize', $FILESIZE)
+            ->setValue('category_id', $rex_media_category_id)
+            ->setValue('createdate', date('Y-m-d H:i:s'))
+            ->setValue('createuser', $mediapool_user)
+            ->setValue('updatedate', date('Y-m-d H:i:s'))
+            ->setValue('updateuser', $mediapool_user)
+            ->insert();
 
         return $RETURN;
     }
