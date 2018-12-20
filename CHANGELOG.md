@@ -58,6 +58,7 @@ Version 3.0 – xx.xx.2018
 * Bug: Mehrere YOrm Aufrufe konnten sich beeinflussen. REQUEST/YCom Problem
 * checkbox nun auch mit attributes
 * be_manager_relation nun auch mit zusätzlichen varchar(191) ergänzt
+* create_table, db: Mit %TABLE_PREFIX% im Tabellennamen kann man den Prefix der REDAXO Tabellen setzen.
 
 #### deprecated
 
@@ -69,9 +70,11 @@ Version 3.0 – xx.xx.2018
 * float Feld
 * captcha
 * captcha_calc
+* createdb
 
 #### umbenannt und werden initial aus der YForm Definition entfernt
 
+* action: createdb -> create_table
 * labelexist -> in_names
 * existintable -> in_table
 * REX_YFORM_TABLE_DATA[table="tablename" output="widget/widgetlist"] -> REX_YFORM_TABLE_DATA[table="tablename" widget="1" multiple="1"]
