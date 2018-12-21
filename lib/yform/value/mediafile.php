@@ -21,8 +21,6 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $media_category_id = 0;
         }
 
-        dump($media_category_id);
-
         $mediapool_user = ($this->getElement(9) == '') ? 'yform::mediafile' : $this->getElement(9);
         $pool = $this->params['value_pool']['email'];
         $mediapool_user = preg_replace_callback('/###(\w+)###/',
