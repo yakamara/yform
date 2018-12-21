@@ -36,7 +36,11 @@ yform_table_overview = Tabla de resumen
 yform_manager_edit_table = Editar tabla
 yform_manager_add_table = Agrega una tabla
 
+yform_update_table = Actualizar tabla
+yform_add_table = Agrega una tabla
 yform_add_row = Agregar fila
+
+yform_edit_datatable = Administrar datos
 
 # tables.inc.php
 yform_importcsv = Importar CSV
@@ -46,7 +50,7 @@ yform_tbl_inactive = Inactivo
 yform_tbl_active = Activamente
 yform_tbl_inactive = Inactivo
 
-yform_manager_table_updated = Tabla y campos han sido creados y / o actualizados
+yform_manager_table_updated = Gracias por la actualización.
 yform_manager_table_entry_saved = Gracias por el registro
 yform_manager_table_enter_name = Por favor ingrese el nombre de la tabla
 yform_manager_table_enter_specialchars = Por favor ingrese solo letras y números para el nombre de la tabla. El primer personaje debe ser una letra
@@ -72,6 +76,10 @@ yform_manager_table_allow_mass_deletion = Permitir eliminación masiva
 yform_manager_table_allow_mass_edit = Permitir procesamiento masivo
 yform_manager_table_history = Crear historial
 yform_manager_tablefield_overview = Resumen campo
+yform_manager_table_schema_overwrite = SIEMPRE sobrescriba los campos de la base de datos con definición de esquema
+yform_manager_table_basic_info = Información básica
+yform_manager_table_func = Las funciones de tabla
+yform_manager_table_user_func = funciones de confort del usuario
 
 yform_manager_table_updated = Gracias por la actualización.
 yform_manager_table_added = Gracias por la entrada.
@@ -117,6 +125,7 @@ yform_manager_table_hidden = Visibilidad
 yform_hidden = Oculto
 yform_visible = Visible
 
+
 # edit.inc.php
 yform_thankyouforupdate = Record ha sido actualizado.
 yform_thankyouforentry = Registro fue ingresado
@@ -134,6 +143,7 @@ yform_save = Guardar
 yform_save_apply = Tomar el relevo
 yform_delete = Borrar
 yform_delete_definitions = Eliminar definiciones
+yform_delete_definitions_info = Tabla de base de datos se conserva
 yform_search = Búsqueda
 yform_export = Exportación
 yform_import = Importación
@@ -201,6 +211,8 @@ yform_manager_import_divider_tab = Tabulador
 yform_manager_import_unique_field = Si este campo es idéntico, el registro será reemplazado
 yform_manager_import_start = Añadir
 yform_manager_import_file = Expediente
+yform_manager_import_error_missingfielddefinition = Hay campos que están vacíos y, por lo tanto, no se pueden asignar. Por favor, compruebe la primera línea de la importación.
+yform_manager_import_error_duplicatefielddefinition = Hay campos que son idénticos. Por favor, compruebe la primera línea de la importación.
 
 # history
 yform_history = historia
@@ -230,12 +242,12 @@ yform_tabledata_overview = Tabla de datos
 
 yform_manager_multi_edit_field = Editar campo "{0}"
 
-yform_values_be_link_description = Un campo de Redaxo para seleccionar un <b>artículo de Redaxo</b>.
-yform_values_be_manager_relation_description = Una casilla de verificación / ventana emergente para <b>vincular</b> uno o más <b>registros</b> a una hoja de cálculo extranjera.
-yform_values_be_media_description = Un campo Redaxo para seleccionar uno o varios <b>archivos de grupo de medios</b>.
-yform_values_be_select_category_description = Un campo redaxo para seleccionar una o más <b>categorías</b> del árbol.
-yform_values_be_table_description = Una serie de campos de entrada para ingresar <b>datos tabulares</b>.
-yform_values_prio_description = Un <b>cuadro de selección</b> para ordenar registros en un <b>orden específico</b>.
+yform_values_be_link_description = 				Un campo de Redaxo para seleccionar un <b>artículo de Redaxo</b>.
+yform_values_be_manager_relation_description = 	Una casilla de verificación / ventana emergente para <b>vincular</b> uno o más <b>registros</b> a una hoja de cálculo extranjera.
+yform_values_be_media_description = 			Un campo Redaxo para seleccionar uno o varios <b>archivos de grupo de medios</b>.
+yform_values_be_select_category_description =	Un campo redaxo para seleccionar una o más <b>categorías</b> del árbol.
+yform_values_be_table_description = 			Una serie de campos de entrada para ingresar <b>datos tabulares</b>.
+yform_values_prio_description =					Un <b>cuadro de selección</b> para ordenar registros en un <b>orden específico</b>.
 
 yform_values_defaults_prio = Prioridad
 yform_values_be_manager_relation_table = Tabla de objetivos
@@ -275,3 +287,7 @@ yform_values_prio_default = En el comienzo
 
 yform_is = Es
 yform_will_set_to = Deberá
+
+yform_field_add = Añadir campo
+yform_field_update = Campo de actualización
+yform_field_db_type = Tipo de campo de base de datos
