@@ -42,4 +42,10 @@ class rex_yform_action_createdb extends rex_yform_action_abstract
     {
         return 'action|createdb|tablename';
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
+
 }

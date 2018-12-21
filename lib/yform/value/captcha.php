@@ -223,4 +223,10 @@ fg_color_4          = 255,221,0';
         $string = md5($string);
         $_SESSION['captcha'] = $string;
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
+
 }

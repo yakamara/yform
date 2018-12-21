@@ -121,4 +121,10 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
         return implode('<br />', $return);
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
+
 }

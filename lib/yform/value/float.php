@@ -87,4 +87,10 @@ class rex_yform_value_float extends rex_yform_value_abstract
     {
         return number_format((float) strtr($value, ',', '.'), (int) $scale, '.', '');
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
+
 }

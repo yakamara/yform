@@ -159,4 +159,10 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             return ' ( ' . implode(' or ', $where) . ' )';
         }
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
+
 }

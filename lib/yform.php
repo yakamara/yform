@@ -631,8 +631,10 @@ class rex_yform
 
                         if (isset($definitions['formbuilder']) && !$definitions['formbuilder']) {
 
-                        } elseif (isset($definitions['deprecated']) && $definitions['deprecated']) {
-                            $classesDeprecatedDescription[$arr_key] .= '<tr class="yform-classes-deprecated"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $definitions['deprecated'] . '<br />' . $desc . '</td></tr>';
+                        } elseif ($class->isDeprecated()) {
+
+                            $deprecatedInfo = isset($definitions['deprecated']) ? $definitions['deprecated'].'<br />' : '';
+                            $classesDeprecatedDescription[$arr_key] .= '<tr class="yform-classes-deprecated"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $deprecatedInfo . $desc . '</td></tr>';
 
                         } elseif (isset($definitions['famous']) && $definitions['famous']) {
                             $classesFamousDescription[$arr_key] .= '<tr class="yform-classes-famous"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
