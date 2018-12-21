@@ -36,7 +36,11 @@ yform_table_overview = Tabellöversikt
 yform_manager_edit_table = Redigera tabell
 yform_manager_add_table = Tillfoga tabell
 
+yform_update_table = Uppdatera tabellen
+yform_add_table = Tillfoga tabell
 yform_add_row = Tillfoga rad
+
+yform_edit_datatable = Hantera data
 
 # tables.inc.php
 yform_importcsv = Importera CSV
@@ -72,6 +76,10 @@ yform_manager_table_allow_mass_deletion = Tillåt mass radering
 yform_manager_table_allow_mass_edit = Tillåta massbearbetning
 yform_manager_table_history = Skapa historik
 yform_manager_tablefield_overview = Fältöversikt
+yform_manager_table_schema_overwrite = Skriv ALLTID databasfält med schemadefinition
+yform_manager_table_basic_info = Basinfo
+yform_manager_table_func = Tabellfuntkion
+yform_manager_table_user_func = Användarkomfortfunktioner
 
 yform_manager_table_updated = Tack för aktualiseringen
 yform_manager_table_added = Tack för inlägget.
@@ -135,6 +143,7 @@ yform_save = spara
 yform_save_apply = ta över
 yform_delete = radera
 yform_delete_definitions = Radera definitioner
+yform_delete_definitions_info = Databas tabellen behålls
 yform_search = sök
 yform_export = exportera
 yform_import = importera
@@ -202,6 +211,8 @@ yform_manager_import_divider_tab = Tabulator
 yform_manager_import_unique_field = Om fältet är identisk kommer datasatsen att ersättas
 yform_manager_import_start = Tillfoga
 yform_manager_import_file = Fil
+yform_manager_import_error_missingfielddefinition = Det finns fält som är tomma och som därför inte kan tilldelas. Kontrollera först importens första rad.
+yform_manager_import_error_duplicatefielddefinition = Det finns fält som är identiska. Kontrollera först importens första rad.
 
 # history
 yform_history = Historik
@@ -276,3 +287,7 @@ yform_values_prio_default = Till början
 
 yform_is = är
 yform_will_set_to = kommer att bli
+
+yform_field_add = Tillfoga fält
+yform_field_update = Updatera fält
+yform_field_db_type = Databas fälttyp
