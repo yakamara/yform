@@ -36,6 +36,7 @@ yform_values_checkbox_description = 			Eine <b>Checkbox</b> mit vordefinierten W
 yform_values_checkbox_sql_description =			Eine <b>Checkbox</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
 yform_values_date_description =					Eine Reihe von Auswahlfeldern, in der ein <b>Datum</b> (Tag, Monat, Jahr) ausgewählt wird.
 yform_values_datestamp_description =			Ein unsichtbares Feld, in das ein <b>Zeitstempel</b> gespeichert wird, wenn der Datensatz hinzugefügt oder bearbeitet wird.
+yform_values_datestamp_notice =                 Formatierung entsprechend der PHP date() Funktion (http://php.net/manual/de/function.date.php)
 yform_values_datetime_description =				Eine Reihe von Auswahlfeldern, in der <b>Datum und Uhrzeit</b> (Tag, Monat, Jahr, Stunden, Minuten, Sekunden) ausgewählt wird.
 yform_values_email_description =				Ein einfaches Eingabefeld für <b>E-Mail-Adressen.</b>
 yform_values_emptyname_description =			Ein Feld <b>ohne</b> Eingabemöglichkeit.
