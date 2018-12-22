@@ -21,9 +21,9 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         } elseif ($this->getElement('only_empty') != 1) { // -> == 0
             // wird immer neu gesetzt
             $value = $default_value;
-        } elseif ($this->getValue() != '') {
+        } elseif ($this->getValue() != '' && $this->getValue() != '0000-00-00 00:00:00') {
             // wenn Wert vorhanden ist direkt zurück
-        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != '') {
+        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != '' && $this->params['sql_object']->getValue($this->getName()) != '0000-00-00 00:00:00') {
             // sql object vorhanden und Wert gesetzt ?
         } else {
             $value = $default_value;
