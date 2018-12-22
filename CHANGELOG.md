@@ -64,15 +64,19 @@ Danke auch an Fernando Averanga, christophboecker, Wolfgang Bund, Alex Platter, 
 
 #### deprecated
 
-* radio Feld
-* radio_select Feld
-* select Feld
-* select_sql Feld
-* checkbox_sql Feld
-* float Feld
-* captcha
-* captcha_calc
-* createdb
+* values
+    * radio Feld
+    * radio_select Feld
+    * select Feld
+    * select_sql Feld
+    * checkbox_sql Feld
+    * float Feld
+    * captcha
+    * captcha_calc
+* actions
+    * createdb
+* validates
+    * email
 
 #### umbenannt und werden initial aus der YForm Definition entfernt
 
