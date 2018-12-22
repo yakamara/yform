@@ -8,6 +8,9 @@ Version 3.0 – xx.xx.2018
 
 ### Neue Features
 
+* be_relations: 1-n Verknüpfungen nun über inline Modul möglich, inkl. Sortierung und überprüfung der verknüpften Formulare
+  * inline relations verschachtelbar
+  * entsprechend Felder wie be_media angepasst
 * type: URL-Filter
 * choice Feld ergänzt: ersetzt radio, radio_sql, select, select_sql, checkbox_sql.
 * Warnmeldungen ohne Inhalt werden nun um technische Infos ergänzt.
@@ -17,14 +20,11 @@ Version 3.0 – xx.xx.2018
 * ! datestamp: wird nun als datetime gespeichert. format nun für Anzeige, nicht mehr als Speicherformat.
 * validate: type um json erweitert
 * checkbox nun auch mit Attributen
+* ! utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191). Möglicher Datenverlust bei zu langen Feldinhalten!
 
 ### Änderungen und Korrekturen
 
 * ! Formbuilder textile entfernt (pschuchmann)
-* ! utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191). Möglicher Datenverlust bei zu langen Feldinhalten!
-* be_relations: 1-n Verknüpfungen nun über inline Modul möglich, inkl. Sortierung und überprüfung der verknüpften Formulare
-  * inline relations verschachtelbar
-  * entsprechend Felder wie be_media angepasst
 * Umbau des Feldnamenmanagements
 * sql-Injection des Prio-Felds behoben
 * Unnötige "Send"-Abfragen in den Validierungsklassen entfernt
