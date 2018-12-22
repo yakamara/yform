@@ -4,39 +4,44 @@ Changelog
 Version 3.0 – xx.xx.2018
 --------------------------
 
-#### Warnung - Bitte nicht von 2.x auf 3.x Update ohne sich genau informiert zu haben. Bei Updates von Majorversionen soll man immer Sicherungen machen
+#### Warnung - Bitte nicht von 2.x auf 3.x updaten, ohne sich genau informiert zu haben. Bei Updates der Hauptversion sollte zuvor ein Datenbank-Backup durchgeführt sein.
 
-### Änderungen
+### Neue Features
 
+* type: URL-Filter
+* choice Feld ergänzt: ersetzt radio, radio_sql, select, select_sql, checkbox_sql.
+* Warnmeldungen ohne Inhalt werden nun um technische Infos ergänzt.
+* ! Felder geben nun den Datenbankfeldtyp fest vor. Felder werden auch nachträglich an das Datenbankfeld angepasst. Nun auch optional
+* integer: um Maßeinheit ergänzt
+* number: Neues Feld, mit Maßeinheit und richtigem DB Feldtyp
+* ! datestamp: wird nun als datetime gespeichert. format nun für Anzeige, nicht mehr als Speicherformat.
+* validate: type um json erweitert
+* checkbox nun auch mit Attributen
+
+### Änderungen und Korrekturen
+
+* ! Formbuilder textile entfernt (pschuchmann)
+* ! utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191). Möglicher Datenverlust bei zu langen Feldinhalten!
 * be_relations: 1-n Verknüpfungen nun über inline Modul möglich, inkl. Sortierung und überprüfung der verknüpften Formulare
   * inline relations verschachtelbar
   * entsprechend Felder wie be_media angepasst
 * Umbau des Feldnamenmanagements
-* Prio sql Injection behoben
-* Unnötige "Send" Abfragen in den validierungsklassen entfernt
+* sql-Injection des Prio-Felds behoben
+* Unnötige "Send"-Abfragen in den Validierungsklassen entfernt
 * Feldwertermittlung korrigiert. Bei "0" waren Ergebnisse fehlerhaft
-* internalForms (YORM) führte zu Problemen weil CSRF mit ausgeführt wurden und sessions erstellt wurden.
-* Felder geben nun den Datenbankfeldtyp fest vor. Felder werden auch nachträglich an das Datenbankfeld angepasst. Nun auch optional
-* utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191)
-* choice Feld ergänzt: ersetzt radio, radio_sql, select, select_sql, checkbox_sql
-* Warnmeldungen ohne Inhalt werden nun um technische Infos ergänzt.
+* internalForms (YORM) führte zu Problemen weil CSRF mit ausgeführt wurden und Sessions erstellt wurden.
 * Snapshots über Console korrigiert, User wird nun auch richtig gesetzt
 * Tablesetimport verbessert
 * Dataimport verbessert und bessere Fehlermeldungen, Normalisierung der Feldnamen
 * E-Mail YFORM_DATA output korrigiert auf html und plain
-* MIT Lizenz ergänzt
-* Formbuilder textile entfernt (pschuchmann)
+* MIT-Lizenz ergänzt
 * Popupfenster schliesst nun bei Mehrfachselect nicht mehr direkt
 * Templates überarbeitet: Grid entfernt, diverse Anpassungen class und bootstrap
 * Diverse technische Optimierungen
-* integer: um Maßeinheit ergänzt
-* number: Neues Feld, mit Maßeinheit und richtigem DB Feldtyp
-* datestamp: wird nun als datetime gespeichert. format nun für Anzeige, nicht mehr als Speicherformat
-* type: url filter
 * checkbox: keine eigenen Werte mehr. Ausschliesslich 0,1. DB-Type: tinyint. Deswegen unbedingt die Formulare entsprechend anpassen
-* time: korrigiert (Norbert Micheel )
+* time: korrigiert (Norbert Micheel)
 * captcha: korrekturen
-* date: korrekturen (RexDude )
+* date: korrekturen (RexDude)
 * be_table: korrekturen (Alex Platter)
 * html: Infotext angepasst
 * index: Fehler bei der Speicherung behoben, null wird nun vermieden
@@ -49,16 +54,13 @@ Version 3.0 – xx.xx.2018
 * Tabellenübersicht optimiert
 * YTemplates: Grid überall entfernt, da nicht genutzt und nicht klar verständlich
 * CSV Import mit fehlenden Feldern geht wieder. Fehlende Felder werden als TEXT angelegt
-* Textkorrekturen (Alexander Walther, Wolfgang Bund)
-* Descriptions korrigiert (Alex Platter)
-* Danke auch an christophboecker, Jürgen Weiss, Fernando Averanga, Yves Torres, Alexander Walther  für Übersetzungen, kleinere Korrekturen, Doku, Anpassungen an Templates.
-* validate: type um json erweitert
 * README und CHANGELOG getrennt
 * value: date/datetime Standardformat auf YYYY-MM-DD und YYYY-MM-DD HH:ii:ss geändert
 * Bug: Mehrere YOrm Aufrufe konnten sich beeinflussen. REQUEST/YCom Problem
-* checkbox nun auch mit attributes
-* be_manager_relation nun auch mit zusätzlichen varchar(191) ergänzt
+* be_manager_relation nun auch mit zusätzlichen Feldtyp varchar(191) ergänzt
 * create_table, db: Mit %TABLE_PREFIX% im Tabellennamen kann man den Prefix der REDAXO Tabellen setzen.
+
+Danke auch an Fernando Averanga, christophboecker, Wolfgang Bund, Alex Platter, Yves Torres, Alexander Walther, Jürgen Weiss für Übersetzungen, kleinere Korrekturen, Doku, Anpassungen an Templates.
 
 #### deprecated
 
