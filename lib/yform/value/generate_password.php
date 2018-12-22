@@ -22,4 +22,10 @@ class rex_yform_value_generate_password extends rex_yform_value_abstract
     {
         return 'generate_password|name|[no_db]';
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
+
 }
