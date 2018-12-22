@@ -540,9 +540,15 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-    public static function generateTableAndFields($table, $delete_old = false)
+    public static function generateTableAndFields(rex_yform_manager_table $table, $delete_old = false)
     {
+        $tableName = $table->getTableName();
         rex_yform_manager_table::deleteCache();
+
+        $table = rex_yform_manager_table::get($tableName);
+        if (!$table) {
+            return;
+        }
 
         $c = rex_sql::factory();
         $c->setDebug(self::$debug);
@@ -555,7 +561,7 @@ class rex_yform_manager_table_api
         $EnsureTable = rex_sql_table::get($table->getTableName());
 
         $EnsureTable
-        ->ensurePrimaryIdColumn();
+            ->ensurePrimaryIdColumn();
 
         foreach ($table->getFields() as $field) {
             if ($field->getType() == 'value') {
@@ -600,7 +606,7 @@ class rex_yform_manager_table_api
         }
 
         $EnsureTable
-        ->ensure();
+            ->ensure();
 
         if ($delete_old === true) {
             foreach ($savedColumns as $savedColumn) {
