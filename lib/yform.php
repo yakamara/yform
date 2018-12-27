@@ -548,6 +548,7 @@ class rex_yform
 
         $params = array_merge($this->objparams['form_array'], $params);
 
+        $fieldValue = [];
         switch($this->getObjectparams('get_field_type')) {
             case 'request':
                 if ($this->objparams['real_field_names']) {
@@ -573,6 +574,7 @@ class rex_yform
         foreach($params as $param) {
             $param = $this->prepareLabel($param);
             if ($param != "") {
+
                 if (!isset($fieldValue[$param]) && !is_array($fieldValue)) {
                     $fieldValue = [];
                 } else if (!is_array($fieldValue)) {
