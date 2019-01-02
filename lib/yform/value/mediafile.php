@@ -91,7 +91,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         if ($this->params['send']) {
             $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
-            if ($this->getElement(7) != 'no_db') {
+            if ($this->getElement('no_db') != 'no_db') {
                 $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
             }
         }

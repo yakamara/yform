@@ -57,6 +57,7 @@ yform_values_text_description =					Ein <b>einfaches Eingabefeld</b> für Text.
 yform_values_textarea_description =				Ein <b>mehrzeiliges Eingabefeld</b> für Text.
 yform_values_time_description =					Eine Reihe von Auswahlfeldern, in der die <b>Uhrzeit</b> (Stunden, Minuten, Sekunden) ausgewählt wird.
 yform_values_upload_description =				Ein <b>Upload-Feld</b>, mit dem eine Datei in <b>die Datenbank oder ein Verzeichnis</b> hochgeladen wird.
+yform_values_ip_description =                   Ein <b>IP-Feld</b>, welche hiermit gespeichert wird
 
 yform_values_defaults_name = Name
 yform_values_defaults_label = Bezeichnung
@@ -150,6 +151,8 @@ yform_values_upload_database_filename_field = bei `database`: Dateiname wird ges
 yform_values_upload_upload_folder = bei `upload`: Uploadordner festlegen
 yform_values_upload_upload_folder_notice = Relativen Pfad zu "{0}" eintragen
 yform_values_upload_file_prefix = Dateiprefix
+yform_values_ip_server_var = Servervariable (optional)
+yform_values_ip_server_var_notice = default: REMOTE_ADDR
 
 yform_validate_compare_firstname = 1. Feldname
 yform_validate_compare_secondname = 2. Feldname
