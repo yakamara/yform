@@ -552,6 +552,7 @@ class rex_yform
             case 'request':
                 if ($this->objparams['real_field_names']) {
                     $fieldValue = &$_REQUEST;
+                    $params = [$label];
                 } else {
                     if (!isset($_REQUEST['FORM'][$this->objparams['form_name']])) {
                         $_REQUEST['FORM'][$this->objparams['form_name']] = '';
