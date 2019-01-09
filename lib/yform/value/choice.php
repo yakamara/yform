@@ -90,7 +90,8 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
         $this->setValue(implode(',', $proofedValues));
 
-        $this->params['value_pool']['email'][$this->getName()] = implode(', ', $choiceList->getSelectedListForEmail($values));
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName().'_LABELS'] = implode(', ', $choiceList->getSelectedListForEmail($values));
         $this->params['value_pool']['email'][$this->getName().'_LIST'] = implode("\n", $choiceList->getCompleteListForEmail($values));
 
         if ($this->getElement('no_db') != 1) {
@@ -125,7 +126,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
             ],
             'description' => rex_i18n::msg('yform_values_choice_description'),
-            'db_type' => ['text'],
+            'db_type' => ['text', 'int'],
             'famous' => true,
         ];
     }
@@ -215,12 +216,12 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         }
 
         $params['searchForm']->setValueField('choice', [
-                'name' => $params['field']->getName(),
-                'label' => $params['field']->getLabel(),
-                'choices' => $choices,
-                'multiple' => 1,
-                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
-            ]
+            'name' => $params['field']->getName(),
+            'label' => $params['field']->getLabel(),
+            'choices' => $choices,
+            'multiple' => 1,
+            'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
+        ]
         );
     }
 
@@ -301,7 +302,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $choiceList->createListFromSqlArray(
                 $sql->getArray($choicesElement)
             );
-        } elseif (is_string($choicesElement) && trim($choicesElement{0}) == '{') {
+        } elseif (is_string($choicesElement) && strlen(trim($choicesElement)) > 0 && substr(trim($choicesElement), 0, 1) == '{') {
             $choiceList->createListFromJson($choicesElement);
         } else {
             $choiceList->createListFromStringArray(

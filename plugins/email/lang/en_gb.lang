@@ -27,5 +27,5 @@ yform_delete_template = Delete template
 
 yform_email_caption = List of templates
 
-yform_email_info_text = <p>Fields which are being used in forms, can be displayed/processed in templates. <mark>PHP is allowed</mark> making it possible to handle/process very specific cases. Outputting normal fields is as simple as:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-mail address was entered"]<br />REX_YFORM_DATA[field="name" instead="default value"]<br />REX_YFORM_DATA[field="name" prefix="\nMy name is:" suffix=""]</p>
+yform_email_info_text = <p>Fields which are being used in forms, can be displayed/processed in templates. <mark>PHP is allowed</mark> making it possible to handle/process very specific cases. Outputting normal fields is as simple as:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-mail address was entered"]<br />REX_YFORM_DATA[field="name" instead="default value"]<br />REX_YFORM_DATA[field="name" prefix="My name is:" suffix=""]</p>
 

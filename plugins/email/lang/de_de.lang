@@ -1,8 +1,10 @@
 yform_email_templates = E-Mail Templates
 
 yform_email_key = Key - bitte nicht verändern
-yform_email_from = Absender-E-Mail [z.b.info@redaxo.de]
-yform_email_from_name = Absender-Name [z.b. REDAXO Server]
+yform_email_from = Absender-E-Mail [z.B.info@redaxo.de]
+yform_email_from_name = Absender-Name [z.B. REDAXO Server]
+yform_email_reply_to = Reply-To-E-Mail [z.B. yform@redaxo.de]
+yform_email_reply_to_name = Reply-To-Name [z.B. YForm Server]
 yform_email_subject = Betreff
 yform_email_body = Body
 yform_email_body_html = Body (Html)
@@ -27,5 +29,5 @@ yform_delete_template = Template löschen
 
 yform_email_caption = Liste der Templates
 
-yform_email_info_text = <p>Felder, die in Formularen verwendet werden, können in den Templates angezeigt und verarbeitet werden. <mark>Grundsätzlich ist auch PHP erlaubt</mark>, sodass man ganz individuell auf einzelne Fälle eingehen kann. Die normale Ausgabe eines Feldes geschieht folgendermaßen:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-Mail wurde ausgefüllt"]<br />REX_YFORM_DATA[field="name" instead="defaultwert"]<br />REX_YFORM_DATA[field="name" prefix="\nMein Name:" suffix=""]</p>
+yform_email_info_text = <p>Felder, die in Formularen verwendet werden, können in den Templates angezeigt und verarbeitet werden. <mark>Grundsätzlich ist auch PHP erlaubt</mark>, sodass man ganz individuell auf einzelne Fälle eingehen kann. Die normale Ausgabe eines Feldes geschieht folgendermaßen:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-Mail wurde ausgefüllt"]<br />REX_YFORM_DATA[field="name" instead="defaultwert"]<br />REX_YFORM_DATA[field="name" prefix="Mein Name: " suffix=""]</p>
 

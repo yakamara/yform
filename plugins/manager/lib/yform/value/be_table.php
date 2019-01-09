@@ -75,7 +75,8 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
          */
 
         foreach ($_columns as $index => $col) {
-            $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
+            // Use ;; for separating choice columns instead of ,
+            $values = explode('|', trim(trim(str_replace(';;', ',', rex_yform::unhtmlentities($col))), '|'));
             if (count($values) == 1) {
                 $values = ['text', 'text_'. $index, $values[0]];
             }

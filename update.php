@@ -17,10 +17,8 @@ foreach ($this->getInstalledPlugins() as $plugin) {
 
 
 if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '3', '<')) {
-
-    // TODO: choice feld setzen
-
-    $fields_removed = ['select', 'select_sql', 'checkbox_sql', 'radio', 'radio_sql'];
+    
+    $fields_removed = [];
     $fields_renamed = ['labelexist' => 'in_names', 'existintable' => 'in_table'];
 
     foreach ($fields_renamed as $field_old_name => $field_new_name) {
@@ -31,6 +29,9 @@ if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($th
     foreach ($fields_removed as $field) {
         rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id="value" and type_name = ?', [$field]);
     }
+    
+    rex_sql::factory()->setQuery("UPDATE `rex_yform_field` SET `format` = '' WHERE `type_name` = 'datestamp' AND `format` = 'mysql'");
+
 }
 
 
@@ -50,6 +51,7 @@ if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($th
     foreach ($actions_removed as $action) {
         rex_sql::factory()->setQuery('delete from '.rex_yform_manager_field::table().' where type_id="action" and type_name = ?', [$action]);
     }
+   
 }
 
 rex_autoload::removeCache();
