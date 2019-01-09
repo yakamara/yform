@@ -27,14 +27,14 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
             <?php foreach ($columns as $column): ?>
                 <th><?php echo htmlspecialchars($column['label']) ?></th>
             <?php endforeach ?>
-            <th class="rex-table-action"><a class="btn btn-xs btn-default" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
+            <th class="rex-table-action"><a class="btn btn-xs btn-primary" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($data as $data_index => $row): ?>
             <tr>
                 <?php foreach ($columns as $i => $column): ?>
-                    <td class="be-value-input">
+                    <td class="be-value-input" data-title="<?= rex_escape($column['label'], 'html_attr') ?>">
                         <?php
                         $field = $column['field'];
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
@@ -55,19 +55,22 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                         ?>
                     </td>
                 <?php endforeach ?>
-                <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>
+                <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
+    <a class="btn btn-primary btn-xs add-mobile-btn" id="<?= $this->getHTMLId() ?>-add-mobile-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a>
 
     <script type="text/javascript">
         (function () {
             var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
                 be_table_cnt = <?= (int)$data_index ?>;
 
-            wrapper.find('#<?= $this->getHTMLId() ?>-add-row').click(function () {
-                var tr = $('<tr/>'),
+            wrapper.find('#<?= $this->getHTMLId() ?>-add-row, #<?= $this->getHTMLId() ?>-add-mobile-row').click(function () {
+                var $this = $(this),
+                    $table = $this.parents('.formbe_table').children('table'),
+                    tr = $('<tr/>'),
                     regexp = [
                         // REX_MEDIA
                         new RegExp("(REX_MEDIA_)", 'g'),
@@ -85,7 +88,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                     ],
                     row_html = '\
                     <?php foreach ($columns as $i => $column): ?>\
-                            <td class="be-value-input"><?php
+                            <td class="be-value-input" data-title="<?= $column['label'] ?>"><?php
                         $field = $columns[$i]['field'];
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
                         $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
@@ -104,7 +107,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                         echo strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]);
                         ?></td>\
                     <?php endforeach ?>\
-                    <td><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
+                    <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
                 ';
 
                 be_table_cnt++;
@@ -126,7 +129,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                 });
 
 
-                $(this).closest('table').find('tbody').append(tr);
+                $table.find('tbody').append(tr);
                 $(document).trigger('be_table:row-added', [tr]);
                 return false;
             });
