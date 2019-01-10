@@ -14,10 +14,11 @@ class rex_yform_action_callback extends rex_yform_action_abstract
         if (!$this->getElement(2)) {
             return false;
         }
-
         $f = $this->getElement(2);
 
-        if (strpos($f, '::') !== false) {
+        if (is_callable($f)) {
+            call_user_func($f, $this);
+        } elseif (strpos($f, '::') !== false) {
             $f = explode('::', $f, 2);
             if (is_callable($f[0], $f[1])) {
                 call_user_func($f, $this);
