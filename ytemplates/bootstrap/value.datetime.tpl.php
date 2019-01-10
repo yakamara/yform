@@ -23,7 +23,7 @@ $replace = [];
 
 $pos = strpos($format, 'YYYY');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('year') . '" name="' . $this->getFieldName($this->getName()) . '[year]">';
+    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('year') . '" name="' . $this->getFieldName() . '[year]">';
     $replace_i .= '<option value="00">--</option>';
     for ($i = $yearStart; $i <= $yearEnd; ++$i):
         $selected = (@$year == $i) ? ' selected="selected"' : '';
@@ -36,7 +36,7 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'MM');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('month') . '" name="' . $this->getFieldName($this->getName()) . '[month]">';
+    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('month') . '" name="' . $this->getFieldName() . '[month]">';
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 13; ++$i):
         $selected = (@$month == $i) ? ' selected="selected"' : '';
@@ -49,7 +49,7 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'DD');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('day') . '" name="' . $this->getFieldName($this->getName()) . '[day]">';
+    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('day') . '" name="' . $this->getFieldName() . '[day]">';
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 32; ++$i):
         $selected = (@$day == $i) ? ' selected="selected"' : '';
@@ -62,7 +62,7 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'HH');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('hour') . '" name="' . $this->getFieldName($this->getName()) . '[hour]">';
+    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('hour') . '" name="' . $this->getFieldName() . '[hour]">';
     foreach ($hours as $i):
         $selected = (@$hour == $i) ? ' selected="selected"' : '';
         $replace_i .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
@@ -74,7 +74,7 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'ii');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('minute') . '" name="' . $this->getFieldName($this->getName()) . '[minute]">';
+    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('minute') . '" name="' . $this->getFieldName() . '[minute]">';
     foreach ($minutes as $i):
         $selected = (@$minute == $i) ? ' selected="selected"' : '';
         $replace_i .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
@@ -86,7 +86,7 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'ss');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('second') . '" name="' . $this->getFieldName($this->getName()) . '[second]">';
+    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('second') . '" name="' . $this->getFieldName() . '[second]">';
     for ($i = 0; $i < 60; ++$i):
         $selected = (@$second == $i) ? ' selected="selected"' : '';
         $replace_i .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
