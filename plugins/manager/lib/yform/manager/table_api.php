@@ -541,77 +541,91 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-    public static function generateTablesAndFields($delete_old = false)
+    public static function generateTableAndFields(rex_yform_manager_table $table, $delete_old = false)
     {
+        $tableName = $table->getTableName();
         rex_yform_manager_table::deleteCache();
-        foreach (rex_yform_manager_table::getAll() as $table) {
-            $c = rex_sql::factory();
-            $c->setDebug(self::$debug);
-            $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table->getTableName() . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
-            $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
-            // remember fields, create and in case delete
-            $savedColumns = $table->getColumns();
+        $table = rex_yform_manager_table::get($tableName);
+        if (!$table) {
+            return;
+        }
 
-            $EnsureTable = rex_sql_table::get($table->getTableName());
+        $c = rex_sql::factory();
+        $c->setDebug(self::$debug);
+        $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table->getTableName() . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
+        $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 
-            $EnsureTable
+        // remember fields, create and in case delete
+        $savedColumns = $table->getColumns();
+
+        $EnsureTable = rex_sql_table::get($table->getTableName());
+
+        $EnsureTable
             ->ensurePrimaryIdColumn();
 
-            foreach ($table->getFields() as $field) {
-                if ($field->getType() == 'value') {
-                    $db_type = $field->getDatabaseFieldType();
+        foreach ($table->getFields() as $field) {
+            if ($field->getType() == 'value') {
+                $db_type = $field->getDatabaseFieldType();
 
-                    if ($db_type != 'none' && $db_type != '') {
-                        $hooks = $field->getHooks();
-                        if (isset($hooks['preCreate'])) {
-                            $result = call_user_func($hooks['preCreate'], $field, $db_type);
-                            if (false === $result) {
-                                continue;
-                            }
-                            if (is_string($result)) {
-                                $db_type = $result;
-                            }
+                if ($db_type != 'none' && $db_type != '') {
+                    $hooks = $field->getHooks();
+                    if (isset($hooks['preCreate'])) {
+                        $result = call_user_func($hooks['preCreate'], $field, $db_type);
+                        if (false === $result) {
+                            continue;
                         }
-
-                        $default = $field->getDatabaseFieldDefault();
-                        if (isset($hooks['preDefault'])) {
-                            $result = call_user_func($hooks['preDefault'], $field, $default);
-                            if (is_string($result)) {
-                                $default = $result;
-                            }
-                        }
-
-                        $existingColumn = false;
-
-                        foreach ($savedColumns as $savedColumn) {
-                            if ($savedColumn['name'] == $field->getName()) {
-                                unset($savedColumns[$savedColumn['name']]);
-                                $existingColumn = true;
-                                break;
-                            }
-                        }
-
-                        if (!$existingColumn || ($existingColumn && $table->overwriteSchema())) {
-                            $EnsureTable
-                                ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull(), $default));
+                        if (is_string($result)) {
+                            $db_type = $result;
                         }
                     }
-                }
-            }
 
-            $EnsureTable
-                ->ensure();
+                    $default = $field->getDatabaseFieldDefault();
+                    if (isset($hooks['preDefault'])) {
+                        $result = call_user_func($hooks['preDefault'], $field, $default);
+                        if (is_string($result)) {
+                            $default = $result;
+                        }
+                    }
 
-            if ($delete_old === true) {
-                foreach ($savedColumns as $savedColumn) {
-                    if ($savedColumn['name'] != 'id') {
-                        $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` DROP `' . $savedColumn['name'] . '` ');
+                    $existingColumn = false;
+
+                    foreach ($savedColumns as $savedColumn) {
+                        if ($savedColumn['name'] == $field->getName()) {
+                            unset($savedColumns[$savedColumn['name']]);
+                            $existingColumn = true;
+                            break;
+                        }
+                    }
+
+                    if (!$existingColumn || ($existingColumn && $table->overwriteSchema())) {
+                        $EnsureTable
+                        ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull(), $default));
                     }
                 }
             }
         }
 
+        $EnsureTable
+            ->ensure();
+
+        if ($delete_old === true) {
+            foreach ($savedColumns as $savedColumn) {
+                if ($savedColumn['name'] != 'id') {
+                    $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` DROP `' . $savedColumn['name'] . '` ');
+                }
+            }
+        }
+        rex_yform_manager_table::deleteCache();
+    }
+
+
+    public static function generateTablesAndFields($delete_old = false)
+    {
+        rex_yform_manager_table::deleteCache();
+        foreach (rex_yform_manager_table::getAll() as $table) {
+            self::generateTableAndFields($table, $delete_old);
+        }
         rex_yform_manager_table::deleteCache();
     }
 }

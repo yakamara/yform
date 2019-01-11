@@ -11,64 +11,63 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $compare_type = $this->getElement('compare_type');
+        $compare_type = $this->getElement('compare_type');
 
-            $field_1 = $this->getElement('name');
-            $field_2 = $this->getElement('name2');
+        $field_1 = $this->getElement('name');
+        $field_2 = $this->getElement('name2');
 
-            foreach ($this->getObjects() as $o) {
-                if ($o->getName() == $field_1) {
-                    $id_1 = !isset($id_1) ? $o->getId() : $id_1;
-                    $value_1 = !isset($value_1) ? $o->getValue() : $value_1;
-                }
-                if ($o->getName() == $field_2) {
-                    $id_2 = !isset($id_2) ? $o->getId() : $id_2;
-                    $value_2 = !isset($value_2) ? $o->getValue() : $value_2;
-                }
+        foreach ($this->getObjects() as $o) {
+            if ($o->getName() == $field_1) {
+                $id_1 = !isset($id_1) ? $o->getId() : $id_1;
+                $value_1 = !isset($value_1) ? $o->getValue() : $value_1;
             }
-
-            $error = false;
-            switch ($compare_type) {
-                case '<=':
-                    if ($value_1 <= $value_2) {
-                        $error = true;
-                    }
-                    break;
-                case '>=':
-                    if ($value_1 >= $value_2) {
-                        $error = true;
-                    }
-                    break;
-                case '>':
-                    if ($value_1 > $value_2) {
-                        $error = true;
-                    }
-                    break;
-                case '<':
-                    if ($value_1 < $value_2) {
-                        $error = true;
-                    }
-                    break;
-                case '==':
-                    if ($value_1 == $value_2) {
-                        $error = true;
-                    }
-                    break;
-                case '!=':
-                default:
-                    if ($value_1 != $value_2) {
-                        $error = true;
-                    }
-            }
-
-            if ($error) {
-                $this->params['warning'][$id_1] = $this->params['error_class'];
-                $this->params['warning'][$id_2] = $this->params['error_class'];
-                $this->params['warning_messages'][$id_1] = $this->getElement('message');
-                // $this->params['warning_messages'][$id_2] = $this->getElement('message');
+            if ($o->getName() == $field_2) {
+                $id_2 = !isset($id_2) ? $o->getId() : $id_2;
+                $value_2 = !isset($value_2) ? $o->getValue() : $value_2;
             }
         }
+
+        $error = false;
+        switch ($compare_type) {
+            case '<=':
+                if ($value_1 <= $value_2) {
+                    $error = true;
+                }
+                break;
+            case '>=':
+                if ($value_1 >= $value_2) {
+                    $error = true;
+                }
+                break;
+            case '>':
+                if ($value_1 > $value_2) {
+                    $error = true;
+                }
+                break;
+            case '<':
+                if ($value_1 < $value_2) {
+                    $error = true;
+                }
+                break;
+            case '==':
+                if ($value_1 == $value_2) {
+                    $error = true;
+                }
+                break;
+            case '!=':
+            default:
+                if ($value_1 != $value_2) {
+                    $error = true;
+                }
+        }
+
+        if ($error) {
+            $this->params['warning'][$id_1] = $this->params['error_class'];
+            $this->params['warning'][$id_2] = $this->params['error_class'];
+            $this->params['warning_messages'][$id_1] = $this->getElement('message');
+            // $this->params['warning_messages'][$id_2] = $this->getElement('message');
+        }
+
     }
 
     public function getDescription()

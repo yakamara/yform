@@ -6,25 +6,22 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
 
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
+        $Object = $this->getValueObject();
 
-            $Object = $this->getValueObject();
+        if (!$this->isObject($Object)) {
+            return;
+        }
 
-            if (!$this->isObject($Object)) {
-                return;
-            }
+        $rules = json_decode($this->getElement('rules'), true);
+        if (count($rules) == 0) {
+            $rules = json_decode(self::PASSWORD_POLICY_DEFAULT_RULES, true);
+        }
 
-            $rules = json_decode($this->getElement('rules'), true);
-            if (count($rules) == 0) {
-                $rules = json_decode(self::PASSWORD_POLICY_DEFAULT_RULES, true);
-            }
+        $PasswordPolicy = new rex_password_policy($rules);
 
-            $PasswordPolicy = new rex_password_policy($rules);
-
-            if ($Object->getValue() != '' && $PasswordPolicy->check($Object->getValue()) !== true) {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-            }
+        if ($Object->getValue() != '' && $PasswordPolicy->check($Object->getValue()) !== true) {
+            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
         }
     }
 

@@ -45,6 +45,7 @@ yform_values_hashvalue_description =			Ett fält som genererar ett  <b>hashvärd
 yform_values_html_description =					Utmatar rå <b> HTML-kod </ b> på en viss plats i formuläret.
 yform_values_index_description =				Ett fält som skapar en <b> index nyckel </ b> över flera fält.
 yform_values_integer_description =				Ett enkelt inmatningsfält för <b>heltal</b>.
+yform_values_number_description =               Ett inmatningsfält för <b> siffror med eller utan decimaler. (DECIMAL) </ b>
 yform_values_mediafile_description =			Ett <b>filuppladdningsfält</b> som man kan ladda upp en fil från filhanteraren (Medienpool).
 yform_values_php_description =					Kör <b>PHP-kod</b> vid ett specifik ställe i formuläret.
 yform_values_radio_description =				En eller flera urvalsfält som <b>radio buttons</b>.
@@ -65,9 +66,14 @@ yform_values_defaults_attributes_notice = Var god skriv i JSON format.  T.ex. {"
 yform_values_defaults_widgets = Widget
 yform_values_defaults_showvalue = Visa värde
 yform_validate_defaults_message = Felmeddelande
+yform_values_defaults_unit = Måttenhet (t.ex. € $ m mm %)
+
+yform_values_number_precision = Antal siffror (23335443.23 skulle till exempel vara 10 siffror) (PRECISION)
+yform_values_number_scale = Antal decimaler (23335443.23 skulle exempelvis vara 2 decimaler) (SCALE)
 
 yform_search_defaults_wildcard_notice = Exempel: * namn /! (empty) / (empty)
 yform_search_integer_notice = Exempel:> 5 /! = 5 / 3-5 / 2..5 /! (empty) / (empty)
+yform_search_number_notice = Exempel: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
 yform_search_defaults_select_notice = Använd CTRL eller COMMAND för att välja fler alternativ
 
 yform_values_checkbox_values = Värden (0,1 = unchecked, checked)
@@ -101,6 +107,7 @@ yform_values_index_names_notice = Kommaseparerat. Fält från relaterade tabelle
 yform_values_index_function = Optional coding function
 yform_values_index_function_notice = Exempel: md5, sha1
 yform_values_integer_default = Default värde
+yform_values_number_default = Default värde
 yform_values_mediafile_max_size = Maximal storlek i kilobytes eller ett intervall, ex .: 100, 500
 yform_values_mediafile_types = Tillåtna filtyper, komma separerat lista. T.ex. ".gif, .png"
 yform_values_mediafile_required = Obligatorisk fält
@@ -125,6 +132,8 @@ yform_values_submit_default = Default värde
 yform_values_submit_css_classes = CSS class name (kommaseparerat)
 yform_values_text_default = Default value
 yform_values_text_css_class = CSS class name
+yform_values_defaults_prepend = Visa sträng före den. t.ex. EUR
+yform_values_defaults_append = Visa sträng före den. t.ex. .00
 yform_values_textarea_default = Default value
 yform_values_textarea_classes = Classes
 yform_values_time_hours = Timmar
@@ -191,3 +200,47 @@ yform_values_csrf_description = CSRF skydd
 
 yform_geo_get_position = Hämta position
 yform_geo_clear_position = Radera position
+
+
+yform_values_choice_attributes = Attribut för elementet (attributes)
+yform_values_choice_attributes_notice = Med det här alternativet kan HTML-attribut läggas till i någon <code> div </ code> eller <code> select </ code>. Callable: <code> foo ($ attribut) </ code>; <code> foo :: bar ($ attribut) </ code> eller JSON: <code> {"class": "group-item"} </ code> eller <code> {"size": "5"} < / code>
+yform_values_choice_choice_attributes = Attribut för varje urval (choice_attributes)
+yform_values_choice_choice_attributes_notice = Med det här alternativet kan ytterligare HTML-attribut läggas till för varje urval. Callable: <code> foo ($attributes, $value, $label) </ code>; <code> foo :: bar ($attributes, $value, $label) </ code> eller JSON: <code> {"class": "choicable", "DE": {"data-language": "de-de"}} </ code>
+yform_values_choice_choices = Val (choices)
+yform_values_choice_choices_notice = Det här är det enklaste sättet att ange vilka alternativ som ska användas av det här fältet. Alternativet är antingen en kommaseparerad sträng (label = value), en JSON-array, där matrisnyckeln är elementets etikett och arrayvärdet är elementets värde eller en fråga "SELECT id, namn FROM table"
+yform_values_choice_choices_table = <table class="table"><colgroup><col width="32%" /><col width="69%" /></colgroup><thead valign="bottom"><tr><th>Beskrivning</th><th>Exempel</th></tr></thead><tbody valign="top"><tr><td>kommaseparerad string</td><td><code>Danmark=DK,Tyskland=DE,Österrike=AT,Schweiz=CH</code></td></tr><tr><td>JSON-Array</td><td><code>{"Danmark": "DK", "Tyskland": "DE", "Österrike": "AT", "Schweiz": "CH"}</code></td></tr><tr><td>JSON-Array med <code>optgroup</code> för select tag</td><td><code>{"Europa": {"Danmark": "DK", "Tyskland": "DE", "Österrike": "AT", "Schweiz": "CH"}, "Sydamerika": {"Bolivia": "BO"}}</code></td></tr><tr><td>Query</td><td><code>SELECT id AS value, name AS label FROM country</code></td></tr><tr><td>Query med <code>optgroup</code> för select tag<br /> (I optionen <code>group_by</code> måste <code>group_label</code> noteras)</td><td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td></tr></tbody></table>
+yform_values_choice_default = Standardvärden (default)
+yform_values_choice_default_notice = Om värden anges här på ett kommaseparerat sätt, är dessa redan förinställda
+yform_values_choice_description = Ett multifunktionsfält som låter användaren "välja" ett eller flera alternativ. Det kan visas som välj select-tag, radio eller kryssrutor (alternativ till <code> checkbox_sql </ code>, <code> radio </ code>, <code> radio_sql </ code>, <code> select </ code> , <code> select_sql </ code>)
+yform_values_choice_expanded = Utökat (expanded)
+yform_values_choice_expanded_notice = Om den är satt till true, görs radios eller kryssrutor (beroende på multiple). Om det är fale, görs ett Select-element.
+yform_values_choice_expanded_multiple_table = <table class = "table"> <colgroup> <col width = "69%" /> <col width = "16%" /> <col width = "16%" /> </ colgroup> <thead valign = " botten "> <tr> <th>Element </th><th>Utökat</th><th> flera val</th></tr></ thead><tbody valign ="top"><tr><td>select tag </td><td><code>false </ code></td><td><code>false </code></td> </tr><tr><td>select tag (with <code>multiple</code> attributes)</td><td><code>false </code></td><td><code>true</code></td></tr><tr><td> radio buttons</td><td> <code>true </code></td><td><code>false</code></td></tr><tr> <td>checkboxes</td><td><code>true</code></td><td><code>true</code></td></tr></tbody></table>
+yform_values_choice_group_attributes = Attribut för gruppen (group_attributes)
+yform_values_choice_group_attributes_notice = Det här alternativet lägger till ytterligare HTML-attribut för objektet. Callable: <code> foo ($attributes) </ code>; <code> foo :: bar ($attributes) </ code> eller JSON: <code> {"class": "group", "data-yform": "awesome"} </ code>
+yform_values_choice_group_by = Grupperingar (group_by)
+yform_values_choice_group_by_notice = Detta alternativ gör det möjligt att "gruppera" val i valet. (För närvarande endast möjligt via sökfråga, ange fältnamn)
+yform_values_choice_multiple = Multipelval (multiple)
+yform_values_choice_multiple_notice = Om det är sant kan användaren välja flera alternativ (i motsats till bara ett alternativ). Beroende på värdet på det expanderade alternativet visas antingen en välj Select-Tag eller checkboxes (true) eller en välj Select-Tag eller radio-buttons (false).
+yform_values_choice_placeholder = Platshållare
+yform_values_choice_placeholder_notice = Det här alternativet avgör om ett speciellt "tomt" alternativ (till exempel "Välj ett alternativ") visas överst på en Select-widget. Det här alternativet gäller endast om multipelalternativet är inställt på felaktigt.
+yform_values_choice_preferred_choices = Föredragna val (preferred_choices)
+yform_values_choice_preferred_choices_notice = Det här alternativet flyttar vissa val överst i listan, placera en optisk separator mellan dem och resten av alternativen.
+
+yform_values_message_is_missing = [Varningsmeddelande för fältet `{1}` saknas]
+
+yform_validate_object_is_missing = Objektet `{1}` för validering `{1}` saknas
+
+yform_values_deprecated_checkbox_sql = Deprecated; Använd Choice value
+yform_values_deprecated_radio = Deprecated; Använd Choice value
+yform_values_deprecated_radio_sql = Deprecated; Använd Choice value
+yform_values_deprecated_select = Deprecated; Använd Choice value
+yform_values_deprecated_select_sql = Deprecated; Använd Choice value
+yform_values_deprecated_float = Borttagen ! Använd nummerfältet
+
+yform_always = alltid
+yform_onlyifempty = bara om tom
+yform_never = aldrig
+
+yform_values_number_error_precision = Ange ett tal mellan {0} och {1} för antalet siffror (PRECISION)
+yform_values_number_error_scale = Ange ett tal mellan {0} och {1} i antal decimaler (SCALE)
+yform_values_number_error_compare = Decimalerna får inte vara högre än antalet siffror

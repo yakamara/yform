@@ -132,9 +132,9 @@ class rex_yform_manager
             $link_vars .= '&' . urlencode($k) . '=' . urlencode($v);
         }
 
-        $page_title = rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']</small>', '');
+        $description = ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
+        $page_title = rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', '');
         echo rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_PAGE_TITLE', $page_title, ['table' => $this->table]));
-
 
         $_csrf_key = 'table_field-'.$this->table->getTableName();
 
@@ -443,7 +443,7 @@ class rex_yform_manager
                             $data_id = $yform->objparams['main_id'];
                             $func = 'edit';
                             $yform = $yform_clone;
-                            $yform->setFieldValue('send', '', '', 'send');
+                            $yform->setFieldValue('send', [], '');
                             $yform->setHiddenField('func', $func);
                             $yform->setHiddenField('data_id', $data_id);
                             $yform->setObjectparams('main_id', $data_id);
@@ -1218,10 +1218,10 @@ class rex_yform_manager
                 $func = '';
             } else {
                 if ($func == 'edit') {
-                    $this->generateAll();
+                    rex_yform_manager_table_api::generateTableAndFields($table);
                     echo rex_view::success(rex_i18n::msg('yform_thankyouforupdate'));
                 } elseif ($func == 'add') {
-                    $this->generateAll();
+                    rex_yform_manager_table_api::generateTableAndFields($table);
                     echo rex_view::success(rex_i18n::msg('yform_thankyouforentry'));
                 }
                 $func = 'list';
@@ -1242,7 +1242,8 @@ class rex_yform_manager
                     $delsql->setDebug(self::$debug);
                     $delsql->setQuery($query);
                     echo rex_view::success(rex_i18n::msg('yform_tablefielddeleted'));
-                    $this->generateAll();
+                    rex_yform_manager_table_api::generateTableAndFields($table);
+
                 } else {
                     echo rex_view::warning(rex_i18n::msg('yform_tablefieldnotfound'));
                 }
@@ -1252,13 +1253,13 @@ class rex_yform_manager
 
         // ********************************************* CREATE/UPDATE FIELDS
         if ($func == 'updatetable') {
-            $this->generateAll();
+            rex_yform_manager_table_api::generateTableAndFields($table);
             echo rex_view::info(rex_i18n::msg('yform_tablesupdated'));
             $func = 'list';
         }
 
         if ($func == 'updatetablewithdelete') {
-            $this->generateAll(['delete_fields' => true]);
+            rex_yform_manager_table_api::generateTableAndFields($table, true);
             echo rex_view::info(rex_i18n::msg('yform_tablesupdated'));
             $func = 'list';
         }
@@ -1576,14 +1577,6 @@ class rex_yform_manager
         $c->insert();
 
         return true;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function generateAll($f = [])
-    {
-        rex_yform_manager_table_api::generateTablesAndFields(isset($f['delete_fields']) ? $f['delete_fields'] : false);
     }
 
     public static function checkMediaInUse($params)

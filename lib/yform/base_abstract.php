@@ -131,6 +131,11 @@ abstract class rex_yform_base_abstract
     {
     }
 
+    public function isDeprecated()
+    {
+        return false;
+    }
+
     /* deprecated */
     public function execute()
     {
@@ -139,5 +144,8 @@ abstract class rex_yform_base_abstract
     public function init()
     {
     }
+
+
+
 
 }

@@ -9,7 +9,9 @@
 
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
-    const VALUE_DATETIME_DEFAULT = 'YYYY-MM-DD HH:ii:ss';
+    const
+        VALUE_DATETIME_DEFAULT = 'YYYY-MM-DD HH:ii:ss',
+        VALUE_DATETIME_FORMATS = ['YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss'];
 
     public function preValidateAction()
     {
@@ -227,7 +229,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'year_start' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_year_start')],
                 'year_end' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_year_end')],
                 'minutes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_minutes')],
-                'format' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'notice' => rex_i18n::msg('yform_values_datetime_format_notice')],
+                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'choices' => self::VALUE_DATETIME_FORMATS, 'default' => self::VALUE_DATETIME_DEFAULT],
                 'current_date' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_datetime_current_date')],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],

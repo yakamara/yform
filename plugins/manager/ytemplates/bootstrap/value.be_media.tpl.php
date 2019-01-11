@@ -36,7 +36,7 @@ if (count($notice) > 0) {
 }
 
 ?>
-<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
+<div data-be-media-wrapper="<?php echo $this->getFieldName(); ?>" class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
     <?php echo $widget; ?>
     <?php echo $notice ?>

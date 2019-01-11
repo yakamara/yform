@@ -16,7 +16,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement(4) != 'no_db') {
+        if ($this->getElement('no_db') != 'no_db') {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
@@ -108,7 +108,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 'clang' => ['type' => 'select_sql',    'query' => 'select id, code as name from rex_clang', 'label' => rex_i18n::msg('yform_values_be_select_category_clang'), 'value' => 1],
                 'multiple' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_be_select_category_multiple')],
                 'size' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_select_category_size')],
-                'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),          'default' => 0],
+                'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],

@@ -75,10 +75,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $options = [];
         $valueName = '';
         $values = [];
+
         if (count($this->getValue()) > 0) {
             $listValues = self::getListValues($this->relation['target_table'], $this->relation['target_field'], $filter);
-            foreach ($this->getValue() as $v) {
-                if (isset($listValues[$v])) {
+            foreach ((array) $this->getValue() as $v) {
+                if (is_string($v) && isset($listValues[$v])) {
                     $values[] = $v;
                     $valueName = $listValues[$v] . ' [id=' . $v . ']';
                     $options[] = ['id' => $v, 'name' => $valueName];
@@ -109,6 +110,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // --------------------------------------- Selectbox, single 0 or multiple 1
         if ($this->relation['relation_type'] < 2) {
+
             // ----- SELECT BOX
             $options = [];
             if ($this->relation['relation_type'] == 0 && $this->relation['eoption'] == 1) {
@@ -148,8 +150,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // --------------------------------------- INLINE, 1-n
         if ($this->relation['relation_type'] == 5) {
+
             $warning = false;
             $table = rex_yform_manager_table::get($this->relation['target_table']);
+
+            // ----- Find PrioFieldname if exists
 
             $prioFieldName = '';
             $fields = [];
@@ -163,7 +168,17 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 }
             }
 
-            $fieldkey = $this->relation['source_table'].'-'.$this->relation['target_table'].'-'.$this->relation['target_field'];
+            // ----- Form Definitions
+
+            $forms = [];
+
+            $form_name = $this->params['this']->getObjectparams('form_name');
+            $form_array = array_merge($this->params['this']->getObjectparams('form_array'), [$this->getId()]);
+
+            $fieldkey = $this->relation['source_table'] . '-' . $this->relation['target_table'] . '-' . $this->relation['target_field'];
+            $relationKey = '__' . sha1($fieldkey) . '__';
+
+            // ----- Existing Relations
 
             $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
                 ->where($this->relation['target_field'], $this->params['main_id']);
@@ -177,31 +192,18 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $relationIDs[] = $relation->getId();
             }
 
-            if (!$send) {
-                $counter = 1;
-                foreach ($relations as $relation) {
-                    $_REQUEST['FORM'][$fieldkey][$counter]['id'] = $relation->getId();
-                    foreach ($table->getFields() as $field) {
-                        if ($field->getType() == 'value' && !in_array($field->getDatabaseFieldDefaultType(), ['none', null])) {
-                            $_REQUEST['FORM'][$fieldkey][$counter][$field->getName()] = $relation->getValue($field->getName());
-                        }
-                    }
-                    ++$counter;
-                }
-            } else {
-                if (!$this->relation['eoption']) {
-                    if (!isset($_REQUEST['FORM'][$fieldkey]) || !is_array($_REQUEST['FORM'][$fieldkey]) || count($_REQUEST['FORM'][$fieldkey]) == 0) {
-                        $warning = true;
-                    }
-                }
-            }
+            // ----- Prototype Form
 
             $data = $table->createDataset();
             $yform = $data->getForm();
-            $yform->setObjectparams('form_array', '__name__');
+
+            $yform->setObjectparams('form_name', $form_name);
+            $yform->setObjectparams('form_array', array_merge($form_array, [$relationKey])); // $relationKey]);
+
             $yform->setObjectparams('form_action', '');
             $yform->setObjectparams('form_showformafterupdate', 1);
-            $yform->setObjectparams('form_name', $fieldkey);
+            $yform->setObjectparams('data', ['1']);
+
             $yform->setObjectparams('submit_btn_show', false);
             $yform->setObjectparams('csrf_protection', false);
             $form_elements = [];
@@ -218,16 +220,23 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $yform->objparams['form_elements'] = $form_elements;
             $prototypeForm = $yform->getForm();
 
-            $forms = [];
-            if (isset($_REQUEST['FORM'][$fieldkey]) && is_array($_REQUEST['FORM'][$fieldkey])) {
-                foreach ($_REQUEST['FORM'][$fieldkey] as $counter => $form) {
-                    $data = $table->createDataset();
-                    $yform = $data->getForm();
+            // \\ ----- Prototype Form
+
+
+            // ----- Existing Forms - Init
+            if (!$send) {
+
+                foreach ($relations as $counter => $relation) {
+
+                    $yform = $relation->getForm();
+                    $yform->setObjectparams('form_name', $form_name); //
+                    $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
+
                     $yform->setObjectparams('form_action', '');
                     $yform->setObjectparams('form_showformafterupdate', 1);
-                    $yform->setObjectparams('form_name', $fieldkey);
-                    $yform->setObjectparams('form_array', $counter);
-                    $yform->setObjectparams('data', $form);
+
+                    $yform->setObjectparams('getdata', true);
+
                     $yform->setObjectparams('submit_btn_show', false);
                     $yform->setObjectparams('csrf_protection', false);
                     $form_elements = [];
@@ -243,29 +252,73 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     }
                     $yform->objparams['form_elements'] = $form_elements;
 
-                    $hiddenId = '';
-                    if (isset($form['id'])) {
-                        if (!in_array($form['id'], $relationIDs)) {
-                            unset($_REQUEST['FORM'][$fieldkey][$counter]['id']);
-                        } else {
-                            $hiddenId = '<input type="hidden" name="'.$yform->getFieldName('id').'" value="'.$form['id'].'" />';
+                    $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relation->getId() . '" />';
+
+                    $forms[] = $hiddenId . $yform->getForm();
+
+                }
+
+            }
+
+            // ----- Relations Forms sent
+
+            if ($send) {
+
+                $yform->setObjectparams('form_array', $form_array);
+                $relationVars = $yform->getFieldValue('', []);
+
+                if (is_array($relationVars)) {
+
+                    foreach ($relationVars as $counter => $form) {
+
+                        $data = $table->createDataset();
+                        $yform = $data->getForm();
+                        $yform->setObjectparams('form_name', $form_name); //
+                        $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
+
+                        $yform->setObjectparams('form_action', '');
+                        $yform->setObjectparams('form_showformafterupdate', 1);
+                        $yform->setObjectparams('data', $form);
+                        $yform->setObjectparams('submit_btn_show', false);
+                        $yform->setObjectparams('csrf_protection', false);
+                        $form_elements = [];
+                        foreach ($yform->objparams['form_elements'] as $form_element) {
+                            if ($form_element[0] == 'prio' && $form_element[1] == $prioFieldName) {
+                                $form_elements[] = ['hidden', $prioFieldName];
+                            } elseif ($form_element[0] == 'be_manager_relation' && $form_element[1] == $this->relation['target_field'] && $form_element[3] == $this->relation['source_table']) {
+                                $form_elements[] = ['hidden', $form_element[1]];
+                            } elseif ($form_element[0] == 'action') {
+                            } else {
+                                $form_elements[] = $form_element;
+                            }
+                        }
+                        $yform->objparams['form_elements'] = $form_elements;
+
+                        // Wenn Formular abgeschickt und id hatte..
+                        // beibehalten wenn in relations vorhanden
+                        $hiddenId = '';
+                        if (isset($form['id']) && in_array($form['id'], $relationIDs, true)) {
+                            $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $form['id'] . '" />';
+                        }
+
+                        $forms[] = $hiddenId . $yform->getForm();
+
+                        if (count($yform->objparams['warning']) > 0) {
+                            $warning = true;
                         }
                     }
+                }
 
-                    $forms[] = $hiddenId.$yform->getForm();
+                // \\ ----- Relations Forms sent
 
-                    if (count($yform->objparams['warning']) > 0) {
-                        $warning = true;
-                    }
+                if ($warning) {
+                    $this->params['warning'][$this->getId()] = $this->params['error_class'];
+                    $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
                 }
             }
 
-            if ($warning) {
-                $this->params['warning'][$this->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
-            }
+            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName', 'relationKey'));
 
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName'));
         }
     }
 
@@ -273,73 +326,87 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     public function postAction()
     {
+
         if ($this->needsOutput()) {
             if ($this->relation['relation_type'] == 5 && $this->params['main_id'] > 0) {
-                $fieldkey = $this->relation['source_table'].'-'.$this->relation['target_table'].'-'.$this->relation['target_field'];
+
+                self::$yform_list_values = []; // delete cache
+
+                $currentRelationsQuery = rex_yform_manager_dataset::query($this->relation['target_table'])
+                    ->where($this->relation['target_field'], $this->params['main_id'])
+                    ->find();
+
+                $currentRelations = [];
+                foreach ($currentRelationsQuery as $currentRelation) {
+                    $currentRelations[$currentRelation->getId()] = $currentRelation;
+                }
                 $table = rex_yform_manager_table::get($this->relation['target_table']);
 
-                $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
-                    ->where($this->relation['target_field'], $this->params['main_id'])->find();
-
-                $relations_key = [];
-                foreach ($relations as $relation) {
-                    $relations_key[$relation->getId()] = $relation;
-                }
-
-                if (isset($_REQUEST['FORM'][$fieldkey]) && is_array($_REQUEST['FORM'][$fieldkey])) {
-                    foreach ($_REQUEST['FORM'][$fieldkey] as $key => $form) {
-                        if (isset($form['id'])) {
-                            if (array_key_exists($form['id'], $relations_key)) {
-                                $_REQUEST['FORM'][$fieldkey][$key]['id'] = (int) $_REQUEST['FORM'][$fieldkey][$key]['id'];
-                                unset($relations_key[$form['id']]);
-                            } else {
-                                unset($_REQUEST['FORM'][$fieldkey][$key]['id']);
-                            }
+                $prioFieldName = '';
+                foreach ($table->getFields() as $field) {
+                    if ($field->getType() == 'value') {
+                        if ($field->getTypeName() == 'prio') {
+                            $prioFieldName = $field->getName();
                         }
                     }
                 }
 
-                foreach ($relations_key as $relation) {
-                    $relation->delete();
-                }
+                $form_name = $this->params['this']->getObjectparams('form_name');
+                $form_array = array_merge($this->params['this']->getObjectparams('form_array'), [$this->getId()]);
 
-                $prioFieldName = '';
-                foreach ($table->getFields() as $field) {
-                    if ($field->getType() == 'value' && $field->getTypeName() == 'prio') {
-                        $prioFieldName = $field->getName();
-                    }
-                }
+                $data = $table->createDataset();
+                $yform = $data->getForm();
 
-                if (isset($_REQUEST['FORM'][$fieldkey]) && is_array($_REQUEST['FORM'][$fieldkey])) {
-                    $counter = 0;
-                    foreach ($_REQUEST['FORM'][$fieldkey] as $key => $form) {
-                        ++$counter;
-                        $data = $table->createDataset();
+                $yform->setObjectparams('form_name', $form_name);
+                $yform->setObjectparams('form_array', array_merge($form_array));
 
-                        $yform = $data->getForm();
+                $relationVars = $yform->getFieldValue();
+
+                if (is_array($relationVars)) {
+
+                    $prio = 0;
+                    foreach ($relationVars as $counter => $form) {
+
+                        $prio++;
 
                         if ($prioFieldName != '') {
-                            $form[$prioFieldName] = $counter;
+                            $form[$prioFieldName] = $prio;
                         }
 
                         $form[$this->relation['target_field']] = $this->params['main_id'];
 
+                        $data = $table->createDataset();
+                        $yform = $data->getForm();
+                        $yform->setObjectparams('form_name', $form_name); //
+                        $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
+
                         if (isset($form['id'])) {
+                            $form['id'] = (int) $form['id'];
                             $yform->setObjectparams('main_id', $form['id']);
-                            $yform->setObjectparams('main_where', 'id='.$form['id']);
+                            $yform->setObjectparams('main_where', 'id=' . $form['id']);
+                            if (array_key_exists($form['id'], $currentRelations)) {
+                                unset($currentRelations[$form['id']]);
+                            }
+
                         }
 
-                        $yform->setObjectparams('form_array', $key);
                         $yform->setObjectparams('data', $form);
                         $yform->setObjectparams('send', true);
-                        $yform->setObjectparams('form_name', $fieldkey);
+                        $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
+                        $forms[] = $yform->getForm();
 
-                        $yform->getForm();
                     }
                 }
+
+                foreach ($currentRelations as $relation) {
+                    $relation->delete(); // unused relations
+                }
+
             }
         }
+
+        // ---------------------------------------------------
 
 
         if (!$relationTable = $this->getElement('relation_table')) {

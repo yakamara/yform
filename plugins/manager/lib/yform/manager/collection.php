@@ -369,7 +369,7 @@ class rex_yform_manager_collection extends \SplFixedArray
         $yform->setDebug(self::$debug);
         $yform->objparams['form_class'] .= ' yform-manager-multi-edit';
 
-        $send = $yform->getFieldValue('send', '', 'send');
+        $send = $yform->getFieldValue('send');
 
         $i = 0;
         $validations = [];
@@ -427,7 +427,7 @@ class rex_yform_manager_collection extends \SplFixedArray
             $default = 0;
             if (!$send || !$enabled) {
                 if ($this->isValueUnique($key)) {
-                    $yform->setFieldValue($i, $this->getUniqueValue($key));
+                    $yform->setFieldValue($i, [], $this->getUniqueValue($key));
                     $default = 1;
                 }
             }

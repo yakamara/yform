@@ -61,19 +61,15 @@ class rex_yform_manager_search
         $this->scriptPath = $scriptpath;
     }
 
-    public function getForm()
-    {
-        if (!$this->table->isSearchable()) {
-            return '';
-        }
 
-        $yform = new rex_yform_manager_searchform();
+    public function getYForm()
+    {
+        $yform = new rex_yform();
+        $yform->setObjectparams('form_name', 'rex_yform_searchvars-'.$this->table->getTableName());
         $yform->setObjectparams('form_showformafterupdate', 1);
-        $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('csrf_protection', false);
         $yform->setObjectparams('form_action', $this->scriptPath);
         $yform->setObjectparams('form_method', 'get');
-        $yform->setObjectparams('form_name', 'yform-manager-search-form-'.$this->table->getTableName());
         $yform->setObjectparams('main_table', $this->table->getTableName());
 
         foreach ($this->linkVars as $k => $v) {
@@ -94,20 +90,34 @@ class rex_yform_manager_search
         }
         $yform->setValueField('submit', ['yform_search_submit', rex_i18n::msg('yform_search')]);
 
+        return $yform;
+    }
+
+    public function getForm()
+    {
+        if (!$this->table->isSearchable()) {
+            return '';
+        }
+        $yform = $this->getYForm();
         return $yform->getForm();
     }
 
     public function getSearchVars()
     {
-        $rex_yform_searchvars = rex_request('rex_yform_searchvars', 'array');
-        unset($rex_yform_searchvars['send']);
-        unset($rex_yform_searchvars['yform_search_submit']);
-        foreach ($rex_yform_searchvars as $k => $v) {
-            if ($v == '') {
-                unset($rex_yform_searchvars[$k]);
+        $yform = $this->getYForm();
+        $yform->getForm();
+        $fieldValues = $yform->getFieldValue();
+
+        $return = [];
+        foreach ($yform->objparams['values'] as $i => $valueObject) {
+            if (isset($fieldValues[$i]) && $fieldValues[$i] != "") {
+                $return[$valueObject->getName()] = $fieldValues[$i];
             }
         }
-        return ['rex_yform_searchvars' => $rex_yform_searchvars];
+        if(isset($return['yform_search_submit'])) {
+            unset($return['yform_search_submit']);
+        }
+        return ['rex_yform_searchvars' => $return];
     }
 
     public function getQueryFilterArray()
@@ -121,7 +131,6 @@ class rex_yform_manager_search
 
         foreach ($this->fields as $field) {
             if (array_key_exists($field->getName(), $vars['rex_yform_searchvars']) && $field->getType() == 'value' && $field->isSearchable()) {
-                //                rex_yform::includeClass($field->getType(), $field->getTypeName());
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                     $qf = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
                         [
@@ -136,7 +145,6 @@ class rex_yform_manager_search
                 }
             }
         }
-
         return $queryFilter;
     }
 }

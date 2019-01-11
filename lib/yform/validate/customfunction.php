@@ -11,31 +11,30 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $label = $this->getElement('name');
-            $func = $this->getElement('function');
-            $parameter = $this->getElement('params');
+        $label = $this->getElement('name');
+        $func = $this->getElement('function');
+        $parameter = $this->getElement('params');
 
-            $comparator = true;
-            if (is_string($func) && mb_substr($func, 0, 1) == '!') {
-                $comparator = false;
-                $func = mb_substr($func, 1);
-            }
-
-            $Object = $this->getValueObject($label);
-
-            if (!$this->isObject($Object)) {
-                return;
-            }
-
-            if (!is_callable($func)) {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';
-            } elseif (call_user_func($func, $label, $Object->getValue(), $parameter, $this) === $comparator) {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-            }
+        $comparator = true;
+        if (is_string($func) && mb_substr($func, 0, 1) == '!') {
+            $comparator = false;
+            $func = mb_substr($func, 1);
         }
+
+        $Object = $this->getValueObject($label);
+
+        if (!$this->isObject($Object)) {
+            return;
+        }
+
+        if (!is_callable($func)) {
+            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';
+        } elseif (call_user_func($func, $label, $Object->getValue(), $parameter, $this) === $comparator) {
+            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+        }
+
     }
 
     public function getDescription()

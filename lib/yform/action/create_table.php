@@ -7,11 +7,13 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_action_createdb extends rex_yform_action_abstract
+class rex_yform_action_create_table extends rex_yform_action_abstract
 {
     public function executeAction()
     {
         $table_name = $this->getElement(2);
+        $table_name = str_replace('%TABLE_PREFIX%', rex::getTablePrefix(), $table_name);
+
         $table_exists = false;
 
         $tables = rex_sql::factory()->getArray('show tables');
@@ -40,12 +42,6 @@ class rex_yform_action_createdb extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|createdb|tablename';
+        return 'action|create_table|tablename';
     }
-
-    public function isDeprecated()
-    {
-        return true;
-    }
-
 }

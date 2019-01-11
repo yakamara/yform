@@ -134,7 +134,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         if ($this->getParam('send')) {
             $this->setValue(json_encode($this->fieldData));
 
-            if ($this->getElement(5) != 'no_db') {
+            if ($this->getElement('no_db') != 'no_db') {
                 $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
             }
             $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -155,6 +155,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
                 'label'   => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'columns' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_be_table_columns')],
                 'notice'  => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'no_db'   => ['type' => 'no_db','label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
             ],
             'description' => rex_i18n::msg('yform_values_be_table_description'),
             'formbuilder' => false,

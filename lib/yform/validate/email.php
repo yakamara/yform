@@ -11,16 +11,15 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $Object = $this->getValueObject();
+        $Object = $this->getValueObject();
 
-            if (!$this->isObject($Object)) {
-                return;
-            }
+        if (!$this->isObject($Object)) {
+            return;
+        }
 
-            if ($Object->getValue() == '') {
-                return;
-            }
+        if ($Object->getValue() == '') {
+            return;
+        }
 
             if ($Object->getValue()) {
                 // https://html.spec.whatwg.org/multipage/forms.html#valid-e-mail-address
@@ -30,6 +29,7 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
                 }
             }
         }
+
     }
 
     public function getDescription()
@@ -48,5 +48,10 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
             ],
             'description' => rex_i18n::msg('yform_validate_email_description'),
         ];
+    }
+
+    public function isDeprecated()
+    {
+        return true;
     }
 }

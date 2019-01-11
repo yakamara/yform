@@ -32,29 +32,30 @@ yform_validate_size_range_description = Comprueba si la <b>longitud</b> del valo
 yform_validate_type_description = Comprueba si <b>el tipo</b> del valor de entrada es correcto [int, float, numeric, string, email, url, date, hex]
 yform_validate_unique_description = Comprueba si el valor de entrada <b>aún no está disponible en otros conjuntos de datos</b>.
 
-yform_values_checkbox_description = Una <b>casilla de verificación</b> con valores predefinidos.
-yform_values_checkbox_sql_description =	Una <b>casilla de verificación</b> con valores provenientes de una <b>consulta SQL</b>.
-yform_values_date_description =	Una serie de cuadros de selección en los que se selecciona una <b>fecha</b> (día, mes, año).
-yform_values_datestamp_description =	Un campo invisible que almacena una <b>marca de tiempo</b> cuando se agrega o edita el registro.
-yform_values_datetime_description =	Una serie de cuadros de selección en los que se selecciona <b>fecha y hora</b> (día, mes, año, horas, minutos, segundos).
-yform_values_email_description =	Un campo de entrada simple para <b>direcciones de correo electrónico.</B>
-yform_values_emptyname_description =	Una opción de entrada de campo <b>sin</b>.
-yform_values_fieldset_description =	Un fieldset agrupa los campos.
-yform_values_float_description =	Un campo de entrada simple para <b>números de coma flotante.</B>
-yform_values_hashvalue_description =	Un campo que genera un <b>valor hash</b> del valor de otro campo.
-yform_values_html_description =	Imprima <b>código HTML</b> en la ubicación deseada del formulario de entrada.
-yform_values_index_description =	Un campo que genera una clave <b>index</b> en varios campos.
-yform_values_integer_description =	Un campo de entrada simple para <b>enteros.</B>
-yform_values_mediafile_description =	Un <b>campo de carga</b> que carga un archivo al grupo de medios.
-yform_values_php_description =	Ejecuta <b>código PHP</b> en la ubicación deseada del formulario de entrada.
-yform_values_radio_description =	Uno o más campos de selección como <b>botones de radio</b>.
-yform_values_select_description =	Un <b>cuadro de selección</b> con valores predefinidos.
-yform_values_select_sql_description =	Un <b>cuadro de selección</b> con valores provenientes de una <b>consulta SQL</b>.
-yform_values_submit_description =	Uno o más <b>Enviar botones</b> para enviar el formulario.
-yform_values_text_description =	Un <b>campo de entrada simple</b> para el texto.
-yform_values_textarea_description =	Un <b>campo de entrada de varias líneas</b> para texto.
-yform_values_time_description =	Una serie de cuadros de selección en los que se selecciona <b>tiempo</b> (horas, minutos, segundos).
-yform_values_upload_description =	Un <b>campo de carga</b> que carga un archivo a <b>la base de datos o un directorio</b>.
+yform_values_checkbox_description = 			Una <b>casilla de verificación</b> con valores predefinidos.
+yform_values_checkbox_sql_description =			Una <b>casilla de verificación</b> con valores provenientes de una <b>consulta SQL</b>.
+yform_values_date_description =					Una serie de cuadros de selección en los que se selecciona una <b>fecha</b> (día, mes, año).
+yform_values_datestamp_description =			Un campo invisible que almacena una <b>marca de tiempo</b> cuando se agrega o edita el registro.
+yform_values_datetime_description =				Una serie de cuadros de selección en los que se selecciona <b>fecha y hora</b> (día, mes, año, horas, minutos, segundos).
+yform_values_email_description =				Un campo de entrada simple para <b>direcciones de correo electrónico.</B>
+yform_values_emptyname_description =			Una opción de entrada de campo <b>sin</b>.
+yform_values_fieldset_description =				Un fieldset agrupa los campos.
+yform_values_float_description =				Un campo de entrada simple para <b>números de coma flotante.</B>
+yform_values_hashvalue_description =			Un campo que genera un <b>valor hash</b> del valor de otro campo.
+yform_values_html_description =					Imprima <b>código HTML</b> en la ubicación deseada del formulario de entrada.
+yform_values_index_description =				Un campo que genera una clave <b>index</b> en varios campos.
+yform_values_integer_description =				Un campo de entrada simple para <b>enteros.</B>
+yform_values_number_description =               Un campo de entrada para <b>números con o sin lugares decimales. (Decimal)</b>
+yform_values_mediafile_description =			Un <b>campo de carga</b> que carga un archivo al grupo de medios.
+yform_values_php_description =					Ejecuta <b>código PHP</b> en la ubicación deseada del formulario de entrada.
+yform_values_radio_description =				Uno o más campos de selección como <b>botones de radio</b>.
+yform_values_select_description =				Un <b>cuadro de selección</b> con valores predefinidos.
+yform_values_select_sql_description =			Un <b>cuadro de selección</b> con valores provenientes de una <b>consulta SQL</b>.
+yform_values_submit_description =				Uno o más <b>Enviar botones</b> para enviar el formulario.
+yform_values_text_description =					Un <b>campo de entrada simple</b> para el texto.
+yform_values_textarea_description =				Un <b>campo de entrada de varias líneas</b> para texto.
+yform_values_time_description =					Una serie de cuadros de selección en los que se selecciona <b>tiempo</b> (horas, minutos, segundos).
+yform_values_upload_description =				Un <b>campo de carga</b> que carga un archivo a <b>la base de datos o un directorio</b>.
 
 yform_values_defaults_name = Nombre
 yform_values_defaults_label = Designación
@@ -65,9 +66,14 @@ yform_values_defaults_attributes_notice = Por favor escribe como JSON. por ejemp
 yform_values_defaults_widgets = Reproductor
 yform_values_defaults_showvalue = Mostrar valor
 yform_validate_defaults_message = Mensaje de error
+yform_values_defaults_unit = Unidad de medida (por ejemplo, € $ m mm%)
+
+yform_values_number_precision = Número de dígitos (23335443.23 sería, por ejemplo, 10 dígitos) (PRECISIÓN)
+yform_values_number_scale = Número de dígitos después de los dígitos (23335443.23 serían 2 decimales, por ejemplo) (ESCALA)
 
 yform_search_defaults_wildcard_notice = Ejemplos: * nombre /! (Vacío) / (vacío)
 yform_search_integer_notice = Ejemplos:> 5 /!= 5 / 3-5 / 2..5 /! (Vacío) / (vacío)
+yform_search_number_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / !(vacío ) / (vacío )
 yform_search_defaults_select_notice = Seleccione varios con CTRL o comando
 
 yform_values_checkbox_values = Valores (0,1) (sin hacer clic, hacer clic)
@@ -101,6 +107,7 @@ yform_values_index_names_notice = Separados por comas, también campos de relaci
 yform_values_index_function = Función de codificación opcional
 yform_values_index_function_notice = por ejemplo md5, sha1
 yform_values_integer_default = El valor por defecto
+yform_values_number_default = El valor por defecto
 yform_values_mediafile_max_size = Tamaño máximo en Kb o Rango 100,500
 yform_values_mediafile_types = Qué archivos deben permitirse, lista separada por comas. ".gif, .png"
 yform_values_mediafile_required = campo obligatorio
@@ -125,6 +132,8 @@ yform_values_submit_default = El valor por defecto
 yform_values_submit_css_classes = Clases de CSS (separadas por comas)
 yform_values_text_default = El valor por defecto
 yform_values_text_css_class = cssclassname
+yform_values_defaults_prepend = Mostrar cadena antes de eso. por ejemplo EUR
+yform_values_defaults_append = Mostrar cadena antes de eso. por ejemplo 0.00
 yform_values_textarea_default = El valor por defecto
 yform_values_textarea_classes = Clases
 yform_values_time_hours = Rejilla hora
@@ -182,12 +191,56 @@ yform_validate_preg_match_description = Validación PREG_MATCH
 yform_validate_password_policy_rules = Configuración de la regla
 yform_validate_password_policy_rules_notice = Reglas predeterminadas si están vacías: {0}
 
-yform_values_options_name = Nombre
-yform_values_options_label = Designación
-yform_values_options_boolvalues	= Valores (0,1) (sin hacer clic, hacer clic)
+yform_values_options_name = 	Nombre
+yform_values_options_label = 	Designación
+yform_values_options_boolvalues	= 	Valores (0,1) (sin hacer clic, hacer clic)
 
 yform_values_be_user_description = Guarde el usuario de back-end
 yform_values_csrf_description = Protección CSRF
 
 yform_geo_get_position = Obtener posición
 yform_geo_clear_position = Eliminar posición
+
+
+yform_values_choice_attributes = Atributos para el elemento (atributos)
+yform_values_choice_attributes_notice = Con esta opción, los atributos HTML se pueden agregar a cualquier <cod>div</code> o <code>select</code>. Llamable: <code>foo($attributes)</code>; <code>foo::bar($attributes)</code> o JSON: <code>{"class": "group-item"}</code> o <code>{"size": "5"} </code>
+yform_values_choice_choice_attributes = Atributos para cada selección (selección de atributos)
+yform_values_choice_choice_attributes_notice = Con esta opción, se pueden agregar atributos HTML adicionales a cada selección. Llamable: <code>foo ($ attributes, $ value, $ label)</code>; <code> foo :: bar ($ attributes, $ value, $ label)</code> o JSON: <code>{"class": "choicable", "DE": {"data-language": " de "}}</code>
+yform_values_choice_choices = Opciones
+yform_values_choice_choices_notice = Esta es la forma más fácil de especificar las opciones que debe usar este campo. La opción de opciones es una cadena separada por comas (etiqueta = valor), una matriz JSON, donde la clave del arreglo es la etiqueta del elemento, y el valor del arreglo es el valor del elemento, o una consulta "SELECT id, name FROM table"
+yform_values_choice_choices_table = <table class="table">   <colgroup>     <col width="32%" />   <col width="69%" /></colgroup>   <thead valign="bottom"><tr><th>Descripción</th><th>Ejemplo</th></tr></thead>   <tbody valign="top">     <tr>       <td>Cadena separada por comas</td>       <td><code>Dänemark=DK,Deutschland=DE,Österreich=AT,Schweiz=CH</code></td>     </tr>     <tr>       <td>JSON-Array</td>       <td><code>{"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}</code></td>     </tr>     <tr>       <td>JSON-Array con <code>optgroup</code> para la etiqueta de selección</td>       <td><code>{"Europa": {"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}, "Südamerika": {"Bolivien": "BO"}}</code></td>     </tr>     <tr>       <td>Query</td>       <td><code>SELECT id AS value, name AS label FROM country</code></td>     </tr>     <tr>       <td>Query con <code>optgroup</code> para la etiqueta de selección<br/> (En la opción <code>group_by</code> necesario <code>group_label</code> ser notado)</td>       <td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td>     </tr>   </tbody> </table>
+yform_values_choice_default = Valores por defecto
+yform_values_choice_default_notice = Si los valores se especifican aquí en una forma separada por comas, estos ya están preseleccionados
+yform_values_choice_description = Un campo multipropósito que permite al usuario "seleccionar" una o más opciones. Se puede mostrar como etiqueta de selección, radios o casillas de verificación (alternativa a <code>checkbox_sql</code>, <code>radio</code>, <code>radio_sql</code>, <code>select</code>, <code>select_sql</code>)
+yform_values_choice_expanded = Extendido
+yform_values_choice_expanded_notice = Si se establece en verdadero, se emiten radios o casillas de verificación (dependiendo de múltiples). Si es falso, se representa un elemento Seleccionar.
+yform_values_choice_expanded_multiple_table = <table class="table"><colgroup><col width="69%" /><col width="16%" /><col width="16%" /></colgroup><thead valign="bottom"><tr><th>Elemento</th><th>Extendido</th><th>Selección múltiple</th></tr></thead><tbody valign="top"><tr><td>select tag</td><td><code>false</code></td><td><code>false</code></td></tr><tr><td>select tag (with <code>multiple</code> attribute)</td><td><code>false</code></td><td><code>true</code></td></tr><tr><td>radio buttons</td><td><code>true</code></td><td><code>false</code></td></tr><tr><td>checkboxes</td><td><code>true</code></td><td><code>true</code></td></tr></tbody></table>
+yform_values_choice_group_attributes = Atributos para el grupo (group_attributes)
+yform_values_choice_group_attributes_notice = Esta opción agrega atributos HTML adicionales al artículo. Llamable: <code>foo($attributes)</code>; <code>foo::bar($attributes)</code> oder JSON: <code>{"class": "group", "data-yform": "awesome"}</code>
+yform_values_choice_group_by = Grupos
+yform_values_choice_group_by_notice = Esta opción permite que las opciones se "agrupen" en una selección. (Actualmente solo es posible mediante consulta, especifique el nombre del campo)
+yform_values_choice_multiple = Selección múltiple
+yform_values_choice_multiple_notice = Si es verdadero, el usuario puede seleccionar múltiples opciones (a diferencia de una sola opción). Dependiendo del valor de la opción expandida, se muestran una etiqueta de selección o casillas de verificación (verdadero) o una etiqueta de selección o radios (falso).
+yform_values_choice_placeholder = Marcador de posición
+yform_values_choice_placeholder_notice = Esta opción determina si una opción especial "en blanco" (por ejemplo, "elegir una opción") aparece en la parte superior de un widget Seleccionar. Esta opción se aplica solo si la opción múltiple está configurada en falso.
+yform_values_choice_preferred_choices = Opciones preferidas
+yform_values_choice_preferred_choices_notice = Esta opción mueve ciertas opciones a la parte superior de la lista, colocando un separador óptico entre ellas y el resto de las opciones.
+
+yform_values_message_is_missing = [Falta un mensaje de advertencia para el campo `{1}`]
+
+yform_validate_object_is_missing = El objeto `{1}` para la validación `{1}` falta
+
+yform_values_deprecated_checkbox_sql = Obsoleta; Usa el valor de elección
+yform_values_deprecated_radio = Obsoleta; Usa el valor de elección
+yform_values_deprecated_radio_sql = Obsoleta; Usa el valor de elección
+yform_values_deprecated_select = Obsoleta; Usa el valor de elección
+yform_values_deprecated_select_sql = Obsoleta; Usa el valor de elección
+yform_values_deprecated_float = Obsoleta! Usa el campo numérico
+
+yform_always = siempre
+yform_onlyifempty = solo cuando está vacío
+yform_never = Nunca
+
+yform_values_number_error_precision = Ingrese un número entre {0} y {1} en la cantidad de dígitos (PRECISION)
+yform_values_number_error_scale = Ingrese un número entre {0} y {1} en el número de decimales (ESCALA)
+yform_values_number_error_compare = Los lugares decimales no deben ser más altos que el número de dígitos.

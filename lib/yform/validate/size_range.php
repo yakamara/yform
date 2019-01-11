@@ -11,43 +11,41 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $Object = $this->getValueObject();
+        $Object = $this->getValueObject();
 
-            if (!$this->isObject($Object)) {
-                return;
-            }
+        if (!$this->isObject($Object)) {
+            return;
+        }
 
-            if ($Object->getValue() == '') {
-                return;
-            }
+        if ($Object->getValue() == '') {
+            return;
+        }
 
-            $w = false;
+        $w = false;
 
-            $minsize = -1;
-            if ($this->getElement('min') != '') {
-                $minsize = (int) $this->getElement('min');
-            }
+        $minsize = -1;
+        if ($this->getElement('min') != '') {
+            $minsize = (int) $this->getElement('min');
+        }
 
-            $maxsize = -1;
-            if ($this->getElement('max') != '') {
-                $maxsize = (int) $this->getElement('max');
-            }
+        $maxsize = -1;
+        if ($this->getElement('max') != '') {
+            $maxsize = (int) $this->getElement('max');
+        }
 
-            $size = strlen($Object->getValue());
+        $size = strlen($Object->getValue());
 
-            if ($minsize > -1 && $minsize > $size) {
-                $w = true;
-            }
+        if ($minsize > -1 && $minsize > $size) {
+            $w = true;
+        }
 
-            if ($maxsize > -1 && $maxsize < $size) {
-                $w = true;
-            }
+        if ($maxsize > -1 && $maxsize < $size) {
+            $w = true;
+        }
 
-            if ($w) {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-            }
+        if ($w) {
+            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
         }
     }
 

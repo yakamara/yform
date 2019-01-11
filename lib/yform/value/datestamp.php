@@ -21,9 +21,9 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         } elseif ($this->getElement('only_empty') != 1) { // -> == 0
             // wird immer neu gesetzt
             $value = $default_value;
-        } elseif ($this->getValue() != '') {
+        } elseif ($this->getValue() != '' && $this->getValue() != '0000-00-00 00:00:00') {
             // wenn Wert vorhanden ist direkt zurück
-        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != '') {
+        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != '' && $this->params['sql_object']->getValue($this->getName()) != '0000-00-00 00:00:00') {
             // sql object vorhanden und Wert gesetzt ?
         } else {
             $value = $default_value;
@@ -61,7 +61,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'format' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_datestamp_format')],
+                'format' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_datestamp_format'), 'notice' => rex_i18n::msg('yform_values_datestamp_notice')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1,translate:yform_never=2'],
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],

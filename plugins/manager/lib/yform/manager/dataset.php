@@ -449,17 +449,17 @@ class rex_yform_manager_dataset
                 continue;
             }
             if (isset($fields[$key])) {
-                $yform->setFieldValue(0, $value, '', $key);
+                $yform->setFieldValue($key,[ 0], $value);
             }
         }
 
-        $send = $yform->getFieldValue('send', '', 'send');
-        $yform->setFieldValue('send', '1', '', 'send');
+        $send = $yform->getFieldValue('send');
+        $yform->setFieldValue('send', [], '1');
 
         $yform->executeFields();
         $this->messages = $yform->getObjectparams('warning_messages');
 
-        $yform->setFieldValue('send', $send, '', 'send');
+        $yform->setFieldValue('send', [], $send);
 
         return empty($this->messages);
     }
@@ -472,7 +472,6 @@ class rex_yform_manager_dataset
         $yform = clone $this->getInternalForm();
         $this->setFormMainId($yform);
         $yform->initializeFields();
-        $yform->setObjectparams('get_field_type', '');
 
         $table = $this->getTable();
         $fields = $table->getValueFields();
@@ -482,20 +481,16 @@ class rex_yform_manager_dataset
                 continue;
             }
             if (isset($fields[$key])) {
-                $yform->setFieldValue(0, $value, '', $key);
+                $yform->objparams['data'][$key] = $value;
             } elseif (isset($columns[$key])) {
                 $yform->objparams['value_pool']['sql'][$key] = $value;
             }
         }
 
-        $send = $yform->getFieldValue('send', '', 'send');
-        $yform->setFieldValue('send', '1', '', 'send');
-
+        $yform->setFieldValue('send', [], '1');
         $this->executeForm($yform);
         $this->messages = $yform->getObjectparams('warning_messages');
 
-        $yform->setFieldValue('send', $send, '', 'send');
-        
         return empty($this->messages);
     }
 
@@ -707,6 +702,8 @@ class rex_yform_manager_dataset
         $yform = $dummy->createForm();
         $yform->setObjectparams('real_field_names', true);
         $yform->setObjectparams('form_needs_output', false);
+        $yform->setObjectparams('csrf_protection', false);
+        $yform->setObjectparams('get_field_type', '');
 
         return self::$internalForms[$this->table] = $yform;
     }

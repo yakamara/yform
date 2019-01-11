@@ -11,57 +11,56 @@ class rex_yform_validate_compare_value extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == '1') {
-            $compare_type = $this->getElement('compare_type');
-            $compare_value = $this->getElement('compare_value');
+        $compare_type = $this->getElement('compare_type');
+        $compare_value = $this->getElement('compare_value');
 
-            $Object = $this->getValueObject($this->getElement('name'));
+        $Object = $this->getValueObject($this->getElement('name'));
 
-            if (!$this->isObject($Object)) {
-                return;
-            }
-
-            $field_value = $Object->getValue();
-
-            $error = false;
-            switch ($compare_type) {
-                case '<=':
-                    if ($field_value <= $compare_value) {
-                        $error = true;
-                    }
-                    break;
-                case '>=':
-                    if ($field_value >= $compare_value) {
-                        $error = true;
-                    }
-                    break;
-                case '>':
-                    if ($field_value > $compare_value) {
-                        $error = true;
-                    }
-                    break;
-                case '<':
-                    if ($field_value < $compare_value) {
-                        $error = true;
-                    }
-                    break;
-                case '==':
-                    if ($field_value == $compare_value) {
-                        $error = true;
-                    }
-                    break;
-                case '!=':
-                default:
-                    if ($field_value != $compare_value) {
-                        $error = true;
-                    }
-            }
-
-            if ($error) {
-                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-            }
+        if (!$this->isObject($Object)) {
+            return;
         }
+
+        $field_value = $Object->getValue();
+
+        $error = false;
+        switch ($compare_type) {
+            case '<=':
+                if ($field_value <= $compare_value) {
+                    $error = true;
+                }
+                break;
+            case '>=':
+                if ($field_value >= $compare_value) {
+                    $error = true;
+                }
+                break;
+            case '>':
+                if ($field_value > $compare_value) {
+                    $error = true;
+                }
+                break;
+            case '<':
+                if ($field_value < $compare_value) {
+                    $error = true;
+                }
+                break;
+            case '==':
+                if ($field_value == $compare_value) {
+                    $error = true;
+                }
+                break;
+            case '!=':
+            default:
+                if ($field_value != $compare_value) {
+                    $error = true;
+                }
+        }
+
+        if ($error) {
+            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+            $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+        }
+
     }
 
     public function getDescription()
