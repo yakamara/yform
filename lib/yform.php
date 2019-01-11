@@ -470,7 +470,7 @@ class rex_yform
 
         if ($this->objparams['real_field_names']) {
             $label = $this->prepareLabel($label);
-            return $label ?? current($params);
+            return $label ?: current($params);
         }
 
         if (count($params) == 0) {
