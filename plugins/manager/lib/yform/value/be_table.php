@@ -8,6 +8,8 @@
  */
 class rex_yform_value_be_table extends rex_yform_value_abstract
 {
+    protected $fieldData = [];
+
     public function preValidateAction()
     {
         // bc service for Version < 1.1
@@ -67,7 +69,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $columns = [];
         $objs = [];
         $columnIndex = [];
-        
+
+        $this->fieldData = $data;
+
         $yfparams = \rex_yform::factory()->objparams;
         $yfparams['this'] = \rex_yform::factory();
 
@@ -76,7 +80,8 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
          */
 
         foreach ($_columns as $index => $col) {
-            $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
+            // Use ;; for separating choice columns instead of ,
+            $values = explode('|', trim(trim(str_replace(';;', ',', rex_yform::unhtmlentities($col))), '|'));
             if (count($values) == 1) {
                 $values = ['text', 'text_'. $index, $values[0]];
             }
@@ -97,8 +102,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
                 foreach($data as $rowCount => $row) {
                     $obj = clone $field;
+                    $rdata = array_values($data[$rowCount]);
                     $obj->setName($name.$rowCount.$index);
-                    $obj->setValue($data[$rowCount][$index]);
+                    $obj->setValue($rdata[$index]);
                     $objs[]= $obj;
                 }
 
@@ -130,6 +136,19 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         }
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
+
+        if ($this->getParam('send')) {
+            $this->setValue(json_encode($this->fieldData));
+
+            if ($this->getElement('no_db') != 'no_db') {
+                $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+            }
+            $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        }
+    }
+
+    public function setFieldData($index, $key, $value) {
+        $this->fieldData[$index][$key] = $value;
     }
 
     public function getDefinitions()
