@@ -184,7 +184,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $field->init();
             $field->setLabel($this->getElement('label'));
             $field->setElement('columns', implode(',', $beCols));
-            $field->setElement('no_db', 'no_db');
+            $field->setElement('no_db', 1);
             $field->setId($this->getId());
 
             $field->params['this']->setObjectparams('form_name', $this->getId());

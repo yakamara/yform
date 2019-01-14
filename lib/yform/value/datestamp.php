@@ -43,7 +43,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getValue() && $this->getElement('no_db') != 'no_db') {
+        if ($this->getValue() && $this->getElement('no_db') != 1) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }

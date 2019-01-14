@@ -51,7 +51,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
     public function enterObject()
     {
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement('no_db') != 'no_db') {
+        if ($this->getElement('no_db') != 1) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
@@ -140,7 +140,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         if ($this->getParam('send')) {
             $this->setValue(json_encode($this->fieldData));
 
-            if ($this->getElement('no_db') != 'no_db') {
+            if ($this->getElement('no_db') != 1) {
                 $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
             }
             $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
