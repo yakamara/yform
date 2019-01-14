@@ -18,7 +18,7 @@ class rex_yform_value_ip extends rex_yform_value_abstract
 
         dump($this->getElement('no_db'));
 
-        if ($this->getElement('no_db') != 'no_db') {
+        if ($this->getElement('no_db') != 1) {
 
             echo "saved";
 

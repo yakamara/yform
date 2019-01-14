@@ -36,6 +36,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                 <?php foreach ($columns as $i => $column): ?>
                     <td class="be-value-input" data-title="<?= rex_escape($column['label'], 'html_attr') ?>">
                         <?php
+                        $rowData = array_values($row);
                         $field = $column['field'];
                         $field->params['this']->setObjectparams('form_name', $this->getId() . '.' . $i);
                         $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
@@ -48,7 +49,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                             $field->params['main_table'] = $field->getElement('table');
                             $field->setName($field->getElement('field'));
                         }
-                        $field->setValue($row[$i] ?: '');
+                        $field->setValue($rowData[$i] ?: '');
                         $field->setId($data_index);
                         $field->enterObject();
                         echo $field->params['form_output'][$field->getId()]
@@ -113,6 +114,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                 be_table_cnt++;
                 // set new row field ids
                 row_html = row_html.replace(new RegExp('{{FIELD_ID}}', 'g'), be_table_cnt);
+                row_html = row_html.replace(new RegExp('--FIELD_ID--', 'g'), be_table_cnt);
 
                 for (var i in regexp) {
                     row_html = row_html.replace(regexp[i], '$1' + be_table_cnt + '<?= $i ?>');
@@ -127,7 +129,6 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
 
                     $input.prop('id', 'REX_MEDIALIST_' + id);
                 });
-
 
                 $table.find('tbody').append(tr);
                 $(document).trigger('be_table:row-added', [tr]);

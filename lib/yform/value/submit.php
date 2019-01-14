@@ -64,7 +64,7 @@ class rex_yform_value_submit extends rex_yform_value_abstract
             $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         }
 
-        if ($this->getElement('no_db') != 'no_db' && $this->getElement(3) != 'no_db') { // BC element[3]
+        if ($this->getElement('no_db') != 1 && $this->getElement(3) != 'no_db') { // BC element[3]
             if (!isset($this->params['value_pool']['sql'][$this->getName()]) || $this->params['value_pool']['sql'][$this->getName()] == '') {
                 $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
             }

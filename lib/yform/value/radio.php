@@ -28,7 +28,7 @@ class rex_yform_value_radio extends rex_yform_value_abstract
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         $this->params['value_pool']['email'][$this->getName() . '_NAME'] = isset($options[$this->getValue()]) ? $options[$this->getValue()] : null;
 
-        if ($this->getElement('no_db') != 'no_db') {
+        if ($this->getElement('no_db') != 1) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }

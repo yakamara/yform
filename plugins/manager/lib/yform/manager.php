@@ -598,8 +598,8 @@ class rex_yform_manager
                             if ($table) {
                                 $fields = $table->getValueFields(['name' => $field_name]);
                                 if (isset($fields[$field_name])) {
-                                    $target_table = $fields[$field_name]->getElement('table');
-                                    $target_field = $fields[$field_name]->getElement('field');
+                                    $target_table = $fields[$field_name]->getElement('table') ?: $table_name;
+                                    $target_field = $fields[$field_name]->getElement('field') ?: $field_name;
 
                                     $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
                                     $value = $values[$params['list']->getValue('id')];
