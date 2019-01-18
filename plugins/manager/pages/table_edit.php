@@ -130,7 +130,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
 
     $yform->setValueField('html', ['html' => '']);
 
-    $yform->setValueField('text', ['name' => 'list_amount', 'label' => '<br />'.rex_i18n::msg('yform_manager_entries_per_page'), 'prepend' => 'sf','default' => '50']);
+    $yform->setValueField('text', ['name' => 'list_amount', 'label' => '<br />'.rex_i18n::msg('yform_manager_entries_per_page'), 'default' => '50']);
     $yform->setValidateField('type', ['list_amount', 'int', rex_i18n::msg('yform_manager_enter_number')]);
 
     $sortFields = ['id'];
