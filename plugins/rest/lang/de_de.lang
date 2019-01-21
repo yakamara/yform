@@ -1,0 +1,27 @@
+yform_rest = RESTful API
+
+yform_rest_token = Tokens
+
+
+yform_rest_token_name = Name
+yform_rest_token_token = Token
+yform_rest_token_status = Aktiv
+
+yform_rest_token_deleted = Token wurde gelöscht
+yform_rest_token_info_text =
+yform_rest_token_update = Tokendaten aktualisieren
+yform_rest_token_info_updated
+yform_rest_token_create = Token anlegen
+yform_rest_token_info_added
+
+yform_rest_token_updated = Tokendaten wurden aktualisiert
+yform_rest_token_added
+
+yform_rest_token_header_summary
+
+yform_rest_token_header_description
+yform_rest_token_not_found = Keine Tokens gefunden
+yform_rest_token_caption = Liste der Tokens
+
+yform_rest_token_name_validate = Bitte eine Bezeichnung/Name eingeben
+yform_rest_token_token_validate = Bitte einen Token eintragen

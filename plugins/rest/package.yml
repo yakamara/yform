@@ -1,0 +1,10 @@
+package: yform/rest
+version: '1.0-beta1'
+author: 'Jan Kristinus'
+supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
+
+page:
+    title: 'translate:yform_rest'
+    pjax: true
+    icon: rex-icon fa-exchange
+
