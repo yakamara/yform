@@ -60,7 +60,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $errors = [];
 
         // Hat Formular einen Uniquekey für dieses Formular und dieses Feld übertragen ?
-        $unique = $this->params['this']->getFieldValue($this->getName(), ['unique', $this->getId()]);
+        $unique = $this->params['this']->getFieldValue($this->getName(), [$this->getId()]);
 
         if ($unique == '') {
             // Nein - also anlegen
@@ -69,7 +69,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
         }
 
-        $delete = (bool) @$this->params['this']->getFieldValue($this->getName(), ['delete', $this->getId()]);
+        $delete = (bool) @$this->params['this']->getFieldValue('delete', [$this->getName(), $this->getId()]);
         if ($delete) {
             unset($_FILES[$unique]);
             unset($_SESSION['yform_field_upload'][$unique]);
@@ -264,7 +264,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function postAction()
     {
-        $unique = $this->params['this']->getFieldValue($this->getName(), ['unique', $this->getId()]);
+        $unique = $this->params['this']->getFieldValue($this->getName(), [$this->getId()]);
 
         if (isset($_SESSION['yform_field_upload'][$unique]['file'])) {
             $FILE = $_SESSION['yform_field_upload'][$unique]['file'];
