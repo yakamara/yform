@@ -87,10 +87,10 @@ if ($pos !== false) {
 $pos = strpos($format, 'ss');
 if ($pos !== false) {
     $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('second') . '" name="' . $this->getFieldName() . '[second]">';
-    for ($i = 0; $i < 60; ++$i):
+    foreach ($seconds as $i): // ($i = 0; $i < 60; ++$i):
         $selected = (@$second == $i) ? ' selected="selected"' : '';
         $replace_i .= '<option value="' . $i . '"' . $selected . '>' . $i . '</option>';
-    endfor;
+    endforeach;
     $replace_i .= '</select>';
     $replace['ss'] = $replace_i;
     $search[] = 'ss';
