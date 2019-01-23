@@ -61,7 +61,6 @@ class rex_yform_manager_search
         $this->scriptPath = $scriptpath;
     }
 
-
     public function getYForm()
     {
         $yform = new rex_yform();
@@ -110,14 +109,33 @@ class rex_yform_manager_search
 
         $return = [];
         foreach ($yform->objparams['values'] as $i => $valueObject) {
-            if (isset($fieldValues[$i]) && $fieldValues[$i] != "") {
+            if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
                 $return[$valueObject->getName()] = $fieldValues[$i];
             }
         }
-        if(isset($return['yform_search_submit'])) {
+        if (isset($return['yform_search_submit'])) {
             unset($return['yform_search_submit']);
         }
+
         return ['rex_yform_searchvars' => $return];
+    }
+
+    public function getSearchLinkVars()
+    {
+        $yform = $this->getYForm();
+        $yform->getForm();
+        $fieldValues = $yform->getFieldValue();
+
+        $return = [];
+        foreach ($yform->objparams['values'] as $i => $valueObject) {
+            if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
+                $return[$valueObject->getFieldName()] = $fieldValues[$i];
+            }
+        }
+        if (isset($return['yform_search_submit'])) {
+            unset($return['yform_search_submit']);
+        }
+        return $return;
     }
 
     public function getQueryFilterArray()
