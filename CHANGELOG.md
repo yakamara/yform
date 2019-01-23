@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 3.0 – xx.xx.2018
+Version 3.0 – xx.01.2019
 --------------------------
 
 #### Warnung - Bitte nicht von 2.x auf 3.x updaten, ohne sich genau informiert zu haben. Bei Updates der Hauptversion sollte zuvor ein Datenbank-Backup durchgeführt sein.
@@ -21,6 +21,7 @@ Version 3.0 – xx.xx.2018
 * validate: type um json erweitert
 * checkbox nun auch mit Attributen
 * ! utf8mb4 ist nun standard und wird erzwungen, wie auch von Varchar(255) -> varchar(191). Möglicher Datenverlust bei zu langen Feldinhalten!
+* REST API als Plugin
 
 ### Änderungen und Korrekturen
 
