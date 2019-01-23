@@ -492,7 +492,7 @@ class rex_yform
 
     }
 
-    public function getFieldValue($label = '', array $params = [], $debug = false)
+    public function getFieldValue($label = '', array $params = [])
     {
         if (count($params) == 0 && $label != '') {
             $params = [$label];
