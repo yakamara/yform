@@ -5,7 +5,8 @@ supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 
 page:
     title: 'translate:yform_email_templates'
+    icon: rex-icon fa-envelope
     perm: yform[email]
     pjax: true
     subpages:
-        index: { title: 'translate:overview', hidden: true }
+        index: { title: 'translate:yform_email_templates', hidden: true }
