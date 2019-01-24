@@ -16,25 +16,24 @@ class rex_yform_validate_recaptcha extends rex_yform_validate_abstract
 
         $Object = $this->getValueObject();
 
-        if (!$this->isObject($Object)) {
-            return;
-        }
-
         if ($privateKey == "") {
             $this->params['warning'][$Object->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$Object->getId()] = 'ERROR: private key for element '.$Object->getId().' not provided!';
         } else {
             try {
+
+                $data = array(
+                    'secret' => $privateKey,
+                    'response' => $_POST['g-recaptcha-response'],
+                    'remoteip' => $_SERVER['REMOTE_ADDR']
+                );
+
                 $ch = curl_init();
                 curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
                 curl_setopt($ch, CURLOPT_HEADER, 0);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, [
-                    'secret' => $privateKey,
-                    'response' => $_POST['g-recaptcha-response'],
-                    'remoteip' => $_SERVER['REMOTE_ADDR']
-                ]);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 
                 $res = json_decode(curl_exec($ch));
                 $res = $res->success;
