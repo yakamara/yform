@@ -11,12 +11,16 @@ class rex_yform_rest
     public static $status = [
         200 => '200 OK',
         201 => '201 Created', // for POST Created resource with Link
+        // 201 – OK – New resource has been created
         204 => '204 No Content',
+        // 204 – OK – The resource was successfully deleted
+        304 => '304 – Not Modified',
         400 => '400 Bad Request',
-        403 => '403 Forbidden',
         401 => '401 Unauthorized',
+        403 => '403 Forbidden',
         404 => '404 Not Found',
         405 => '405 Method Not Allowed',
+        500 => '500 Internal Server Error',
     ];
     public static $preRoute = '/rest';
 

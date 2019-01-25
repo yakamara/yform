@@ -59,9 +59,11 @@ class rex_yform_rest_model
                         // single property
 
                         $field = array_pop($paths);
-                        if (in_array($field, $fields)) {
+
+                        if (array_key_exists($field, $fields)) {
                             $field = $instance->getValue($field);
                         }
+
                         $content = [$field];
 
                         \rex_yform_rest::sendContent(200, $content);
@@ -70,23 +72,15 @@ class rex_yform_rest_model
                     // all fields of instance
 
                     $data = [];
-                    foreach ($fields as $field) {
-                        $data[$field] = $instance->getValue($field);
+                    foreach ($fields as $fieldName => $field) {
+                        $data[$fieldName] = $instance->getValue($fieldName);
                     }
 
                     \rex_yform_rest::sendContent(200, $data);
                 } else {
                     // instances
 
-                    if (isset($get['filter']) && is_array($get['filter'])) {
-                        foreach ($get['filter'] as $filterKey => $filterValue) {
-                            foreach ($fields as $field) {
-                                if ($field == $filterKey) {
-                                    $query->where($filterKey, $filterValue);
-                                }
-                            }
-                        }
-                    }
+                    $query = $this->getFilterQuery($query, $fields, $get);
 
                     // page, per_page
 
@@ -132,8 +126,8 @@ class rex_yform_rest_model
                     $collection = [];
                     foreach ($instances as $instance) {
                         $data = [];
-                        foreach ($fields as $field) {
-                            $data[$field] = $instance->getValue($field);
+                        foreach ($fields as $fieldName => $field) {
+                            $data[$fieldName] = $instance->getValue($fieldName);
                         }
                         $collection[] = $data;
                     }
@@ -167,7 +161,7 @@ class rex_yform_rest_model
                 }
 
                 foreach ($in as $inKey => $inValue) {
-                    if (in_array($inKey, $fields)) {
+                    if (array_key_exists($inKey, $fields)) {
                         $dataset->setValue($inKey, $inValue);
                     }
                 }
@@ -185,30 +179,21 @@ class rex_yform_rest_model
             case 'delete':
 
                 $fields = $this->getFieldsFromModelType('delete');
-                if (isset($_GET['filter']) && is_array($_GET['filter'])) {
-                    $filter = false;
-                    $instances = $this->config['query'];
-                    foreach ($_GET['filter'] as $filterKey => $filterValue) {
-                        foreach ($fields as $field) {
-                            if ($field == $filterKey) {
-                                $instances->where($filterKey, $filterValue);
-                                $filter = true;
-                            }
-                        }
-                    }
-                    if (!$filter) {
-                        \rex_yform_rest::sendError(404, 'no-available-filter-set');
-                    }
-                } else {
-                    if (count($paths) == 0) {
-                        \rex_yform_rest::sendError(404, 'no-id-set');
-                    }
+
+                $queryClone = clone $query;
+                $query = $this->getFilterQuery($query, $fields, $get);
+
+                if ($queryClone === $query && isset($get['filter'])) {
+                    \rex_yform_rest::sendError(404, 'no-available-filter-set');
+                } elseif ($queryClone != $query) {
+                    // filter set -> true
+                } elseif (count($paths) == 0) {
+                    \rex_yform_rest::sendError(404, 'no-id-set');
                     $id = $paths[0];
-                    $instances = $this->config['query']
-                        ->where('id', $id);
+                    $query->where('id', $id);
                 }
 
-                $data = $instances->find();
+                $data = $query->find();
 
                 $content = [];
                 $content['all'] = count($data);
@@ -250,19 +235,47 @@ class rex_yform_rest_model
             throw  new rex_api_exception('Problem with Config: A Table/Class does not exists ');
         }
         $availableFields = $table->getValueFields();
-        $returnFields = ['id'];
+        $returnFields = ['id' => new \rex_yform_manager_field([
+            'name' => 'id',
+            'type_id' => 'value',
+            'type_name' => 'integer',
+        ])];
         $fields = (!isset($this->config[$type]['fields'])) ? [] : $this->config[$type]['fields'];
-
-        dump($availableFields);
 
         foreach ($availableFields as $key => $availableField) {
             if ($availableField->getDatabaseFieldType() != 'none') {
                 if (count($fields) == 0 || in_array($key, $fields)) {
-                    $returnFields[] = $key;
+                    $returnFields[$key] = $availableField;
                 }
             }
         }
-
         return $returnFields;
+    }
+
+    public function getFilterQuery($query, $fields, $get)
+    {
+        if (isset($get['filter']) && is_array($get['filter'])) {
+            foreach ($get['filter'] as $filterKey => $filterValue) {
+                foreach ($fields as $fieldName => $field) {
+                    if ($fieldName == $filterKey) {
+                        if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
+                            try {
+                                $rawQuery = $field->object->getSearchFilter([
+                                    'value' => $filterValue,
+                                    'field' => $field,
+                                ]);
+                            } catch (Error $e) {
+                                \rex_yform_rest::sendError(400, 'field-class-not-found', ['field' => $fieldName, 'table' => $table->getTableName()]);
+                                exit;
+                            }
+                            $query->whereRaw('('.$rawQuery.')');
+                        } else {
+                            $query->where($filterKey, $filterValue);
+                        }
+                    }
+                }
+            }
+        }
+        return $query;
     }
 }
