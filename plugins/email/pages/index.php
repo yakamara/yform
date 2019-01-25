@@ -23,7 +23,7 @@ $show_list = true;
 
 if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
-}  elseif ($func == 'delete') {
+} elseif ($func == 'delete') {
     $query = "delete from $table where id='" . $template_id . "' ";
     $delsql = rex_sql::factory();
     $delsql->setQuery($query);

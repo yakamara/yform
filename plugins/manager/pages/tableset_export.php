@@ -45,7 +45,6 @@ if ($yform->objparams['actions_executed']) {
         header('Content-Disposition: attachment; filename="' . $fileName . '"; charset=utf-8');
         rex_response::sendContent($fileContent, 'application/octetstream');
         exit;
-
     } catch (Exception $e) {
         echo rex_view::warning($this->msg('table_export_failed', '', $e->getMessage()));
     }

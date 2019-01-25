@@ -33,7 +33,7 @@ class rex_yform_choice_view
         if (null === $this->attributes) {
             $this->attributes = [];
         }
-        
+
         // Remove foreign attributes
         foreach ($this->attributes as $index => $attributeValue) {
             if (!is_array($attributeValue)) {

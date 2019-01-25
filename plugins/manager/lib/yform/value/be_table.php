@@ -25,7 +25,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
             $id = $this->getId();
 
-            $columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
+            $columns = preg_split("/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/", $this->getElement('columns'));
             if (count($columns) == 0) {
                 return;
             }
@@ -33,10 +33,10 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $form_data = rex_post('FORM', 'array');
 
             if (isset($form_data[$id . '.0'])) {
-                $rowKeys   = array_keys((array) $form_data[$id . '.0']);
+                $rowKeys = array_keys((array) $form_data[$id . '.0']);
 
                 // Spalten durchgehen
-                for ($c = 0; $c < count($columns); $c++) {
+                for ($c = 0; $c < count($columns); ++$c) {
                     foreach ($rowKeys as $r) {
                         $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
                     }
@@ -57,17 +57,16 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             return;
         }
 
-        $_columns  = preg_split ( "/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/" , $this->getElement('columns') );
+        $_columns = preg_split("/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/", $this->getElement('columns'));
         if (count($_columns) == 0) {
             return;
         }
-
 
         $data = (array) json_decode($this->getValue(), true);
         $columns = [];
         $objs = [];
         $columnIndex = [];
-        
+
         $yfparams = \rex_yform::factory()->objparams;
         $yfparams['this'] = \rex_yform::factory();
 
@@ -82,7 +81,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             }
 
             $class = 'rex_yform_value_' . trim($values[0]);
-            if(class_exists($class)) {
+            if (class_exists($class)) {
                 $name = $values[1];
                 $values[1] = '';
                 $field = new $class();
@@ -95,13 +94,12 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
                 $columnIndex[$name] = $index;
                 $columns[] = ['label' => $values[2], 'field' => $field];
 
-                foreach($data as $rowCount => $row) {
+                foreach ($data as $rowCount => $row) {
                     $obj = clone $field;
                     $obj->setName($name.$rowCount.$index);
                     $obj->setValue($data[$rowCount][$index]);
-                    $objs[]= $obj;
+                    $objs[] = $obj;
                 }
-
             }
         }
 
@@ -113,10 +111,10 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $values = explode('|', trim(trim(rex_yform::unhtmlentities($col)), '|'));
             $name = $values[2];
             $class = 'rex_yform_validate_' . trim($values[1]);
-            if(class_exists($class)) {
+            if (class_exists($class)) {
                 $validate = new $class();
                 $validate->setObjects($objs);
-                foreach($data as $rowCount => $row) {
+                foreach ($data as $rowCount => $row) {
                     $values[2] = $name.$rowCount.$columnIndex[$name];
                     $validate->loadParams($this->params, $values);
                     $validate->init();
@@ -135,18 +133,18 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
     public function getDefinitions()
     {
         return [
-            'type'        => 'value',
-            'name'        => 'be_table',
-            'values'      => [
-                'name'    => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
-                'label'   => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
+            'type' => 'value',
+            'name' => 'be_table',
+            'values' => [
+                'name' => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'columns' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_be_table_columns')],
-                'notice'  => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
-                'no_db'   => ['type' => 'no_db','label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
+                'notice' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
             ],
             'description' => rex_i18n::msg('yform_values_be_table_description'),
             'formbuilder' => false,
-            'db_type'      => ['text'],
+            'db_type' => ['text'],
         ];
     }
 }

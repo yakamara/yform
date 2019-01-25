@@ -24,7 +24,7 @@ if (rex::getUser()->isAdmin()) {
 
         $mi = rex_sql::factory();
         // $mi->debugsql = 1;
-        $mi->setTable(rex::getTable("module"));
+        $mi->setTable(rex::getTable('module'));
         $mi->setValue('input', $input);
         $mi->setValue('output', $output);
 

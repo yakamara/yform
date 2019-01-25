@@ -10,8 +10,8 @@
 class rex_yform_value_date extends rex_yform_value_abstract
 {
     const
-        VALUE_DATE_DEFAULT = 'YYYY-MM-DD',
-        VALUE_DATE_FORMATS = ['YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY','MM-DD-YYYY' => 'MM-DD-YYYY'];
+        VALUE_DATE_DEFAULT = 'YYYY-MM-DD';
+    const VALUE_DATE_FORMATS = ['YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY'];
 
     public function preValidateAction()
     {
@@ -154,7 +154,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if ($this->getElement('widget') == 'input:text') {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
 
-            // } else if ($this->getElement('widget') == 'input:date') {
+        // } else if ($this->getElement('widget') == 'input:date') {
             // wird im moment nicht genutzt.
             // $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'date']);
         } else {

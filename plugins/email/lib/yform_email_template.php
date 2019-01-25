@@ -107,7 +107,7 @@ class rex_yform_email_template
         $mail->AddAddress($template['mail_to'], $template['mail_to_name']);
         $mail->SetFrom($template['mail_from'], $template['mail_from_name']);
 
-        if($template['mail_reply_to'] != '') {
+        if ($template['mail_reply_to'] != '') {
             $mail->AddReplyTo($template['mail_reply_to'], $template['mail_reply_to_name']);
         }
 

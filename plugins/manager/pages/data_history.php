@@ -11,7 +11,7 @@ $historyId = rex_request('history_id', 'int');
 
 $_csrf_key = 'data_edit_history-'.$this->table->getTableName();
 
-if ($subfunc != "" && in_array($subfunc, ['restore','delete_old','delete_all'])) {
+if ($subfunc != '' && in_array($subfunc, ['restore', 'delete_old', 'delete_all'])) {
     if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
         echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
         $subfunc = '';

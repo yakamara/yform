@@ -17,7 +17,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         $media_category_id = ($this->getElement(8) == '') ? 0 : (int) $this->getElement(8);
         $media_category = rex_media_category::get($media_category_id);
-        if (is_null($media_category)) {
+        if (null === $media_category) {
             $media_category_id = 0;
         }
 

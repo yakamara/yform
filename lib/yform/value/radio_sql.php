@@ -125,11 +125,11 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         }
 
         $params['searchForm']->setValueField('select', [
-        'name' => $params['field']->getName(),
-        'label' => $params['field']->getLabel(),
-        'options' => $options,
-        'multiple' => 1,
-        'size' => 5,
+            'name' => $params['field']->getName(),
+            'label' => $params['field']->getLabel(),
+            'options' => $options,
+            'multiple' => 1,
+            'size' => 5,
         ]
         );
     }
@@ -164,5 +164,4 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
     {
         return true;
     }
-
 }

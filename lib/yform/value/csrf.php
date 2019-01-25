@@ -12,7 +12,6 @@ class rex_yform_value_csrf extends rex_yform_value_abstract
     public function enterObject()
     {
         if ($this->params['csrf_protection']) {
-
             $tokenid = 'yform_' . $this->params['form_name'];
 
             $value = (string) $this->getValue();
@@ -24,7 +23,7 @@ class rex_yform_value_csrf extends rex_yform_value_abstract
                     if ($error_message == '') {
                         $error_message = $this->params['csrf_protection_error_message'];
                     }
-                    if(rex::isBackend()) {
+                    if (rex::isBackend()) {
                         $this->params['warning_messages'][$this->getId()] = rex_i18n::msg('csrf_token_invalid');
                     } else {
                         $this->params['warning_messages'][$this->getId()] = $error_message;

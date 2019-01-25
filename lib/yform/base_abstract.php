@@ -144,8 +144,4 @@ abstract class rex_yform_base_abstract
     public function init()
     {
     }
-
-
-
-
 }

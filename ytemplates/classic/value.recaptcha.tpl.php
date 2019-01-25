@@ -1,6 +1,6 @@
 <?php
-if($this->getElement(3)) {
-	echo '<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>';
+if ($this->getElement(3)) {
+    echo '<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>';
 }
 
 ?>

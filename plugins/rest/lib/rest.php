@@ -17,8 +17,8 @@ class rex_yform_rest
         401 => '401 Unauthorized',
         404 => '404 Not Found',
         405 => '405 Method Not Allowed',
-    ],
-    $preRoute = '/rest';
+    ];
+    public static $preRoute = '/rest';
 
     protected static $routes = [];
 
@@ -31,16 +31,13 @@ class rex_yform_rest
     {
         $url = parse_url($_SERVER['REQUEST_URI']);
 
-        if (self::$preRoute != "") {
-
+        if (self::$preRoute != '') {
             if (substr($url['path'], 0, strlen(self::$preRoute)) != self::$preRoute) {
                 return false;
             }
-
         }
 
         foreach (self::$routes as $route) {
-
             $routePath = self::$preRoute.$route->getPath();
 
             if (substr($url['path'], 0, strlen($routePath)) != $routePath) {

@@ -27,5 +27,4 @@ class rex_yform_value_generate_password extends rex_yform_value_abstract
     {
         return true;
     }
-
 }

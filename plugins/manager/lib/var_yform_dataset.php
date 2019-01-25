@@ -63,7 +63,6 @@ class rex_var_yform_table_data extends rex_var
                 $value = implode(',', $values);
 
                 $value = self::getMultipleWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
-
             } else {
                 $valueName = '';
                 $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $value]);

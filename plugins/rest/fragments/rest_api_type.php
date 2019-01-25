@@ -1,7 +1,6 @@
 <?php
 
-foreach($this->elements as $element) {
-
+foreach ($this->elements as $element) {
     $content_type = '';
     if (isset($element['content_type'])) {
         $content_type = '<div class="type"><b>Content-Type:</b> <span>'.$element['content_type'].'</span></div>';
@@ -14,16 +13,16 @@ foreach($this->elements as $element) {
 
     $content_fields = '';
     if (isset($element['fields'])) {
-        $content_fields = '<div class="fields"><b>Fields:</b> '.implode(", ",$element['fields']).'</div>';
+        $content_fields = '<div class="fields"><b>Fields:</b> '.implode(', ', $element['fields']).'</div>';
     }
 
     $content_headers = '';
     if (isset($element['headers'])) {
         $content_headers = [];
-        foreach($element['headers'] as $k => $v) {
+        foreach ($element['headers'] as $k => $v) {
             $content_headers[] = $k.'='.$v;
         }
-        $content_headers = '<div class="fields"><b>Header:</b> '.implode(" / ",$content_headers).'</div>';
+        $content_headers = '<div class="fields"><b>Header:</b> '.implode(' / ', $content_headers).'</div>';
     }
 
     echo '
@@ -35,7 +34,6 @@ foreach($this->elements as $element) {
     <div class="rest-parameter">
         '.$content_type.$content_body.$content_fields.$content_headers.'
     </div>';
-
 }
 
 ?>

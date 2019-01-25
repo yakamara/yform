@@ -22,15 +22,12 @@ $show_list = true;
 
 if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
-
-} else if ($func == 'delete') {
+} elseif ($func == 'delete') {
     $query = "delete from $table where id='" . $data_id . "' ";
     $delsql = rex_sql::factory();
     $delsql->setQuery($query);
     $content = rex_view::success(rex_i18n::msg('yform_rest_token_deleted'));
-
-} else if ($func == 'edit' || $func == 'add') {
-
+} elseif ($func == 'edit' || $func == 'add') {
     $form_data = [];
 
     $form_data[] = 'checkbox|status|translate:yform_rest_token_status';
@@ -38,7 +35,6 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'validate|empty|name|translate:yform_rest_token_name_validate';
     $form_data[] = 'text|token|translate:yform_rest_token_token';
     $form_data[] = 'validate|empty|token|translate:yform_rest_token_token_validate';
-
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest');
@@ -123,7 +119,6 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
             }
         }
     } else {
-
         $fragment = new rex_fragment();
         $fragment->setVar('class', 'edit', false);
         $fragment->setVar('title', $title);

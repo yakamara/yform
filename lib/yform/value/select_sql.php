@@ -63,7 +63,7 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!array_key_exists($value, $options)) {
-                if ($default or $default === '0') {
+                if ($default || $default === '0') {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -189,13 +189,13 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
         }
 
         $params['searchForm']->setValueField('select', [
-                'name' => $params['field']->getName(),
-                'label' => $params['field']->getLabel(),
-                'options' => $options,
-                'multiple' => 1,
-                'size' => 5,
-                'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
-            ]
+            'name' => $params['field']->getName(),
+            'label' => $params['field']->getLabel(),
+            'options' => $options,
+            'multiple' => 1,
+            'size' => 5,
+            'notice' => rex_i18n::msg('yform_search_defaults_select_notice'),
+        ]
         );
     }
 
@@ -235,5 +235,4 @@ class rex_yform_value_select_sql extends rex_yform_value_abstract
     {
         return true;
     }
-
 }

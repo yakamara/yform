@@ -19,8 +19,7 @@ class rex_yform_value_ip extends rex_yform_value_abstract
         dump($this->getElement('no_db'));
 
         if ($this->getElement('no_db') != 'no_db') {
-
-            echo "saved";
+            echo 'saved';
 
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
@@ -46,5 +45,4 @@ class rex_yform_value_ip extends rex_yform_value_abstract
             'db_type' => ['varchar(191)', 'text'],
         ];
     }
-
 }

@@ -1,7 +1,7 @@
 <div id="<?php echo $this->objparams['form_wrap_id'] ?>" class="<?php echo $this->objparams['form_wrap_class'] ?>">
 
     <?php
-    if ($this->objparams['form_action'] != "") {
+    if ($this->objparams['form_action'] != '') {
         echo '<form action="'.$this->objparams['form_action'].'" method="'.$this->objparams['form_method'].'" id="'.$this->objparams['form_name'].'" class="'.$this->objparams['form_class'].'" enctype="multipart/form-data">';
     }
     ?>
@@ -31,7 +31,7 @@
         <?php endforeach ?>
 
     <?php
-    if ($this->objparams['form_action'] != "") {
+    if ($this->objparams['form_action'] != '') {
         echo '</form>';
     }
     ?>

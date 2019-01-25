@@ -184,5 +184,4 @@ class rex_yform_value_select extends rex_yform_value_abstract
     {
         return true;
     }
-
 }

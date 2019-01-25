@@ -1,9 +1,9 @@
 <?php
 
 
-class rex_yform_rest_auth_token {
-
-    static $Tokens = [];
+class rex_yform_rest_auth_token
+{
+    public static $Tokens = [];
 
     public static function checkToken()
     {
@@ -21,7 +21,5 @@ class rex_yform_rest_auth_token {
         }
 
         return self::$Tokens[$myToken];
-
     }
-
 }

@@ -75,14 +75,14 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
     public static function getListValue($params)
     {
         $return = self::datestamp_getValueByFormat($params['subject'], $params['params']['field']['format']);
-        return ($return == "") ? '-':$return;
+        return ($return == '') ? '-' : $return;
     }
 
     public static function datestamp_getValueByFormat($value, $format)
     {
-        if ($value == "0000-00-00 00:00:00") {
+        if ($value == '0000-00-00 00:00:00') {
             $return = '';
-        } else if ($format == "") {
+        } elseif ($format == '') {
             $return = $value;
         } else {
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $value);
@@ -93,6 +93,5 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             }
         }
         return $return;
-
     }
 }

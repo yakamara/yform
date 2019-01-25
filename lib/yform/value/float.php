@@ -92,5 +92,4 @@ class rex_yform_value_float extends rex_yform_value_abstract
     {
         return true;
     }
-
 }

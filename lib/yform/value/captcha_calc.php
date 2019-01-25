@@ -220,5 +220,4 @@ fg_color_4          = 255,221,0';
     {
         return true;
     }
-
 }

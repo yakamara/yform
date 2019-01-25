@@ -30,13 +30,12 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
             if ($this->getElement(4) == 1) {
                 $this->params['warning'] = [];
                 $this->params['warning_messages'] = [];
-            };
+            }
 
             $this->params['warning'][$this->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$this->getId()] = $this->getElement(2);
         }
     }
-
 
     public function enterObject()
     {
@@ -228,5 +227,4 @@ fg_color_4          = 255,221,0';
     {
         return true;
     }
-
 }

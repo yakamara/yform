@@ -618,7 +618,6 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-
     public static function generateTablesAndFields($delete_old = false)
     {
         rex_yform_manager_table::deleteCache();

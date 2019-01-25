@@ -37,7 +37,7 @@ class rex_yform_rest_route
         return $this->model;
     }
 
-    public function handleRequest(array $paths = [], $get)
+    public function handleRequest(array $paths, $get)
     {
         /* @var $model \rex_yform_rest_model */
         $model = $this->model;

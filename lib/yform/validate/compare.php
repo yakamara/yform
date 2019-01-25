@@ -67,7 +67,6 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
             $this->params['warning_messages'][$id_1] = $this->getElement('message');
             // $this->params['warning_messages'][$id_2] = $this->getElement('message');
         }
-
     }
 
     public function getDescription()

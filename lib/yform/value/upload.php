@@ -13,8 +13,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     {
         $sessionFieldTimeout = 3600; // seconds
         if (isset($_SESSION['yform_field_upload'])) {
-            foreach($_SESSION['yform_field_upload'] as $unique => $session) {
-                if (isset($session['stamp']) && $session['stamp'] < (date('U')-$sessionFieldTimeout)) {
+            foreach ($_SESSION['yform_field_upload'] as $unique => $session) {
+                if (isset($session['stamp']) && $session['stamp'] < (date('U') - $sessionFieldTimeout)) {
                     unset($_SESSION['yform_field_upload'][$unique]);
                     // TODO: Datei aus tmp Ordner löschen ?
                 }
@@ -44,7 +44,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         rex_login::startSession();
 
-        $unique = $this->params['this']->getFieldValue($this->getName(), [ $this->getId(), 'unique']);
+        $unique = $this->params['this']->getFieldValue($this->getName(), [$this->getId(), 'unique']);
 
         if ($unique == '') {
             // Nein - also anlegen
@@ -71,7 +71,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             // Erster Aufruf. Ist File vorhanden ? dann Dateinamen setzen.
             $_SESSION['yform_field_upload'][$unique]['value'] = (string) $this->getValue();
             $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
-
         }
 
         // Datei wurde hochgeladen - mit dem entsprechenden UniqueKey
@@ -129,7 +128,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $_SESSION['yform_field_upload'][$unique] = [];
                 $_SESSION['yform_field_upload'][$unique]['file'] = $FILE;
                 $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
-
             }
         }
 
@@ -256,7 +254,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function postAction()
     {
-
         $unique = $this->params['this']->getFieldValue($this->getName(), [$this->getId(), 'unique']);
 
         if (isset($_SESSION['yform_field_upload'][$unique]['file'])) {
@@ -279,13 +276,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                         chmod($upload_filefolder, rex::getFilePerm());
                         $_SESSION['yform_field_upload'][$unique]['value'] = $FILE['name'];
                         $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
-
                     }
                 } else {
                     chmod($upload_filefolder, rex::getFilePerm());
                     $_SESSION['yform_field_upload'][$unique]['value'] = $FILE['name'];
                     $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
-
                 }
             }
         }
@@ -301,7 +296,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         // delete old files from cache
         $cu = date('U');
         $offset = (60 * 60 * 3); // 3 hours
-        $dir = $temp_folder."/";
+        $dir = $temp_folder.'/';
         if ($dh = opendir($dir)) {
             while (($file = readdir($dh)) !== false) {
                 $f = $dir.$file;
@@ -310,7 +305,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                     unlink($f);
                 }
             }
-
         }
 
         parent::postAction();

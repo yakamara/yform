@@ -96,16 +96,13 @@
 
 <?php
 
-foreach($this->elements as $element) {
-
+foreach ($this->elements as $element) {
     echo '<div class="model">
         <div class="name">'.$element['model'].'</div>';
-    foreach($element['types'] as $type) {
+    foreach ($element['types'] as $type) {
         echo '<div class="types">'.$type.'</div>';
-
     }
     echo '</div>';
-
 }
 
 ?>

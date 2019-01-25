@@ -10,8 +10,8 @@
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
     const
-        VALUE_DATETIME_DEFAULT = 'YYYY-MM-DD HH:ii:ss',
-        VALUE_DATETIME_FORMATS = ['YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss'];
+        VALUE_DATETIME_DEFAULT = 'YYYY-MM-DD HH:ii:ss';
+    const VALUE_DATETIME_FORMATS = ['YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss'];
 
     public function preValidateAction()
     {

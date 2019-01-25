@@ -4,7 +4,7 @@ class rex_yform_rest_model
 {
     public $config = [];
 
-    static $requestMethods = ['get','post','delete'];
+    public static $requestMethods = ['get', 'post', 'delete'];
 
     public function __construct($config)
     {
@@ -76,7 +76,6 @@ class rex_yform_rest_model
 
                     \rex_yform_rest::sendContent(200, $data);
                 } else {
-
                     // instances
 
                     if (isset($get['filter']) && is_array($get['filter'])) {
@@ -104,7 +103,7 @@ class rex_yform_rest_model
                     $sortOrders = [$table->getSortOrderName()];
                     if (isset($get['sort_order']) && $get['sort_order'] != '') {
                         $sortOrders = [];
-                        foreach(explode(",", $get['sort_order']) as $sort_order) {
+                        foreach (explode(',', $get['sort_order']) as $sort_order) {
                             if (strtolower($sort_order) != 'desc') {
                                 $sort_order = 'asc';
                             }
@@ -124,7 +123,7 @@ class rex_yform_rest_model
                         }
                     }
 
-                    foreach($sortFields as $k => $sortField) {
+                    foreach ($sortFields as $k => $sortField) {
                         $query->orderBy($sortField, (isset($sortOrders[$k])) ? $sortOrders[$k] : 'desc');
                     }
 
@@ -174,7 +173,7 @@ class rex_yform_rest_model
                 }
 
                 if ($dataset->save()) {
-                    \rex_yform_rest::sendContent($OKStatus, [ "id" => $dataset->getId() ]);
+                    \rex_yform_rest::sendContent($OKStatus, ['id' => $dataset->getId()]);
                 } else {
                     foreach ($dataset->getMessages() as $message_key => $message) {
                         $errors[] = \rex_i18n::translate($message);
@@ -233,7 +232,7 @@ class rex_yform_rest_model
 
             default:
                 $availableMethods = [];
-                foreach(self::$requestMethods as $method) {
+                foreach (self::$requestMethods as $method) {
                     if (isset($this->config[$method])) {
                         $availableMethods[] = strtoupper($method);
                     }

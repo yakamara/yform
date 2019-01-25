@@ -11,7 +11,6 @@ class rex_yform_validate_in_names extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-
         if ($this->getElement(3) == '') {
             $minamount = 1;
         } else {
@@ -44,7 +43,6 @@ class rex_yform_validate_in_names extends rex_yform_validate_abstract
                 }
             }
         }
-
     }
 
     public function getDescription()

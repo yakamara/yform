@@ -79,15 +79,15 @@ class rex_yform_value_submit extends rex_yform_value_abstract
     public function getDefinitions()
     {
         return [
-                'type' => 'value',
-                'name' => 'submit',
-                'values' => [
-                    'name' => ['type' => 'name',    'label' => rex_i18n::msg('yform_values_defaults_name')],
-                    'labels' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                    'values' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_submit_values')],
-                    'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
-                    'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_submit_default')],
-                    'css_classes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_submit_css_classes'),
+            'type' => 'value',
+            'name' => 'submit',
+            'values' => [
+                'name' => ['type' => 'name',    'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'labels' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'values' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_submit_values')],
+                'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_submit_default')],
+                'css_classes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_submit_css_classes'),
                 ],
             ],
             'description' => rex_i18n::msg('yform_values_submit_description'),

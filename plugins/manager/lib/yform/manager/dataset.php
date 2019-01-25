@@ -65,7 +65,7 @@ class rex_yform_manager_dataset
         $table = $table ?: static::modelToTable();
 
         $class = self::getModelClass($table);
-        if ($class && __CLASS__ === get_called_class()) {
+        if ($class && __CLASS__ === static::class) {
             /** @noinspection PhpUndefinedMethodInspection */
             return $class::get($id, $table);
         }
@@ -90,7 +90,7 @@ class rex_yform_manager_dataset
         $table = $table ?: static::modelToTable();
 
         $class = self::getModelClass($table);
-        if ($class && __CLASS__ === get_called_class()) {
+        if ($class && __CLASS__ === static::class) {
             /** @noinspection PhpUndefinedMethodInspection */
             return $class::getRaw($id, $table);
         }
@@ -120,7 +120,7 @@ class rex_yform_manager_dataset
      */
     public static function table()
     {
-        $class = get_called_class();
+        $class = static::class;
 
         if (__CLASS__ === $class || !isset(self::$modelToTable[$class])) {
             throw new RuntimeException(sprintf('Method "%s()" is only callable for registered model classes.', __METHOD__));
@@ -151,7 +151,7 @@ class rex_yform_manager_dataset
         $table = $table ?: static::modelToTable();
 
         $class = self::getModelClass($table);
-        if ($class && __CLASS__ === get_called_class()) {
+        if ($class && __CLASS__ === static::class) {
             /** @noinspection PhpUndefinedMethodInspection */
             return $class::queryOne($query, $params, $table);
         }
@@ -185,7 +185,7 @@ class rex_yform_manager_dataset
         $table = $table ?: static::modelToTable();
 
         $class = self::getModelClass($table);
-        if ($class && __CLASS__ === get_called_class()) {
+        if ($class && __CLASS__ === static::class) {
             /** @noinspection PhpUndefinedMethodInspection */
             return $class::queryCollection($query, $params, $table);
         }
@@ -448,7 +448,7 @@ class rex_yform_manager_dataset
                 continue;
             }
             if (isset($fields[$key])) {
-                $yform->setFieldValue($key,[ 0], $value);
+                $yform->setFieldValue($key, [0], $value);
             }
         }
 
@@ -760,7 +760,7 @@ class rex_yform_manager_dataset
 
     private static function modelToTable()
     {
-        $class = get_called_class();
+        $class = static::class;
 
         if (isset(self::$modelToTable[$class])) {
             return self::$modelToTable[$class];

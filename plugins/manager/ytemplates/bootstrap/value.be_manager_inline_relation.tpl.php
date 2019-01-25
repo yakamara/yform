@@ -20,7 +20,7 @@ if (count($notice) > 0) {
 $prototypeForm = $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-'.rex_escape($relationKey), 'form' => $prototypeForm, 'prioFieldName' => $prioFieldName]);
 
 $sortable = 'data-yform-be-relation-sortable';
-if ($prioFieldName == ''){
+if ($prioFieldName == '') {
     $sortable = '';
 }
 

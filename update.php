@@ -16,7 +16,6 @@ foreach ($this->getInstalledPlugins() as $plugin) {
 }
 
 if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '3', '<')) {
-
     $fields_removed = [];
     $fields_renamed = ['labelexist' => 'in_names', 'existintable' => 'in_table'];
 
@@ -24,24 +23,22 @@ if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($th
         try {
             rex_sql::factory()->setQuery('update ' . rex::getTable('yform_field') . ' set type_name = ? where type_id="value" and type_name = ?', [$field_new_name, $field_old_name]);
             rex_sql::factory()->setQuery('update ' . rex::getTable('yform_history_field') . ' set field = ? where field = ?', [$field_new_name, $field_old_name]);
-        } catch ( rex_sql_exception $e) {
+        } catch (rex_sql_exception $e) {
         }
     }
 
     foreach ($fields_removed as $field) {
         try {
             rex_sql::factory()->setQuery('delete from ' . rex_yform_manager_field::table() . ' where type_id="value" and type_name = ?', [$field]);
-        } catch ( rex_sql_exception $e) {
+        } catch (rex_sql_exception $e) {
         }
     }
 
     try {
         rex_sql::factory()->setQuery('UPDATE ' . rex_yform_manager_field::table() . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"');
-    } catch ( rex_sql_exception $e) {
+    } catch (rex_sql_exception $e) {
     }
-
 }
-
 
 if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '1.9', '<')) {
     $fields_removed = ['submits', 'uniqueform'];
@@ -51,24 +48,23 @@ if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($th
     foreach ($fields_removed as $field) {
         try {
             rex_sql::factory()->setQuery('delete from ' . rex_yform_manager_field::table() . ' where type_id="value" and type_name = ?', [$field]);
-        } catch ( rex_sql_exception $e) {
+        } catch (rex_sql_exception $e) {
         }
     }
 
     foreach ($fields_change as $field) {
         try {
             rex_sql::factory()->setQuery('delete from ' . rex_yform_manager_field::table() . ' where type_id="value" and type_name = ?', [$field]);
-        } catch ( rex_sql_exception $e) {
+        } catch (rex_sql_exception $e) {
         }
     }
 
     foreach ($actions_removed as $action) {
         try {
             rex_sql::factory()->setQuery('delete from ' . rex_yform_manager_field::table() . ' where type_id="action" and type_name = ?', [$action]);
-        } catch ( rex_sql_exception $e) {
+        } catch (rex_sql_exception $e) {
         }
     }
-
 }
 
 rex_autoload::removeCache();

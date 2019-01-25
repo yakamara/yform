@@ -15,7 +15,7 @@ $show_importform = true;
 $show_list = false;
 
 $fields = [];
-foreach($this->table->getFields() as $field) {
+foreach ($this->table->getFields() as $field) {
     $fields[$field->getName()] = $field;
 }
 
@@ -84,7 +84,6 @@ if (rex_request('send', 'int', 0) == 1) {
             $idColumn = null;
             while (($line_array = fgetcsv($fp, 30384, $div)) !== false) {
                 if (count($fieldarray) == 0) {
-
                     $fieldarray = $line_array;
                     $fieldarray = array_map('rex_string::normalize', $fieldarray);
 
@@ -125,7 +124,6 @@ if (rex_request('send', 'int', 0) == 1) {
                             $error = false;
                             $i = rex_sql::factory();
                             foreach ($mc as $mcc) {
-
                                 rex_sql::factory()
                                     ->setTable(rex_yform_manager_field::table())
                                     ->setValue('table_name', $this->table->getTablename())
@@ -150,10 +148,9 @@ if (rex_request('send', 'int', 0) == 1) {
                             }
 
                             $fields = [];
-                            foreach(rex_yform_manager_table::get($this->table->getTableName()) as $field) {
+                            foreach (rex_yform_manager_table::get($this->table->getTableName()) as $field) {
                                 $fields[$field->getName()] = $field;
                             }
-
                         } else {
                             if (count($fieldarray) == count($mc)) {
                                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_min_missingfields', implode(', ', $mc)));
@@ -168,7 +165,6 @@ if (rex_request('send', 'int', 0) == 1) {
                             }
                         }
                     }
-
                 } else {
                     if (!$line_array) {
                         break;
@@ -209,7 +205,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         ++$dcounter;
                         $dataId = 'ID: '.$id;
                         echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, '<br />* ' .implode('<br />* ', $messages)));
-                    } else if ($exists) {
+                    } elseif ($exists) {
                         ++$rcounter;
                     } else {
                         ++$icounter;

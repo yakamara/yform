@@ -28,7 +28,6 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
                 $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
             }
         }
-
     }
 
     public function getDescription()

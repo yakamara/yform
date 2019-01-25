@@ -41,7 +41,6 @@ if ($yform->objparams['actions_executed']) {
     } catch (Exception $e) {
         echo rex_view::warning(rex_i18n::msg('yform_manager_tableset_import_failed', $e->getMessage()));
     }
-
 }
 
 if ($form != '') {

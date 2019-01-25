@@ -55,8 +55,8 @@ class rex_yform_value_number extends rex_yform_value_abstract
                 ['type' => ['name' => 'precision', 'type' => 'integer', 'message' => rex_i18n::msg('yform_values_number_error_precision', '1', '65'), 'not_required' => false]],
                 ['type' => ['name' => 'scale', 'type' => 'integer', 'message' => rex_i18n::msg('yform_values_number_error_scale', '0', '30'), 'not_required' => false]],
                 ['compare' => ['name' => 'scale', 'name2' => 'precision', 'message' => rex_i18n::msg('yform_values_number_error_compare'), 'compare_type' => '>']],
-                ['intfromto' => ['name' => 'precision', 'from' => '1', 'to' => '65','message' => rex_i18n::msg('yform_values_number_error_precision', '1', '65')]],
-                ['intfromto' => ['name' => 'scale', 'from' => '0', 'to' => '30','message' => rex_i18n::msg('yform_values_number_error_scale', '0', '30')]]
+                ['intfromto' => ['name' => 'precision', 'from' => '1', 'to' => '65', 'message' => rex_i18n::msg('yform_values_number_error_precision', '1', '65')]],
+                ['intfromto' => ['name' => 'scale', 'from' => '0', 'to' => '30', 'message' => rex_i18n::msg('yform_values_number_error_scale', '0', '30')]],
             ],
             'description' => rex_i18n::msg('yform_values_number_description'),
             'db_type' => ['DECIMAL({precision},{scale})'],
@@ -73,8 +73,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        return (!empty($params['params']['field']['unit']) && $params['subject'] != "") ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
-
+        return (!empty($params['params']['field']['unit']) && $params['subject'] != '') ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
     }
 
     public static function getSearchField($params)

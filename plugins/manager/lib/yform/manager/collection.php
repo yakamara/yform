@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @method rex_yform_manager_dataset offsetGet($offset)
- * @method rex_yform_manager_dataset current()
+ * @method rex_yform_manager_dataset   offsetGet($offset)
+ * @method rex_yform_manager_dataset   current()
  * @method rex_yform_manager_dataset[] toArray()
  */
 class rex_yform_manager_collection extends \SplFixedArray

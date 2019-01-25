@@ -153,9 +153,6 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
 
     $yform->setValueField('html', ['html' => '</div></div>']);
 
-
-
-
     $yform->setValueField('html', ['html' => '</div></div>']);
 
     $form = $yform->getForm();
@@ -187,7 +184,6 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
                 rex_yform_manager_table_api::generateTableAndFields($table);
             }
             echo rex_view::info(rex_i18n::msg('yform_manager_table_updated'));
-
         } elseif ($func == 'add') {
             rex_yform_manager_table::deleteCache();
             $table_name = $yform->objparams['value_pool']['sql']['table_name'];
@@ -196,7 +192,6 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
                 rex_yform_manager_table_api::generateTableAndFields($table);
                 echo rex_view::success(rex_i18n::msg('yform_manager_table_added'));
             }
-
         }
     }
 }

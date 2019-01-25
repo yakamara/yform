@@ -75,7 +75,6 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
                 'default' => ['type' => 'text',     'label' => 'Default', 'notice' => '0.000,0.000'],
                 'infotext_1' => ['type' => 'text',     'label' => 'Text: Hole Position', 'default' => 'translate:yform_geo_get_position'],
                 'infotext_2' => ['type' => 'text',     'label' => 'Text: Lösche Position', 'default' => 'translate:yform_geo_clear_position'],
-
             ],
             'description' => 'GoogeMap Positionierung',
             'db_type' => ['text'],

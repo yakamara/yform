@@ -23,7 +23,7 @@ $class_control = trim('form-control');
     <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
     <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" name="<?php echo $unique ?>" />
     <?php echo $notice ?>
-    <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo rex_escape($unique,'html'); ?>" />
+    <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo rex_escape($unique, 'html'); ?>" />
 </div>
 
 <?php

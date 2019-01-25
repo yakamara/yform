@@ -34,7 +34,6 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             $this->params['warning'][$Object->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
         }
-
     }
 
     public function getDescription()

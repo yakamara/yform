@@ -65,7 +65,6 @@ class rex_yform
         $this->objparams['data'] = false;
         $this->objparams['get_field_type'] = 'request';
 
-
         // --------------------------- do not edit
 
         $this->objparams['debug'] = false;
@@ -249,9 +248,8 @@ class rex_yform
             }
         }
 
-
         // FORM DATA individuell einspielen
-        if (isset($this->objparams['data']) && is_array($this->objparams['data']) && count($this->objparams['data'])>0)  {
+        if (isset($this->objparams['data']) && is_array($this->objparams['data']) && count($this->objparams['data']) > 0) {
             foreach ($this->objparams['values'] as $i => $valueObject) {
                 if (isset($this->objparams['data'][$valueObject->getName()])) {
                     $valueObject->setValue($this->objparams['data'][$valueObject->getName()]);
@@ -323,7 +321,7 @@ class rex_yform
             if ($element[0] == 'validate') {
                 $class = 'rex_yform_validate_' . trim($element[1]);
                 $type = 'validates';
-            } else if ($element[0] == 'action') {
+            } elseif ($element[0] == 'action') {
                 $class = 'rex_yform_action_' . trim($element[1]);
                 $type = 'actions';
             } else {
@@ -332,7 +330,6 @@ class rex_yform
             }
 
             if (class_exists($class)) {
-
                 $this->objparams[$type][$i] = new $class();
                 $this->objparams[$type][$i]->loadParams($this->objparams, $element);
                 $this->objparams[$type][$i]->setId($i);
@@ -467,11 +464,10 @@ class rex_yform
 
     public function getFieldName(string $label, array $params = []) // $id = '', $k = '', $label = ''
     {
-
         if ($this->objparams['real_field_names']) {
             $label = $this->prepareLabel($label);
             // specialcase
-            if ($label != "" && count($params) > 1) {
+            if ($label != '' && count($params) > 1) {
                 // 1. FormID
                 // 2. SpecialKey
                 $label .= '['.$this->prepareLabel($params[1]).']';
@@ -487,20 +483,18 @@ class rex_yform
 
         $params = array_merge($this->objparams['form_array'], $params);
 
-        foreach($params as $param) {
+        foreach ($params as $param) {
             $param = $this->prepareLabel($param);
-            if ($param != "") {
+            if ($param != '') {
                 $fieldName .= '['.$this->prepareLabel($param).']';
             }
         }
 
         return $fieldName;
-
     }
 
     public function getFieldValue($label = '', array $params = [])
     {
-
         if (count($params) == 0 && $label != '') {
             $params = [$label];
         }
@@ -508,7 +502,7 @@ class rex_yform
         $params = array_merge($this->objparams['form_array'], $params);
 
         $value = null;
-        switch($this->getObjectparams('get_field_type')) {
+        switch ($this->getObjectparams('get_field_type')) {
             case 'request':
                 if ($this->objparams['real_field_names']) {
                     $value = isset($_REQUEST) ? $_REQUEST : null;
@@ -533,11 +527,11 @@ class rex_yform
                 break;
         }
 
-        if (in_array("", $params, true)) {
+        if (in_array('', $params, true)) {
             return '';
         }
 
-        foreach($params as $counter => $param) {
+        foreach ($params as $counter => $param) {
             $param = $this->prepareLabel($param);
 
             if (is_array($value) && array_key_exists($param, $value)) {
@@ -548,20 +542,18 @@ class rex_yform
             }
         }
 
-        return (is_null($value)) ? '' : $value;
-
+        return (null === $value) ? '' : $value;
     }
 
     public function setFieldValue(string $label, array $params, $value)
     {
-
         if (count($params) == 0) {
             $params = [$label];
         }
 
         $params = array_merge($this->objparams['form_array'], $params);
 
-        switch($this->getObjectparams('get_field_type')) {
+        switch ($this->getObjectparams('get_field_type')) {
             case 'request':
                 if ($this->objparams['real_field_names']) {
                     $fieldValue = &$_REQUEST;
@@ -574,7 +566,6 @@ class rex_yform
                     } else {
                         $params = [$label];
                     }
-
                 } else {
                     if (!isset($_REQUEST['FORM'][$this->objparams['form_name']])) {
                         $_REQUEST['FORM'][$this->objparams['form_name']] = '';
@@ -591,13 +582,12 @@ class rex_yform
                 break;
         }
 
-        foreach($params as $param) {
+        foreach ($params as $param) {
             $param = $this->prepareLabel($param);
-            if ($param != "") {
-
+            if ($param != '') {
                 if (!isset($fieldValue[$param]) && !is_array($fieldValue)) {
                     $fieldValue = [];
-                } else if (!is_array($fieldValue)) {
+                } elseif (!is_array($fieldValue)) {
                     $fieldValue = [];
                 }
                 $fieldValue[$param] = $value;
@@ -652,25 +642,19 @@ class rex_yform
                         }
 
                         if (isset($definitions['formbuilder']) && !$definitions['formbuilder']) {
-
                         } elseif ($class->isDeprecated()) {
-
                             $deprecatedInfo = isset($definitions['deprecated']) ? $definitions['deprecated'].'<br />' : '';
                             $classesDeprecatedDescription[$arr_key] .= '<tr class="yform-classes-deprecated"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $deprecatedInfo . $desc . '</td></tr>';
-
                         } elseif (isset($definitions['famous']) && $definitions['famous']) {
                             $classesFamousDescription[$arr_key] .= '<tr class="yform-classes-famous"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
-
                         } else {
                             $classesDescription[$arr_key] .= '<tr><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';
-
                         }
                     }
                 }
             }
 
             $classesDescription[$arr_key] = $classesFamousDescription[$arr_key] . $classesDescription[$arr_key] . $classesDeprecatedDescription[$arr_key];
-
         }
 
         $return = '';
