@@ -470,6 +470,12 @@ class rex_yform
 
         if ($this->objparams['real_field_names']) {
             $label = $this->prepareLabel($label);
+            // specialcase
+            if ($label != "" && count($params) > 1) {
+                // 1. FormID
+                // 2. SpecialKey
+                $label .= '['.$this->prepareLabel($params[1]).']';
+            }
             return $label ?? current($params);
         }
 
@@ -494,6 +500,7 @@ class rex_yform
 
     public function getFieldValue($label = '', array $params = [])
     {
+
         if (count($params) == 0 && $label != '') {
             $params = [$label];
         }
@@ -505,8 +512,14 @@ class rex_yform
             case 'request':
                 if ($this->objparams['real_field_names']) {
                     $value = isset($_REQUEST) ? $_REQUEST : null;
-                    $params = [$label];
-                    // return ($value[$this->prepareLabel($label)]) ?? '';
+                    // specialcase
+                    if (count($params) > 1) {
+                        // 1. FormID
+                        // 2. SpecialKey
+                        $params = [$label, $params[1]];
+                    } else {
+                        $params = [$label];
+                    }
                 }
                 if (!$value) {
                     $value = isset($_REQUEST['FORM'][$this->objparams['form_name']]) ? $_REQUEST['FORM'][$this->objparams['form_name']] : null;
@@ -552,7 +565,16 @@ class rex_yform
             case 'request':
                 if ($this->objparams['real_field_names']) {
                     $fieldValue = &$_REQUEST;
-                    $params = [$label];
+
+                    // specialcase
+                    if (count($params) > 1) {
+                        // 1. FormID
+                        // 2. SpecialKey
+                        $params = [$label, $params[1]];
+                    } else {
+                        $params = [$label];
+                    }
+
                 } else {
                     if (!isset($_REQUEST['FORM'][$this->objparams['form_name']])) {
                         $_REQUEST['FORM'][$this->objparams['form_name']] = '';
