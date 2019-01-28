@@ -11,7 +11,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        $label = $this->getElement('name');
+        $names = explode(",", $this->getElement('name'));
         $func = $this->getElement('function');
         $parameter = $this->getElement('params');
 
@@ -21,24 +21,40 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             $func = mb_substr($func, 1);
         }
 
-        $Object = $this->getValueObject($label);
+        $Objects = [];
+        foreach($names as $name) {
+            $Object = $this->getValueObject($name);
+            if (!$this->isObject($Object)) {
+                return;
+            }
+            $Objects[$name] = $this->getValueObject($name);
 
-        if (!$this->isObject($Object)) {
-            return;
+        }
+
+        $functionObjects = $Objects;
+        if (count($Objects) == 1) {
+            $functionObjects = current($Objects);
         }
 
         if (!is_callable($func)) {
-            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-            $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';
-        } elseif (call_user_func($func, $label, $Object->getValue(), $parameter, $this) === $comparator) {
-            $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-            $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+            foreach($Objects as $Object) {
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';
+            }
+        } elseif (call_user_func($func, $names, $functionObjects, $parameter, $this) === $comparator) {
+            foreach($Objects as $Object) {
+                $this->params['warning'][$Object->getId()] = $this->params['error_class'];
+                if (!empty($this->getElement('message'))) {
+                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+                }
+            }
         }
+
     }
 
     public function getDescription()
     {
-        return 'validate|customfunction|name|[!]function/class::method|weitere_parameter|warning_message';
+        return 'validate|customfunction|name[s]|[!]function/class::method|weitere_parameter|warning_message';
     }
 
     public function getDefinitions()
