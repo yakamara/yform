@@ -8,6 +8,8 @@ class rex_yform_rest_model
 
     public function __construct($config)
     {
+        // TODO:
+        // Prüfen ob alles gesetzt ist.
         $this->config = $config;
     }
 
@@ -24,11 +26,13 @@ class rex_yform_rest_model
 
     public function handleRequest($paths, $get)
     {
+        $type = array_shift($paths);
+
         if (!isset($this->config['table'])) {
             \rex_yform_rest::sendError(400, 'table-not-available');
         }
 
-        $requestMethod = strtolower($_SERVER['REQUEST_METHOD']);
+        $requestMethod = $this->getRequestMethod();
         if (in_array($requestMethod, self::$requestMethods) && !isset($this->config[$requestMethod])) {
             \rex_yform_rest::sendError(400, 'request-method-not-available');
         }
@@ -45,7 +49,11 @@ class rex_yform_rest_model
                 $fields = $this->getFieldsFromModelType('get');
 
                 if (count($paths) > 0) {
+
+                    // TODO:
+
                     // instance
+                    /*
                     $id = array_shift($paths);
                     $query
                         ->where('id', $id);
@@ -56,29 +64,32 @@ class rex_yform_rest_model
                     }
 
                     if (count($paths) > 0) {
-                        // single property
+                        // single property could be array
 
                         $field = array_pop($paths);
-
                         if (array_key_exists($field, $fields)) {
-                            $field = $instance->getValue($field);
+
+                            // $this->getFieldsValue(\rex_yform_manager_dataset $instance, $fields, $deep = 0)
+                            $data = $this->getFieldsValue($instance, $fields);
+                            // $data = $instance->getValue($field);
                         }
 
-                        $content = [$field];
+                        $content = [$data];
 
                         \rex_yform_rest::sendContent(200, $content);
                     }
 
                     // all fields of instance
 
-                    $data = [];
-                    foreach ($fields as $fieldName => $field) {
-                        $data[$fieldName] = $instance->getValue($fieldName);
-                    }
+                    $data = $this->getFieldsValue($instance, $fields);
 
                     \rex_yform_rest::sendContent(200, $data);
+                    */
                 } else {
+
                     // instances
+
+                    // dump($query->count());
 
                     $query = $this->getFilterQuery($query, $fields, $get);
 
@@ -92,45 +103,46 @@ class rex_yform_rest_model
 
                     $query->limit(($page - 1) * $per_page, $per_page);
 
-                    // sort_field, sort_order
+                    if ($get['order'] && is_array($get['order'])) {
 
-                    $sortOrders = [$table->getSortOrderName()];
-                    if (isset($get['sort_order']) && $get['sort_order'] != '') {
-                        $sortOrders = [];
-                        foreach (explode(',', $get['sort_order']) as $sort_order) {
-                            if (strtolower($sort_order) != 'desc') {
-                                $sort_order = 'asc';
-                            }
-                            $sortOrders[] = $sort_order;
-                        }
-                    }
-
-                    $sortFields = [$table->getSortFieldName()];
-                    if (isset($get['sort_field']) && $get['sort_field'] != '') {
-                        $sortFields = [];
-                        foreach (explode(',', $get['sort_field']) as $sort_field) {
-                            foreach ($fields as $field) {
-                                if ($field === $sort_field) {
-                                    $sortFields[] = $sort_field;
+                        foreach ($get['order'] as $orderName => $orderValue) {
+                            if (array_key_exists($orderName, $fields)) {
+                                if ($orderValue != 'desc') {
+                                    $orderValue = 'asc';
                                 }
+                                $query->orderBy($orderName, ($orderValue != 'desc') ? 'asc' : 'desc');
                             }
                         }
-                    }
+                        $query->orderBy($table->getSortFieldName(), $table->getSortOrderName());
 
-                    foreach ($sortFields as $k => $sortField) {
-                        $query->orderBy($sortField, (isset($sortOrders[$k])) ? $sortOrders[$k] : 'desc');
                     }
 
                     $instances = $query->find();
 
-                    $collection = [];
+                    $data = [];
                     foreach ($instances as $instance) {
-                        $data = [];
-                        foreach ($fields as $fieldName => $field) {
-                            $data[$fieldName] = $instance->getValue($fieldName);
-                        }
-                        $collection[] = $data;
+                        $data[] = [
+                            'id' => $instance->getId(),
+                            'type' => $this->getTypeFromInstance($instance),
+                            'attributes' => $this->getInstanceAttributes($instance, $fields),
+                            'relationships' => $this->getInstanceRelationships($instance, $fields),
+                            'links' => [
+                                'self' => 'TODO'
+                            ]
+                        ];
                     }
+
+                    $collection = [
+                        'links' => [
+                            'self' => 'TODO'
+                        ],
+                        'meta' => [
+                            'totalItems' => 'TODO',
+                            'itemsPerPage' => $per_page,
+                            'currentPage' => $page
+                        ],
+                        'data' => $data
+                    ];
 
                     \rex_yform_rest::sendContent(200, $collection);
                 }
@@ -170,6 +182,7 @@ class rex_yform_rest_model
                     \rex_yform_rest::sendContent($OKStatus, ['id' => $dataset->getId()]);
                 } else {
                     foreach ($dataset->getMessages() as $message_key => $message) {
+                        // TODO: Info wenn Meldung leer.. siehe leere Meldungen bei YForm
                         $errors[] = \rex_i18n::translate($message);
                     }
                     \rex_yform_rest::sendError(400, 'errors-set', $errors);
@@ -189,6 +202,7 @@ class rex_yform_rest_model
                     // filter set -> true
                 } elseif (count($paths) == 0) {
                     \rex_yform_rest::sendError(404, 'no-id-set');
+                } else {
                     $id = $paths[0];
                     $query->where('id', $id);
                 }
@@ -222,14 +236,16 @@ class rex_yform_rest_model
                         $availableMethods[] = strtoupper($method);
                     }
                 }
-                \rex_yform_rest::sendError(404, 'no-request-method-found', ['please only use: '. implode(',', $availableMethods)]);
+                \rex_yform_rest::sendError(404, 'no-request-method-found', ['please only use: ' . implode(',', $availableMethods)]);
         }
     }
 
-    public function getFieldsFromModelType($type)
+    public function getFieldsFromModelType($type, $table = null)
     {
         /* @var $table \rex_yform_manager_table */
-        $table = $this->config['table'];
+        if (!$table) {
+            $table = $this->config['table'];
+        }
 
         if (!is_object($table)) {
             throw  new rex_api_exception('Problem with Config: A Table/Class does not exists ');
@@ -268,7 +284,7 @@ class rex_yform_rest_model
                                 \rex_yform_rest::sendError(400, 'field-class-not-found', ['field' => $fieldName, 'table' => $table->getTableName()]);
                                 exit;
                             }
-                            $query->whereRaw('('.$rawQuery.')');
+                            $query->whereRaw('(' . $rawQuery . ')');
                         } else {
                             $query->where($filterKey, $filterValue);
                         }
@@ -278,4 +294,58 @@ class rex_yform_rest_model
         }
         return $query;
     }
+
+    public function getInstanceAttributes(\rex_yform_manager_dataset $instance, $fields)
+    {
+        $data = [];
+        foreach ($fields as $fieldName => $field) {
+            if ($field->getTypeName() != 'be_manager_relation') {
+                $data[$fieldName] = $instance->getValue($field->getName());
+            }
+        }
+        return $data;
+
+    }
+
+    public function getInstanceRelationships(\rex_yform_manager_dataset $instance, $fields)
+    {
+        $return = [];
+        foreach ($fields as $field) {
+            if ($field->getTypeName() == 'be_manager_relation') {
+                $collection = $instance->getRelatedCollection($field->getName());
+                $data = [];
+                foreach ($collection as $entry) {
+                    $data[] = [
+                        'type' => $this->getTypeFromInstance($entry),
+                        'id' => $entry->getId()
+                    ];
+                }
+                if (count($data) > 0) {
+                    $return[$field->getName()] = [
+                        'data' => $data
+                    ];
+
+                }
+            }
+        }
+
+        return $return;
+
+    }
+
+    public function getRequestMethod()
+    {
+        // TODO: implement: X-HTTP-Method-Override: PUT
+        return strtolower($_SERVER['REQUEST_METHOD']);
+    }
+
+    public function getTypeFromInstance($instance)
+    {
+        $type = get_class($instance);
+        if ($type == "rex_yform_manager_dataset") {
+            $type = 'not-defined';
+        }
+        return $type;
+    }
+
 }

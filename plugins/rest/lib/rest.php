@@ -63,6 +63,7 @@ class rex_yform_rest
 
     public static function sendError($status = '404', $error = 'error', $error_descriptions = [])
     {
+        // TODO: Errors umbauen - entsprechend json api specs
         $message = [];
         $message['error'] = $error;
         $message['status'] = $status;
