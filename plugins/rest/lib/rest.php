@@ -42,7 +42,7 @@ class rex_yform_rest
         }
 
         foreach (self::$routes as $route) {
-            $routePath = self::$preRoute.$route->getPath();
+            $routePath = self::$preRoute . $route->getPath();
 
             if (substr($url['path'], 0, strlen($routePath)) != $routePath) {
                 continue;
@@ -57,138 +57,35 @@ class rex_yform_rest
                 return false;
             });
 
-            $route->handleRequest($paths, $_GET);
+            /* @var $route \rex_yform_rest_route */
+
+            if (!$route->hasAuth()) {
+                self::sendError(400, 'no-access');
+            } else {
+                $route
+                ->handleRequest($paths, $_GET);
+            }
+
         }
     }
 
-    public static function sendError($status = '404', $error = 'error', $error_descriptions = [])
+    public static function sendError($status = '404', $error = 'error', $descriptions = [])
     {
-        // TODO: Errors umbauen - entsprechend json api specs
         $message = [];
-        $message['error'] = $error;
-        $message['status'] = $status;
-        $message['error_messages'] = $error_descriptions;
+        $message['errors'] = [
+            'message' => $error,
+            'status' => $status,
+            'descriptions' => $descriptions
+        ];
         self::sendContent($status, $message);
     }
 
-    public static function sendContent($status, array $content, $contentType = 'application/json')
+    public static function sendContent($status, $content, $contentType = 'application/json')
     {
-        \rex_response::setStatus(\rex_yform_rest::$status[$status]);
+        \rex_response::setStatus(self::$status[$status]);
         \rex_response::sendContent(json_encode($content), $contentType);
         exit;
     }
-
-    /*
-    public function getInfoView()
-    {
-        $elements = [];
-
-        foreach ($this->config['models'] as $modelName => $params) {
-            if ($this->hasTokenAccess($params)) {
-                $Path = 'http[s]://'.$_SERVER['HTTP_HOST'].$this->config['route'].$modelName.'/';
-                $attributes = ['token' => 'mytoken'];
-
-                $contentModel = [];
-
-                if (isset($params['get'])) {
-                    $contentModel[] = $this->getGetInfoView($Path, $params, $attributes);
-                }
-
-                if (isset($params['post'])) {
-                    $contentModel[] = $this->getPostInfoView($Path, $params, $attributes);
-                }
-
-                if (isset($params['delete'])) {
-                    $contentModel[] = $this->getDeleteInfoView($Path, $params, $attributes);
-                }
-
-                $elements[] = [
-                    'model' => $modelName,
-                    'types' => $contentModel,
-                ];
-            }
-        }
-
-        $fragment = new \rex_fragment();
-        $fragment->setVar('elements', $elements, false);
-
-        \rex_response::sendContent($fragment->parse('rest_api.php'));
-        exit;
-    }
-
-    public function getGetInfoView($path, $params, $attributes)
-    {
-        $elements[] = [
-            'type' => 'GET',
-            'path' => $path,
-            'header' => $attributes,
-            'fields' => $this->getFieldsFromModelType($params, 'get'),
-        ];
-
-        $elements[] = [
-            'type' => 'GET',
-            'path' => $path,
-            'headers' => array_merge($attributes, ['filter[myfieldname]' => 'myvalue', 'sort' => 'id', 'direction' => 'asc', 'offset' => 0, 'limit' => 10]),
-            'fields' => $this->getFieldsFromModelType($params, 'get'),
-        ];
-
-        $elements[] = [
-            'type' => 'GET',
-            'path' => $path.'{id}/',
-            'headers' => $attributes,
-            'fields' => $this->getFieldsFromModelType($params, 'get'),
-        ];
-
-        $elements[] = [
-            'type' => 'GET',
-            'path' => $path.'{id}/{field}/',
-            'headers' => $attributes,
-            'fields' => $this->getFieldsFromModelType($params, 'get'),
-        ];
-
-        $fragment = new \rex_fragment();
-        $fragment->setVar('elements', $elements, false);
-        return $fragment->parse('rest_api_type.php');
-    }
-
-    public function getPostInfoView($path, $params, $attributes)
-    {
-        $elements[] = [
-            'type' => 'POST',
-            'path' => $path,
-            'headers' => $attributes,
-            'content_type' => 'Content-Type: application/json',
-            'fields' => $this->getFieldsFromModelType($params, 'post'),
-            'body' => '{ "fieldname": "value", "fieldname2": "value2" }',
-        ];
-
-        $fragment = new \rex_fragment();
-        $fragment->setVar('elements', $elements, false);
-        return $fragment->parse('rest_api_type.php');
-    }
-
-    public function getDeleteInfoView($path, $params, $attributes)
-    {
-        $elements[] = [
-            'type' => 'DELETE',
-            'path' => $path.'{id}/',
-            'headers' => $attributes,
-        ];
-
-        $elements[] = [
-            'type' => 'DELETE',
-            'path' => $path,
-            'headers' => array_merge(['filter[fieldname]' => 'test'], $attributes),
-            'fields' => $this->getFieldsFromModelType($params, 'delete'),
-        ];
-        $fragment = new \rex_fragment();
-        $fragment->setVar('elements', $elements, false);
-        return $fragment->parse('rest_api_type.php');
-    }
-
-    */
-
-    // Helper Methods
 
     public static function getHeader($key = '', $default = '')
     {
@@ -220,4 +117,34 @@ class rex_yform_rest
 
         return $value;
     }
+
+    public static function getLinkByPath($route, $params = [], $additionalPaths = [])
+    {
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+            $url = 'https://';
+        } elseif ( (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off')) {
+            $url = 'https://';
+        } else {
+            $url = 'http://';
+        }
+
+        if (isset($_SERVER['HTTP_X_FORWARDED_SERVER'])) {
+            $url .= $_SERVER['HTTP_X_FORWARDED_SERVER'];
+        } else {
+            $url .= @$_SERVER['HTTP_HOST'];
+        }
+
+        $query = http_build_query($params, '', '&');
+        $query = ($query != '') ? '?' . $query : $query;
+
+        $additionalPaths = implode('/', $additionalPaths);
+        if ($additionalPaths != '') {
+            $additionalPaths = '/' . $additionalPaths;
+        }
+
+        return $url . self::$preRoute . $route->getPath() . $additionalPaths . $query ;
+
+    }
+
 }
