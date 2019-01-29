@@ -11,7 +11,11 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        $names = explode(",", $this->getElement('name'));
+        $names = $this->getElement('name');
+        if (!is_array($names)) {
+            $names = explode(',', $names);
+        }
+
         $func = $this->getElement('function');
         $parameter = $this->getElement('params');
 
@@ -22,7 +26,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
         }
 
         $Objects = [];
-        foreach($names as $name) {
+        foreach ($names as $name) {
             $Object = $this->getValueObject($name);
             if (!$this->isObject($Object)) {
                 return;
@@ -31,22 +35,26 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 
         }
 
-        $functionObjects = $Objects;
+        $ObjectValues = [];
+        foreach ($Objects as $k => $Object) {
+            $ObjectValues[$k] = $Object->getValue();
+        }
+
         if (count($Objects) == 1) {
-            $functionObjects = current($Objects);
+            $ObjectValues = current($Objects);
         }
 
         if (!is_callable($func)) {
-            foreach($Objects as $Object) {
+            foreach ($Objects as $Object) {
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';
             }
-        } elseif (call_user_func($func, $names, $functionObjects, $parameter, $this) === $comparator) {
-            foreach($Objects as $Object) {
+        } elseif (call_user_func($func, $names, $ObjectValues, $parameter, $this) === $comparator) {
+            foreach ($Objects as $Object) {
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-                if (!empty($this->getElement('message'))) {
-                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
-                }
+            }
+            if (!empty($this->getElement('message'))) {
+                $this->params['warning_messages'][] = $this->getElement('message');
             }
         }
 
@@ -63,7 +71,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'customfunction',
             'values' => [
-                'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_customfunction_name')],
+                'name' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_validate_customfunction_name')],
                 'function' => ['type' => 'text',  'label' => rex_i18n::msg('yform_validate_customfunction_function')],
                 'params' => ['type' => 'text',   'label' => rex_i18n::msg('yform_validate_customfunction_params')],
                 'message' => ['type' => 'text',   'label' => rex_i18n::msg('yform_validate_customfunction_message')],
