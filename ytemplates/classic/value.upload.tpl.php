@@ -3,7 +3,7 @@
         <?php echo $this->getLabel() ?>
     </label>
 
-    <input class="upload <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" type="file" />
+    <input class="upload <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" accept="<?php echo $this->getElement("types") ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" type="file" />
 </p>
 <?php
 
