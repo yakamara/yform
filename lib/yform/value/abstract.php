@@ -293,6 +293,16 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return (isset($definitions['default']) && $definitions['default']) ? $definitions['default'] : null;
     }
 
+    public function saveInDB($elementKey = 'no_db')
+    {
+        // is no_db set
+        if (in_array($this->getElement($elementKey), [1,"1",true,"no_db"], true)) {
+            return false;
+        }
+        return true;
+    }
+
+
     // ------------ Trigger
 
     public function enterObject()

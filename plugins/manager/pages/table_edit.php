@@ -37,7 +37,7 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
             rex_i18n::msg('yform_manager_table_import_warning_selectfile'),
         ],
         'modus' => 'no_save',
-        'no_db' => 'no_db',
+        'no_db' => true,
     ]);
 
     $form = $yform->getForm();

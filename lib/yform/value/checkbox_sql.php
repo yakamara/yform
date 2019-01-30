@@ -50,7 +50,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
         $this->setValue(implode(',', $proofed_values));
 
         $this->params['value_pool']['email'][$this->getName()] = implode(', ', $proofed_name_values);
-        if ($this->getElement('no_db') != 1) {
+        if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }

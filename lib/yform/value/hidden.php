@@ -25,7 +25,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement(4) != 'no_db') {
+        if ($this->saveInDb('4')) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }

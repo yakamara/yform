@@ -49,7 +49,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
     public function enterObject()
     {
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->getElement('no_db') != 'no_db') {
+        if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 

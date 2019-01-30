@@ -16,11 +16,7 @@ class rex_yform_value_ip extends rex_yform_value_abstract
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
-        dump($this->getElement('no_db'));
-
-        if ($this->getElement('no_db') != 'no_db') {
-            echo 'saved';
-
+        if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }
