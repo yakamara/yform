@@ -1,7 +1,7 @@
 <?php
 
 /**
- * XForm.
+ * YForm
  *
  * @author p.schulze@bitshifters.de
  * @author <a href="http://www.bitshifters.de">www.bitshifters.de</a>
@@ -16,7 +16,7 @@ class rex_yform_validate_recaptcha extends rex_yform_validate_abstract
 
         $Object = $this->getValueObject();
 
-        if (!$this->isObject($Object)) {
+        if (!is_object($Object)) {
             return;
         }
 
