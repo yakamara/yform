@@ -40,8 +40,9 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             $ObjectValues[$k] = $Object->getValue();
         }
 
-        if (count($Objects) == 1) {
-            $ObjectValues = current($Objects);
+        if (count($ObjectValues) == 1) {
+            $ObjectValues = current($ObjectValues);
+            $names = $names[0];
         }
 
         if (!is_callable($func)) {
