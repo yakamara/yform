@@ -75,6 +75,7 @@ Danke auch an Fernando Averanga, christophboecker, Wolfgang Bund, Alex Platter, 
     * captcha
     * captcha_calc
     * generate_password
+    * password
 * actions
     * createdb
 * validates

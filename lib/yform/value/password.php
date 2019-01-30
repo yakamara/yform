@@ -29,4 +29,9 @@ class rex_yform_value_password extends rex_yform_value_abstract
     {
         return 'password|name|label|default_value|[no_db]';
     }
+
+    public function isDeprecated()
+    {
+        return true;
+    }
 }
