@@ -127,6 +127,7 @@ yform_values_select_sql_empty_option = Leeroption
 yform_values_select_sql_empty_value = Text bei Leeroption (Bitte auswählen)
 yform_values_select_sql_multiple = Mehrere Felder möglich
 yform_values_select_sql_size = Höhe der Auswahlbox
+yform_values_submit_labels = Bezeichnung (optional, kommasepariert)
 yform_values_submit_values = Werte (optional, kommasepariert)
 yform_values_submit_default = Defaultwert
 yform_values_submit_css_classes = CSS Klassen (kommasepariert)
