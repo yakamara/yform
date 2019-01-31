@@ -8,9 +8,8 @@ class rex_yform_rest_route
 
     public function __construct($config)
     {
-        // TODO:
-        // Prüfen ob alles gesetzt ist.
         $this->config = $config;
+        $this->config['table'] = $config['type']::table();
     }
 
     public function hasAuth()
@@ -95,8 +94,13 @@ class rex_yform_rest_route
                         } elseif (!$instance) {
                             $id = $path;
                             if (!$instance) {
+                                $id_column = 'id';
+                                if ($query->getTableAlias() != '') {
+                                    $id_column = $query->getTableAlias().'.id';
+                                }
+
                                 $query
-                                ->where('id', $id);
+                                    ->where($id_column, $id);
                                 $instance = $query->findOne();
 
                                 if (!$instance) {
@@ -116,8 +120,12 @@ class rex_yform_rest_route
 
                             if ($fields[$attribute]->getTypeName() == 'be_manager_relation') {
                                 $instances = $instance->getRelatedCollection($attribute);
+                                if (count($instances) > 0) {
+                                    $instance = $instances->current();
+                                }
+                                $fields = self::getFieldsFromModelType('get', $instances->getTable(), $this->getTypeFromInstance($instance));
                                 $instance = null;
-                                $fields = self::getFieldsFromModelType('get', $instances->getTable());
+
                             }
 
                         }
@@ -337,7 +345,7 @@ class rex_yform_rest_route
         }
     }
 
-    public function getFieldsFromModelType($type, $table = null)
+    public function getFieldsFromModelType($type, $table = null, $classType = null)
     {
         /* @var $table \rex_yform_manager_table */
         if (!$table) {
@@ -353,11 +361,16 @@ class rex_yform_rest_route
             'type_id' => 'value',
             'type_name' => 'integer',
         ])];
-        $fields = (!isset($this->config[$type]['fields'])) ? [] : $this->config[$type]['fields'];
+
+        if (!$classType) {
+            $classType = $this->config['type'];
+        }
+
+        $fields = ($classType == '' || !isset($this->config[$type]['fields'][$classType])) ? ['id'] : $this->config[$type]['fields'][$classType];
 
         foreach ($availableFields as $key => $availableField) {
             if ($availableField->getDatabaseFieldType() != 'none') {
-                if (count($fields) == 0 || in_array($key, $fields)) {
+                if (count($fields) == 0 || in_array($key, $fields, true)) {
                     $returnFields[$key] = $availableField;
                 }
             }
