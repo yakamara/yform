@@ -1,10 +1,11 @@
 Changelog
 =========
 
-Version 3.0 – xx.01.2019
+Version 3.0 – 01.02.2019
 --------------------------
 
-#### Warnung - Bitte nicht von 2.x auf 3.x updaten, ohne sich genau informiert zu haben. Bei Updates der Hauptversion sollte zuvor ein Datenbank-Backup durchgeführt sein.
+#### Warnung - Bitte nicht von 2.x auf 3.x updaten, ohne sich genau informiert zu haben. Bei Updates der Hauptversion sollte zuvor ein Datenbank-Backup durchgeführt werden. Bitte auch die Bemerkungen bei deprecated und bei den Umbenennungen/Löschungen beachten
+
 
 ### Neue Features
 

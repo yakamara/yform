@@ -1,5 +1,5 @@
 package: yform/email
-version: '3.0-dev'
+version: '3.0'
 author: 'Jan Kristinus'
 supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 
