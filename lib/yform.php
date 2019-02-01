@@ -472,7 +472,7 @@ class rex_yform
                 // 2. SpecialKey
                 $label .= '['.$this->prepareLabel($params[1]).']';
             }
-            return $label ?? current($params);
+            return ($label) ? $label : current($params);
         }
 
         if (count($params) == 0) {
