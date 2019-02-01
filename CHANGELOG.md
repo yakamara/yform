@@ -25,6 +25,7 @@ Version 3.0 – xx.01.2019
 
 ### Änderungen und Korrekturen
 
+* ReCaptcha umgebaut. Nur noch ValueObjekt nötig.
 * ! Formbuilder textile entfernt (pschuchmann)
 * Umbau des Feldnamenmanagements
 * sql-Injection des Prio-Felds behoben
