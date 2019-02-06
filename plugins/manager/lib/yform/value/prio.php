@@ -37,7 +37,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 $selectFields[] = $field;
             }
             $sql->setQuery(sprintf(
-                'SELECT id, %s, %s as prio FROM %s%s ORDER BY %2$s',
+                'SELECT id, `%s`, `%s` as prio FROM %s%s ORDER BY %2$s',
                 implode(', ', $selectFields),
                 $this->getElement('name'),
                 $this->params['main_table'],
