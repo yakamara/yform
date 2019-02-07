@@ -10,6 +10,9 @@ class rex_yform_rest_route
     {
         $this->config = $config;
         $this->config['table'] = $config['type']::table();
+        $this->type = $config['type'];
+
+        // TODO: validate incoming config
     }
 
     public function hasAuth()
@@ -30,9 +33,6 @@ class rex_yform_rest_route
 
     public function handleRequest($paths, $get)
     {
-        // dump($paths);exit;
-        // $type = array_shift($paths);
-
         if (!isset($this->config['table'])) {
             \rex_yform_rest::sendError(400, 'table-not-available');
         }
@@ -51,128 +51,19 @@ class rex_yform_rest_route
         switch ($requestMethod) {
             case 'get':
 
-                $fields = $this->getFieldsFromModelType('get');
+                /* @var rex_yform_manager_dataset $instance */
+                $instance = null;
+                /* @var rex_yform_manager_collection $instance */
+                $instances = null;
+                $attribute = null;
+                $baseInstances = false;
 
-                if (count($paths) > 0) {
+                $fields = $this->getFields('get');
 
-                    /*
-                     * Beispiele:
-                    /77
-                    /77/name
-                    /77/autos
-                    /77/quatsch
-                    /77/autos/32
-                    /77/autos/32/name
-                    /77/autos/32/prio
-                    /77/autos/32/years
-                    /77/autos/32/years/40
-                    /77/autos/32/years/40/name
-                    */
+                if (count($paths) == 0) {
+                    $baseInstances = true;
 
-                    /* @var rex_yform_manager_dataset $instance */
-                    $instance = null;
-                    /* @var rex_yform_manager_collection $instance */
-                    $instances = null;
-                    $attribute = null;
-
-                    foreach ($paths as $path) {
-
-                        if ($instances) {
-                            $id = $path;
-                            foreach ($instances as $i_instance) {
-                                if ($i_instance->getId() == $id) {
-                                    $instance = $i_instance;
-                                }
-                            }
-                            if (!$instance) {
-                                \rex_yform_rest::sendError(400, 'dataset-not-found', ['paths' => $paths, 'table' => $instances->getTable()->getTableName()]);
-
-                            }
-                            $attribute = null;
-                            $instances = null;
-
-                        } elseif (!$instance) {
-                            $id = $path;
-                            if (!$instance) {
-                                $id_column = 'id';
-                                if ($query->getTableAlias() != '') {
-                                    $id_column = $query->getTableAlias().'.id';
-                                }
-
-                                $query
-                                    ->where($id_column, $id);
-                                $instance = $query->findOne();
-
-                                if (!$instance) {
-                                    \rex_yform_rest::sendError(400, 'dataset-not-found', ['paths' => $paths, 'table' => $query->getTable()->getTableName()]);
-                                }
-
-                            }
-                            $attribute = null;
-
-                        } else {
-
-                            $attribute = $path;
-
-                            if (!array_key_exists($attribute, $fields)) {
-                                \rex_yform_rest::sendError(400, 'attribute-not-found', ['paths' => $paths, 'table' => $table->getTableName()]);
-                            }
-
-                            if ($fields[$attribute]->getTypeName() == 'be_manager_relation') {
-                                $instances = $instance->getRelatedCollection($attribute);
-                                if (count($instances) > 0) {
-                                    $instance = $instances->current();
-                                }
-                                $fields = self::getFieldsFromModelType('get', $instances->getTable(), $this->getTypeFromInstance($instance));
-                                $instance = null;
-
-                            }
-
-                        }
-
-                    }
-
-                    if ($instances) {
-
-                        $data = [];
-                        foreach ($instances as $instance) {
-                            $data[] = [
-                                'id' => $instance->getId(),
-                                'type' => $this->getTypeFromInstance($instance),
-                                'attributes' => $this->getInstanceAttributes($instance, $fields),
-                                'relationships' => $this->getInstanceRelationships($instance, $fields, $paths),
-                                'links' => [
-                                    'self' => \rex_yform_rest::getLinkByPath($this, [], $paths+[$instance->getId()])
-                                ]
-                            ];
-                        }
-
-                    } elseif ($instance) {
-
-                        if ($attribute) {
-                            $data = $instance->getValue($attribute);
-
-                        } else {
-                            $data = [
-                                'id' => $instance->getId(),
-                                'type' => $this->getTypeFromInstance($instance),
-                                'attributes' => $this->getInstanceAttributes($instance, $fields),
-                                'relationships' => $this->getInstanceRelationships($instance, $fields),
-                                'links' => [
-                                    'self' => \rex_yform_rest::getLinkByPath($this, [], $paths)
-                                ]
-                            ];
-
-                        }
-
-                    }
-
-                    \rex_yform_rest::sendContent(200, $data);
-
-                } else {
-
-                    // instances
-
+                    // Base Instances with filter and order
                     $query = $this->getFilterQuery($query, $fields, $get);
                     $itemsAll = $query->count();
 
@@ -185,7 +76,7 @@ class rex_yform_rest_route
                     $query->limit(($currentPage - 1) * $per_page, $per_page);
 
                     $order = [];
-                    if ($get['order'] && is_array($get['order'])) {
+                    if (isset($get['order']) && is_array($get['order'])) {
                         foreach ($get['order'] as $orderName => $orderValue) {
                             if (array_key_exists($orderName, $fields)) {
                                 $orderValue = ($orderValue != 'desc') ? 'asc' : 'desc';
@@ -193,68 +84,167 @@ class rex_yform_rest_route
                                 $query->orderBy($orderName, $orderValue);
                             }
                         }
-                        $order[$table->getSortFieldName()] = $table->getSortOrderName();
+                        if (count($order) == 0) {
+                            $order[$table->getSortFieldName()] = $table->getSortOrderName();
+                        }
                         $query->orderBy($table->getSortFieldName(), $table->getSortOrderName());
                     }
 
                     $instances = $query->find();
+                }
 
+                /*
+                 * Beispiele:
+                /77
+                /77/name
+                /77/autos
+                /77/quatsch
+                /77/autos/32
+                /77/autos/32/name
+                /77/autos/32/prio
+                /77/autos/32/years
+                /77/autos/32/years/40
+                /77/autos/32/years/40/name
+                */
+
+                foreach ($paths as $path) {
+                    if ($instances) {
+                        $id = $path;
+                        foreach ($instances as $i_instance) {
+                            if ($i_instance->getId() == $id) {
+                                $instance = $i_instance;
+                            }
+                        }
+
+                        if (!$instance) {
+                            \rex_yform_rest::sendError(400, 'dataset-not-found', ['paths' => $paths, 'table' => $instances->getTable()->getTableName()]);
+                        }
+                        $attribute = null;
+                        $instances = null;
+                    } elseif (!$instance) {
+                        $id = $path;
+                        if (!$instance) {
+                            $id_column = 'id';
+                            if ($query->getTableAlias() != '') {
+                                $id_column = $query->getTableAlias().'.id';
+                            }
+
+                            $query
+                                ->where($id_column, $id);
+                            $instance = $query->findOne();
+
+                            if (!$instance) {
+                                \rex_yform_rest::sendError(400, 'dataset-not-found', ['paths' => $paths, 'table' => $query->getTable()->getTableName()]);
+                            }
+
+                            $fields = $this->getFields('get', $instance);
+                        }
+                        $attribute = null;
+                    } else {
+                        $attribute = $path;
+
+                        if (!array_key_exists($attribute, $fields)) {
+                            \rex_yform_rest::sendError(400, 'attribute-not-found', ['paths' => $paths, 'table' => $table->getTableName()]);
+                        }
+
+                        if ($fields[$attribute]->getTypeName() == 'be_manager_relation') {
+                            $instances = $instance->getRelatedCollection($attribute);
+                            if (count($instances) > 0) {
+                                $instance = $instances->current();
+                            }
+                            $fields = self::getFields('get', $instance);
+                            $instance = null;
+                        }
+                    }
+                }
+
+                if ($instances) {
                     $data = [];
                     foreach ($instances as $instance) {
-                        $data[] = [
-                            'id' => $instance->getId(),
-                            'type' => $this->getTypeFromInstance($instance),
-                            'attributes' => $this->getInstanceAttributes($instance, $fields),
-                            'relationships' => $this->getInstanceRelationships($instance, $fields),
-                            'links' => [
-                                'self' => \rex_yform_rest::getLinkByPath($this, [], [$instance->getId()])
-                            ]
+                        $data[] = $this->getInstanceData(
+                            $instance,
+                            array_merge($paths, [$instance->getId()])
+                        );
+                    }
+
+                    if ($baseInstances) {
+                        $links = [];
+                        $meta = [];
+
+                        $linkParams = [
+                            'page' => $currentPage,
+                            'per_page' => $per_page,
+                            'order' => $order,
+                        ];
+
+                        if (isset($get['filter']) && is_array($get['filter'])) {
+                            $linkParams['filter'] = $get['filter'];
+                            $meta['filter'] = $get['filter'];
+                        }
+
+                        if ($order) {
+                            $meta['order'] = $order;
+                        }
+
+                        $meta['totalItems'] = (int) $itemsAll;
+                        $meta['currentItems'] = count($instances);
+                        $meta['itemsPerPage'] = $per_page;
+                        $meta['currentPage'] = $currentPage;
+
+                        $links['self'] = \rex_yform_rest::getLinkByPath($this, $linkParams);
+                        $links['first'] = \rex_yform_rest::getLinkByPath($this, array_merge(
+                            $linkParams,
+                            ['page' => 1]
+                        ));
+                        if (($currentPage - 1) > 0) {
+                            $links['prev'] = \rex_yform_rest::getLinkByPath($this, array_merge(
+                                $linkParams,
+                                ['page' => ($currentPage - 1)]
+                            ));
+                        }
+                        if (($currentPage * $per_page) < $itemsAll) {
+                            $links['next'] = \rex_yform_rest::getLinkByPath($this, array_merge(
+                                $linkParams,
+                                ['page' => ($currentPage + 1)]
+                            ));
+                        }
+
+                        $data = [
+                            'links' => $links,
+                            'meta' => $meta,
+                            'data' => $data
                         ];
                     }
-
-                    $linkParams = [
-                        'page' => $currentPage,
-                        'per_page' => $per_page,
-                        'order' => $order,
-                    ];
-
-                    if (isset($get['filter']) && is_array($get['filter'])) {
-                        $linkParams['filter'] = $get['filter'];
+                } elseif ($instance) {
+                    if ($attribute) {
+                        $data = $instance->getValue($attribute, true);
+                    } else {
+                        $data = $this->getInstanceData(
+                            $instance,
+                            array_merge($paths)
+                        );
                     }
-
-                    $links = [];
-                    $links['self'] = \rex_yform_rest::getLinkByPath($this, $linkParams);
-                    $links['first'] = \rex_yform_rest::getLinkByPath($this, array_merge(
-                        $linkParams, ['page' => 1]
-                    ));
-                    if (($currentPage - 1) > 0) {
-                        $links['prev'] = \rex_yform_rest::getLinkByPath($this, array_merge(
-                            $linkParams, ['page' => ($currentPage - 1)]
-                        ));
-                    }
-                    if ( ($currentPage * $per_page) < $itemsAll) {
-                        $links['next'] = \rex_yform_rest::getLinkByPath($this, array_merge(
-                            $linkParams, ['page' => ($currentPage + 1)]
-                        ));
-                    }
-
-                    $collection = [
-                        'links' => $links,
-                        'meta' => [
-                            'totalItems' => (int) $itemsAll,
-                            'currentItems' => count($instances),
-                            'itemsPerPage' => $per_page,
-                            'currentPage' => $currentPage
-                        ],
-                        'data' => $data
-                    ];
-
-                    \rex_yform_rest::sendContent(200, $collection);
                 }
+
+                \rex_yform_rest::sendContent(200, $data);
 
                 break;
 
+                // ----- /END GET
+
+
+
+
+
+
+
+
+
+
+
             case 'post':
+
+                // TODO: to be optimized
 
                 $errors = [];
                 $fields = $this->getFieldsFromModelType('post');
@@ -295,6 +285,8 @@ class rex_yform_rest_route
                 break;
 
             case 'delete':
+
+                // TODO: to be optimized
 
                 $fields = $this->getFieldsFromModelType('delete');
 
@@ -345,44 +337,52 @@ class rex_yform_rest_route
         }
     }
 
-    public function getFieldsFromModelType($type, $table = null, $classType = null)
+    public function getFields($type = 'get', $instance = null)
     {
-        /* @var $table \rex_yform_manager_table */
-        if (!$table) {
-            $table = $this->config['table'];
-        }
+        $class = $this->getTypeFromInstance($instance);
 
-        if (!is_object($table)) {
-            throw  new rex_api_exception('Problem with Config: A Table/Class does not exists ');
-        }
-        $availableFields = $table->getValueFields();
         $returnFields = ['id' => new \rex_yform_manager_field([
             'name' => 'id',
             'type_id' => 'value',
             'type_name' => 'integer',
         ])];
 
-        if (!$classType) {
-            $classType = $this->config['type'];
+        if (!isset($this->config[$type]['fields'][$class])) {
+            return $returnFields;
         }
 
-        $fields = ($classType == '' || !isset($this->config[$type]['fields'][$classType])) ? ['id'] : $this->config[$type]['fields'][$classType];
+        /* @var $table \rex_yform_manager_table */
+        $table = $class::table();
+
+        if (!is_object($table)) {
+            throw  new rex_api_exception('Problem with Config: A Table/Class does not exists ');
+        }
+
+        $availableFields = $table->getValueFields();
 
         foreach ($availableFields as $key => $availableField) {
             if ($availableField->getDatabaseFieldType() != 'none') {
-                if (count($fields) == 0 || in_array($key, $fields, true)) {
+                // ALLE Felder erlaubt wenn kein Feld gesetzt ? count($this->config[$type]['fields'][$class]) == 0 ||
+                if (isset($this->config[$type]['fields'][$class]) && in_array($key, @$this->config[$type]['fields'][$class], true)) {
                     $returnFields[$key] = $availableField;
                 }
             }
         }
+
         return $returnFields;
     }
 
     public function getFilterQuery($query, $fields, $get)
     {
+        /* @var \rex_yform_manager_query $query */
+        $tableAlias = $query->getTableAlias();
+
         if (isset($get['filter']) && is_array($get['filter'])) {
             foreach ($get['filter'] as $filterKey => $filterValue) {
                 foreach ($fields as $fieldName => $field) {
+
+                    /* @var \rex_yform_manager_field $field */
+
                     if ($fieldName == $filterKey) {
                         if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                             try {
@@ -390,8 +390,13 @@ class rex_yform_rest_route
                                     'value' => $filterValue,
                                     'field' => $field,
                                 ]);
+
+                                if ($tableAlias != '') {
+                                    // TODO: fieser hack bisher, da bekannt wie die SearchFilter funktionieren.
+                                    $rawQuery = str_replace('`'.$field.'`', '`'.$tableAlias.'`.`'.$field.'`', $rawQuery);
+                                }
                             } catch (Error $e) {
-                                \rex_yform_rest::sendError(400, 'field-class-not-found', ['field' => $fieldName, 'table' => $table->getTableName()]);
+                                \rex_yform_rest::sendError(400, 'field-class-not-found', ['field' => $fieldName]);
                                 exit;
                             }
                             $query->whereRaw('(' . $rawQuery . ')');
@@ -405,50 +410,78 @@ class rex_yform_rest_route
         return $query;
     }
 
-    public function getInstanceAttributes(\rex_yform_manager_dataset $instance, $fields)
+    public function getInstanceData($instance, $paths)
+    {
+        $links = [];
+        $links['self'] =  \rex_yform_rest::getLinkByPath($this, [], $paths);
+
+        return
+        [
+            'id' => $instance->getId(),
+            'type' => $this->getTypeFromInstance($instance),
+            'attributes' => $this->getInstanceAttributes($instance),
+            'relationships' => $this->getInstanceRelationships($instance),
+            'links' => $links
+        ];
+    }
+
+    public function getInstanceAttributes(\rex_yform_manager_dataset $instance)
     {
         $data = [];
+
+        $fields = $this->getFields('get', $instance);
+
         foreach ($fields as $fieldName => $field) {
             if ($field->getTypeName() != 'be_manager_relation') {
                 $data[$fieldName] = $instance->getValue($field->getName());
             }
         }
         return $data;
-
     }
 
-    public function getInstanceRelationships(\rex_yform_manager_dataset $instance, $fields, $paths = [])
+    public function getInstanceRelationships(\rex_yform_manager_dataset $instance)
     {
         $paths[] = $instance->getId();
+
+        $fields = $this->getFields('get', $instance);
 
         $return = [];
         foreach ($fields as $field) {
             if ($field->getTypeName() == 'be_manager_relation') {
-                $collection = $instance->getRelatedCollection($field->getName());
-                $data = [];
-                foreach ($collection as $entry) {
-                    $data[] = [
-                        'type' => $this->getTypeFromInstance($entry),
-                        'id' => $entry->getId(),
-                        'links' => [
-                            'self' => \rex_yform_rest::getLinkByPath($this, [], $paths + [$field->getName()] + [$entry->getId()])
-                        ]
-                    ];
-                }
-                if (count($data) > 0) {
-                    $return[$field->getName()] = [
-                        'data' => $data
-                    ];
+                $relationInstances = $instance->getRelatedCollection($field->getName());
 
+                $data = [];
+                foreach ($relationInstances as $relationInstance) {
+                    $data[] = $this->getInstanceData(
+                        $relationInstance,
+                        array_merge($paths, [$field->getName(),$relationInstance->getId()])
+                    );
                 }
-                $return['links'] = [
-                    'self' => \rex_yform_rest::getLinkByPath($this, [], $paths + [$field->getName()])
+                $return[$field->getName()] = [
+                    'data' => $data
                 ];
+
+                $links = [];
+                $links['self'] = \rex_yform_rest::getLinkByPath($this, [], array_merge($paths, [$field->getName()]));
+
+                if ($relationInstance) {
+                    $route = \rex_yform_rest::getRouteByInstance($relationInstance);
+
+                    if ($route) {
+                        $links['absolute'] = \rex_yform_rest::getLinkByPath($route, []);
+                    }
+                }
+
+                $return[$field->getName()]['links'] = $links;
             }
         }
 
         return $return;
+    }
 
+    public function getInstanceValue($instance, $key, $attributCall = false)
+    {
+        return $instance->getValue($key, $attributCall);
     }
 
     public function getRequestMethod()
@@ -465,5 +498,4 @@ class rex_yform_rest_route
         }
         return $type;
     }
-
 }

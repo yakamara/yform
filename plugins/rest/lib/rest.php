@@ -139,11 +139,21 @@ class rex_yform_rest
         $query = ($query != '') ? '?' . $query : $query;
 
         $additionalPaths = implode('/', $additionalPaths);
-        if ($additionalPaths != '') {
-            $additionalPaths = '/' . $additionalPaths;
+        return $url . self::$preRoute . $route->getPath() . $additionalPaths . $query ;
+
+    }
+
+    public static function getRouteByInstance($instance)
+    {
+        $instanceType = get_class($instance);
+
+        foreach (self::$routes as $route) {
+            if ($route->type == $instanceType) {
+                return $route;
+            }
         }
 
-        return $url . self::$preRoute . $route->getPath() . $additionalPaths . $query ;
+        return null;
 
     }
 
