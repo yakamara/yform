@@ -18,6 +18,7 @@ function deleteYFormDataset(id){
 
 function deleteYFormDatasetList(id){
     deleteREX(id, 'YFORM_DATASETLIST_', 'YFORM_DATASETLIST_SELECT_');
+    opener.jQuery('body').trigger('rex:YForm_selectData', [id]);
 }
 
 function moveYFormDatasetList(id, direction){
