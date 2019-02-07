@@ -19,3 +19,6 @@ rex_sql_table::get(rex::getTable('yform_email_template'))
     ->ensureColumn(new rex_sql_column('body_html', 'text'))
     ->ensureColumn(new rex_sql_column('attachments', 'text'))
     ->ensure();
+
+$c = rex_sql::factory();
+$c->setQuery('ALTER TABLE `' . rex::getTable('yform_email_template') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
