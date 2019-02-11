@@ -53,9 +53,9 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
         } elseif (call_user_func($func, $names, $ObjectValues, $parameter, $this) === $comparator) {
             foreach ($Objects as $Object) {
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-            }
-            if (!empty($this->getElement('message'))) {
-                $this->params['warning_messages'][] = $this->getElement('message');
+                if (!empty($this->getElement('message'))) {
+                    $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+                }
             }
         }
 
