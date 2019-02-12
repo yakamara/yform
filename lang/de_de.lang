@@ -165,6 +165,7 @@ yform_validate_customfunction_name = Name
 yform_validate_customfunction_function = Name der Funktion
 yform_validate_customfunction_params = Weitere Parameter
 yform_validate_customfunction_message = Fehlermeldung
+yform_validate_customfunction_type = Validierungszeitpunkt
 yform_validate_email_name = Name
 yform_validate_email_message = Fehlermeldung
 yform_validate_empty_name = Name

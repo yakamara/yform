@@ -9,7 +9,7 @@
 
 class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 {
-    public function enterObject()
+    public function customfunction_execute()
     {
         $names = $this->getElement('name');
         if (!is_array($names)) {
@@ -32,7 +32,6 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
                 return;
             }
             $Objects[$name] = $this->getValueObject($name);
-
         }
 
         $ObjectValues = [];
@@ -50,7 +49,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 $this->params['warning_messages'][$Object->getId()] = 'ERROR: customfunction "' . $func . '" not found';
             }
-        } elseif (call_user_func($func, $names, $ObjectValues, $parameter, $this) === $comparator) {
+        } elseif (call_user_func($func, $names, $ObjectValues, $parameter, $this, $Objects) === $comparator) {
             foreach ($Objects as $Object) {
                 $this->params['warning'][$Object->getId()] = $this->params['error_class'];
                 if (!empty($this->getElement('message'))) {
@@ -58,12 +57,32 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
                 }
             }
         }
+    }
 
+    public function preValidateAction()
+    {
+        if ($this->getElement('validate_type') == 'pre') {
+            return $this->customfunction_execute();
+        }
+    }
+
+    public function enterObject()
+    {
+        if ($this->getElement('validate_type') != 'pre' && $this->getElement('validate_type') != 'post') {
+            return $this->customfunction_execute();
+        }
+    }
+
+    public function postValueAction()
+    {
+        if ($this->getElement('validate_type') == 'post') {
+            return $this->customfunction_execute();
+        }
     }
 
     public function getDescription()
     {
-        return 'validate|customfunction|name[s]|[!]function/class::method|weitere_parameter|warning_message';
+        return 'validate|customfunction|name[s]|[!]function/class::method|weitere_parameter|warning_message|type[default:normal,pre,post]';
     }
 
     public function getDefinitions()
@@ -76,6 +95,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
                 'function' => ['type' => 'text',  'label' => rex_i18n::msg('yform_validate_customfunction_function')],
                 'params' => ['type' => 'text',   'label' => rex_i18n::msg('yform_validate_customfunction_params')],
                 'message' => ['type' => 'text',   'label' => rex_i18n::msg('yform_validate_customfunction_message')],
+                'validate_type' => ['type' => 'choice',   'label' => rex_i18n::msg('yform_validate_customfunction_type'), 'choices' => ['normal', 'pre', 'post'], 'default' => 'normal'],
             ],
             'description' => rex_i18n::msg('yform_validate_customfunction_description'),
             'multi_edit' => false,
