@@ -12,9 +12,15 @@
 Number of fractionalDigits
 Default: "*"
 
+The value can be a number, *, or a quantifier syntax like 2,4
+When the quantifier syntax is used, the digitsOptional option is ignored
+
 ### digitsOptional
 Specify wheter the digits are optional.
 Default: true
+
+### enforceDigitsOnBlur 
+Enforces the decimal part when leaving the input field.
 
 ### groupSize
 Define the grouping of the integer part.
@@ -23,10 +29,6 @@ Default: 3
 ### autoGroup
 Enable grouping of the integer part.
 Default: false
-
-### allowPlus
-Allow to enter +.
-Default: true
 
 ### allowMinus
 Allow to enter -.
