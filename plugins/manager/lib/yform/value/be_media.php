@@ -41,28 +41,17 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             'db_type' => ['text'],
         ];
     }
-
+    
     public static function getListValue($params)
     {
         $files = explode(',', $params['subject']);
-
+		
         if (count($files) == 1) {
-            $filename = $params['subject'];
-            if (strlen($params['subject']) > 16) {
-                $filename = mb_substr($params['subject'], 0, 6) . ' ... ' . mb_substr($params['subject'], -6);
-            }
-            $return[] = '<span style="white-space:nowrap;" title="' . rex_escape($params['subject']) . '">' . $filename . '</span>';
-        } else {
-            foreach ($files as $file) {
-                $filename = $file;
-                if (strlen($file) > 16) {
-                    $filename = mb_substr($file, 0, 6) . ' ... ' . mb_substr($file, -6) . '</span>';
-                }
-                $return[] = '<span style="white-space:nowrap;" title="' . htmlspecialchars($file) . '">' . $filename . '</span>';
+            $media = rex_media::get($files[0]);
+            if($media) {
+	            return '<img class="thumbnail" src="' . rex_url::backendController(['rex_media_type' => 'rex_mediapool_preview', 'rex_media_file' => urlencode($media->getFileName()), 'buster' => strtotime($media->getUpdateDate())]) . '">';
             }
         }
-
-        return implode('<br />', $return);
     }
 
     public static function getSearchField($params)
