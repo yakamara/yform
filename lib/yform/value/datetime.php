@@ -194,6 +194,15 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             }
         }
 
+        if ($this->getElement('seconds') != '') {
+            $seconds = explode(',', trim($this->getElement('seconds')));
+        } else {
+            $seconds = [];
+            for ($i = 0; $i < 60; ++$i) {
+                $seconds[$i] = $i;
+            }
+        }
+        
         $year = (int) substr($this->getValue(), 0, 4);
         $month = (int) substr($this->getValue(), 5, 2);
         $day = (int) substr($this->getValue(), 8, 2);
@@ -208,7 +217,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.datetime.tpl.php', 'value.datetime.tpl.php'],
-                compact('format', 'yearStart', 'yearEnd', 'hours', 'minutes', 'year', 'month', 'day', 'hour', 'minute', 'second')
+                compact('format', 'yearStart', 'yearEnd', 'hours', 'minutes', 'seconds', 'year', 'month', 'day', 'hour', 'minute', 'second')
             );
         }
     }

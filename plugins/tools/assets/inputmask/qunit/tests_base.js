@@ -1,11 +1,4 @@
-define([
-	"qunit",
-	"inputmask.dependencyLib",
-	"inputmask",
-	"../dist/inputmask/inputmask.extensions",
-	"prototypeExtensions",
-	"simulator"
-], function (qunit, $, Inputmask) {
+export default function (qunit, $, Inputmask) {
 	qunit.module("Simple masking");
 
 	qunit.test("inputmask(\"99-99-99\", { clearMaskOnLostFocus: false}", function (assert) {
@@ -223,21 +216,6 @@ define([
 		assert.equal(testmask.value, "abcde", "Result " + testmask.value);
 	});
 
-	qunit.test("inputmask(\"d/m/y\")", function (assert) {
-		var $fixture = $("#qunit-fixture");
-		$fixture.append('<input type="text" id="testmask" />');
-		var testmask = document.getElementById("testmask");
-		Inputmask("d/m/y").mask(testmask);
-
-		testmask.focus();
-
-		$("#testmask").Type("23031973");
-		$.caret(testmask, 5);
-		$("#testmask").SendKey(Inputmask.keyCode.BACKSPACE);
-
-		assert.equal(testmask.value, "23/0_/1973", "Result " + testmask.value);
-	});
-
 	qunit.test("inputmask(\"(999)999-9999\") - ruslanfedoseenko mask", function (assert) {
 		var $fixture = $("#qunit-fixture");
 		$fixture.append('<input type="text" id="testmask" />');
@@ -381,7 +359,7 @@ define([
 
 		$("#testmask").Type("abc");
 
-		assert.equal(testmask.value, "A.B.C", "Result " + testmask.value);
+		assert.equal(testmask.value, "A.B.C.", "Result " + testmask.value);
 	});
 
 	qunit.test("{ mask: \"A\", placeholder: \"\", repeat: 16 }) - type testtest - glosswordteam", function (assert) {
@@ -588,4 +566,4 @@ define([
 
 		assert.equal(document.getElementById("testmask").inputmask._valueGet(), "___BA__V__", "Result " + document.getElementById("testmask").inputmask._valueGet());
 	});
-});
+};
