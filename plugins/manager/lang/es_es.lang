@@ -259,6 +259,7 @@ yform_values_be_manager_relation_size = Altura del cuadro de selección
 yform_values_be_manager_relation_filter = Filtro
 yform_values_be_manager_relation_relation_table = Tabla de relaciones
 yform_values_be_media_preview = Preestreno
+yform_values_be_media_list_preview = Preestreno en la lista
 yform_values_be_media_category = Categoría de grupo de medios
 yform_values_be_media_types = Tipos
 yform_values_be_media_types_notice = Formato: jpg, gif
