@@ -98,7 +98,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
         }
 
-        // --------------------------------------- save
+        // ---------- save
         $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
         if (!$this->getElement('relation_table') && ($this->relation['relation_type'] != 4 && $this->relation['relation_type'] != 5)) {
             $this->params['value_pool']['sql'][$this->getName()] = implode(',', $this->getValue());
@@ -108,7 +108,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return;
         }
 
-        // --------------------------------------- Selectbox, single 0 or multiple 1
+        // ------------------------------------ Selectbox, single 0 or multiple 1
         if ($this->relation['relation_type'] < 2) {
             // ----- SELECT BOX
             $options = [];
@@ -134,7 +134,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
         }
 
-        // --------------------------------------- POPUP, 1-n
+        // ------------------------------------ POPUP, 1-n
         if ($this->relation['relation_type'] == 4) {
             $filter[$this->relation['target_field']] = $this->params['main_id'];
             $link = 'index.php?page=yform/manager/data_edit&table_name=' . $this->relation['target_table'];
@@ -144,7 +144,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link', 'send'));
         }
 
-        // --------------------------------------- INLINE, 1-n
+        // ------------------------------------ INLINE, 1-n
         if ($this->relation['relation_type'] == 5) {
             $warning = false;
             $table = rex_yform_manager_table::get($this->relation['target_table']);
@@ -218,6 +218,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             // \\ ----- Prototype Form
 
             // ----- Existing Forms - Init
+
+            $value = [];
+
             if (!$send) {
                 foreach ($relations as $counter => $relation) {
                     $yform = $relation->getForm();
@@ -247,7 +250,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relation->getId() . '" />';
 
                     $forms[] = $hiddenId . $yform->getForm();
+
                 }
+
             }
 
             // ----- Relations Forms sent
@@ -258,6 +263,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
                 if (is_array($relationVars)) {
                     foreach ($relationVars as $counter => $form) {
+
                         $data = $table->createDataset();
                         $yform = $data->getForm();
                         $yform->setObjectparams('form_name', $form_name);
@@ -266,13 +272,17 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform->setObjectparams('form_action', '');
                         $yform->setObjectparams('form_showformafterupdate', 1);
                         $yform->setObjectparams('data', $form);
+
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
                         $form_elements = [];
+
+                        $relation_field = '';
                         foreach ($yform->objparams['form_elements'] as $form_element) {
                             if ($form_element[0] == 'prio' && $form_element[1] == $prioFieldName) {
                                 $form_elements[] = ['hidden', $prioFieldName];
                             } elseif ($form_element[0] == 'be_manager_relation' && $form_element[1] == $this->relation['target_field'] && $form_element[3] == $this->relation['source_table']) {
+                                $relation_field = $form_element[1];
                                 $form_elements[] = ['hidden', $form_element[1]];
                             } elseif ($form_element[0] == 'action') {
                             } else {
@@ -290,6 +300,13 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
                         $forms[] = $hiddenId . $yform->getForm();
 
+                        if (isset($form['id']) && in_array($form['id'], $relationIDs, true)) {
+                            $value[] = array_merge(['id' => $form['id']], $yform->getObjectparams('value_pool')['email']);
+
+                        } else {
+                            $value[] = $yform->getObjectparams('value_pool')['email'];
+                        }
+
                         if (count($yform->objparams['warning']) > 0) {
                             $warning = true;
                         }
@@ -303,6 +320,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $this->params['warning_messages'][$this->getId()] = $this->getElement('empty_value');
                 }
             }
+
+            $this->params['value_pool']['email'][$this->getName()] = $value;
 
             $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName', 'relationKey'));
         }
@@ -459,7 +478,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_be_manager_relation_description'),
-            'db_type' => ['text', 'varchar(191)', 'int'],
+            'db_type' => ['text', 'varchar(191)'],
             'formbuilder' => false,
             'hooks' => [
                 'preCreate' => function (rex_yform_manager_field $field) {
