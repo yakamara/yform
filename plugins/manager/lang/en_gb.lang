@@ -248,6 +248,7 @@ yform_values_be_manager_relation_size = Height of select box
 yform_values_be_manager_relation_filter = Filter
 yform_values_be_manager_relation_relation_table = Related table
 yform_values_be_media_preview = Preview
+yform_values_be_media_list_preview = Preview in list view
 yform_values_be_media_category = Mediapool category
 yform_values_be_media_types = Types
 yform_values_be_media_types_notice = Format: jpg, gif
