@@ -1,6 +1,6 @@
-$(document).on('rex:ready',function() {
+$(document).on('rex:ready',function(event, container) {
 
-    $("select[data-yform-tools-select2]").each(function () {
+    container.find("select[data-yform-tools-select2]").each(function () {
         var options = $(this).attr('data-yform-tools-select2');
         var placeholder = $(this).attr("placeholder");
         if (options == "tags") {
@@ -11,7 +11,7 @@ $(document).on('rex:ready',function() {
         $(this).select2(options);
     });
 
-    $("input[data-yform-tools-inputmask]").each(function () {
+    container.find("input[data-yform-tools-inputmask]").each(function () {
         var format = $(this).attr('data-yform-tools-inputmask');
         if (format != "") {
             format = format.toLowerCase();
@@ -50,7 +50,7 @@ $(document).on('rex:ready',function() {
           };
 
 
-    $("input[data-yform-tools-datepicker]").each(function () {
+    container.find("input[data-yform-tools-datepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-datepicker');
         locale.format = format;
         if (format != "") {
@@ -67,7 +67,7 @@ $(document).on('rex:ready',function() {
         }
     });
 
-    $("input[data-yform-tools-datetimepicker]").each(function () {
+    container.find("input[data-yform-tools-datetimepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-datetimepicker');
         if (format != "") {
             // ii -> mm
@@ -100,7 +100,7 @@ $(document).on('rex:ready',function() {
     });
 
 
-    $("input[data-yform-tools-daterangepicker]").each(function () {
+    container.find("input[data-yform-tools-daterangepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-daterangepicker');
         if (format != "") {
             var format = format.replace("ii", "mm");
