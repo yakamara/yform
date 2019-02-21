@@ -51,8 +51,8 @@ class rex_yform_value_index extends rex_yform_value_abstract
             }
 
             $fnc = trim($this->getElement('function'));
-            if (function_exists($fnc)) {
-                $value = call_user_func($fnc, $value);
+            if ($fnc != '') {
+                $value = call_user_func($fnc, $value, $this);
             }
         }
 
