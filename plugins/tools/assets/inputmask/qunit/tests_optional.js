@@ -1,15 +1,4 @@
-define([
-	"qunit",
-	"inputmask.dependencyLib",
-	"inputmask",
-	"../dist/inputmask/inputmask.date.extensions",
-	"../dist/inputmask/inputmask.extensions",
-	"../dist/inputmask/inputmask.numeric.extensions",
-	"../dist/inputmask/inputmask.phone.extensions",
-	"../dist/inputmask/inputmask.regex.extensions",
-	"prototypeExtensions",
-	"simulator"
-], function (qunit, $, Inputmask) {
+export default function (qunit, $, Inputmask) {
 
 	qunit.module("Optional");
 	qunit.test("inputmask(\"(99) 9999[9]-99999\") - input 121234-12345", function (assert) {
@@ -302,4 +291,21 @@ define([
 		assert.equal(testmask.value, "1234", "Result " + testmask.value);
 	});
 
-});
+	qunit.test("9999[ 9999][ 9999][ 9999][ 999] - Enfree", function (assert) {
+		var $fixture = $("#qunit-fixture");
+		$fixture.append('<input type="text" id="testmask" />');
+		var testmask = document.getElementById("testmask");
+		Inputmask({
+			mask: '9999[ 9999][ 9999][ 9999][ 999]',
+			placeholder: '', greedy: false
+		}).mask(testmask);
+
+		testmask.focus();
+		$("#testmask").Type("45464748");
+		$.caret(testmask, 2);
+		$("#testmask").Type("0909");
+
+		assert.equal(testmask.value, "4509 0946 4748", "Result " + testmask.value);
+	});
+
+};
