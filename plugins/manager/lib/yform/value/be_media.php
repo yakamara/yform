@@ -46,6 +46,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
     public static function getListValue($params)
     {
         $files = explode(',', $params['subject']);
+
         if(!(int)$params['params']['field']['list_preview']) {
             if (count($files) == 1) {
                 $filename = $params['subject'];
@@ -71,6 +72,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 }
             }
         }		
+
     }
 
     public static function getSearchField($params)
