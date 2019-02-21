@@ -246,6 +246,7 @@ yform_values_be_manager_relation_size = Altura da caixa de seleção
 yform_values_be_manager_relation_filter = Filtro
 yform_values_be_manager_relation_relation_table = Tabela relacionada
 yform_values_be_media_preview = Preview
+yform_values_be_media_list_preview = Preview na lista
 yform_values_be_media_category = Categoria Mediapool
 yform_values_be_media_types = Tipos
 yform_values_be_media_types_notice = Formato: jpg, gif
