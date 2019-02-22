@@ -1,15 +1,4 @@
-define([
-	"qunit",
-	"inputmask.dependencyLib",
-	"inputmask",
-	"../dist/inputmask/inputmask.date.extensions",
-	"../dist/inputmask/inputmask.extensions",
-	"../dist/inputmask/inputmask.numeric.extensions",
-	"../dist/inputmask/inputmask.phone.extensions",
-	"../dist/inputmask/inputmask.regex.extensions",
-	"prototypeExtensions",
-	"simulator"
-], function (qunit, $, Inputmask) {
+export default function (qunit, $, Inputmask) {
 
 	qunit.module("Paste value");
 	qunit.test("inputmask(\"+7 (999) 999-99-99\") ~ paste \"+79114041112\"", function (assert) {
@@ -130,7 +119,7 @@ define([
 		$("#testmask").paste("$-123.22");
 
 		setTimeout(function () {
-			assert.equal(testmask.value, "$ -123.22", "Result " + testmask.value);
+			assert.equal(testmask.value, "-$ 123.22", "Result " + testmask.value);
 			done();
 		}, 0);
 	});
@@ -158,7 +147,7 @@ define([
 		$("#testmask").paste("-1000.00");
 
 		setTimeout(function () {
-			assert.equal(testmask.value, "$ -1,000.00", "Result " + testmask.value);
+			assert.equal(testmask.value, "-$ 1,000.00", "Result " + testmask.value);
 			done();
 		}, 0);
 	});
@@ -186,7 +175,7 @@ define([
 		$("#testmask").paste("$-1000.00");
 
 		setTimeout(function () {
-			assert.equal(testmask.value, "$ -1,000.00", "Result " + testmask.value);
+			assert.equal(testmask.value, "-$ 1,000.00", "Result " + testmask.value);
 			done();
 		}, 0);
 	});
@@ -237,4 +226,4 @@ define([
 			done();
 		}, 0);
 	});
-});
+};
