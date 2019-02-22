@@ -1,12 +1,10 @@
-# Branch 3.x is no longer maintained!
+# jquery.inputmask 3.x
 
-# Inputmask 3.x
-
-Copyright (c) 2010 - 2017 Robin Herbots Licensed under the MIT license ([http://opensource.org/licenses/mit-license.php](http://opensource.org/licenses/mit-license.php))
+Copyright (c) 2010 - 2016 Robin Herbots Licensed under the MIT license ([http://opensource.org/licenses/mit-license.php](http://opensource.org/licenses/mit-license.php))
 
 [![NPM Version][npm-image]][npm-url] [![Dependency Status][david-image]][david-url] [![devDependency Status][david-dev-image]][david-dev-url]
 
-Inputmask is a javascript library which creates an input mask.  Inputmask can run against vanilla javascript, jQuery and jqlite.
+jquery.inputmask is a jQuery plugin which creates an input mask.
 
 An inputmask helps the user with the input by ensuring a predefined format. This can be useful for dates, numerics, phone numbers, ...
 
@@ -29,122 +27,48 @@ Highlights:
 - value formatting / validating without input element
 - AMD/CommonJS support
 - dependencyLibs: vanilla javascript, jQuery, jqlite
-- <strike>[Android support](README_android.md)</strike>
 
-Demo page see [http://robinherbots.github.io/Inputmask](http://robinherbots.github.io/Inputmask)
+Demo page see [http://robinherbots.github.io/jquery.inputmask](http://robinherbots.github.io/jquery.inputmask)
 
 [![donate](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZNR3EB6JTMMSS)
 
-## Setup
-### dependencyLibs
-Inputmask can run against different javascript libraries.  
-You can choose between:
-- inputmask.dependencyLib (vanilla)
-- inputmask.dependencyLib.jquery
-- inputmask.dependencyLib.jqlite
-- .... (others are welcome)
-
-### Classic web with <script\> tag
+## Usage:
 Include the js-files which you can find in the `dist` folder.
 
-If you want to include the Inputmask and all extensions. (with jQuery as dependencylib)
+via Inputmask class
+
 ```html
 <script src="jquery.js"></script>
-<script src="dist/jquery.inputmask.bundle.js"></script>
-<script src="dist/inputmask/phone-codes/phone.js"></script>
-<script src="dist/inputmask/phone-codes/phone-be.js"></script>
-<script src="dist/inputmask/phone-codes/phone-ru.js"></script>
+<script src="inputmask.js"></script>
+<script src="inputmask.???.Extensions.js"></script>
 ```
-For individual extensions. (with jQuery as dependencylib)
-```html
-<script src="jquery.js"></script>
-<script src="dist/inputmask/inputmask.js"></script>
-<script src="dist/inputmask/inputmask.extensions.js"></script>
-<script src="dist/inputmask/inputmask.numeric.extensions.js"></script>
-<script src="dist/inputmask/inputmask.date.extensions.js"></script>
-<script src="dist/inputmask/inputmask.phone.extensions.js"></script>
-<script src="dist/inputmask/jquery.inputmask.js"></script>
-<script src="dist/inputmask/phone-codes/phone.js"></script>
-<script src="dist/inputmask/phone-codes/phone-be.js"></script>
-<script src="dist/inputmask/phone-codes/phone-ru.js"></script>
-```
-
-For individual extensions. (with vanilla dependencylib)
-```html
-<script src="dist/inputmask/dependencyLibs/inputmask.dependencyLib.js"></script>
-<script src="dist/inputmask/inputmask.js"></script>
-<script src="dist/inputmask/inputmask.extensions.js"></script>
-<script src="dist/inputmask/inputmask.numeric.extensions.js"></script>
-<script src="dist/inputmask/inputmask.date.extensions.js"></script>
-<script src="dist/inputmask/inputmask.phone.extensions.js"></script>
-<script src="dist/inputmask/phone-codes/phone.js"></script>
-<script src="dist/inputmask/phone-codes/phone-be.js"></script>
-<script src="dist/inputmask/phone-codes/phone-ru.js"></script>
-```
-
-If you like to automatically bind the inputmask to the inputs marked with the data-inputmask- ... attributes you may also want to include the inputmask.binding.js
-
-```html
-<script src="dist/inputmask/bindings/inputmask.binding.js"></script>
-```
-
-### webpack
-
-#### Install the package
-```
-npm install inputmask --save-dev
-```
-
-#### In your modules
-If you want to include the Inputmask and all extensions.
-```
-var Inputmask = require('inputmask');
-
-//es6
-import Inputmask from "inputmask";
-```
-
-For individual extensions.   
-Every extension exports the Inputmask, so you only need to import the extensions.  
-See example.
-```
-require("inputmask/dist/inputmask/inputmask.numeric.extensions");
-var Inputmask = require("inputmask/dist/inputmask/inputmask.date.extensions");
-
-//es6
-import "inputmask/dist/inputmask/inputmask.numeric.extensions";
-import Inputmask from "inputmask/dist/inputmask/inputmask.date.extensions";
-```
-
-#### Selecting the dependencyLib
-By default the vanilla dependencyLib is used.  You can select another dependency
-by creating an alias in the webpack.config.
-
-```
- resolve: {
-        alias: {
-            "./dependencyLibs/inputmask.dependencyLib": "./dependencyLibs/inputmask.dependencyLib.jquery"
-        }
-    },
-```
-## Usage
-
-### via Inputmask class
 
 ```javascript
 var selector = document.getElementById("selector");
 
 var im = new Inputmask("99-9999999");
 im.mask(selector);
-  
-//or
-  
+
 Inputmask({"mask": "(999) 999-9999", .... other options .....}).mask(selector);
 Inputmask("9-a{1,3}9{1,3}").mask(selector);
 Inputmask("9", { repeat: 10 }).mask(selector);
 ```
 
-### via jquery plugin
+via jquery plugin
+
+```html
+<script src="jquery.js"></script>
+<script src="inputmask.js"></script>
+<script src="inputmask.???.Extensions.js"></script>
+<script src="jquery.inputmask.js"></script>
+```
+
+or with the bundled version
+
+```html
+<script src="jquery.js"></script>
+<script src="jquery.inputmask.bundle.js"></script>
+```
 
 ```javascript
 $(document).ready(function(){
@@ -154,7 +78,7 @@ $(document).ready(function(){
 });
 ```
 
-### via data-inputmask attribute
+via data-inputmask attribute
 
 ```html
 <input data-inputmask="'alias': 'date'" />
@@ -170,7 +94,7 @@ $(document).ready(function(){
 });
 ```
 
-#### Any option can also be passed through the use of a data attribute. Use data-inputmask-<**_the name of the option_**>="value"
+Any option can also be passed through the use of a data attribute. Use data-inputmask-<**_the name of the option_**>="value"
 
 ```html
 <input id="example1" data-inputmask-clearmaskonlostfocus="false" />
@@ -180,9 +104,36 @@ $(document).ready(function(){
 ```javascript
 $(document).ready(function(){
   $("#example1").inputmask("99-9999999");
-  $("#example2").inputmask();
+  $("#example2").inputmask("Regex");
 });
 ```
+
+If you like to automatically bind the inputmask to the inputs marked with the data-inputmask- ... attributes you may also want to include the inputmask.binding.js
+
+```html
+...
+<script src="inputmask.binding.js"></script>
+...
+```
+
+If you use a module loader like requireJS
+
+Add in your config.js
+
+```javascript
+paths: {
+  ...
+  "inputmask.dependencyLib": "../dist/inputmask/inputmask.dependencyLib.jquery",
+  "inputmask": "../dist/inputmask/inputmask",
+  ...
+}
+```
+
+As dependencyLib you can choose between the supported libraries.
+- inputmask.dependencyLib (vanilla)
+- inputmask.dependencyLib.jquery
+- inputmask.dependencyLib.jqlite
+- .... (others are welcome)
 
 ### Allowed HTML-elements
 - `<input type="text">`
@@ -287,12 +238,9 @@ $(document).ready(function(){
 ```
 
 ### Alternator masks
-The alternator syntax is like an **OR** statement.  The mask can be one of the 3 choices specified in the alternator.
+The alternator syntax is like an **OR** statement.  The mask can be one of the 2 choices specified in the alternator.
 
-To define an alternator use the |.  
-ex: "a|9" => a or 9  
-"(aaa)|(999)" => aaa or 999  
-"(aaa|999|9AA)" => aaa or 999 or 9AA
+To define an alternator use the |.<br>ex: "a|9" => a or 9<br>    "(aaa)|(999)" => aaa or 999
 
 Also make sure to read about the keepStatic option.
 
@@ -420,7 +368,7 @@ Inputmask.extendDefinitions({
 ```
 
 ### placeholder
-Specify a placeholder for a definition.  This can also be a function.
+Specify a placeholder for a definition.
 
 ### set defaults
 Defaults can be set as below.
@@ -442,7 +390,7 @@ Inputmask.extendDefinitions({
   }
 });
 Inputmask.extendAliases({
-  'numeric': {
+  'Regex': {
     mask: "r",
     greedy: false,
     ...
@@ -515,7 +463,7 @@ Inputmask("99-999-99").mask(document.querySelectorAll(selector));
 or
 
 ```javascript
-var im = new Inputmask("99-999-99");
+var im : new Inputmask("99-999-99");
 im.mask(document.querySelectorAll(selector));
 ```
 
@@ -663,7 +611,7 @@ For example, `placeholder: " "` will change the default autofill with empty valu
 
 ```javascript
 $(document).ready(function(){
-  $("#date").inputmask("99/99/9999",{ "placeholder": "*" });
+  $("#date").inputmask("d/m/y",{ "placeholder": "*" });
 });
 ```
 
@@ -671,7 +619,7 @@ or a multi-char placeholder
 
 ```javascript
 $(document).ready(function(){
-  $("#date").inputmask("99/99/9999",{ "placeholder": "dd/mm/yyyy" });
+  $("#date").inputmask("d/m/y",{ "placeholder": "dd/mm/yyyy" });
 });
 ```
 
@@ -720,7 +668,7 @@ Execute a function when the mask is completed
 
 ```javascript
 $(document).ready(function(){
-  $("#date").inputmask("99/99/9999",{ "oncomplete": function(){ alert('inputmask complete'); } });
+  $("#date").inputmask("d/m/y",{ "oncomplete": function(){ alert('inputmask complete'); } });
 });
 ```
 
@@ -729,7 +677,7 @@ Execute a function when the mask is incomplete.  Executes on blur.
 
 ```javascript
 $(document).ready(function(){
-  $("#date").inputmask("99/99/9999",{ "onincomplete": function(){ alert('inputmask incomplete'); } });
+  $("#date").inputmask("d/m/y",{ "onincomplete": function(){ alert('inputmask incomplete'); } });
 });
 ```
 
@@ -738,7 +686,7 @@ Execute a function when the mask is cleared.
 
 ```javascript
 $(document).ready(function(){
-  $("#date").inputmask("99/99/9999",{ "oncleared": function(){ alert('inputmask cleared'); } });
+  $("#date").inputmask("d/m/y",{ "oncleared": function(){ alert('inputmask cleared'); } });
 });
 ```
 
@@ -787,7 +735,7 @@ Clear the incomplete input on blur
 
 ```javascript
 $(document).ready(function(){
-  $("#date").inputmask("99/99/9999",{ "clearIncomplete": true });
+  $("#date").inputmask("d/m/y",{ "clearIncomplete": true });
 });
 ```
 
@@ -937,6 +885,15 @@ $(document).ready(function(){
 ```
 
 ### skipOptionalPartCharacter
+### showTooltip
+Show the current mask definition as a tooltip.
+
+```javascript
+$(selector).inputmask({ mask: ["999-999-9999 [x99999]", "+099 99 99 9999[9]-9999"], showTooltip: true });
+```
+
+### tooltip
+Specify the tooltip to show.  By default the mask definition will be taken.
 
 ### numericInput
 Numeric input direction.  Keeps the caret at the end.
@@ -988,7 +945,7 @@ Allows for tabbing through the different parts of the masked field.<br>Default: 
 With this call-in (hook) you can override the default implementation of the isComplete function.<br>Args => buffer, opts Return => true|false
 
 ```javascript
-$(selector).inputmask({
+$(selector).inputmask("Regex", {
   regex: "[0-9]*",
   isComplete: function(buffer, opts) {
     return new RegExp(opts.regex).test(buffer.join(''));
@@ -1000,11 +957,7 @@ $(selector).inputmask({
 Hook to alter the clear behavior in the stripValidPositions<br>Args => maskset, position, lastValidPosition, opts<br>Return => true|false
 
 ### postValidation
-Hook to postValidate the result from isValid.  Usefull for validating the entry as a whole.  Args => buffer, currentResult, opts<br>Return => true|false|command object
-
-### preValidation
-Hook to preValidate the input.  Useful for validating regardless the definition. Args => buffer, pos, char, isSelection, opts => return true/false/command object
-When return true, the normal validation kicks in, otherwise it is skipped.
+Hook to postValidate the result from isValid.  Usefull for validating the entry as a whole.  Args => buffer, currentResult, opts<br>Return => true|false
 
 ### staticDefinitionSymbol
 The staticDefinitionSymbol option is used to indicate that the static entries in the mask can match a certain definition.  Especially usefull with alternators so that static element in the mask can match another alternation.
@@ -1028,38 +981,14 @@ Inputmask("(99 99 999999)|(i{+})", {
 Return nothing when the user hasn't entered anything.
 Default: true
 
-### noValuePatching
-Disable value property patching  
-Default: false
-
 ### positionCaretOnClick
 Positioning of the caret on click.  Options none, lvp (based on the last valid position (default), radixFocus (position caret to radixpoint on initial click)
 Default: "lvp"
 
 ### casing
 Apply casing at the mask-level.
-Options: null, "upper", "lower" or "title"   
-or callback args => elem, test, pos, validPositions return charValue
-
-```
-casing: function(elem, test, pos, validPositions) {
-	do some processing || upper/lower input property in the validPositions
-	return elem; //upper/lower element
-}
-```
+Options: null, "upper", "lower" or "title"
 Default: null
-
-### inputmode
-Default: "verbatim"
-Specify the inputmode  - already in place for when browsers start to  support them
-https://html.spec.whatwg.org/#input-modalities:-the-inputmode-attribute
-
-### colorMask
-Default: false
-Create a css styleable mask.
-Uses css classes: im-caret, im-static.
-
-You need to include the inputmask.css in your page to use this option in full.
 
 ## General
 ### set a value and apply mask
@@ -1078,7 +1007,7 @@ with the autoUnmaskoption you can change the return of $.fn.val (or value proper
 
 ```javascript
 $(document).ready(function(){
-  $('#<%= tbDate.ClientID%>').inputmask({ "mask": "99/99/9999", 'autoUnmask' : true});    //  value: 23/03/1973
+  $('#<%= tbDate.ClientID%>').inputmask({ "mask": "d/m/y", 'autoUnmask' : true});    //  value: 23/03/1973
   alert($('#<%= tbDate.ClientID%>').val());    // shows 23031973     (autoUnmask: true)
 
   var tbDate = document.getElementById("<%= tbDate.ClientID%>");
@@ -1087,8 +1016,6 @@ $(document).ready(function(){
 ```
 
 ### escape special mask chars
-
-If you want a mask element to appear as a static element you can escape them by \\
 
 ```javascript
 $(document).ready(function(){
@@ -1180,13 +1107,14 @@ When cloning a inputmask, the inputmask reactivates on the first event (mouseent
 # jquery.inputmask extensions
 ## [date & datetime extensions](README_date.md)
 ## [numeric extensions](README_numeric.md)
+## [regex extensions](README_regex.md)
 ## [phone extensions](README_phone.md)
 ## [other extensions](README_other.md)
 
-[npm-url]: https://npmjs.org/package/inputmask
-[npm-image]: https://img.shields.io/npm/v/inputmask.svg
-[david-url]: https://david-dm.org/RobinHerbots/inputmask#info=dependencies
-[david-image]: https://img.shields.io/david/RobinHerbots/inputmask.svg
-[david-dev-url]: https://david-dm.org/RobinHerbots/inputmask#info=devDependencies
-[david-dev-image]: https://img.shields.io/david/dev/RobinHerbots/inputmask.svg
+[npm-url]: https://npmjs.org/package/jquery.inputmask
+[npm-image]: https://img.shields.io/npm/v/jquery.inputmask.svg
+[david-url]: https://david-dm.org/RobinHerbots/jquery.inputmask#info=dependencies
+[david-image]: https://img.shields.io/david/RobinHerbots/jquery.inputmask.svg
+[david-dev-url]: https://david-dm.org/RobinHerbots/jquery.inputmask#info=devDependencies
+[david-dev-image]: https://img.shields.io/david/dev/RobinHerbots/jquery.inputmask.svg
 [input-type-ref]: https://html.spec.whatwg.org/multipage/forms.html#do-not-apply

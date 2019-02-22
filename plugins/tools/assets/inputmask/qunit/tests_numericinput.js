@@ -1,4 +1,15 @@
-export default function (qunit, $, Inputmask) {
+define([
+	"qunit",
+	"inputmask.dependencyLib",
+	"inputmask",
+	"../dist/inputmask/inputmask.date.extensions",
+	"../dist/inputmask/inputmask.extensions",
+	"../dist/inputmask/inputmask.numeric.extensions",
+	"../dist/inputmask/inputmask.phone.extensions",
+	"../dist/inputmask/inputmask.regex.extensions",
+	"prototypeExtensions",
+	"simulator"
+], function (qunit, $, Inputmask) {
 
 	qunit.module("Direction RTL");
 	qunit.test("inputmask(\"999.999.999\") - delete 2nd with backspace, continue the mask", function (assert) {
@@ -280,7 +291,7 @@ export default function (qunit, $, Inputmask) {
 
 		testmask.focus();
 		$("#testmask").trigger("click");
-
+		;
 		setTimeout(function () {
 			$("#testmask").Type("123");
 			assert.equal(testmask.value, "_123 t", "Result " + testmask.value);
@@ -363,19 +374,4 @@ export default function (qunit, $, Inputmask) {
 		assert.equal(testmask.value, "20,00", "Result " + testmask.value);
 
 	});
-
-	qunit.test("currency - numericInput: true - initial value 4545.56 - sadhuria", function (assert) {
-		var $fixture = $("#qunit-fixture");
-		$fixture.append('<input type="text" id="testmask" value="4545.56" />');
-		var testmask = document.getElementById("testmask");
-		Inputmask("currency", {
-			groupSeparator: ',',
-			placeholder: '0.00',
-			numericInput: true,
-			autoGroup: true
-		}).mask(testmask);
-
-		assert.equal(testmask.value, "$ 4,545.56", "Result " + testmask.value);
-
-	});
-};
+});

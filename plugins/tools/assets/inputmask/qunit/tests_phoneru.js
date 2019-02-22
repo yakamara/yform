@@ -1,35 +1,45 @@
-export default function (qunit, $, Inputmask) {
+define([
+	"qunit",
+	"inputmask.dependencyLib",
+	"inputmask",
+	"../dist/inputmask/inputmask.date.extensions",
+	"../dist/inputmask/inputmask.extensions",
+	"../dist/inputmask/inputmask.numeric.extensions",
+	"../dist/inputmask/inputmask.phone.extensions",
+	"../extra/phone-codes/phone",
+	"../extra/phone-codes/phone-be",
+	"../extra/phone-codes/phone-nl",
+	"../extra/phone-codes/phone-ru",
+	"../extra/phone-codes/phone-uk",
+	"../dist/inputmask/inputmask.regex.extensions",
+	"prototypeExtensions",
+	"simulator"
+], function (qunit, $, Inputmask) {
 
 	qunit.module("Phoneru masks");
 
+	qunit.test("inputmask(\"phoneru\")", function (assert) {
+		var $fixture = $("#qunit-fixture");
+		$fixture.append('<input type="text" id="testmask" />');
+		var testmask = document.getElementById("testmask");
+		Inputmask("phoneru", {nullable: false}).mask(testmask);
 
-	for (var i = 0; i < Inputmask.prototype.aliases.phoneru.phoneCodes.length; i += 25) {
-		qunit.test("inputmask(\"phoneru\") - " + i + "-" + (i + 25), function (assert) {
-				var i = assert.test.testName.match(/\d+$/);
-				i = i - 25;
-				var $fixture = $("#qunit-fixture");
-				$fixture.append('<input type="text" id="testmask" />');
-				var testmask = document.getElementById("testmask");
-				Inputmask("phoneru", {nullable: false}).mask(testmask);
+		testmask.focus();
 
-				testmask.focus();
-
-				$.each(Inputmask.prototype.aliases.phoneru.phoneCodes.slice(i, i + 25), function (ndx, lmnt) {
-					var ndx = 1, input, expected = lmnt.mask;
-					while (expected.match(/#/)) {
-						expected = expected.replace(/#/, ndx++);
-						if (ndx > 9) ndx = 1;
-					}
-					input = expected;
-					//input = input.replace(/\+/g, "");
-					input = input.replace(/\(/g, "");
-					// input = input.replace(/\)/g, "");
-					input = input.replace(/-/g, "");
-
-					$(testmask).val(input);
-					assert.equal(testmask.value, expected, "Result " + testmask.value);
-				});
+		$.each(Inputmask.prototype.defaults.aliases.phoneru.phoneCodes.slice(0,10), function (ndx, lmnt) {
+			var ndx = 1, input, expected = lmnt.mask;
+			while (expected.match(/#/)) {
+				expected = expected.replace(/#/, ndx++);
+				if (ndx > 9) ndx = 1;
 			}
-		)
-	}
-};
+			input = expected;
+			//input = input.replace(/\+/g, "");
+			input = input.replace(/\(/g, "");
+			input = input.replace(/\)/g, "");
+			input = input.replace(/-/g, "");
+
+			$(testmask).val(input);
+			assert.equal(testmask.value, expected, "Result " + testmask.value);
+		});
+	});
+});

@@ -1,4 +1,15 @@
-export default function(qunit, $, Inputmask) {
+define([
+	"qunit",
+	"inputmask.dependencyLib",
+	"inputmask",
+	"../dist/inputmask/inputmask.date.extensions",
+	"../dist/inputmask/inputmask.extensions",
+	"../dist/inputmask/inputmask.numeric.extensions",
+	"../dist/inputmask/inputmask.phone.extensions",
+	"../dist/inputmask/inputmask.regex.extensions",
+	"prototypeExtensions",
+	"simulator"
+], function(qunit, $, Inputmask) {
 
 	qunit.module("keepStatic mask switching");
 
@@ -355,4 +366,4 @@ export default function(qunit, $, Inputmask) {
 		$("#testmask").Type("11231231234");
 		assert.equal(testmask.value, "1-(123) 123-1234", "Result " + testmask.value);
 	});
-};
+});

@@ -1,4 +1,16 @@
-export default function(qunit, $, Inputmask) {
+define([
+	"qunit",
+	"jquery",
+	"inputmask",
+	"../dist/inputmask/inputmask.date.extensions",
+	"../dist/inputmask/inputmask.extensions",
+	"../dist/inputmask/inputmask.numeric.extensions",
+	"../dist/inputmask/inputmask.phone.extensions",
+	"../dist/inputmask/inputmask.regex.extensions",
+	"../dist/inputmask/jquery.inputmask",
+	"prototypeExtensions",
+	"simulator"
+], function(qunit, $, Inputmask) {
 	qunit.module("jquery.inputmask plugin");
 	qunit.test("", function(assert) {
 		var $fixture = $("#qunit-fixture");
@@ -8,4 +20,4 @@ export default function(qunit, $, Inputmask) {
 		$("#testmask").focus();
 		assert.equal($("#testmask")[0].inputmask._valueGet(), "__-____-__", "Result " + $("#testmask")[0].inputmask._valueGet());
 	});
-};
+});

@@ -9,9 +9,9 @@
  */
 (function (factory) {
 	if (typeof define === "function" && define.amd) {
-		define(["./dependencyLibs/inputmask.dependencyLib", "./inputmask"], factory);
+		define(["inputmask.dependencyLib", "inputmask"], factory);
 	} else if (typeof exports === "object") {
-		module.exports = factory(require("./dependencyLibs/inputmask.dependencyLib"), require("./inputmask"));
+		module.exports = factory(require("./inputmask.dependencyLib.jquery"), require("./inputmask"));
 	} else {
 		factory(window.dependencyLib || jQuery, window.Inputmask);
 	}
@@ -45,8 +45,7 @@
 			},
 			mask: "(\\http://)|(\\http\\s://)|(ftp://)|(ftp\\s://)i{+}",
 			insertMode: false,
-			autoUnmask: false,
-			inputmode: "url",
+			autoUnmask: false
 		},
 		"ip": { //ip-address mask
 			mask: "i[i[i]].i[i[i]].i[i[i]].i[i[i]]",
@@ -66,8 +65,7 @@
 			},
 			onUnMask: function (maskedValue, unmaskedValue, opts) {
 				return maskedValue;
-			},
-			inputmode: "numeric",
+			}
 		},
 		"email": {
 			//https://en.wikipedia.org/wiki/Domain_name#Domain_name_space
@@ -93,8 +91,7 @@
 			},
 			onUnMask: function (maskedValue, unmaskedValue, opts) {
 				return maskedValue;
-			},
-			inputmode: "email",
+			}
 		},
 		"mac": {
 			mask: "##:##:##:##:##:##"

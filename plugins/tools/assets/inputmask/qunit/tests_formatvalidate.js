@@ -1,4 +1,15 @@
-export default function(qunit, $, Inputmask) {
+define([
+	"qunit",
+	"inputmask.dependencyLib",
+	"inputmask",
+	"../dist/inputmask/inputmask.date.extensions",
+	"../dist/inputmask/inputmask.extensions",
+	"../dist/inputmask/inputmask.numeric.extensions",
+	"../dist/inputmask/inputmask.phone.extensions",
+	"../dist/inputmask/inputmask.regex.extensions",
+	"prototypeExtensions",
+	"simulator"
+], function(qunit, $, Inputmask) {
 	qunit.module("Value formatting");
 	qunit.test("Inputmask.format(\"2331973\", { alias: \"date\"})", function(assert) {
 		var formattedValue = Inputmask.format("2331973", {
@@ -45,10 +56,6 @@ export default function(qunit, $, Inputmask) {
 		assert.equal(formattedValue, "(555) 111-2222", "Result " + formattedValue);
 	});
 
-	qunit.test("format(62.91, { alias: 'numeric' } - penihel", function(assert) {
-		var formattedValue = 	Inputmask.format(62.91, { alias: 'numeric' });
-		assert.equal(formattedValue, "62.91", "Result " + formattedValue);
-	});
 
 	qunit.module("Value Validating");
 	qunit.test("Inputmask.isValid(\"23/03/1973\", { alias: \"date\"})", function(assert) {
@@ -130,8 +137,7 @@ export default function(qunit, $, Inputmask) {
 			alias: "decimal",
 			radixPoint: ".",
 			groupSeparator: ",",
-			groupSize: 3,
-			autoGroup: true
+			groupSize: 3
 		});
 		assert.equal(isValid, true, "Result " + isValid);
 	});
@@ -158,8 +164,7 @@ export default function(qunit, $, Inputmask) {
 			alias: "decimal",
 			radixPoint: ".",
 			groupSeparator: ",",
-			groupSize: 3,
-			autoGroup: true
+			groupSize: 3
 		});
 		assert.equal(isValid, true, "Result " + isValid);
 	});
@@ -223,6 +228,4 @@ export default function(qunit, $, Inputmask) {
 		});
 		assert.equal(unmasked, "23031973", "Result " + unmasked);
 	});
-
-
-};
+});
