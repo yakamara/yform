@@ -1,6 +1,6 @@
-$(document).on('ready pjax:success',function() {
+$(document).on('rex:ready',function(event, container) {
 
-    $("select[data-yform-tools-select2]").each(function () {
+    container.find("select[data-yform-tools-select2]").each(function () {
         var options = $(this).attr('data-yform-tools-select2');
         var placeholder = $(this).attr("placeholder");
         if (options == "tags") {
@@ -11,7 +11,7 @@ $(document).on('ready pjax:success',function() {
         $(this).select2(options);
     });
 
-    $("input[data-yform-tools-inputmask]").each(function () {
+    container.find("input[data-yform-tools-inputmask]").each(function () {
         var format = $(this).attr('data-yform-tools-inputmask');
         if (format != "") {
             format = format.toLowerCase();
@@ -19,103 +19,71 @@ $(document).on('ready pjax:success',function() {
         }
     });
 
-    $("input[data-yform-tools-datepicker]").each(function () {
+    var locale = {
+            "format": "DD.MM.YYYY",
+            "separator": " - ",
+            "weekLabel": "W",
+            "daysOfWeek": [
+                "So",
+                "Mo",
+                "Di",
+                "Mi",
+                "Do",
+                "Fr",
+                "Sa"
+              ],
+              "monthNames": [
+                "Januar",
+                "Februar",
+                "März",
+                "April",
+                "Mai",
+                "Juni",
+                "Juli",
+                "August",
+                "September",
+                "Oktober",
+                "November",
+                "Dezember"
+              ],
+              "firstDay": 1
+          };
+
+
+    container.find("input[data-yform-tools-datepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-datepicker');
+        locale.format = format;
         if (format != "") {
             $(this).daterangepicker({
-                  "autoUpdateInput": false,
-                  "singleDatePicker": true,
-                  "showDropdowns": true,
-                  "showWeekNumbers": true,
-                  "showISOWeekNumbers": true,
-                  "autoApply": true,
-                  "locale": {
-                      "format": format,
-                      "separator": " - ",
-                      "weekLabel": "W",
-                      "daysOfWeek": [
-                          "Su",
-                          "Mo",
-                          "Tu",
-                          "We",
-                          "Th",
-                          "Fr",
-                          "Sa"
-                      ],
-                      "monthNames": [
-                          "January",
-                          "February",
-                          "March",
-                          "April",
-                          "May",
-                          "June",
-                          "July",
-                          "August",
-                          "September",
-                          "October",
-                          "November",
-                          "December"
-                      ],
-                      "firstDay": 1
-                  }
-              }, function (start, end, label) {
-                  // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-              })
-              .on('apply.daterangepicker', function(e, picker) {
-
-                  var format = $(this).attr('data-yform-tools-datepicker');
-                  if (format != "") {
-                      $(this).val(picker.startDate.format(format));
-                  }
-
+                "autoUpdateInput": true,
+                "singleDatePicker": true,
+                "showDropdowns": true,
+                "showWeekNumbers": true,
+                "showISOWeekNumbers": true,
+                "autoApply": true,
+                "locale": locale
               });
 
         }
     });
 
-    $("input[data-yform-tools-datetimepicker]").each(function () {
+    container.find("input[data-yform-tools-datetimepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-datetimepicker');
         if (format != "") {
             // ii -> mm
             var format = format.replace("ii", "mm");
+			locale.format = format;
             $(this).daterangepicker({
-                  "timePicker": true,
-                  "timePicker24Hour": true,
-                  "timePickerSeconds": true,
-                  "singleDatePicker": true,
-                  "showDropdowns": true,
-                  "showWeekNumbers": true,
-                  "showISOWeekNumbers": true,
-                  "autoApply": true,
-                  "locale": {
-                      "format": format,
-                      "separator": " - ",
-                      "weekLabel": "W",
-                      "daysOfWeek": [
-                          "Su",
-                          "Mo",
-                          "Tu",
-                          "We",
-                          "Th",
-                          "Fr",
-                          "Sa"
-                      ],
-                      "monthNames": [
-                          "January",
-                          "February",
-                          "March",
-                          "April",
-                          "May",
-                          "June",
-                          "July",
-                          "August",
-                          "September",
-                          "October",
-                          "November",
-                          "December"
-                      ],
-                      "firstDay": 1
-                  }
+                "timePicker": true,
+                "timePicker24Hour": true,
+                "timePickerSeconds": false,
+                "singleDatePicker": true,
+                "showDropdowns": true,
+                "showWeekNumbers": true,
+                "showISOWeekNumbers": true,
+                "autoApply": true,
+				"autoUpdateInput": true,
+                "locale": locale
               }, function(start, end, label) {
                   // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
               })
@@ -132,15 +100,18 @@ $(document).on('ready pjax:success',function() {
     });
 
 
-    $("input[data-yform-tools-daterangepicker]").each(function () {
+    container.find("input[data-yform-tools-daterangepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-daterangepicker');
         if (format != "") {
+            var format = format.replace("ii", "mm");
+			locale.format = format;
             $(this).daterangepicker({
-                "autoUpdateInput": false,
+                "autoUpdateInput": true,
                 "showDropdowns": true,
                 "showWeekNumbers": true,
                 "showISOWeekNumbers": true,
                 "linkedCalendars": false,
+	            "autoApply": true,
                 "ranges": {
                     'Today': [moment(), moment()],
                     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -151,35 +122,7 @@ $(document).on('ready pjax:success',function() {
                     'This Year': [moment().startOf('year'), moment().endOf('year')],
                     'Last Year': [moment().subtract(365, 'days').startOf('year'), moment().subtract(365, 'days').endOf('year')],
                 },
-                "locale": {
-                    "format": format,
-                    "separator": " - ",
-                    "weekLabel": "W",
-                    "daysOfWeek": [
-                        "Su",
-                        "Mo",
-                        "Tu",
-                        "We",
-                        "Th",
-                        "Fr",
-                        "Sa"
-                    ],
-                    "monthNames": [
-                        "January",
-                        "February",
-                        "March",
-                        "April",
-                        "May",
-                        "June",
-                        "July",
-                        "August",
-                        "September",
-                        "October",
-                        "November",
-                        "December"
-                    ],
-                    "firstDay": 1
-                }
+                "locale": locale
             }, function (start, end, label) {
                 // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
 
