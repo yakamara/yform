@@ -81,6 +81,78 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
+     * @return null|rex_yform_manager_dataset
+     */
+    public function first()
+    {
+        return $this->count() ? $this[0] : null;
+    }
+
+    /**
+     * @return null|rex_yform_manager_dataset
+     */
+    public function last()
+    {
+        return $this->count() ? $this[$this->count() - 1] : null;
+    }
+
+    public function filter(callable $callback): self
+    {
+        return new static($this->table, array_filter($this->toArray(), $callback));
+    }
+
+    public function slice(int $offset, int $length = null): self
+    {
+        return new static($this->table, array_slice($this->toArray(), $offset, $length));
+    }
+
+    public function shuffle(): self
+    {
+        $data = $this->toArray();
+        shuffle($data);
+
+        return new static($this->table, $data);
+    }
+
+    public function sort(callable $callback): self
+    {
+        $data = $this->toArray();
+        usort($data, $callback);
+
+        return new static($this->table, $data);
+    }
+
+    public function map(callable $callback): array
+    {
+        return array_map($callback, $this->toArray());
+    }
+
+    public function split(int $groups): array
+    {
+        $size = (int) floor($this->count() / $groups);
+        $mod = $this->count() % $groups;
+
+        $data = $this->toArray();
+        $result = [];
+        $offset = 0;
+
+        for ($i = 0; $i < $groups; ++$i) {
+            $groupSize = $i < $mod ? $size + 1 : $size;
+
+            $result[] = array_slice($data, $offset, $groupSize);
+
+            $offset += $size;
+        }
+
+        return $result;
+    }
+
+    public function chunk(int $size): array
+    {
+        return array_chunk($this->toArray(), $size);
+    }
+
+    /**
      * @param string $key
      *
      * @return rex_yform_manager_dataset[]
@@ -146,6 +218,30 @@ class rex_yform_manager_collection extends \SplFixedArray
         }
 
         return $array;
+    }
+
+    /**
+     * @param string|Closure $value     Field name or callback
+     * @param string         $separator Separator between elements
+     * @param null|string    $and       Optional separator between last two elements
+     */
+    public function implode($value, string $separator, string $and = null): string
+    {
+        if (!$value instanceof Closure) {
+            $value = static function (rex_yform_manager_dataset $dataset) use ($value) {
+                return $dataset->getValue($value);
+            };
+        }
+
+        $data = $this->map($value);
+
+        if (null === $and || $this->count() < 2) {
+            return implode($separator, $data);
+        }
+
+        $last = array_pop($data);
+
+        return implode($separator, $data).$and.$last;
     }
 
     /**
