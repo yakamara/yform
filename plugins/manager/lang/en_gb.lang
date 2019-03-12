@@ -36,7 +36,11 @@ yform_table_overview = Table overview
 yform_manager_edit_table = Edit table
 yform_manager_add_table = Add table
 
+yform_update_table = Update table
+yform_add_table = Add table
 yform_add_row = Add row
+
+yform_edit_datatable = Edit data
 
 # tables.inc.php
 yform_importcsv = Import CSV file
@@ -72,6 +76,10 @@ yform_manager_table_allow_mass_deletion = Allow mass deletion
 yform_manager_table_allow_mass_edit = Allow mass edit
 yform_manager_table_history = Use History AddOn
 yform_manager_tablefield_overview = Field overview
+yform_manager_table_schema_overwrite = ALWAYS overwrite database field types with schema definitions
+yform_manager_table_basic_info = Basic info
+yform_manager_table_func = Table functions
+yform_manager_table_user_func = User functions
 
 yform_manager_table_updated = Thank you for the update.
 yform_manager_table_added = Thank you for the entry.
@@ -135,6 +143,7 @@ yform_save = save
 yform_save_apply = apply
 yform_delete = delete
 yform_delete_definitions = delete definitions
+yform_delete_definitions_info = Database table will be preserved
 yform_search = search
 yform_export = export
 yform_import = import
@@ -202,6 +211,8 @@ yform_manager_import_divider_tab = Tab
 yform_manager_import_unique_field = If this field is identical, the record will be replaced
 yform_manager_import_start = Add
 yform_manager_import_file = File
+yform_manager_import_error_missingfielddefinition = There are empty fields, empty fields cannot be allocated. Please check the first line of the import.
+yform_manager_import_error_duplicatefielddefinition = There are identical fields. Please check the first line of the import.
 
 # history
 yform_history = History
@@ -276,3 +287,7 @@ yform_values_prio_default = At the top
 
 yform_is = is
 yform_will_set_to = will be
+
+yform_field_add = Add field
+yform_field_update = Update field
+yform_field_db_type = Database field type
