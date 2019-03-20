@@ -7,4 +7,6 @@ page:
     title: 'translate:yform_rest'
     pjax: true
     icon: rex-icon fa-exchange
-
+    subpages:
+        token: { title: translate:yform_rest_token, perm: admin}
+        access: { title: translate:yform_rest_token_access, perm: admin }

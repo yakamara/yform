@@ -157,4 +157,10 @@ class rex_yform_rest
 
     }
 
+    public static function getCurrentUrl()
+    {
+        return $_SERVER['REQUEST_URI'];
+
+    }
+
 }
