@@ -163,7 +163,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
             ['value.date.tpl.php', 'value.datetime.tpl.php'],
-            compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day', 'value')
+            compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
             );
         }
     }
