@@ -19,7 +19,6 @@ class rex_yform
 
         // --------------------------- editable via objparams|key|newvalue
 
-        $this->objparams['answertext'] = '';
         $this->objparams['submit_btn_label'] = 'Abschicken';
         $this->objparams['submit_btn_show'] = true;
 

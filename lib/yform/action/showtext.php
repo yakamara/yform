@@ -13,10 +13,6 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
     {
         $text = $this->getElement(2);
 
-        if ($text == '') {
-            $text = $this->params['answertext'];
-        }
-
         $text = rex_i18n::translate($text, null);
 
         if ($this->getElement(5) == '0') {
