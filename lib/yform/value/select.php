@@ -151,7 +151,9 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $sql = rex_sql::factory();
 
         $field = $params['field']->getName();
-        $values = (array) $params['value'];
+
+        $self = new self();
+        $values = $self->getArrayFromString($params['value']);
 
         $multiple = $params['field']->getElement('multiple') == 1;
 

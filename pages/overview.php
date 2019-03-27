@@ -64,5 +64,5 @@ echo $fragment->parse('core/page/section.php');
 
 $fragment = new rex_fragment();
 $fragment->setVar('title', $this->i18n('description_type_heading'), false);
-$fragment->setVar('body', rex_yform::showHelp(true, true), false);
+$fragment->setVar('body', rex_yform::showHelp(), false);
 echo $fragment->parse('core/page/section.php');

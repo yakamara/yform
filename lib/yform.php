@@ -61,6 +61,7 @@ class rex_yform
         $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
 
         $this->objparams['getdata'] = false;
+        $this->objparams['fixdata'] = [];
         $this->objparams['data'] = false;
         $this->objparams['get_field_type'] = 'request';
 
@@ -172,9 +173,16 @@ class rex_yform
         $this->setObjectparams('form_action', rex_getUrl($aid, $clang, $params));
     }
 
-    public function setHiddenField($k, $v)
+    public function setHiddenField($key, $value)
     {
-        $this->objparams['form_hiddenfields'][$k] = $v;
+        $this->objparams['form_hiddenfields'][$key] = $value;
+    }
+
+    public function setHiddenFields(array $fields)
+    {
+        foreach ($fields as $key => $value) {
+            $this->objparams['form_hiddenfields'][$key] = $value;
+        }
     }
 
     public function setObjectparams($k, $v, $refresh = true)
@@ -208,17 +216,19 @@ class rex_yform
             $this->initializeFields();
         }
 
+        // ---- setValues
+
+        // 1. setValue direct via REQUEST
         foreach ($this->objparams['values'] as $ValueObject) {
+            /* @var rex_yform_value_abstract $ValueObject */
             $ValueObject->setValue($this->getFieldValue($ValueObject->getName(), [$ValueObject->getId()]));
         }
 
-        // *************************************************** OBJECT PARAM "send"
         if ($this->getFieldValue('send') == '1') {
             $this->objparams['send'] = 1;
         }
 
-        // *************************************************** PRE VALUES
-        // Felder aus Datenbank auslesen - Sofern Aktualisierung
+        // 2. setValue defaults via sql_object
         if ($this->objparams['getdata']) {
             if (!$this->objparams['sql_object'] instanceof rex_sql) {
                 $this->objparams['sql_object'] = rex_sql::factory();
@@ -233,11 +243,9 @@ class rex_yform
             }
         }
 
-        // ----- Felder mit Werten fuellen, fuer wiederanzeige
-        // Die Value Objekte werden mit den Werten befuellt die
-        // aus dem Formular nach dem Abschicken kommen
         if ($this->objparams['send'] != 1 && $this->objparams['main_where'] != '') {
             foreach ($this->objparams['values'] as $i => $valueObject) {
+                /* @var rex_yform_value_abstract $valueObject */
                 if ($valueObject->getName()) {
                     if (isset($this->objparams['sql_object'])) {
                         $this->setFieldValue($valueObject->getName(), [$i], @$this->objparams['sql_object']->getValue($valueObject->getName()));
@@ -247,16 +255,31 @@ class rex_yform
             }
         }
 
-        // FORM DATA individuell einspielen
+        // 3. setValue direct via data Object
         if (isset($this->objparams['data']) && is_array($this->objparams['data']) && count($this->objparams['data']) > 0) {
-            foreach ($this->objparams['values'] as $i => $valueObject) {
+            foreach ($this->objparams['values'] as $valueObject) {
+                /* @var rex_yform_value_abstract $valueObject */
                 if (isset($this->objparams['data'][$valueObject->getName()])) {
                     $valueObject->setValue($this->objparams['data'][$valueObject->getName()]);
                 }
             }
         }
 
-        // *************************************************** VALIDATE OBJEKTE
+        // 4. setValue direct via fixdata
+        $fixdata = $this->getObjectparams('fixdata');
+        if ($fixdata && is_array($fixdata) && count($fixdata) > 0) {
+            foreach ($this->objparams['values'] as $i => $valueObject) {
+                if (isset($fixdata[$valueObject->getName()])) {
+                    $valueObject->setValue($fixdata[$valueObject->getName()]);
+                }
+            }
+        }
+
+        // ----- validate form
+
+        /* @var rex_yform_base_abstract $Object */
+        /* @var rex_yform_validate_abstract $ValidateObject */
+        /* @var rex_yform_value_abstract $valueObject */
 
         foreach ($this->objparams['fields'] as $types) {
             foreach ($types as $Object) {
@@ -265,8 +288,8 @@ class rex_yform
         }
 
         if ($this->objparams['send'] == 1) {
-            foreach ($this->objparams['validates'] as $Object) {
-                $Object->enterObject();
+            foreach ($this->objparams['validates'] as $ValidateObject) {
+                $ValidateObject->enterObject();
             }
         }
 
@@ -276,19 +299,18 @@ class rex_yform
             }
         }
 
-        // *************************************************** FORMULAR ERSTELLEN
+        // ----- create form
 
         foreach ($this->objparams['values'] as $ValueObject) {
             $ValueObject->enterObject();
         }
 
         if ($this->objparams['send'] == 1) {
-            foreach ($this->objparams['validates'] as $Object) {
-                $Object->postValueAction();
+            foreach ($this->objparams['validates'] as $ValidateObject) {
+                $ValidateObject->postValueAction();
             }
         }
 
-        // ***** PostFormActions
         foreach ($this->objparams['values'] as $ValueObject) {
             $ValueObject->postFormAction();
         }
@@ -307,8 +329,6 @@ class rex_yform
         $this->objparams['fields']['actions'] = &$this->objparams['actions'];
 
         $this->objparams['send'] = 0;
-
-        // *************************************************** VALUE OBJECT INIT
 
         $this->setCSRFField();
 
@@ -329,12 +349,15 @@ class rex_yform
             }
 
             if (class_exists($class)) {
-                $this->objparams[$type][$i] = new $class();
-                $this->objparams[$type][$i]->loadParams($this->objparams, $element);
-                $this->objparams[$type][$i]->setId($i);
-                $this->objparams[$type][$i]->init();
-                $this->objparams[$type][$i]->setObjects($this->objparams['values']);
-                $rows = count($this->objparams['form_elements']); // if elements have changed -> new rowcount
+                /* @var rex_yform_base_abstract $Object */
+                $Object = new $class();
+                $Object->loadParams($this->objparams, $element);
+                $Object->setId($i);
+                $Object->init();
+                $Object->setObjects($this->objparams['values']);
+                $this->objparams[$type][$i] = $Object;
+
+                $rows = count($this->objparams['form_elements']);
 
                 // special case - submit button shows up by default
                 if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
@@ -411,15 +434,12 @@ class rex_yform
         }
 
         if ($this->objparams['form_show']) {
-            // -------------------- send definition
             $this->setHiddenField($this->getFieldName('send'), 1);
 
-            // -------------------- form start
             if ($this->objparams['form_anchor'] != '') {
                 $this->objparams['form_action'] .= '#' . $this->objparams['form_anchor'];
             }
 
-            // -------------------- formOut
             $this->objparams['output'] .= $this->parse('form.tpl.php');
         }
 
@@ -607,7 +627,7 @@ class rex_yform
         return html_entity_decode($text);
     }
 
-    public static function showHelp($script = false)
+    public static function showHelp()
     {
         $arr = [
             'value' => 'rex_yform_value_',
@@ -629,6 +649,7 @@ class rex_yform
                 if (count($exploded) == 2) {
                     $name = $exploded[1];
                     if ($name != 'abstract') {
+                        /* @var rex_yform_base_abstract $class */
                         $class = new $class();
                         $desc = trim($class->getDescription());
                         $definitions = $class->getDefinitions();
@@ -685,6 +706,7 @@ class rex_yform
                 if (count($exploded) == 2) {
                     $name = $exploded[1];
                     if ($name != 'abstract') {
+                        /* @var rex_yform_base_abstract $class */
                         $class = new $class();
                         $d = $class->getDefinitions();
                         if (count($d) > 0) {

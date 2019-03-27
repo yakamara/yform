@@ -1,23 +1,5 @@
 <?php
 
-
-/*
- * TODO:
- *
- * Suche nach id noch anpassen
- * Suche mit diversen krietrien ermöglich
- * z.B. selectfeld (genaue suche. like suche. etc.. siehe phpmyadmin)
- * dadurch auch rex_yform_searchvars mit unterarray erlauben
- * getSearchVars entsprechend umbauen
- *
- *
- * text/textarea / s: text / einfach text suche: suchtext / auch mit * -> % und (empty) oder !(empty)
-  // o: select, sqlselect / s: multiselect mit checkbox: ist vorhanden, oder ist nicht vorhanden find in set
-  // o: relation / s: lookup mit übernehmen.
-  andere felder fehlen noch..
-  select und co
- */
-
 class rex_yform_manager_search
 {
     private $linkVars = [];
@@ -51,7 +33,7 @@ class rex_yform_manager_search
         $this->linkVars[$k] = $v;
     }
 
-    public function setLinkVars($vars)
+    public function setSearchLinkVars(array $vars)
     {
         $this->linkVars = array_merge($this->linkVars, $vars);
     }
@@ -110,30 +92,8 @@ class rex_yform_manager_search
         $return = [];
         foreach ($yform->objparams['values'] as $i => $valueObject) {
             if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
-                $return[$valueObject->getName()] = $fieldValues[$i];
+                $return[$yform->getFieldName($valueObject->getLabel(), [$i])] = $fieldValues[$i];
             }
-        }
-        if (isset($return['yform_search_submit'])) {
-            unset($return['yform_search_submit']);
-        }
-
-        return ['rex_yform_searchvars' => $return];
-    }
-
-    public function getSearchLinkVars()
-    {
-        $yform = $this->getYForm();
-        $yform->getForm();
-        $fieldValues = $yform->getFieldValue();
-
-        $return = [];
-        foreach ($yform->objparams['values'] as $i => $valueObject) {
-            if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
-                $return[$valueObject->getFieldName()] = $fieldValues[$i];
-            }
-        }
-        if (isset($return['yform_search_submit'])) {
-            unset($return['yform_search_submit']);
         }
         return $return;
     }
@@ -145,16 +105,29 @@ class rex_yform_manager_search
         }
 
         $queryFilter = [];
-        $vars = $this->getSearchVars();
+
+        $yform = $this->getYForm();
+        $yform->getForm();
+        $fieldValues = $yform->getFieldValue();
+
+        $vars = [];
+        foreach ($yform->objparams['values'] as $i => $valueObject) {
+            if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
+                $vars[$valueObject->getName()] = $fieldValues[$i];
+            }
+        }
+        if (isset($vars['yform_search_submit'])) {
+            unset($vars['yform_search_submit']);
+        }
 
         foreach ($this->fields as $field) {
-            if (array_key_exists($field->getName(), $vars['rex_yform_searchvars']) && $field->getType() == 'value' && $field->isSearchable()) {
+            if (array_key_exists($field->getName(), $vars) && $field->getType() == 'value' && $field->isSearchable()) {
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                     $qf = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
                         [
                             'field' => $field,
                             'fields' => $this->fields,
-                            'value' => $vars['rex_yform_searchvars'][$field->getName()],
+                            'value' => $vars[$field->getName()],
                         ]
                     );
                     if ($qf != '') {

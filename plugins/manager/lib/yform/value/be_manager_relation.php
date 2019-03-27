@@ -725,6 +725,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
     {
         $value = $params['value'];
 
+        if (null !== $value && !\is_scalar($value) && !(\is_object($value) && \method_exists($value, '__toString'))) {
+            return null;
+        } else {
+            $value = (string) $value;
+        }
+
         if ($value == '') {
             return null;
         }
