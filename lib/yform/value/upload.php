@@ -53,13 +53,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
         }
 
-        if ($unique == '') {
-            // Nein - also anlegen
-            $unique = self::_upload_getUniqueKey();
-            $_SESSION['yform_field_upload'][$unique] = [];
-            $_SESSION['yform_field_upload'][$unique]['stamp'] = date('U');
-        }
-
         $delete = (bool) @$this->params['this']->getFieldValue($this->getName(), [$this->getId(), 'delete']);
 
         if ($delete) {
