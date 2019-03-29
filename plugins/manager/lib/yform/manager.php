@@ -258,13 +258,15 @@ class rex_yform_manager
                         $query->whereRaw($where);
                     }
                     $data = $query->find();
+
+                    $yform = $data->getForm();
                 } else {
                     $data = $func == 'add' ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
+
+                    $yform = $data->getForm();
+
+                    $yform->setObjectparams('form_name', 'data_edit-'.$this->table->getTableName());
                 }
-
-                $yform = $data->getForm();
-
-                $yform->setObjectparams('form_name', 'data_edit-'.$this->table->getTableName());
 
                 $yform->setHiddenFields($this->getLinkVars());
                 $yform->setHiddenFields($rex_yform_list);

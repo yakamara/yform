@@ -463,6 +463,7 @@ class rex_yform_manager_collection extends \SplFixedArray
     {
         $yform = new rex_yform();
         $yform->setDebug(self::$debug);
+        $yform->objparams['form_name'] = 'yform-manager-multi-edit';
         $yform->objparams['form_class'] .= ' yform-manager-multi-edit';
 
         $send = $yform->getFieldValue('send');
