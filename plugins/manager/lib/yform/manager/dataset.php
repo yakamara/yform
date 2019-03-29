@@ -448,17 +448,14 @@ class rex_yform_manager_dataset
                 continue;
             }
             if (isset($fields[$key])) {
-                $yform->setFieldValue($key, [0], $value);
+                $yform->objparams['data'][$key] = $value;
             }
         }
 
-        $send = $yform->getFieldValue('send');
         $yform->setFieldValue('send', [], '1');
 
         $yform->executeFields();
         $this->messages = $yform->getObjectparams('warning_messages');
-
-        $yform->setFieldValue('send', [], $send);
 
         return empty($this->messages);
     }
