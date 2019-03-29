@@ -28,6 +28,11 @@ if (!isset($elementAttributes)) {
     $elementAttributes = [];
 }
 $elementClass = 'form-control';
+
+if (isset($this->params['fixdata'][$this->getName()]) && !isset($elementAttributes['disabled'])) {
+    $elementAttributes['disabled'] = 'disabled';
+}
+
 if (isset($elementAttributes['class']) && is_array($elementAttributes['class'])) {
     $elementAttributes['class'][] = $elementClass;
 } elseif (isset($elementAttributes['class'])) {

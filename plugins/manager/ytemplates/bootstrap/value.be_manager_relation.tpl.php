@@ -37,11 +37,7 @@ if (count($notice) > 0) {
             $select->setName($this->getFieldName());
         }
 
-        if ($this->relation['disabled']) {
-            $select->setAttribute('disabled', 'disabled');
-        }
-
-        $attributes = $this->getAttributeArray($attributes, ['required', 'readonly']);
+        $attributes = $this->getAttributeArray($attributes, ['required', 'readonly', 'disabled']);
 
         $select->setAttributes($attributes);
         foreach ($options as $option) {

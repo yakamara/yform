@@ -159,6 +159,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public function getAttributeArray(array $attributes, array $direct_attributes = [])
     {
         $additionalAttributes = $this->getElement('attributes');
+
+        if (isset($this->params['fixdata'][$this->getName()]) && !isset($attributes['disabled'])) {
+            $attributes['disabled'] = 'disabled';
+        }
+
         if ($additionalAttributes) {
             if (!is_array($additionalAttributes)) {
                 $additionalAttributes = json_decode(trim($additionalAttributes), true);

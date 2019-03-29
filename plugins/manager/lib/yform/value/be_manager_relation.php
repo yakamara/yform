@@ -41,7 +41,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         if ($this->relation['eoption'] != 1) {
             $this->relation['eoption'] = 0;
         }
-        $this->relation['disabled'] = false;
 
         // ---------- Value angleichen -> immer Array mit IDs daraus machen
         if (!is_array($this->getValue())) {
@@ -52,14 +51,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             } else {
                 $this->setValue(explode(',', $this->getValue()));
             }
-        }
-
-        // ---------- connected, fix values
-        if (isset($this->params['rex_yform_set'][$this->getName()]) && !is_array($this->params['rex_yform_set'][$this->getName()])) {
-            $values = $this->getValue();
-            $values[] = $this->params['rex_yform_set'][$this->getName()];
-            $this->setValue($values);
-            $this->relation['disabled'] = true;
         }
 
         // ---------- Filter
