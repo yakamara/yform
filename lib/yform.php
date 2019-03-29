@@ -17,8 +17,6 @@ class rex_yform
     {
         $this->objparams = [];
 
-        // --------------------------- editable via objparams|key|newvalue
-
         $this->objparams['submit_btn_label'] = 'Abschicken';
         $this->objparams['submit_btn_show'] = true;
 
@@ -65,7 +63,7 @@ class rex_yform
         $this->objparams['data'] = false;
         $this->objparams['get_field_type'] = 'request';
 
-        // --------------------------- do not edit
+        $this->objparams['send'] = 0;
 
         $this->objparams['debug'] = false;
 
@@ -102,7 +100,6 @@ class rex_yform
         $this->objparams['action'] = [];
 
         $this->objparams['form_array'] = [];
-
         $this->objparams['this'] = $this;
     }
 
@@ -327,8 +324,6 @@ class rex_yform
         $this->objparams['fields']['values'] = &$this->objparams['values'];
         $this->objparams['fields']['validates'] = &$this->objparams['validates'];
         $this->objparams['fields']['actions'] = &$this->objparams['actions'];
-
-        $this->objparams['send'] = 0;
 
         $this->setCSRFField();
 
