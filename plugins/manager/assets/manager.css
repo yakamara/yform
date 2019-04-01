@@ -173,3 +173,73 @@ div.sortable-ghost {
     padding-top: 15px;
 }
 
+.formbe_table th.rex-table-action {
+    padding: 4px 8px
+}
+
+.formbe_table .add-mobile-btn, .formbe_table th.rex-table-action .btn {
+    border-radius: 0;
+    line-height: 26px
+}
+
+.formbe_table .add-mobile-btn {
+    margin-bottom: 20px;
+    width: 100%
+}
+
+.formbe_table table {
+    margin: 0 0 4px 0
+}
+
+.formbe_table tbody tr td {
+    padding-left: 8px;
+    padding-top: 30px
+}
+
+.formbe_table tbody tr td:before {
+    line-height: 1;
+    width: 100%
+}
+
+.formbe_table tbody tr td.delete-row {
+    padding-top: 8px
+}
+
+@media screen and (min-width: 480px) {
+    .formbe_table tbody tr td {
+        padding-top: 8px;
+        padding-left: 40%
+    }
+
+    .formbe_table tbody tr td:before {
+        line-height: 34px;
+        width: 35%
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .formbe_table tbody tr td {
+        padding-left: 8px
+    }
+}
+
+.formbe_table .be-value-input .form-group {
+    margin: 0
+}
+
+.formbe_table .be-value-input label {
+    display: none
+}
+
+.formbe_table .btn-delete {
+    border-radius: 0;
+    display: block;
+    line-height: 26px
+}
+
+@media screen and (min-width: 768px) {
+    .formbe_table .add-mobile-btn {
+        display: none
+    }
+}
+
