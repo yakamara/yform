@@ -23,7 +23,14 @@ $replace = [];
 
 $pos = strpos($format, 'YYYY');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('year') . '" name="' . $this->getFieldName() . '[year]">';
+
+    $attributes = $this->getAttributeElements([
+        'class' => trim('form-control ' . $this->getWarningClass()),
+        'id' => $this->getFieldId('year'),
+        'name' => $this->getFieldName() . '[year]',
+    ], ['required', 'disabled', 'readonly']);
+
+    $replace_i = '<select ' . implode(' ', $attributes) . '>';
     $replace_i .= '<option value="00">--</option>';
     for ($i = $yearStart; $i <= $yearEnd; ++$i):
         $selected = (@$year == $i) ? ' selected="selected"' : '';
@@ -36,7 +43,14 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'MM');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('month') . '" name="' . $this->getFieldName() . '[month]">';
+
+    $attributes = $this->getAttributeElements([
+        'class' => trim('form-control ' . $this->getWarningClass()),
+        'id' => $this->getFieldId('month'),
+        'name' => $this->getFieldName() . '[month]',
+    ], ['required', 'disabled', 'readonly']);
+
+    $replace_i = '<select ' . implode(' ', $attributes) . '>';
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 13; ++$i):
         $selected = (@$month == $i) ? ' selected="selected"' : '';
@@ -49,7 +63,14 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'DD');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('day') . '" name="' . $this->getFieldName() . '[day]">';
+
+    $attributes = $this->getAttributeElements([
+        'class' => trim('form-control ' . $this->getWarningClass()),
+        'id' => $this->getFieldId('day'),
+        'name' => $this->getFieldName() . '[day]',
+    ], ['required', 'disabled', 'readonly']);
+
+    $replace_i = '<select ' . implode(' ', $attributes) . '>';
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 32; ++$i):
         $selected = (@$day == $i) ? ' selected="selected"' : '';
@@ -62,7 +83,14 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'HH');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('hour') . '" name="' . $this->getFieldName() . '[hour]">';
+
+    $attributes = $this->getAttributeElements([
+        'class' => trim('form-control ' . $this->getWarningClass()),
+        'id' => $this->getFieldId('hour'),
+        'name' => $this->getFieldName() . '[hour]',
+    ], ['required', 'disabled', 'readonly']);
+
+    $replace_i = '<select ' . implode(' ', $attributes) . '>';
     foreach ($hours as $i):
         $selected = (@$hour == $i) ? ' selected="selected"' : '';
     $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
@@ -74,7 +102,14 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'ii');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('minute') . '" name="' . $this->getFieldName() . '[minute]">';
+
+    $attributes = $this->getAttributeElements([
+        'class' => trim('form-control ' . $this->getWarningClass()),
+        'id' => $this->getFieldId('minute'),
+        'name' => $this->getFieldName() . '[minute]',
+    ], ['required', 'disabled', 'readonly']);
+
+    $replace_i = '<select ' . implode(' ', $attributes) . '>';
     foreach ($minutes as $i):
         $selected = (@$minute == $i) ? ' selected="selected"' : '';
     $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
@@ -86,7 +121,14 @@ if ($pos !== false) {
 
 $pos = strpos($format, 'ss');
 if ($pos !== false) {
-    $replace_i = '<select class="' . trim('form-control ' . $this->getWarningClass()) . '" id="' . $this->getFieldId('second') . '" name="' . $this->getFieldName() . '[second]">';
+
+    $attributes = $this->getAttributeElements([
+        'class' => trim('form-control ' . $this->getWarningClass()),
+        'id' => $this->getFieldId('second'),
+        'name' => $this->getFieldName() . '[second]',
+    ], ['required', 'disabled', 'readonly']);
+
+    $replace_i = '<select ' . implode(' ', $attributes) . '>';
     foreach ($seconds as $i): // ($i = 0; $i < 60; ++$i):
         $selected = (@$second == $i) ? ' selected="selected"' : '';
     $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
