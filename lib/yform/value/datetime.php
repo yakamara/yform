@@ -172,8 +172,10 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         if (substr($this->getElement('year_end'), 0, 1) == '+') {
             $add_years = (int) substr($this->getElement('year_end'), 1);
             $yearEnd = date('Y') + $add_years;
-        } else {
+        } elseif ($this->getElement('year_end') != '') {
             $yearEnd = (int) $this->getElement('year_end');
+        } else {
+            $yearEnd = date('Y');
         }
 
         if ($yearEnd <= $yearStart) {
