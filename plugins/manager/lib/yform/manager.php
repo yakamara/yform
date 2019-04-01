@@ -93,7 +93,6 @@ class rex_yform_manager
         $_csrf_key = 'table_field-'.$this->table->getTableName();
         $rex_yform_list += rex_csrf_token::factory($_csrf_key)->getUrlParams();
 
-        // -------------- opener - popup for selection
         $popup = false;
         $rex_yform_manager_opener = rex_request('rex_yform_manager_opener', 'array');
         if (isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') {
@@ -104,6 +103,16 @@ class rex_yform_manager
         if ($rex_yform_manager_popup == 1) {
             $popup = true;
         }
+
+        rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_DATA_PAGE', $this));
+
+        $rex_yform_filter = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_DATA_EDIT_FILTER', $rex_yform_filter, [
+            'table' => $this->table,
+        ]));
+
+        $rex_yform_set = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_DATA_EDIT_SET', $rex_yform_set, [
+            'table' => $this->table,
+        ]));
 
         $searchObject = new rex_yform_manager_search($this->table);
         $searchObject->setSearchLinkVars($this->getLinkVars());
@@ -136,8 +145,7 @@ class rex_yform_manager
 
         echo rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_REX_INFO', ''));
 
-        $show_editpage = true;
-        $show_editpage = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_DATA_EDIT_FUNC', $show_editpage,
+        $show_editpage = rex_extension::registerPoint(new rex_extension_point('YFORM_MANAGER_DATA_EDIT_FUNC', true,
         [
             'table' => $this->table,
             'link_vars' => $this->getLinkVars(),
@@ -145,19 +153,20 @@ class rex_yform_manager
         ));
 
         if ($show_editpage) {
-            // -------------- DB FELDER HOLEN
 
-            // -------------- DB DATA HOLEN
-            $data = [];
             if ($data_id > 0) {
-                $gd = rex_sql::factory();
-                $gd->setQuery('select * from ' . $this->table->getTableName() . ' where id=' . $data_id);
+                $data_query = $this->table->query()
+                    ->where('id', $data_id);
+                $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
+                if ($where) {
+                    $data_query->whereRaw($where);
+                }
+                $data_collection = $data_query->find();
 
-                if ($gd->getRows() == 1) {
-                    $datas = $gd->getArray();
-                    $data = current($datas);
+                if (count($data_collection) == 1) {
+                    $data_id = $data_collection[0]->getId();
                 } else {
-                    $data_id = 0;
+                    $data_id = null;
                 }
             }
 
@@ -167,7 +176,6 @@ class rex_yform_manager
                 $rex_yform_list,
                 ['rex_yform_manager_opener' => $rex_yform_manager_opener],
                 ['rex_yform_manager_popup' => $rex_yform_manager_popup],
-                ['rex_yform_filter' => $rex_yform_filter],
                 ['rex_yform_filter' => $rex_yform_filter],
                 ['rex_yform_set' => $rex_yform_set]
             );
@@ -185,7 +193,7 @@ class rex_yform_manager
                 $show_list = false;
             }
 
-            if ($func == 'delete' && $data_id > 0 && $this->hasDataPageFunction('delete')) {
+            if ($func == 'delete' && $data_id && $this->hasDataPageFunction('delete')) {
                 if ($this->table->getRawDataset($data_id)->delete()) {
                     echo rex_view::success(rex_i18n::msg('yform_datadeleted'));
                     $func = '';
@@ -194,7 +202,7 @@ class rex_yform_manager
 
             if (!$popup && $func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
                 $query = $this->table->query();
-                $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject, $this->table);
+                $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
                 if ($where) {
                     $query->whereRaw($where);
                 }
@@ -213,7 +221,7 @@ class rex_yform_manager
             if (!$popup && $func == 'dataset_export' && $this->hasDataPageFunction('export')) {
                 ob_end_clean();
 
-                $sql = $this->getDataListQuery($rex_yform_filter, $searchObject, $this->table);
+                $sql = $this->getDataListQuery(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
 
                 $g = rex_sql::factory();
                 $g->setQuery($sql);
@@ -247,24 +255,28 @@ class rex_yform_manager
             }
 
             // -------------- form
-            if (($func == 'add' && $this->hasDataPageFunction('add')) || $func == 'edit' || ($func == 'collection_edit' && $this->table->isMassEditAllowed())) {
+            if (
+                    ($func == 'add' && $this->hasDataPageFunction('add')) ||
+                    ($func == 'edit' && $data_id) ||
+                    ($func == 'collection_edit' && $this->table->isMassEditAllowed())
+            ) {
                 // TODO: Backlink korrigieren.
                 $back = rex_view::info('<a href="index.php?' . http_build_query(array_merge($rex_link_vars)) . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
                 if ('collection_edit' === $func) {
                     $query = $this->table->query();
-                    $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject, $this->table);
+                    $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
                     if ($where) {
                         $query->whereRaw($where);
                     }
                     $data = $query->find();
 
                     $yform = $data->getForm();
+
                 } else {
                     $data = $func == 'add' ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
 
                     $yform = $data->getForm();
-
                     $yform->setObjectparams('form_name', 'data_edit-'.$this->table->getTableName());
                 }
 
@@ -317,7 +329,7 @@ class rex_yform_manager
                 $yform_clone = clone $yform;
                 $yform->setHiddenField('func', $func); // damit es neu im clone gesetzt werden kann
 
-                if ($func == 'edit') {
+                if ($func == 'edit' && $data_id) {
                     $yform->setHiddenField('data_id', $data_id);
                     $yform->setObjectparams('getdata', true);
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
@@ -680,14 +692,13 @@ class rex_yform_manager
         } // end: $show_editpage
     }
 
-    public function getDataListQueryWhere($rex_yform_filter, $searchObject, rex_yform_manager_table $table)
+    public function getDataListQueryFilterWhere($rex_filter, rex_yform_manager_table $table)
     {
         $sql_o = rex_sql::factory();
-
         $sql = [];
-        if (count($rex_yform_filter) > 0) {
+        if (count($rex_filter) > 0) {
             $sql_filter = '';
-            foreach ($rex_yform_filter as $k => $v) {
+            foreach ($rex_filter as $k => $v) {
                 if ($sql_filter != '') {
                     $sql_filter .= ' AND ';
                 }
@@ -701,6 +712,12 @@ class rex_yform_manager
             }
             $sql[] = $sql_filter;
         }
+        return $sql;
+    }
+
+    public function getDataListQueryWhere($rex_filter, $searchObject, rex_yform_manager_table $table)
+    {
+        $sql = $this->getDataListQueryFilterWhere($rex_filter, $table);
 
         $searchFilter = $searchObject->getQueryFilterArray();
         if (count($searchFilter) > 0) {
@@ -716,7 +733,7 @@ class rex_yform_manager
         return $sql;
     }
 
-    public function getDataListQuery($rex_yform_filter, $searchObject, rex_yform_manager_table $table)
+    public function getDataListQuery($rex_filter, $searchObject, rex_yform_manager_table $table)
     {
         $sql = 'select * from ' . $table->getTablename() . ' t0';
         $sql_felder = rex_sql::factory();
@@ -740,7 +757,7 @@ class rex_yform_manager
             $sql = 'select `id`,' . implode(',', $fields) . ' from `' . $table->getTablename() . '` t0';
         }
 
-        $where = $this->getDataListQueryWhere($rex_yform_filter, $searchObject, $table);
+        $where = $this->getDataListQueryWhere($rex_filter, $searchObject, $table);
         if ($where) {
             $sql .= ' where '.$where;
         }
