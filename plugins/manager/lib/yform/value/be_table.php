@@ -176,7 +176,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $this->fieldData[$index][$key] = $value;
     }
 
-    public function getDefinitions($values = [])
+    public function getDefinitions()
     {
         return [
             'type' => 'value',
