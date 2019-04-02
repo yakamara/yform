@@ -6,7 +6,6 @@ supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 page:
     title: 'translate:yform_manager'
     pjax: false
-    icon: rex-icon rex-icon-module
     subpages:
         table_edit: { title: translate:table_edit, perm: admin}
         table_migrate: { title: translate:table_migrate, perm: admin }
