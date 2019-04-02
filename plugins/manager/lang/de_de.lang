@@ -193,6 +193,7 @@ yform_manager_import_error_missingfields = Es fehlen folgende Felder: {0}
 yform_manager_import_error_min_missingfields = Es fehlt mindestens ein Feld: {0}
 yform_manager_import_error_field = Feld "{0}" konnte nicht angelegt werden: "{1}"
 yform_manager_import_field_added = Feld "{0}" wurde angelegt
+yform_manager_import_error_import_abort = Import wurde wegen folgendem Fehler nicht ausgeführt: {0}
 yform_manager_import_error_import_stopped = Import wurde abgebrochen, da Fehler aufgetaucht sind.
 yform_manager_import_error_dataimport = Datensatz ({0}) konnte nicht importiert werden: {1}
 yform_manager_import_error_import = Es wurden {0} Datensätze importiert. Davon waren {1} neue Datensätze und {2} Datensätze wurden ersetzt.

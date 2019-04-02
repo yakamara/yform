@@ -153,7 +153,6 @@ class rex_yform_manager
         ));
 
         if ($show_editpage) {
-
             if ($data_id > 0) {
                 $data_query = $this->table->query()
                     ->where('id', $data_id);
@@ -184,7 +183,6 @@ class rex_yform_manager
 
             if (!$popup && $func == 'import' && $this->hasDataPageFunction('import')) {
                 include rex_path::plugin('yform', 'manager', 'pages/data_import.php');
-                echo rex_view::info('<a href="index.php?' . http_build_query(array_merge($rex_link_vars)) . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
             }
 
             if (!$popup && $func == 'history') {
@@ -260,7 +258,6 @@ class rex_yform_manager
                     ($func == 'edit' && $data_id) ||
                     ($func == 'collection_edit' && $this->table->isMassEditAllowed())
             ) {
-                // TODO: Backlink korrigieren.
                 $back = rex_view::info('<a href="index.php?' . http_build_query(array_merge($rex_link_vars)) . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
                 if ('collection_edit' === $func) {
@@ -272,7 +269,6 @@ class rex_yform_manager
                     $data = $query->find();
 
                     $yform = $data->getForm();
-
                 } else {
                     $data = $func == 'add' ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
 
