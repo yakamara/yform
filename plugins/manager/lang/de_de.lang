@@ -6,7 +6,7 @@ yform_manager_fields = Felder
 # yform manager
 yform_alltables = Alle Tabellen
 yform_back_to_overview = Zurück zur Übersicht
-yform_updatetable = Tabelle/n aktualisieren
+yform_updatetable = aktualisieren
 yform_tablesupdated = Tabelle/n wurde/n aktualisiert
 
 yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
@@ -158,7 +158,11 @@ yform_dataset_deleted = Datenergebnis wurde geleert
 yform_dataset_delete_confirm = Wirklich das Datenergebnis leeren?
 
 yform_data = Datensatz
+yform_datas = Datensätze
 yform_manager_search = Suche
+
+yform_data_view = ansehen
+
 
 yform_data_select = übernehmen
 

@@ -63,6 +63,24 @@ class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
+     * @param int $tableId
+     *
+     * @return rex_yform_manager_table|null
+     */
+    public static function getById(int $tableID)
+    {
+        $tables = self::getAll();
+
+        foreach ($tables as $table) {
+            if ($table->getId() == $tableID) {
+                return self::get($table->getTableName());
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * @return rex_yform_manager_table[]
      */
     public static function getAll()

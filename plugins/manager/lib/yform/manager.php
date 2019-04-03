@@ -1301,40 +1301,70 @@ class rex_yform_manager
                 $context = new rex_context(
                 $this->getLinkVars()
                 );
-                $items = [];
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_manager_show_form_notation');
-                $item['url'] = $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'show_form_notation']);
-                $item['attributes']['class'][] = 'btn-default';
-                if (rex_request('func', 'string') == 'show_form_notation') {
-                    $item['attributes']['class'][] = 'active';
-                }
-                $items[] = $item;
 
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_updatetable');
-                $item['url'] = $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'updatetable'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
-                $item['attributes']['class'][] = 'btn-default';
-                if (rex_request('func', 'string') == 'updatetable') {
-                    $item['attributes']['class'][] = 'active';
-                }
-                $items[] = $item;
-
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_updatetable_with_delete');
-                $item['url'] = $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'updatetablewithdelete'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
-                $item['attributes']['class'][] = 'btn-default';
-                if (rex_request('func', 'string') == 'updatetablewithdelete') {
-                    $item['attributes']['class'][] = 'active';
-                }
-                $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_updatetable_with_delete_confirm') . '\')';
-
-                $items[] = $item;
 
                 $fragment = new rex_fragment();
-                $fragment->setVar('buttons', $items, false);
                 $fragment->setVar('size', 'xs', false);
-                $panel_options = $fragment->parse('core/buttons/button_group.php');
+                $fragment->setVar('buttons', [
+                    [
+                        'label' => rex_i18n::msg('yform_data_view'),
+                        'url' => 'index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName(),
+                        'attributes' => [
+                            'class' => [
+                                'btn-default',
+                            ],
+                        ],
+                    ]
+                ], false);
+                $panel_options = '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_datas') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
+
+                $fragment = new rex_fragment();
+                $fragment->setVar('size', 'xs', false);
+                $fragment->setVar('buttons', [
+                    [
+                        'label' => rex_i18n::msg('yform_edit'),
+                        'url' => 'index.php?page=yform/manager/table_edit&func=edit&table_id='.$table->getId(),
+                        'attributes' => [
+                            'class' => [
+                                'btn-default',
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => rex_i18n::msg('yform_manager_show_form_notation'),
+                        'url' => $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'show_form_notation']),
+                        'attributes' => [
+                            'class' => [
+                                'btn-default',
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => rex_i18n::msg('yform_updatetable'),
+                        'url' => $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'updatetable'] + rex_csrf_token::factory($_csrf_key)->getUrlParams()),
+                        'attributes' => [
+                            'class' => [
+                                'btn-default',
+                            ],
+                        ],
+                    ],
+                    [
+                        'label' => rex_i18n::msg('yform_updatetable').' '.rex_i18n::msg('yform_updatetable_with_delete'),
+                        'url' => $context->getUrl(['table_name' => $table->getTableName(), 'func' => 'updatetablewithdelete'] + rex_csrf_token::factory($_csrf_key)->getUrlParams()),
+                        'attributes' => [
+                            'class' => [
+                                'btn-default',
+                            ],
+                            'onclick' => [
+                                'return confirm(\'' . rex_i18n::msg('yform_updatetable_with_delete_confirm') . '\')'
+                            ],
+                        ],
+                    ],
+
+                ], false);
+                $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_table') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
+
+
 
                 $sql = 'select id, prio, type_id, type_name, name, label from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
                 $list = rex_list::factory($sql, 200);
