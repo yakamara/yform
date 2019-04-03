@@ -11,8 +11,6 @@ class rex_yform_rest_route
         $this->config = $config;
         $this->config['table'] = $config['type']::table();
         $this->type = $config['type'];
-
-        // TODO: validate incoming config
     }
 
     public function hasAuth()
@@ -212,7 +210,7 @@ class rex_yform_rest_route
                         $data = [
                             'links' => $links,
                             'meta' => $meta,
-                            'data' => $data
+                            'data' => $data,
                         ];
                     }
                 } elseif ($instance) {
@@ -232,63 +230,91 @@ class rex_yform_rest_route
 
                 // ----- /END GET
 
-
-
-
-
-
-
-
-
-
-
             case 'post':
 
-                // TODO: to be optimized
+                $instance = $table->createDataset();
 
                 $errors = [];
-                $fields = $this->getFieldsFromModelType('post');
+                $fields = $this->getFields('post', $instance);
 
                 $in = json_decode(file_get_contents('php://input'), true);
 
-                $dataset = null;
-                if (isset($in['id'])) {
-                    $dataset = $table->getDataset($in['id']);
-                    $OKStatus = 200; // update
+                $data = (array) @$in['data']['attributes'];
+                $type = (string) @$in['data']['type'];
+
+                if (self::getTypeFromInstance($instance) != $type) {
+                    \rex_yform_rest::sendError(400, 'post-data-type-different');
                 }
 
-                if (!$dataset) {
-                    if (isset($in['id'])) {
-                        $dataset = $table->getRawDataset($in['id']);
-                    }
-                    if (!$dataset) {
-                        $dataset = $table->createDataset();
-                    }
-                    $OKStatus = 201; // created
-                }
-
-                foreach ($in as $inKey => $inValue) {
-                    if (array_key_exists($inKey, $fields)) {
-                        $dataset->setValue($inKey, $inValue);
-                    }
-                }
-
-                if ($dataset->save()) {
-                    \rex_yform_rest::sendContent($OKStatus, ['id' => $dataset->getId()]);
+                if (count($data) == 0) {
+                    \rex_yform_rest::sendError(400, 'post-data-attributes-empty');
                 } else {
-                    foreach ($dataset->getMessages() as $message_key => $message) {
-                        // TODO: Info wenn Meldung leer.. siehe leere Meldungen bei YForm
-                        $errors[] = \rex_i18n::translate($message);
+                    $dataset = null;
+                    if (isset($in['id'])) {
+                        $dataset = $table->getDataset($in['id']);
+                        $OKStatus = 200; // update
                     }
-                    \rex_yform_rest::sendError(400, 'errors-set', $errors);
+
+                    if (!$dataset) {
+                        if (isset($in['id'])) {
+                            $dataset = $table->getRawDataset($in['id']);
+                        }
+                        if (!$dataset) {
+                            $dataset = $table->createDataset();
+                        }
+                        $OKStatus = 201; // created
+                    }
+
+                    foreach ($data as $inKey => $inValue) {
+                        if (array_key_exists($inKey, $fields) && $fields[$inKey]->getTypeName() != 'be_manager_relation') {
+                            $dataset->setValue($inKey, $inValue);
+                        }
+                    }
+
+                    $relations = (array) @$in['data']['relationships'];
+
+                    foreach ($relations as $inKey => $inValue) {
+                        if (array_key_exists($inKey, $fields) && $fields[$inKey]->getTypeName() == 'be_manager_relation') {
+                            $relation_data = @$inValue['data'];
+                            if (!is_array($relation_data)) {
+                                $relation_data = [$relation_data];
+                            }
+
+                            $value = [];
+                            foreach ($relation_data as $relation_date) {
+                                $relation_date_type = (string) @$relation_date['type'];
+                                // TODO: übergebenen Type mit Klasse der Relation prüfen
+
+                                $relation_date_id = (int) @$relation_date['id'];
+                                if ($relation_date_id > 0) {
+                                    $value[] = $relation_date_id;
+                                }
+                            }
+                            // TODO: entsprechend des relationstypes reagieren
+                            $dataset->setValue($inKey, implode(',', $value));
+                        }
+                    }
+
+                    // TODO:
+                    // komplettes Dataset zurückgeben, nach https://jsonapi.org/
+
+                    if ($dataset->save()) {
+                        \rex_yform_rest::sendContent($OKStatus, ['id' => $dataset->getId()]);
+                    } else {
+                        foreach ($dataset->getMessages() as $message_key => $message) {
+                            $errors[] = \rex_i18n::translate($message);
+                        }
+                        \rex_yform_rest::sendError(400, 'errors-set', $errors);
+                    }
                 }
+
                 break;
 
             case 'delete':
 
-                // TODO: to be optimized
+                $instance = $table->createDataset();
 
-                $fields = $this->getFieldsFromModelType('delete');
+                $fields = $this->getFields('delete', $instance);
 
                 $queryClone = clone $query;
                 $query = $this->getFilterQuery($query, $fields, $get);
@@ -317,7 +343,7 @@ class rex_yform_rest_route
                     if ($i_data->delete()) {
                         ++$content['deleted'];
                     } else {
-                        ++$content['failes'];
+                        ++$content['failed'];
                     }
                     $content['dataset'][] = $date;
                 }
@@ -380,7 +406,6 @@ class rex_yform_rest_route
         if (isset($get['filter']) && is_array($get['filter'])) {
             foreach ($get['filter'] as $filterKey => $filterValue) {
                 foreach ($fields as $fieldName => $field) {
-
                     /* @var \rex_yform_manager_field $field */
 
                     if ($fieldName == $filterKey) {
@@ -413,7 +438,7 @@ class rex_yform_rest_route
     public function getInstanceData($instance, $paths)
     {
         $links = [];
-        $links['self'] =  \rex_yform_rest::getLinkByPath($this, [], $paths);
+        $links['self'] = \rex_yform_rest::getLinkByPath($this, [], $paths);
 
         return
         [
@@ -421,7 +446,7 @@ class rex_yform_rest_route
             'type' => $this->getTypeFromInstance($instance),
             'attributes' => $this->getInstanceAttributes($instance),
             'relationships' => $this->getInstanceRelationships($instance),
-            'links' => $links
+            'links' => $links,
         ];
     }
 
@@ -454,11 +479,11 @@ class rex_yform_rest_route
                 foreach ($relationInstances as $relationInstance) {
                     $data[] = $this->getInstanceData(
                         $relationInstance,
-                        array_merge($paths, [$field->getName(),$relationInstance->getId()])
+                        array_merge($paths, [$field->getName(), $relationInstance->getId()])
                     );
                 }
                 $return[$field->getName()] = [
-                    'data' => $data
+                    'data' => $data,
                 ];
 
                 $links = [];
@@ -490,10 +515,10 @@ class rex_yform_rest_route
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function getTypeFromInstance($instance)
+    public function getTypeFromInstance($instance = null)
     {
         $type = get_class($instance);
-        if ($type == 'rex_yform_manager_dataset') {
+        if ($type == 'rex_yform_manager_dataset' || $instance == 'rex_yform_rest_route' || !$instance) {
             $type = 'not-defined';
         }
         return $type;
