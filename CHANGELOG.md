@@ -1,6 +1,52 @@
 Changelog
 =========
 
+
+Version 3.1 – 04.04.2019
+--------------------------
+
+### Neue Features, bitte beachten
+
+* REST Plugin: Authentifizierung kann nun eingeschränkt und getrackt werden
+* REST Plugin: POST und DELETE ergänzt
+* YOrm: collection. Methoden ergänzt: first, last, filter, slice, shuffle, sort, map, split, chunk
+* Feld: upload: Upload-Dialogfeld per Filter auf gewählte Filetypes begrenzen
+* validate: password_policy: Wenn keine Fehlermeldung dann redaxo default
+* YForm: objparams: Answertext entfernt
+* manager: Filter und Sets umgebaut und vereinheitlicht
+* manager: fixdata. Nicht veränderbare Daten sind setz- und erzwingbar. Attribute disabled wird erzwungen.
+* EPs: YFORM_MANAGER_DATA_EDIT_FILTER und YFORM_MANAGER_DATA_EDIT_SET um im manager Aufrufe einschränken zu können.
+* manager: Import: Wird nun als Transaktion durchgeführt. Bei Fehlern wird ein Rollback ausgeführt
+* manager: Verlinkung bei table edit, Feld Edit, und Datensätze jeweils ergänzt.
+
+### Änderungen und Korrekturen
+
+* Feld: index um Typ `TEXT`
+* Feld: emptyname um Typ `MEDIUMTEXT` ergänzt
+* Feld: be_manager_relation um Typ `INT` ergänzt, be_manager_relation inline werte in email value pool übergeben
+* Feld: validate: custom function liefert nun an die passenden Felder die Fehlermeldungen, func aufruf flexibler und yform_value klasse
+* Feld: Datetime seconds hinzugefügt da notice. str_pad left für Anzeige bei select
+* Feld: action: callback angepasst
+* Feld: date/datetime: Deutsches Datums-Format hinzugefügt, Notices entfernt, yearEnd angepasst
+* Vendor update inputmask
+* Vendor update daterangepicker
+* Update tools.js
+* E-Mail-PlugIn: template Tabelle in utf8mb4_unicode_ci konvertiert
+* Template: checkbox classic template korrigiert
+* Template: value.choice.select.tpl.php für classic-Template erstellt
+* Diverse Übersetzungen und DOCs
+* YForm-Table-Cache löschen nach Installation oder Update
+* manager: dataset: isValid()
+* Massenbearbeitung korrigiert.
+* send parameter dynamisch setzen geht wieder
+* Email: reply_to angepasst und richtig eingesetzt
+* manager:migrate Table mit tinyint geht wieder 
+* Icons der Subpages entfernt
+* Feld: be_table geht nun wieder.
+* Email: update funktionierte nicht richtig.
+
+Danke: Yves Torres, Tobias Krais, Gregor Harlan, 8i11y, Alexander Walther
+
 Version 3.0 – 01.02.2019
 --------------------------
 
