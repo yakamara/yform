@@ -11,6 +11,10 @@ class rex_yform_rest_route
         $this->config = $config;
         $this->config['table'] = $config['type']::table();
         $this->type = $config['type'];
+        $this->table = $this->config['table'];
+        $this->query = $this->config['query'];
+        $this->instance = $this->table->createDataset();
+
     }
 
     public function hasAuth()
@@ -229,7 +233,7 @@ class rex_yform_rest_route
 
                 break;
 
-                // ----- /END GET
+            // ----- /END GET
 
             case 'post':
 
@@ -436,19 +440,29 @@ class rex_yform_rest_route
         return $query;
     }
 
-    public function getInstanceData($instance, $paths)
+    public function getInstanceData($instance, $paths, $onlyId = false)
     {
         $links = [];
         $links['self'] = \rex_yform_rest::getLinkByPath($this, [], $paths);
 
-        return
-        [
-            'id' => $instance->getId(),
-            'type' => $this->getTypeFromInstance($instance),
-            'attributes' => $this->getInstanceAttributes($instance),
-            'relationships' => $this->getInstanceRelationships($instance),
-            'links' => $links,
-        ];
+        if ($onlyId) {
+            return
+                [
+                    'id' => $instance->getId(),
+                    'type' => $this->getTypeFromInstance($instance),
+                    'links' => $links,
+                ];
+        } else {
+            return
+                [
+                    'id' => $instance->getId(),
+                    'type' => $this->getTypeFromInstance($instance),
+                    'attributes' => $this->getInstanceAttributes($instance),
+                    'relationships' => $this->getInstanceRelationships($instance),
+                    'links' => $links,
+                ];
+
+        }
     }
 
     public function getInstanceAttributes(\rex_yform_manager_dataset $instance)
@@ -472,15 +486,23 @@ class rex_yform_rest_route
         $fields = $this->getFields('get', $instance);
 
         $return = [];
+
+        /* @var rex_yform_manager_field $field */
+
         foreach ($fields as $field) {
             if ($field->getTypeName() == 'be_manager_relation') {
                 $relationInstances = $instance->getRelatedCollection($field->getName());
 
                 $data = [];
                 foreach ($relationInstances as $relationInstance) {
+                    $onlyId = false;
+                    if ($this->table->getTableName() == $relationInstance->getTableName()) {
+                        $onlyId = true;
+                    }
                     $data[] = $this->getInstanceData(
                         $relationInstance,
-                        array_merge($paths, [$field->getName(), $relationInstance->getId()])
+                        array_merge($paths, [$field->getName(), $relationInstance->getId()]),
+                        $onlyId
                     );
                 }
                 $return[$field->getName()] = [
