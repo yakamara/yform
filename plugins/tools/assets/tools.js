@@ -49,13 +49,12 @@ $(document).on('rex:ready',function(event, container) {
               "firstDay": 1
           };
 
-
     container.find("input[data-yform-tools-datepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-datepicker');
         locale.format = format;
         if (format != "") {
             $(this).daterangepicker({
-                "autoUpdateInput": true,
+                "autoUpdateInput": false,
                 "singleDatePicker": true,
                 "showDropdowns": true,
                 "showWeekNumbers": true,
@@ -82,7 +81,7 @@ $(document).on('rex:ready',function(event, container) {
                 "showWeekNumbers": true,
                 "showISOWeekNumbers": true,
                 "autoApply": true,
-				"autoUpdateInput": true,
+				"autoUpdateInput": false,
                 "locale": locale
               }, function(start, end, label) {
                   // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
@@ -99,14 +98,13 @@ $(document).on('rex:ready',function(event, container) {
         }
     });
 
-
     container.find("input[data-yform-tools-daterangepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-daterangepicker');
         if (format != "") {
             var format = format.replace("ii", "mm");
 			locale.format = format;
             $(this).daterangepicker({
-                "autoUpdateInput": true,
+                "autoUpdateInput": false,
                 "showDropdowns": true,
                 "showWeekNumbers": true,
                 "showISOWeekNumbers": true,
