@@ -49,14 +49,15 @@ class rex_yform_rest_route
         switch ($requestMethod) {
             case 'get':
 
+                $instance = $table->createDataset();
+                $fields = $this->getFields('get', $instance);
+
                 /* @var rex_yform_manager_dataset $instance */
                 $instance = null;
                 /* @var rex_yform_manager_collection $instance */
                 $instances = null;
                 $attribute = null;
                 $baseInstances = false;
-
-                $fields = $this->getFields('get');
 
                 if (count($paths) == 0) {
                     $baseInstances = true;
