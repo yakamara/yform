@@ -490,7 +490,7 @@ class rex_yform_rest_route
                 $links = [];
                 $links['self'] = \rex_yform_rest::getLinkByPath($this, [], array_merge($paths, [$field->getName()]));
 
-                if ($relationInstance) {
+                if (isset($relationInstance)) {
                     $route = \rex_yform_rest::getRouteByInstance($relationInstance);
 
                     if ($route) {
