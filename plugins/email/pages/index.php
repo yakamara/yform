@@ -174,6 +174,8 @@ if ($show_list) {
     $list->setColumnLabel('mail_from_name', rex_i18n::msg('yform_email_header_template_mail_from_name'));
     $list->setColumnLabel('subject', rex_i18n::msg('yform_email_header_template_subject'));
 
+    $list->removeColumn('mail_reply_to');
+    $list->removeColumn('mail_reply_to_name');
     $list->removeColumn('body');
     $list->removeColumn('body_html');
     $list->removeColumn('attachments');
