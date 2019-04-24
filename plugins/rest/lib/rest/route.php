@@ -14,6 +14,7 @@ class rex_yform_rest_route
         $this->table = $this->config['table'];
         $this->query = $this->config['query'];
         $this->instance = $this->table->createDataset();
+        $this->path = (substr($this->config['path'],-1) == '/') ? substr($this->config['path'],0, -1) : $this->config['path'];
 
     }
 
@@ -30,7 +31,7 @@ class rex_yform_rest_route
 
     public function getPath()
     {
-        return $this->config['path'];
+        return $this->path;
     }
 
     public function handleRequest($paths, $get)
@@ -534,13 +535,16 @@ class rex_yform_rest_route
 
     public function getRequestMethod()
     {
-        // TODO: implement: X-HTTP-Method-Override: PUT
+        if (isset($_SERVER['X-HTTP-Method-Override'])) {
+            return strtolower($_SERVER['X-HTTP-Method-Override']);
+        }
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
     public function getTypeFromInstance($instance = null)
     {
         $type = get_class($instance);
+
         if ($type == 'rex_yform_manager_dataset' || $instance == 'rex_yform_rest_route' || !$instance) {
             $type = 'not-defined';
         }
