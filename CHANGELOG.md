@@ -2,6 +2,21 @@ Changelog
 =========
 
 
+Version 3.1.1 – 24.04.2019
+--------------------------
+
+### Korrekturen
+
+* mediafile Template war fehlerhaft und nicht nutzbar
+* Email: mail_reply_to/mail_reply_to_name aus Liste entfernt
+* Tools: Datepickerdefault Einstellungen geändert. Damit die Suche im manager wieder geht
+* REST API: Feldererkennung war fehlerhaft.
+* REST API: Notice entfernt bei Relations
+* REST API: Selfrelations gehen nun
+* REST API: Path geht nun auch mit oder ohne / in URL
+
+
+
 Version 3.1 – 04.04.2019
 --------------------------
 
@@ -46,6 +61,9 @@ Version 3.1 – 04.04.2019
 * Email: update funktionierte nicht richtig.
 
 Danke: Yves Torres, Tobias Krais, Gregor Harlan, 8i11y, Alexander Walther
+
+
+
 
 Version 3.0 – 01.02.2019
 --------------------------
