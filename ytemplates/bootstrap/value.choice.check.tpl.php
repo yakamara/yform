@@ -65,7 +65,13 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 <?php
     } ?>
 
-<div<?= rex_string::buildAttributes($groupAttributes) ?> id="<?=$this->getHTMLId()?>">
+<?php 
+    if (!isset($groupAttributes['id'])) {
+        $groupAttributes['id'] = $this->getHTMLId();
+    }
+ ?>
+
+<div<?= rex_string::buildAttributes($groupAttributes) ?>>
     <?php if ($this->getLabel()): ?>
         <label class="control-label" for="<?= $this->getFieldId() ?>">
             <?= rex_escape($this->getLabelStyle($this->getLabel())) ?>
