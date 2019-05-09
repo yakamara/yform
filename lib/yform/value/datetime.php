@@ -67,9 +67,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         }
     }
 
-    private function datetime_getFormat()
+    private static function datetime_getFormat($format = '')
     {
-        $format = $this->getElement('format');
         if ($format == '') {
             $format = self::VALUE_DATETIME_DEFAULT;
         }
@@ -161,7 +160,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             return;
         }
 
-        $format = $this->datetime_getFormat();
+        $format = self::datetime_getFormat($this->datetime_getFormat());
 
         $yearStart = (int) $this->getElement('year_start');
 
@@ -265,5 +264,65 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             return $d->format($format);
         }
         return '[' . $params['subject'] . ']';
+    }
+
+    public static function getSearchField($params)
+    {
+        // 01/15/2015 - 02/15/2015
+        $format = self::datetime_getFormat($params['field']->getElement('format'));
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_values_date_search_notice', $format), 'attributes' => '{"data-yform-tools-daterangepicker":"' . $format . '"}']);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        // 01/15/2015 - 02/15/2015
+        // >19/11/2015
+        // <19/11/2015
+        // =19/11/2015
+        // 19/11/2015
+        // 19/11/2015-19/12/2015
+        // $value = self::date_convertFromFormatToIsoDate($this->getValue(), self::date_getFormat($this->getElement('format')));
+
+        $value = trim($params['value']);
+        if ($value == '') {
+            return;
+        }
+
+        $sql = rex_sql::factory();
+        $format = $params['field']->getElement('format');
+        $format_len = strlen($format);
+        $field = $params['field']->getName();
+        $firstchar = substr($value, 0, 1);
+
+        switch ($firstchar) {
+            case '>':
+            case '<':
+            case '=':
+                $date = substr($value, 1);
+                $date = self::datetime_convertFromFormatToIsoDatetime($date, $format);
+                return '(' . $sql->escapeIdentifier($field) . ' ' . $firstchar . ' ' . $sql->escape($date) . ')';
+                break;
+        }
+
+        // date
+        if (strlen($value) == $format_len) {
+            $date = self::datetime_convertFromFormatToIsoDatetime($value, $format);
+            return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($date) . ')';
+        }
+
+        $dates = explode(' - ', $value);
+        if (count($dates) == 2) {
+            // daterange
+            $date_from = self::datetime_convertFromFormatToIsoDatetime($dates[0], $format);
+            $date_to = self::datetime_convertFromFormatToIsoDatetime($dates[1], $format);
+
+            return ' (
+            ' . $sql->escapeIdentifier($field) . '>= ' . $sql->escape($date_from) . ' and
+            ' . $sql->escapeIdentifier($field) . '<= ' . $sql->escape($date_to) . '
+            ) ';
+        }
+
+        // wenn alles nicht hilfe -> plain rein
+        return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value) . ')';
     }
 }
