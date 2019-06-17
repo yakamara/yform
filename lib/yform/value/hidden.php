@@ -13,11 +13,11 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
     {
         if ($this->getElement(3) == 'REQUEST' && isset($_REQUEST[$this->getElement(2)])) {
             $this->value = rex_request($this->getElement(2));
-        } else if ($this->getElement(3) == 'GET' && isset($_REQUEST[$this->getElement(2)])) {
+        } else if ($this->getElement(3) == 'GET' && isset($_GET[$this->getElement(2)])) {
             $this->value = rex_get($this->getElement(2));
-        } else if ($this->getElement(3) == 'POST' && isset($_REQUEST[$this->getElement(2)])) {
+        } else if ($this->getElement(3) == 'POST' && isset($_POST[$this->getElement(2)])) {
             $this->value = rex_post($this->getElement(2));
-        } else if ($this->getElement(3) == 'SESSION' && isset($_REQUEST[$this->getElement(2)])) {
+        } else if ($this->getElement(3) == 'SESSION' && isset($_SESSION[$this->getElement(2)])) {
             $this->value = rex_session($this->getElement(2));
         } else {
             $this->value = $this->getElement(2);
