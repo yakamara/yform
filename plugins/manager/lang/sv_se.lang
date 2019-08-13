@@ -158,7 +158,11 @@ yform_dataset_deleted = Dataresultatet raderades
 yform_dataset_delete_confirm = Radera dataresultatet?
 
 yform_data = Datasats
+yform_datas = Dataset
 yform_manager_search = Sök
+
+yform_data_view = visa
+
 
 yform_data_select = ta över
 
@@ -193,6 +197,7 @@ yform_manager_import_error_missingfields = Det saknas följande fält: {0}
 yform_manager_import_error_min_missingfields = Det saknas minst ett fält: {0}
 yform_manager_import_error_field = Fält "{0}" kunde inte skapas: "{1}"
 yform_manager_import_field_added = Fält "{0}" har skapats
+yform_manager_import_error_import_abort = Importen utfördes inte på grund av följande fel: {0}
 yform_manager_import_error_import_stopped = Importen avbröts eftersom det uppstod fel.
 yform_manager_import_error_dataimport = Datasatts ({0}) kunde inte importeras: {1}
 yform_manager_import_error_import = {0} datasatser har importerats. Av det var {1} nya datasatser och {2} datasatser har ersätts.
