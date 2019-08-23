@@ -280,6 +280,8 @@ class rex_yform_manager
                 $yform->setHiddenFields($rex_yform_list);
                 $yform->setHiddenFields(['rex_yform_filter' => $rex_yform_filter]);
                 $yform->setHiddenFields(['rex_yform_set' => $rex_yform_set]);
+                $yform->setHiddenFields(['rex_yform_manager_opener' => $rex_yform_manager_opener]);
+                $yform->setHiddenFields(['rex_yform_manager_popup' => $rex_yform_manager_popup]);
 
                 if (rex_request('rex_yform_show_formularblock', 'string') != '') {
                     // Optional .. kann auch geloescht werden. Dient nur zu Hilfe beim Aufbau
