@@ -11,8 +11,14 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 {
     public function setValue($value)
     {
-        if ($this->getElement(3) == 'REQUEST' && isset($_REQUEST[$this->getElement(2)])) {
+        if ('REQUEST' == $this->getElement(3) && isset($_REQUEST[$this->getElement(2)])) {
             $this->value = rex_request($this->getElement(2));
+        } elseif ('GET' == $this->getElement(3) && isset($_GET[$this->getElement(2)])) {
+            $this->value = rex_get($this->getElement(2));
+        } elseif ('POST' == $this->getElement(3) && isset($_POST[$this->getElement(2)])) {
+            $this->value = rex_post($this->getElement(2));
+        } elseif ('SESSION' == $this->getElement(3) && null !== rex_session($this->getElement(2), 'string', null)) {
+            $this->value = rex_session($this->getElement(2));
         } else {
             $this->value = $this->getElement(2);
         }
@@ -20,7 +26,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->needsOutput() && $this->getElement(3) == 'REQUEST') {
+        if ($this->needsOutput() && (in_array($this->getElement(3), ['GET', 'POST', 'SESSION']))) {
             $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
         }
 
@@ -32,6 +38,6 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'hidden|name|(default)value||[no_db]'."\n".'hidden|job_id|my_id|REQUEST|[no_db]';
+        return 'hidden|name|(default)value||[no_db]'."\n".'hidden|job_id|my_id|REQUEST/GET/POST/SESSION|[no_db]';
     }
 }
