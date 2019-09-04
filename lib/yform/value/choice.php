@@ -289,7 +289,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $options['preferred_choices'] = $self->getArrayFromString($elements['preferred_choices']);
         }
         if ($elements['placeholder'] !== false && trim($elements['placeholder']) !== '') {
-            $options['placeholder'] = $elements['placeholder'];
+            $options['placeholder'] = rex_i18n::translate($elements['placeholder']);
         }
         if ($elements['choice_attributes'] !== false) {
             $options['choice_attributes'] = $elements['choice_attributes'];
