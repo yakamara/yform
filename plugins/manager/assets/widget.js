@@ -17,6 +17,7 @@ function deleteYFormDataset(id){
 }
 
 function deleteYFormDatasetList(id){
+	jQuery('body').trigger('rex:YForm_deleteData', [id]);
     deleteREX(id, 'YFORM_DATASETLIST_', 'YFORM_DATASETLIST_SELECT_');
 }
 
@@ -32,8 +33,8 @@ rex_retain_popup_event_handlers("rex:YForm_selectData");
 
 function setYFormDataset(id, data_id, data_name, multiple){
 
-    var event = opener.jQuery.Event("rex:YForm_selectData");
-    opener.jQuery(window).trigger(event, [data_id, data_name, multiple]);
+    var eventName = "rex:YForm_selectData";
+    var event = opener.jQuery.Event(eventName);
     if (event.isDefaultPrevented()) {
         self.close();
     }
@@ -56,5 +57,6 @@ function setYFormDataset(id, data_id, data_name, multiple){
         opener.document.getElementById(data_field_id).value = data_id;
         self.close();
     }
+    opener.jQuery('body').trigger(eventName, [id, data_id, data_name, multiple]);
 
 }
