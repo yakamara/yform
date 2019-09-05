@@ -55,11 +55,13 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/email/index');
+    $yform->setObjectparams('form_name', 'yform-email-template');
 
     $yform->setFormData(implode("\n", $form_data));
     $yform->setObjectparams('form_showformafterupdate', 1);
 
     $yform_clone = clone $yform;
+
 
     if ($func == 'edit') {
         $title = rex_i18n::msg('yform_email_update');
