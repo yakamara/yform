@@ -343,6 +343,12 @@ class rex_yform
                 $type = 'values';
             }
 
+            if (!class_exists($class)) {
+                array_unshift($element,'html', uniqid('html'));
+                $class = 'rex_yform_value_html';
+                $type = 'values';
+            }
+
             if (class_exists($class)) {
                 /* @var rex_yform_base_abstract $Object */
                 $Object = new $class();
