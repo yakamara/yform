@@ -113,6 +113,7 @@ yform_values_index_names = Felder
 yform_values_index_names_notice = Kommasepariert, auch Felder aus Relationen möglich, z. B.: title,description,category_id.name
 yform_values_index_function = Optional Codierfunktion
 yform_values_index_function_notice = z.B. md5, sha1
+yform_values_index_add_this_param = Feldobjekt als 2. Parameter an die Funktion übergeben ?
 yform_values_integer_default = Defaultwert
 yform_values_number_default = Defaultwert
 yform_values_mediafile_max_size = Maximale Größe in Kb oder Range 100,500
