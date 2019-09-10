@@ -270,7 +270,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     {
         // 01/15/2015 - 02/15/2015
         $format = self::datetime_getFormat($params['field']->getElement('format'));
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_values_date_search_notice', $format), 'attributes' => '{"data-yform-tools-daterangepicker":"' . $format . '"}']);
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_values_date_search_notice', $format), 'attributes' => '{"data-yform-tools-datetimerangepicker":"' . $format . '"}']);
     }
 
     public static function getSearchFilter($params)
