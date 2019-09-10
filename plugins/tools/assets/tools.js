@@ -48,31 +48,31 @@ $(document).on('ready pjax:success',function() {
         var format = $(this).attr('data-yform-tools-datepicker');
         if (format != "") {
             $(this).daterangepicker({
-                  autoUpdateInput: false,
-                  singleDatePicker: true,
-                  showDropdowns: true,
-                  showWeekNumbers: true,
-                  showISOWeekNumbers: true,
-                  autoApply: true,
-                  locale: {
-                      format: format,
-                      separator: " - ",
-                      weekLabel: "W",
-                      daysOfWeek: daysOfWeek,
-                      monthNames: monthNames,
-                      firstDay: 1
-                  }
-              }, function (start, end, label) {
-                  // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-              })
-              .on('apply.daterangepicker', function(e, picker) {
+                autoApply: true,
+                autoUpdateInput: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showWeekNumbers: true,
+                showISOWeekNumbers: true,
+                locale: {
+                    format: format,
+                    separator: " - ",
+                    weekLabel: "W",
+                    daysOfWeek: daysOfWeek,
+                    monthNames: monthNames,
+                    firstDay: 1
+                }
+            }, function (start, end, label) {
+                // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+            })
+                .on('apply.daterangepicker', function(e, picker) {
 
-                  var format = $(this).attr('data-yform-tools-datepicker');
-                  if (format != "") {
-                      $(this).val(picker.startDate.format(format));
-                  }
+                    var format = $(this).attr('data-yform-tools-datepicker');
+                    if (format != "") {
+                        $(this).val(picker.startDate.format(format));
+                    }
 
-              });
+                });
 
         }
     });
@@ -80,35 +80,35 @@ $(document).on('ready pjax:success',function() {
     $("input[data-yform-tools-datetimepicker]").each(function () {
         var format = $(this).attr('data-yform-tools-datetimepicker');
         if (format != "") {
+            alert(1);
             format = format.replace("ii", "mm"); // ii -> mm
             $(this).daterangepicker({
-                  timePicker: true,
-                  timePicker24Hour: true,
-                  timePickerSeconds: true,
-                  singleDatePicker: true,
-                  showDropdowns: true,
-                  showWeekNumbers: true,
-                  showISOWeekNumbers: true,
-                  autoApply: true,
-                  locale: {
-                      format: format,
-                      separator: " - ",
-                      weekLabel: "W",
-                      daysOfWeek: daysOfWeek,
-                      monthNames: monthNames,
-                      firstDay: 1
-                  }
-              }, function(start, end, label) {
-                  // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-              })
-              .on('apply.daterangepicker', function(e, picker) {
-                  format = $(this).attr('data-yform-tools-datetimepicker');
-                  format = format.replace("ii", "mm");
-                  if (format != "") {
-                      $(this).val(picker.startDate.format(format));
-                  }
+                timePicker: true,
+                timePicker24Hour: true,
+                timePickerSeconds: true,
+                singleDatePicker: true,
+                showDropdowns: true,
+                showWeekNumbers: true,
+                showISOWeekNumbers: true,
+                locale: {
+                    format: format,
+                    separator: " - ",
+                    weekLabel: "W",
+                    daysOfWeek: daysOfWeek,
+                    monthNames: monthNames,
+                    firstDay: 1
+                }
+            }, function(start, end, label) {
+                // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+            })
+                .on('apply.daterangepicker', function(e, picker) {
+                    format = $(this).attr('data-yform-tools-datetimepicker');
+                    format = format.replace("ii", "mm");
+                    if (format != "") {
+                        $(this).val(picker.startDate.format(format));
+                    }
 
-              });
+                });
         }
     });
 
@@ -120,7 +120,6 @@ $(document).on('ready pjax:success',function() {
                 timePicker: true,
                 timePicker24Hour: true,
                 timePickerSeconds: true,
-                autoUpdateInput: false,
                 showDropdowns: true,
                 showWeekNumbers: true,
                 showISOWeekNumbers: true,
@@ -164,7 +163,8 @@ $(document).on('ready pjax:success',function() {
         format = $(this).attr('data-yform-tools-daterangepicker');
         if (format != "") {
             $(this).daterangepicker({
-                autoUpdateInput: false,
+                autoApply: true,
+                autoUpdateInput: true,
                 showDropdowns: true,
                 showWeekNumbers: true,
                 showISOWeekNumbers: true,
