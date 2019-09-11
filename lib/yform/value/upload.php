@@ -92,7 +92,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             }
 
             if (isset($FILE)) {
-                $sizes = explode(',', $this->getElement('sizes'));
+                $sizes = array_map('intval', explode(',', $this->getElement('sizes')));
                 $min_size = count($sizes) > 1 ? (int) ($sizes[0] * 1024) : 0;
                 $max_size = count($sizes) > 1 ? (int) ($sizes[1] * 1024) : (int) ($sizes[0] * 1024);
 
