@@ -337,17 +337,35 @@ class rex_yform_manager
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 }
 
-                $form = $data->executeForm($yform, function (rex_yform $yform) {
-                    /** @var rex_yform_value_abstract $valueObject */
-                    foreach ($yform->objparams['values'] as $valueObject) {
-                        if ($valueObject->getName() == 'submit') {
-                            if ($valueObject->getValue() == 2) { // apply
-                                $yform->setObjectparams('form_showformafterupdate', 1);
-                                $yform->executeFields();
+                $sql_db = rex_sql::factory();
+                $sql_db->beginTransaction();
+
+                $transactionErrorMessage = null;
+
+                try {
+
+                    $form = $data->executeForm($yform, function (rex_yform $yform) {
+                        /** @var rex_yform_value_abstract $valueObject */
+                        foreach ($yform->objparams['values'] as $valueObject) {
+                            if ($valueObject->getName() == 'submit') {
+                                if ($valueObject->getValue() == 2) { // apply
+                                    $yform->setObjectparams('form_showformafterupdate', 1);
+                                    $yform->executeFields();
+                                }
                             }
                         }
-                    }
-                });
+                    });
+
+                } catch (\Throwable $e) {
+                    $sql_db->rollBack();
+                    $transactionErrorMessage = $e->getMessage();
+                }
+
+                if ($transactionErrorMessage) {
+                    echo rex_view::error(rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage));
+                } else {
+                    $sql_db->commit();
+                }
 
                 if ($yform->objparams['actions_executed']) {
                     if ($func == 'edit') {
