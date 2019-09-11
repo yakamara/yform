@@ -49,7 +49,7 @@ $(document).on('ready pjax:success',function() {
         if (format != "") {
             $(this).daterangepicker({
                 autoApply: true,
-                autoUpdateInput: true,
+                autoUpdateInput: false,
                 singleDatePicker: true,
                 showDropdowns: true,
                 showWeekNumbers: true,
@@ -78,11 +78,12 @@ $(document).on('ready pjax:success',function() {
     });
 
     $("input[data-yform-tools-datetimepicker]").each(function () {
+
         var format = $(this).attr('data-yform-tools-datetimepicker');
         if (format != "") {
-            alert(1);
             format = format.replace("ii", "mm"); // ii -> mm
             $(this).daterangepicker({
+                autoUpdateInput: false,
                 timePicker: true,
                 timePicker24Hour: true,
                 timePickerSeconds: true,
@@ -117,6 +118,7 @@ $(document).on('ready pjax:success',function() {
         if (format != "") {
             var format = format.replace("ii", "mm");
             $(this).daterangepicker({
+                autoUpdateInput: false,
                 timePicker: true,
                 timePicker24Hour: true,
                 timePickerSeconds: true,
@@ -164,7 +166,7 @@ $(document).on('ready pjax:success',function() {
         if (format != "") {
             $(this).daterangepicker({
                 autoApply: true,
-                autoUpdateInput: true,
+                autoUpdateInput: false,
                 showDropdowns: true,
                 showWeekNumbers: true,
                 showISOWeekNumbers: true,
