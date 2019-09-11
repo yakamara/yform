@@ -678,14 +678,26 @@ class rex_yform_manager
                 $fragment->setVar('content', $content, false);
                 $content = $fragment->parse('core/page/section.php');
 
+                $grid = [];
+                $grid['content'] = [];
                 if ($this->table->isSearchable() && $this->hasDataPageFunction('search')) {
-                    $fragment = new rex_fragment();
-                    $fragment->setVar('content', [$searchform, $content], false);
-                    $fragment->setVar('classes', ['col-sm-3 col-md-3 col-lg-2', 'col-sm-9 col-md-9 col-lg-10'], false);
-                    echo $fragment->parse('core/page/grid.php');
-                } else {
-                    echo $content;
+                    $grid['content']['searchform'] = $searchform;
                 }
+                $grid['content']['searchlist'] = $content;
+
+                $grid['classes'] = [];
+                $grid['classes']['searchform'] = 'col-sm-3 col-md-3 col-lg-2';
+                $grid['classes']['searchlist'] = 'col-sm-9 col-md-9 col-lg-10';
+
+                $grid['fragment'] = 'yform/manager/page/grid.php';
+
+                $grid = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST_GRID', $grid, ['table' => $this->table]));
+
+                $fragment = new rex_fragment();
+                $fragment->setVar('content', $grid['content'], false);
+                $fragment->setVar('classes', $grid['classes'], false);
+                echo $fragment->parse($grid['fragment']);
+
             }
         } // end: $show_editpage
     }
