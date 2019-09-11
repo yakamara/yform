@@ -519,6 +519,8 @@ class rex_yform_manager_dataset
 
         rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_DELETED', '', ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
 
+        rex_yform_manager_dataset::clearInstance([$this->getTable()->getName(), $this->id]);
+
         $this->invalidateData();
         $this->dataLoaded = true;
 
