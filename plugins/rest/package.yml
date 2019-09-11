@@ -6,6 +6,7 @@ supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 page:
     title: 'translate:yform_rest'
     pjax: true
+    perm: admin
     subpages:
-        token: { title: translate:yform_rest_token, perm: admin}
-        access: { title: translate:yform_rest_token_access, perm: admin }
+        token: { title: translate:yform_rest_token }
+        access: { title: translate:yform_rest_token_access }
