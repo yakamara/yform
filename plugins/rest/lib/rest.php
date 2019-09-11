@@ -138,8 +138,9 @@ class rex_yform_rest
         $query = http_build_query($params, '', '&');
         $query = ($query != '') ? '?' . $query : $query;
 
-        $additionalPaths = implode('/', $additionalPaths);
-        return $url . self::$preRoute . $route->getPath() . $additionalPaths . $query ;
+        $path = implode('/', array_merge([$route->getPath()], $additionalPaths));
+
+        return $url . self::$preRoute . $path . $query ;
 
     }
 
