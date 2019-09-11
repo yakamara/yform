@@ -74,10 +74,11 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
         $yform->setObjectparams('main_where', "id=$template_id");
         $yform->setObjectparams('main_table', $table);
         $yform->setObjectparams('getdata', true);
+
     } else {
         $yform->setHiddenField('func', $func);
         $title = rex_i18n::msg('yform_email_create');
-        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add'), 'values' => '1,btn-apply', 'no_db' => true, 'css_classes' => 'btn-save']);
         $yform->setActionField('db', [$table]);
         $yform->setActionField('showtext', [rex_view::success(rex_i18n::msg('yform_email_info_template_added')), '', '', 1]);
     }
