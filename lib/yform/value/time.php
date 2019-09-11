@@ -9,7 +9,7 @@
 
 class rex_yform_value_time extends rex_yform_value_abstract
 {
-    const VALUE_TIME_DEFAULT = 'HH:ii:ss';
+    const VALUE_TIME_SHOW_FORMAT = 'H:i:s';
 
     public function preValidateAction()
     {
@@ -32,6 +32,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $value = $this->getValue();
 
             if (is_array($value)) {
+                // widget: selects
                 $hour = (int) substr(@$value['hour'], 0, 2);
                 $minute = (int) substr(@$value['minute'], 0, 2);
                 $second = (int) substr(@$value['second'], 0, 2);
@@ -40,70 +41,30 @@ class rex_yform_value_time extends rex_yform_value_abstract
                     str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($second, 2, '0', STR_PAD_LEFT);
+
             } else {
                 // widget: input:text
-                $value = self::time_convertFromFormatToIsoTime($this->getValue(), $this->time_getFormat());
+                // $value = $this->getValue(), $this->time_getFormat());
             }
 
             $this->setValue($value);
         }
 
-        // value set: isotimeformat
     }
 
-    private function time_getFormat()
+    public static function time_getFormat($format = '')
     {
-        $format = $this->getElement('format');
-        if ($format == '') {
-            $format = self::VALUE_TIME_DEFAULT;
-        }
-        return $format;
+        return ($format != '') ? $format : self::VALUE_TIME_SHOW_FORMAT;
+
     }
 
-    public static function time_convertIsoTimeToFormat($iso_timestring, $format)
+    public static function time_getFormattedTime($iso_timestring, $format)
     {
-        // 13:15:23
         $hour = (int) substr($iso_timestring, 0, 2);
         $minute = (int) substr($iso_timestring, 3, 2);
         $second = (int) substr($iso_timestring, 6, 2);
+        return date($format, mktime($hour, $minute, $second, 1, 1, 2000)); // dummy date
 
-        $hour = str_pad($hour, 2, '0', STR_PAD_LEFT);
-        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
-        $second = str_pad($second, 2, '0', STR_PAD_LEFT);
-
-        $replace = ['HH' => $hour, 'ii' => $minute, 'ss' => $second];
-        $timestring = strtr($format, $replace);
-
-        return $timestring;
-    }
-
-    public static function time_convertFromFormatToIsotime($timestring, $format)
-    {
-        $hour = 0;
-        $pos = strpos($format, 'HH');
-        if ($pos !== false) {
-            $hour = (int) substr($timestring, $pos, 2);
-        }
-
-        $minute = 0;
-        $pos = strpos($format, 'ii');
-        if ($pos !== false) {
-            $minute = (int) substr($timestring, $pos, 2);
-        }
-
-        $second = 0;
-        $pos = strpos($format, 'ss');
-        if ($pos !== false) {
-            $second = (int) substr($timestring, $pos, 2);
-        }
-
-        $hour = str_pad($hour, 2, '0', STR_PAD_LEFT);
-        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
-        $second = str_pad($second, 2, '0', STR_PAD_LEFT);
-
-        $iso_timestring = sprintf('%02d:%02d:%02d', $hour, $minute, $second);
-
-        return $iso_timestring;
     }
 
     public function enterObject()
@@ -118,7 +79,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             return;
         }
 
-        $format = $this->time_getFormat();
+        $format = "HH:ii:ss";
 
         if ($this->getElement('hours') != '') {
             $hours = explode(',', trim($this->getElement('hours')));
@@ -147,14 +108,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
         $minute = (int) substr($this->getValue(), 3, 2);
         $second = (int) substr($this->getValue(), 6, 2);
 
-        $input_value = self::time_convertIsoTimeToFormat($this->getValue(), $format);
-
         if ($this->getElement('widget') == 'input:text') {
-            $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.text.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
-                ['value.time.tpl.php', 'value.datetime.tpl.php'],
-                compact('format', 'hours', 'minutes', 'seconds', 'hour', 'minute', 'second')
+                ['value.time.tpl.php', 'value.datetime.tpl.php'], compact('format', 'hours', 'minutes', 'seconds', 'hour', 'minute', 'second')
             );
         }
     }
@@ -174,7 +133,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'label' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'hours' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_time_hours')],
                 'minutes' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_time_minutes')],
-                'format' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_time_format'), 'notice' => rex_i18n::msg('yform_values_time_format_notice')],
+                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a']],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
@@ -186,11 +145,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $format = $params['params']['field']['format'];
-        if ($format == '') {
-            $format = self::VALUE_TIME_DEFAULT;
-        }
+        return '<nobr>'.self::time_getFormattedTime($params['subject'], self::time_getFormat($params['params']['field']['format'])).'</nobr>';
 
-        return self::time_convertIsoTimeToFormat($params['subject'], $format);
     }
 }
