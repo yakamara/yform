@@ -46,7 +46,6 @@ switch ($count) {
 
     default:
 
-        echo "ppp";
         foreach ($this->content as $content) {
             echo $content;
         }
