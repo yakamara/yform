@@ -31,6 +31,9 @@ Version 3.2 – xx.09.2019
 * REST: Tokenfreigabe können nun auf Endpoints beschränkt werden
 * REST: Zugriffsübersicht zeigte falschen Tokennamen an.
 
+Dank geht an: godsdog, Alexander Walther, Yves Torres, Pascal Schuchmann, Fernando Averanga, Jürgen Weiss, Marco Hanke 
+
+
 
 
 Version 3.1.1 – 24.04.2019
