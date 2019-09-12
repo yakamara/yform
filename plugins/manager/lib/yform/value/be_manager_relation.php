@@ -506,6 +506,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
 
         $listValues = self::getListValues($field['table'], $field['field']);
+
+        if (3 == $field['type']) {
+            // n:m
+            return implode('<br />', $listValues);
+        }
+
         $return = [];
         foreach (explode(',', $params['value']) as $value) {
             if (isset($listValues[$value])) {
