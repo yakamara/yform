@@ -44,3 +44,5 @@ yform_rest_token_access_deleted = Eintrag wurde gelöscht
 yform_rest_token_access_updated = Eintrag wurde aktualisiert
 yform_rest_token_access_datetime_created = Zugriff am
 yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Erlaubte Endpoints

@@ -11,11 +11,11 @@ class rex_yform_rest_auth_token
     ];
     public static $tokenList = [];
 
-    public static function checkToken()
+    public static function checkToken(rex_yform_rest_route $route)
     {
         $myToken = \rex_yform_rest::getHeader('token');
 
-        $TokenAuths = \rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token').' where status=1 and token=?', [$myToken]);
+        $TokenAuths = \rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token').' where status=1 and token=? and FIND_IN_SET(?, paths)', [$myToken, $route->getPath()]);
 
         if (count($TokenAuths) != 1) {
             return false;
@@ -62,7 +62,7 @@ class rex_yform_rest_auth_token
         }
 
         foreach (self::$tokenList as $token) {
-            if ($token['id']) {
+            if ($token['id'] == $id) {
                 return $token;
             }
         }

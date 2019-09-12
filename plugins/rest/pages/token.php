@@ -20,6 +20,11 @@ $data_id = rex_request('data_id', 'int');
 $content = '';
 $show_list = true;
 
+$routes = [];
+foreach(rex_yform_rest::getRoutes() as $route) {
+    $routes[] = $route->getPath();
+}
+
 if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
 } elseif ($func == 'delete') {
@@ -37,6 +42,7 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'validate|empty|token|translate:yform_rest_token_token_validate';
     $form_data[] = 'choice|interval|translate:yform_rest_token_interval|translate:yform_rest_token_none=none,translate:yform_rest_token_overall=overall,translate:yform_rest_token_per_hour=hour,translate:yform_rest_token_per_day=day,translate:yform_rest_token_per_month=month|#attributes:{"class": "form-control yform-rest-token-interval-select"}';
     $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
+    $form_data[] = 'choice|paths|translate:yform_rest_token_token_paths|'.implode(',', $routes).'||1';
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest/token');

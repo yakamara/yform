@@ -22,7 +22,7 @@ class rex_yform_rest_route
     {
         if (isset($this->config['auth'])) {
             if (is_callable($this->config['auth'])) {
-                return call_user_func($this->config['auth']);
+                return call_user_func($this->config['auth'], $this);
             }
             return $this->config['auth'];
         }
