@@ -1,6 +1,37 @@
 Changelog
 =========
 
+Version 3.2 – xx.09.2019
+--------------------------
+
+### Korrekturen, Anpassungen
+
+* Diverse Beschreibungen und fehlende Texte ergänzt, Übersetzungen nachgezogen
+* YForm: EP YFORM_INIT ergänzt, um allgemeine Einstellungen einbinden zu können
+* YForm: als factory trait nun möglich
+* Docs Update
+* Anpassungen Javascript um besser auf Objekte zugreifen zu können
+* pipe Notation verbessert: Tabs werden am Anfang ignoriert. Zeilen die keine validate,action oder value Feld sind werden als html interpretiert (bessere Übersicht)
+* Choice-Feld: Platzhalter wurden fälschlicherweise als Json erkannt, IDs werden nun angezeigt, Placeholder wird nun übersetzt
+* Datetime-Feld: Manager - Nun auch durchsuchbar
+* Validate-empty: Mehrfach Validierung als ODER nun möglich
+* index-Feld: Funktionsaufruf optimiert. Parameter nun optional
+* hidden-Feld: um SESSION, GET, und POST erweitert
+* textarea-Feld: nun auch Defaultwert möglich
+* time-Feld: Format nur noch für die Ausgabe und mit voreingestellten Varianten
+* Tools: daterangepicker aktualisiert. v3.0.5
+* Tools: Daterangepickeraufrufe optimiert
+* Manager: Nach Datensatzlöschung wird Instanz nun direkt auch gelöscht
+* Manager: Grid in Fragmente gelegt und somit überschreibbar gemacht, für eigene Layoutlösungen
+* Manager: Collection-Edit nun als Transaktion
+* Be-Relation-Feld: m:n Werte werden nun in der Listenübersicht angezeigt.
+* Be-Relation-Feld: Popup wurde z.T. fehlerhaft angezeigt
+* E-Mail: Template anlegen, nun ohne übernehmen, da dies nicht funktionierte
+* REST: Pathangaben in der JSON-Antwort waren z.T. falsch
+* REST: Tokenfreigabe können nun auf Endpoints beschränkt werden
+* REST: Zugriffsübersicht zeigte falschen Tokennamen an.
+
+
 
 Version 3.1.1 – 24.04.2019
 --------------------------
