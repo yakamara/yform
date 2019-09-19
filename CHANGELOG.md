@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 3.2 – xx.09.2019
+Version 3.2 – 19.09.2019
 --------------------------
 
 ### Korrekturen, Anpassungen
