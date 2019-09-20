@@ -108,7 +108,7 @@ class rex_var_yform_table_data extends rex_var
                 <select class="form-control" name="YFORM_DATASETLIST_SELECT_' . $id . '" id="YFORM_DATASETLIST_SELECT_' . $id . '" size="10">
                     ' . implode('', $options) . '
                 </select>
-                <input type="hidden" name="' . $name . '" id="YFORM_DATASETLIST_' . $id . '" value="' . rex_escape(($value)) . '" />';
+                <input type="hidden" name="' . $name . '" id="YFORM_DATASETLIST_FIELD_' . $id . '" value="' . rex_escape(($value)) . '" />';
 
         $e['moveButtons'] = '
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="moveYFormDatasetList(' . $id . ',\'top\');return false;" title="' . rex_i18n::msg('yform_relation_move_first_data') . '"><i class="rex-icon rex-icon-top"></i></a>
@@ -133,7 +133,7 @@ class rex_var_yform_table_data extends rex_var
             $valueName = rex_escape(trim(sprintf('%s [%s]', $args['valueName'], $value)));
         }
 
-        $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  $valueName . '" id="YFORM_DATASET_' . $id . '_NAME" readonly="readonly" /><input type="hidden" name="' .  $name . '" id="YFORM_DATASET_' . $id . '" value="' . $value . '" />';
+        $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  $valueName . '" id="YFORM_DATASET_SELECT_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $name . '" id="YFORM_DATASET_FIELD_' . $id . '" value="' . $value . '" />';
         $e['functionButtons'] = '
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="openYFormDataset(' . $id . ', \'' . urlencode($args['fieldName']) . '\', \'' . $link . '\');return false;" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="deleteYFormDataset(' . $id . ');return false;" title="' .  rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>';

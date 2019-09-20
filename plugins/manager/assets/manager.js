@@ -91,6 +91,7 @@ $(document).on('rex:ready', function (event, container) {
 });
 
 var be_relation_media_counter = 100; // no conflicts to 100 media in one page
+var be_relation_counter = 100; // no conflicts to 100 media in one page
 
 $(document).on('rex:ready', function (event, container) {
 
@@ -164,6 +165,35 @@ $(document).on('rex:ready', function (event, container) {
 
   });
 
+  container.find('[data-be-relation-wrapper]').each(function() {
+
+    // irgendwie werden die Werte in der Datalist nicht übernommen
+
+    be_relation_counter++;
+
+    // REX_MEDIA
+    var regexp_media = [
+      new RegExp("(id=\"YFORM_DATASETLIST_SELECT_)", 'g'),
+      new RegExp("(id=\"YFORM_DATASETLIST_FIELD_)", 'g'),
+      new RegExp("(moveYFormDatasetList\\()", 'g'),
+      new RegExp("(openYFormDatasetList\\()", 'g'),
+      new RegExp("(deleteYFormDatasetList\\()", 'g'),
+
+      // TODO noch prüfen
+      new RegExp("(id=\"YFORM_DATASET_SELECT_)", 'g'),
+      new RegExp("(id=\"YFORM_DATASET_FIELD_)", 'g'),
+      new RegExp("(openYFormDataset\\()", 'g'),
+      new RegExp("(deleteYFormDataset\\()", 'g')
+    ];
+
+    for (var i in regexp_media) {
+      $(this).html($(this).html().replace(regexp_media[i], '$1' + be_relation_counter));
+    }
+
+    console.log($(this).html());
+
+  });
+
   container.find('[data-be-media-wrapper]').each(function() {
 
     be_relation_media_counter++;
@@ -174,11 +204,11 @@ $(document).on('rex:ready', function (event, container) {
       new RegExp("(openREXMedia\\()", 'g'),
       new RegExp("(addREXMedia\\()", 'g'),
       new RegExp("(deleteREXMedia\\()", 'g'),
-      new RegExp("(viewREXMedia\\()", 'g'),
+      new RegExp("(viewREXMedia\\()", 'g')
     ];
 
     for (var i in regexp_media) {
-      // $(this).html($(this).html().replace(regexp_media[i], '$1' + be_relation_media_counter));
+      $(this).html($(this).html().replace(regexp_media[i], '$1' + be_relation_media_counter));
     }
 
     // REX_MEDIALIST

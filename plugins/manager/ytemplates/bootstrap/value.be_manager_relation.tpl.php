@@ -2,7 +2,7 @@
 
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
-$id = crc32($this->params['form_name']) . rand(0, 10000) . $this->getId();
+$id = crc32($this->params['form_name']. rand(0, 100). $this->getId())  ;
 
 $notice = [];
 if ($this->getElement('notice') != '') {
@@ -19,7 +19,7 @@ if (count($notice) > 0) {
 
 ?>
 <?php if ($this->relation['relation_type'] < 2): ?>
-    <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
+    <div data-be-relation-wrapper="<?php echo $this->getFieldName(); ?>" class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
         <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabelStyle($this->relation['label']) ?></label>
         <?php
 
@@ -50,7 +50,7 @@ if (count($notice) > 0) {
         <?php echo $notice ?>
     </div>
 <?php else: ?>
-    <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
+    <div data-be-relation-wrapper="<?php echo $this->getFieldName(); ?>" class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
         <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabelStyle($this->relation['label']) ?></label>
         <?php
         $e = [];
@@ -66,7 +66,7 @@ if (count($notice) > 0) {
             $fragment->setVar('elements', [$e], false);
             echo $fragment->parse('core/form/widget.php');
         } elseif ($this->relation['relation_type'] == 2) {
-            $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  htmlspecialchars($valueName) . '" id="YFORM_DATASET_' . $id . '_NAME" readonly="readonly" /><input type="hidden" name="' .  $this->getFieldName() . '" id="YFORM_DATASET_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
+            $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  htmlspecialchars($valueName) . '" id="YFORM_DATASET_SELECT_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $this->getFieldName() . '" id="YFORM_DATASET_FIELD_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
             $e['functionButtons'] = '
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="openYFormDataset(' . $id . ', \'' . $this->relation['source_table'] . '.' . $this->getName() . '\', \'' . $link . '\',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="deleteYFormDataset(' . $id . ',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>';
@@ -87,7 +87,7 @@ if (count($notice) > 0) {
             foreach ($options as $option) {
                 $select->addOption($option['name'], $option['id']);
             }
-            $e['field'] = $select->get() . '<input type="hidden" name="' . $this->getFieldName() . '" id="YFORM_DATASETLIST_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
+            $e['field'] = $select->get() . '<input type="hidden" name="' . $this->getFieldName() . '" id="YFORM_DATASETLIST_FIELD_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
 
             $e['moveButtons'] = '
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="moveYFormDatasetList(' . $id . ',\'top\');return false;" title="' . rex_i18n::msg('yform_relation_move_first_data') . '"><i class="rex-icon rex-icon-top"></i></a>

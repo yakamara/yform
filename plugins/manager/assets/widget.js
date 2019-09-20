@@ -10,31 +10,30 @@ function openYFormDatasetList(id, field, link)
 
 function deleteYFormDataset(id){
     var a;
-    a = new getObj('YFORM_DATASET_'+id);
+    a = new getObj('YFORM_DATASET_FIELD_' + id);
     a.obj.value = '';
-    a = new getObj('YFORM_DATASET_'+id+'_NAME');
+    a = new getObj('YFORM_DATASET_SELECT_' + id);
     a.obj.value = '';
 }
 
 function deleteYFormDatasetList(id){
-	jQuery('body').trigger('rex:YForm_deleteData', [id]);
-    deleteREX(id, 'YFORM_DATASETLIST_', 'YFORM_DATASETLIST_SELECT_');
+    deleteREX(id, 'YFORM_DATASETLIST_FIELD_', 'YFORM_DATASETLIST_SELECT_');
 }
 
 function moveYFormDatasetList(id, direction){
-    moveREX(id, 'YFORM_DATASETLIST_', 'YFORM_DATASETLIST_SELECT_', direction);
+    moveREX(id, 'YFORM_DATASETLIST_FIELD_', 'YFORM_DATASETLIST_SELECT_', direction);
 }
 
 function writeYFormDatasetlist(id){
-    writeREX(id, 'YFORM_DATASETLIST_', 'YFORM_DATASETLIST_SELECT_');
+    writeREX(id, 'YFORM_DATASETLIST_FIELD_', 'YFORM_DATASETLIST_SELECT_');
 }
 
 rex_retain_popup_event_handlers("rex:YForm_selectData");
 
 function setYFormDataset(id, data_id, data_name, multiple){
 
-    var eventName = "rex:YForm_selectData";
-    var event = opener.jQuery.Event(eventName);
+    var event = opener.jQuery.Event("rex:YForm_selectData");
+    opener.jQuery(window).trigger(event, [data_id, data_name, multiple]);
     if (event.isDefaultPrevented()) {
         self.close();
     }
@@ -49,14 +48,14 @@ function setYFormDataset(id, data_id, data_name, multiple){
         option.value = data_id;
 
         source.options.add(option, sourcelength);
-        opener.writeREX(id, 'YFORM_DATASETLIST_', 'YFORM_DATASETLIST_SELECT_');
+        opener.writeREX(id, 'YFORM_DATASETLIST_FIELD_', 'YFORM_DATASETLIST_SELECT_');
+
     }else {
-        var data_field_name = 'YFORM_DATASET_'+id+'_NAME';
-        var data_field_id = 'YFORM_DATASET_'+id;
+        var data_field_name = 'YFORM_DATASET_SELECT_' + id;
+        var data_field_id = 'YFORM_DATASET_FIELD_' + id;
         opener.document.getElementById(data_field_name).value = data_name;
         opener.document.getElementById(data_field_id).value = data_id;
         self.close();
     }
-    opener.jQuery('body').trigger(eventName, [id, data_id, data_name, multiple]);
 
 }
