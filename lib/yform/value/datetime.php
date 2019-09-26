@@ -160,7 +160,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             return;
         }
 
-        $format = self::datetime_getFormat($this->datetime_getFormat());
+        $format = self::datetime_getFormat($this->getElement('format'));
 
         $yearStart = (int) $this->getElement('year_start');
 
