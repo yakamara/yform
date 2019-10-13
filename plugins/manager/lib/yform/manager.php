@@ -356,15 +356,14 @@ class rex_yform_manager
                         }
                     });
 
+                    $sql_db->commit();
                 } catch (\Throwable $e) {
                     $sql_db->rollBack();
                     $transactionErrorMessage = $e->getMessage();
-                }
-
-                if ($transactionErrorMessage) {
-                    echo rex_view::error(rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage));
-                } else {
-                    $sql_db->commit();
+                    
+                    if ($transactionErrorMessage) {
+                        echo rex_view::error(rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage));
+                    }
                 }
 
                 if ($yform->objparams['actions_executed']) {
