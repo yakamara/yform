@@ -464,7 +464,7 @@ class rex_yform_manager
                     if (is_array($paramValue)) {
                         foreach ($paramValue as $paramKey2 => $paramValue2) {
                             if (is_array($paramValue2)) {
-                                throw new \Exception('multi dimenstional arrays are not supported!');
+                                throw new \Exception('multi dimensional arrays are not supported!');
                             }
 
                             $list->addParam($paramKey.'['.$paramKey2.']', $paramValue2);
