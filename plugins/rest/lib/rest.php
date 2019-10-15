@@ -39,7 +39,7 @@ class rex_yform_rest
     public static function getCurrentPath()
     {
         $url = parse_url($_SERVER['REQUEST_URI']);
-        return $url['path'];
+        return $url['path'] ?? '';
     }
 
     public static function handleRoutes()
