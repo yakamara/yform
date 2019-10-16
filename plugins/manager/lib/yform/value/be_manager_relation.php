@@ -505,13 +505,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return '<a href="' . $link . '">' . rex_i18n::translate($field['label']) . '</a>';
         }
 
+        // read all values
         $listValues = self::getListValues($field['table'], $field['field']);
 
-        if (3 == $field['type']) {
-            // n:m
-            return implode('<br />', $listValues);
-        }
-
+        // filter values
         $return = [];
         foreach (explode(',', $params['value']) as $value) {
             if (isset($listValues[$value])) {
@@ -529,7 +526,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $tableObject = rex_yform_manager_table::get($table);
             self::$yform_list_values[$table][$field][$filterHash] = [];
             $db = rex_sql::factory();
-            //$db->debugsql = true;
+            // $db->setDebug();
             $where = '';
             $join = '';
             $joinIndex = 1;
