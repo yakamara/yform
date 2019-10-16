@@ -6,6 +6,7 @@ yform_rest_token_header = REST: Tokens
 
 yform_rest_token_name = Name
 yform_rest_token_token = Token
+yform_rest_token_token_notice = Neuer Token gewünscht ? [{0}]
 yform_rest_token_status = Aktiv
 
 yform_rest_token_deleted = Token wurde gelöscht

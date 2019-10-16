@@ -35,10 +35,12 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 } elseif ($func == 'edit' || $func == 'add') {
     $form_data = [];
 
+    $dummyToken = bin2hex(random_bytes((32-(32%2))/2));
+
     $form_data[] = 'checkbox|status|translate:yform_rest_token_status';
     $form_data[] = 'text|name|translate:yform_rest_token_name';
     $form_data[] = 'validate|empty|name|translate:yform_rest_token_name_validate';
-    $form_data[] = 'text|token|translate:yform_rest_token_token';
+    $form_data[] = 'text|token|translate:yform_rest_token_token|#notice:'.rex_i18n::msg('yform_rest_token_token_notice', $dummyToken);;
     $form_data[] = 'validate|empty|token|translate:yform_rest_token_token_validate';
     $form_data[] = 'choice|interval|translate:yform_rest_token_interval|translate:yform_rest_token_none=none,translate:yform_rest_token_overall=overall,translate:yform_rest_token_per_hour=hour,translate:yform_rest_token_per_day=day,translate:yform_rest_token_per_month=month|#attributes:{"class": "form-control yform-rest-token-interval-select"}';
     $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
