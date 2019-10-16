@@ -9,7 +9,8 @@
 
 class rex_yform_value_time extends rex_yform_value_abstract
 {
-    const VALUE_TIME_SHOW_FORMAT = 'H:i:s';
+    const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'H:i:s';
+    const VALUE_TIME_SHOW_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
 
     public function preValidateAction()
     {
@@ -42,9 +43,6 @@ class rex_yform_value_time extends rex_yform_value_abstract
                     str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($second, 2, '0', STR_PAD_LEFT);
 
-            } else {
-                // widget: input:text
-                // $value = $this->getValue(), $this->time_getFormat());
             }
 
             $this->setValue($value);
@@ -54,7 +52,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public static function time_getFormat($format = '')
     {
-        return ($format != '') ? $format : self::VALUE_TIME_SHOW_FORMAT;
+        return (in_array($format, self::VALUE_TIME_SHOW_FORMATS, true)) ? $format : self::VALUE_TIME_SHOW_DEFAULT_FORMAT;
 
     }
 
@@ -133,7 +131,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'label' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'hours' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_time_hours')],
                 'minutes' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_time_minutes')],
-                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a']],
+                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => self::VALUE_TIME_SHOW_FORMATS],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
