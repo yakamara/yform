@@ -36,7 +36,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         }
 
         if ($this->getElement('current_date') == 1 && $this->getValue() == '' && $this->params['main_id'] < 1) {
-            $this->setValue(date('Y-m-d H:i:00'));
+            $this->setValue(date('Y-m-d H:i:ss'));
             return;
         }
 
@@ -131,7 +131,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         $second = (int) substr($this->getValue(), 17, 2);
 
         $format = self::datetime_getFormat($this->getElement('format'));
-        $input_value = self::datetime_getFromFormattedDatetime($this->getValue(), 'YYYY-MM-DD', $format);
+        $input_value = self::datetime_getFromFormattedDatetime($this->getValue(), 'YYYY-MM-DD HH:ii:ss', $format);
 
         if ($this->getElement('widget') == 'input:text') {
             if (self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss') == "00000000000000") {
