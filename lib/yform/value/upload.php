@@ -199,6 +199,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $this->params['warning_messages'][$this->getId()] = implode(', ', $errors);
         }
 
+        $download_link = '';
+        if (rex::isBackend()) {
+            $download_link = self::upload_getDownloadLink($this->params['main_table'], $this->getName(), $this->params['main_id']);
+        }
+
         if ($this->needsOutput()) {
             $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', ['unique' => $unique, 'filename' => $filename, 'error_messages' => $error_messages, 'download_link' => $download_link]);
         }
@@ -328,6 +333,14 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         ];
     }
 
+    public static function upload_getDownloadLink($table_name, $field_name, $data_id)
+    {
+        if ('' != $table_name && '' != $field_name && 0 < $data_id) {
+            return '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$table_name.'&data_id='.$data_id.'&func=edit&rex_upload_downloadfile='.urlencode($field_name);
+        }
+        return '';
+    }
+
     public static function getListValue($params)
     {
         $value = $params['subject'];
@@ -341,7 +354,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         if (rex::isBackend()) {
             $field = new rex_yform_manager_field($params['params']['field']);
             if ($value != '') {
-                $return = '<a href="/redaxo/index.php?page=yform/manager/data_edit&table_name='.$field->getElement('table_name').'&data_id='.$params['list']->getValue('id').'&func=edit&rex_upload_downloadfile='.urlencode($field->getElement('name')).'" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
+                $return = '<a href="' . self::upload_getDownloadLink($field->getElement('table_name'), $field->getElement('name'), $params['list']->getValue('id')) . '" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
             }
         }
 
