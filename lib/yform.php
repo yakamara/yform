@@ -12,13 +12,12 @@ class rex_yform
     use rex_factory_trait;
 
     public static $TemplatePaths = [];
+    public $objparams = [];
 
     private $fieldsInitialized = false;
 
     public function __construct(array $params = [])
     {
-        $this->objparams = [];
-
         $this->objparams['submit_btn_label'] = 'Abschicken';
         $this->objparams['submit_btn_show'] = true;
 
