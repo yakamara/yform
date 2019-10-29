@@ -508,7 +508,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         if (3 == $field['type']) {
 
             // with relation-table
-            if ($field['relation_table'] && null === $params['value']) {
+            if (@$field['relation_table'] && null === $params['value']) {
                 $params['value'] = [];
                 $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
 
