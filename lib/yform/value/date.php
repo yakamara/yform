@@ -12,7 +12,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
     const
         VALUE_DATE_DEFAULT_FORMAT = 'YYYY-MM-DD';
     const
-        VALUE_DATE_FORMATS = ['DD.MM.YYYY' => 'DD.MM.YYYY', 'YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY'];
+        VALUE_DATE_FORMATS = ['DD.MM.YYYY' => 'DD.MM.YYYY', 'YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY', 'YYYY' => 'YYYY', 'MM' => 'MM', 'MM-YYYY' => 'MM-YYYY', 'YYYY-MM' => 'YYYY-MM' ];
 
     public function preValidateAction()
     {
