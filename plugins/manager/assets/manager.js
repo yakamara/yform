@@ -218,12 +218,10 @@ $(document).on('rex:ready', function (event, container) {
         .find("[onclick]").each(function() {
       var elementOnClick = $(this).attr("onclick");
 
-      console.log(elementOnClick);
       for (var i in regexpMedia) {
         elementOnClick = elementOnClick.replace(regexpMedia[i], '$1' + be_relation_counter);
       }
       $(this).attr("onclick", elementOnClick);
-      console.log(elementOnClick);
 
     });
 
