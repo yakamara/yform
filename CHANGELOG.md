@@ -1,6 +1,12 @@
 Changelog
 =========
 
+Version 3.3.1 – 30.10.2019
+--------------------------
+
+* Bug mit Relationsansichten korrigiert. z.B. Selectpicker ging nicht.
+
+
 Version 3.3 – 25.10.2019
 --------------------------
 
