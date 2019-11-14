@@ -155,6 +155,7 @@ class rex_yform_manager
         if ($show_editpage) {
             if ($data_id > 0) {
                 $data_query = $this->table->query()
+                    ->alias('t0')
                     ->where('id', $data_id);
                 $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
                 if ($where) {
