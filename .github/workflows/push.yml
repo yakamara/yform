@@ -18,7 +18,6 @@ jobs:
         coverage: none # disable xdebug, pcov
     - run: |
         composer require --dev friendsofredaxo/linter && vendor/bin/rexlint
-        php redaxo/bin/console be_style:compile
 
   phpstan-analysis:
       name: phpstan static code analysis
