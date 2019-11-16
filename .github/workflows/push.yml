@@ -1,0 +1,49 @@
+name: PHP Checks
+
+on:
+  push:
+
+jobs:
+
+  rex-lint:
+    name: REX Linting
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Setup PHP
+      uses: shivammathur/setup-php@master
+      with:
+        php-version: 7.1
+        extension-csv: intl
+        coverage: none # disable xdebug, pcov
+    - run: |
+        composer require --dev friendsofredaxo/linter && vendor/bin/rexlint
+        php redaxo/bin/console be_style:compile
+
+  phpstan-analysis:
+      name: phpstan static code analysis
+      runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@master
+          - name: Setup PHP
+            uses: shivammathur/setup-php@master
+            with:
+                php-version: 7.3
+                extension-csv: intl
+                coverage: none # disable xdebug, pcov
+          - run: |
+                composer require --dev phpstan/phpstan-shim
+                vendor/bin/phpstan analyse --no-progress
+
+  php-cs-fixer:
+      name: check php-cs-fixer codestyles
+      runs-on: ubuntu-latest
+      steps:
+          - uses: actions/checkout@master
+          - name: Setup PHP
+            uses: shivammathur/setup-php@master
+            with:
+                php-version: 7.1
+                extension-csv: intl
+                coverage: none # disable xdebug, pcov
+          - run: composer global require friendsofphp/php-cs-fixer && ~/.composer/vendor/bin/php-cs-fixer fix --diff --dry-run
