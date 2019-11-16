@@ -1,0 +1,9 @@
+parameters:
+    level: 0
+    paths:
+        - lib
+        - module
+        - pages
+        - plugins
+        - ytemplates
+        
