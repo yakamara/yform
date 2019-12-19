@@ -2,7 +2,7 @@
 
 $class_group = trim('form-group ' . $this->getHTMLClass()); // . ' ' . $this->getWarningClass()
 
-$id = sprintf('%u', crc32($this->params['form_name']) . rand(0, 10000) . $this->getId());
+$id = sprintf('%u', crc32($this->params['form_name'])) . rand(0, 10000) . $this->getId();
 
 $notice = [];
 if ($this->getElement('notice') != '') {
