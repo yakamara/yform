@@ -238,6 +238,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         'data_errors' => $errorcounter,
                     ]
                 ));
+                $sql_db->commit();
             } catch (\Throwable $e) {
                 $sql_db->rollBack();
                 $error_message = $e->getMessage();
@@ -246,7 +247,6 @@ if (rex_request('send', 'int', 0) == 1) {
             if ($error_message) {
                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_abort', $error_message));
             } else {
-                $sql_db->commit();
                 echo rex_view::info(rex_i18n::msg('yform_manager_import_error_import', ($icounter + $rcounter), $icounter, $rcounter));
             }
         } else {
