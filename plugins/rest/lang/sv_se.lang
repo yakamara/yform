@@ -6,6 +6,7 @@ yform_rest_token_header = REST: Tokens
 
 yform_rest_token_name = Namn
 yform_rest_token_token = Token
+yform_rest_token_token_notice = Önslas ny token ? [{0}]
 yform_rest_token_status = Aktiv
 
 yform_rest_token_deleted = Token raderades!
@@ -44,3 +45,5 @@ yform_rest_token_access_deleted = Inlägg raderades
 yform_rest_token_access_updated = Inlägg aktualiserades
 yform_rest_token_access_datetime_created = Visning den
 yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Tillåtna slutpunkter

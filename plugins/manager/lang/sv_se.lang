@@ -131,6 +131,7 @@ yform_thankyouforupdate = Datasatsen aktualiserades.
 yform_thankyouforentry = Datasatsen tillfogades.
 yform_editdata = Redigera datasats
 yform_editdata_collection = Redigera {0} datasatser
+yform_editdata_collection_error_abort = Transaktionen misslyckades på grund av fel: {0}
 yform_adddata = Skapa datasats
 yform_searchtext = Sökbegrepp
 yform_searchfields = Fälten som ska sökas igenom

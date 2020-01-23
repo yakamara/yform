@@ -32,6 +32,9 @@ yform_validate_size_range_description = Kontrollera om värdets <b>längd</b> li
 yform_validate_type_description = Kontrollera om värdets <b>typ</b> är korrekt [int, float, numeric, string, email, url, date, hex]
 yform_validate_unique_description = Kontrollera om värdet <b>inte finns än i andra datasatser</b>.
 
+yform_validate_empty_notices_name = Om flera fält väljs måste minst ett fält fyllas i.
+
+
 yform_values_checkbox_description = 			En <b>Checkbox</b> med fördefinerade värden.
 yform_values_checkbox_sql_description =			En <b>Checkbox</b>  med värden som kommer från en <b>SQL query</b>.
 yform_values_date_description =					Tre select fält för ange ett <b>datum</b> (månad, dag, år).
@@ -59,6 +62,8 @@ yform_values_textarea_description =				Ett enkelt <b>inmatningsfält med flera r
 yform_values_time_description =					Ett antal urvalsfält i vilken <b>tiden </ b> (timmar, minuter, sekunder) kan bestämmas.
 yform_values_upload_description =				Ett <b> filöverföringsfält </ b> för att ladda upp en enstaka fil till en <b> databas eller katalog </ b>.
 yform_values_ip_description =                   Ett <b> IP-fält </ b>, som lagras här
+yform_values_showvalue_description =            Ett fält som bara visar fältets värde men inte kan ändras.
+
 
 yform_values_defaults_name = Namn
 yform_values_defaults_label = Beteckning
@@ -108,6 +113,7 @@ yform_values_index_names = Fält
 yform_values_index_names_notice = Kommaseparerat. Fält från relaterade tabeller möjliga, ex .: title, description, category_id.name
 yform_values_index_function = Optional coding function
 yform_values_index_function_notice = Exempel: md5, sha1
+yform_values_index_add_this_param = Skicka fältobjekt som 2. parametern till funktionen?
 yform_values_integer_default = Default värde
 yform_values_number_default = Default värde
 yform_values_mediafile_max_size = Maximal storlek i kilobytes eller ett intervall, ex .: 100, 500
