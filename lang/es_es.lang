@@ -32,6 +32,9 @@ yform_validate_size_range_description = Comprueba si la <b>longitud</b> del valo
 yform_validate_type_description = Comprueba si <b>el tipo</b> del valor de entrada es correcto [int, float, numeric, string, email, url, date, hex]
 yform_validate_unique_description = Comprueba si el valor de entrada <b>aún no está disponible en otros conjuntos de datos</b>.
 
+yform_validate_empty_notices_name = Si se seleccionan varios campos, se debe completar al menos un campo.
+
+
 yform_values_checkbox_description = 			Una <b>casilla de verificación</b> con valores predefinidos.
 yform_values_checkbox_sql_description =			Una <b>casilla de verificación</b> con valores provenientes de una <b>consulta SQL</b>.
 yform_values_date_description =					Una serie de cuadros de selección en los que se selecciona una <b>fecha</b> (día, mes, año).
@@ -59,6 +62,8 @@ yform_values_textarea_description =				Un <b>campo de entrada de varias líneas<
 yform_values_time_description =					Una serie de cuadros de selección en los que se selecciona <b>tiempo</b> (horas, minutos, segundos).
 yform_values_upload_description =				Un <b>campo de carga</b> que carga un archivo a <b>la base de datos o un directorio</b>.
 yform_values_ip_description =                   Un <b>campo IP</b>, que se almacena aquí
+yform_values_showvalue_description =            Un campo que solo muestra el valor del campo pero no se puede cambiar.
+
 
 yform_values_defaults_name = Nombre
 yform_values_defaults_label = Designación
@@ -108,6 +113,7 @@ yform_values_index_names = Campos
 yform_values_index_names_notice = Separados por comas, también campos de relaciones posibles, z. Por ejemplo: título, descripción, category_id.name
 yform_values_index_function = Función de codificación opcional
 yform_values_index_function_notice = por ejemplo md5, sha1
+yform_values_index_add_this_param = ¿Pasar objeto de campo como el segundo parámetro a la función?
 yform_values_integer_default = El valor por defecto
 yform_values_number_default = El valor por defecto
 yform_values_mediafile_max_size = Tamaño máximo en Kb o Rango 100,500

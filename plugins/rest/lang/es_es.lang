@@ -6,6 +6,7 @@ yform_rest_token_header = REST: Tokens
 
 yform_rest_token_name = Nombre
 yform_rest_token_token = Token
+yform_rest_token_token_notice = ¿Se necesita una nueva ficha? [{0}]
 yform_rest_token_status = Activo
 
 yform_rest_token_deleted = El token ha sido eliminado
@@ -44,3 +45,5 @@ yform_rest_token_access_deleted = Se ha eliminado la entrada.
 yform_rest_token_access_updated = La entrada ha sido actualizada.
 yform_rest_token_access_datetime_created = Acceso en
 yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Puntos finales permitidos

@@ -131,6 +131,7 @@ yform_thankyouforupdate = Record ha sido actualizado.
 yform_thankyouforentry = Registro fue ingresado
 yform_editdata = Editar registro [id: {0}]
 yform_editdata_collection = {0} editar registros
+yform_editdata_collection_error_abort = La transacción falló debido a un error: {0}
 yform_adddata = Crear registro de datos
 yform_searchtext = Palabra clave
 yform_searchfields = Campos de tabla para buscar
