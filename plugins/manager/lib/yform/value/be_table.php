@@ -25,7 +25,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             // Cleanup Array
             $table_array = [];
 
-            $id = $this->getId();
+            $id = $this->getName();
 
             $columns = preg_split("/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/", $this->getElement('columns'));
             if (count($columns) == 0) {

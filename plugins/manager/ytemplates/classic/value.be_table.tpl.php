@@ -14,7 +14,7 @@
         <?php foreach ($data as $row): ?>
             <tr>
                 <?php foreach ($row as $i => $column): ?>
-                    <td><input type="text" name="v[<?php echo $this->getId() ?>][<?php echo $i ?>][]" value="<?php echo $column ?>" /></td>
+                    <td><input type="text" name="v[<?php echo $this->getName() ?>][<?php echo $i ?>][]" value="<?php echo $column ?>" /></td>
                 <?php endforeach ?>
                 <td><a href="javascript:void(0)">- <?php echo rex_i18n::msg('yform_delete') ?></a></td>
             </tr>
