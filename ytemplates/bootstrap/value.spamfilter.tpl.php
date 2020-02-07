@@ -4,7 +4,9 @@
         <input id="<?= $this->getFieldId() ?>_microtime" name="<?= $this->getFieldId() ?>_microtime" type="hidden" value="<?= microtime(true) ?>" readonly="readonly"  tabindex="-1">
 <style>
 [id="<?=$this->getHTMLId() ?>"] {
-    display: none; 
+    overflow: hidden;
+    height: 1px;
+    opacity: 100%;
 }
 </style>
 </div>
