@@ -199,7 +199,7 @@ class rex_yform_manager
                 }
             }
 
-            if (!$popup && $func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
+            if ($func == 'dataset_delete' && $this->hasDataPageFunction('truncate_table')) {
                 $query = $this->table->query();
                 $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
                 if ($where) {
@@ -617,7 +617,7 @@ class rex_yform_manager
                     $item['attributes']['class'][] = 'btn-default';
                     $dataset_links[] = $item;
                 }
-                if (!$popup && $this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
+                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_delete');
                     $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'dataset_delete'], $rex_link_vars));
