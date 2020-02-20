@@ -18,6 +18,7 @@ rex_sql_table::get(rex::getTable('yform_email_template'))
     ->ensureColumn(new rex_sql_column('body', 'text'))
     ->ensureColumn(new rex_sql_column('body_html', 'text'))
     ->ensureColumn(new rex_sql_column('attachments', 'text'))
+    ->ensureColumn(new rex_sql_column('updatedate', 'datetime'))
     ->ensure();
 
 $c = rex_sql::factory();
