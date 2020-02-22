@@ -96,7 +96,7 @@ $mail_display = ($sel=='' || $sel==0) ?' style="display:none"':'';
     <div class="form-group">
       <label class="col-md-2 control-label">Verfügbare Feldklassen</label>
       <div class="col-md-10">
-        <div id="yform-formbuilder-classes-showhelp"><?= rex_yform::showHelp(true,true); ?></div>
+        <div id="yform-formbuilder-classes-showhelp"><?= rex_yform::showHelp(); ?></div>
       </div>
     </div>
     <div class="form-group">

@@ -10,8 +10,9 @@
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
     const
-        VALUE_DATETIME_DEFAULT = 'YYYY-MM-DD HH:ii:ss';
-    const VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
+        VALUE_DATETIME_DEFAULT_FORMAT = 'YYYY-MM-DD HH:ii:ss';
+    const
+        VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
 
     public function preValidateAction()
     {
@@ -35,7 +36,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         }
 
         if ($this->getElement('current_date') == 1 && $this->getValue() == '' && $this->params['main_id'] < 1) {
-            $this->setValue(date('Y-m-d H:i:00'));
+            $this->setValue(date('Y-m-d H:i:ss'));
             return;
         }
 
@@ -60,94 +61,14 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                     str_pad($second, 2, '0', STR_PAD_LEFT);
             } else {
                 // widget: input:text
-                $value = self::datetime_convertFromFormatToIsoDatetime($this->getValue(), $this->datetime_getFormat());
+                $format = self::datetime_getFormat($this->getElement('format'));
+                $value = self::datetime_getFromFormattedDatetime($this->getValue(), $format);
             }
 
             $this->setValue($value);
         }
     }
 
-    private function datetime_getFormat()
-    {
-        $format = $this->getElement('format');
-        if ($format == '') {
-            $format = self::VALUE_DATETIME_DEFAULT;
-        }
-        return $format;
-    }
-
-    public static function datetime_convertIsoDatetimeToFormat($iso_datestring, $format)
-    {
-        // 2010-12-31 13:15:23
-        $year = (int) substr($iso_datestring, 0, 4);
-        $month = (int) substr($iso_datestring, 5, 2);
-        $day = (int) substr($iso_datestring, 8, 2);
-        $hour = (int) substr($iso_datestring, 11, 2);
-        $minute = (int) substr($iso_datestring, 14, 2);
-        $second = (int) substr($iso_datestring, 17, 2);
-
-        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
-        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
-        $hour = str_pad($hour, 2, '0', STR_PAD_LEFT);
-        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
-        $second = str_pad($second, 2, '0', STR_PAD_LEFT);
-
-        $replace = ['YYYY' => $year, 'MM' => $month, 'DD' => $day, 'HH' => $hour, 'ii' => $minute, 'ss' => $second];
-        $datestring = strtr($format, $replace);
-
-        return $datestring;
-    }
-
-    public static function datetime_convertFromFormatToIsoDatetime($datestring, $format)
-    {
-        $year = 0;
-        $pos = strpos($format, 'YYYY');
-        if ($pos !== false) {
-            $year = (int) substr($datestring, $pos, 4);
-        }
-
-        $month = 0;
-        $pos = strpos($format, 'MM');
-        if ($pos !== false) {
-            $month = (int) substr($datestring, $pos, 2);
-        }
-
-        $day = 0;
-        $pos = strpos($format, 'DD');
-        if ($pos !== false) {
-            $day = (int) substr($datestring, $pos, 2);
-        }
-
-        $hour = 0;
-        $pos = strpos($format, 'HH');
-        if ($pos !== false) {
-            $hour = (int) substr($datestring, $pos, 2);
-        }
-
-        $minute = 0;
-        $pos = strpos($format, 'ii');
-        if ($pos !== false) {
-            $minute = (int) substr($datestring, $pos, 2);
-        }
-
-        $second = 0;
-        $pos = strpos($format, 'ss');
-        if ($pos !== false) {
-            $second = (int) substr($datestring, $pos, 2);
-        }
-
-        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
-        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
-        $hour = str_pad($hour, 2, '0', STR_PAD_LEFT);
-        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
-        $second = str_pad($second, 2, '0', STR_PAD_LEFT);
-
-        $iso_datestring = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $year, $month, $day, $hour, $minute, $second);
-
-        return $iso_datestring;
-    }
 
     public function enterObject()
     {
@@ -161,10 +82,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             return;
         }
 
-        $format = $this->datetime_getFormat();
-
         $yearStart = (int) $this->getElement('year_start');
-
         if ($yearStart == '0') {
             $yearStart = date('Y');
         }
@@ -172,8 +90,10 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         if (substr($this->getElement('year_end'), 0, 1) == '+') {
             $add_years = (int) substr($this->getElement('year_end'), 1);
             $yearEnd = date('Y') + $add_years;
-        } else {
+        } elseif ($this->getElement('year_end') != '') {
             $yearEnd = (int) $this->getElement('year_end');
+        } else {
+            $yearEnd = date('Y');
         }
 
         if ($yearEnd <= $yearStart) {
@@ -210,9 +130,13 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         $minute = (int) substr($this->getValue(), 14, 2);
         $second = (int) substr($this->getValue(), 17, 2);
 
-        $input_value = self::datetime_convertIsoDatetimeToFormat($this->getValue(), $format);
+        $format = self::datetime_getFormat($this->getElement('format'));
+        $input_value = self::datetime_getFromFormattedDatetime($this->getValue(), 'YYYY-MM-DD HH:ii:ss', $format);
 
         if ($this->getElement('widget') == 'input:text') {
+            if (self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss') == "00000000000000") {
+                $input_value = '';
+            }
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
@@ -220,6 +144,59 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 compact('format', 'yearStart', 'yearEnd', 'hours', 'minutes', 'seconds', 'year', 'month', 'day', 'hour', 'minute', 'second')
             );
         }
+    }
+
+    private static function datetime_getFormat($format = '')
+    {
+        return (in_array($format, self::VALUE_DATETIME_FORMATS, true)) ? $format : self::VALUE_DATETIME_DEFAULT_FORMAT;
+    }
+
+    public static function datetime_getFromFormattedDatetime($datestring, $format, $returnDatetimeFormat = 'YYYY-MM-DD HH:ii:ss')
+    {
+        $year = 0;
+        $pos = strpos($format, 'YYYY');
+        if ($pos !== false) {
+            $year = (int) substr($datestring, $pos, 4);
+        }
+        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
+
+        $month = 0;
+        $pos = strpos($format, 'MM');
+        if ($pos !== false) {
+            $month = (int) substr($datestring, $pos, 2);
+        }
+        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+
+        $day = 0;
+        $pos = strpos($format, 'DD');
+        if ($pos !== false) {
+            $day = (int) substr($datestring, $pos, 2);
+        }
+        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
+
+        $hour = 0;
+        $pos = strpos($format, 'HH');
+        if ($pos !== false) {
+            $hour = (int) substr($datestring, $pos, 2);
+        }
+        $hour = str_pad($hour, 2, '0', STR_PAD_LEFT);
+
+        $minute = 0;
+        $pos = strpos($format, 'ii');
+        if ($pos !== false) {
+            $minute = (int) substr($datestring, $pos, 2);
+        }
+        $minute = str_pad($minute, 2, '0', STR_PAD_LEFT);
+
+        $second = 0;
+        $pos = strpos($format, 'ss');
+        if ($pos !== false) {
+            $second = (int) substr($datestring, $pos, 2);
+        }
+        $second = str_pad($second, 2, '0', STR_PAD_LEFT);
+
+        return str_replace(['YYYY', 'MM', 'DD', 'HH', 'ii', 'ss'], [$year,$month,$day, $hour, $minute, $second], $returnDatetimeFormat);
+
     }
 
     public function getDescription()
@@ -238,7 +215,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
                 'year_start' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_year_start')],
                 'year_end' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_year_end')],
                 'minutes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_datetime_minutes')],
-                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'choices' => self::VALUE_DATETIME_FORMATS, 'default' => self::VALUE_DATETIME_DEFAULT],
+                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'choices' => self::VALUE_DATETIME_FORMATS, 'default' => self::VALUE_DATETIME_DEFAULT_FORMAT],
                 'current_date' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_datetime_current_date')],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
@@ -252,16 +229,70 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $format = @$params['params']['field']['format'];
-        if (!$format) {
-            $format = self::VALUE_DATETIME_DEFAULT;
-        }
-
+        $format = self::datetime_getFormat( ($params['params']['field']['format']) ?? '');
         if (($d = DateTime::createFromFormat('Y-m-d H:i:s', $params['subject'])) && $d->format('Y-m-d H:i:s') == $params['subject']) {
-            $replace = ['YYYY' => 'Y', 'MM' => 'm', 'DD' => 'd', 'HH' => 'H', 'ii' => 'i', 'ss' => 's'];
-            $format = strtr($format, $replace);
-            return $d->format($format);
+            return '<nobr>'.self::datetime_getFromFormattedDatetime($params['subject'], 'YYYY-MM-DD HH:ii:ss', $format).'</nobr>';
         }
         return '[' . $params['subject'] . ']';
+    }
+
+    public static function getSearchField($params)
+    {
+        // 01/15/2015 - 02/15/2015
+        $format = self::datetime_getFormat($params['field']->getElement('format'));
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_values_date_search_notice', $format), 'attributes' => '{"data-yform-tools-datetimerangepicker":"' . $format . '"}']);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        // 01/15/2015 - 02/15/2015
+        // >19/11/2015
+        // <19/11/2015
+        // =19/11/2015
+        // 19/11/2015
+        // 19/11/2015-19/12/2015
+        // $value = self::date_convertFromFormatToIsoDate($this->getValue(), self::date_getFormat($this->getElement('format')));
+
+        $value = trim($params['value']);
+        if ($value == '') {
+            return;
+        }
+
+        $sql = rex_sql::factory();
+        $format = $params['field']->getElement('format');
+        $format_len = strlen($format);
+        $field = $params['field']->getName();
+        $firstchar = substr($value, 0, 1);
+
+        switch ($firstchar) {
+            case '>':
+            case '<':
+            case '=':
+                $date = substr($value, 1);
+                $date = self::datetime_getFromFormattedDatetime($date, $format);
+                return '(' . $sql->escapeIdentifier($field) . ' ' . $firstchar . ' ' . $sql->escape($date) . ')';
+                break;
+        }
+
+        // date
+        if (strlen($value) == $format_len) {
+            $date = self::datetime_getFromFormattedDatetime($value, $format);
+            return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($date) . ')';
+        }
+
+        $dates = explode(' - ', $value);
+        if (count($dates) == 2) {
+            // daterange
+            $date_from = self::datetime_getFromFormattedDatetime($dates[0], $format);
+            $date_to = self::datetime_getFromFormattedDatetime($dates[1], $format);
+
+            return ' (
+            ' . $sql->escapeIdentifier($field) . '>= ' . $sql->escape($date_from) . ' and
+            ' . $sql->escapeIdentifier($field) . '<= ' . $sql->escape($date_to) . '
+            ) ';
+        }
+
+        // wenn alles nicht hilfe -> plain rein
+        return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value) . ')';
     }
 }

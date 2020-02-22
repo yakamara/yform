@@ -50,10 +50,10 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1'],
+                'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_generate_key_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1'],
                 'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
-            'description' => rex_i18n::msg('yform_values_datestamp_description'),
+            'description' => rex_i18n::msg('yform_values_generate_key_description'),
             'db_type' => ['varchar(191)'],
             'multi_edit' => 'always',
         ];

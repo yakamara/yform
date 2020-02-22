@@ -1,11 +1,10 @@
 package: yform/email
-version: '3.0'
+version: '3.3.1'
 author: 'Jan Kristinus'
 supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 
 page:
     title: 'translate:yform_email_templates'
-    icon: rex-icon fa-envelope
     perm: yform[email]
     pjax: true
     subpages:

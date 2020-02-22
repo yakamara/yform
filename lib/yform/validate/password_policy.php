@@ -19,9 +19,9 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
 
         $PasswordPolicy = new rex_password_policy($rules);
 
-        if ($Object->getValue() != '' && $PasswordPolicy->check($Object->getValue()) !== true) {
+        if ($Object->getValue() != '' && true !== $msg = $PasswordPolicy->check($Object->getValue())) {
             $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-            $this->params['warning_messages'][$Object->getId()] = $this->getElement('message');
+            $this->params['warning_messages'][$Object->getId()] = trim($this->getElement('message')) == '' ? $msg : $this->getElement('message');
         }
     }
 

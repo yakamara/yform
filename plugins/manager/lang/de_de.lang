@@ -6,7 +6,7 @@ yform_manager_fields = Felder
 # yform manager
 yform_alltables = Alle Tabellen
 yform_back_to_overview = Zurück zur Übersicht
-yform_updatetable = Tabelle/n aktualisieren
+yform_updatetable = aktualisieren
 yform_tablesupdated = Tabelle/n wurde/n aktualisiert
 
 yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
@@ -131,6 +131,7 @@ yform_thankyouforupdate = Datensatz wurde aktualisiert.
 yform_thankyouforentry = Datensatz wurde eingetragen.
 yform_editdata = Datensatz editieren [id: {0}]
 yform_editdata_collection = {0} Datensätze editieren
+yform_editdata_collection_error_abort = Transaktion wurde wegen folgendem Fehler nicht ausgeführt: {0}
 yform_adddata = Datensatz anlegen
 yform_searchtext = Suchbegriff
 yform_searchfields = Tabellenfelder über die gesucht wird
@@ -158,7 +159,11 @@ yform_dataset_deleted = Datenergebnis wurde geleert
 yform_dataset_delete_confirm = Wirklich das Datenergebnis leeren?
 
 yform_data = Datensatz
+yform_datas = Datensätze
 yform_manager_search = Suche
+
+yform_data_view = ansehen
+
 
 yform_data_select = übernehmen
 
@@ -193,6 +198,7 @@ yform_manager_import_error_missingfields = Es fehlen folgende Felder: {0}
 yform_manager_import_error_min_missingfields = Es fehlt mindestens ein Feld: {0}
 yform_manager_import_error_field = Feld "{0}" konnte nicht angelegt werden: "{1}"
 yform_manager_import_field_added = Feld "{0}" wurde angelegt
+yform_manager_import_error_import_abort = Import wurde wegen folgendem Fehler nicht ausgeführt: {0}
 yform_manager_import_error_import_stopped = Import wurde abgebrochen, da Fehler aufgetaucht sind.
 yform_manager_import_error_dataimport = Datensatz ({0}) konnte nicht importiert werden: {1}
 yform_manager_import_error_import = Es wurden {0} Datensätze importiert. Davon waren {1} neue Datensätze und {2} Datensätze wurden ersetzt.

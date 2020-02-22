@@ -1,6 +1,125 @@
 Changelog
 =========
 
+Version 3.3.1 – 30.10.2019
+--------------------------
+
+* Bug mit Relationsansichten korrigiert. z.B. Selectpicker ging nicht.
+
+
+Version 3.3 – 25.10.2019
+--------------------------
+
+### Korrekturen, Anpassungen
+
+* Be-Relation-Feld: Fehler bei inline Relationen korrigiert
+* Diverse Debugausgaben entfernt
+* time, date, datetime vereinheitlicht
+* Rest Token wird nun angeboten
+* Uploadfeld optimiert. Downloadfähig im Datensatz selber
+* Be-Relation-Feld: Multiple Wert Ausgaben in den Listen korrigiert
+* Datestamp Multiedit korrigiert. Wert wurde fälschlicherweise neu gesetzt
+* Action redirect optimiert. Exit wird nach dem Formular (postactions) durchgeführt
+
+
+Version 3.2 – 19.09.2019
+--------------------------
+
+### Korrekturen, Anpassungen
+
+* Diverse Beschreibungen und fehlende Texte ergänzt, Übersetzungen nachgezogen
+* YForm: EP YFORM_INIT ergänzt, um allgemeine Einstellungen einbinden zu können
+* YForm: als factory trait nun möglich
+* Docs Update
+* Anpassungen Javascript um besser auf Objekte zugreifen zu können
+* pipe Notation verbessert: Tabs werden am Anfang ignoriert. Zeilen die keine validate,action oder value Feld sind werden als html interpretiert (bessere Übersicht)
+* Choice-Feld: Platzhalter wurden fälschlicherweise als Json erkannt, IDs werden nun angezeigt, Placeholder wird nun übersetzt
+* Datetime-Feld: Manager - Nun auch durchsuchbar
+* Validate-empty: Mehrfach Validierung als ODER nun möglich
+* index-Feld: Funktionsaufruf optimiert. Parameter nun optional
+* hidden-Feld: um SESSION, GET, und POST erweitert
+* textarea-Feld: nun auch Defaultwert möglich
+* time-Feld: Format nur noch für die Ausgabe und mit voreingestellten Varianten
+* Tools: daterangepicker aktualisiert. v3.0.5
+* Tools: Daterangepickeraufrufe optimiert
+* Manager: Nach Datensatzlöschung wird Instanz nun direkt auch gelöscht
+* Manager: Grid in Fragmente gelegt und somit überschreibbar gemacht, für eigene Layoutlösungen
+* Manager: Collection-Edit nun als Transaktion
+* Be-Relation-Feld: m:n Werte werden nun in der Listenübersicht angezeigt.
+* Be-Relation-Feld: Popup wurde z.T. fehlerhaft angezeigt
+* E-Mail: Template anlegen, nun ohne übernehmen, da dies nicht funktionierte
+* REST: Pathangaben in der JSON-Antwort waren z.T. falsch
+* REST: Tokenfreigabe können nun auf Endpoints beschränkt werden
+* REST: Zugriffsübersicht zeigte falschen Tokennamen an.
+
+Dank geht an: godsdog, Alexander Walther, Yves Torres, Pascal Schuchmann, Fernando Averanga, Jürgen Weiss, Marco Hanke 
+
+
+
+
+Version 3.1.1 – 24.04.2019
+--------------------------
+
+### Korrekturen
+
+* mediafile Template war fehlerhaft und nicht nutzbar
+* Email: mail_reply_to/mail_reply_to_name aus Liste entfernt
+* Tools: Datepickerdefault Einstellungen geändert. Damit die Suche im manager wieder geht
+* REST API: Feldererkennung war fehlerhaft.
+* REST API: Notice entfernt bei Relations
+* REST API: Selfrelations gehen nun
+* REST API: Path geht nun auch mit oder ohne / in URL
+
+
+
+Version 3.1 – 04.04.2019
+--------------------------
+
+### Neue Features, bitte beachten
+
+* REST Plugin: Authentifizierung kann nun eingeschränkt und getrackt werden
+* REST Plugin: POST und DELETE ergänzt
+* YOrm: collection. Methoden ergänzt: first, last, filter, slice, shuffle, sort, map, split, chunk
+* Feld: upload: Upload-Dialogfeld per Filter auf gewählte Filetypes begrenzen
+* validate: password_policy: Wenn keine Fehlermeldung dann redaxo default
+* YForm: objparams: Answertext entfernt
+* manager: Filter und Sets umgebaut und vereinheitlicht
+* manager: fixdata. Nicht veränderbare Daten sind setz- und erzwingbar. Attribute disabled wird erzwungen.
+* EPs: YFORM_MANAGER_DATA_EDIT_FILTER und YFORM_MANAGER_DATA_EDIT_SET um im manager Aufrufe einschränken zu können.
+* manager: Import: Wird nun als Transaktion durchgeführt. Bei Fehlern wird ein Rollback ausgeführt
+* manager: Verlinkung bei table edit, Feld Edit, und Datensätze jeweils ergänzt.
+
+### Änderungen und Korrekturen
+
+* Feld: index um Typ `TEXT`
+* Feld: emptyname um Typ `MEDIUMTEXT` ergänzt
+* Feld: be_manager_relation um Typ `INT` ergänzt, be_manager_relation inline werte in email value pool übergeben
+* Feld: validate: custom function liefert nun an die passenden Felder die Fehlermeldungen, func aufruf flexibler und yform_value klasse
+* Feld: Datetime seconds hinzugefügt da notice. str_pad left für Anzeige bei select
+* Feld: action: callback angepasst
+* Feld: date/datetime: Deutsches Datums-Format hinzugefügt, Notices entfernt, yearEnd angepasst
+* Vendor update inputmask
+* Vendor update daterangepicker
+* Update tools.js
+* E-Mail-PlugIn: template Tabelle in utf8mb4_unicode_ci konvertiert
+* Template: checkbox classic template korrigiert
+* Template: value.choice.select.tpl.php für classic-Template erstellt
+* Diverse Übersetzungen und DOCs
+* YForm-Table-Cache löschen nach Installation oder Update
+* manager: dataset: isValid()
+* Massenbearbeitung korrigiert.
+* send parameter dynamisch setzen geht wieder
+* Email: reply_to angepasst und richtig eingesetzt
+* manager:migrate Table mit tinyint geht wieder 
+* Icons der Subpages entfernt
+* Feld: be_table geht nun wieder.
+* Email: update funktionierte nicht richtig.
+
+Danke: Yves Torres, Tobias Krais, Gregor Harlan, 8i11y, Alexander Walther
+
+
+
+
 Version 3.0 – 01.02.2019
 --------------------------
 

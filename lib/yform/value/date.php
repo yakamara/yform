@@ -10,8 +10,9 @@
 class rex_yform_value_date extends rex_yform_value_abstract
 {
     const
-        VALUE_DATE_DEFAULT = 'YYYY-MM-DD';
-    const VALUE_DATE_FORMATS = ['DD.MM.YYYY' => 'DD.MM.YYYY', 'YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY', 'MM-YYYY' => 'MM-YYYY', 'YYYY-MM' => 'YYYY-MM', 'DD-MM' => 'DD-MM', 'MM-DD' => 'MM-DD'];
+        VALUE_DATE_DEFAULT_FORMAT = 'YYYY-MM-DD';
+    const
+        VALUE_DATE_FORMATS = ['DD.MM.YYYY' => 'DD.MM.YYYY', 'YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY', 'YYYY' => 'YYYY', 'MM' => 'MM', 'MM-YYYY' => 'MM-YYYY', 'YYYY-MM' => 'YYYY-MM' ];
 
     public function preValidateAction()
     {
@@ -48,70 +49,17 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 $day = (int) substr(@$value['day'], 0, 2);
 
                 $value =
-                str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
-                str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
-                str_pad($day, 2, '0', STR_PAD_LEFT);
+                    str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
+                    str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
+                    str_pad($day, 2, '0', STR_PAD_LEFT);
             } else {
                 // widget: input:text
-                $value = self::date_convertFromFormatToIsoDate($this->getValue(), self::date_getFormat($this->getElement('format')));
+                $format = self::date_getFormat($this->getElement('format'));
+                $value = (string) self::date_getFromFormattedDate($this->getValue(), $format, 'YYYY-MM-DD');
             }
 
             $this->setValue($value);
         }
-    }
-
-    public static function date_getFormat($format)
-    {
-        if ($format == '') {
-            $format = self::VALUE_DATE_DEFAULT;
-        }
-        return $format;
-    }
-
-    public static function date_convertIsoDateToFormat($iso_datestring, $format)
-    {
-        // 2010-12-31 13:15:23
-        $year = (int) substr($iso_datestring, 0, 4);
-        $month = (int) substr($iso_datestring, 5, 2);
-        $day = (int) substr($iso_datestring, 8, 2);
-
-        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
-        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
-
-        $replace = ['YYYY' => $year, 'MM' => $month, 'DD' => $day];
-        $datestring = strtr($format, $replace);
-
-        return $datestring;
-    }
-
-    public static function date_convertFromFormatToIsoDate($datestring, $format)
-    {
-        $year = 0;
-        $pos = strpos($format, 'YYYY');
-        if ($pos !== false) {
-            $year = (int) substr($datestring, $pos, 4);
-        }
-
-        $month = 0;
-        $pos = strpos($format, 'MM');
-        if ($pos !== false) {
-            $month = (int) substr($datestring, $pos, 2);
-        }
-
-        $day = 0;
-        $pos = strpos($format, 'DD');
-        if ($pos !== false) {
-            $day = (int) substr($datestring, $pos, 2);
-        }
-
-        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
-        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
-
-        $iso_datestring = sprintf('%04d-%02d-%02d', $year, $month, $day);
-
-        return $iso_datestring;
     }
 
     public function enterObject()
@@ -125,8 +73,6 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if (!$this->needsOutput()) {
             return;
         }
-
-        $format = self::date_getFormat($this->getElement('format'));
 
         if (substr($this->getElement('year_start'), 0, 1) == '-') {
             $minus_years = (int) substr($this->getElement('year_start'), 1);
@@ -152,21 +98,53 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $month = (int) substr($this->getValue(), 5, 2);
         $day = (int) substr($this->getValue(), 8, 2);
 
-        $input_value = self::date_convertIsoDateToFormat($this->getValue(), $format);
+        $format = self::date_getFormat($this->getElement('format'));
+        $input_value = self::date_getFromFormattedDate($this->getValue(), 'YYYY-MM-DD', $format);
 
         if ($this->getElement('widget') == 'input:text') {
+            if (self::date_getFromFormattedDate($this->getValue(), $format, 'YYYYMMDD') == "00000000") {
+                $input_value = '';
+            }
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
-
-        // } else if ($this->getElement('widget') == 'input:date') {
-            // wird im moment nicht genutzt.
-            // $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'date']);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
-            ['value.date.tpl.php', 'value.datetime.tpl.php'],
-            compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day', 'value')
+                ['value.date.tpl.php', 'value.datetime.tpl.php'],
+                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
             );
         }
     }
+
+    public static function date_getFormat($format)
+    {
+        return (in_array($format, self::VALUE_DATE_FORMATS, true)) ? $format : self::VALUE_DATE_DEFAULT_FORMAT;
+    }
+
+    public static function date_getFromFormattedDate($datestring, $format, $returnDateFormat = 'YYYY-MM-DD')
+    {
+        $year = 0;
+        $pos = strpos($format, 'YYYY');
+        if ($pos !== false) {
+            $year = (int) substr($datestring, $pos, 4);
+        }
+        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
+
+        $month = 0;
+        $pos = strpos($format, 'MM');
+        if ($pos !== false) {
+            $month = (int) substr($datestring, $pos, 2);
+        }
+        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+
+        $day = 0;
+        $pos = strpos($format, 'DD');
+        if ($pos !== false) {
+            $day = (int) substr($datestring, $pos, 2);
+        }
+        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
+
+        return str_replace(['YYYY', 'MM', 'DD'], [$year,$month,$day], $returnDateFormat);
+    }
+
 
     public function getDescription()
     {
@@ -183,7 +161,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'year_start' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_date_year_start')],
                 'year_end' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_date_year_end')],
-                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_date_format'), 'choices' => self::VALUE_DATE_FORMATS, 'default' => self::VALUE_DATE_DEFAULT],
+                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_date_format'), 'choices' => self::VALUE_DATE_FORMATS, 'default' => self::VALUE_DATE_DEFAULT_FORMAT],
                 'current_date' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_date_current_date')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table')],
                 'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
@@ -198,16 +176,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $format = '';
-        if (isset($params['params']['field']['format'])) {
-            $format = $params['params']['field']['format'];
+        $format = self::date_getFormat( ($params['params']['field']['format']) ?? '');
+        if (($d = DateTime::createFromFormat('Y-m-d', $params['subject'])) && $d->format('Y-m-d') == $params['subject']) {
+            return '<nobr>'.self::date_getFromFormattedDate($params['subject'], 'YYYY-MM-DD', $format).'</nobr>';
         }
-        if ($format == '') {
-            $format = self::VALUE_DATE_DEFAULT;
-        }
-        return self::date_convertIsoDateToFormat($params['subject'], $format);
+        return '[' . $params['subject'] . ']';
     }
-
     public static function getSearchField($params)
     {
         // 01/15/2015 - 02/15/2015
@@ -231,7 +205,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         }
 
         $sql = rex_sql::factory();
-        $format = $params['field']->getElement('format');
+        $format = self::date_getFormat($params['field']->getElement('format'));
         $format_len = strlen($format);
         $field = $params['field']->getName();
         $firstchar = substr($value, 0, 1);
@@ -241,22 +215,22 @@ class rex_yform_value_date extends rex_yform_value_abstract
             case '<':
             case '=':
                 $date = substr($value, 1);
-                $date = self::date_convertFromFormatToIsoDate($date, $format);
+                $date = self::date_getFromFormattedDate($date, $format, 'YYYY-MM-DD');
                 return '(' . $sql->escapeIdentifier($field) . ' ' . $firstchar . ' ' . $sql->escape($date) . ')';
                 break;
         }
 
         // date
         if (strlen($value) == $format_len) {
-            $date = self::date_convertFromFormatToIsoDate($value, $format);
+            $date = self::date_getFromFormattedDate($value, $format, 'YYYY-MM-DD');
             return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($date) . ')';
         }
 
         $dates = explode(' - ', $value);
         if (count($dates) == 2) {
             // daterange
-            $date_from = self::date_convertFromFormatToIsoDate($dates[0], $format);
-            $date_to = self::date_convertFromFormatToIsoDate($dates[1], $format);
+            $date_from = self::date_getFromFormattedDate($dates[0], $format, 'YYYY-MM-DD');
+            $date_to = self::date_getFromFormattedDate($dates[1], $format, 'YYYY-MM-DD');
 
             return ' (
             ' . $sql->escapeIdentifier($field) . '>= ' . $sql->escape($date_from) . ' and

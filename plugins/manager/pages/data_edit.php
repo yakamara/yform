@@ -16,7 +16,7 @@ if ($table && rex::getUser() && (rex::getUser()->isAdmin() || rex::getUser()->ge
     try {
         $page = new rex_yform_manager();
         $page->setTable($table);
-        $page->setLinkVars(['page' => 'yform/manager/data_edit', 'table_name' => $table->getTableName()]);
+        $page->setLinkVars(['page' => rex_be_controller::getCurrentPage(), 'table_name' => $table->getTableName()]);
         echo $page->getDataPage();
     } catch (Exception $e) {
         $message = nl2br($e->getMessage()."\n".$e->getTraceAsString());

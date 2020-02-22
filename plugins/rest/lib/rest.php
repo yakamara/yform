@@ -31,12 +31,21 @@ class rex_yform_rest
         self::$routes[] = $route;
     }
 
-    public static function handleRoutes()
+    public static function getRoutes()
+    {
+        return self::$routes;
+    }
+
+    public static function getCurrentPath()
     {
         $url = parse_url($_SERVER['REQUEST_URI']);
+        return $url['path'] ?? '';
+    }
 
+    public static function handleRoutes()
+    {
         if (self::$preRoute != '') {
-            if (substr($url['path'], 0, strlen(self::$preRoute)) != self::$preRoute) {
+            if (substr(self::getCurrentPath(), 0, strlen(self::$preRoute)) != self::$preRoute) {
                 return false;
             }
         }
@@ -44,11 +53,11 @@ class rex_yform_rest
         foreach (self::$routes as $route) {
             $routePath = self::$preRoute . $route->getPath();
 
-            if (substr($url['path'], 0, strlen($routePath)) != $routePath) {
+            if (substr(self::getCurrentPath(), 0, strlen($routePath)) != $routePath) {
                 continue;
             }
 
-            $paths = explode('/', substr($url['path'], strlen($routePath)));
+            $paths = explode('/', substr(self::getCurrentPath(), strlen($routePath)));
 
             $paths = array_filter($paths, function ($p) {
                 if (!empty($p)) {
@@ -138,8 +147,9 @@ class rex_yform_rest
         $query = http_build_query($params, '', '&');
         $query = ($query != '') ? '?' . $query : $query;
 
-        $additionalPaths = implode('/', $additionalPaths);
-        return $url . self::$preRoute . $route->getPath() . $additionalPaths . $query ;
+        $path = implode('/', array_merge([$route->getPath()], $additionalPaths));
+
+        return $url . self::$preRoute . $path . $query ;
 
     }
 
@@ -154,6 +164,12 @@ class rex_yform_rest
         }
 
         return null;
+
+    }
+
+    public static function getCurrentUrl()
+    {
+        return $_SERVER['REQUEST_URI'];
 
     }
 

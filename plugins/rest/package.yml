@@ -1,10 +1,12 @@
 package: yform/rest
-version: '3.0'
+version: '3.3.1'
 author: 'Jan Kristinus'
 supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 
 page:
     title: 'translate:yform_rest'
     pjax: true
-    icon: rex-icon fa-exchange
-
+    perm: admin
+    subpages:
+        token: { title: translate:yform_rest_token }
+        access: { title: translate:yform_rest_token_access }

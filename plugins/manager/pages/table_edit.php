@@ -65,6 +65,14 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
         }
     }
 } elseif (($func == 'add' || $func == 'edit') && rex::getUser()->isAdmin()) {
+    $table = null;
+    if ($func == 'edit') {
+        $table = rex_yform_manager_table::getById($table_id);
+        if (!$table) {
+            $func = 'add';
+        }
+    }
+
     $yform = new rex_yform();
     // $yform->setDebug(TRUE);
     $yform->setObjectparams('form_name', $_csrf_key);
@@ -89,10 +97,10 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
     if ($func == 'edit') {
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_update_table'));
         $yform->setValueField('showvalue', ['table_name', rex_i18n::msg('yform_manager_table_name')]);
-        $yform->setHiddenField('table_id', $table_id);
-        $yform->setActionField('db', [rex_yform_manager_table::table(), "id=$table_id"]);
-        $yform->setObjectparams('main_id', $table_id);
-        $yform->setObjectparams('main_where', "id=$table_id");
+        $yform->setHiddenField('table_id', $table->getId());
+        $yform->setActionField('db', [rex_yform_manager_table::table(), 'id='.$table->getId()]);
+        $yform->setObjectparams('main_id', $table->getId());
+        $yform->setObjectparams('main_where', 'id='.$table->getId());
         $yform->setObjectparams('getdata', true);
     } elseif ($func == 'add') {
         $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add_table'));
@@ -159,13 +167,44 @@ if ($func == 'tableset_import' && rex::getUser()->isAdmin()) {
 
     if ($yform->objparams['form_show']) {
         if ($func == 'edit') {
-            $title = rex_i18n::msg('yform_manager_edit_table');
+            $fragment = new rex_fragment();
+            $fragment->setVar('size', 'xs', false);
+            $fragment->setVar('buttons', [
+                [
+                    'label' => rex_i18n::msg('yform_data_view'),
+                    'url' => 'index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName(),
+                    'attributes' => [
+                        'class' => [
+                            'btn-default',
+                        ],
+                    ],
+                ]
+            ], false);
+            $panel_options = '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_datas') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
+
+            $fragment = new rex_fragment();
+            $fragment->setVar('size', 'xs', false);
+            $fragment->setVar('buttons', [
+                [
+                    'label' => rex_i18n::msg('yform_edit'),
+                    'url' => 'index.php?page=yform/manager/table_field&table_name='.$table->getTableName(),
+                    'attributes' => [
+                        'class' => [
+                            'btn-default',
+                        ],
+                    ],
+                ],
+            ], false);
+            $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_manager_fields') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
+
+            $title = rex_i18n::msg('yform_manager_edit_table'). ' `'.$table->getTableName().'`';
         } else {
             $title = rex_i18n::msg('yform_manager_add_table');
         }
 
         $fragment = new rex_fragment();
         $fragment->setVar('class', 'edit', false);
+        $fragment->setVar('options', (isset($panel_options)) ? $panel_options : '', false);
         $fragment->setVar('title', $title);
         $fragment->setVar('body', $form, false);
         // $fragment->setVar('buttons', $buttons, false);

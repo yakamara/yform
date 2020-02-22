@@ -9,7 +9,7 @@
 
 $_csrf_key = 'yform_rest_token';
 
-echo rex_view::title(rex_i18n::msg('yform_rest_token'));
+echo rex_view::title(rex_i18n::msg('yform_rest_token_header'));
 
 $table = rex::getTablePrefix() . 'yform_rest_token';
 $bezeichner = rex_i18n::msg('yform_rest_token');
@@ -19,6 +19,11 @@ $page = rex_request('page', 'string', '');
 $data_id = rex_request('data_id', 'int');
 $content = '';
 $show_list = true;
+
+$routes = [];
+foreach(rex_yform_rest::getRoutes() as $route) {
+    $routes[] = $route->getPath();
+}
 
 if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
@@ -30,14 +35,20 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 } elseif ($func == 'edit' || $func == 'add') {
     $form_data = [];
 
+    $dummyToken = bin2hex(random_bytes((32-(32%2))/2));
+
     $form_data[] = 'checkbox|status|translate:yform_rest_token_status';
     $form_data[] = 'text|name|translate:yform_rest_token_name';
     $form_data[] = 'validate|empty|name|translate:yform_rest_token_name_validate';
-    $form_data[] = 'text|token|translate:yform_rest_token_token';
+    $form_data[] = 'text|token|translate:yform_rest_token_token|#notice:'.rex_i18n::msg('yform_rest_token_token_notice', $dummyToken);;
     $form_data[] = 'validate|empty|token|translate:yform_rest_token_token_validate';
+    $form_data[] = 'choice|interval|translate:yform_rest_token_interval|translate:yform_rest_token_none=none,translate:yform_rest_token_overall=overall,translate:yform_rest_token_per_hour=hour,translate:yform_rest_token_per_day=day,translate:yform_rest_token_per_month=month|#attributes:{"class": "form-control yform-rest-token-interval-select"}';
+    $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
+    $form_data[] = 'choice|paths|translate:yform_rest_token_token_paths|'.implode(',', $routes).'||1';
 
     $yform = rex_yform::factory();
-    $yform->setObjectparams('form_action', 'index.php?page=yform/rest');
+    $yform->setObjectparams('form_action', 'index.php?page=yform/rest/token');
+    $yform->setObjectparams('form_name', 'yform-rest-token-form');
 
     $yform->setFormData(implode("\n", $form_data));
     $yform->setObjectparams('form_showformafterupdate', 1);
@@ -50,7 +61,7 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
         $yform->setHiddenField('data_id', $data_id);
         $yform->setHiddenField('func', $func);
         $yform->setActionField('db', [$table, "id=$data_id"]);
-        $yform->setActionField('showtext', [rex_view::success(rex_i18n::msg('yform_rest_token_info_updated')), '', '', 1]);
+        $yform->setActionField('showtext', [rex_view::success(rex_i18n::msg('yform_rest_token_updated')), '', '', 1]);
         $yform->setObjectparams('main_id', $data_id);
         $yform->setObjectparams('main_where', "id=$data_id");
         $yform->setObjectparams('main_table', $table);
@@ -131,6 +142,19 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
 echo $content;
 
+?><script>
+$(document).ready(function() {
+    $(".yform-rest-token-interval-select").on("change", function(e) {
+
+        if ($(this).val() == "none") {
+            $("#yform-yform-rest-token-form-amount").css("display","none");
+        } else {
+            $("#yform-yform-rest-token-form-amount").css("display","block");
+        }
+    }).trigger("change");
+});
+</script><?php
+
 if ($show_list) {
     $add_sql = ' ORDER BY name';
     $link = '';
@@ -153,6 +177,24 @@ if ($show_list) {
     $list->setColumnParams('name', ['page' => $page, 'func' => 'edit', 'data_id' => '###id###']);
 
     $list->setColumnLabel('token', rex_i18n::msg('yform_rest_token_token'));
+
+    $list->setColumnFormat('amount', 'custom', function ($params) {
+        $subject = $params['subject'];
+        /* @var $list rex_list */
+        $list = $params['list'];
+        $maxHits = $list->getValue('amount');
+
+        $return = $maxHits;
+
+        if ($list->getValue('interval') != 'none') {
+            $currentHits = \rex_yform_rest_auth_token::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
+            $return = $currentHits . ' / ' . $maxHits . ' / ' . $list->getValue('interval') . '';
+        }
+
+        return $return;
+    });
+
+    $list->removeColumn('interval');
 
     $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
     $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'data_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());

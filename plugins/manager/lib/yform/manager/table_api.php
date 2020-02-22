@@ -391,7 +391,7 @@ class rex_yform_manager_table_api
             case 'tinyint':
                 if (1 == $column['length']) {
                     $sql = rex_sql::factory();
-                    $sql->setQuery('SELECT * FROM `' . $sql->escape($table_name) . '` WHERE `' . $sql->escape($column['name']) . '` NOT IN (0, 1) LIMIT 1');
+                    $sql->setQuery('SELECT * FROM ' . $sql->escapeIdentifier($table_name) . ' WHERE ' . $sql->escapeIdentifier($column['name']) . ' NOT IN (0, 1) LIMIT 1');
                     if (!$sql->getRows()) {
                         $fields[] = [
                             'type_id' => 'value',

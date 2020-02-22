@@ -82,3 +82,7 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yform_table') . '` CONVERT TO CHAR
 $c->setQuery('ALTER TABLE `' . rex::getTable('yform_field') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 $c->setQuery('ALTER TABLE `' . rex::getTable('yform_history') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
 $c->setQuery('ALTER TABLE `' . rex::getTable('yform_history_field') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
+if (class_exists('rex_yform_manager_table')) {
+    rex_yform_manager_table::deleteCache();
+}
