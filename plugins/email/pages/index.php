@@ -53,13 +53,17 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'textarea|body_html|translate:yform_email_body_html|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
     $form_data[] = 'be_media|attachments|translate:yform_email_attachments|0|1';
 
+    $form_data[] = 'datestamp|updatedate||mysql||0';
+
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/email/index');
+    $yform->setObjectparams('form_name', 'yform-email-template');
 
     $yform->setFormData(implode("\n", $form_data));
     $yform->setObjectparams('form_showformafterupdate', 1);
 
     $yform_clone = clone $yform;
+
 
     if ($func == 'edit') {
         $title = rex_i18n::msg('yform_email_update');
@@ -72,10 +76,11 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
         $yform->setObjectparams('main_where', "id=$template_id");
         $yform->setObjectparams('main_table', $table);
         $yform->setObjectparams('getdata', true);
+
     } else {
         $yform->setHiddenField('func', $func);
         $title = rex_i18n::msg('yform_email_create');
-        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add'), 'values' => '1,btn-apply', 'no_db' => true, 'css_classes' => 'btn-save']);
         $yform->setActionField('db', [$table]);
         $yform->setActionField('showtext', [rex_view::success(rex_i18n::msg('yform_email_info_template_added')), '', '', 1]);
     }
@@ -179,6 +184,7 @@ if ($show_list) {
     $list->removeColumn('body');
     $list->removeColumn('body_html');
     $list->removeColumn('attachments');
+    $list->removeColumn('updatedate');
 
     $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
     $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'template_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());

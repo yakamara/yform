@@ -32,6 +32,9 @@ yform_validate_size_range_description = Checks whether the <b>length</b> of the 
 yform_validate_type_description = Checks whether the <b>type</b> of the submitted value <b>is correct [int, float, numeric, string, email, url, date, hex]]</b>.
 yform_validate_unique_description = Checks whether the submitted value <b>is not yet found in a database record set</b>.
 
+yform_validate_empty_notices_name = If more than one field is selected, only one field has to contain a value.
+
+
 yform_values_checkbox_description = 			A <b>checkbox</b> with predefined values.
 yform_values_checkbox_sql_description =			A <b>checkbox</b> with values coming from a <b>SQL query</b>.
 yform_values_date_description =					Three select fields to set a <b>date</b> (month, day, year).
@@ -42,6 +45,7 @@ yform_values_email_description =				A simple input field for <b>e-mail addresses
 yform_values_emptyname_description =			A field <b>without input options</b>.
 yform_values_fieldset_description =				A fieldset groups form elements
 yform_values_float_description =				A simple input field for <b>floating-point numbers</b>.
+yform_values_generate_key_description =			An invisible field with which a <b>random 32 character key containing letters and numbers</b> can be stored, when a record is added or saved.
 yform_values_hashvalue_description =			A field which generates a <b>hash value</b> out of a value of another field..
 yform_values_html_description =					Outputs raw <b>HTML code</b> at a specified location in the form.
 yform_values_index_description =				A field that creates an <b>index / key</b> across multiple fields.
@@ -58,6 +62,8 @@ yform_values_textarea_description =				A simple textarea field for <b>multiline 
 yform_values_time_description =					Three select fields to set a <b>time</b> (hours, minutes, seconds).
 yform_values_upload_description =				A <b>file upload field</b> to upload a single file to a <b>database or directory</b>.
 yform_values_ip_description =                   An <b>IP address field</b>, to save the users IP address
+yform_values_showvalue_description =            A field used to show a raw value from a column, without the possibility to change the output.
+
 
 yform_values_defaults_name = Name
 yform_values_defaults_label = Description
@@ -98,6 +104,7 @@ yform_values_email_default = Default status
 yform_values_email_classname = Class name
 yform_values_float_scale = Decimal place
 yform_values_float_default = Default value
+yform_values_generate_key_only_empty = When the value should be set
 yform_values_hashvalue_field = Input field
 yform_values_hashvalue_function = Algorithm
 yform_values_hashvalue_salt = Salt
@@ -106,6 +113,7 @@ yform_values_index_names = Fields
 yform_values_index_names_notice = Comma separated. Fields from related tables possible, ex.: title, description, category_id.name
 yform_values_index_function = Optional coding function
 yform_values_index_function_notice = Example: md5, sha1
+yform_values_index_add_this_param = Pass field object as 2nd parameter to the function?
 yform_values_integer_default = Default value
 yform_values_number_default = Default value
 yform_values_mediafile_max_size = Maximum size in kilobytes or a range, ex.: 100, 500

@@ -91,6 +91,7 @@ $(document).on('rex:ready', function (event, container) {
 });
 
 var be_relation_media_counter = 100; // no conflicts to 100 media in one page
+var be_relation_counter = 100; // no conflicts to 100 media in one page
 
 $(document).on('rex:ready', function (event, container) {
 
@@ -164,37 +165,65 @@ $(document).on('rex:ready', function (event, container) {
 
   });
 
+  container.find('[data-be-relation-wrapper]').each(function() {
+
+    be_relation_counter++;
+
+    var regexpDataset = [
+      new RegExp("(moveYFormDatasetList\\(?\\d+)", 'g'),
+      new RegExp("(openYFormDatasetList\\(?\\d+)", 'g'),
+      new RegExp("(deleteYFormDatasetList\\(?\\d+)", 'g'),
+      new RegExp("(openYFormDataset\\(?\\d+)", 'g'),
+      new RegExp("(deleteYFormDataset\\(?\\d+)", 'g')
+    ];
+
+    $(this)
+        .find("[id^='YFORM_DATASETLIST_SELECT_'],[id^='YFORM_DATASETLIST_FIELD_'],[id^='YFORM_DATASET_SELECT_'],[id^='YFORM_DATASET_FIELD_']").each(function() {
+      $(this).attr("id", $(this).attr("id") + be_relation_counter);
+    });
+
+    $(this)
+        .find("[onclick]").each(function() {
+      var elementOnClick = $(this).attr("onclick");
+      for (var i in regexpDataset) {
+        elementOnClick = elementOnClick.replace(regexpDataset[i], '$1' + be_relation_counter);
+      }
+      $(this).attr("onclick", elementOnClick);
+    });
+
+  });
+
   container.find('[data-be-media-wrapper]').each(function() {
 
     be_relation_media_counter++;
 
-    // REX_MEDIA
-    var regexp_media = [
-      new RegExp("(REX_MEDIA_)", 'g'),
-      new RegExp("(openREXMedia\\()", 'g'),
-      new RegExp("(addREXMedia\\()", 'g'),
-      new RegExp("(deleteREXMedia\\()", 'g'),
-      new RegExp("(viewREXMedia\\()", 'g'),
+    $(this)
+        .find("[id^='REX_MEDIA_'],[id^='REX_MEDIALIST_SELECT_']").each(function() {
+      $(this).attr("id", $(this).attr("id") + be_relation_counter);
+    });
+
+    var regexpMedia = [
+      new RegExp("(openREXMedia\\(?\\d+)", 'g'),
+      new RegExp("(addREXMedia\\(?\\d+)", 'g'),
+      new RegExp("(deleteREXMedia\\(?\\d+)", 'g'),
+      new RegExp("(viewREXMedia\\(?\\d+)", 'g'),
+      new RegExp("(moveREXMedialist\\(?\\d+)", 'g'),
+      new RegExp("(openREXMedialist\\(?\\d+)", 'g'),
+      new RegExp("(addREXMedialist\\(?\\d+)", 'g'),
+      new RegExp("(deleteREXMedialist\\(?\\d+)", 'g'),
+      new RegExp("(viewREXMedialist\\(?\\d+)", 'g'),
     ];
 
-    for (var i in regexp_media) {
-      // $(this).html($(this).html().replace(regexp_media[i], '$1' + be_relation_media_counter));
-    }
+    $(this)
+        .find("[onclick]").each(function() {
+      var elementOnClick = $(this).attr("onclick");
 
-    // REX_MEDIALIST
+      for (var i in regexpMedia) {
+        elementOnClick = elementOnClick.replace(regexpMedia[i], '$1' + be_relation_counter);
+      }
+      $(this).attr("onclick", elementOnClick);
 
-    var regexp_medialist = [
-      new RegExp("(REX_MEDIALIST_SELECT_)", 'g'),
-      new RegExp("(moveREXMedialist\\()", 'g'),
-      new RegExp("(openREXMedialist\\()", 'g'),
-      new RegExp("(addREXMedialist\\()", 'g'),
-      new RegExp("(deleteREXMedialist\\()", 'g'),
-      new RegExp("(viewREXMedialist\\()", 'g'),
-    ];
-
-    for (var j in regexp_medialist) {
-      $(this).html($(this).html().replace(regexp_medialist[j], '$1' + be_relation_media_counter));
-    }
+    });
 
     // replace be medialist
     $(this).find('select[id^="REX_MEDIALIST_"]').each(function() {

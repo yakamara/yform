@@ -76,7 +76,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $options[] = ['id' => $v, 'name' => $valueName];
                 }
             }
-
             $this->setValue($values);
         }
 
@@ -469,7 +468,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_be_manager_relation_description'),
-            'db_type' => ['text', 'varchar(191)'],
+            'db_type' => ['text', 'varchar(191)', 'int'],
             'formbuilder' => false,
             'hooks' => [
                 'preCreate' => function (rex_yform_manager_field $field) {
@@ -484,6 +483,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
+        /* @var rex_yform_manager_field $field */
         $field = $params['params']['field'];
 
         if (4 == $field['type'] || 5 == $field['type']) {
@@ -505,7 +505,40 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return '<a href="' . $link . '">' . rex_i18n::translate($field['label']) . '</a>';
         }
 
+        if (3 == $field['type']) {
+
+            // with relation-table
+            if (@$field['relation_table'] && null === $params['value']) {
+                $params['value'] = [];
+                $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
+
+                if ($relationTableFields['source'] && $relationTableFields['target']) {
+                    $sql = rex_sql::factory();
+                    // $sql->setDebug();
+                    $sql->setQuery('
+                        SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
+                        FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
+                        WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
+                    );
+                    while ($sql->hasNext()) {
+                        $id = $sql->getValue('id');
+                        $params['value'][$id] = $id;
+                        $sql->next();
+                    }
+                }
+
+                $params['value'] = implode(',', $params['value']);
+
+            } else {
+                // without relation-table
+                // $params['value'] isset
+            }
+        }
+
+        // relation_table
         $listValues = self::getListValues($field['table'], $field['field']);
+
+        // filter values
         $return = [];
         foreach (explode(',', $params['value']) as $value) {
             if (isset($listValues[$value])) {
@@ -523,7 +556,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $tableObject = rex_yform_manager_table::get($table);
             self::$yform_list_values[$table][$field][$filterHash] = [];
             $db = rex_sql::factory();
-            //$db->debugsql = true;
+            // $db->setDebug();
             $where = '';
             $join = '';
             $joinIndex = 1;

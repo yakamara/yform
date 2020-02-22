@@ -9,14 +9,15 @@
 
 class rex_yform
 {
+    use rex_factory_trait;
+
     public static $TemplatePaths = [];
+    public $objparams = [];
 
     private $fieldsInitialized = false;
 
-    public function __construct()
+    public function __construct(array $params = [])
     {
-        $this->objparams = [];
-
         $this->objparams['submit_btn_label'] = 'Abschicken';
         $this->objparams['submit_btn_show'] = true;
 
@@ -89,6 +90,7 @@ class rex_yform
         $this->objparams['form_elements'] = [];
         $this->objparams['form_output'] = [];
         $this->objparams['form_needs_output'] = true;
+        $this->objparams['form_exit'] = false;
 
         $this->objparams['value_pool'] = [];
         $this->objparams['value_pool']['email'] = [];
@@ -101,11 +103,17 @@ class rex_yform
 
         $this->objparams['form_array'] = [];
         $this->objparams['this'] = $this;
+
+        $this->objparams = array_merge($this->objparams, $params);
+
+        rex_extension::registerPoint(new rex_extension_point('YFORM_INIT', $this));
+
     }
 
-    public static function factory()
+    public static function factory(array $params = [])
     {
-        return new self();
+        $class = static::getFactoryClass();
+        return new $class($params);
     }
 
     public static function addTemplatePath($path)
@@ -343,6 +351,12 @@ class rex_yform
                 $type = 'values';
             }
 
+            if (!class_exists($class)) {
+                array_unshift($element,'html', uniqid('html'));
+                $class = 'rex_yform_value_html';
+                $type = 'values';
+            }
+
             if (class_exists($class)) {
                 /* @var rex_yform_base_abstract $Object */
                 $Object = new $class();
@@ -422,6 +436,11 @@ class rex_yform
                 }
             }
             $this->objparams['postactions_executed'] = true;
+        }
+
+        if ($this->objparams['form_exit']) {
+            rex_response::cleanOutputBuffers();
+            exit;
         }
 
         if ($this->objparams['form_showformafterupdate']) {

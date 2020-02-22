@@ -131,6 +131,7 @@ yform_thankyouforupdate = Record updated.
 yform_thankyouforentry = Record added.
 yform_editdata = Edit record [id: {0}]
 yform_editdata_collection = Edit {0} records
+yform_editdata_collection_error_abort = Transaction failed due to the following error: {0}
 yform_adddata = Create record
 yform_searchtext = Search term
 yform_searchfields = The fields to be searched
@@ -158,7 +159,11 @@ yform_dataset_deleted = Result set deleted
 yform_dataset_delete_confirm = Delete result set?
 
 yform_data = Record
+yform_datas = Records
 yform_manager_search = Search
+
+yform_data_view = show
+
 
 yform_data_select = apply
 
@@ -193,6 +198,7 @@ yform_manager_import_error_missingfields = The following gields are missing: {0}
 yform_manager_import_error_min_missingfields = At least one field is missing: {0}
 yform_manager_import_error_field = Field {0} could not be created: "{1}"
 yform_manager_import_field_added = Field "{0}" created
+yform_manager_import_error_import_abort = Import failed due to the following error: {0}
 yform_manager_import_error_import_stopped = Import aborted due to errors.
 yform_manager_import_error_dataimport = Record ({0}) could not be imported: {1}
 yform_manager_import_error_import = {0} records imported. {1} records added, {2} records updated/replaced

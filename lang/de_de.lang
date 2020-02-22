@@ -32,6 +32,9 @@ yform_validate_size_range_description = Überprüft, ob die <b>Länge</b> des Ei
 yform_validate_type_description = Überprüft, ob <b>der Typ</b> des Eingabe-Werts korrekt ist [int, float, numeric, string, email, url, date, hex]
 yform_validate_unique_description = Überprüft ob der Eingabe-Wert <b>noch nicht in anderen Datensätzen vorhanden</b> ist.
 
+yform_validate_empty_notices_name = Wenn mehrere Felder ausgewählt werden muss nur mindestens ein Feld ausgefüllt sein.
+
+
 yform_values_checkbox_description = 			Eine <b>Checkbox</b> mit vordefinierten Werten.
 yform_values_checkbox_sql_description =			Eine <b>Checkbox</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
 yform_values_date_description =					Eine Reihe von Auswahlfeldern, in der ein <b>Datum</b> (Tag, Monat, Jahr) ausgewählt wird.
@@ -59,6 +62,8 @@ yform_values_textarea_description =				Ein <b>mehrzeiliges Eingabefeld</b> für 
 yform_values_time_description =					Eine Reihe von Auswahlfeldern, in der die <b>Uhrzeit</b> (Stunden, Minuten, Sekunden) ausgewählt wird.
 yform_values_upload_description =				Ein <b>Upload-Feld</b>, mit dem eine Datei in <b>die Datenbank oder ein Verzeichnis</b> hochgeladen wird.
 yform_values_ip_description =                   Ein <b>IP-Feld</b>, welche hiermit gespeichert wird
+yform_values_showvalue_description =            Ein Feld mit dem ausschließlich der Wert des Feldes angezeigt wird, aber nicht verändert werden kann.
+
 
 yform_values_defaults_name = Name
 yform_values_defaults_label = Bezeichnung
@@ -108,6 +113,7 @@ yform_values_index_names = Felder
 yform_values_index_names_notice = Kommasepariert, auch Felder aus Relationen möglich, z. B.: title,description,category_id.name
 yform_values_index_function = Optional Codierfunktion
 yform_values_index_function_notice = z.B. md5, sha1
+yform_values_index_add_this_param = Feldobjekt als 2. Parameter an die Funktion übergeben ?
 yform_values_integer_default = Defaultwert
 yform_values_number_default = Defaultwert
 yform_values_mediafile_max_size = Maximale Größe in Kb oder Range 100,500

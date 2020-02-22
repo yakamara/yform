@@ -30,6 +30,6 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|showtext|Antworttext|&lt;p&gt;|&lt;/p&gt;|0/1/2 (plaintext/html/textile)';
+        return 'action|showtext|Antworttext|&lt;p&gt;|&lt;/p&gt;|[0 for specialchars + nl2br]';
     }
 }

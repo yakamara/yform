@@ -131,6 +131,7 @@ yform_thankyouforupdate = Record ha sido actualizado.
 yform_thankyouforentry = Registro fue ingresado
 yform_editdata = Editar registro [id: {0}]
 yform_editdata_collection = {0} editar registros
+yform_editdata_collection_error_abort = La transacción falló debido a un error: {0}
 yform_adddata = Crear registro de datos
 yform_searchtext = Palabra clave
 yform_searchfields = Campos de tabla para buscar
@@ -158,7 +159,11 @@ yform_dataset_deleted = El resultado de los datos fue vaciado
 yform_dataset_delete_confirm = ¿Realmente vaciar el resultado de los datos?
 
 yform_data = Registro
+yform_datas = Archivos
 yform_manager_search = Búsqueda
+
+yform_data_view = Vista
+
 
 yform_data_select = Tomar el relevo
 
@@ -193,6 +198,7 @@ yform_manager_import_error_missingfields = Faltan los siguientes campos: {0}
 yform_manager_import_error_min_missingfields = Al menos falta un campo: {0}
 yform_manager_import_error_field = No se pudo crear el campo "{0}": "{1}"
 yform_manager_import_field_added = El campo "{0}" ha sido creado
+yform_manager_import_error_import_abort = La importación no se ejecutó debido al siguiente error: {0}
 yform_manager_import_error_import_stopped = La importación fue abortada porque aparecieron errores.
 yform_manager_import_error_dataimport = El registro ({0}) no se pudo importar: {1}
 yform_manager_import_error_import = {0} registros fueron importados De estos, {1} nuevos registros y {2} registros fueron reemplazados.

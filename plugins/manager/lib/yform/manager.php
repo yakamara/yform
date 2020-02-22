@@ -155,6 +155,7 @@ class rex_yform_manager
         if ($show_editpage) {
             if ($data_id > 0) {
                 $data_query = $this->table->query()
+                    ->alias('t0')
                     ->where('id', $data_id);
                 $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
                 if ($where) {
@@ -280,6 +281,8 @@ class rex_yform_manager
                 $yform->setHiddenFields($rex_yform_list);
                 $yform->setHiddenFields(['rex_yform_filter' => $rex_yform_filter]);
                 $yform->setHiddenFields(['rex_yform_set' => $rex_yform_set]);
+                $yform->setHiddenFields(['rex_yform_manager_opener' => $rex_yform_manager_opener]);
+                $yform->setHiddenFields(['rex_yform_manager_popup' => $rex_yform_manager_popup]);
 
                 if (rex_request('rex_yform_show_formularblock', 'string') != '') {
                     // Optional .. kann auch geloescht werden. Dient nur zu Hilfe beim Aufbau
@@ -335,17 +338,34 @@ class rex_yform_manager
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 }
 
-                $form = $data->executeForm($yform, function (rex_yform $yform) {
-                    /** @var rex_yform_value_abstract $valueObject */
-                    foreach ($yform->objparams['values'] as $valueObject) {
-                        if ($valueObject->getName() == 'submit') {
-                            if ($valueObject->getValue() == 2) { // apply
-                                $yform->setObjectparams('form_showformafterupdate', 1);
-                                $yform->executeFields();
+                $sql_db = rex_sql::factory();
+                $sql_db->beginTransaction();
+
+                $transactionErrorMessage = null;
+
+                try {
+
+                    $form = $data->executeForm($yform, function (rex_yform $yform) {
+                        /** @var rex_yform_value_abstract $valueObject */
+                        foreach ($yform->objparams['values'] as $valueObject) {
+                            if ($valueObject->getName() == 'submit') {
+                                if ($valueObject->getValue() == 2) { // apply
+                                    $yform->setObjectparams('form_showformafterupdate', 1);
+                                    $yform->executeFields();
+                                }
                             }
                         }
+                    });
+
+                    $sql_db->commit();
+                } catch (\Throwable $e) {
+                    $sql_db->rollBack();
+                    $transactionErrorMessage = $e->getMessage();
+
+                    if ($transactionErrorMessage) {
+                        echo rex_view::error(rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage));
                     }
-                });
+                }
 
                 if ($yform->objparams['actions_executed']) {
                     if ($func == 'edit') {
@@ -444,10 +464,7 @@ class rex_yform_manager
                     if (is_array($paramValue)) {
                         foreach ($paramValue as $paramKey2 => $paramValue2) {
                             if (is_array($paramValue2)) {
-                                // TODO:
-                                dump($paramKey.'['.$paramKey2.']');
-                                dump($paramValue2);
-                                echo '************************';
+                                throw new \Exception('multi dimensional arrays are not supported!');
                             }
 
                             $list->addParam($paramKey.'['.$paramKey2.']', $paramValue2);
@@ -676,14 +693,26 @@ class rex_yform_manager
                 $fragment->setVar('content', $content, false);
                 $content = $fragment->parse('core/page/section.php');
 
+                $grid = [];
+                $grid['content'] = [];
                 if ($this->table->isSearchable() && $this->hasDataPageFunction('search')) {
-                    $fragment = new rex_fragment();
-                    $fragment->setVar('content', [$searchform, $content], false);
-                    $fragment->setVar('classes', ['col-sm-3 col-md-3 col-lg-2', 'col-sm-9 col-md-9 col-lg-10'], false);
-                    echo $fragment->parse('core/page/grid.php');
-                } else {
-                    echo $content;
+                    $grid['content']['searchform'] = $searchform;
                 }
+                $grid['content']['searchlist'] = $content;
+
+                $grid['classes'] = [];
+                $grid['classes']['searchform'] = 'col-sm-3 col-md-3 col-lg-2';
+                $grid['classes']['searchlist'] = 'col-sm-9 col-md-9 col-lg-10';
+
+                $grid['fragment'] = 'yform/manager/page/grid.php';
+
+                $grid = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST_GRID', $grid, ['table' => $this->table]));
+
+                $fragment = new rex_fragment();
+                $fragment->setVar('content', $grid['content'], false);
+                $fragment->setVar('classes', $grid['classes'], false);
+                echo $fragment->parse($grid['fragment']);
+
             }
         } // end: $show_editpage
     }
@@ -1215,19 +1244,19 @@ class rex_yform_manager
                 }, $values);
 
                 if ($field['type_id'] == 'value') {
-                    $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', array(\'' . rtrim(implode('\',\'', $php_values), '\',\'') . '\'));';
+                    $notation_php .= "\n" . '$yform->setValueField(\'' . $field['type_name'] . '\', [\'' . rtrim(implode('\',\'', $php_values), '\',\'') . '\']);';
                     $notation_pipe .= "\n" . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                     $notation_email .= "\n" . rex_i18n::translate($field['label']) . ': REX_YFORM_DATA[field="' . $field['name'] . '"]';
                 } elseif ($field['type_id'] == 'validate') {
-                    $notation_php .= "\n" . '$yform->setValidateField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $php_values), '","') . '"));';
+                    $notation_php .= "\n" . '$yform->setValidateField(\'' . $field['type_name'] . '\', [\'' . rtrim(implode('\',\'', $php_values), '\',\'') . '\']);';
                     $notation_pipe .= "\n" . $field['type_id'] . '|' . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                 } elseif ($field['type_id'] == 'action') {
-                    $notation_php .= "\n" . '$yform->setActionField(\'' . $field['type_name'] . '\', array("' . rtrim(implode('","', $php_values), '","') . '"));';
+                    $notation_php .= "\n" . '$yform->setActionField(\'' . $field['type_name'] . '\', [\'' . rtrim(implode('\',\'', $php_values), '\',\'') . '\']);';
                     $notation_pipe .= "\n" . $field['type_id'] . '|' . $field['type_name'] . '|' . rtrim(implode('|', $values), '|') . '|';
                 }
             }
 
-            $notation_php .= "\n\n"  . '$yform->setActionField(\'tpl2email\', array(\'emailtemplate\', \'emaillabel\', \'email@domain.de\'));';
+            $notation_php .= "\n\n"  . '$yform->setActionField(\'tpl2email\', [\'emailtemplate\', \'emaillabel\', \'email@domain.de\']);';
             $notation_php .= "\n".'echo $yform->getForm();';
 
             $notation_pipe .= "\n\n"  . 'action|tpl2email|emailtemplate|emaillabel|email@domain.de';

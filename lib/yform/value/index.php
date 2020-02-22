@@ -11,7 +11,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
 {
     public function postFormAction()
     {
-        if ($this->params['send'] != 1) {
+        if (1 != $this->params['send']) {
             return;
         }
 
@@ -20,7 +20,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             $value = '';
         }
 
-        if ($this->getElement('names') != '') {
+        if ('' != $this->getElement('names')) {
             $index_labels = explode(',', $this->getElement('names'));
 
             $value = '';
@@ -29,7 +29,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             foreach ($index_labels as $name) {
                 $name = trim($name);
 
-                if ($name == 'id' && $this->params['main_id'] > 0) {
+                if ('id' == $name && $this->params['main_id'] > 0) {
                     $value .= $this->params['main_id'];
                 }
 
@@ -51,8 +51,12 @@ class rex_yform_value_index extends rex_yform_value_abstract
             }
 
             $fnc = trim($this->getElement('function'));
-            if ($fnc != '') {
-                $value = call_user_func($fnc, $value, $this);
+            if ('' != $fnc) {
+                if (1 == $this->getElement('add_this_param')) {
+                    $value = call_user_func($fnc, $value, $this);
+                } else {
+                    $value = call_user_func($fnc, $value);
+                }
             }
         }
 
@@ -80,6 +84,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'names' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_index_names'), 'notice' => rex_i18n::msg('yform_values_index_names_notice')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'function' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_index_function'), 'notice' => rex_i18n::msg('yform_values_index_function_notice')],
+                'add_this_param' => ['type' => 'checkbox',   'label' => rex_i18n::msg('yform_values_index_add_this_param'),  'default' => 0],
             ],
             'description' => rex_i18n::msg('yform_values_index_description'),
             'db_type' => ['mediumtext', 'text', 'varchar(191)'], // text (65kb) mediumtext (16Mb)
@@ -119,7 +124,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             $joins = [];
             $maxIndex = 0;
 
-            $addJoin = function ($table, $index, $name, $type) use ($sql, &$joins, &$maxIndex) {
+            $addJoin = static function ($table, $index, $name, $type) use ($sql, &$joins, &$maxIndex) {
                 switch ($type) {
                     case 0:
                     case 2:
@@ -149,7 +154,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 return $nextIndex;
             };
 
-            $addFieldsAndJoins = function (array $columns, rex_yform_manager_field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, &$joins, &$maxIndex, $sql) {
+            $addFieldsAndJoins = static function (array $columns, rex_yform_manager_field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, &$joins, &$maxIndex, $sql) {
                 $table = rex_yform_manager_table::get($relation->getElement('table'));
 
                 $fieldFormat = 't%d.%s';

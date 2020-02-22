@@ -24,7 +24,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
             exit;
         }
 
-        if ($this->params['send'] == 1 && $_SESSION['captcha'] != '' && md5(mb_strtolower($this->getValue())) == $_SESSION['captcha']) {
+        if ($this->params['send'] == 1 && isset($_SESSION['captcha']) && $_SESSION['captcha'] != '' && md5(mb_strtolower($this->getValue())) == $_SESSION['captcha']) {
             $_SESSION['captcha'] = '';
         } elseif ($this->params['send'] == 1) {
             if ($this->getElement(4) == 1) {

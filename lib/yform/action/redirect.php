@@ -41,9 +41,8 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
         }
 
         if ($url != '') {
-            rex_response::cleanOutputBuffers();
             header('Location: ' . $url);
-            // no exit(); because there could be other actions and also post action triggers.
+            $this->params['form_exit'] = true;
         }
     }
 

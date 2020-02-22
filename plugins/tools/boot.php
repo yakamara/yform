@@ -12,9 +12,9 @@
 // rex_yform::addTemplatePath(rex_path::plugin('yform','geo','ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {
-    rex_view::addJsFile($this->getAssetsUrl('bootstrap-daterangepicker/moment.min.js'));
-    rex_view::addJsFile($this->getAssetsUrl('bootstrap-daterangepicker/daterangepicker.js'));
-    rex_view::addCssFile($this->getAssetsUrl('bootstrap-daterangepicker/daterangepicker.css'));
+    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/moment.min.js'));
+    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/daterangepicker.js'));
+    rex_view::addCssFile($this->getAssetsUrl('daterangepicker/daterangepicker.css'));
 
     rex_view::addJsFile($this->getAssetsUrl('select2/dist/js/select2.min.js'));
     rex_view::addCssFile($this->getAssetsUrl('select2/dist/css/select2.min.css'));

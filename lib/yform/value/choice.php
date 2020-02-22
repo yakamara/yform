@@ -101,7 +101,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'choice|name|label|choices|[expanded type: boolean; default: false]|[multiple type: boolean; default: false]|[default]|[group_by]|[preferred_choices]|[group_attributes]|[choice_attributes]|[attributes]|[notice]|[no_db]';
+        return 'choice|name|label|choices|[expanded type: boolean; default: 0, 0,1]|[multiple type: boolean; default: 0, 0,1]|[default]|[group_by]|[preferred_choices]|[group_attributes]|[choice_attributes]|[attributes]|[notice]|[no_db]';
     }
 
     public function getDefinitions()
@@ -289,7 +289,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $options['preferred_choices'] = $self->getArrayFromString($elements['preferred_choices']);
         }
         if ($elements['placeholder'] !== false && trim($elements['placeholder']) !== '') {
-            $options['placeholder'] = $elements['placeholder'];
+            $options['placeholder'] = rex_i18n::translate($elements['placeholder']);
         }
         if ($elements['choice_attributes'] !== false) {
             $options['choice_attributes'] = $elements['choice_attributes'];
