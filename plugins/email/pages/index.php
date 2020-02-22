@@ -53,6 +53,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'textarea|body_html|translate:yform_email_body_html|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
     $form_data[] = 'be_media|attachments|translate:yform_email_attachments|0|1';
 
+    $form_data[] = 'datestamp|updatedate||mysql||0';
+
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/email/index');
     $yform->setObjectparams('form_name', 'yform-email-template');
@@ -182,6 +184,7 @@ if ($show_list) {
     $list->removeColumn('body');
     $list->removeColumn('body_html');
     $list->removeColumn('attachments');
+    $list->removeColumn('updatedate');
 
     $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
     $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'template_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
