@@ -83,23 +83,6 @@ class rex_yform_manager_table_api
         }
     }
 
-    public static function exportTableset($table_name)
-    {
-        $export = [];
-        $export_table = rex_yform_manager_table::get($table_name);
-        $export_fields = [];
-        foreach ($export_table->getFields() as $field) {
-            $export_fields[] = $field->toArray();
-        }
-
-        $export[$export_table['table_name']] = [
-            'table' => $export_table->toArray(),
-            'fields' => $export_fields,
-        ];
-
-        return json_encode($export);
-    }
-
     public static function importTablesets($tableset_content)
     {
         $tableset_content = json_decode($tableset_content, true);
