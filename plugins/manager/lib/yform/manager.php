@@ -134,7 +134,9 @@ class rex_yform_manager
 
         $description = ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
 
-        echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', '');
+        if (!rex_addon::get($addonkey)->getProperty('page')['subpages'][$table]['hide_title']) {
+            echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', '');            
+        }
 
         if ($func != '' && in_array($func, ['delete', 'dataset_delete', 'truncate_table'])) {
             if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
