@@ -133,7 +133,10 @@ class rex_yform_manager
         }
 
         $description = ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
-
+        
+        $addonkey = rex_be_controller::getCurrentPagePart(1);
+        $table = rex_be_controller::getCurrentPagePart(2);
+        
         if (!rex_addon::get($addonkey)->getProperty('page')['subpages'][$table]['hide_title']) {
             echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', '');            
         }
