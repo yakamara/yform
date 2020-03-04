@@ -134,7 +134,16 @@ class rex_yform_manager
 
         $description = ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
 
-        echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', '');
+        echo rex_extension::registerPoint(
+            new rex_extension_point(
+                'YFORM_MANAGER_DATA_PAGE_HEADER',
+                rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', ''),
+                [
+                    'yform' => $this,
+                    'table' => $this->table->getTablename()
+                ]
+            )
+        );
 
         if ($func != '' && in_array($func, ['delete', 'dataset_delete', 'truncate_table'])) {
             if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
