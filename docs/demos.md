@@ -209,9 +209,9 @@ $yform->setValueField('hidden', array("suche", "q", REQUEST));
 **Formbuilder Pipe-Schreibweise**
 
     // www.domain.de/meinformular/?q=Foo
-    hidden|suche|q|REQUEST
+    hidden|q||REQUEST
 
-Schreibt den Wert `Foo` des GET-Parameters `q` in das Feld `suche`.
+Schreibt den Wert `Foo` des GET-Parameters `q` in das YForm-Feld `q`.
 
 > **Wichtig** Der GET-Parameter wird immer aus dem *abgesendeten* Formular geholt und nicht aus der URL des Formulars. Ggf. muss der Objekt-Parameter von YForm `form_action` den GET-Parameter enthalten.
 
