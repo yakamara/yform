@@ -16,7 +16,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
             $mail_to = rex::getErrorEmail();
 
             if ($this->getElement(3) != false && $this->getElement(3) != '') {
-                if(!filter_var($this->getElement(3), FILTER_VALIDATE_EMAIL))
+                if(!filter_var($this->getElement(3), FILTER_VALIDATE_EMAIL)) {
                     foreach ($this->params['value_pool']['email'] as $key => $value) {
                         if ($this->getElement(3) == $key) {
                             $mail_to = $value;
@@ -46,7 +46,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 $mail_to_name = $mail_to;
             }
             // Ende Kompatibilität
-        
+
             if ($this->params['debug']) {
                 dump($etpl);
             }
