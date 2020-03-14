@@ -30,7 +30,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'text|name|label|defaultwert|[no_db]|[attributes]|notice';
+        return 'text|name|label|defaultwert|[no_db]|[attributes]|[notice]|[prepend]|[append]';
     }
 
     public function getDefinitions()
