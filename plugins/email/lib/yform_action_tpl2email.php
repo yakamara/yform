@@ -99,6 +99,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]|[Fehlermeldung wenn Versand fehgeschlagen ist/html]';
+        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]|[Fehlermeldung wenn Versand fehlgeschlagen ist/html]';
     }
 }
