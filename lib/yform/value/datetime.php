@@ -82,9 +82,13 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             return;
         }
 
-        $yearStart = (int) $this->getElement('year_start');
-        if ($yearStart == '0') {
-            $yearStart = date('Y');
+        if (substr($this->getElement('year_start'), 0, 1) == '-') {
+            $minus_years = (int) substr($this->getElement('year_start'), 1);
+            $yearStart = date('Y') - $minus_years;
+        } elseif ($this->getElement('year_start') == '') {
+            $yearStart = date('Y') - 20;
+        } else {
+            $yearStart = (int) $this->getElement('year_start');
         }
 
         if (substr($this->getElement('year_end'), 0, 1) == '+') {
