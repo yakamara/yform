@@ -17,7 +17,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
     // Um im Suchformular weitergehende Auswertungen zu machen
     const
         VALUE_SEARCH_PATTERN = [
-            'DD.MM.YYYY' => '(?:(?<d>\d{1,2}(?=\.\d{1,2}\.))\.)?(?:(?<m>\d{1,2})\.)?(?<y>(?:\d{2}|\d{4})))',
+            'DD.MM.YYYY' => '(?:(?<d>\d{1,2}(?=\.\d{1,2}\.))\.)?(?:(?<m>\d{1,2})\.)?(?<y>(?:\d{2}|\d{4}))',
             'YYYY-MM-DD' => '(?<y>(?:\d{2}|\d{4}))(?:-(?<m>\d{1,2}))?(?:-(?<d>\d{1,2}))?',
             'DD-MM-YYYY' => '(?:(?<d>\d{1,2}(?=-\d{1,2}-))-)?(?:(?<m>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
             'MM-DD-YYYY' => '(?:(?<m>\d{1,2})-)?(?:(?<d>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
