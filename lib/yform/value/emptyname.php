@@ -11,16 +11,7 @@ class rex_yform_value_emptyname extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $value = $this->getValue();
-        if (!$value) {
-            $value = '';
-        }
-        $this->setValue($value);
 
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        if ($this->saveInDb()) {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-        }
     }
 
     public function getDescription()
