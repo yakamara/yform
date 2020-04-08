@@ -1,0 +1,2 @@
+# copy this line to /.gitignore of your REDAXO root
+redaxo/data/addons/yform/plugins/manager/upload/*
