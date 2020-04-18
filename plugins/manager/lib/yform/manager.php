@@ -132,7 +132,7 @@ class rex_yform_manager
             $this->setLinkVars($searchObject->getSearchVars());
         }
 
-        $description = ($this->table->getDescription() == '' || $popup) ? '' : '<br />' . $this->table->getDescription();
+        $description =  $popup || ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
 
         echo rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', '');
 
