@@ -139,8 +139,7 @@ class rex_yform_manager
                 'YFORM_MANAGER_DATA_PAGE_HEADER',
                 rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', ''),
                 [
-                    'yform' => $this,
-                    'table' => $this->table->getTablename()
+                    'yform' => $this
                 ]
             )
         );
