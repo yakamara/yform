@@ -1,6 +1,7 @@
 {
     "require-dev": {
-        "redaxo/core": "dev-master"
+        "redaxo/core": "dev-master",
+        "phpstan/phpstan": "^0.12.11"
     },
 
     "autoload-dev": {

@@ -20,7 +20,7 @@ jobs:
                 tools: cs2pr
 
           - name: Install Dependencies
-            run: composer require phpstan/phpstan
+            run: composer install --prefer-dist
 
           - run: |
                 vendor/bin/phpstan analyse --no-progress --error-format=checkstyle | cs2pr
