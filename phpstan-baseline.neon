@@ -1,48 +1,13 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to static method getCurrentId\\(\\) on an unknown class rex_article\\.$#"
-			count: 1
-			path: lib/yform.php
-
-		-
-			message: "#^Function rex_getUrl not found\\.$#"
-			count: 1
-			path: lib/yform.php
-
-		-
-			message: "#^Instantiated class rex_mailer not found\\.$#"
-			count: 1
-			path: lib/yform/action/email.php
-
-		-
-			message: "#^Function rex_getUrl not found\\.$#"
-			count: 1
-			path: lib/yform/action/redirect.php
-
-		-
 			message: "#^Access to an undefined property rex_yform_value_abstract\\:\\:\\$aid\\.$#"
 			count: 1
 			path: lib/yform/value/abstract.php
 
 		-
-			message: "#^Instantiated class rex_article_content not found\\.$#"
-			count: 1
-			path: lib/yform/value/article.php
-
-		-
 			message: "#^Access to an undefined property rex_yform_value_captcha\\:\\:\\$captcha_ini\\.$#"
 			count: 6
-			path: lib/yform/value/captcha.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: lib/yform/value/captcha.php
-
-		-
-			message: "#^Function rex_getUrl not found\\.$#"
-			count: 1
 			path: lib/yform/value/captcha.php
 
 		-
@@ -121,16 +86,6 @@ parameters:
 			path: lib/yform/value/captcha_calc.php
 
 		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: lib/yform/value/captcha_calc.php
-
-		-
-			message: "#^Function rex_getUrl not found\\.$#"
-			count: 1
-			path: lib/yform/value/captcha_calc.php
-
-		-
 			message: "#^Access to an undefined property rex_yform_value_captcha_calc\\:\\:\\$captcha_image\\.$#"
 			count: 6
 			path: lib/yform/value/captcha_calc.php
@@ -191,11 +146,6 @@ parameters:
 			path: lib/yform/value/captcha_calc.php
 
 		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 1
-			path: lib/yform/value/csrf.php
-
-		-
 			message: "#^Access to an undefined property rex_yform_value_datestamp\\:\\:\\$showValue\\.$#"
 			count: 3
 			path: lib/yform/value/datestamp.php
@@ -206,51 +156,6 @@ parameters:
 			path: lib/yform/value/google_geocode.php
 
 		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: lib/yform/value/hidden.php
-
-		-
-			message: "#^Function rex_get not found\\.$#"
-			count: 1
-			path: lib/yform/value/hidden.php
-
-		-
-			message: "#^Function rex_post not found\\.$#"
-			count: 1
-			path: lib/yform/value/hidden.php
-
-		-
-			message: "#^Function rex_session not found\\.$#"
-			count: 2
-			path: lib/yform/value/hidden.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_media_category\\.$#"
-			count: 1
-			path: lib/yform/value/mediafile.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 1
-			path: lib/yform/value/php.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 2
-			path: lib/yform/value/text.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: lib/yform/value/upload.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 2
-			path: lib/yform/value/upload.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: pages/index.php
@@ -271,36 +176,6 @@ parameters:
 			path: pages/overview.php
 
 		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 2
-			path: pages/overview.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 1
-			path: plugins/email/lib/var_yform_data.php
-
-		-
-			message: "#^Call to static method getNotfoundArticleId\\(\\) on an unknown class rex_article\\.$#"
-			count: 1
-			path: plugins/email/lib/yform_email_template.php
-
-		-
-			message: "#^Call to static method getCurrentId\\(\\) on an unknown class rex_article\\.$#"
-			count: 1
-			path: plugins/email/lib/yform_email_template.php
-
-		-
-			message: "#^Instantiated class rex_mailer not found\\.$#"
-			count: 1
-			path: plugins/email/lib/yform_email_template.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 3
-			path: plugins/email/pages/index.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: plugins/email/update.php
@@ -318,11 +193,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 8
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 5
 			path: plugins/manager/boot.php
 
 		-
@@ -336,22 +206,7 @@ parameters:
 			path: plugins/manager/fragments/yform/manager/page/grid.php
 
 		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 3
-			path: plugins/manager/lib/var_yform_dataset.php
-
-		-
 			message: "#^Function rex_yform_manager_checkField not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/manager.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 21
-			path: plugins/manager/lib/yform/manager.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
 			count: 1
 			path: plugins/manager/lib/yform/manager.php
 
@@ -401,74 +256,14 @@ parameters:
 			path: plugins/manager/lib/yform/manager/query.php
 
 		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_article\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_link.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_manager_relation.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media.php
-
-		-
-			message: "#^Parameter \\$cat of anonymous function has invalid typehint type rex_media_category\\.$#"
+			message: "#^Call to an undefined static method rex_media_category\\:\\:getCategoryById\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/lib/yform/value/be_media_category.php
 
 		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_media_category\\.$#"
-			count: 2
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Call to static method getRootCategories\\(\\) on an unknown class rex_media_category\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Call to static method getCategoryById\\(\\) on an unknown class rex_media_category\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Parameter \\$cat of anonymous function has invalid typehint type rex_category\\.$#"
+			message: "#^Call to an undefined static method rex_category\\:\\:getCategoryById\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/lib/yform/value/be_select_category.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_category\\.$#"
-			count: 2
-			path: plugins/manager/lib/yform/value/be_select_category.php
-
-		-
-			message: "#^Call to static method getRootCategories\\(\\) on an unknown class rex_category\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_select_category.php
-
-		-
-			message: "#^Call to static method getCategoryById\\(\\) on an unknown class rex_category\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_select_category.php
-
-		-
-			message: "#^Function rex_post not found\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_table.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_edit.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 4
-			path: plugins/manager/pages/data_history.php
 
 		-
 			message: "#^Undefined variable\\: \\$this$#"
@@ -489,16 +284,6 @@ parameters:
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 9
 			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 4
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 9
-			path: plugins/manager/pages/table_edit.php
 
 		-
 			message: "#^Function rex_yform_status_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
@@ -531,21 +316,6 @@ parameters:
 			path: plugins/manager/pages/table_edit.php
 
 		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_field.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 2
-			path: plugins/manager/pages/tableset_export.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: plugins/manager/pages/tableset_export.php
@@ -554,11 +324,6 @@ parameters:
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 1
 			path: plugins/manager/pages/tableset_export.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_import.php
 
 		-
 			message: "#^Undefined variable\\: \\$this$#"
@@ -583,16 +348,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 15
-			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
-
-		-
-			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_linklist\\.$#"
-			count: 1
-			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
-
-		-
-			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_link\\.$#"
-			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
 
 		-
@@ -633,11 +388,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:parse\\(\\)\\.$#"
 			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 4
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
 
 		-
@@ -781,16 +531,6 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
 
 		-
-			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_medialist\\.$#"
-			count: 1
-			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
-
-		-
-			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_media\\.$#"
-			count: 1
-			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
@@ -858,11 +598,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
 			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
 
 		-
@@ -951,11 +686,6 @@ parameters:
 			path: plugins/rest/fragments/rest_api_type.php
 
 		-
-			message: "#^Function rex_get not found\\.$#"
-			count: 1
-			path: plugins/rest/lib/rest.php
-
-		-
 			message: "#^Access to an undefined property rex_yform_rest_route\\:\\:\\$type\\.$#"
 			count: 1
 			path: plugins/rest/lib/rest/route.php
@@ -981,16 +711,6 @@ parameters:
 			path: plugins/rest/lib/rest/route.php
 
 		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 3
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Function rex_request not found\\.$#"
-			count: 3
-			path: plugins/rest/pages/token.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: plugins/rest/update.php
@@ -1008,11 +728,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 14
-			path: plugins/tools/boot.php
-
-		-
-			message: "#^Instantiated class rex_scss_compiler not found\\.$#"
-			count: 1
 			path: plugins/tools/boot.php
 
 		-
@@ -1201,11 +916,6 @@ parameters:
 			path: ytemplates/bootstrap/value.choice.check.tpl.php
 
 		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 4
-			path: ytemplates/bootstrap/value.choice.check.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.choice.check.tpl.php
@@ -1253,11 +963,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
 			count: 1
-			path: ytemplates/bootstrap/value.choice.select.tpl.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 5
 			path: ytemplates/bootstrap/value.choice.select.tpl.php
 
 		-
@@ -1711,11 +1416,6 @@ parameters:
 			path: ytemplates/bootstrap/value.showvalue.tpl.php
 
 		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 3
-			path: ytemplates/bootstrap/value.showvalue.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.showvalue.tpl.php
@@ -1886,11 +1586,6 @@ parameters:
 			path: ytemplates/bootstrap/value.upload.tpl.php
 
 		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.upload.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.upload.tpl.php
@@ -2003,11 +1698,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
 			count: 1
-			path: ytemplates/classic/value.choice.select.tpl.php
-
-		-
-			message: "#^Function rex_escape not found\\.$#"
-			count: 5
 			path: ytemplates/classic/value.choice.select.tpl.php
 
 		-
