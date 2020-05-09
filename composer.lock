@@ -4,20 +4,77 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "197e5ce07281e107c09fdd9e05ca7599",
-    "packages": [
+    "content-hash": "886dbedf6ab051aea3465c5283aae911",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "phpstan/phpstan",
+            "version": "0.12.23",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "71e529efced79e055fa8318b692e7f7d03ea4e75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/71e529efced79e055fa8318b692e7f7d03ea4e75",
+                "reference": "71e529efced79e055fa8318b692e7f7d03ea4e75",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-05-05T12:55:44+00:00"
+        },
         {
             "name": "redaxo/core",
             "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/redaxo/core.git",
-                "reference": "51a141ec4c6938df0a1c3705b5660ece7863aa3b"
+                "reference": "deea5436b51243261c562ebab7bc7e70c062edeb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/redaxo/core/zipball/51a141ec4c6938df0a1c3705b5660ece7863aa3b",
-                "reference": "51a141ec4c6938df0a1c3705b5660ece7863aa3b",
+                "url": "https://api.github.com/repos/redaxo/core/zipball/deea5436b51243261c562ebab7bc7e70c062edeb",
+                "reference": "deea5436b51243261c562ebab7bc7e70c062edeb",
                 "shasum": ""
             },
             "require": {
@@ -30,10 +87,9 @@
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
-            "time": "2020-05-09T07:28:40+00:00"
+            "time": "2020-05-09T07:31:11+00:00"
         }
     ],
-    "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
