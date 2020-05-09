@@ -1,0 +1,47 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "197e5ce07281e107c09fdd9e05ca7599",
+    "packages": [
+        {
+            "name": "redaxo/core",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/redaxo/core.git",
+                "reference": "51a141ec4c6938df0a1c3705b5660ece7863aa3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/redaxo/core/zipball/51a141ec4c6938df0a1c3705b5660ece7863aa3b",
+                "reference": "51a141ec4c6938df0a1c3705b5660ece7863aa3b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2020-05-09T07:28:40+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "redaxo/core": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}

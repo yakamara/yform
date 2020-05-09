@@ -1,16 +1,6 @@
 parameters:
 	ignoreErrors:
 		-
-			message: "#^Call to static method getCurrentPagePart\\(\\) on an unknown class rex_be_controller\\.$#"
-			count: 1
-			path: pages/index.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: pages/index.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: pages/index.php
@@ -21,16 +11,6 @@ parameters:
 			path: pages/index.php
 
 		-
-			message: "#^Call to static method includeCurrentPageSubPath\\(\\) on an unknown class rex_be_controller\\.$#"
-			count: 1
-			path: pages/index.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: pages/overview.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 7
 			path: pages/overview.php
@@ -38,51 +18,11 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 7
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 2
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 2
 			path: pages/overview.php
 
 		-
 			message: "#^Function rex_request not found\\.$#"
 			count: 2
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method addon\\(\\) on an unknown class rex_path\\.$#"
-			count: 2
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_file\\.$#"
-			count: 2
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: pages/overview.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 3
-			path: pages/overview.php
-
-		-
-			message: "#^Call to static method rawMsg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
 			path: pages/overview.php
 
 		-
@@ -91,104 +31,14 @@ parameters:
 			path: pages/overview.php
 
 		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
-			count: 1
-			path: plugins/email/install.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 2
-			path: plugins/email/install.php
-
-		-
-			message: "#^Instantiated class rex_sql_column not found\\.$#"
-			count: 10
-			path: plugins/email/install.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 1
-			path: plugins/email/install.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 31
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
 			message: "#^Function rex_request not found\\.$#"
 			count: 3
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
-			count: 2
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 6
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method rawMsg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
 			path: plugins/email/pages/index.php
 
 		-
 			message: "#^Call to static method factory\\(\\) on an unknown class rex_yform\\.$#"
 			count: 1
 			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 4
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/email/pages/index.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
-			count: 1
-			path: plugins/email/uninstall.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/email/uninstall.php
 
 		-
 			message: "#^Undefined variable\\: \\$this$#"
@@ -206,31 +56,6 @@ parameters:
 			path: plugins/manager/boot.php
 
 		-
-			message: "#^Call to static method plugin\\(\\) on an unknown class rex_path\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Call to static method register\\(\\) on an unknown class rex_complex_perm\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
-			count: 3
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Call to static method addJsFile\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: plugins/manager/boot.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 8
 			path: plugins/manager/boot.php
@@ -241,38 +66,13 @@ parameters:
 			path: plugins/manager/boot.php
 
 		-
-			message: "#^Call to static method addCssFile\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
 			message: "#^Call to static method getAll\\(\\) on an unknown class rex_yform_manager_table\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Instantiated class rex_be_page_main not found\\.$#"
 			count: 1
 			path: plugins/manager/boot.php
 
 		-
 			message: "#^Function rex_request not found\\.$#"
 			count: 5
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Call to static method register\\(\\) on an unknown class rex_extension\\.$#"
-			count: 1
-			path: plugins/manager/boot.php
-
-		-
-			message: "#^Parameter \\$ep of anonymous function has invalid typehint type rex_extension_point\\.$#"
-			count: 1
 			path: plugins/manager/boot.php
 
 		-
@@ -306,36 +106,6 @@ parameters:
 			path: plugins/manager/fragments/yform/manager/page/grid.php
 
 		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
-			count: 4
-			path: plugins/manager/install.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 10
-			path: plugins/manager/install.php
-
-		-
-			message: "#^Instantiated class rex_sql_column not found\\.$#"
-			count: 34
-			path: plugins/manager/install.php
-
-		-
-			message: "#^Access to constant UNIQUE on an unknown class rex_sql_index\\.$#"
-			count: 1
-			path: plugins/manager/install.php
-
-		-
-			message: "#^Instantiated class rex_sql_index not found\\.$#"
-			count: 2
-			path: plugins/manager/install.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 3
-			path: plugins/manager/install.php
-
-		-
 			message: "#^Function rex_request not found\\.$#"
 			count: 1
 			path: plugins/manager/pages/data_edit.php
@@ -346,27 +116,7 @@ parameters:
 			path: plugins/manager/pages/data_edit.php
 
 		-
-			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
-			count: 3
-			path: plugins/manager/pages/data_edit.php
-
-		-
 			message: "#^Instantiated class rex_yform_manager not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_edit.php
-
-		-
-			message: "#^Call to static method getCurrentPage\\(\\) on an unknown class rex_be_controller\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_edit.php
-
-		-
-			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_edit.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
 			count: 1
 			path: plugins/manager/pages/data_edit.php
 
@@ -386,62 +136,7 @@ parameters:
 			path: plugins/manager/pages/data_history.php
 
 		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
-			count: 5
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 21
-			path: plugins/manager/pages/data_history.php
-
-		-
 			message: "#^Call to static method getRaw\\(\\) on an unknown class rex_yform_manager_dataset\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 3
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 6
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method sendContent\\(\\) on an unknown class rex_response\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_history.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
 			count: 1
 			path: plugins/manager/pages/data_history.php
 
@@ -461,11 +156,6 @@ parameters:
 			path: plugins/manager/pages/data_history.php
 
 		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_history.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 9
 			path: plugins/manager/pages/data_import.php
@@ -481,43 +171,8 @@ parameters:
 			path: plugins/manager/pages/data_import.php
 
 		-
-			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
-			count: 9
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 27
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method registerPoint\\(\\) on an unknown class rex_extension\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Instantiated class rex_extension_point not found\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 3
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method normalize\\(\\) on an unknown class rex_string\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_import.php
-
-		-
 			message: "#^Call to static method table\\(\\) on an unknown class rex_yform_manager_field\\.$#"
 			count: 1
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
-			count: 3
 			path: plugins/manager/pages/data_import.php
 
 		-
@@ -531,48 +186,13 @@ parameters:
 			path: plugins/manager/pages/data_import.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_import.php
-
-		-
 			message: "#^Call to static method deleteCache\\(\\) on an unknown class rex_yform_manager_table\\.$#"
 			count: 1
 			path: plugins/manager/pages/data_import.php
 
 		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 4
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Instantiated class rex_select not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method currentBackendPage\\(\\) on an unknown class rex_url\\.$#"
-			count: 2
-			path: plugins/manager/pages/data_import.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 80
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
 			message: "#^Function rex_request not found\\.$#"
 			count: 9
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
-			count: 7
 			path: plugins/manager/pages/table_edit.php
 
 		-
@@ -581,22 +201,7 @@ parameters:
 			path: plugins/manager/pages/table_edit.php
 
 		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 6
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
-			count: 4
-			path: plugins/manager/pages/table_edit.php
-
-		-
 			message: "#^Call to static method importTablesets\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
 			count: 1
 			path: plugins/manager/pages/table_edit.php
 
@@ -611,18 +216,8 @@ parameters:
 			path: plugins/manager/pages/table_edit.php
 
 		-
-			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
 			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_manager_table\\.$#"
 			count: 3
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 1
 			path: plugins/manager/pages/table_edit.php
 
 		-
@@ -637,21 +232,6 @@ parameters:
 
 		-
 			message: "#^Call to static method deleteCache\\(\\) on an unknown class rex_yform_manager_table\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
-			count: 2
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
 			count: 1
 			path: plugins/manager/pages/table_edit.php
 
@@ -681,26 +261,6 @@ parameters:
 			path: plugins/manager/pages/table_edit.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 3
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Instantiated class rex_context not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_edit.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: plugins/manager/pages/table_edit.php
@@ -714,16 +274,6 @@ parameters:
 			message: "#^Call to static method getAll\\(\\) on an unknown class rex_yform_manager_table\\.$#"
 			count: 1
 			path: plugins/manager/pages/table_edit.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: plugins/manager/pages/table_field.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_field.php
 
 		-
 			message: "#^Function rex_request not found\\.$#"
@@ -741,27 +291,7 @@ parameters:
 			path: plugins/manager/pages/table_field.php
 
 		-
-			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
-			count: 2
-			path: plugins/manager/pages/table_field.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 9
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
 			message: "#^Function rex_request not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Call to static method showTables\\(\\) on an unknown class rex_sql\\.$#"
 			count: 1
 			path: plugins/manager/pages/table_migrate.php
 
@@ -779,36 +309,6 @@ parameters:
 			message: "#^Call to static method migrateTable\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
 			count: 1
 			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/table_migrate.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 6
-			path: plugins/manager/pages/tableset_export.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_export.php
 
 		-
 			message: "#^Function rex_request not found\\.$#"
@@ -831,16 +331,6 @@ parameters:
 			path: plugins/manager/pages/tableset_export.php
 
 		-
-			message: "#^Call to static method sendContent\\(\\) on an unknown class rex_response\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_export.php
-
-		-
-			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_export.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 1
 			path: plugins/manager/pages/tableset_export.php
@@ -849,21 +339,6 @@ parameters:
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 1
 			path: plugins/manager/pages/tableset_export.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_export.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 9
-			path: plugins/manager/pages/tableset_import.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_import.php
 
 		-
 			message: "#^Function rex_request not found\\.$#"
@@ -879,31 +354,6 @@ parameters:
 			message: "#^Call to static method importTablesets\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
 			count: 1
 			path: plugins/manager/pages/tableset_import.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_import.php
-
-		-
-			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_import.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 1
-			path: plugins/manager/pages/tableset_import.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
-			count: 4
-			path: plugins/manager/uninstall.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 4
-			path: plugins/manager/uninstall.php
 
 		-
 			message: "#^Undefined variable\\: \\$this$#"
@@ -941,11 +391,6 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
@@ -973,11 +418,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 15
-			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
 
 		-
@@ -1061,11 +501,6 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
@@ -1096,11 +531,6 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
 
 		-
-			message: "#^Instantiated class rex_select not found\\.$#"
-			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getAttributeArray\\(\\)\\.$#"
 			count: 2
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
@@ -1116,17 +546,7 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
 
 		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 10
-			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$link$#"
-			count: 3
-			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
 			count: 3
 			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
 
@@ -1166,11 +586,6 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
@@ -1206,11 +621,6 @@ parameters:
 			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
@@ -1232,11 +642,6 @@ parameters:
 
 		-
 			message: "#^Undefined variable\\: \\$columns$#"
-			count: 4
-			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
 			count: 4
 			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
 
@@ -1291,11 +696,6 @@ parameters:
 			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
 
 		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 10
-			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$link$#"
 			count: 3
 			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
@@ -1316,11 +716,6 @@ parameters:
 			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
 
 		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 3
-			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$columns$#"
 			count: 2
 			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
@@ -1329,16 +724,6 @@ parameters:
 			message: "#^Undefined variable\\: \\$data$#"
 			count: 1
 			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
-
-		-
-			message: "#^Call to static method register\\(\\) on an unknown class rex_extension\\.$#"
-			count: 1
-			path: plugins/rest/boot.php
-
-		-
-			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/rest/boot.php
 
 		-
 			message: "#^Call to static method handleRoutes\\(\\) on an unknown class rex_yform_rest\\.$#"
@@ -1366,58 +751,8 @@ parameters:
 			path: plugins/rest/fragments/rest_api_type.php
 
 		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
-			count: 2
-			path: plugins/rest/install.php
-
-		-
-			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
-			count: 2
-			path: plugins/rest/install.php
-
-		-
-			message: "#^Instantiated class rex_sql_column not found\\.$#"
-			count: 9
-			path: plugins/rest/install.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 29
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
-			count: 2
-			path: plugins/rest/pages/access.php
-
-		-
 			message: "#^Function rex_request not found\\.$#"
 			count: 3
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
-			count: 2
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 1
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 6
 			path: plugins/rest/pages/access.php
 
 		-
@@ -1426,39 +761,9 @@ parameters:
 			path: plugins/rest/pages/access.php
 
 		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 4
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
-			count: 1
-			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/rest/pages/access.php
-
-		-
 			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_rest_auth_token\\.$#"
 			count: 1
 			path: plugins/rest/pages/access.php
-
-		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 31
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/rest/pages/token.php
 
 		-
 			message: "#^Function rex_request not found\\.$#"
@@ -1471,42 +776,7 @@ parameters:
 			path: plugins/rest/pages/token.php
 
 		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
-			count: 2
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
-			count: 1
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
-			count: 1
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
-			count: 6
-			path: plugins/rest/pages/token.php
-
-		-
 			message: "#^Call to static method factory\\(\\) on an unknown class rex_yform\\.$#"
-			count: 1
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Instantiated class rex_fragment not found\\.$#"
-			count: 4
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
-			count: 1
-			path: plugins/rest/pages/token.php
-
-		-
-			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
 			count: 1
 			path: plugins/rest/pages/token.php
 
@@ -1526,21 +796,6 @@ parameters:
 			path: plugins/rest/update.php
 
 		-
-			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/tools/boot.php
-
-		-
-			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: plugins/tools/boot.php
-
-		-
-			message: "#^Call to static method addJsFile\\(\\) on an unknown class rex_view\\.$#"
-			count: 5
-			path: plugins/tools/boot.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 14
 			path: plugins/tools/boot.php
@@ -1551,22 +806,7 @@ parameters:
 			path: plugins/tools/boot.php
 
 		-
-			message: "#^Call to static method addCssFile\\(\\) on an unknown class rex_view\\.$#"
-			count: 3
-			path: plugins/tools/boot.php
-
-		-
-			message: "#^Call to static method register\\(\\) on an unknown class rex_extension\\.$#"
-			count: 1
-			path: plugins/tools/boot.php
-
-		-
 			message: "#^Instantiated class rex_scss_compiler not found\\.$#"
-			count: 1
-			path: plugins/tools/boot.php
-
-		-
-			message: "#^Call to static method copy\\(\\) on an unknown class rex_file\\.$#"
 			count: 1
 			path: plugins/tools/boot.php
 
@@ -1578,16 +818,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 11
-			path: ytemplates/bootstrap/errors.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 3
-			path: ytemplates/bootstrap/errors.tpl.php
-
-		-
-			message: "#^Call to static method get\\(\\) on an unknown class rex_addon\\.$#"
-			count: 1
 			path: ytemplates/bootstrap/errors.tpl.php
 
 		-
@@ -1638,11 +868,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 14
-			path: ytemplates/bootstrap/value.checkbox.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.checkbox.tpl.php
 
 		-
@@ -1701,11 +926,6 @@ parameters:
 			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
@@ -1761,11 +981,6 @@ parameters:
 			path: ytemplates/bootstrap/value.choice.check.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.choice.check.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.choice.check.tpl.php
@@ -1783,11 +998,6 @@ parameters:
 		-
 			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_view\\.$#"
 			count: 1
-			path: ytemplates/bootstrap/value.choice.check.tpl.php
-
-		-
-			message: "#^Call to static method buildAttributes\\(\\) on an unknown class rex_string\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.choice.check.tpl.php
 
 		-
@@ -1841,11 +1051,6 @@ parameters:
 			path: ytemplates/bootstrap/value.choice.select.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.choice.select.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.choice.select.tpl.php
@@ -1878,11 +1083,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
 			count: 1
-			path: ytemplates/bootstrap/value.choice.select.tpl.php
-
-		-
-			message: "#^Call to static method buildAttributes\\(\\) on an unknown class rex_string\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.choice.select.tpl.php
 
 		-
@@ -1923,11 +1123,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 35
-			path: ytemplates/bootstrap/value.datetime.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.datetime.tpl.php
 
 		-
@@ -2081,11 +1276,6 @@ parameters:
 			path: ytemplates/bootstrap/value.google_geocode.tpl.php
 
 		-
-			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.google_geocode.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 3
 			path: ytemplates/bootstrap/value.hidden.tpl.php
@@ -2103,11 +1293,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 21
-			path: ytemplates/bootstrap/value.mediafile.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.mediafile.tpl.php
 
 		-
@@ -2151,11 +1336,6 @@ parameters:
 			path: ytemplates/bootstrap/value.mediafile.tpl.php
 
 		-
-			message: "#^Call to static method media\\(\\) on an unknown class rex_url\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.mediafile.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 2
 			path: ytemplates/bootstrap/value.radio.tpl.php
@@ -2163,11 +1343,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 20
-			path: ytemplates/bootstrap/value.radio.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.radio.tpl.php
 
 		-
@@ -2241,11 +1416,6 @@ parameters:
 			path: ytemplates/bootstrap/value.recaptcha.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.resetbutton.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 5
 			path: ytemplates/bootstrap/value.resetbutton.tpl.php
@@ -2263,11 +1433,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 18
-			path: ytemplates/bootstrap/value.select.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.select.tpl.php
 
 		-
@@ -2346,11 +1511,6 @@ parameters:
 			path: ytemplates/bootstrap/value.showvalue.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.showvalue.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.showvalue.tpl.php
@@ -2401,21 +1561,6 @@ parameters:
 			path: ytemplates/bootstrap/value.submit.tpl.php
 
 		-
-			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.submit.tpl.php
-
-		-
-			message: "#^Call to static method normalize\\(\\) on an unknown class rex_string\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.submit.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.submit.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 3
 			path: ytemplates/bootstrap/value.text.tpl.php
@@ -2423,11 +1568,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 17
-			path: ytemplates/bootstrap/value.text.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.text.tpl.php
 
 		-
@@ -2473,11 +1613,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 17
-			path: ytemplates/bootstrap/value.textarea.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/bootstrap/value.textarea.tpl.php
 
 		-
@@ -2536,11 +1671,6 @@ parameters:
 			path: ytemplates/bootstrap/value.upload.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/bootstrap/value.upload.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/bootstrap/value.upload.tpl.php
@@ -2596,11 +1726,6 @@ parameters:
 			path: ytemplates/bootstrap/value.upload.tpl.php
 
 		-
-			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.upload.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$download_link$#"
 			count: 2
 			path: ytemplates/bootstrap/value.upload.tpl.php
@@ -2618,11 +1743,6 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 10
-			path: ytemplates/classic/errors.tpl.php
-
-		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
 			path: ytemplates/classic/errors.tpl.php
 
 		-
@@ -2701,11 +1821,6 @@ parameters:
 			path: ytemplates/classic/value.choice.select.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 2
-			path: ytemplates/classic/value.choice.select.tpl.php
-
-		-
 			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
 			count: 1
 			path: ytemplates/classic/value.choice.select.tpl.php
@@ -2733,11 +1848,6 @@ parameters:
 		-
 			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
 			count: 1
-			path: ytemplates/classic/value.choice.select.tpl.php
-
-		-
-			message: "#^Call to static method buildAttributes\\(\\) on an unknown class rex_string\\.$#"
-			count: 2
 			path: ytemplates/classic/value.choice.select.tpl.php
 
 		-
@@ -2966,11 +2076,6 @@ parameters:
 			path: ytemplates/classic/value.submit.tpl.php
 
 		-
-			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
-			count: 1
-			path: ytemplates/classic/value.submit.tpl.php
-
-		-
 			message: "#^Undefined variable\\: \\$this$#"
 			count: 10
 			path: ytemplates/classic/value.text.tpl.php
@@ -2998,10 +2103,5 @@ parameters:
 		-
 			message: "#^Using \\$this outside a class\\.$#"
 			count: 19
-			path: ytemplates/classic/value.upload.tpl.php
-
-		-
-			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
-			count: 1
 			path: ytemplates/classic/value.upload.tpl.php
 
