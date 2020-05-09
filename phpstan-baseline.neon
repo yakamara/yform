@@ -1,0 +1,3007 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method getCurrentPagePart\\(\\) on an unknown class rex_be_controller\\.$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Call to static method includeCurrentPageSubPath\\(\\) on an unknown class rex_be_controller\\.$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: pages/overview.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: pages/overview.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 7
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 2
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 2
+			path: pages/overview.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 2
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method addon\\(\\) on an unknown class rex_path\\.$#"
+			count: 2
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_file\\.$#"
+			count: 2
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: pages/overview.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 3
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method rawMsg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method showHelp\\(\\) on an unknown class rex_yform\\.$#"
+			count: 1
+			path: pages/overview.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
+			count: 1
+			path: plugins/email/install.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 2
+			path: plugins/email/install.php
+
+		-
+			message: "#^Instantiated class rex_sql_column not found\\.$#"
+			count: 10
+			path: plugins/email/install.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 1
+			path: plugins/email/install.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 31
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 3
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
+			count: 2
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 6
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method rawMsg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_yform\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 4
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/email/pages/index.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
+			count: 1
+			path: plugins/email/uninstall.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/email/uninstall.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/email/update.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/email/update.php
+
+		-
+			message: "#^Call to static method addTemplatePath\\(\\) on an unknown class rex_yform\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method plugin\\(\\) on an unknown class rex_path\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method register\\(\\) on an unknown class rex_complex_perm\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
+			count: 3
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method addJsFile\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method addCssFile\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method getAll\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Instantiated class rex_be_page_main not found\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 5
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method register\\(\\) on an unknown class rex_extension\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Parameter \\$ep of anonymous function has invalid typehint type rex_extension_point\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Call to static method getRaw\\(\\) on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Access to constant ACTION_CREATE on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Access to constant ACTION_UPDATE on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: plugins/manager/fragments/yform/manager/page/grid.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 20
+			path: plugins/manager/fragments/yform/manager/page/grid.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
+			count: 4
+			path: plugins/manager/install.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 10
+			path: plugins/manager/install.php
+
+		-
+			message: "#^Instantiated class rex_sql_column not found\\.$#"
+			count: 34
+			path: plugins/manager/install.php
+
+		-
+			message: "#^Access to constant UNIQUE on an unknown class rex_sql_index\\.$#"
+			count: 1
+			path: plugins/manager/install.php
+
+		-
+			message: "#^Instantiated class rex_sql_index not found\\.$#"
+			count: 2
+			path: plugins/manager/install.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 3
+			path: plugins/manager/install.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
+			count: 3
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Instantiated class rex_yform_manager not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Call to static method getCurrentPage\\(\\) on an unknown class rex_be_controller\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_edit.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 4
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
+			count: 5
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 21
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method getRaw\\(\\) on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 3
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 6
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method sendContent\\(\\) on an unknown class rex_response\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Access to constant ACTION_CREATE on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Access to constant ACTION_UPDATE on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Access to constant ACTION_DELETE on an unknown class rex_yform_manager_dataset\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 4
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
+			count: 9
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 27
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method registerPoint\\(\\) on an unknown class rex_extension\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Instantiated class rex_extension_point not found\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 3
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method normalize\\(\\) on an unknown class rex_string\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method table\\(\\) on an unknown class rex_yform_manager_field\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
+			count: 3
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method generateTablesAndFields\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method deleteCache\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 4
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Instantiated class rex_select not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method currentBackendPage\\(\\) on an unknown class rex_url\\.$#"
+			count: 2
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 80
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 9
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
+			count: 7
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Instantiated class rex_yform not found\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 6
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
+			count: 4
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method importTablesets\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method getById\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method table\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 5
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 3
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method table\\(\\) on an unknown class rex_yform_manager_field\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method generateTableAndFields\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method deleteCache\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method removeTable\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_status_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_hidden_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_features_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_list_translate not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 3
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Instantiated class rex_context not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method getAll\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_field.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_field.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_field.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_field.php
+
+		-
+			message: "#^Instantiated class rex_yform_manager not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_field.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_field.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 9
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method showTables\\(\\) on an unknown class rex_sql\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method getAll\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Instantiated class rex_yform not found\\.$#"
+			count: 2
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method migrateTable\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method info\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_migrate.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 6
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 2
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Call to static method getAll\\(\\) on an unknown class rex_yform_manager_table\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Instantiated class rex_yform not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Call to static method exportTablesets\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Call to static method sendContent\\(\\) on an unknown class rex_response\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 9
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Instantiated class rex_yform not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Call to static method importTablesets\\(\\) on an unknown class rex_yform_manager_table_api\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Call to static method warning\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_import.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
+			count: 4
+			path: plugins/manager/uninstall.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 4
+			path: plugins/manager/uninstall.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/manager/update.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/manager/update.php
+
+		-
+			message: "#^Undefined variable\\: \\$counter$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 15
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_linklist\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_link\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 5
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 15
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:parse\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$fieldkey$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$prioFieldName$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$prototypeForm$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$relationKey$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$forms$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$relation\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$prioFieldName$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation_form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$counterfieldkey$#"
+			count: 7
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation_form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$form$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation_form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 44
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$relation\\.$#"
+			count: 10
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 7
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Instantiated class rex_select not found\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeArray\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 10
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$valueName$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$counter$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 12
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_medialist\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to static method getWidget\\(\\) on an unknown class rex_var_media\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 6
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$columns$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$data$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 7
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$counter$#"
+			count: 5
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$linkName$#"
+			count: 1
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 51
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 51
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 2
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 10
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 3
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$valueName$#"
+			count: 1
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 3
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$columns$#"
+			count: 2
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$data$#"
+			count: 1
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Call to static method register\\(\\) on an unknown class rex_extension\\.$#"
+			count: 1
+			path: plugins/rest/boot.php
+
+		-
+			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/rest/boot.php
+
+		-
+			message: "#^Call to static method handleRoutes\\(\\) on an unknown class rex_yform_rest\\.$#"
+			count: 1
+			path: plugins/rest/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api_type.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api_type.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_sql_table\\.$#"
+			count: 2
+			path: plugins/rest/install.php
+
+		-
+			message: "#^Call to static method getTable\\(\\) on an unknown class rex\\.$#"
+			count: 2
+			path: plugins/rest/install.php
+
+		-
+			message: "#^Instantiated class rex_sql_column not found\\.$#"
+			count: 9
+			path: plugins/rest/install.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 29
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
+			count: 2
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 3
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
+			count: 2
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 6
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_yform\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 4
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_yform_rest_auth_token\\.$#"
+			count: 1
+			path: plugins/rest/pages/access.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 31
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method title\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method getTablePrefix\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Function rex_request not found\\.$#"
+			count: 3
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method getRoutes\\(\\) on an unknown class rex_yform_rest\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_csrf_token\\.$#"
+			count: 2
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method error\\(\\) on an unknown class rex_view\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_sql\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method success\\(\\) on an unknown class rex_view\\.$#"
+			count: 6
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_yform\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Instantiated class rex_fragment not found\\.$#"
+			count: 4
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method factory\\(\\) on an unknown class rex_list\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method getAccesskey\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Call to static method getCurrentIntervalAmount\\(\\) on an unknown class rex_yform_rest_auth_token\\.$#"
+			count: 1
+			path: plugins/rest/pages/token.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/rest/update.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/rest/update.php
+
+		-
+			message: "#^Call to static method getUser\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Call to static method addJsFile\\(\\) on an unknown class rex_view\\.$#"
+			count: 5
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 14
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Call to static method addCssFile\\(\\) on an unknown class rex_view\\.$#"
+			count: 3
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Call to static method register\\(\\) on an unknown class rex_extension\\.$#"
+			count: 1
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Instantiated class rex_scss_compiler not found\\.$#"
+			count: 1
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Call to static method copy\\(\\) on an unknown class rex_file\\.$#"
+			count: 1
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 5
+			path: ytemplates/bootstrap/errors.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 11
+			path: ytemplates/bootstrap/errors.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/errors.tpl.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class rex_addon\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/errors.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 16
+			path: ytemplates/bootstrap/form.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 16
+			path: ytemplates/bootstrap/form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.article.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$article$#"
+			count: 1
+			path: ytemplates/bootstrap/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 11
+			path: ytemplates/bootstrap/value.captcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 11
+			path: ytemplates/bootstrap/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 3
+			path: ytemplates/bootstrap/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$value$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 16
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceList$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_view\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to static method buildAttributes\\(\\) on an unknown class rex_string\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 4
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_group_view\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceListView$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Class rex_yform_choice_group_view not found\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 16
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_view\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 5
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_group_view\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to static method buildAttributes\\(\\) on an unknown class rex_string\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceList$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceListView$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Class rex_yform_choice_group_view not found\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 35
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 7
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$format$#"
+			count: 7
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 7
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearEnd$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearStart$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$year$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$month$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$day$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hours$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hour$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minutes$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minute$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$seconds$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$second$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$option$#"
+			count: 2
+			path: ytemplates/bootstrap/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: ytemplates/bootstrap/value.fieldset.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$address$#"
+			count: 1
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 13
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 13
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$googleapikey$#"
+			count: 2
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$value$#"
+			count: 1
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$mapZoom$#"
+			count: 1
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$mapWidth$#"
+			count: 3
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$mapHeight$#"
+			count: 3
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Call to static method msg\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.hidden.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.hidden.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 4
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to static method media\\(\\) on an unknown class rex_url\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 20
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 4
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$loadScript$#"
+			count: 1
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$publicKey$#"
+			count: 1
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.resetbutton.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 5
+			path: ytemplates/bootstrap/value.resetbutton.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 5
+			path: ytemplates/bootstrap/value.resetbutton.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 18
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$multiple$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$size$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 13
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$labels$#"
+			count: 3
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Call to static method normalize\\(\\) on an unknown class rex_string\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 17
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 17
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 19
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$unique$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$filename$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$download_link$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$error_messages$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: ytemplates/classic/errors.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: ytemplates/classic/errors.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/classic/errors.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 13
+			path: ytemplates/classic/form.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 13
+			path: ytemplates/classic/form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: ytemplates/classic/value.article.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: ytemplates/classic/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$article$#"
+			count: 1
+			path: ytemplates/classic/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: ytemplates/classic/value.captcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: ytemplates/classic/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 2
+			path: ytemplates/classic/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: ytemplates/classic/value.checkbox.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: ytemplates/classic/value.checkbox.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/classic/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: ytemplates/classic/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 7
+			path: ytemplates/classic/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 2
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_view\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Function rex_escape not found\\.$#"
+			count: 5
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Parameter \\$view of anonymous function has invalid typehint type rex_yform_choice_group_view\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to static method buildAttributes\\(\\) on an unknown class rex_string\\.$#"
+			count: 2
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceList$#"
+			count: 3
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceListView$#"
+			count: 3
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Class rex_yform_choice_group_view not found\\.$#"
+			count: 2
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 29
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 29
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$format$#"
+			count: 7
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearEnd$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearStart$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$year$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$month$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$day$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hours$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hour$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minutes$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minute$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$second$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$option$#"
+			count: 2
+			path: ytemplates/classic/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: ytemplates/classic/value.fieldset.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 6
+			path: ytemplates/classic/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/classic/value.hidden.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/classic/value.hidden.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 21
+			path: ytemplates/classic/value.mediafile.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: ytemplates/classic/value.mediafile.tpl.php
+
+		-
+			message: "#^Function getElement not found\\.$#"
+			count: 1
+			path: ytemplates/classic/value.mediafile.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 11
+			path: ytemplates/classic/value.radio.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 11
+			path: ytemplates/classic/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/classic/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/classic/value.recaptcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/classic/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$publicKey$#"
+			count: 1
+			path: ytemplates/classic/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: ytemplates/classic/value.resetbutton.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: ytemplates/classic/value.resetbutton.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 12
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 12
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$multiple$#"
+			count: 1
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$size$#"
+			count: 1
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: ytemplates/classic/value.showvalue.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: ytemplates/classic/value.showvalue.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$labels$#"
+			count: 4
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Call to static method translate\\(\\) on an unknown class rex_i18n\\.$#"
+			count: 1
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: ytemplates/classic/value.text.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: ytemplates/classic/value.text.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: ytemplates/classic/value.textarea.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: ytemplates/classic/value.textarea.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 19
+			path: ytemplates/classic/value.upload.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 19
+			path: ytemplates/classic/value.upload.tpl.php
+
+		-
+			message: "#^Call to static method isBackend\\(\\) on an unknown class rex\\.$#"
+			count: 1
+			path: ytemplates/classic/value.upload.tpl.php
+
