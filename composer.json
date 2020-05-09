@@ -1,5 +1,12 @@
 {
     "require-dev": {
         "redaxo/core": "dev-master"
+    },
+
+    "autoload-dev": {
+        "classmap": [
+            "lib/",
+            "plugins/"
+        ]
     }
 }
