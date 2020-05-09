@@ -46,7 +46,7 @@ class rex_yform_validate_empty extends rex_yform_validate_abstract
             'name' => 'empty',
             'values' => [
                 'name' => ['type' => 'select_names', 'multiple' => true, 'label' => rex_i18n::msg('yform_validate_empty_name'), 'notice' => rex_i18n::msg('yform_validate_empty_notices_name')],
-                'message' => ['type' => 'text',        'label' => rex_i18n::msg('yform_validate_empty_message')],
+                'message' => ['type' => 'text',        'label' => rex_i18n::msg('yform_validate_empty_message'), 'notice' => rex_i18n::msg('translatable')],
             ],
             'description' => rex_i18n::msg('yform_validate_empty_description'),
             'famous' => true,
