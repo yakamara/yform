@@ -205,16 +205,24 @@ class rex_yform_value_date extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = trim($params['value']);
+        $format = self::date_getFormat($params['field']->getElement('format'));
+        $field = $params['field']->getName();
+        return self::getDateFilterWhere( $value, $field, $format);
+    }
 
-        // kein Suchtext, kein Filter
+    // allow external call in not-searchform-context
+    // @param   string $value   search criteria
+    // @param   string $field   db-field
+    // @param   string $format  date-format as defined in self::VALUE_DATE_FORMATS
+    // @return  string          WHERE-clause
+    public static function getDateFilterWhere( $value, $field, $format)
+    {
+        // kein Suchtext => kein Filter
         if ($value == '') {
             return '';
         }
 
-        $sql = rex_sql::factory();
-        $format = self::date_getFormat($params['field']->getElement('format'));
-        $field = $params['field']->getName();
-        $field = $sql->escapeIdentifier($field);
+        $field = rex_sql::factory()->escapeIdentifier($field);
 
         // Auswertung über Pattern: <|<=|=|>=|> $value
         $pattern = '/^(?<c>\<=|\<|=|\>=|\>)?\s*' . self::VALUE_SEARCH_PATTERN[$format] . '$/';
