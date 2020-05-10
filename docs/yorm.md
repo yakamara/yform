@@ -174,6 +174,7 @@ if ($post->save()) {
 
 <a name="datensatz-erstellen"></a>
 ### Datensatz erstellen
+
 ```php
 $post = rex_yform_manager_dataset::create('rex_blog_post');
 $post->title = 'REDAXO-Tag in Wackershofen (am Grundbach)'; 
@@ -205,12 +206,13 @@ echo $dataset->executeForm($yform);
 
 <a name="eigene-modelklassen"></a>
 ### Eigene Modelklassen
+
 ```php
 // boot.php  
 rex_yform_manager_dataset::setModelClass(  
     'rex_blog_author',  
     rex_blog_author::class  
-);  
+);
 ```
 
 ```php
@@ -310,7 +312,6 @@ echo $post->title;
 } 
 
 ```php
-
 $posts = $author->getRelatedCollection('posts'); 
 ``` 
 
