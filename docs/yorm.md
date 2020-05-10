@@ -3,10 +3,10 @@
 ## Mini-ORM für YForm 
 (ORM = Object-relational mapping = Objektrelationale Abbildung)
 
-Yorm erlecihtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über Yorm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
+Yorm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über Yorm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
 
-> - [YOrm ohne eigene Model Class verwenden](#ohne-model-class)
-> - [YOrm mit eigener Model Class verwenden](#eigene-model-class)
+> - [Yorm ohne eigene Model Class verwenden](#ohne-model-class)
+> - [Yorm mit eigener Model Class verwenden](#eigene-model-class)
 >   - [Klasse erstellen](#klasse-erstellen)
 >   - [Klasse registrieren](#klasse-registrieren)
 > - [Praxis-Beispiele](#praxis-beispiele)
@@ -31,7 +31,7 @@ Yorm erlecihtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und
 
 
 <a name="ohne-model-class"></a>
-## YOrm ohne eigene Model Class verwenden
+## Yorm ohne eigene Model Class verwenden
 
 Hole alle Daten der Tabelle `rex_my_table` und zeige das Objekt. 
 
@@ -111,7 +111,7 @@ $table = rex_yform_manager_table::get('rex_data_product');
 
 $products = $table->query()
     ->joinRelation('category_id', 'c') // Join auf rex_data_product_category gemäß Relationsfeld category_id, mit Alias "c" für weitere Verwendung
-    ->select('c.name', 'category_name') // Aus der gejointen Tabelle den Kategorienamen mit auslesen mit Alias "category_name"
+    ->select('c.name', 'category_name') // Aus der gejointen Tabelle den Kategorienamen mit auslesen mit dem Alias "category_name"
     ->where('status', 1)
     ->find();
 

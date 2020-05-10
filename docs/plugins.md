@@ -9,13 +9,13 @@
 
 Will man eine E-Mail aus einem YForm-Formular versenden, kann man mit Hilfe eines `E-Mail-Templates` (siehe entsprechender Menüpunkt in YForm) diese E-Mail gestalten und mit Platzhaltern aus dem Formular versehen.
 
-Über die E-Mail-Template-Verwaltung kann ein Template angelegt werden. Dabei muss zuerst ein Key erstellt werden, der die eindeutige Zuordnung zu diesem Tempalte ermöglicht. Ebenfalls muss die Absender-E-Mail, der Ansender-E-Mail-Name sowie der Betreff eingegeben werden.
+Über die E-Mail-Template-Verwaltung kann ein Template angelegt werden. Dabei muss zuerst ein Key erstellt werden, der die eindeutige Zuordnung zu diesem Tempalte ermöglicht. Ebenfalls muss die Absender-E-Mail, der Absender-E-Mail-Name sowie der Betreff eingegeben werden.
 
 Danach folgen die Eingaben für den E-Mail-Body, in Plain und HTML (optional).
 
 ### Handhabung
 
-Über die Aktion **tpl2email** kann eine E-Mail über den angebenen **Key** eines E-Mail-Templates gesendet werden. Über das Formular können zb die Werte der beiden Eingabefelder des Formular über das E-Mail-Template ausgeben werden.
+Über die Aktion **tpl2email** kann eine E-Mail über den angebenen **Key** eines E-Mail-Templates gesendet werden. Über das Formular können zb. die Werte der beiden Eingabefelder des Formular über das E-Mail-Template ausgeben werden.
 
 #### Beispiel-Formular im Formbuilder
 
@@ -60,7 +60,7 @@ if ('REX_YFORM_DATA[field="anrede"]' == 'w') {
 ```
 
 > **Hinweis:**  
-> Die Action **tpl2email** kann auch mehrfach im Formular eingesetzt werden. So könnten E-Mails mit unterschiedlichen Templates versendet werden oder auch an mehrere Empfänger, z.B. Admin unhd Kunde.
+> Die Action **tpl2email** kann auch mehrfach im Formular eingesetzt werden. So könnten E-Mails mit unterschiedlichen Templates versendet werden oder auch an mehrere Empfänger, z.B. Admin und Kunde.
 
 
 ### Beispiele
@@ -280,7 +280,7 @@ Wenn man keine Authentifizierung einträgt kann jeder diese Daten entsprechend d
 
 
 `table`
-hier wird die entsprechend Tabelle übergeben, die in YOrm definiert ist.
+Hier wird die entsprechend Tabelle übergeben, die in YOrm definiert ist.
 
 Beispiel
 
@@ -327,7 +327,7 @@ Jeder Zugriff auf die REST-API wird erfasst.
 
 > Dieses Plugin hilft bei bestimmten Eingabearten. Datumsfelder, DatumZeit-Felder und Textfelder die bestimmte Eingaben verlangen, die man bereits bei der Eingabe erzwingen möchte.
 
-Dabei werden die entsprechenden Bibliotheken bei der Aktivierung der AddOn bereits installiert und initialisiert. D.h. man muss die gewünschten Funktionen nur durch Definition von CSS Attributen zuweisen.
+Dabei werden die entsprechenden Bibliotheken bei der Aktivierung des AddOns bereits installiert und initialisiert. D.h. man muss die gewünschten Funktionen nur durch Definition von CSS Attributen zuweisen.
 
 ### select2
 
@@ -337,7 +337,7 @@ Dabei muss hier das select-Feld folgendes Attribut bekommen:
 
 	data-yform-tools-select2 = ""
 
-Das kann man im Manager über das Attibutefeld innerhalb von z.B. select oder select_sql so setzen:
+Das kann man im Manager über das Attributefeld innerhalb von z.B. select oder select_sql so setzen:
 
 	{"data-yform-tools-select2": "", "placeholder": "My Placeholder"}
 
@@ -348,7 +348,7 @@ Eine weitere Variante wäre der Tag-Mode
 
 ### inputmask
 
-diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. Z.B. kann ein bestimmtes Datumsformat erzwungen werden.
+Diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. Z.B. kann ein bestimmtes Datumsformat erzwungen werden.
 
 Dabei wird auch hier ein Attribute im Textfeld gesetzt:
 
@@ -367,13 +367,13 @@ oder
     9-a{1,3}9{1,3}
 
 
-Das kann man im Manager über das Attibutefeld innerhalb von z.B. text so setzen:
+Das kann man im Manager über das Attributefeld innerhalb von z.B. text so setzen:
 
     {"data-yform-tools-inputmask":"dd/mm/yyyy"}
 
 ### daterangepicker
 
-diese Bibliothek [http://www.daterangepicker.com/](http://www.daterangepicker.com/) dient für die Auswahl von Datumsfeldern oder Datumzeiträumen. Dabei kann auch eine Uhrzeit selektiert werden.
+Diese Bibliothek [http://www.daterangepicker.com/](http://www.daterangepicker.com/) dient für die Auswahl von Datumsfeldern oder Datumzeiträumen. Dabei kann auch eine Uhrzeit selektiert werden.
 
 > Bitte unbedingt beachten, dass man das selbe Format bei den Date(time)pickern einträgt, wie man es im entsprechenden Feld (z.B. Date) ausgewählt hat.
 
@@ -386,7 +386,7 @@ oder
 
     data-yform-tools-datetimepicker = ""
 
-und auch mit Formaten versehen werden. Z.b. Beim Datepicker
+und auch mit Formaten versehen werden. Z.B. beim Datepicker
 
     DD-MM-YYYY
 

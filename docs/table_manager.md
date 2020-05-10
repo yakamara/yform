@@ -4,7 +4,7 @@
 
 Der Table Manager in YForm dient zum Erstellen und Bearbeiten von Datenbanktabellen sowie zum Verwalten von tabellarischen Daten innerhalb von Redaxo.
 
-> Hinweis: Der Table Manager ist nicht für den Zugriff aller Redaxo-Datenbanktabellen, bspw. `rex_article` gedacht. Um direkt auf die Tabellen einer Redaxo-Installation zuzugreifen, gibt es das [Adminer-Addon von Friends Of Redaxo](https://github.com/FriendsOfREDAXO/adminer). Adminer ist wie PHPMyAdmin eine Webanwendung zur Administration von Datenbanken.
+> Hinweis: Der Table Manager ist nicht für den Zugriff aller Redaxo-Datenbanktabellen, beispielsweise `rex_article` gedacht. Um direkt auf die Tabellen einer Redaxo-Installation zuzugreifen, gibt es das [Adminer-Addon von Friends Of Redaxo](https://github.com/FriendsOfREDAXO/adminer). Adminer ist wie PHPMyAdmin eine Webanwendung zur Administration von Datenbanken.
 
 ### Erste Schritte
 
@@ -52,7 +52,7 @@ Und es gibt ein neues History-Plugin, mit dem Änderungen an Datensätzen nachve
 
 ### Für Entwickler: Table Manager erweitern
 
-Es ist möglich, eigene Feldtypen zu definieren und dem Table Manager hinzuzufügen. Das Geo-Plugin für YForm bspw. ist eine Möglichkeit, sich mit der Erweiterung von YForm und dem Table Manager vertraut zu machen.
+Es ist möglich, eigene Feldtypen zu definieren und dem Table Manager hinzuzufügen. Das Geo-Plugin für YForm beispielsweise ist eine Möglichkeit, sich mit der Erweiterung von YForm und dem Table Manager vertraut zu machen.
 
 
 ## Tabellen und Optionen
@@ -741,7 +741,7 @@ Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen z
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
-> Hinweis: Wenn das `class`-Attribut im Backend überschrieben wird, bspw. für einen Editor, dann muss die Klasse `form-control` ebenfalls wieder hinzugefügt werden. 
+> Hinweis: Wenn das `class`-Attribut im Backend überschrieben wird, beispielsweise für einen Editor, dann muss die Klasse `form-control` ebenfalls wieder hinzugefügt werden. 
 > Tipp: Mit dem Redactor 2 Addon kann das `textarea`-Feld zu einem WYSIWYG-Editor umgewandelt werden, mit dem Markdown-Addon zu einem WYSIWYM-Editor.
 
 ### time
@@ -814,7 +814,7 @@ Option | Erläuterung
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
 \1. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `checkbox_agb`, `newsletter_consent`
 Vergleichswert | Fest definierter Wert, der für den Vergleich herangezogen wird, z.B. `1` (bei Checkboxen) 
-Vergleichsart |  Operator, wie `Feld 1` und `Vergleichswert` vergleichen werden sollen, bspw. `!=`, `!=`, `>`, `<` 
+Vergleichsart |  Operator, wie `Feld 1` und `Vergleichswert` vergleichen werden sollen, beispielsweise `!=`, `!=`, `>`, `<` 
 Fehlermeldung | Hinweis, der erscheint, wenn die Bedingung des Vergleichs erfüllt ist.
 
 > Merkhilfe: Wenn die Bedingung erfüllt ist, dann wird eine Fehlermeldung ausgegeben.
@@ -827,15 +827,15 @@ Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
 Name | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `name`, `email`, `phone`, `zip`
-Name der Funktion | Funktion, die den Wert überprüfen soll, bspw. `yform_validate_custom`
-Weitere Parameter | Eingabe-Wert, gegen den geprüft werden soll, bspw. `20`
+Name der Funktion | Funktion, die den Wert überprüfen soll, beispielsweise `yform_validate_custom`
+Weitere Parameter | Eingabe-Wert, gegen den geprüft werden soll, beispielsweise `20`
 Fehlermeldung | Hinweis, der erscheint, wenn die Bedingung des Vergleichs erfüllt ist.
 
 > Merkhilfe: Wenn die Bedingung erfüllt ist (`return true;`), dann wird eine Fehlermeldung ausgegeben.
 
 #### Beispiel für `customfunction`
 
-Diese Funktion bspw. im `project`-Addon in der boot.php hinterlegen:
+Diese Funktion beispielsweise im `project`-Addon in der boot.php hinterlegen:
 
 ```php
 function yform_validate_custom($label, $value, $param)

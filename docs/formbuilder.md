@@ -14,17 +14,17 @@ Im Eingabefeld des Formbuilder-Moduls kann man die Values, Validierungen und Akt
 Value-Felder sind die am häufigstgen verwendeten Felder, die normalerweise im Formular direkt auftauchen: einfache Textfelder, Selectfelder, Checkboxen, aber auch versteckte Felder, Geburtsdaten, Datenbank-Selectfelder, etc.
 
 #### [Validate-Felder](yform_modul_validates.md)
-Mit Validate-Feldern werden die Werte der Value-Felder überprüft. Das heißt, damit wird z.B. valdiert, ob ein Wert eingetragen wurde (`empty`) oder ob ein `String`, `Integer` oder sonstiger Wert eingetragen wurde. Es kann aber auch überprüft werden, ob ein Datenbankfeld mit diesem Wert überhaupt schon existiert.
+Mit Validate-Feldern werden die Werte der Value-Felder überprüft. Das heißt, damit wird z.B. valdiert, ob ein Wert eingetragen wurde (`empty`) oder ob ein `String`, `Integer` oder sonstiger Wert eingetragen wurde. Es kann aber auch überprüft werden, ob ein Datenbankfeld mit diesem Wert schon existiert.
 
 #### [Action-Felder](yform_modul_actions.md)
-Action-Felder sind für spätere Verwendungen wichtig: Soll z.B. eine E-Mail verschickt werden und/oder ein Eintrag in die Datenbank geschehen?
+Action-Felder sind für spätere Verwendungen wichtig: Soll z.B. eine E-Mail verschickt werden und/oder ein Eintrag in die Datenbank erfolgen?
 
 #### [Objparams](yform_modul_objparams.md)
 Objektparameter sind Einstellungen, die das ganze Formular betreffen. Mann kann dort z.B. CSS-Klassen oder IDs für das Formular festlegen oder das Ziel das Formularversands definieren.
 
 ### Syntax
 
-Im Normalfall folgt die Syntax folgendem Schema: Zuerst kommt der Feldtyp, dann der Name, dann die Optionen, jeweils durch einen Trennstrich (Pipe) voneinander abgetrennt.
+Im Normalfall folgt die Syntax folgendem Schema: zuerst kommt der Feldtyp, dann der Name, dann die Optionen, jeweils durch einen Trennstrich (Pipe) voneinander abgetrennt.
 
 **Beispiel:** Hier erscheint zunächst ein Textfeld, dann wird validiert, ob ein Wert eingetragen wurde. In der Zeile darunter wird ein Selectfeld definiert, danach folgt eine Aktion, um die Daten in die Datenbank "adressen" zu speichern:
 
@@ -41,7 +41,7 @@ Die vollständigen Optionen für jedes Feld kann man direkt im YForm-Modul erseh
 - **name:** der interne Feld-Name.
 - **label:** das vor dem Feld sichtbare Label (Feldbeschriftung).
 - **defaultwert:** Damit kann man einen Standardwert in das Feld setzen.
-- **no_db:** Speichert eine Aktion die Felddaten in die Datenbank, so gibt es hin und wieder Felder, die man nicht gespeichert haben will, z.B. den Wert eines Submit-Buttons. Dieser Wert ist optional, symbolisiert durch die eckigen Klammern.
+- **no_db:** Speichert eine Aktion die Felddaten in die Datenbank. So gibt es hin und wieder Felder, die man nicht gespeichert haben will, z.B. den Wert eines Submit-Buttons. Dieser Wert ist optional, symbolisiert durch die eckigen Klammern.
 - **cssclassname:** Damit kann man dem Feld eine individuelle CSS-Klasse zuweisen.
 
 ### PHP-Schreibweise
@@ -66,7 +66,7 @@ echo $yform->getForm();
 
 ### Vordefinierte Aktionen
 
-Standardmäßig ist die vordefinierte Aktion auf `Nichts machen (actions im Formular definieren)`. Dies ist auch die beste Option, denn durch die Actions in der Moduleingabe hat man wesentliche mehr Funktionen als bei den vordefinierten Aktionen, die eher für Einsteiger gedacht sind oder wenn man nur einfache Standardfunktionen benötigt. Außerdem kann man bei der manuellen Eingabe beiliebig viele Actions auslösen, bei den vordefinierten Aktionen jedoch nur eine.
+Standardmäßig ist die vordefinierte Aktion auf `Nichts machen (actions im Formular definieren)`. Dies ist auch die beste Option, denn durch die Actions in der Moduleingabe hat man wesentliche mehr Funktionen als bei den vordefinierten Aktionen, die eher für Einsteiger gedacht sind oder wenn man nur einfache Standardfunktionen benötigt. Außerdem kann man bei der manuellen Eingabe beliebig viele Actions auslösen, bei den vordefinierten Aktionen jedoch nur eine.
 
 Folgende vordefinierte Aktionen stehen zur Verfügung:
 
@@ -76,7 +76,7 @@ Hier muss man lediglich die Zieltabelle auswählen, in die gespeichert werden so
 
 #### Nur E-Mail versenden
 
-Bei dieser Option muss die Sende-Email-Adresse, die Empfänger-E-Mail-Adresse, der Betreff (Subject) und der eigentliche Mailtext (Body) eingetragen werden. Für alle im Formular vorkommenden Felder wird der Platzhalter-Code angezeigt, den man mit Copy&Paste in das Mailbody einsetzen kann. Wenn ein Feld von ###Doppelkreuzen### umschlossen eingegeben wird, wird es beim Versand gegen den richtigen Feldwert ersetzt. Diese Aktion entspricht der Action [email](yform_modul_actions.md).
+Bei dieser Option muss die Sende-E-Mail-Adresse, die Empfänger-E-Mail-Adresse, der Betreff (Subject) und der eigentliche Mailtext (Body) eingetragen werden. Für alle im Formular vorkommenden Felder wird der Platzhalter-Code angezeigt, den man mit Copy&Paste in das Mailbody einsetzen kann. Wenn ein Feld von ###Doppelkreuzen### umschlossen eingegeben wird, wird es beim Versand gegen den richtigen Feldwert ersetzt. Diese Aktion entspricht der Action [email](yform_modul_actions.md).
 
 #### E-Mail versenden und in Datenbak speichern
 
@@ -138,7 +138,7 @@ $yform->setObjectparams('key', 'newvalue', '[init/runtime]');
 $yform->setObjectparams('form_show','1');
 ```
 
-Mit dem Wert `0` wird das Formular nach dem Abschicken nicht angezeigt. Dieses Ausblenden benötigt man, wenn man eine Formulaktion auslösen will, aber kein sichtbares Formular haben möchte. **Beispiel:** Ein User wird durch den Aufruf einer bestimmten URL freigeschaltet.  
+Mit dem Wert `0` wird das Formular nach dem Abschicken nicht angezeigt. Dieses Ausblenden benötigt man, wenn man eine Formularaktion auslösen will, aber kein sichtbares Formular haben möchte. **Beispiel:** Ein User wird durch den Aufruf einer bestimmten URL freigeschaltet.  
 Der Defaultwert ist `1` (anzeigen).
 
 #### Eindeutige Namen Für Felder
@@ -218,11 +218,11 @@ Default ist `html`.
 $yform->setObjectparams('csrf_protection', false);
 ```
 
-Der Parameter zum CSRF-Schutz (Cross-Site-Request-Forgery, auch XSRF) verhindert, dass speziell präparierte Anfragen von YForm ausgeführt werden. Angriffsszenario auf ein YForm-Formular wäre bspw. ein Nutzer, der einen präparierten Link erhält und durch einen Klick dann Daten seines REDAXO-Besuchs preisgibt oder unbemerkte/ungewollte Aktionen durch das YForm-Formular ausführt.
+Der Parameter zum CSRF-Schutz (Cross-Site-Request-Forgery, auch XSRF) verhindert, dass speziell präparierte Anfragen von YForm ausgeführt werden. Angriffsszenario auf ein YForm-Formular wäre beispielsweise ein Nutzer, der einen präparierten Link erhält und durch einen Klick dann Daten seines REDAXO-Besuchs preisgibt oder unbemerkte/ungewollte Aktionen durch das YForm-Formular ausführt.
 
 Vereinfacht gesagt sorgt der CSRF-Schutz dafür, dass Formulare nur dann erfolgreich abgesendet werden, wenn der Nutzer sich zum Zeitpunkt des Formular-Absendens auf der Seite befunden hat.
 
-Der CSRF-Schutz sollte daher immer aktiviert bleiben, außer, wenn der direkte Aufruf und Versand eines Formulars explizit durch einen präparierten Link erfolgen muss - bspw. beim Account-Aktivieren-Link des Addons YCom.
+Der CSRF-Schutz sollte daher immer aktiviert bleiben, außer, wenn der direkte Aufruf und Versand eines Formulars explizit durch einen präparierten Link erfolgen muss - beispielsweise beim Account-Aktivieren-Link des Addons YCom.
 
 ---
 
@@ -238,7 +238,7 @@ Der CSRF-Schutz sollte daher immer aktiviert bleiben, außer, wenn der direkte A
 $yform->setObjectparams('form_ytemplate','classic');
 ```
 
-YForm verfügt über `Templates`, in denen das HTML-Markup definiert ist, das die Felder umgibt. Im Ordner `ytemplates` gibt es Unterordner für jedes Theme, in denen dann die Templates für die einzelnen Felder zu finden sind. Auf diese Weise kann man schnell eigene Themes definieren, die auf dem Basis-Theme aufbauen: Wenn es für einen Feldtyp ein eigenes Template gibt, wird dieses verwendet, anonsten das des Basis-Themes.
+YForm verfügt über `Templates`, in denen das HTML-Markup definiert ist, das die Felder umgibt. Im Ordner `ytemplates` gibt es Unterordner für jedes Theme, in denen dann die Templates für die einzelnen Felder zu finden sind. Auf diese Weise kann man schnell eigene Themes definieren, die auf dem Basis-Theme aufbauen: wenn es für einen Feldtyp ein eigenes Template gibt, wird dieses verwendet, anonsten das des Basis-Themes.
 Der Defaultwert lautet `bootstrap`, d.h. als Basis-Theme ist das HTML-Schema des CSS-Frameworks "Bootstrap" hinterlegt.
 
 #### Submit-Button benennen
@@ -311,7 +311,7 @@ Der Default-Wert ist `0`.
 $yform->setObjectparams('form_method','get');
 ```
 
-Mit dem Wert `get` wir die Versandmethode auf get geändert, d.h. alle Feldwerte sind als get-Paramater in der URL enthalten.  
+Mit dem Wert `get` wird die Versandmethode auf get geändert, d.h. alle Feldwerte sind als get-Paramater in der URL enthalten.  
 Der Defaultwert ist `post`.
 
 #### Zieladresse des Formulars
@@ -398,7 +398,7 @@ Mit dem Wert `1` bei `getdata` in Verbindung mit `main_where` (hier die id auf d
 
 #### Weiterleitung forcieren
 
-Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in Modulen und Templates, nach erfolgreichem Versand beendet wird oder nicht. Ein vorzeitiges Beenden des Codes ist bspw. dann nötig, wenn man eine redirect-Action (Weiterleitung) verwenden möchte und diese direkt ausgeführt werden soll, oder, um in bestimmten Fällen eine doppelte Ausführung des Formulars zu verhindern.
+Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in Modulen und Templates, nach erfolgreichem Versand beendet wird oder nicht. Ein vorzeitiges Beenden des Codes ist beispielsweise dann nötig, wenn man eine redirect-Action (Weiterleitung) verwenden möchte und diese direkt ausgeführt werden soll, oder, um in bestimmten Fällen eine doppelte Ausführung des Formulars zu verhindern.
 
 	// Im YForm-Formbuilder
 	objparams|form_exit|1
@@ -809,7 +809,7 @@ $yform->setValueField('fieldset', array("fieldset", "Fieldset", "", "onlyclose")
 
 #### float
 
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `number` verwenden.
+> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen das Feld `number` verwenden.
 
 ###### Definition
 	Ein einfaches Eingabefeld für Gleitkomma-Zahlen.
@@ -860,7 +860,7 @@ $yform->setValueField('hashvalue', array("hashvalue","Hashvalue"));
 #### hidden
 definiert ein Feld, das nur serverseitig befüllt wird und nicht ausgegeben wird.
 
-> Hinweis: Für ein unsichtbares Eingabefeld wird nicht dieses hidden-Feld verwendet, sondern bspw. ein reguläres Eingabefeld (`text`), das zusätzlich das Attribut type="hidden" bekommt.
+> Hinweis: Für ein unsichtbares Eingabefeld wird nicht dieses hidden-Feld verwendet, sondern beispielsweise ein reguläres Eingabefeld (`text`), das zusätzlich das Attribut type="hidden" bekommt.
 
 ###### Definition
 	hidden|name|(default)value||[no_db]
@@ -1862,7 +1862,7 @@ $yform->setActionField('tpl2email', array("emailtemplate", "email"));
 > * `emaillabel` ist das E-Mail-Label, Formular-Element
 > * Wird eine E-Mail-Adresse angegeben, wird die E-Mail des Labels überschrieben.
 
-Die Action lässt sich auch mehrfach verwenden, sodass bspw. noch eine Bestätigungs-E-Mail an einen vorgegebenen Empfänger versendet werden kann.
+Die Action lässt sich auch mehrfach verwenden, sodass beispielsweise noch eine Bestätigungs-E-Mail an einen vorgegebenen Empfänger versendet werden kann.
 
 	// im YForm-Formbuilder
 	text|email|E-Mail-Empfänger
@@ -1903,7 +1903,7 @@ YForm lässt sich an verschiedenen Stellen erweitern - durch eigene Feldtypen, T
 ### eigene Values, Validates und Actions verwenden
 
 
-Values, Validates und Actions werden von YForm automatisch aufgenommen. Dupliziere dazu bspw. eine Validierung aus `/redaxo/src/addons/yform/lib/yform/validate`. Den Datei- sowie den Klassennamen anpassen und unter `/redaxo/src/addons/project/lib/` ablegen.
+Values, Validates und Actions werden von YForm automatisch aufgenommen. Dupliziere dazu beispielsweise eine Validierung aus `/redaxo/src/addons/yform/lib/yform/validate`. Den Datei- sowie den Klassennamen anpassen und unter `/redaxo/src/addons/project/lib/` ablegen.
 
 > **Tipp:** Das Theme-Addon für REDAXO bringt bereits eine Struktur mit, in der eigene YForm-Erweiterungen abgelegt werden können.
 
@@ -1921,9 +1921,9 @@ ytemplates
 
 ### ein eigenes Template / Framework für Formularcode verwenden
 
-Standardmäßig werden Formularcodes von YForm mit Bootstrap-3-Syntax ausgegeben. Mit dem Parameter `form_ytemplate` lassen sich eigene Templates laden, die das Template komplett, oder auch teilweise überschreiben.
+Standardmäßig werden Formularcodes von YForm mit Bootstrap-3-Syntax ausgegeben. Mit dem Parameter `form_ytemplate` lassen sich eigene Templates laden, die das Template komplett oder auch teilweise überschreiben.
 
-Dazu bspw. in die boot.php des `project`-Addons folgende Zeile aufnehmen:
+Dazu beispielsweise in die boot.php des `project`-Addons folgende Zeile aufnehmen:
 
 ```php
 rex_yform::addTemplatePath($this->getPath('ytemplates'));
