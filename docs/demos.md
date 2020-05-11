@@ -74,7 +74,8 @@ foreach ($dateiliste as $file) {
 
 1. Datei ins Dateisystem hochladen, Link zum Download per Mail versenden und nach einer Frist von beispielsweise 7 Tagen wieder vom Dateisystem löschen.
 2. Externe Anbieter wie beispielsweise [wetransfer.com](https://wetransfer.com) (Datenschutz beachten!)
-3. Cloud-Lösungen, wie beispielsweise eine Dropbox, OwnCloud oder NextCloud-Freigabe (Datenschutz beachten!)
+3. Cloud-Lösungen, wie beispielsweise eine Dropbox-, OwnCloud- oder NextCloud-Freigabe (Datenschutz beachten!)
+
 
 ### Credits
 
