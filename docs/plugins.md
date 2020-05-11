@@ -368,7 +368,8 @@ oder
     9-a{1,3}9{1,3}
 
 
-Das kann man im Manager über das Attributefeld innerhalb von z.B. text so setzen:
+Das kann man im Manager über das Attribute-Feld innerhalb von z. B. `text` so setzen:
+
 
     {"data-yform-tools-inputmask":"dd/mm/yyyy"}
 
