@@ -1,12 +1,12 @@
-# Yorm ORM
+# YOrm ORM
 
 ## Mini-ORM für YForm 
 (ORM = Object-relational mapping = Objektrelationale Abbildung)
 
-Yorm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über Yorm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
+YOrm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über YOrm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
 
-> - [Yorm ohne eigene Model Class verwenden](#ohne-model-class)
-> - [Yorm mit eigener Model Class verwenden](#eigene-model-class)
+> - [YOrm ohne eigene Model Class verwenden](#ohne-model-class)
+> - [YOrm mit eigener Model Class verwenden](#eigene-model-class)
 >   - [Klasse erstellen](#klasse-erstellen)
 >   - [Klasse registrieren](#klasse-registrieren)
 > - [Praxis-Beispiele](#praxis-beispiele)
@@ -31,7 +31,7 @@ Yorm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und
 
 
 <a name="ohne-model-class"></a>
-## Yorm ohne eigene Model Class verwenden
+## YOrm ohne eigene Model Class verwenden
 
 Hole alle Daten der Tabelle `rex_my_table` und zeige das Objekt. 
 
