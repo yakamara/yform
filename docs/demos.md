@@ -20,7 +20,8 @@ YForm bietet dieses Möglichkeit über einen Trick.
 2. Ein E-Mail-Template (in REDAXO > YForm > E-Mail-Tempaltes)
 3. Eine funktionierende PHPMailer-Konfiguration (in REDAXO > PHPMailer)
 
-> Wichtig: Diese Anleitung funktioniert nur wenn man ein E-Mail-Template zusammen mit der Action `tpl2email` nutzt (nicht im YForm Formbuilder).
+> Wichtig: Diese Anleitung funktioniert nur wenn man ein E-Mail-Template zusammen mit der Action `tpl2email` nutzt und nicht die im YForm Formbuilder-Modul angebotene Eingabe für eine E-Mail.).
+
 
 ### Umsetzung
 
@@ -538,4 +539,3 @@ if($key && $token) {
         ?>
     </div>
 ```
-
