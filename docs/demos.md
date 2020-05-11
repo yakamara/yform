@@ -96,7 +96,7 @@ Alexander Walther, @alexplusde
 
 ### Modul-Eingabe
 
-```
+```html
 <div class="alert alert-info">
   Dieses Modul gibt das Glossar aus. Keine weiteren Einstellungsmöglichkeiten. 
 </div>
@@ -443,7 +443,7 @@ action|tpl2email|member_confirm||betreiber@domain.de
 ```
 
 *Meldung bei erfolgreichem Versand* 
-```
+```html
 <p>Vielen Dank für Ihre Unterstützung!</p>
 <p>Bitte beachten Sie: Sie erhalten in Kürze eine Mail mit einem Bestätigungs-Link. Erst, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
 ```

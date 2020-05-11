@@ -131,7 +131,7 @@ if($form) { // Wenn das Formular nicht abgesendet wurde
 
 Wenn die Validierung des Formulars erfolgreich ist, wird die E-Mail versendet und der selbst definierte Platzhalter steht nun ebenfalls im Template zur Verfügung.
 
-```
+```html
 REX_YFORM_DATA[field="name"]
 REX_YFORM_DATA[field="email"]
 REX_YFORM_DATA[field="custom"]
@@ -178,7 +178,7 @@ if ($yform_email_template = rex_yform_email_template::getTemplate($yform_email_t
 
 Absender, Betreff usw. werden automatisch ausgefüllt, indem die üblichen Platzhalter im E-Mail-Template verwendet werden:
 
-```
+```html
 REX_YFORM_DATA[field="name"]
 REX_YFORM_DATA[field="phone"]
 REX_YFORM_DATA[field="email"]
