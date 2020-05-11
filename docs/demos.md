@@ -447,7 +447,8 @@ action|tpl2email|member_confirm||betreiber@domain.de
 *Meldung bei erfolgreichem Versand* 
 ```
 <p>Vielen Dank für Ihre Unterstützung!</p>
-<p>Bitte beachten Sie: in Kürze erhalten Sie eine Mail mit einem Bestätigungs-Link. Erst dann, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
+<p>Bitte beachten Sie: In Kürze erhalten Sie eine Mail mit einem Bestätigungs-Link. Erst dann, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
+
 ```
 
 ### Schritt 4: E-Mail-Templates anlegen
