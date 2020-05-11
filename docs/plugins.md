@@ -46,7 +46,7 @@ In den E-Mail-Template `Body (Html)` kommt:
 
 #### PHP
 
-Es kann auch PHP-Code integriert werden, um z.B. Formular-Eingaben zu prüfen und die Ausgabe in der E-Mail individuell zu verändern.
+Es kann auch PHP-Code integriert werden, um z. B. Formular-Eingaben zu prüfen und die Ausgabe in der E-Mail individuell zu verändern.
 
 ```php
 Hallo,<br />
@@ -60,7 +60,7 @@ if ('REX_YFORM_DATA[field="anrede"]' == 'w') {
 ```
 
 > **Hinweis:**  
-> Die Action **tpl2email** kann auch mehrfach im Formular eingesetzt werden. So könnten E-Mails mit unterschiedlichen Templates versendet werden oder auch an mehrere Empfänger, z.B. Admin und Kunde.
+> Die Action **tpl2email** kann auch mehrfach im Formular eingesetzt werden. So könnten E-Mails mit unterschiedlichen Templates versendet werden oder auch an mehrere Empfänger, z. B. Admin und Kunde.
 
 
 ### Beispiele
@@ -294,7 +294,7 @@ Beispiel
 
 ### Nutzung eines Endpoints
 
-URL (z.B. https://domain/rest/v1/user)
+URL (z. B. https://domain/rest/v1/user)
 In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung gibt. Um zu sehen wie die Aufrufe funktionieren bitte hier https://jsonapi.org/format/ nachschlagen. 
 
 #### GET
@@ -337,7 +337,7 @@ Dabei muss hier das select-Feld folgendes Attribut bekommen:
 
 	data-yform-tools-select2 = ""
 
-Das kann man im Manager über das Attributefeld innerhalb von z.B. select oder select_sql so setzen:
+Das kann man im Manager über das Attributefeld innerhalb von z. B. select oder select_sql so setzen:
 
 	{"data-yform-tools-select2": "", "placeholder": "My Placeholder"}
 
@@ -348,13 +348,13 @@ Eine weitere Variante wäre der Tag-Mode
 
 ### inputmask
 
-Diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. Z.B. kann ein bestimmtes Datumsformat erzwungen werden.
+Diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. z. B. kann ein bestimmtes Datumsformat erzwungen werden.
 
 Dabei wird auch hier ein Attribute im Textfeld gesetzt:
 
     data-yform-tools-inputmask = ""
 
-Man muss einen Wert angeben, damit dem Textfeld klar ist, wie die Überprüfung auszusehen hat. z.B.
+Man muss einen Wert angeben, damit dem Textfeld klar ist, wie die Überprüfung auszusehen hat. z. B.
 
     dd/mm/yyyy
 
@@ -367,7 +367,7 @@ oder
     9-a{1,3}9{1,3}
 
 
-Das kann man im Manager über das Attributefeld innerhalb von z.B. text so setzen:
+Das kann man im Manager über das Attributefeld innerhalb von z. B. text so setzen:
 
     {"data-yform-tools-inputmask":"dd/mm/yyyy"}
 
@@ -375,7 +375,7 @@ Das kann man im Manager über das Attributefeld innerhalb von z.B. text so setze
 
 Diese Bibliothek [http://www.daterangepicker.com/](http://www.daterangepicker.com/) dient für die Auswahl von Datumsfeldern oder Datumzeiträumen. Dabei kann auch eine Uhrzeit selektiert werden.
 
-> Bitte unbedingt beachten, dass man das selbe Format bei den Date(time)pickern einträgt, wie man es im entsprechenden Feld (z.B. Date) ausgewählt hat.
+> Bitte unbedingt beachten, dass man das selbe Format bei den Date(time)pickern einträgt, wie man es im entsprechenden Feld (z. B. Date) ausgewählt hat.
 
 
 Dabei muss das Textfeld folgendes Attribut bekommen:
@@ -386,7 +386,7 @@ oder
 
     data-yform-tools-datetimepicker = ""
 
-und auch mit Formaten versehen werden. Z.B. beim Datepicker
+und auch mit Formaten versehen werden. z. B. beim Datepicker
 
     DD-MM-YYYY
 
@@ -394,7 +394,7 @@ oder beim Datetimepicker
 
     YYYY-MM-DD HH:ii
 
-kann man im Manager über das Attibutefeld innerhalb von z.B. date mit input:text so setzen:
+kann man im Manager über das Attibutefeld innerhalb von z. B. date mit input:text so setzen:
 
     {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii"}
 

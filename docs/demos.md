@@ -26,7 +26,7 @@ YForm bietet dieses Möglichkeit über einen Trick.
 
 Dem bestehenden Formular wird ein `upload`-Valuefeld hinzugefügt, das in diesem Beispiel auf max. 10 MB begrenzt ist und nur bestimmte Dateiendungen zulässt.
 
-Die empfohlene Dateigrößen-Begrenzung hängt von der gewählten PHPMailer-Konfiguration, der Konfiguration des Webservers und PHP sowie von weiteren Faktoren ab - beispielsweise Limits und Speicherplatz des Empfänger-Postfachs.
+Die empfohlene Dateigrößen-Begrenzung hängt von der gewählten PHPMailer-Konfiguration, der Konfiguration des Webservers und PHP sowie von weiteren Faktoren ab - z. B. Limits und Speicherplatz des Empfänger-Postfachs.
 
 #### PHP-Schreibweise
 ```php
@@ -71,9 +71,9 @@ foreach ($dateiliste as $file) {
 
 ### Alternativen
 
-1. Datei ins Dateisystem hochladen, Link zum Download per Mail versenden und nach einer Frist von beispielsweise 7 Tagen wieder vom Dateisystem löschen.
-2. Externe Anbieter wie beispielsweise [wetransfer.com](https://wetransfer.com) (Datenschutz beachten!)
-3. Cloud-Lösungen, wie beispielsweise eine Dropbox, OwnCloud oder NextCloud-Freigabe (Datenschutz beachten!)
+1. Datei ins Dateisystem hochladen, Link zum Download per Mail versenden und nach einer Frist von z. B. 7 Tagen wieder vom Dateisystem löschen.
+2. Externe Anbieter wie z. B. [wetransfer.com](https://wetransfer.com) (Datenschutz beachten!)
+3. Cloud-Lösungen, wie z. B. eine Dropbox, OwnCloud oder NextCloud-Freigabe (Datenschutz beachten!)
 
 ### Credits
 
@@ -167,7 +167,7 @@ YForm bietet dieses Möglichkeit auf zwei Wege: Serverseitig über das YForm-Val
 
 Sensible Daten sollten niemals an den Besucher übergeben werden. Daten wie die Summe eines Warenkorbs sollten bei einem Bestellformular immer serverseitig berechnet und überprüft werden und nicht über ein ausgeblendetes Eingabefeld eines Formulars. 
 
-Andere Daten wie beispielsweise die Anzahl der Produkte in einem Warenkorb können auch über ein clientseitiges hidden-Feld übertragen werden.
+Andere Daten wie z. B. die Anzahl der Produkte in einem Warenkorb können auch über ein clientseitiges hidden-Feld übertragen werden.
 
 ### Voraussetzung
 
@@ -229,7 +229,7 @@ $yform->setValueField('text', array('anzahl','Anzahl','0','0','{"type":"hidden"}
 
     text|anzahl|Anzahl|0|0|{"type":"hidden"}|
 
-Erzeugt im Formular Eingabefeld, das beispielsweise per Javascript verändert werden kann:
+Erzeugt im Formular Eingabefeld, das z. B. per Javascript verändert werden kann:
 
     `<input class="form-control" name="FORM[...]" type="hidden" id="yform-data_edit-..." value="0">`
 
@@ -302,7 +302,7 @@ function yform_validate_timer($label,$microtime,$seconds)
 
 **WICHTIG: damit das funktioniert, muss `real_field_names` auf `true` stehen: [Anleitung](yform_modul_objparams.md#echte-feldnamen)**
     
-> Tipp: Die Funktion kann beispielsweise im projects-Addon innerhalb der boot.php hinterlegt werden.
+> Tipp: Die Funktion kann z. B. im projects-Addon innerhalb der boot.php hinterlegt werden.
     
 **Funktionsweise**
 
@@ -312,7 +312,7 @@ Spambots sind kleine ungeduldige Biester. Sie füllen das Formular in der Regel 
 
 Dieser Zeitstempel wird beim Absenden des Formulars in der Funktion `yform_validate_timer` verglichen. Wenn der vorgegebene Zeitwert unterschritten wird (in diesem Beispiel sind es `5` Sekunden), dann ist davon auszugehen, dass das Formular von einem Spambot ausgefüllt wurde, weshalb die Validierung fehlschlägt und das Absenden unterbunden wird.
 
-> Tipp: Zum Testen kann der Wert auf einen wesentlich höheren Wert gestellt werden, beispielsweise 30 Sekunden. Anschließend beide Fälle testen (vor 30 Sekunden -> Fehler, nach 30 Sekunden -> Erfolg) und zuletzt wieder auf einen niedrigeren Wert stellen.
+> Tipp: Zum Testen kann der Wert auf einen wesentlich höheren Wert gestellt werden, z. B. 30 Sekunden. Anschließend beide Fälle testen (vor 30 Sekunden -> Fehler, nach 30 Sekunden -> Erfolg) und zuletzt wieder auf einen niedrigeren Wert stellen.
 
 **Nachteile**
 
@@ -323,7 +323,7 @@ Dieser Zeitstempel wird beim Absenden des Formulars in der Funktion `yform_valid
 **Vorgehensweise**
 
 1. Feld vom Typ `email` anlegen, als Label `email` verwenden
-2. weiteres Feld vom Typ `email` anlegen, als Label beispielsweise `xmail` verwenden
+2. weiteres Feld vom Typ `email` anlegen, als Label z. B. `xmail` verwenden
 3. Validierung vom Typ `compare` anlegen, das Feld darf nicht `>0` sein.
 4. Eingabefeld `email` via CSS verstecken.
 
@@ -356,7 +356,7 @@ In diesem Tutorial geht es darum, ein Formular zu entwerfen, mit dem Besucher ei
 Damit nicht wildfremde Menschen das Formular ausfüllen, soll eine E-Mail an den Antragssteller gesendet werden, in der sich ein Link zur Bestätigung befindet. Hierzu muss ein zufälliger Validierungs-Code erstellt werden, sodass nicht Fremde die Bestätigung über einen Link vornehmen können.
 
 *Datenschutz*
-E-Mails werden noch immer oft unverschlüsselt gesendet. Deshalb ist es notwendig, sensible Daten wie beispielsweise IBAN, vor dem Versand der Bestätinungs-E-Mail an den Antragssteller zu maskieren. Generell ist empfohlen, dass das Formular nur verschlüsselt (https) übertragen wird.
+E-Mails werden noch immer oft unverschlüsselt gesendet. Deshalb ist es notwendig, sensible Daten wie z. B. IBAN, vor dem Versand der Bestätinungs-E-Mail an den Antragssteller zu maskieren. Generell ist empfohlen, dass das Formular nur verschlüsselt (https) übertragen wird.
 
 *Einfache Handhabung*
 Das Formular soll, sofern möglich, auf die Autofill-Funktion des Browsers zugreifen können. Hierzu müssen die Feldnamen richtig benannt werden.
@@ -455,7 +455,7 @@ action|tpl2email|member_confirm||betreiber@domain.de
 ```
 Hallo REX_YFORM_DATA[field="salutation"] REX_YFORM_DATA[field="firstname"] REX_YFORM_DATA[field="lastname"],
 
-Sie haben auf unserer Homepage einen Antrag auf Mitgliedschaft ausgefüllt. Bitte bestätigten Sie Ihre Mitgliedschaft mit einem Klick auf folgenden Link:
+Sie haben auf unserer Website einen Antrag auf Mitgliedschaft ausgefüllt. Bitte bestätigten Sie Ihre Mitgliedschaft mit einem Klick auf folgenden Link:
 
 https://www.domain.de/mitgliedschaft-aktivieren/?key=REX_YFORM_DATA[field="key"]&token=REX_YFORM_DATA[field="token"]
 

@@ -460,7 +460,7 @@ echo $post->executeForm($yform)
 - Select
     - resetSelect
     - select
-    - selectRaw (lässt individuelle Argumente zu, wie z.B. `CONCAT, SUM`)
+    - selectRaw (lässt individuelle Argumente zu, wie z. B. `CONCAT, SUM`)
 - Table
     - getTable
     - getTableName
@@ -523,7 +523,7 @@ Datei `/redaxo/src/addons/yform/plugins/manager/lib/yform/manager/dataset.php` u
 ## Tricks
 
 <a name="dataset-filter"></a>
-### Aus dem Dataset ungewollte Felder (z.B. für's Frontend) herausfiltern 
+### Aus dem Dataset ungewollte Felder (z. B. für's Frontend) herausfiltern 
 
 ```php 
 class rex_data_mydata extends rex_yform_manager_dataset
@@ -551,7 +551,7 @@ class rex_data_mydata extends rex_yform_manager_dataset
 }
 ```
 
-Model-Class in boot.php z.B. im project Addon registrieren
+Model-Class in boot.php z. B. im project Addon registrieren
 
 ```php
 rex_yform_manager_dataset::setModelClass('mydata', rex_data_mydate::class);
