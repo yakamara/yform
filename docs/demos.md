@@ -20,7 +20,8 @@ YForm bietet dieses Möglichkeit über einen Trick.
 2. Ein E-Mail-Template (in REDAXO > YForm > E-Mail-Tempaltes)
 3. Eine funktionierende PHPMailer-Konfiguration (in REDAXO > PHPMailer)
 
-> Wichtig: Diese Anleitung funktioniert nur wenn man ein E-Mail-Template zusammen mit der Action `tpl2email` nutzt (nicht im YForm Formbuilder).
+> Wichtig: Diese Anleitung funktioniert nur wenn man ein E-Mail-Template zusammen mit der Action `tpl2email` nutzt und nicht die im YForm Formbuilder-Modul angebotene Eingabe für eine E-Mail.).
+
 
 ### Umsetzung
 
@@ -445,7 +446,8 @@ action|tpl2email|member_confirm||betreiber@domain.de
 *Meldung bei erfolgreichem Versand* 
 ```
 <p>Vielen Dank für Ihre Unterstützung!</p>
-<p>Bitte beachten Sie: in Kürze erhalten Sie eine Mail mit einem Bestätigungs-Link. Erst dann, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
+<p>Bitte beachten Sie: In Kürze erhalten Sie eine Mail mit einem Bestätigungs-Link. Erst dann, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
+
 ```
 
 ### Schritt 4: E-Mail-Templates anlegen
@@ -538,4 +540,3 @@ if($key && $token) {
         ?>
     </div>
 ```
-
