@@ -207,6 +207,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $value = trim($params['value']);
         $format = self::date_getFormat($params['field']->getElement('format'));
         $field = $params['field']->getName();
+        $field = 't0.' . rex_sql::factory()->escapeIdentifier($field);
         return self::getDateFilterWhere( $value, $field, $format);
     }
 
@@ -222,9 +223,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
             return '';
         }
 
-        $field = rex_sql::factory()->escapeIdentifier($field);
-
-        // Auswertung über Pattern: <|<=|=|>=|> $value
+         // Auswertung über Pattern: <|<=|=|>=|> $value
         $pattern = '/^(?<c>\<=|\<|=|\>=|\>)?\s*' . self::VALUE_SEARCH_PATTERN[$format] . '$/';
         $ok = preg_match( $pattern, $value, $match );
         if( $ok ) {
