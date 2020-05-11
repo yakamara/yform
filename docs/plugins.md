@@ -337,7 +337,8 @@ Dabei muss hier das select-Feld folgendes Attribut bekommen:
 
 	data-yform-tools-select2 = ""
 
-Das kann man im Manager über das Attributefeld innerhalb von z.B. select oder select_sql so setzen:
+Das kann man im Manager über das Feld „Attribute“ innerhalb von z. B. `select` oder `select_sql` so setzen:
+
 
 	{"data-yform-tools-select2": "", "placeholder": "My Placeholder"}
 
