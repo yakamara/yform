@@ -138,7 +138,8 @@ $yform->setObjectparams('key', 'newvalue', '[init/runtime]');
 $yform->setObjectparams('form_show','1');
 ```
 
-Mit dem Wert `0` wird das Formular nach dem Abschicken nicht angezeigt. Dieses Ausblenden benötigt man, wenn man eine Formularaktion auslösen will, aber kein sichtbares Formular haben möchte. **Beispiel:** Ein User wird durch den Aufruf einer bestimmten URL freigeschaltet.  
+Mit dem Wert `0` wird das Formular nach dem Abschicken nicht angezeigt. Dieses Ausblenden benötigt man, wenn man eine Formular-Aktion auslösen will, aber kein sichtbares Formular haben möchte. **Beispiel:** Ein User wird durch den Aufruf einer bestimmten URL freigeschaltet.  
+
 Der Defaultwert ist `1` (anzeigen).
 
 #### Eindeutige Namen Für Felder
