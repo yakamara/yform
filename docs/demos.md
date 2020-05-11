@@ -20,13 +20,15 @@ YForm bietet dieses Möglichkeit über einen Trick.
 2. Ein E-Mail-Template (in REDAXO > YForm > E-Mail-Tempaltes)
 3. Eine funktionierende PHPMailer-Konfiguration (in REDAXO > PHPMailer)
 
-> Wichtig: Diese Anleitung funktioniert nicht, wenn man die E-Mail direkt YForm Formbuilder verfasst, sondern nur, wenn man ein E-Mail-Template zusammen mit der Action `tpl2email` nutzt.
+> Wichtig: Diese Anleitung funktioniert nur wenn man ein E-Mail-Template zusammen mit der Action `tpl2email` nutzt und nicht die im YForm Formbuilder-Modul angebotene Eingabe für eine E-Mail.
+
+
 
 ### Umsetzung
 
 Dem bestehenden Formular wird ein `upload`-Valuefeld hinzugefügt, das in diesem Beispiel auf max. 10 MB begrenzt ist und nur bestimmte Dateiendungen zulässt.
 
-Die empfohlene Dateigrößen-Begrenzung hängt von der gewählten PHPMailer-Konfiguration, der Konfiguration des Webservers und PHP sowie von weiteren Faktoren ab - bspw. Limits und Speicherplatz des Empfänger-Postfachs.
+Die empfohlene Dateigrößen-Begrenzung hängt von der gewählten PHPMailer-Konfiguration, der Konfiguration des Webservers und PHP sowie von weiteren Faktoren ab - z. B. Limits und Speicherplatz des Empfänger-Postfachs.
 
 #### PHP-Schreibweise
 ```php
@@ -42,7 +44,7 @@ upload|upload|Dateianhang|100,10000|.pdf,.odt,.doc,.docx,.xls,.xlsx,.png,.jpg,.j
 php|php_attach|Datei anhängen|<?php if (isset($this->params['value_pool']['files'])) { $this->params['value_pool']['email_attachments'] = $this->params['value_pool']['files']; } ?>
 ```
 
-Beim erfolgreichen Upload wird die Datei als dem "value pool" des Dateiuploads (`files`) übertragen in den "value pool" der E-Mail-Anhänge (`email_attachments`).
+Beim erfolgreichen Upload wird die Datei aus dem "value pool" des Dateiuploads (`files`) übertragen in den "value pool" der E-Mail-Anhänge (`email_attachments`).
 
 ### Datei(en) aus dem Medienpool als Anhang
 
@@ -71,9 +73,9 @@ foreach ($dateiliste as $file) {
 
 ### Alternativen
 
-1. Datei ins Dateisystem hochladen, Link zum Download per Mail versenden und nach einer Frist von bspw. 7 Tagen wieder vom Dateisystem löschen.
-2. Externe Anbieter wie bspw. [wetransfer.com](https://wetransfer.com) (Datenschutz beachten!)
-3. Cloud-Lösungen, wie bspw. eine Dropbox, OwnCloud oder NextCloud-Freigabe (Datenschutz beachten!)
+1. Datei ins Dateisystem hochladen, Link zum Download per Mail versenden und nach einer Frist von z. B. 7 Tagen wieder vom Dateisystem löschen.
+2. Externe Anbieter wie z. B. [wetransfer.com](https://wetransfer.com) (Datenschutz beachten!)
+3. Cloud-Lösungen, wie z. B. eine Dropbox, OwnCloud oder NextCloud-Freigabe (Datenschutz beachten!)
 
 ### Credits
 
@@ -167,7 +169,7 @@ YForm bietet dieses Möglichkeit auf zwei Wege: Serverseitig über das YForm-Val
 
 Sensible Daten sollten niemals an den Besucher übergeben werden. Daten wie die Summe eines Warenkorbs sollten bei einem Bestellformular immer serverseitig berechnet und überprüft werden und nicht über ein ausgeblendetes Eingabefeld eines Formulars. 
 
-Andere Daten wie bspw. die Anzahl der Produkte in einem Warenkorb können auch über ein clientseitiges hidden-Feld übertragen werden.
+Andere Daten wie z. B. die Anzahl der Produkte in einem Warenkorb können auch über ein clientseitiges hidden-Feld übertragen werden.
 
 ### Voraussetzung
 
@@ -229,13 +231,13 @@ $yform->setValueField('text', array('anzahl','Anzahl','0','0','{"type":"hidden"}
 
     text|anzahl|Anzahl|0|0|{"type":"hidden"}|
 
-Erzeugt im Formular Eingabefeld, das bspw. per Javascript verändert werden kann:
+Erzeugt im Formular Eingabefeld, das z. B. per Javascript verändert werden kann:
 
     `<input class="form-control" name="FORM[...]" type="hidden" id="yform-data_edit-..." value="0">`
 
 ### Weitere Möglichkeiten
 
-Das YForm-Objekt verfügt über zwei weitere Objekt-Methoden `setHiddenField()` und `setHiddenFields()`, die jedoch ihre Werte nicht in den sog. `value_pool` ablegen, sondern als Objektparameter unter dem key `form_hiddenfields` - d.h. diese Werte sind nicht für Aktionen wie `tpl2email` oder `db` sichtbar und werden demzufolge nicht an ein E-Mail-Template oder die Datenbank übergeben.
+Das YForm-Objekt verfügt über zwei weitere Objekt-Methoden: `setHiddenField()` und `setHiddenFields()`. Diese legen jedoch ihre Werte nicht in den sog. `value_pool` ab, sondern als Objektparameter unter dem key `form_hiddenfields` - d.h. diese Werte sind nicht für Aktionen wie `tpl2email` oder `db` sichtbar und werden demzufolge nicht an ein E-Mail-Template oder die Datenbank übergeben.
 
 ```php
 $yform->setHiddenField('versteckt', 1);
@@ -302,17 +304,17 @@ function yform_validate_timer($label,$microtime,$seconds)
 
 **WICHTIG: damit das funktioniert, muss `real_field_names` auf `true` stehen: [Anleitung](yform_modul_objparams.md#echte-feldnamen)**
     
-> Tipp: Die Funktion kann bspw. im projects-Addon innerhalb der boot.php hinterlegt werden.
+> Tipp: Die Funktion kann z. B. im projects-Addon innerhalb der boot.php hinterlegt werden.
     
 **Funktionsweise**
 
-Spambots sind kleine ungeduldige Biestlinge. Sie füllen das Formular in der Regel im Bruchteil einer Sekunde aus und haben schließlich keine Zeit zu verlieren, um den nächsten Website-Betreiber in den Wahnsinn zu treiben.
+Spambots sind kleine ungeduldige Biester. Sie füllen das Formular in der Regel im Bruchteil einer Sekunde aus und haben schließlich keine Zeit zu verlieren, um den nächsten Website-Betreiber in den Wahnsinn zu treiben.
 
 Über PHP wird ein zusätzliches, verstecktes Feld namens `validate_timer` erstellt und bei der Ausgabe des Formulars mit dem Zeitstempel ausgefüllt. Ein Nutzer wird i.d.R. einige Sekunden brauchen, um das Formular auszufüllen. 
 
 Dieser Zeitstempel wird beim Absenden des Formulars in der Funktion `yform_validate_timer` verglichen. Wenn der vorgegebene Zeitwert unterschritten wird (in diesem Beispiel sind es `5` Sekunden), dann ist davon auszugehen, dass das Formular von einem Spambot ausgefüllt wurde, weshalb die Validierung fehlschlägt und das Absenden unterbunden wird.
 
-> Tipp: Zum Testen kann der Wert auf einen wesentlich höheren Wert gestellt werden, bspw. 30 Sekunden. Anschließend beide Fälle testen (vor 30 Sekunden -> Fehler, nach 30 Sekunden -> Erfolg) und zuletzt wieder auf einen niedrigeren Wert stellen.
+> Tipp: Zum Testen kann der Wert auf einen wesentlich höheren Wert gestellt werden, z. B. 30 Sekunden. Anschließend beide Fälle testen (vor 30 Sekunden -> Fehler, nach 30 Sekunden -> Erfolg) und zuletzt wieder auf einen niedrigeren Wert stellen.
 
 **Nachteile**
 
@@ -323,7 +325,7 @@ Dieser Zeitstempel wird beim Absenden des Formulars in der Funktion `yform_valid
 **Vorgehensweise**
 
 1. Feld vom Typ `email` anlegen, als Label `email` verwenden
-2. weiteres Feld vom Typ `email` anlegen, als Label bspw. `xmail` verwenden
+2. weiteres Feld vom Typ `email` anlegen, als Label z. B. `xmail` verwenden
 3. Validierung vom Typ `compare` anlegen, das Feld darf nicht `>0` sein.
 4. Eingabefeld `email` via CSS verstecken.
 
@@ -356,7 +358,7 @@ In diesem Tutorial geht es darum, ein Formular zu entwerfen, mit dem Besucher ei
 Damit nicht wildfremde Menschen das Formular ausfüllen, soll eine E-Mail an den Antragssteller gesendet werden, in der sich ein Link zur Bestätigung befindet. Hierzu muss ein zufälliger Validierungs-Code erstellt werden, sodass nicht Fremde die Bestätigung über einen Link vornehmen können.
 
 *Datenschutz*
-E-Mails werden noch immer oft unverschlüsselt gesendet. Deshalb ist es notwendig, sensible Daten wie bspw. IBAN, vor dem Versand der Bestätinungs-E-Mail an den Antragssteller zu maskieren. Generell ist empfohlen, dass das Formular nur verschlüsselt (https) übertragen wird.
+E-Mails werden noch immer oft unverschlüsselt gesendet. Deshalb ist es notwendig, sensible Daten wie z. B. IBAN, vor dem Versand der Bestätinungs-E-Mail an den Antragssteller zu maskieren. Generell ist empfohlen, dass das Formular nur verschlüsselt (https) übertragen wird.
 
 *Einfache Handhabung*
 Das Formular soll, sofern möglich, auf die Autofill-Funktion des Browsers zugreifen können. Hierzu müssen die Feldnamen richtig benannt werden.
@@ -445,7 +447,8 @@ action|tpl2email|member_confirm||betreiber@domain.de
 *Meldung bei erfolgreichem Versand* 
 ```html
 <p>Vielen Dank für Ihre Unterstützung!</p>
-<p>Bitte beachten Sie: Sie erhalten in Kürze eine Mail mit einem Bestätigungs-Link. Erst, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
+<p>Bitte beachten Sie: In Kürze erhalten Sie eine Mail mit einem Bestätigungs-Link. Erst dann, wenn Sie diesen Link anklicken, wird Ihre Mitgliedschaft verbindlich. Sie erhalten anschließend eine schriftliche Bestätigung.</p>
+
 ```
 
 ### Schritt 4: E-Mail-Templates anlegen
@@ -461,7 +464,7 @@ https://www.domain.de/mitgliedschaft-aktivieren/?key=REX_YFORM_DATA[field="key"]
 
 Sie erhalten anschließend eine schriftliche Bestätigung per Post an die von Ihnen angegebene Adresse.
 
-Ihr Vorteil Als Mitglied: Sie erhalten ermäßigten Eintritt zu unseren Veranstaltungen. Bringen Sie dazu Ihren Mitgliedsausweis mit.
+Ihr Vorteil als Mitglied: Sie erhalten ermäßigten Eintritt zu unseren Veranstaltungen. Bringen Sie dazu Ihren Mitgliedsausweis mit.
 
 Wir bedanken uns sehr für Ihre Unterstützung und freuen uns über Ihren nächsten Besuch!
 
@@ -538,4 +541,3 @@ if($key && $token) {
         ?>
     </div>
 ```
-

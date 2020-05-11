@@ -1,9 +1,9 @@
-# Yorm ORM
+# YOrm ORM
 
 ## Mini-ORM für YForm 
 (ORM = Object-relational mapping = Objektrelationale Abbildung)
 
-Yorm erlecihtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über Yorm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
+YOrm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über YOrm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
 
 > - [YOrm ohne eigene Model Class verwenden](#ohne-model-class)
 > - [YOrm mit eigener Model Class verwenden](#eigene-model-class)
@@ -111,7 +111,7 @@ $table = rex_yform_manager_table::get('rex_data_product');
 
 $products = $table->query()
     ->joinRelation('category_id', 'c') // Join auf rex_data_product_category gemäß Relationsfeld category_id, mit Alias "c" für weitere Verwendung
-    ->select('c.name', 'category_name') // Aus der gejointen Tabelle den Kategorienamen mit auslesen mit Alias "category_name"
+    ->select('c.name', 'category_name') // Aus der gejointen Tabelle den Kategorienamen mit auslesen mit dem Alias "category_name"
     ->where('status', 1)
     ->find();
 
@@ -461,7 +461,7 @@ echo $post->executeForm($yform)
 - Select
     - resetSelect
     - select
-    - selectRaw (lässt individuelle Argumente zu, wie z.B. `CONCAT, SUM`)
+    - selectRaw (lässt individuelle Argumente zu, wie z. B. `CONCAT, SUM`)
 - Table
     - getTable
     - getTableName
@@ -524,7 +524,7 @@ Datei `/redaxo/src/addons/yform/plugins/manager/lib/yform/manager/dataset.php` u
 ## Tricks
 
 <a name="dataset-filter"></a>
-### Aus dem Dataset ungewollte Felder (z.B. für's Frontend) herausfiltern 
+### Aus dem Dataset ungewollte Felder (z. B. für's Frontend) herausfiltern 
 
 ```php 
 class rex_data_mydata extends rex_yform_manager_dataset
@@ -552,7 +552,7 @@ class rex_data_mydata extends rex_yform_manager_dataset
 }
 ```
 
-Model-Class in boot.php z.B. im project Addon registrieren
+Model-Class in boot.php z. B. im project Addon registrieren
 
 ```php
 rex_yform_manager_dataset::setModelClass('mydata', rex_data_mydate::class);

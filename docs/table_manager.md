@@ -4,7 +4,7 @@
 
 Der Table Manager in YForm dient zum Erstellen und Bearbeiten von Datenbanktabellen sowie zum Verwalten von tabellarischen Daten innerhalb von Redaxo.
 
-> Hinweis: Der Table Manager ist nicht für den Zugriff aller Redaxo-Datenbanktabellen, bspw. `rex_article` gedacht. Um direkt auf die Tabellen einer Redaxo-Installation zuzugreifen, gibt es das [Adminer-Addon von Friends Of Redaxo](https://github.com/FriendsOfREDAXO/adminer). Adminer ist wie PHPMyAdmin eine Webanwendung zur Administration von Datenbanken.
+> Hinweis: Der Table Manager ist nicht für den Zugriff aller Redaxo-Datenbanktabellen, z. B. `rex_article` gedacht. Um direkt auf die Tabellen einer Redaxo-Installation zuzugreifen, gibt es das [Adminer-Addon von Friends Of Redaxo](https://github.com/FriendsOfREDAXO/adminer). Adminer ist wie PHPMyAdmin eine Webanwendung zur Administration von Datenbanken.
 
 ### Erste Schritte
 
@@ -41,7 +41,7 @@ Die Daten können dann in Modulen und Addons im Frontend und Backend verwendet w
 
 Daten im Table Manager werden in der SQL-Datenbank abgelegt, die bei der Redaxo-Installation angegeben wurde. Die einfachste Möglichkeit ist daher, über das [rex_sql-Objekt](https://github.com/redaxo/redaxo/wiki/Aenderungen-in-REDAXO-5#rex_sql) die Daten auszulesen.
 
-> Tipp: Um beispielsweise jede News oder jedes Produkt statt via GET-Parameter über eine eigene URL aufzurufen, obwohl kein eigener Artikel existiert, kann das [URL-Addon von Thomas Blum](https://github.com/tbaddade/redaxo_url) verwendet werden.
+> Tipp: Um z. B. jede News oder jedes Produkt statt via GET-Parameter über eine eigene URL aufzurufen, obwohl kein eigener Artikel existiert, kann das [URL-Addon von Thomas Blum](https://github.com/tbaddade/redaxo_url) verwendet werden.
 
 
 ### Backups der Table Manager-Tabellen
@@ -52,7 +52,7 @@ Und es gibt ein neues History-Plugin, mit dem Änderungen an Datensätzen nachve
 
 ### Für Entwickler: Table Manager erweitern
 
-Es ist möglich, eigene Feldtypen zu definieren und dem Table Manager hinzuzufügen. Das Geo-Plugin für YForm bspw. ist eine Möglichkeit, sich mit der Erweiterung von YForm und dem Table Manager vertraut zu machen.
+Es ist möglich, eigene Feldtypen zu definieren und dem Table Manager hinzuzufügen. Das Geo-Plugin für YForm z. B. ist eine Möglichkeit, sich mit der Erweiterung von YForm und dem Table Manager vertraut zu machen.
 
 
 ## Tabellen und Optionen
@@ -75,7 +75,7 @@ Anschließend können der Tabelle folgende Optionen zugewiesen werden:
 
 Option | Erläuterungen
 ------ | ------
-Priorität | Legt fest, an welcher Position sich die neue Tabelle zwischen bestehenden Tabellen einreiht, beispielsweise im Menü.
+Priorität | Legt fest, an welcher Position sich die neue Tabelle zwischen bestehenden Tabellen einreiht, z. B. im Menü.
 Name | Der Name der Datenbank-Tabelle, wie sie in MySQL heißt und über SQL-Querys aufgerufen wird.
 Bezeichnung | Der Name der Tabelle, wie sie im Menü aufgelistet wird.
 Beschreibung | Informationen zur Tabelle, zum Beispiel eine Kurzanleitung für den Kunden oder Informationen über den Aufbau der Tabelle als Merkhilfe. Die Beschreibung wird angezeigt beim direkten Aufruf einer Tabelle.
@@ -84,7 +84,7 @@ Datensätze pro Seite | Legt fest, ab wie vielen Datensätzen die Tabellen-Über
 Standardsortierung Feld | Legt fest, nach welchem Feld die Tabellen-Übersicht zu Beginn sortiert wird.
 Standardsortierung Richtung |  Legt fest, ob das gewählte Feld auf- oder absteigend sortiert wird.
 Suche aktiv | Zeigt die Schaltfläche `Datensatz suchen` in der Tabellen-Übersicht an.
-In der Navigation versteckt | Legt fest, ob die Tabelle auch im Menü angezeigt wird, oder nur im Table Manager. (Hilfreich, um beispielsweise relationale Datenbank-Tabellen auszublenden.)
+In der Navigation versteckt | Legt fest, ob die Tabelle auch im Menü angezeigt wird, oder nur im Table Manager. (Hilfreich, um z. B. relationale Datenbank-Tabellen auszublenden.)
 Export der Daten erlauben | Zeigt die Schaltfläche `Datensätze exportieren` in der Tabellen-Übersicht an.
 Import von Daten erlauben | [Zeigt die Schaltfläche `Datensätze importieren` in der Tabellen-Übersicht an.
 
@@ -96,7 +96,7 @@ Import von Daten erlauben | [Zeigt die Schaltfläche `Datensätze importieren` i
 In diesem Fall wird durch den abschließenden Klick auf `hinzufügen` die Datenbank-Tabelle erstellt.
 
 > **Tipp:** 
-> Wenn die Datenbank über Import/Export oder über einen Backup-Crobjob gesichert werden soll, sollte die Tabelle den Präfix `rex_` behalten. Zur besseren Übersicht empfiehlt es sich, der Tabelle einen eigenen Projekt-Präfix zu geben, z.B. `rex_kunde_projekte` oder `rex_kunde_mitarbeiter`.
+> Wenn die Datenbank über Import/Export oder über einen Backup-Crobjob gesichert werden soll, sollte die Tabelle den Präfix `rex_` behalten. Zur besseren Übersicht empfiehlt es sich, der Tabelle einen eigenen Projekt-Präfix zu geben, z. B. `rex_kunde_projekte` oder `rex_kunde_mitarbeiter`.
 
 
 ### Tabelle migrieren
@@ -148,40 +148,40 @@ Um eine fremde Datenbank-Tabelle zu importieren oder Datensätze einer Tabelle z
 Ein Redaxo-Feld, um einen <b>Redaxo-Artikel</b> auszuwählen.
 
 > **Wert in der Datenbank**
-> id des Redaxo-Artikels, z.B. `1`, `5`, `20`
+> id des Redaxo-Artikels, z. B. `1`, `5`, `20`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `article_id`, `page_id`, `link_id`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Redaxo-Artikel`, `Seite`, `Link`
+Name | Name des Felds in der Datenbank, z. B. `article_id`, `page_id`, `link_id`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Redaxo-Artikel`, `Seite`, `Link`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben. 
 In der Liste verstecken | Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen | Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 ### be_manager_relation
 
-Ein Auswahlfeld / Popup, um ein oder mehrere <b>Datensätze</b> mit denen einer fremden Tabelle zu <b>verknüpfen</b>, z.B. über einen Fremdschlüssel (1:n) oder eine Relationstabelle (m:n).
+Ein Auswahlfeld / Popup, um ein oder mehrere <b>Datensätze</b> mit denen einer fremden Tabelle zu <b>verknüpfen</b>, z. B. über einen Fremdschlüssel (1:n) oder eine Relationstabelle (m:n).
 
 > **Wert in der Datenbank**
-> - id des verknüpften Datensatzes, z.B. `1`, `5`, `20` oder
-> - ids der verknüpften Datensätze als `SET`, z.B. `1,5,20`, `4,8,12`, `7,10,42` oder
+> - id des verknüpften Datensatzes, z. B. `1`, `5`, `20` oder
+> - ids der verknüpften Datensätze als `SET`, z. B. `1,5,20`, `4,8,12`, `7,10,42` oder
 > - leer, wenn eine Relationstabelle angegeben wurde.
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern im Formular ein.
-Name | Name des Felds in der Datenbank, z.B. `article_id`, `person_id`, `link_id`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. die Bezeichnung der Ziel-Tabelle
+Name | Name des Felds in der Datenbank, z. B. `article_id`, `person_id`, `link_id`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. die Bezeichnung der Ziel-Tabelle
 Ziel-Tabelle | Name der Tabelle, deren Datensätze referenziert werden.
-Ziel Tabellenfeld(er) zur Anzeige oder Zielfeld | Feldname der Tabelle, dessen Werte als Select-Box oder im Popup angezeigt werden, z.B. `name`, `prename, ' ', name` oder `name, '(', id, ')'`
+Ziel Tabellenfeld(er) zur Anzeige oder Zielfeld | Feldname der Tabelle, dessen Werte als Select-Box oder im Popup angezeigt werden, z. B. `name`, `prename, ' ', name` oder `name, '(', id, ')'`
 Mehrfachauswahl | Gibt an, ob ein (1:n) oder mehrere (m:n) Datensätze ausgewählt werden können, entweder in einem select-Feld oder als Popup-Fenster 
 Mit "Leer-Option" | Gibt an, ob "keine Auswahl" erlaubt ist.
 Fehlermeldung, wenn "Leer-Option" nicht aktiviert ist | Fehlermeldung, die dem Nutzer mitteilt, dass eine Auswahl getroffen werden muss. 
 Höhe der Auswahlbox | Höhe der Auswahlbox, wenn `Mehrfachauswahl` als select-Feld aktiviert wurde. 
 Zusätzliche Angaben in einer speziellen Syntax, die in [be_relation-Tutorial](table_manager_feldtypen_be-manager-relation.md) erläutert werden.  
 Vorab: [Diskussion auf GitHub](https://github.com/yakamara/redaxo_yform_docs/issues/12)  
-Relationstabelle | [optional] Name der Tabelle, in der die m:n-Beziehungen abgelegt sind, z.B. `rex_project_news_tags`
+Relationstabelle | [optional] Name der Tabelle, in der die m:n-Beziehungen abgelegt sind, z. B. `rex_project_news_tags`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben. 
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -195,17 +195,17 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein Redaxo-Feld, um eine einzelne oder mehrere <b>Medienpool-Datei/en</b> auszuwählen.
 
 > **Wert in der Datenbank**
-> Dateiname der Medienpool-Datei, z.B. `mueller.jpg`, `preisliste.pdf`
+> Dateiname der Medienpool-Datei, z. B. `mueller.jpg`, `preisliste.pdf`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `image`, `attachment`, `file`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Bild`, `Anhang`, `Datei`
+Name | Name des Felds in der Datenbank, z. B. `image`, `attachment`, `file`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Bild`, `Anhang`, `Datei`
 Preview (0/1) (opt) | Zeigt eine Bildvorschau an, wenn die Datei markiert wird.
 Mehrfachauswahl (0/1) | Wenn mehrere Medien ausgwählt werden sollen.
 Medienpool Kategorie (opt) | id der Medienpool-Kategorie, die bei der Auswahl der Dateien voreingestellt ist.
-Types (opt) | Filtert die Dateiauswahl im Medienpool anhand der Dateiendung, z.B. `.jpg,.jpeg,.png,.gif` oder `.pdf,.docx,.doc`
+Types (opt) | Filtert die Dateiauswahl im Medienpool anhand der Dateiendung, z. B. `.jpg,.jpeg,.png,.gif` oder `.pdf,.docx,.doc`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -216,17 +216,17 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein Redaxo-Feld, um ein oder mehrere <b>Kategorien</b> aus der Struktur auszuwählen.
 
 > **Wert in der Datenbank**
-> ids der gewählten Kategorien (kommagetrennt), z.B. `1,5,20`
+> ids der gewählten Kategorien (kommagetrennt), z. B. `1,5,20`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `category_id`, oder `category_ids`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Kategorie`, `Kategorien`, `Navigationspunkt`
+Name | Name des Felds in der Datenbank, z. B. `category_id`, oder `category_ids`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Kategorie`, `Kategorien`, `Navigationspunkt`
 Ignoriere Offline-Kategorien  | Gibt an, ob Offline-Kategorien aus dem Auswahl-Dialogfeld ausgeschlossen werden. 
 Prüfe Rechte  | Prüft, ob der Nutzer berechtigt ist, auf die jeweiligen Kategorien zuzugreifen.
 Füge "Homepage"-Eintrag (Root) hinzu  | Gibt an, ob im Auswahl-Dialogfeld die oberste Ebene auswählbar ist.
-Root-id | Startpunkt der Auswahl-Dialogfelds, z.B. die id einer Unterkategorie.
+Root-id | Startpunkt der Auswahl-Dialogfelds, z. B. die id einer Unterkategorie.
 Sprache |Clang-id der Sprache, aus der die Kategorienamen und der Offline-Status gelesen werden, z.B: `1`
 Mehrere Felder möglich | Gibt an, ob ein oder mehrere Kategorien ausgewählt werden können.
 Höhe der Auswahlbox | Höhe der Auswahlbox, wenn `Mehrere Felder möglich` aktiviert wurde. 
@@ -245,30 +245,30 @@ Eine Reihe von Eingabefeldern, um <b>tabellarische Daten</b> einzugeben.
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `table`, `features`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Info-Tabelle`, `Eigenschaften`
+Name | Name des Felds in der Datenbank, z. B. `table`, `features`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Info-Tabelle`, `Eigenschaften`
 Anzahl Spalten |  Anzahl der Spalten, die bei der Eingabe zur Verfügung stehen.
-Bezeichnung der Spalten (Menge,Preis,Irgendwas)  | Kopfzeile der Tabelle, z.B., `Leistung,Aufpreis`, `Vorname,Name`, `Artikelnummer,Größe,Preis` 
+Bezeichnung der Spalten (Menge,Preis,Irgendwas)  | Kopfzeile der Tabelle, z. B., `Leistung,Aufpreis`, `Vorname,Name`, `Artikelnummer,Größe,Preis` 
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 
 > **Hinweis:**  
-> Um die Werte wieder aufzutrennen, kann z.B. `$array = json_decode($json, true);` verwendet werden. `json_decode()` liefert ein mehrdimensionales Array, das per `foreach()` durchlaufen werden kann.
+> Um die Werte wieder aufzutrennen, kann z. B. `$array = json_decode($json, true);` verwendet werden. `json_decode()` liefert ein mehrdimensionales Array, das per `foreach()` durchlaufen werden kann.
 
 ### checkbox
 
 Eine <b>Checkbox</b> mit vordefinierten Werten.
 
 > **Wert in der Datenbank**
-> Status der Checkbox als Zahl, z.B. `0` oder `1`
+> Status der Checkbox als Zahl, z. B. `0` oder `1`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `active`, `online`, `visible`, `hidden`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `aktiviert`, `online`, `sichtbar?`, `ausgeblendet?`
+Name | Name des Felds in der Datenbank, z. B. `active`, `online`, `visible`, `hidden`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `aktiviert`, `online`, `sichtbar?`, `ausgeblendet?`
 Defaultstatus | Gibt an, ob die Checkbox vorausgewählt ist oder nicht.
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -281,36 +281,36 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein oder mehrere **Checkbox**-Felder mit Werten, die aus einer **SQL-Abfrage** stammen.  
 
 > **Wert in der Datenbank**
-> ids der verknüpften Datenbankeinträge, z.B. `1`, `10,25,58`
+> ids der verknüpften Datenbankeinträge, z. B. `1`, `10,25,58`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern im Formular ein.
-Name | Name des Felds in der Datenbank, z.B. `active_languages`, `tags`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Sichtbar in Sprachen`, `Schlagwörter`
-Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z.B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
+Name | Name des Felds in der Datenbank, z. B. `active_languages`, `tags`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Sichtbar in Sprachen`, `Schlagwörter`
+Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z. B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 > **Tipp:**  
-> Mit checkbox_sql kann man z.B. in einer News-Tabelle einer News die Sprachen zuordnen, in der sie angezeigt werden sollen. 
+> Mit checkbox_sql kann man z. B. in einer News-Tabelle einer News die Sprachen zuordnen, in der sie angezeigt werden sollen. 
 
 ### date
 
 Eine Reihe von Auswahlfeldern, in der ein <b>Datum</b> (Tag, Monat, Jahr) ausgewählt wird.
 
 > **Wert in der Datenbank**
-> MYSQL-Date-Format, z.B. `2016-07-12`
+> MYSQL-Date-Format, z. B. `2016-07-12`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `date`, `date_begin`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Datum`, `Beginn der Veranstaltung`
-[Startjahr] oder [-X] | Gibt an, mit welchem Jahr das Auswahlfeld beginnt, z.B. `1980`, `2014` oder '-1', um immer 1 Jahr unter der aktuellen Jahreszahl zu beginnen 
-[Endjahr] oder [+X] | Gibt an, mit welchem Jahr das Auswahlfeld endet, z.B. `2020` oder `+3`, um immer 3 Jahre über der aktuellen Jahreszahl zu enden.
-[Anzeigeformat###Y###-###M###-###D###]] | Reihenfolge der Auswahlfelder für Tag, Monat und Jahr beim bearbeiteten eines Datensatzes, z.B. `am ###D###.###M###.###Y###`
+Name | Name des Felds in der Datenbank, z. B. `date`, `date_begin`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Datum`, `Beginn der Veranstaltung`
+[Startjahr] oder [-X] | Gibt an, mit welchem Jahr das Auswahlfeld beginnt, z. B. `1980`, `2014` oder '-1', um immer 1 Jahr unter der aktuellen Jahreszahl zu beginnen 
+[Endjahr] oder [+X] | Gibt an, mit welchem Jahr das Auswahlfeld endet, z. B. `2020` oder `+3`, um immer 3 Jahre über der aktuellen Jahreszahl zu enden.
+[Anzeigeformat###Y###-###M###-###D###]] | Reihenfolge der Auswahlfelder für Tag, Monat und Jahr beim bearbeiteten eines Datensatzes, z. B. `am ###D###.###M###.###Y###`
 Aktuelles Datum voreingestellt | Gibt an, ob das aktuelle Datum vorausgewählt ist.
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -325,14 +325,14 @@ Ein unsichtbares Feld, in das ein **Zeitstempel** gespeichert wird, wenn der Dat
 
 > **Wert in der Datenbank**
 
-> - MYSQL-Date-Format, z.B. `2016-07-12`, oder
+> - MYSQL-Date-Format, z. B. `2016-07-12`, oder
 > - andere in "Format" angegebene Datumsformate.
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `datestamp`, `date_created`
-Format | Format, in dem der Zeitstempel abgespeichert wird, z.B. `YmdHis`, `U`, `dmy`, - leer lassen für `mysql`
+Name | Name des Felds in der Datenbank, z. B. `datestamp`, `date_created`
+Format | Format, in dem der Zeitstempel abgespeichert wird, z. B. `YmdHis`, `U`, `dmy`, - leer lassen für `mysql`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Wann soll Wert gesetzt werden | Gibt an, ob der Zeitstempel initial beim Erstellen des Datenbankeintrags angelegt wird (`nur, wenn leer`), oder auch bei Änderungen (`immer`).
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
@@ -343,16 +343,16 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Eine Reihe von Auswahlfeldern, in der **Datum und Uhrzeit** (Tag, Monat, Jahr, Stunden, Minuten, Sekunden) ausgewählt wird.
 
 > **Wert in der Datenbank**
-> MYSQL-Date-Format, z.B. `2016-07-12 10:00:00`
+> MYSQL-Date-Format, z. B. `2016-07-12 10:00:00`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `date`, `date_begin`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Datum`, `Beginn der Veranstaltung`
-[Startjahr] oder [-X] | Gibt an, mit welchem Jahr das Auswahlfeld beginnt, z.B. `1980`, `2014` oder '-1', um immer 1 Jahr unter der aktuellen Jahreszahl zu beginnen 
-[Endjahr] oder [+X] | Gibt an, mit welchem Jahr das Auswahlfeld endet, z.B. `2020` oder `+3`, um immer 3 Jahre über der aktuellen Jahreszahl zu enden.
-Anzeigeformat | Reihenfolge der Auswahlfelder für Tag, Monat und Jahr beim bearbeiteten eines Datensatzes, z.B. `am ###D###.###M###.###Y###`
+Name | Name des Felds in der Datenbank, z. B. `date`, `date_begin`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Datum`, `Beginn der Veranstaltung`
+[Startjahr] oder [-X] | Gibt an, mit welchem Jahr das Auswahlfeld beginnt, z. B. `1980`, `2014` oder '-1', um immer 1 Jahr unter der aktuellen Jahreszahl zu beginnen 
+[Endjahr] oder [+X] | Gibt an, mit welchem Jahr das Auswahlfeld endet, z. B. `2020` oder `+3`, um immer 3 Jahre über der aktuellen Jahreszahl zu enden.
+Anzeigeformat | Reihenfolge der Auswahlfelder für Tag, Monat und Jahr beim bearbeiteten eines Datensatzes, z. B. `am ###D###.###M###.###Y###`
 Aktuelles Datum voreingestellt | Gibt an, ob das aktuelle Datum vorausgewählt ist.
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -364,14 +364,14 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein einfaches Eingabefeld für **E-Mail-Adressen.**
 
 > **Wert in der Datenbank**
-> `String`, z.B. `max@mustermann.de`
+> `String`, z. B. `max@mustermann.de`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `email`, `contact`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `E-Mail`, `Kontakt-Mail-Adresse`
-Defaultwert | E-Mail-Adresse, mit der das Eingabfeld vorausgefüllt wird, z.B. `max@mustermann.de`, `jane@smith.com` 
+Name | Name des Felds in der Datenbank, z. B. `email`, `contact`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `E-Mail`, `Kontakt-Mail-Adresse`
+Defaultwert | E-Mail-Adresse, mit der das Eingabfeld vorausgefüllt wird, z. B. `max@mustermann.de`, `jane@smith.com` 
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 cssclassname | CSS-Klasse(n), die dem Input-Element zugewiesen werden.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -405,8 +405,8 @@ Ein Fieldset gruppiert Formularfelder.
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `fieldset_product`, `fieldset_details`,
-Bezeichnung | Titel des Fieldsets, das im `<legend />`-Tag notiert wird. z.B. `Produktinfos`, `Details`
+Name | Name des Felds in der Datenbank, z. B. `fieldset_product`, `fieldset_details`,
+Bezeichnung | Titel des Fieldsets, das im `<legend />`-Tag notiert wird. z. B. `Produktinfos`, `Details`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -421,15 +421,15 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein einfaches Eingabefeld für <b>Gleitkomma-Zahlen.</b>
 
 > **Wert in der Datenbank**
-> Zahl, z.B. `0.1234`
+> Zahl, z. B. `0.1234`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `price`, `fee`.
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Preis in EUR`, `Gebühr`
-Nachkommastellen | Anzahl der erlaubten Stellen nach dem Komma, z.B. `1`, `5`, `42`
-Defaultwert | Zahl, mit der das Eingabfeld vorausgefüllt wird, z.B. `0,1234`, `5` 
+Name | Name des Felds in der Datenbank, z. B. `price`, `fee`.
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Preis in EUR`, `Gebühr`
+Nachkommastellen | Anzahl der erlaubten Stellen nach dem Komma, z. B. `1`, `5`, `42`
+Defaultwert | Zahl, mit der das Eingabfeld vorausgefüllt wird, z. B. `0,1234`, `5` 
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
@@ -443,15 +443,15 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein Feld, das aus dem Wert eines anderen Feldes einen <b>Hashwert</b> erzeugt.
 
 > **Wert in der Datenbank**
-> String, z.B. `f53c8008cb4b3b3c1f51c9922d9dddd0`
+> String, z. B. `f53c8008cb4b3b3c1f51c9922d9dddd0`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `password_hash`, `password`.
-Bezeichnung | Name des Felds, wie er im Backend angezeigt wird, z.B. `Passwort-Hash`, `Passwort`
+Name | Name des Felds in der Datenbank, z. B. `password_hash`, `password`.
+Bezeichnung | Name des Felds, wie er im Backend angezeigt wird, z. B. `Passwort-Hash`, `Passwort`
 Input-Feld | Name des Felds, aus dem der Hash generiert werden soll.
-Algorithmus | Name des Algorithmus, der beim Generieren verwendet wird, z.B. `md5`, `sha1`, `sha512`
+Algorithmus | Name des Algorithmus, der beim Generieren verwendet wird, z. B. `md5`, `sha1`, `sha512`
 Salt | Salz, das zusätzlich zum Input-Feld gestreut wird.
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -459,19 +459,19 @@ In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 > **Tipp**
-> Salt sollte immer individuell von Feld zu Feld und Redaxo-Installation zu Redaxo-Installation festegelgt werden, um die Sicherheit zu erhöhen. Als Generator für Salt kann z.B. ein [Passwort-Generator](https://www.passwort-generator.com/) zum Einsazt kommen.
+> Salt sollte immer individuell von Feld zu Feld und Redaxo-Installation zu Redaxo-Installation festegelgt werden, um die Sicherheit zu erhöhen. Als Generator für Salt kann z. B. ein [Passwort-Generator](https://www.passwort-generator.com/) zum Einsazt kommen.
 
 ### html
 
 Gibt <b>HTML-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
 
 > Wert in der Datebank
-> String, z.B. `<p>Hallo Welt</p>`
+> String, z. B. `<p>Hallo Welt</p>`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern im Formular ein.
-Name | Name des Felds in der Datenbank, z.B. `info`, `code`.
+Name | Name des Felds in der Datenbank, z. B. `info`, `code`.
 HTML | HTML-Code, der vor, zwischen oder nach anderen Feldern im Frontend oder Backend eingefügt wird.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
@@ -482,15 +482,15 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein Feld, das einen <b>Index</b> / Schlüssel über mehrere Felder erzeugt.
 
 > **Wert in der Datenbank**
-> Alle Werte zusammengefasst als String, z.B. `max@mustermann.de4ja` bei Feldern `email,article_id,checkbox_agb`, sofern kein Algorithmus gewählt wurde.
+> Alle Werte zusammengefasst als String, z. B. `max@mustermann.de4ja` bei Feldern `email,article_id,checkbox_agb`, sofern kein Algorithmus gewählt wurde.
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `password_hash`, `password`.
+Name | Name des Felds in der Datenbank, z. B. `password_hash`, `password`.
 Felder | Auswahl an Feldern, die für das Erstellen des Index verwendet werden sollen.
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Opt. Codierfunktion |  Name des Algorithmus, der beim Generieren verwendet wird, z.B. `md5`, `sha1`
+Opt. Codierfunktion |  Name des Algorithmus, der beim Generieren verwendet wird, z. B. `md5`, `sha1`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -503,14 +503,14 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein einfaches Eingabefeld für <b>ganze Zahlen.</b>
 
 > **Wert in der Datenbank**
-> Zahl, z.B. `5`
+> Zahl, z. B. `5`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `price`, `quantity`.
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Preis in EUR`, `Anzahl`
-Defaultwert | Zahl, mit der das Eingabfeld vorausgefüllt wird, z.B. `1`, `5`, `42` 
+Name | Name des Felds in der Datenbank, z. B. `price`, `quantity`.
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Preis in EUR`, `Anzahl`
+Defaultwert | Zahl, mit der das Eingabfeld vorausgefüllt wird, z. B. `1`, `5`, `42` 
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
@@ -521,13 +521,13 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein <b>Upload-Feld</b>, mit dem eine Datei in den Medienpool hochgeladen wird.
 
 > Wert in der Datebank
-> Dateiname, z.B. `default.jpg`
+> Dateiname, z. B. `default.jpg`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `image`, `attachment`.
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Profilbild`, `Anhang`
+Name | Name des Felds in der Datenbank, z. B. `image`, `attachment`.
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Profilbild`, `Anhang`
 Maximale Größe in Kb oder Range 100,500 | |
 Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png" | |
 Pflichtfeld  | |
@@ -546,7 +546,7 @@ Führt <b>PHP-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `php`, `code`.
+Name | Name des Felds in der Datenbank, z. B. `php`, `code`.
 PHP Code | PHP-Code, der vor, zwischen oder nach anderen Feldern im Frontend oder Backend eingefügt wird.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -566,22 +566,22 @@ Option | Erläuterung
 Ein <b>Auswahlfeld</b>, um Datensätze in eine <b>bestimmte Reihenfolge</b> zu sortieren.
 
 > **Wert in der Datenbank**
-> Zahl, z.B. `5`, `20`
+> Zahl, z. B. `5`, `20`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `prio`, `ranking`, `order`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Priorität`, `Rang`, `Reihenfolge`
-Anzeige | Feld(er), die in der Auswahl-Box angezeigt werden, z.B. `name`, `title`, `isbn`
-Beschränkung | Feld(er), die die Auswahlmöglichkeiten in der Auswahl-Box beschränken, z.B. `category_id` 
+Name | Name des Felds in der Datenbank, z. B. `prio`, `ranking`, `order`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Priorität`, `Rang`, `Reihenfolge`
+Anzeige | Feld(er), die in der Auswahl-Box angezeigt werden, z. B. `name`, `title`, `isbn`
+Beschränkung | Feld(er), die die Auswahlmöglichkeiten in der Auswahl-Box beschränken, z. B. `category_id` 
 Am Anfang | Vorauswahl, ob ein neuer Datensatz am Anfang oder am Ende angelegt wird. 
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 > **Hinweis:**  
-> Wenn eine Beschränkung ausgewählt wurde, kann es vorkommen, dass ein Datensatz zunächst gespeichert werden muss, damit die Beschränkung greifen kann. Dadurch lässt sich z.B. eine Reihenfolge pro Kategorie festlegen.
+> Wenn eine Beschränkung ausgewählt wurde, kann es vorkommen, dass ein Datensatz zunächst gespeichert werden muss, damit die Beschränkung greifen kann. Dadurch lässt sich z. B. eine Reihenfolge pro Kategorie festlegen.
 
 ### radio
 
@@ -590,16 +590,16 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
 
 > **Wert in der Datenbank** 
-> Wert des gewählten Radio-Buttons, z.B. `3`, `d`
+> Wert des gewählten Radio-Buttons, z. B. `3`, `d`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `options`, `ranking`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Optionen`, `Rang`
-Selectdefinition, kommasepariert | Beschriftung und Wert für die Datenbank, z.B. `Erster=1,Zweiter=2,Dritter=3,disqualifiziert=d`
+Name | Name des Felds in der Datenbank, z. B. `options`, `ranking`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Optionen`, `Rang`
+Selectdefinition, kommasepariert | Beschriftung und Wert für die Datenbank, z. B. `Erster=1,Zweiter=2,Dritter=3,disqualifiziert=d`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Defaultwert | Wert, der beim Aufruf des Formulars vorausgewählt ist, z.B. `3` für `Dritter`
+Defaultwert | Wert, der beim Aufruf des Formulars vorausgewählt ist, z. B. `3` für `Dritter`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -611,14 +611,14 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
 
 > **Wert in der Datenbank**
-> Wert des gewählten Radio-Buttons, z.B. `3`, `d`
+> Wert des gewählten Radio-Buttons, z. B. `3`, `d`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `clang_id`, `type`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Sprache`, `Typ`
-Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z.B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
+Name | Name des Felds in der Datenbank, z. B. `clang_id`, `type`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Sprache`, `Typ`
+Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z. B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
@@ -629,14 +629,14 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein <b>Auswahlfeld</b> mit vordefinierten Werten.
 
 > Wert in der Datenbank
-> Werte der gewählten Einträge, z.B. `1,2,3`, `d`
+> Werte der gewählten Einträge, z. B. `1,2,3`, `d`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `options`, `ranking`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Optionen`, `Rang`
-Selectdefinition, kommasepariert | Beschriftung und Wert für die Datenbank, z.B. `Erster=1,Zweiter=2,Dritter=3,disqualifiziert=d`
+Name | Name des Felds in der Datenbank, z. B. `options`, `ranking`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Optionen`, `Rang`
+Selectdefinition, kommasepariert | Beschriftung und Wert für die Datenbank, z. B. `Erster=1,Zweiter=2,Dritter=3,disqualifiziert=d`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Defaultwert (opt.) | Wert des Eintrags, der beim Aufruf des Formulars vorausgewählt ist.
 Mehrere Felder möglich | Gibt an, ob ein oder mehrere Einträge ausgewählt werden können und das Feld als `<select multiple>` dargestellt wird.
@@ -652,18 +652,18 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Ein <b>Auswahlfeld</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
 
 > Wert in der Datenbank
-> Werte der gewählten Einträge, z.B. `1,2,3`, `d`
+> Werte der gewählten Einträge, z. B. `1,2,3`, `d`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `clang_id`, `type`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Sprache`, `Typ`
-Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z.B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
+Name | Name des Felds in der Datenbank, z. B. `clang_id`, `type`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Sprache`, `Typ`
+Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z. B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
 Defaultwert (opt.) | Wert des Eintrags, der beim Aufruf des Formulars vorausgewählt ist.
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Leeroption  | Gibt an, ob es einen Eintrag "Ohne Auswahl" gibt.
-Text bei Leeroption (Bitte auswählen) | Beschriftung des Leeroption-Eintrags, z.B. `Bitte auswählen` oder `keine Auswahl`
+Text bei Leeroption (Bitte auswählen) | Beschriftung des Leeroption-Eintrags, z. B. `Bitte auswählen` oder `keine Auswahl`
 Mehrere Felder möglich | Gibt an, ob ein oder mehrere Einträge ausgewählt werden können und das Feld als `<select multiple>` dargestellt wird.
 Höhe der Auswahlbox | Anzahl der Einträge, die `<select multiple>` auf einmal anzeigt. 
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -682,39 +682,39 @@ Zeigt einen Wert in der Ausgabe.
 Ein oder mehrere <b>Submit-Buttons</b> zum Absenden des Formulars.
 
 > **Wert in der Datenbank**
-> Wert des abgesendeten Buttons, z.B. `Anfrage`
+> Wert des abgesendeten Buttons, z. B. `Anfrage`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `submit`
-Bezeichnungen (kommasepariert) | Liste an Beschriftungen für die jeweiligen Buttons, z.B. `Anfragen,Kaufen` oder `Rückruf,E-Mail`
+Name | Name des Felds in der Datenbank, z. B. `submit`
+Bezeichnungen (kommasepariert) | Liste an Beschriftungen für die jeweiligen Buttons, z. B. `Anfragen,Kaufen` oder `Rückruf,E-Mail`
 Werte (optional, kommasepariert) | `Anfragen,Kaufen`,`email,phone`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Defaultwert |  Wert, mit der das Eingabefeld vorausgefüllt wird, z.B. `Anfragen`, `phone` 
-CSS Klassen (kommasepariert) | CSS-Klassen für die jeweiligen Submit-Buttons, z.B. `submit--email,submit--phone`
+Defaultwert |  Wert, mit der das Eingabefeld vorausgefüllt wird, z. B. `Anfragen`, `phone` 
+CSS Klassen (kommasepariert) | CSS-Klassen für die jeweiligen Submit-Buttons, z. B. `submit--email,submit--phone`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 > **Tipp:**  
-> Mit mehreren Submits kann man auf unterschiedliche Absichten mit dem gleichen Formular reagieren, z.B. zwei Buttons namens `Bestellen` und `Angebot anfragen`.
+> Mit mehreren Submits kann man auf unterschiedliche Absichten mit dem gleichen Formular reagieren, z. B. zwei Buttons namens `Bestellen` und `Angebot anfragen`.
 
 ### text
 
 Input-Feld zur Eingabe eines Textes.
 
 > **Wert in der Datenbank**
-> String, z.B. `Musterfirma`, `Paul`, `Musterprojekt`
+> String, z. B. `Musterfirma`, `Paul`, `Musterprojekt`
 
 Option | Erläuterung
 ------ | ------ 
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `name`, `prename`, `title`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Name`, `Vorname`, `Titel`
-Defaultwert | Wert, der beim Aufruf des Formulars eingetragen ist, z.B. `Musterfirma`, `Paul`, `Musterprojekt`
+Name | Name des Felds in der Datenbank, z. B. `name`, `prename`, `title`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Name`, `Vorname`, `Titel`
+Defaultwert | Wert, der beim Aufruf des Formulars eingetragen ist, z. B. `Musterfirma`, `Paul`, `Musterprojekt`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-individuelle Attribute | Zusätzliche Feld-Attribute im JSON-Format, z.B. `{"placeholder":"+491234567890","type":"phone"}`
+individuelle Attribute | Zusätzliche Feld-Attribute im JSON-Format, z. B. `{"placeholder":"+491234567890","type":"phone"}`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken | Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen | Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
@@ -732,16 +732,16 @@ Ein <b>mehrzeiliges Eingabefeld</b> für Text.
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `text`, `description`, `message`
-Bezeichnung |  Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. "Text", "Beschreibung", "Nachricht"
-Defaultwert | Wert, der beim Aufruf des Formulars eingetragen ist, z.B. `Geben Sie hier Ihre Nachricht ein`
+Name | Name des Felds in der Datenbank, z. B. `text`, `description`, `message`
+Bezeichnung |  Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. "Text", "Beschreibung", "Nachricht"
+Defaultwert | Wert, der beim Aufruf des Formulars eingetragen ist, z. B. `Geben Sie hier Ihre Nachricht ein`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-individuelle Attribute | Zusätzliche Feld-Attribute im JSON-Format, z.B. `{"class":"form-control redactorEditor2-full","id":"textarea1"}`
+individuelle Attribute | Zusätzliche Feld-Attribute im JSON-Format, z. B. `{"class":"form-control redactorEditor2-full","id":"textarea1"}`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
-> Hinweis: Wenn das `class`-Attribut im Backend überschrieben wird, bspw. für einen Editor, dann muss die Klasse `form-control` ebenfalls wieder hinzugefügt werden. 
+> Hinweis: Wenn das `class`-Attribut im Backend überschrieben wird, z. B. für einen Editor, dann muss die Klasse `form-control` ebenfalls wieder hinzugefügt werden. 
 > Tipp: Mit dem Redactor 2 Addon kann das `textarea`-Feld zu einem WYSIWYG-Editor umgewandelt werden, mit dem Markdown-Addon zu einem WYSIWYM-Editor.
 
 ### time
@@ -749,16 +749,16 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 Eine Reihe von Auswahlfeldern, in der die <b>Uhrzeit</b> (Stunden, Minuten, Sekunden) ausgewählt wird.
 
 > **Wert in der Datenbank**
-> - MYSQL-Date-Format, z.B. `10:00:00`
+> - MYSQL-Date-Format, z. B. `10:00:00`
 
 Option | Erläuterung
 ------ | ------
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z.B. `time`, `time_begin`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z.B. `Uhrzeit`, `Beginn der Veranstaltung`
-[Stundenraster] | optional: Kommagetrennte Liste an Stunden, die für den Nutzer zur Auswahl stehen sollen, z.B. `0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23`
-[Minutenraster] | optional: Kommagetrennte Liste an Minuten, die für den Nutzer zur Auswahl stehen sollen, z.B. `0,15,30,45`, `0,10,20,30,40,50`
-[Anzeigeformat ###H###h ###I###m] |  Reihenfolge der Auswahlfelder für Stunde und Minute beim bearbeiteten eines Datensatzes, z.B. `um ###H###:###I### Uhr`
+Name | Name des Felds in der Datenbank, z. B. `time`, `time_begin`
+Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Uhrzeit`, `Beginn der Veranstaltung`
+[Stundenraster] | optional: Kommagetrennte Liste an Stunden, die für den Nutzer zur Auswahl stehen sollen, z. B. `0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23`
+[Minutenraster] | optional: Kommagetrennte Liste an Minuten, die für den Nutzer zur Auswahl stehen sollen, z. B. `0,15,30,45`, `0,10,20,30,40,50`
+[Anzeigeformat ###H###h ###I###m] |  Reihenfolge der Auswahlfelder für Stunde und Minute beim bearbeiteten eines Datensatzes, z. B. `um ###H###:###I### Uhr`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
@@ -798,12 +798,12 @@ Vergleicht zwei Eingabe-Werte <b>miteinander</b>.
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-1. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `password`, `email`
-2. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `password2`, `email_verified`
-Vergleichsart | Operator, wie `Feld 1` und `Feld 2` verglichen werden sollen, z.B. `!=`, `!=`, `>`, `<` 
+1. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `password`, `email`
+2. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `password2`, `email_verified`
+Vergleichsart | Operator, wie `Feld 1` und `Feld 2` verglichen werden sollen, z. B. `!=`, `!=`, `>`, `<` 
 Fehlermeldung | Hinweis, der erscheint, wenn der Vergleich beider Felder `false` ergibt.
 
-> Tipp: Diese Validierung kann z. B. bei Online-Tarifrechnern oder Ähnlichem eingesetzt werden, um serverseitig unzulässige Konfigurationen durch den Nutzer auszuschließen.
+> Tipp: Diese Validierung kann z. B. bei Online-Tarifrechnern oder Ähnlichem eingesetzt werden, um serverseitig unzulässige Konfigurationen durch den Nutzer auszuschließen.
 
 ### compare_value
 
@@ -812,9 +812,9 @@ Vergleicht einen Eingabe-Wert mit einem <b>fest definierten Wert</b>.
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-\1. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `checkbox_agb`, `newsletter_consent`
-Vergleichswert | Fest definierter Wert, der für den Vergleich herangezogen wird, z.B. `1` (bei Checkboxen) 
-Vergleichsart |  Operator, wie `Feld 1` und `Vergleichswert` vergleichen werden sollen, bspw. `!=`, `!=`, `>`, `<` 
+\1. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `checkbox_agb`, `newsletter_consent`
+Vergleichswert | Fest definierter Wert, der für den Vergleich herangezogen wird, z. B. `1` (bei Checkboxen) 
+Vergleichsart |  Operator, wie `Feld 1` und `Vergleichswert` vergleichen werden sollen, z. B. `!=`, `!=`, `>`, `<` 
 Fehlermeldung | Hinweis, der erscheint, wenn die Bedingung des Vergleichs erfüllt ist.
 
 > Merkhilfe: Wenn die Bedingung erfüllt ist, dann wird eine Fehlermeldung ausgegeben.
@@ -826,16 +826,16 @@ Ruft eine eigene <b>PHP-Funktion</b> für einen Vergleich auf.
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `name`, `email`, `phone`, `zip`
-Name der Funktion | Funktion, die den Wert überprüfen soll, bspw. `yform_validate_custom`
-Weitere Parameter | Eingabe-Wert, gegen den geprüft werden soll, bspw. `20`
+Name | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `name`, `email`, `phone`, `zip`
+Name der Funktion | Funktion, die den Wert überprüfen soll, z. B. `yform_validate_custom`
+Weitere Parameter | Eingabe-Wert, gegen den geprüft werden soll, z. B. `20`
 Fehlermeldung | Hinweis, der erscheint, wenn die Bedingung des Vergleichs erfüllt ist.
 
 > Merkhilfe: Wenn die Bedingung erfüllt ist (`return true;`), dann wird eine Fehlermeldung ausgegeben.
 
 #### Beispiel für `customfunction`
 
-Diese Funktion bspw. im `project`-Addon in der boot.php hinterlegen:
+Diese Funktion z. B. im `project`-Addon in der boot.php hinterlegen:
 
 ```php
 function yform_validate_custom($label, $value, $param)
@@ -856,7 +856,7 @@ function yform_validate_custom($label, $value, $param)
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `email`, `contact`
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `email`, `contact`
 Fehlermeldung | Hinweis, der erscheint, wenn keine gültige E-Mail-Adresse angegeben wurde.
 
 > Hinweis: Falls das E-Mail-Feld ein Pflichtfeld ist, muss auch die Validierung `empty` hinzugefügt werden, da ein leeres Feld eine keine ungültige E-Mail-Adresse darstellt.
@@ -870,7 +870,7 @@ Fehlermeldung | Hinweis, der erscheint, wenn keine gültige E-Mail-Adresse angeg
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `email`, `name`
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `email`, `name`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe leer ist.
 
 ### in_table
@@ -880,9 +880,9 @@ Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe leer ist.
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `email`, `name`
-Tabellenname |  Name der Tabelle, das für die Überprüfung herangezogen wird, z.B. `rex_ycom_user`
-Feldname |  Name des Feldes in der Tabelle, das für die Überprüfung herangezogen wird, z.B. `email`
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `email`, `name`
+Tabellenname |  Name der Tabelle, das für die Überprüfung herangezogen wird, z. B. `rex_ycom_user`
+Feldname |  Name des Feldes in der Tabelle, das für die Überprüfung herangezogen wird, z. B. `email`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe leer ist.
 
 ### intfromto
@@ -892,9 +892,9 @@ Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe leer ist.
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `email`, `name`
-Von | Wert, der mindestens eingegeben werden muss, z.B. `0`, `5`, `1000`
-Bis | Wert, der höchstens eingegeben werden darf, z.B. `5`,`10`,`2030`
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `email`, `name`
+Von | Wert, der mindestens eingegeben werden muss, z. B. `0`, `5`, `1000`
+Bis | Wert, der höchstens eingegeben werden darf, z. B. `5`,`10`,`2030`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe nicht im erlaubten Bereich liegt.
 
 ### size
@@ -904,8 +904,8 @@ Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe nicht im erlaubten Bere
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `customer_id`, `pin`
-Anzahl der Zeichen | exakte Anzahl der Zeichen, die eingegeben werden sollen, z.B. `5`,`10`,`42`
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `customer_id`, `pin`
+Anzahl der Zeichen | exakte Anzahl der Zeichen, die eingegeben werden sollen, z. B. `5`,`10`,`42`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe die festgelegte Anzahl von Zeichen unter- oder überschreitet.
 
 ### size_range
@@ -915,9 +915,9 @@ Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe die festgelegte Anzahl 
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `customer_id`, `password`
-Minimale Anzahl der Zeichen (opt) | Anzahl der Zeichen, die mindestens werden sollen, z.B. `0`, `5`, `7`
-Maximale Anzahl der Zeichen (opt) | Anzahl der Zeichen, die höchstens werden sollen, z.B. `5`,`10`,`15`
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `customer_id`, `password`
+Minimale Anzahl der Zeichen (opt) | Anzahl der Zeichen, die mindestens werden sollen, z. B. `0`, `5`, `7`
+Maximale Anzahl der Zeichen (opt) | Anzahl der Zeichen, die höchstens werden sollen, z. B. `5`,`10`,`15`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe den festgelegten Bereich an Zeichen unter- oder überschreitet.
 
 ### type
@@ -927,8 +927,8 @@ Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe den festgelegten Bereic
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z.B. `zip`, `phone`, `name`, `email`, `website`
-Prüfung nach | Typ, der überprüft werden soll, z.B. `int`, `float`, `numeric`, `string`, `email`, `url`, `date`, `hex`]
+Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `zip`, `phone`, `name`, `email`, `website`
+Prüfung nach | Typ, der überprüft werden soll, z. B. `int`, `float`, `numeric`, `string`, `email`, `url`, `date`, `hex`]
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe nicht dem festgelegten Typ entspricht.
 Feld muss nicht ausgefüllt werden | Gibt an, ob die Validierung erfolgreich ist, wenn keine Eingabe stattfindet. 
 
@@ -939,7 +939,7 @@ Feld muss nicht ausgefüllt werden | Gibt an, ob die Validierung erfolgreich ist
 Option | Erläuterung
 ------ | ------
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Names |  Namen der Tabellenfelder, die für die Überprüfung herangezogen werden, z.B. `id`, `customer_id`, `email,email_verified`
+Names |  Namen der Tabellenfelder, die für die Überprüfung herangezogen werden, z. B. `id`, `customer_id`, `email,email_verified`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe bereits in einem anderen Datensatz existiert.
 Tabelle [opt] | Name der Tabelle, in der die Felder durchsucht werden.
 
@@ -1233,7 +1233,7 @@ Als Suchfeld aufnehmen | deaktivieren
 
 Wenn man nun einen News-Beitrag erfasst oder editiert, findet man ganz am Ende der Eingabemaske ein Feld mit Namen "Tags", entweder mit einem Multi-SELECT-Feld oder einem Rex-Widget mit Popup. Speichert man den Datensatz ab, wird in der News-Beitrag-Tabelle `news_tag_beitrag` die Zuordnung vom jeweiligen Beitrag zu den entsprechenden Tags gespeichert.
 
-Im Frontend kann das ganze dann beispielsweise so abgefragt werden:
+Im Frontend kann das ganze dann z. B. so abgefragt werden:
 
 ```php
 <?php
