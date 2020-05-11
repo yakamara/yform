@@ -15,7 +15,8 @@ Danach folgen die Eingaben für den E-Mail-Body, in Plain und HTML (optional).
 
 ### Handhabung
 
-Über die Aktion **tpl2email** kann eine E-Mail über den angebenen **Key** eines E-Mail-Templates gesendet werden. Über das Formular können zb. die Werte der beiden Eingabefelder des Formular über das E-Mail-Template ausgeben werden.
+Über die Aktion **tpl2email** kann eine E-Mail über den angebenen **Key** eines E-Mail-Templates gesendet werden. Über das Formular können z. B. die Werte der beiden Eingabefelder des Formular über das E-Mail-Template ausgeben werden.
+
 
 #### Beispiel-Formular im Formbuilder
 
