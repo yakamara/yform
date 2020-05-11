@@ -387,7 +387,8 @@ oder
 
     data-yform-tools-datetimepicker = ""
 
-und auch mit Formaten versehen werden. Z.B. beim Datepicker
+und auch mit Formaten versehen werden. Zum Beispiel beim Datepicker
+
 
     DD-MM-YYYY
 
