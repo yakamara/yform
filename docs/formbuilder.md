@@ -311,7 +311,8 @@ Der Default-Wert ist `0`.
 $yform->setObjectparams('form_method','get');
 ```
 
-Mit dem Wert `get` wird die Versandmethode auf get geändert, d.h. alle Feldwerte sind als get-Paramater in der URL enthalten.  
+Mit dem Wert `get` wird die Versandmethode auf `GET` geändert, d.h. alle Feldwerte sind als GET-Paramater in der URL enthalten.  
+
 Der Defaultwert ist `post`.
 
 #### Zieladresse des Formulars
