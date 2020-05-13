@@ -34,7 +34,6 @@ class rex_yform_value_csrf extends rex_yform_value_abstract
             $this->setValue(rex_csrf_token::factory($tokenid)->getValue());
 
             if ($this->needsOutput()) {
-                $this->setName($this->getFieldName());
                 $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
             }
         }
