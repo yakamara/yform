@@ -1023,25 +1023,19 @@ class rex_yform_manager
                         break;
 
                     case 'table':
-                        // ist fest eingetragen, damit keine Dinge durcheinandergehen
-
-                        if ($func == 'edit') {
-                            $yform->setValueField('showvalue', [$k_field, $v['label']]);
-                        } else {
-                            $_tables = rex_yform_manager_table::getAll();
-                            $_options = [];
-                            if (isset($v['empty_option']) && $v['empty_option']) {
-                                $_options[0] = '–=';
-                            }
-                            foreach ($_tables as $_table) {
-                                $_options[$_table['table_name']] = str_replace('=', '-', rex_i18n::translate($_table['name']) . ' [' . $_table['table_name'] . ']') . '=' . $_table['table_name'];
-                                $_options[$_table['table_name']] = str_replace(',', '.', $_options[$_table['table_name']]);
-                            }
-                            if (!isset($v['default'])) {
-                                $v['default'] = '';
-                            }
-                            $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_options), 'default' => $v['default']]);
+                        $_tables = rex_yform_manager_table::getAll();
+                        $_options = [];
+                        if (isset($v['empty_option']) && $v['empty_option']) {
+                            $_options[0] = '–=';
                         }
+                        foreach ($_tables as $_table) {
+                            $_options[$_table['table_name']] = str_replace('=', '-', rex_i18n::translate($_table['name']) . ' [' . $_table['table_name'] . ']') . '=' . $_table['table_name'];
+                            $_options[$_table['table_name']] = str_replace(',', '.', $_options[$_table['table_name']]);
+                        }
+                        if (!isset($v['default'])) {
+                            $v['default'] = '';
+                        }
+                        $yform->setValueField('choice', ['name' => $k_field, 'label' => $v['label'], 'choices' => implode(',', $_options), 'default' => $v['default']]);
                         break;
 
                     case 'select_name':
