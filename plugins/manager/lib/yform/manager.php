@@ -132,7 +132,7 @@ class rex_yform_manager
             $this->setLinkVars($searchObject->getSearchVars());
         }
 
-        $description = ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
+        $description =  $popup || ($this->table->getDescription() == '') ? '' : '<br />' . $this->table->getDescription();
 
         echo rex_extension::registerPoint(
             new rex_extension_point(
