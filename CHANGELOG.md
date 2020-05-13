@@ -52,7 +52,7 @@ Version 3.2 – 19.09.2019
 * REST: Tokenfreigabe können nun auf Endpoints beschränkt werden
 * REST: Zugriffsübersicht zeigte falschen Tokennamen an.
 
-Dank geht an: godsdog, Alexander Walther, Yves Torres, Pascal Schuchmann, Fernando Averanga, Jürgen Weiss, Marco Hanke 
+Dank geht an: godsdog, Alexander Walther, Yves Torres, Pascal Schuchmann, Fernando Averanga, Jürgen Weiss, Marco Hanke
 
 
 
@@ -110,7 +110,7 @@ Version 3.1 – 04.04.2019
 * Massenbearbeitung korrigiert.
 * send parameter dynamisch setzen geht wieder
 * Email: reply_to angepasst und richtig eingesetzt
-* manager:migrate Table mit tinyint geht wieder 
+* manager:migrate Table mit tinyint geht wieder
 * Icons der Subpages entfernt
 * Feld: be_table geht nun wieder.
 * Email: update funktionierte nicht richtig.
@@ -207,7 +207,7 @@ Danke auch an Fernando Averanga, christophboecker, Wolfgang Bund, Alex Platter, 
 * action: createdb -> create_table
 * labelexist -> in_names
 * existintable -> in_table
-* REX_YFORM_TABLE_DATA[table="tablename" output="widget/widgetlist"] -> REX_YFORM_TABLE_DATA[table="tablename" widget="1" multiple="1"]
+* REX_YFORM_TABLE_DATA[table="tablename" output="widget/widgetlist"] -> REX_YFORM_TABLE_DATA[id=1 table="tablename" widget="1" multiple="1"]
 
 Version 2.3 – 26.01.2018
 --------------------------
@@ -220,7 +220,7 @@ Version 2.3 – 26.01.2018
 * Tools: Timepicker angepasst
 * geo locations: fixed
 * Abhängigkeit ist nun REDAXO 5.5
-* Benennungen angepasst name, label .. 
+* Benennungen angepasst name, label ..
 * uniqueform entfernt
 * Umbau auf rex_sql_table
 * GEO Plugin gelöscht, google_geo feld verschoben und bleibt
@@ -254,7 +254,7 @@ Version 2.3 – 26.01.2018
 * Bei Update aus älteren YForms wird nun auch das be_medialist und submits entfernt
 * select Feld: Falsche selected korrigiert, Defaultwert wird nun richtig übernommen
 * radio feld hat keinen Fehler ausgegeben.
-* Manager: CSV Import/Export optimiert. BOM gesetzt und entfernt. Unnötige Felder werden ignoriert, EnsureColumne bei AlterTable .. 
+* Manager: CSV Import/Export optimiert. BOM gesetzt und entfernt. Unnötige Felder werden ignoriert, EnsureColumne bei AlterTable ..
 * redirect geht nun richtig mit REDAXO 5.4 Version
 * Manager: Historieeinträge konnten bei bestimmten Relationen nicht wieder zurückgesetzt werden
 * YOrm: Durch Nutzung von YORM, wurde immer der Send Status für alle Formulare gesetzt.
