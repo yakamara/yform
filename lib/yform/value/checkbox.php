@@ -11,10 +11,10 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        if ($this->params['send'] == 1 && $this->getValue() != 1) {
+        if (1 == $this->params['send'] && 1 != $this->getValue()) {
             $this->setValue(0);
-        } elseif ($this->getValue() != '') {
-            $this->setValue(($this->getValue() != 1) ? '0' : '1');
+        } elseif ('' != $this->getValue()) {
+            $this->setValue((1 != $this->getValue()) ? '0' : '1');
         } else {
             $this->setValue($this->getElement('default'));
         }
@@ -46,13 +46,14 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
                 'attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'output_values' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_status_output_values'), 'notice' => rex_i18n::msg('yform_values_status_output_values_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_checkbox_description'),
             'db_type' => ['tinyint(1)'],
             'famous' => true,
             'hooks' => [
-                'preDefault' => function (rex_yform_manager_field $field) {
-                    return ($field->getElement('default') == 1) ? '1' : '0';
+                'preDefault' => static function (rex_yform_manager_field $field) {
+                    return (1 == $field->getElement('default')) ? '1' : '0';
                 },
             ],
         ];
@@ -83,5 +84,23 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         $sql = rex_sql::factory();
 
         return ' ' . $sql->escapeIdentifier($field) . ' =  ' . $sql->escape($value) . '';
+    }
+
+    public static function getListValue($params)
+    {
+        $values = $params['params']['field']['output_values'] ?? '0,1';
+        $values = explode(',', $values);
+        if (2 != count($values)) {
+            $values = [0, 1];
+        }
+
+        if ('1' === $params['subject']) {
+            return $values[1];
+        }
+        if ('0' === $params['subject']) {
+            return $values[0];
+        }
+
+        return $params['subject'];
     }
 }
