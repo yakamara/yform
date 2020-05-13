@@ -1,0 +1,13 @@
+{
+    "require-dev": {
+        "redaxo/source": "dev-master",
+        "phpstan/phpstan": "^0.12.11"
+    },
+
+    "autoload-dev": {
+        "classmap": [
+            "lib/",
+            "plugins/"
+        ]
+    }
+}

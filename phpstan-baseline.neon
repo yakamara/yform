@@ -1,0 +1,1957 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to an undefined property rex_yform_value_abstract\\:\\:\\$aid\\.$#"
+			count: 1
+			path: lib/yform/value/abstract.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_captcha\\:\\:\\$captcha_ini\\.$#"
+			count: 6
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_captcha\\:\\:\\$captcha_image\\.$#"
+			count: 6
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$height$#"
+			count: 3
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$width$#"
+			count: 3
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_captcha\\:\\:\\$captcha_letters\\.$#"
+			count: 3
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$bg_color_2$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$bg_color_1$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$dust_vs_scratches$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$padding$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$letters_no$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$font_size$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$fonts$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$fg_colors$#"
+			count: 2
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$letter_precession$#"
+			count: 2
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Undefined variable\\: \\$letters$#"
+			count: 1
+			path: lib/yform/value/captcha.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_captcha_calc\\:\\:\\$captcha_ini\\.$#"
+			count: 6
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_captcha_calc\\:\\:\\$captcha_image\\.$#"
+			count: 6
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$height$#"
+			count: 3
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$width$#"
+			count: 3
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_captcha_calc\\:\\:\\$captcha_letters\\.$#"
+			count: 5
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$bg_color_2$#"
+			count: 1
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$bg_color_1$#"
+			count: 1
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$dust_vs_scratches$#"
+			count: 1
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$padding$#"
+			count: 1
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$font_size$#"
+			count: 1
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$fonts$#"
+			count: 1
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$fg_colors$#"
+			count: 2
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Undefined variable\\: \\$letter_precession$#"
+			count: 2
+			path: lib/yform/value/captcha_calc.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_value_datestamp\\:\\:\\$showValue\\.$#"
+			count: 3
+			path: lib/yform/value/datestamp.php
+
+		-
+			message: "#^Call to function compact\\(\\) contains undefined variable \\$includeGoogleMaps\\.$#"
+			count: 1
+			path: lib/yform/value/google_geocode.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: pages/index.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: pages/overview.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 7
+			path: pages/overview.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/email/update.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/email/update.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: plugins/manager/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: plugins/manager/fragments/yform/manager/page/grid.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 20
+			path: plugins/manager/fragments/yform/manager/page/grid.php
+
+		-
+			message: "#^Function rex_yform_manager_checkField not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/manager.php
+
+		-
+			message: "#^Function rex_yform_list_format not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/manager.php
+
+		-
+			message: "#^Inner named functions are not supported by PHPStan\\. Consider refactoring to an anonymous function, class method, or a top\\-level\\-defined function\\. See issue \\#165 \\(https\\://github\\.com/phpstan/phpstan/issues/165\\) for more details\\.$#"
+			count: 3
+			path: plugins/manager/lib/yform/manager.php
+
+		-
+			message: "#^Function rex_yform_list_edit_format not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/manager.php
+
+		-
+			message: "#^Function rex_yform_list_format not found\\.$#"
+			count: 2
+			path: plugins/manager/lib/yform/manager.php
+
+		-
+			message: "#^Function rex_yform_list_delete_format not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/manager.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 4
+			path: plugins/manager/lib/yform/manager/collection.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/manager/dataset.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_manager_field\\:\\:\\$object\\.$#"
+			count: 6
+			path: plugins/manager/lib/yform/manager/field.php
+
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/manager/query.php
+
+		-
+			message: "#^Call to an undefined static method rex_media_category\\:\\:getCategoryById\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/value/be_media_category.php
+
+		-
+			message: "#^Call to an undefined static method rex_category\\:\\:getCategoryById\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/lib/yform/value/be_select_category.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: plugins/manager/pages/data_history.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: plugins/manager/pages/data_import.php
+
+		-
+			message: "#^Function rex_yform_status_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_hidden_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_features_col not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Function rex_yform_list_translate not found while trying to analyse it \\- autoloading is probably not configured properly\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/manager/pages/table_edit.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/manager/pages/tableset_export.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/manager/update.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/manager/update.php
+
+		-
+			message: "#^Undefined variable\\: \\$counter$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 15
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 5
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 15
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:parse\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$fieldkey$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$prioFieldName$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$prototypeForm$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$relationKey$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$forms$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$relation\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$prioFieldName$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation_form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$counterfieldkey$#"
+			count: 7
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation_form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$form$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_inline_relation_form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 44
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$relation\\.$#"
+			count: 10
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 7
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeArray\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 3
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$valueName$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$counter$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 12
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_media.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 6
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$columns$#"
+			count: 4
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$data$#"
+			count: 1
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			count: 2
+			path: plugins/manager/ytemplates/bootstrap/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 7
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$counter$#"
+			count: 5
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$linkName$#"
+			count: 1
+			path: plugins/manager/ytemplates/classic/value.be_link.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 51
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 51
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 2
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 3
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$valueName$#"
+			count: 1
+			path: plugins/manager/ytemplates/classic/value.be_manager_relation.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$columns$#"
+			count: 2
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$data$#"
+			count: 1
+			path: plugins/manager/ytemplates/classic/value.be_table.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api_type.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/rest/fragments/rest_api_type.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_rest_route\\:\\:\\$type\\.$#"
+			count: 1
+			path: plugins/rest/lib/rest/route.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_rest_route\\:\\:\\$table\\.$#"
+			count: 2
+			path: plugins/rest/lib/rest/route.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_rest_route\\:\\:\\$query\\.$#"
+			count: 1
+			path: plugins/rest/lib/rest/route.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_rest_route\\:\\:\\$instance\\.$#"
+			count: 1
+			path: plugins/rest/lib/rest/route.php
+
+		-
+			message: "#^Access to an undefined property rex_yform_rest_route\\:\\:\\$path\\.$#"
+			count: 2
+			path: plugins/rest/lib/rest/route.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: plugins/rest/update.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: plugins/rest/update.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 14
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: plugins/tools/boot.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 5
+			path: ytemplates/bootstrap/errors.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 11
+			path: ytemplates/bootstrap/errors.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 16
+			path: ytemplates/bootstrap/form.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 16
+			path: ytemplates/bootstrap/form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.article.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$article$#"
+			count: 1
+			path: ytemplates/bootstrap/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 11
+			path: ytemplates/bootstrap/value.captcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 11
+			path: ytemplates/bootstrap/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 3
+			path: ytemplates/bootstrap/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$value$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 16
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceList$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceListView$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.check.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 16
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceList$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceListView$#"
+			count: 3
+			path: ytemplates/bootstrap/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 35
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 7
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$format$#"
+			count: 7
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 7
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearEnd$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearStart$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$year$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$month$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$day$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hours$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hour$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minutes$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minute$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$seconds$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$second$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$option$#"
+			count: 2
+			path: ytemplates/bootstrap/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: ytemplates/bootstrap/value.fieldset.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$address$#"
+			count: 1
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 13
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 13
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$googleapikey$#"
+			count: 2
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$value$#"
+			count: 1
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$mapZoom$#"
+			count: 1
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$mapWidth$#"
+			count: 3
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$mapHeight$#"
+			count: 3
+			path: ytemplates/bootstrap/value.google_geocode.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.hidden.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.hidden.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 4
+			path: ytemplates/bootstrap/value.mediafile.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 20
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 4
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$loadScript$#"
+			count: 1
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$publicKey$#"
+			count: 1
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 5
+			path: ytemplates/bootstrap/value.resetbutton.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 5
+			path: ytemplates/bootstrap/value.resetbutton.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 18
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$multiple$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$size$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 13
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.showvalue.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 6
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$labels$#"
+			count: 3
+			path: ytemplates/bootstrap/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 17
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.text.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 17
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getAttributeElements\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.textarea.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 19
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getElement\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 3
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$unique$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldName\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getValue\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$filename$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$download_link$#"
+			count: 2
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$error_messages$#"
+			count: 1
+			path: ytemplates/bootstrap/value.upload.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: ytemplates/classic/errors.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: ytemplates/classic/errors.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 13
+			path: ytemplates/classic/form.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 13
+			path: ytemplates/classic/form.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 1
+			path: ytemplates/classic/value.article.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 1
+			path: ytemplates/classic/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$article$#"
+			count: 1
+			path: ytemplates/classic/value.article.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: ytemplates/classic/value.captcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: ytemplates/classic/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$link$#"
+			count: 2
+			path: ytemplates/classic/value.captcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: ytemplates/classic/value.checkbox.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: ytemplates/classic/value.checkbox.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/classic/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 7
+			path: ytemplates/classic/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 7
+			path: ytemplates/classic/value.checkbox_group.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 14
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getWarningClass\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getHTMLId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabel\\(\\)\\.$#"
+			count: 2
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getFieldId\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Call to an undefined method object\\:\\:getLabelStyle\\(\\)\\.$#"
+			count: 1
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceList$#"
+			count: 3
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$choiceListView$#"
+			count: 3
+			path: ytemplates/classic/value.choice.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 29
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 29
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$format$#"
+			count: 7
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearEnd$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$yearStart$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$year$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$month$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$day$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hours$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$hour$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minutes$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$minute$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$second$#"
+			count: 1
+			path: ytemplates/classic/value.datetime.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$option$#"
+			count: 2
+			path: ytemplates/classic/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 6
+			path: ytemplates/classic/value.fieldset.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 6
+			path: ytemplates/classic/value.fieldset.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/classic/value.hidden.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/classic/value.hidden.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 21
+			path: ytemplates/classic/value.mediafile.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 21
+			path: ytemplates/classic/value.mediafile.tpl.php
+
+		-
+			message: "#^Function getElement not found\\.$#"
+			count: 1
+			path: ytemplates/classic/value.mediafile.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 11
+			path: ytemplates/classic/value.radio.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 11
+			path: ytemplates/classic/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/classic/value.radio.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 3
+			path: ytemplates/classic/value.recaptcha.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 3
+			path: ytemplates/classic/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$publicKey$#"
+			count: 1
+			path: ytemplates/classic/value.recaptcha.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: ytemplates/classic/value.resetbutton.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: ytemplates/classic/value.resetbutton.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 12
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 12
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$multiple$#"
+			count: 1
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$size$#"
+			count: 1
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$options$#"
+			count: 1
+			path: ytemplates/classic/value.select.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 8
+			path: ytemplates/classic/value.showvalue.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 8
+			path: ytemplates/classic/value.showvalue.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$labels$#"
+			count: 4
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 9
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 9
+			path: ytemplates/classic/value.submit.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: ytemplates/classic/value.text.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: ytemplates/classic/value.text.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 10
+			path: ytemplates/classic/value.textarea.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 10
+			path: ytemplates/classic/value.textarea.tpl.php
+
+		-
+			message: "#^Undefined variable\\: \\$this$#"
+			count: 19
+			path: ytemplates/classic/value.upload.tpl.php
+
+		-
+			message: "#^Using \\$this outside a class\\.$#"
+			count: 19
+			path: ytemplates/classic/value.upload.tpl.php
+
