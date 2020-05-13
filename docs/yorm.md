@@ -555,5 +555,5 @@ class rex_data_mydata extends rex_yform_manager_dataset
 Model-Class in boot.php z. B. im project Addon registrieren
 
 ```php
-rex_yform_manager_dataset::setModelClass('mydata', rex_data_mydate::class);
+rex_yform_manager_dataset::setModelClass('rex_my_table', rex_data_mydata::class);
 ```
