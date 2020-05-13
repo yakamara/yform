@@ -17,7 +17,7 @@ class rex_yform_manager_table implements ArrayAccess
     protected $fields = [];
 
     /** @var rex_yform_manager_field[] */
-    protected $relations = null;
+    protected $relations;
 
     protected static $debug = false;
 
@@ -94,7 +94,7 @@ class rex_yform_manager_table implements ArrayAccess
         $tables = self::$tables;
         self::$tables = [];
         foreach (self::getCache() as $tableName => $table) {
-            self::$tables[$tableName] = isset($tables[$tableName]) ? $tables[$tableName] : new self($table);
+            self::$tables[$tableName] = $tables[$tableName] ?? new self($table);
         }
 
         return self::$tables;
@@ -126,7 +126,7 @@ class rex_yform_manager_table implements ArrayAccess
     {
         $columns = rex_sql::showColumns($this->getTableName());
         foreach ($columns as $column) {
-            if ($column['name'] == 'id' && $column['extra'] == 'auto_increment') {
+            if ('id' == $column['name'] && 'auto_increment' == $column['extra']) {
                 return true;
             }
         }
@@ -135,47 +135,47 @@ class rex_yform_manager_table implements ArrayAccess
 
     public function isActive()
     {
-        return $this->values['status'] == 1;
+        return 1 == $this->values['status'];
     }
 
     public function isHidden()
     {
-        return $this->values['hidden'] == 1;
+        return 1 == $this->values['hidden'];
     }
 
     public function isSearchable()
     {
-        return $this->values['search'] == 1;
+        return 1 == $this->values['search'];
     }
 
     public function isImportable()
     {
-        return $this->values['import'] == 1;
+        return 1 == $this->values['import'];
     }
 
     public function isExportable()
     {
-        return $this->values['export'] == 1;
+        return 1 == $this->values['export'];
     }
 
     public function isMassDeletionAllowed()
     {
-        return $this->values['mass_deletion'] == 1;
+        return 1 == $this->values['mass_deletion'];
     }
 
     public function isMassEditAllowed()
     {
-        return $this->values['mass_edit'] == 1;
+        return 1 == $this->values['mass_edit'];
     }
 
     public function overwriteSchema()
     {
-        return ($this->values['schema_overwrite'] == 1) ? true : false;
+        return (1 == $this->values['schema_overwrite']) ? true : false;
     }
 
     public function hasHistory()
     {
-        return $this->values['history'] == 1;
+        return 1 == $this->values['history'];
     }
 
     public function getSortFieldName()
@@ -204,8 +204,6 @@ class rex_yform_manager_table implements ArrayAccess
     /**
      * Fields of yform Definitions.
      *
-     * @param array $filter
-     *
      * @return rex_yform_manager_field[]
      */
     public function getFields(array $filter = [])
@@ -226,8 +224,6 @@ class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @param array $filter
-     *
      * @return rex_yform_manager_field[]
      */
     public function getValueFields(array $filter = [])
@@ -250,7 +246,7 @@ class rex_yform_manager_table implements ArrayAccess
     public function getValueField($name)
     {
         $fields = $this->getValueFields(['name' => $name]);
-        return isset($fields[$name]) ? $fields[$name] : null;
+        return $fields[$name] ?? null;
     }
 
     /**
@@ -283,7 +279,7 @@ class rex_yform_manager_table implements ArrayAccess
     public function getRelation($column)
     {
         $relations = $this->getRelations();
-        return isset($relations[$column]) ? $relations[$column] : null;
+        return $relations[$column] ?? null;
     }
 
     public function getRelationTableColumns($column)
