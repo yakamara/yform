@@ -23,13 +23,12 @@ class rex_yform_value_emptyname extends rex_yform_value_abstract
         }
 
         if ($this->needsOutput()) {
-             if ($this->getElement('show_value') == 1) {
+            if (1 == $this->getElement('show_value')) {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php');
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
             }
         }
-
     }
 
     public function getDescription()

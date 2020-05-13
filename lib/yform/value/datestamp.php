@@ -16,14 +16,14 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         $value = $this->getValue();
         $this->showValue = self::datestamp_getValueByFormat($value, $this->getElement('format'));
 
-        if ($this->getElement('only_empty') == 2) {
+        if (2 == $this->getElement('only_empty')) {
             // wird nicht gesetzt
-        } elseif ($this->getElement('only_empty') != 1) { // -> == 0
+        } elseif (1 != $this->getElement('only_empty')) { // -> == 0
             // wird immer neu gesetzt
             $value = $default_value;
-        } elseif ($this->getValue() != '' && $this->getValue() != '0000-00-00 00:00:00') {
+        } elseif ('' != $this->getValue() && '0000-00-00 00:00:00' != $this->getValue()) {
             // wenn Wert vorhanden ist direkt zurück
-        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != '' && $this->params['sql_object']->getValue($this->getName()) != '0000-00-00 00:00:00') {
+        } elseif (isset($this->params['sql_object']) && '' != $this->params['sql_object']->getValue($this->getName()) && '0000-00-00 00:00:00' != $this->params['sql_object']->getValue($this->getName())) {
             // sql object vorhanden und Wert gesetzt ?
         } else {
             $value = $default_value;
@@ -34,10 +34,10 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->needsOutput() && $this->getElement('show_value') == 1) {
-            if ($this->showValue != '') {
+        if ($this->needsOutput() && 1 == $this->getElement('show_value')) {
+            if ('' != $this->showValue) {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php', ['showValue' => $this->showValue]);
-            } elseif ($this->getValue() != '') {
+            } elseif ('' != $this->getValue()) {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php');
             }
         }
@@ -75,14 +75,14 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
     public static function getListValue($params)
     {
         $return = self::datestamp_getValueByFormat($params['subject'], $params['params']['field']['format']);
-        return ($return == '') ? '-' : $return;
+        return ('' == $return) ? '-' : $return;
     }
 
     public static function datestamp_getValueByFormat($value, $format)
     {
-        if ($value == '0000-00-00 00:00:00') {
+        if ('0000-00-00 00:00:00' == $value) {
             $return = '';
-        } elseif ($format == '') {
+        } elseif ('' == $format) {
             $return = $value;
         } else {
             $date = DateTime::createFromFormat('Y-m-d H:i:s', $value);

@@ -20,7 +20,7 @@ class rex_yform_value_csrf extends rex_yform_value_abstract
                 if ($value != rex_csrf_token::factory($tokenid)->getValue()) {
                     $this->params['warning'][$this->getId()] = $this->params['error_class'];
                     $error_message = $this->getElement('message');
-                    if ($error_message == '') {
+                    if ('' == $error_message) {
                         $error_message = $this->params['csrf_protection_error_message'];
                     }
                     if (rex::isBackend()) {
