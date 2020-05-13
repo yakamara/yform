@@ -42,4 +42,19 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
             'db_type' => ['text'],
         ];
     }
+
+    public static function getSearchField($params)
+    {
+        rex_yform_value_text::getSearchField($params);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        return rex_yform_value_text::getSearchFilter($params);
+    }
+
+    public static function getListValue($params)
+    {
+        return rex_yform_value_text::getListValue($params);
+    }
 }
