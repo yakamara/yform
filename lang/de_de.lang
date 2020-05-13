@@ -238,6 +238,9 @@ yform_values_choice_placeholder_notice = Diese Option legt fest, ob eine speziel
 yform_values_choice_preferred_choices = Bevorzugte Auswahlmöglichkeiten (preferred_choices)
 yform_values_choice_preferred_choices_notice = Mit dieser Option werden bestimmte Auswahlmöglichkeiten an den Anfang der Liste verschoben, wobei ein optisches Trennzeichen zwischen ihnen und dem Rest der Optionen gesetzt wird.
 
+yform_values_status_output_values = Ausgabewerte eingeben
+yform_values_status_output_values_notice = 2 Werte kommasepariert. z.B. offline,online oder ▢,▣
+
 yform_values_message_is_missing = [Warnmeldung für Feld `{1}` fehlt]
 
 yform_validate_object_is_missing = Object `{1}` zur Validierung `{1}` fehlt
