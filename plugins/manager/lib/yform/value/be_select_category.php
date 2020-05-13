@@ -11,6 +11,10 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
 {
     public function enterObject()
     {
+        if (null == $this->getValue()) {
+            $this->setValue('');
+        }
+
         if (is_array($this->getValue())) {
             $this->setValue(implode(',', $this->getValue()));
         }
@@ -24,7 +28,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
             return;
         }
 
-        $multiple = $this->getElement('multiple') == 1;
+        $multiple = 1 == $this->getElement('multiple');
 
         $options = [];
         if ($this->getElement('homepage')) {
@@ -35,7 +39,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         $checkPerms = $this->getElement('check_perms');
         $clang = (int) $this->getElement('clang');
 
-        $add = function (rex_category $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
+        $add = static function (rex_category $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
             if (!$checkPerms || rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($cat->getId())) {
                 $cid = $cat->getId();
                 $cname = $cat->getName();
