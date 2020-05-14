@@ -95,6 +95,10 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        if (!$this->getValue()) {
+            $this->setValue(json_encode([]));
+        }
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
