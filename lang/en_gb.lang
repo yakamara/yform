@@ -64,6 +64,8 @@ yform_values_upload_description =				A <b>file upload field</b> to upload a sing
 yform_values_ip_description =                   An <b>IP address field</b>, to save the users IP address
 yform_values_showvalue_description =            A field used to show a raw value from a column, without the possibility to change the output.
 
+yform_values_checked = checked
+yform_values_not_checked = not checked
 
 yform_values_defaults_name = Name
 yform_values_defaults_label = Description

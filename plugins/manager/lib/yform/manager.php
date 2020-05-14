@@ -447,6 +447,13 @@ class rex_yform_manager
                 $list = rex_list::factory($sql, $this->table->getListAmount());
                 $list->addTableAttribute('class', 'table-striped table-hover');
 
+                // $rex_yform_list['start'] = 3;
+                // $rex_yform_list
+//                $rex_yform_list[$list->getPager()->getCursorName()] = rex_request($list->getPager()->getCursorName(),'int',0);
+//                dump($list->getPager()->getCursorName());
+//                dump($rex_yform_list);
+
+
                 if ($this->hasDataPageFunction('add')) {
                     $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
                     $thIcon = '<a href="index.php?' . http_build_query(array_merge(['func' => 'add'], $rex_link_vars)) . '"' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';

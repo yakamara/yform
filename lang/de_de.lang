@@ -64,6 +64,8 @@ yform_values_upload_description =				Ein <b>Upload-Feld</b>, mit dem eine Datei 
 yform_values_ip_description =                   Ein <b>IP-Feld</b>, welche hiermit gespeichert wird
 yform_values_showvalue_description =            Ein Feld mit dem ausschließlich der Wert des Feldes angezeigt wird, aber nicht verändert werden kann.
 
+yform_values_checked = ausgewählt
+yform_values_not_checked = nicht ausgewählt
 
 yform_values_defaults_name = Name
 yform_values_defaults_label = Bezeichnung
