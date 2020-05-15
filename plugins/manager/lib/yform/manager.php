@@ -88,7 +88,7 @@ class rex_yform_manager
         $rex_yform_list['list'] = rex_request('list', 'string');
         $rex_yform_list['sort'] = rex_request('sort', 'string');
         $rex_yform_list['sorttype'] = rex_request('sorttype', 'string');
-        $rex_yform_list['start'] = rex_request('start', 'string');
+        $rex_yform_list['start'] = rex_request('start', 'int', null) ??  rex_request($rex_yform_list['list'].'_start','int', null) ?? 0;
 
         $_csrf_key = 'table_field-'.$this->table->getTableName();
         $rex_yform_list += rex_csrf_token::factory($_csrf_key)->getUrlParams();
@@ -447,12 +447,7 @@ class rex_yform_manager
                 $list = rex_list::factory($sql, $this->table->getListAmount());
                 $list->addTableAttribute('class', 'table-striped table-hover');
 
-                // $rex_yform_list['start'] = 3;
-                // $rex_yform_list
-//                $rex_yform_list[$list->getPager()->getCursorName()] = rex_request($list->getPager()->getCursorName(),'int',0);
-//                dump($list->getPager()->getCursorName());
-//                dump($rex_yform_list);
-
+                $rex_yform_list[$list->getPager()->getCursorName()] = rex_request($list->getPager()->getCursorName(),'int',0);
 
                 if ($this->hasDataPageFunction('add')) {
                     $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
