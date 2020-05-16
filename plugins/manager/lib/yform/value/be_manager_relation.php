@@ -527,9 +527,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         // relation_table
         $listValues = self::getListValues($field['table'], $field['field']);
 
-        dump($listValues);
-        dump($field['type']);
-
         // filter values
         $return = [];
         foreach (explode(',', $params['value']) as $value) {
