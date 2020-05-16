@@ -1,0 +1,20 @@
+name: PHP Checks
+
+on:
+  push:
+
+jobs:
+
+  rex-lint:
+    name: REX Linting
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 7.1
+        extension-csv: intl
+        coverage: none # disable xdebug, pcov
+    - run: |
+        composer require --dev friendsofredaxo/linter && vendor/bin/rexlint
