@@ -501,35 +501,34 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return '<a href="' . $link . '">' . rex_i18n::translate($field['label']) . '</a>';
         }
 
-        if (3 == $field['type']) {
-            // with relation-table
-            if (@$field['relation_table'] && null === $params['value']) {
-                $params['value'] = [];
-                $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
+        // with relation-table
+        if ((3 == $field['type'] || 1 == $field['type']) && @$field['relation_table'] && null === $params['value']) {
+            $params['value'] = [];
+            $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
 
-                if ($relationTableFields['source'] && $relationTableFields['target']) {
-                    $sql = rex_sql::factory();
-                    // $sql->setDebug();
-                    $sql->setQuery('
-                        SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
-                        FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
-                        WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
-                    );
-                    while ($sql->hasNext()) {
-                        $id = $sql->getValue('id');
-                        $params['value'][$id] = $id;
-                        $sql->next();
-                    }
+            if ($relationTableFields['source'] && $relationTableFields['target']) {
+                $sql = rex_sql::factory();
+                // $sql->setDebug();
+                $sql->setQuery('
+                    SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
+                    FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
+                    WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
+                );
+                while ($sql->hasNext()) {
+                    $id = $sql->getValue('id');
+                    $params['value'][$id] = $id;
+                    $sql->next();
                 }
-
-                $params['value'] = implode(',', $params['value']);
             }
-            // without relation-table
-                // $params['value'] isset
+
+            $params['value'] = implode(',', $params['value']);
         }
 
         // relation_table
         $listValues = self::getListValues($field['table'], $field['field']);
+
+        dump($listValues);
+        dump($field['type']);
 
         // filter values
         $return = [];
