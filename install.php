@@ -8,7 +8,7 @@ try {
     $testSQL->beginTransaction();
     $testSQL->commit();
 } catch (Exception $e) {
-    throw new rex_sql_exception('db does not support transactions');
+    throw new rex_sql_exception('db does not support transactions', $e);
 }
 
 foreach ($this->getInstalledPlugins() as $plugin) {
