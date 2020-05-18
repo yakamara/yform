@@ -15,7 +15,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
         $php = $this->getElement('php');
 
         // BC
-        if ($php == '') {
+        if ('' == $php) {
             $php = $label;
         }
 
@@ -55,7 +55,7 @@ class rex_yform_value_php extends rex_yform_value_abstract
         $list = true;
 
         // BC
-        if ($php == '') {
+        if ('' == $php) {
             $php = $label;
         }
 
