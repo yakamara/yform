@@ -88,7 +88,7 @@ class rex_yform_manager
         $rex_yform_list['list'] = rex_request('list', 'string');
         $rex_yform_list['sort'] = rex_request('sort', 'string');
         $rex_yform_list['sorttype'] = rex_request('sorttype', 'string');
-        $rex_yform_list['start'] = rex_request('start', 'int', null) ??  rex_request($rex_yform_list['list'].'_start','int', null) ?? 0;
+        $rex_yform_list['start'] = rex_request('start', 'int', null) ?? rex_request($rex_yform_list['list'].'_start', 'int', null) ?? 0;
 
         $_csrf_key = 'table_field-'.$this->table->getTableName();
         $rex_yform_list += rex_csrf_token::factory($_csrf_key)->getUrlParams();
@@ -447,18 +447,18 @@ class rex_yform_manager
                 $list = rex_list::factory($sql, $this->table->getListAmount());
                 $list->addTableAttribute('class', 'table-striped table-hover');
 
-                $rex_yform_list[$list->getPager()->getCursorName()] = rex_request($list->getPager()->getCursorName(),'int',0);
+                $rex_yform_list[$list->getPager()->getCursorName()] = rex_request($list->getPager()->getCursorName(), 'int', 0);
 
+                $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
+                $thIcon = '_';
                 if ($this->hasDataPageFunction('add')) {
-                    $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
                     $thIcon = '<a href="index.php?' . http_build_query(array_merge(['func' => 'add'], $rex_link_vars)) . '"' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
-                    $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
-
-                    if (!isset($rex_yform_manager_opener['id'])) {
-                        $list->setColumnParams($thIcon, array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
-                    }
                 }
-                // $list->setColumnFormat('id', 'Id');
+                $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon" data-title="' . rex_i18n::msg('id') . '">###VALUE###</td>']);
+                $list->setColumnParams($thIcon, array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
+
+                $list->setColumnLabel('id', rex_i18n::msg('yform_id'));
+                $list->setColumnSortable('id');
 
                 $link_list_params = array_merge(
                     $this->getLinkVars(),
@@ -482,11 +482,6 @@ class rex_yform_manager
                         $list->addParam($paramKey, $paramValue);
                     }
                 }
-
-                $list->setColumnLabel('id', rex_i18n::msg('yform_id'));
-                $list->setColumnLayout('id', ['<th class="rex-table-id">###VALUE###</th>', '<td class="rex-table-id" data-title="' . rex_i18n::msg('id') . '">###VALUE###</td>']);
-                $list->setColumnParams('id', ['data_id' => '###id###', 'func' => 'edit']);
-                $list->setColumnSortable('id');
 
                 foreach ($this->table->getFields() as $field) {
                     if (!$field->isHiddenInList() && $field->getTypeName()) {
