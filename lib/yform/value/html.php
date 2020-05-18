@@ -39,7 +39,7 @@ class rex_yform_value_html extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'html' => ['type' => 'textarea',    'label' => rex_i18n::msg('yform_values_html_HTML')],
+                'html' => ['type' => 'textarea',    'attributes' => ['class' => 'form-control rex-code'], 'label' => rex_i18n::msg('yform_values_html_HTML')],
             ],
             'description' => rex_i18n::msg('yform_values_html_description'),
             'db_type' => ['none'],
