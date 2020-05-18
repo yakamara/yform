@@ -199,7 +199,7 @@ $(document).on('rex:ready', function (event, container) {
 
     $(this)
         .find("[id^='REX_MEDIA_'],[id^='REX_MEDIALIST_SELECT_']").each(function() {
-      $(this).attr("id", $(this).attr("id") + be_relation_counter);
+      $(this).attr("id", $(this).attr("id") + be_relation_media_counter);
     });
 
     var regexpMedia = [
@@ -219,7 +219,7 @@ $(document).on('rex:ready', function (event, container) {
       var elementOnClick = $(this).attr("onclick");
 
       for (var i in regexpMedia) {
-        elementOnClick = elementOnClick.replace(regexpMedia[i], '$1' + be_relation_counter);
+        elementOnClick = elementOnClick.replace(regexpMedia[i], '$1' + be_relation_media_counter);
       }
       $(this).attr("onclick", elementOnClick);
 
