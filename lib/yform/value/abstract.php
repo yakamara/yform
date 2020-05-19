@@ -38,10 +38,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     public function getFieldId($k = '')
     {
+        $form_name_array = array_merge([$this->params['form_name']], $this->params['form_array']);
         if ($k === '') {
-            return 'yform-' . $this->params['form_name'] . '-field-' . $this->getId();
+            return 'yform-' . implode('_', $form_name_array) . '-field-' . $this->getId();
         }
-        return 'yform-' . $this->params['form_name'] . '-field-' . $this->getId() . '_' . $k;
+        return 'yform-' . implode('_', $form_name_array) . '-field-' . $this->getId() . '_' . $k;
     }
 
     public function getFieldName($k = '')
@@ -56,13 +57,13 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     public function getHTMLId($suffix = '')
     {
+        $form_name_array = array_merge([$this->params['form_name']], $this->params['form_array']);
         if ($suffix != '') {
-            return 'yform-' . $this->params['form_name'] . '-' . $this->getName() . '-' . $suffix;
+            return 'yform-' . implode('_',$form_name_array) . '-' . $this->getName() . '-' . $suffix;
         }
         if ($this->getName() != '') {
-            return 'yform-' . $this->params['form_name'] . '-' . $this->getName();
+            return 'yform-' . implode('_',$form_name_array) . '-' . $this->getName();
         }
-
         return '';
     }
 
