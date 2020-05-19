@@ -40,7 +40,7 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
             $url = str_replace('###' . $search . '###', urlencode($replace), $url);
         }
 
-        if ($url != '') {
+        if ('' != $url && 0 == count($this->params['warning_messages'])) {
             header('Location: ' . $url);
             $this->params['form_exit'] = true;
         }
