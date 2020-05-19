@@ -21,7 +21,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
 
         $main_table = str_replace('%TABLE_PREFIX%', rex::getTablePrefix(), $main_table);
 
-        if ($main_table == '') {
+        if ('' == $main_table) {
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
             $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
@@ -32,14 +32,14 @@ class rex_yform_action_db extends rex_yform_action_abstract
 
         $where = '';
         if ($where = $this->getElement(3)) {
-            if ($where == 'main_where') {
+            if ('main_where' == $where) {
                 $where = $this->params['main_where'];
             }
         }
 
         foreach ($this->params['value_pool']['sql'] as $key => $value) {
             $sql->setValue($key, $value);
-            if ($where != '') {
+            if ('' != $where) {
                 $where = str_replace('###' . $key . '###', addslashes($value), $where);
             }
         }
@@ -47,9 +47,9 @@ class rex_yform_action_db extends rex_yform_action_abstract
         $action = null;
 
         try {
-            if ($where != '') {
+            if ('' != $where) {
                 $sql->setWhere($where);
-                $saved = $sql->update();
+                $sql->update();
                 $action = 'update';
 
                 if ($this->params['main_id'] <= 0) {
@@ -61,18 +61,21 @@ class rex_yform_action_db extends rex_yform_action_abstract
                     $this->params['value_pool']['email']['ID'] = $this->params['main_id'];
                 }
             } else {
-                $saved = $sql->insert();
+                $sql->insert();
                 $action = 'insert';
                 $id = $sql->getLastId();
                 $this->params['main_id'] = $id;
                 $this->params['value_pool']['email']['ID'] = $id;
                 // $this->params["value_pool"]["sql"]["ID"] = $id;
             }
-        } catch (Exception $sql) {
+        } catch (Exception $e) {
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
-            $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
-            echo $sql->getMessage();
+            if ($this->params['debug']) {
+                $this->params['warning_messages'][] = $e->getMessage();
+            } else {
+                $this->params['warning_messages'][] = $this->params['Error-Code-QueryError'];
+            }
         }
 
         rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql,
