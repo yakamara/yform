@@ -2,7 +2,7 @@
 
 echo rex_view::title($this->i18n('yform'));
 
-if (rex::getUser()->isAdmin()) {
+if (rex::getUser()->isAdmin() && rex_addon::get('structure') && rex_addon::get('structure')->isAvailable()) {
     $content = '';
     $searchtext = 'module:yform_basic_output';
 
@@ -18,7 +18,7 @@ if (rex::getUser()->isAdmin()) {
 
     $yform_module_name = 'YForm Formbuilder';
 
-    if (rex_request('install', 'integer') == 1) {
+    if (1 == rex_request('install', 'integer')) {
         $input = rex_file::get(rex_path::addon('yform', 'module/module_input.inc'));
         $output = rex_file::get(rex_path::addon('yform', 'module/module_output.inc'));
 
