@@ -28,7 +28,7 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
             $params = [];
             foreach ($labels as $label) {
                 $label = trim($label);
-                $params[] = $this->params['value_pool']['sql'][$label];
+                $params[] = $this->params['value_pool']['sql'][$label] ?? '';
             }
 
             $sql->setQuery($query, $params);
