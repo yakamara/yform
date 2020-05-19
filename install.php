@@ -11,6 +11,12 @@ try {
     throw new rex_sql_exception('db does not support transactions', $e);
 }
 
+// old plugin docs still exists ? -> delete
+$pluginDocs = __DIR__.'/plugins/docs';
+if (file_exists($pluginDocs)) {
+    rex_dir::delete($pluginDocs);
+}
+
 foreach ($this->getInstalledPlugins() as $plugin) {
     // use path relative to __DIR__ to get correct path in update temp dir
     $file = __DIR__.'/plugins/'.$plugin->getName().'/install.php';
