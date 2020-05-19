@@ -107,7 +107,6 @@ class rex_yform
         $this->objparams = array_merge($this->objparams, $params);
 
         rex_extension::registerPoint(new rex_extension_point('YFORM_INIT', $this));
-
     }
 
     public static function factory(array $params = [])
@@ -142,7 +141,7 @@ class rex_yform
         // CLEAR EMPTY AND COMMENT LINES
         foreach ($form_elements_tmp as $form_element) {
             $form_element = trim($form_element);
-            if ($form_element != '' && $form_element[0] != '#' && $form_element[0] != '/') {
+            if ('' != $form_element && '#' != $form_element[0] && '/' != $form_element[0]) {
                 $this->objparams['form_elements'][] = explode('|', trim($form_element));
             }
         }
@@ -168,10 +167,10 @@ class rex_yform
 
     public function setRedaxoVars($aid = '', $clang = '', $params = [])
     {
-        if ($clang == '') {
+        if ('' == $clang) {
             $clang = rex_clang::getCurrentId();
         }
-        if ($aid == '') {
+        if ('' == $aid) {
             $aid = rex_article::getCurrentId();
         }
 
@@ -229,7 +228,7 @@ class rex_yform
             $ValueObject->setValue($this->getFieldValue($ValueObject->getName(), [$ValueObject->getId()]));
         }
 
-        if ($this->getFieldValue('send') == '1') {
+        if ('1' == $this->getFieldValue('send')) {
             $this->objparams['send'] = 1;
         }
 
@@ -240,7 +239,7 @@ class rex_yform
                 $this->objparams['sql_object']->setDebug($this->objparams['debug']);
                 $this->objparams['sql_object']->setQuery('SELECT * from ' . $this->objparams['main_table'] . ' WHERE ' . $this->objparams['main_where']);
             }
-            if ($this->objparams['sql_object']->getRows() > 1 || $this->objparams['sql_object']->getRows() == 0) {
+            if ($this->objparams['sql_object']->getRows() > 1 || 0 == $this->objparams['sql_object']->getRows()) {
                 $this->objparams['warning'][] = $this->objparams['Error-Code-EntryNotFound'];
                 $this->objparams['warning_messages'][] = $this->objparams['Error-Code-EntryNotFound'];
                 $this->objparams['form_show'] = true;
@@ -248,9 +247,9 @@ class rex_yform
             }
         }
 
-        if ($this->objparams['send'] != 1 && $this->objparams['main_where'] != '') {
+        if (1 != $this->objparams['send'] && '' != $this->objparams['main_where']) {
             foreach ($this->objparams['values'] as $i => $valueObject) {
-                /* @var rex_yform_value_abstract $valueObject */
+                /** @var rex_yform_value_abstract $valueObject */
                 if ($valueObject->getName()) {
                     if (isset($this->objparams['sql_object'])) {
                         $this->setFieldValue($valueObject->getName(), [$i], @$this->objparams['sql_object']->getValue($valueObject->getName()));
@@ -263,7 +262,7 @@ class rex_yform
         // 3. setValue direct via data Object
         if (isset($this->objparams['data']) && is_array($this->objparams['data']) && count($this->objparams['data']) > 0) {
             foreach ($this->objparams['values'] as $valueObject) {
-                /* @var rex_yform_value_abstract $valueObject */
+                /** @var rex_yform_value_abstract $valueObject */
                 if (isset($this->objparams['data'][$valueObject->getName()])) {
                     $valueObject->setValue($this->objparams['data'][$valueObject->getName()]);
                 }
@@ -292,7 +291,7 @@ class rex_yform
             }
         }
 
-        if ($this->objparams['send'] == 1) {
+        if (1 == $this->objparams['send']) {
             foreach ($this->objparams['validates'] as $ValidateObject) {
                 $ValidateObject->enterObject();
             }
@@ -310,7 +309,7 @@ class rex_yform
             $ValueObject->enterObject();
         }
 
-        if ($this->objparams['send'] == 1) {
+        if (1 == $this->objparams['send']) {
             foreach ($this->objparams['validates'] as $ValidateObject) {
                 $ValidateObject->postValueAction();
             }
@@ -340,10 +339,10 @@ class rex_yform
         for ($i = 0; $i < $rows; ++$i) {
             $element = $this->objparams['form_elements'][$i];
 
-            if ($element[0] == 'validate') {
+            if ('validate' == $element[0]) {
                 $class = 'rex_yform_validate_' . trim($element[1]);
                 $type = 'validates';
-            } elseif ($element[0] == 'action') {
+            } elseif ('action' == $element[0]) {
                 $class = 'rex_yform_action_' . trim($element[1]);
                 $type = 'actions';
             } else {
@@ -352,13 +351,13 @@ class rex_yform
             }
 
             if (!class_exists($class)) {
-                array_unshift($element,'html', uniqid('html'));
+                array_unshift($element, 'html', uniqid('html'));
                 $class = 'rex_yform_value_html';
                 $type = 'values';
             }
 
             if (class_exists($class)) {
-                /* @var rex_yform_base_abstract $Object */
+                /** @var rex_yform_base_abstract $Object */
                 $Object = new $class();
                 $Object->loadParams($this->objparams, $element);
                 $Object->setId($i);
@@ -391,11 +390,11 @@ class rex_yform
             $this->objparams['value_pool']['email']['ID'] = $this->objparams['main_id'];
         }
 
-        $hasWarnings = count($this->objparams['warning']) != 0;
-        $hasWarningMessages = count($this->objparams['warning_messages']) != 0;
+        $hasWarnings = 0 != count($this->objparams['warning']);
+        $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
 
         // ----- Actions
-        if ($this->objparams['send'] == 1 && !$hasWarnings && !$hasWarningMessages) {
+        if (1 == $this->objparams['send'] && !$hasWarnings && !$hasWarningMessages) {
             $this->objparams['form_show'] = false;
 
             // ----- pre Actions
@@ -450,7 +449,7 @@ class rex_yform
         if ($this->objparams['form_show']) {
             $this->setHiddenField($this->getFieldName('send'), 1);
 
-            if ($this->objparams['form_anchor'] != '') {
+            if ('' != $this->objparams['form_anchor']) {
                 $this->objparams['form_action'] .= '#' . $this->objparams['form_anchor'];
             }
 
@@ -500,7 +499,7 @@ class rex_yform
         if ($this->objparams['real_field_names']) {
             $label = $this->prepareLabel($label);
             // specialcase
-            if ($label != '' && count($params) > 1) {
+            if ('' != $label && count($params) > 1) {
                 // 1. FormID
                 // 2. SpecialKey
                 $label .= '['.$this->prepareLabel($params[1]).']';
@@ -508,7 +507,7 @@ class rex_yform
             return ($label) ? $label : current($params);
         }
 
-        if (count($params) == 0) {
+        if (0 == count($params)) {
             $params = [$label];
         }
 
@@ -518,7 +517,7 @@ class rex_yform
 
         foreach ($params as $param) {
             $param = $this->prepareLabel($param);
-            if ($param != '') {
+            if ('' != $param) {
                 $fieldName .= '['.$this->prepareLabel($param).']';
             }
         }
@@ -528,7 +527,7 @@ class rex_yform
 
     public function getFieldValue($label = '', array $params = [])
     {
-        if (count($params) == 0 && $label != '') {
+        if (0 == count($params) && '' != $label) {
             $params = [$label];
         }
 
@@ -538,7 +537,7 @@ class rex_yform
         switch ($this->getObjectparams('get_field_type')) {
             case 'request':
                 if ($this->objparams['real_field_names']) {
-                    $value = isset($_REQUEST) ? $_REQUEST : null;
+                    $value = $_REQUEST ?? null;
                     // specialcase
                     if (count($params) > 1) {
                         // 1. FormID
@@ -580,7 +579,7 @@ class rex_yform
 
     public function setFieldValue(string $label, array $params, $value)
     {
-        if (count($params) == 0) {
+        if (0 == count($params)) {
             $params = [$label];
         }
 
@@ -617,7 +616,7 @@ class rex_yform
 
         foreach ($params as $param) {
             $param = $this->prepareLabel($param);
-            if ($param != '') {
+            if ('' != $param) {
                 if (!isset($fieldValue[$param]) && !is_array($fieldValue)) {
                     $fieldValue = [];
                 } elseif (!is_array($fieldValue)) {
@@ -633,7 +632,7 @@ class rex_yform
 
     public function prepareLabel($label)
     {
-        return preg_replace('/[^a-zA-Z\-\_0-9]/', '-', $label);
+        return preg_replace('/[^a-zA-Z\-_0-9]/', '-', $label);
     }
 
     public static function unhtmlentities($text)
@@ -660,18 +659,18 @@ class rex_yform
             $classesDeprecatedDescription[$arr_key] = '';
             foreach ($classes as $class) {
                 $exploded = explode($arr_split, $class);
-                if (count($exploded) == 2) {
+                if (2 == count($exploded)) {
                     $name = $exploded[1];
-                    if ($name != 'abstract') {
-                        /* @var rex_yform_base_abstract $class */
+                    if ('abstract' != $name) {
+                        /** @var rex_yform_base_abstract $class */
                         $class = new $class();
                         $desc = trim($class->getDescription());
                         $definitions = $class->getDefinitions();
-                        $definition_desc = isset($definitions['description']) ? $definitions['description'] : '';
-                        if ($desc != '') {
+                        $definition_desc = $definitions['description'] ?? '';
+                        if ('' != $desc) {
                             $desc = '<code>' . $desc . '</code>';
                         }
-                        if ($definition_desc != '') {
+                        if ('' != $definition_desc) {
                             $desc = $definition_desc . '<br />' . $desc;
                         }
 
@@ -717,10 +716,10 @@ class rex_yform
         foreach ($arr as $arr_key => $arr_split) {
             foreach (rex_autoload::getClasses() as $class) {
                 $exploded = explode($arr_split, $class);
-                if (count($exploded) == 2) {
+                if (2 == count($exploded)) {
                     $name = $exploded[1];
-                    if ($name != 'abstract') {
-                        /* @var rex_yform_base_abstract $class */
+                    if ('abstract' != $name) {
+                        /** @var rex_yform_base_abstract $class */
                         $class = new $class();
                         $d = $class->getDefinitions();
                         if (count($d) > 0) {
