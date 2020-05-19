@@ -68,6 +68,9 @@ if (rex::isBackend() && rex::getUser()) {
     $this->setProperty('pages', $pages);
 }
 
+\rex_extension::register('MEDIA_IS_IN_USE', 'rex_yform_value_be_media::isMediaInUse');
+\rex_extension::register('PACKAGES_INCLUDED', 'rex_yform_value_be_link::isArticleInUse');
+
 rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
     if ($ep->getSubject() instanceof Exception) {
         return;
