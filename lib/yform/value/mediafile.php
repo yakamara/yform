@@ -15,19 +15,18 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $this->setValue('');
         }
 
-        $media_category_id = ($this->getElement(8) == '') ? 0 : (int) $this->getElement(8);
+        $media_category_id = ('' == $this->getElement(8)) ? 0 : (int) $this->getElement(8);
         $media_category = rex_media_category::get($media_category_id);
         if (null === $media_category) {
             $media_category_id = 0;
         }
 
-        $mediapool_user = ($this->getElement(9) == '') ? 'yform::mediafile' : $this->getElement(9);
+        $mediapool_user = ('' == $this->getElement(9)) ? 'yform::mediafile' : $this->getElement(9);
         $pool = $this->params['value_pool']['email'];
         $mediapool_user = preg_replace_callback('/###(\w+)###/',
-                                                            function ($m) use ($pool) {
-                                                                return isset($pool[$m[1]])
-                                                                         ? $pool[$m[1]]
-                                                                         : 'key not found';
+                                                            static function ($m) use ($pool) {
+                                                                return $pool[$m[1]]
+                                                                         ?? 'key not found';
                                                             },
                                                             $mediapool_user);
 
@@ -40,15 +39,15 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         $error = [];
         $err_msgs = explode(',', $this->getElement(6)); // min_err,max_err,type_err,empty_err
         $err_msgs['min_err'] = $err_msgs[0];
-        $err_msgs['max_err'] = isset($err_msgs[1]) ? $err_msgs[1] : $err_msgs[0];
-        $err_msgs['type_err'] = isset($err_msgs[2]) ? $err_msgs[2] : $err_msgs[0];
-        $err_msgs['empty_err'] = isset($err_msgs[3]) ? $err_msgs[3] : $err_msgs[0];
+        $err_msgs['max_err'] = $err_msgs[1] ?? $err_msgs[0];
+        $err_msgs['type_err'] = $err_msgs[2] ?? $err_msgs[0];
+        $err_msgs['empty_err'] = $err_msgs[3] ?? $err_msgs[0];
 
         $rdelete = md5($this->getFieldName('delete'));
         $rfile = 'file_' . md5($this->getFieldName('file'));
 
         // SIZE CHECK
-        if ($this->params['send'] && isset($_FILES[$rfile]) && $_FILES[$rfile]['name'] != '' && ($_FILES[$rfile]['size'] > $maxsize || $_FILES[$rfile]['size'] < $minsize)) {
+        if ($this->params['send'] && isset($_FILES[$rfile]) && '' != $_FILES[$rfile]['name'] && ($_FILES[$rfile]['size'] > $maxsize || $_FILES[$rfile]['size'] < $minsize)) {
             if ($_FILES[$rfile]['size'] < $minsize) {
                 $error[] = $err_msgs['min_err'];
             }
@@ -60,11 +59,11 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         }
 
         if ($this->params['send']) {
-            if (isset($_REQUEST[$rdelete]) && $_REQUEST[$rdelete] == 1) {
+            if (isset($_REQUEST[$rdelete]) && 1 == $_REQUEST[$rdelete]) {
                 $this->setValue('');
             }
 
-            if (isset($_FILES[$rfile]) && $_FILES[$rfile]['name'] != '') {
+            if (isset($_FILES[$rfile]) && '' != $_FILES[$rfile]['name']) {
                 $FILE['size'] = $_FILES[$rfile]['size'];
                 $FILE['name'] = $_FILES[$rfile]['name'];
                 $FILE['type'] = $_FILES[$rfile]['type'];
@@ -97,7 +96,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         }
 
         //# check for required file
-        if ($this->params['send'] && $this->getElement(5) == 1 && $this->getValue() == '') {
+        if ($this->params['send'] && 1 == $this->getElement(5) && '' == $this->getValue()) {
             $error[] = $err_msgs['empty_err'];
         }
 
@@ -147,7 +146,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         $FILETYPE = $FILE['type'];
 
         $NFILENAME = mb_strtolower(preg_replace('/[^a-zA-Z0-9.\-\$\+]/', '_', $FILENAME));
-        if (strrpos($NFILENAME, '.') != '') {
+        if ('' != strrpos($NFILENAME, '.')) {
             $NFILE_NAME = mb_substr($NFILENAME, 0, mb_strlen($NFILENAME) - (mb_strlen($NFILENAME) - mb_strrpos($NFILENAME, '.')));
             $NFILE_EXT = mb_substr($NFILENAME, mb_strrpos($NFILENAME, '.'), mb_strlen($NFILENAME) - mb_strrpos($NFILENAME, '.'));
         } else {
@@ -162,7 +161,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         }
 
         $standard_extensions_array = ['.rtf', '.pdf', '.doc', '.gif', '.jpg', '.jpeg'];
-        if (count($extensions_array) == 0) {
+        if (0 == count($extensions_array)) {
             $extensions_array = $standard_extensions_array;
         }
 
@@ -199,7 +198,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         $RETURN['ok'] = true;
         $RETURN['filename'] = $NFILENAME;
 
-        rex_sql::factory()
+        $saveSQL = rex_sql::factory()
             ->setTable(rex::getTablePrefix() . 'media')
             ->setValue('filetype', $FILETYPE)
             ->setValue('filename', $NFILENAME)
@@ -209,8 +208,17 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             ->setValue('createdate', date('Y-m-d H:i:s'))
             ->setValue('createuser', $mediapool_user)
             ->setValue('updatedate', date('Y-m-d H:i:s'))
-            ->setValue('updateuser', $mediapool_user)
-            ->insert();
+            ->setValue('updateuser', $mediapool_user);
+
+        // get widht height
+        $size = @getimagesize($filefolder . '/' . $NFILENAME);
+
+        if ($size) {
+            $saveSQL->setValue('width', $size[0]);
+            $saveSQL->setValue('height', $size[1]);
+        }
+
+        $saveSQL->insert();
 
         return $RETURN;
     }
