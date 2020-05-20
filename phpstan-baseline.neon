@@ -677,12 +677,12 @@ parameters:
 
 		-
 			message: "#^Undefined variable\\: \\$this$#"
-			count: 16
+			count: 18
 			path: ytemplates/bootstrap/form.tpl.php
 
 		-
 			message: "#^Using \\$this outside a class\\.$#"
-			count: 16
+			count: 18
 			path: ytemplates/bootstrap/form.tpl.php
 
 		-
