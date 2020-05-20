@@ -49,7 +49,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
         <?= in_array($view->getValue(), $this->getValue(), true) ? ' selected="selected"' : '' ?>
         <?= $view->getAttributesAsString() ?>
     >
-        <?= rex_escape($view->getLabel()) ?>
+        <?= $view->getLabel() ?>
     </option>
 <?php
 } ?>
@@ -72,7 +72,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 <div<?= rex_string::buildAttributes($groupAttributes) ?>>
     <?php if ($this->getLabel()): ?>
         <label class="control-label" for="<?= $this->getFieldId() ?>">
-            <?= rex_escape($this->getLabelStyle($this->getLabel())) ?>
+            <?= $this->getLabelStyle($this->getLabel()) ?>
         </label>
     <?php endif ?>
 
