@@ -11,14 +11,14 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 {
     public function setValue($value)
     {
+        // TODO GET
+
         if ('REQUEST' == $this->getElement(3) && isset($_REQUEST[$this->getElement(2)])) {
-            $this->value = rex_request($this->getElement(2));
-        } elseif ('GET' == $this->getElement(3) && isset($_GET[$this->getElement(2)])) {
-            $this->value = rex_get($this->getElement(2));
+            $this->value = rex_request($this->getElement(2), 'string', '');
         } elseif ('POST' == $this->getElement(3) && isset($_POST[$this->getElement(2)])) {
-            $this->value = rex_post($this->getElement(2));
+            $this->value = rex_post($this->getElement(2), 'string', '');
         } elseif ('SESSION' == $this->getElement(3) && null !== rex_session($this->getElement(2), 'string', null)) {
-            $this->value = rex_session($this->getElement(2));
+            $this->value = rex_session($this->getElement(2), 'string', '');
         } else {
             $this->value = $this->getElement(2);
         }
@@ -26,8 +26,8 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->needsOutput() && (in_array($this->getElement(3), ['GET', 'POST', 'SESSION', 'REQUEST']))) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php', ['fieldName' => $this->getName()]);
+        if ($this->needsOutput() && (in_array($this->getElement(3), ['POST', 'REQUEST']))) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php', ['fieldName' => $this->getElement(2)]);
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -38,6 +38,6 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'hidden|name|(default)value||[no_db]'."\n".'hidden|job_id|my_id|REQUEST/GET/POST/SESSION|[no_db]';
+        return 'hidden|fieldname|value||[no_db]'."\n".'hidden|fieldname|key|REQUEST/GET/POST/SESSION|[no_db]';
     }
 }
