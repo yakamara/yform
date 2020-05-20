@@ -329,6 +329,20 @@ $yform->setObjectparams('form_action',rex_getUrl(5));
 Als Ziel nach dem Abschicken kann eine andere Adresse definiert werden, z. B. für eine ausführliche Danke-Seite. Es könnte auch die aktuelle Artikel-ID gesetzt weden, ergänzt um weitere Parameter.  
 Der Defaultwert ist `index.php`, bzw. die URL der Formularseite.
 
+#### GET-Parameter bei der Zielseite erhalten
+
+Wenn GET-Parameter, mit denen das Formular aufgerufen wurde, auch auf der Zielseite erhalten bleiben sollen.
+
+```text
+// Im YForm-Formbuilder
+objparams|form_action_query_params|key1,key2,key3
+```
+
+```php
+// In PHP mit rex_getUrl() auf die Artikel-ID 5
+$yform->setObjectparams('form_action_query_params',`key1,key2,key3`);
+```
+
 #### Sprunganker
 
 	// Im YForm-Formbuilder
