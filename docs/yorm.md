@@ -1,9 +1,10 @@
 # YOrm ORM
 
-## Mini-ORM für YForm 
+## Mini-ORM für YForm
+
 (ORM = Object-relational mapping = Objektrelationale Abbildung)
 
-YOrm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über YOrm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.  
+YOrm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über YOrm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.
 
 > - [YOrm ohne eigene Model Class verwenden](#ohne-model-class)
 > - [YOrm mit eigener Model Class verwenden](#eigene-model-class)
@@ -28,12 +29,11 @@ YOrm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und
 > - [Tricks](#tricks)
 >   - [Dataset filtern](#dataset-filter)
 
-
-
 <a name="ohne-model-class"></a>
+
 ## YOrm ohne eigene Model Class verwenden
 
-Hole alle Daten der Tabelle `rex_my_table` und zeige das Objekt. 
+Hole alle Daten der Tabelle `rex_my_table` und zeige das Objekt.
 
 ```php
 $items = rex_yform_manager_table::get('rex_my_table')->query()->find();
@@ -41,17 +41,19 @@ dump($items);
 ```
 
 <a name="eigene-model-class"></a>
+
 ## YOrm mit eigener Model Class verwenden
 
 > Hinweis: Eine eigene Model Class ist nicht zwingend erforderlich, vereinfacht das Ansprechen der Tabelle mittels der OO-Notation.
 
 Es stehen folgende Klassen zur Verfügung:
 
-* `rex_yform_manager_dataset`
-* `rex_yform_manager_collection` 
-* `rex_yform_manager_query`
+- `rex_yform_manager_dataset`
+- `rex_yform_manager_collection`
+- `rex_yform_manager_query`
 
 <a name="klasse-erstellen"></a>
+
 ### Klasse erstellen
 
 Zunächst wird eine Klasse erstellt und in das `project` AddOn im Ordner `lib` abgelegt
@@ -64,6 +66,7 @@ class MyTable extends \rex_yform_manager_dataset
 ```
 
 <a name="klasse-registrieren"></a>
+
 ### Klasse registrieren
 
 Jetzt muss die erstellte Klasse noch registiert werden. Dazu öffnet man die Datei `boot.php` des `project` AddOns und fügt nachfolgenden Code ein. Wird das theme-Addon verwendet, den Code in die Datei `functions.php` einfügen.
@@ -79,6 +82,7 @@ $items = MyTable::query()->find();
 ```
 
 <a name="praxis-beispiele"></a>
+
 ## Praxis-Beispiele
 
 ```php
@@ -126,16 +130,17 @@ foreach ($products as $product) {
 ```
 
 <a name="datensatz-abfragen"></a>
+
 ### Datensatz abfragen
 
 ```php
 <?php
-    $post = rex_yform_manager_dataset::get($id, 'rex_blog_post');  
-?>  
+    $post = rex_yform_manager_dataset::get($id, 'rex_blog_post');
+?>
 <article>
     <h1><?= $post->title ?></h1>
     <p><?= $post->text ?></p>
-</article> 
+</article>
 ```
 
 **Beispiel:** Datensatz auslesen und YForm-Formular bereitstellen
@@ -149,7 +154,7 @@ $yform = $dataset->getForm();
 $yform->setObjectparams('form_method','get');
 // Ziel des Formulars, sonst erhält man nur Index.php ...
 $yform->setObjectparams('form_action',rex_getUrl(REX_ARTICLE_ID));
-// Sollen die Daten des Datensatzes ausgelesen werden? (true = ja , false = nein) 
+// Sollen die Daten des Datensatzes ausgelesen werden? (true = ja , false = nein)
 $yform->setObjectparams("getdata",true);
 $yform->setActionField('showtext',array('','Gespeichert'));
 // Ausgabe des Formulars
@@ -158,26 +163,12 @@ echo $dataset->executeForm($yform);
 ```
 
 <a name="datensatz-ändern"></a>
+
 ### Datensatz ändern
 
 ```php
 $post = rex_yform_manager_dataset::get($id, 'rex_blog_post');
 $post->title = 'REDAXO-Tag in Wackershofen (am Grundbach)';
-$post->text = '...';
-
-if ($post->save()) { 
-    echo 'Gespeichert!';
-} else {
-    echo implode('<br>', $post->getMessages());
-}
-```
-
-<a name="datensatz-erstellen"></a>
-### Datensatz erstellen
-
-```php
-$post = rex_yform_manager_dataset::create('rex_blog_post');
-$post->title = 'REDAXO-Tag in Wackershofen (am Grundbach)'; 
 $post->text = '...';
 
 if ($post->save()) {
@@ -187,7 +178,23 @@ if ($post->save()) {
 }
 ```
 
-***Beispiel*** Neuen Datensatz erstellen und Formular bereitstellen***
+<a name="datensatz-erstellen"></a>
+
+### Datensatz erstellen
+
+```php
+$post = rex_yform_manager_dataset::create('rex_blog_post');
+$post->title = 'REDAXO-Tag in Wackershofen (am Grundbach)';
+$post->text = '...';
+
+if ($post->save()) {
+    echo 'Gespeichert!';
+} else {
+    echo implode('<br>', $post->getMessages());
+}
+```
+
+**_Beispiel_** Neuen Datensatz erstellen und Formular bereitstellen\*\*\*
 
 ```php
 // Neuen leeren Datensatz erstellen
@@ -203,159 +210,164 @@ echo $dataset->executeForm($yform);
 } ?>
 ```
 
-
 <a name="eigene-modelklassen"></a>
+
 ### Eigene Modelklassen
 
 ```php
-// boot.php  
-rex_yform_manager_dataset::setModelClass(  
-    'rex_blog_author',  
-    rex_blog_author::class  
+// boot.php
+rex_yform_manager_dataset::setModelClass(
+    'rex_blog_author',
+    rex_blog_author::class
 );
 ```
 
 ```php
-// lib/post.php 
-class rex_blog_post extends rex_yform_manager_dataset 
-{ 
-     
+// lib/post.php
+class rex_blog_post extends rex_yform_manager_dataset
+{
+
 }
 ```
 
 oder
 
-```php 
-  
-// boot.php  
-rex_yform_manager_dataset::setModelClass(  
-    'rex_blog_author',  
-    rex_blog_author::class  
-);  
+```php
+
+// boot.php
+rex_yform_manager_dataset::setModelClass(
+    'rex_blog_author',
+    rex_blog_author::class
+);
 ```
 
-```php 
-// lib/author.php 
-class rex_blog_author extends rex_yform_manager_dataset 
-{ 
-    public function getFullName(): string 
-    { 
-        return $this->first_name.' '.$this->last_name; 
-    } 
-} 
+```php
+// lib/author.php
+class rex_blog_author extends rex_yform_manager_dataset
+{
+    public function getFullName(): string
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
+}
 ```
 
-```php 
-// Template 
-$author = rex_blog_author::get($id); 
+```php
+// Template
+$author = rex_blog_author::get($id);
 echo $author->getFullName();
 ```
 
-
 <a name="query-klasse"></a>
+
 ### Query-Klasse
- 
-```php 
-$query = rex_blog_post::query();  
 
-$query  
-->where('status', 1)  
-->where('created', $date, '>')  
-->orderBy('created', 'desc')  
-; 
+```php
+$query = rex_blog_post::query();
 
-$posts = $query->find(); 
+$query
+->where('status', 1)
+->where('created', $date, '>')
+->orderBy('created', 'desc')
+;
+
+$posts = $query->find();
 
 // $post = $query->findOne();
 ```
 
 <a name="collection-Klasse"></a>
+
 ### Collection-Klasse
- 
+
 ```php
-$query = rex_blog_post::query();  
+$query = rex_blog_post::query();
 
-// $query->...  
+// $query->...
 
-$posts = $query->find();  
+$posts = $query->find();
 
-foreach ($posts as $post) { 
-echo $post->title; 
-echo $post->text; 
+foreach ($posts as $post) {
+echo $post->title;
+echo $post->text;
 }
 ```
 
-```php 
+```php
 
-$posts->isEmpty();  
-$posts->getIds();  
-$posts->toKeyIndex();  
-$posts->toKeyValue('title', 'text');  
-$posts->getValues('title');  
-$posts->groupBy('author_id');  
-$posts->setValue('author_id', $authorId); 
-$posts->save(); 
+$posts->isEmpty();
+$posts->getIds();
+$posts->toKeyIndex();
+$posts->toKeyValue('title', 'text');
+$posts->getValues('title');
+$posts->groupBy('author_id');
+$posts->setValue('author_id', $authorId);
+$posts->save();
 $posts->delete();
 ```
 
 <a name="relationen"></a>
+
 ### Relationen
- 
-```php
 
-foreach ($posts as $post) {  
-$author = $post->getRelatedDataset('author_id');  
+````php
 
-echo 'Autor: '.$author->getFullName();  
+foreach ($posts as $post) {
+$author = $post->getRelatedDataset('author_id');
 
-echo $post->title;  
-} 
+echo 'Autor: '.$author->getFullName();
 
-```php
-$posts = $author->getRelatedCollection('posts'); 
-``` 
-
-```php 
-
-$query = rex_blog_post::query();  
-
-$query  
-->joinRelation('author_id', 'a')  
-->selectRaw(  
-'CONCAT(a.first_name, " ", a.last_name)',  
-'author_name' 
-); 
-
-$posts = $query->find(); 
-
-foreach ($posts as $post) { 
-echo 'Autor: '.$post->author_name; 
+echo $post->title;
 }
-``` 
+
+```php
+$posts = $author->getRelatedCollection('posts');
+````
+
+```php
+
+$query = rex_blog_post::query();
+
+$query
+->joinRelation('author_id', 'a')
+->selectRaw(
+'CONCAT(a.first_name, " ", a.last_name)',
+'author_name'
+);
+
+$posts = $query->find();
+
+foreach ($posts as $post) {
+echo 'Autor: '.$post->author_name;
+}
+```
 
 <a name="paginierung"></a>
+
 ### Paginierung
- 
+
 **Beispiel 1**
-```php 
 
-$pager = new rex_pager(20);  
+```php
 
-$query = rex_blog_post::query();  
-//$query->...  
+$pager = new rex_pager(20);
 
-$posts = $query->paginate($pager);  
+$query = rex_blog_post::query();
+//$query->...
 
-foreach ($posts as $post) { 
-// ... 
-} 
+$posts = $query->paginate($pager);
 
-$pager->getRowCount(); 
-$pager->getCurrentPage(); 
-$pager->getLastPage(); 
+foreach ($posts as $post) {
+// ...
+}
+
+$pager->getRowCount();
+$pager->getCurrentPage();
+$pager->getLastPage();
 $pager->getPageCount();
 
-``` 
+```
+
 **Beispiel 2**
 
 ```php
@@ -378,29 +390,33 @@ echo $pager->getPageCount();
 ```
 
 <a name="formulare"></a>
+
 ### Formulare
 
-```php 
+```php
 
-$post = rex_blog_post::get($id);  
+$post = rex_blog_post::get($id);
 
-$yform = $post->getForm();  
+$yform = $post->getForm();
 
-// $yform->setHiddenField();  
-// $yform->setObjparams();  
+// $yform->setHiddenField();
+// $yform->setObjparams();
 
 echo $post->executeForm($yform)
-``` 
-
+```
 
 <a name="methoden-referenz"></a>
+
 ## Methoden-Referenz
 
 <a name="collection-methoden"></a>
+
 ### collection-Methoden
 
 - delete
 - executeForm
+- filter
+- first
 - getForm
 - getIds
 - getTable
@@ -411,68 +427,76 @@ echo $post->executeForm($yform)
 - isEmpty
 - isValid
 - isValueUnique
+- last
+- map
 - populateRelation
 - save
 - setData
 - setValue
+- shuffle
+- slice
+- sort
+- split
 - toKeyIndex
 - toKeyValue
 
 <a name="query-methoden"></a>
+
 ### query-Methoden
 
 - Alias
-    - alias
-    - getTableAlias
+  - alias
+  - getTableAlias
 - count
 - exists (liefert true oder false zurück. Optimal für große Abfragen.)
 - Find
-    - find
-    - findId
-    - findIds
-    - findOne (liefert einen Datensatz als Objekt zurück.)
+  - find
+  - findId
+  - findIds
+  - findOne (liefert einen Datensatz als Objekt zurück.)
 - Get
-    - get
-    - getAll
+  - get
+  - getAll
 - Group By
-    - groupBy
-    - groupByRaw
-    - resetGroupBy
+  - groupBy
+  - groupByRaw
+  - resetGroupBy
 - Join
-    - joinRaw
-    - joinRelation
-    - joinType
-    - joinTypeRelation
-    - leftJoin
-    - leftJoinRelation
-    - resetJoins
+  - joinRaw
+  - joinRelation
+  - joinType
+  - joinTypeRelation
+  - leftJoin
+  - leftJoinRelation
+  - resetJoins
 - Limit
-    - limit
-    - resetLimit
+  - limit
+  - resetLimit
 - Order By
-    - orderBy
-    - orderByRaw
-    - resetOrderBy
+  - orderBy
+  - orderByRaw
+  - resetOrderBy
 - paginate ([Beispiel](#beispiel-paginate))
 - Query
-    - query
-    - queryOne
+  - query
+  - queryOne
 - save
 - Select
-    - resetSelect
-    - select
-    - selectRaw (lässt individuelle Argumente zu, wie z. B. `CONCAT, SUM`)
+  - resetSelect
+  - select
+  - selectRaw (lässt individuelle Argumente zu, wie z. B. `CONCAT, SUM`)
 - Table
-    - getTable
-    - getTableName
+  - getTable
+  - getTableName
 - Where
-    - resetWhere
-    - setWhereOperator
-    - where
-    - whereNested
-    - whereRaw
+  - resetWhere
+  - setWhereOperator
+  - where
+  - whereNested
+  - whereRaw
 
 <a name="dataset-methoden"></a>
+
 ### dataset-Methoden
 
 - create
@@ -492,13 +516,14 @@ echo $post->executeForm($yform)
 - isValid
 - loadData
 
-
 <a name="debugging"></a>
+
 ## Debugging
 
 > Hinweis: Diese Vorgehensweise wird in zukünftigen Versionen optimiert. Beteilige dich aktiv an der Entwicklung auf [github.com/yakamara/redaxo_yform/](http://github.com/yakamara/redaxo_yform/)!
 
 <a name="debugging-variante-1"></a>
+
 ### Variante 1
 
 Wichtig ist nur der Part mit `rex_sql`
@@ -513,20 +538,23 @@ $query
     ->orderBy('t.name')
 $items = rex_sql::factory()->setDebug()->getArray($query->getQuery(), $query->getParams());
 $items = $query->find();
-``` 
+```
 
 <a name="debugging-variante-2"></a>
+
 ### Variante 2
 
 Datei `/redaxo/src/addons/yform/plugins/manager/lib/yform/manager/dataset.php` und die Variable `private static $debug = false;` auf `true` setzen
 
 <a name="tricks"></a>
+
 ## Tricks
 
 <a name="dataset-filter"></a>
-### Aus dem Dataset ungewollte Felder (z. B. für's Frontend) herausfiltern 
 
-```php 
+### Aus dem Dataset ungewollte Felder (z. B. für's Frontend) herausfiltern
+
+```php
 class rex_data_mydata extends rex_yform_manager_dataset
 {
     public function getFields(array $filter = [])
@@ -536,17 +564,17 @@ class rex_data_mydata extends rex_yform_manager_dataset
         if (rex::isBackend()) {
             return $fields;
         }
-                   
+
         foreach ($fields as $i => $field) {
             if ('interne_links' == $field->getName()) {
-                // hebt das Feld auf, es wird später im Formular auch nicht gezeigt. 
-                unset($fields[$i]); 
+                // hebt das Feld auf, es wird später im Formular auch nicht gezeigt.
+                unset($fields[$i]);
             }
             if ('user' == $field->getName()) {
                 unset($fields[$i]);
             }
         }
-   
+
         return $fields;
     }
 }
