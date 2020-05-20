@@ -38,6 +38,6 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'hidden|name|(default)value||[no_db]'."\n".'hidden|job_id|my_id|REQUEST/GET/POST/SESSION|[no_db]';
+        return 'hidden|fieldname|value||[no_db]'."\n".'hidden|fieldname|key|REQUEST/GET/POST/SESSION|[no_db]';
     }
 }
