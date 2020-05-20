@@ -11,9 +11,10 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 {
     public function setValue($value)
     {
-        // TODO GET
-
-        if ('REQUEST' == $this->getElement(3) && isset($_REQUEST[$this->getElement(2)])) {
+        if ('GET' == $this->getElement(3) && isset($_GET[$this->getElement(2)])) {
+            $this->value = rex_get($this->getElement(2), 'string', '');
+            $this->params['form_action_query_params'][$this->getElement(2)] = $this->value;
+        } elseif ('REQUEST' == $this->getElement(3) && isset($_REQUEST[$this->getElement(2)])) {
             $this->value = rex_request($this->getElement(2), 'string', '');
         } elseif ('POST' == $this->getElement(3) && isset($_POST[$this->getElement(2)])) {
             $this->value = rex_post($this->getElement(2), 'string', '');

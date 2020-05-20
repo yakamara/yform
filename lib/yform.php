@@ -36,6 +36,7 @@ class rex_yform
 
         $this->objparams['form_method'] = 'post';
         $this->objparams['form_action'] = 'index.php';
+        $this->objparams['form_action_query_params'] = [];
         $this->objparams['form_anchor'] = '';
         $this->objparams['form_showformafterupdate'] = 0;
         $this->objparams['form_show'] = true;
