@@ -28,7 +28,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
     public function enterObject()
     {
         if ($this->needsOutput() && (in_array($this->getElement(3), ['POST', 'REQUEST']))) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php', ['fieldName' => $this->getElement(2)]);
+            $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php', ['fieldName' => $this->getElement(1)]);
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
