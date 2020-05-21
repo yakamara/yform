@@ -445,7 +445,7 @@ class rex_yform_manager
 
                 /** @var rex_list $list */
                 $list = rex_list::factory($sql, $this->table->getListAmount());
-                $list->addTableAttribute('class', 'table-striped table-hover');
+                $list->addTableAttribute('class', 'table-striped table-hover yform-table-' . $this->table->getTableName());
 
                 $rex_yform_list[$list->getPager()->getCursorName()] = rex_request($list->getPager()->getCursorName(), 'int', 0);
 
