@@ -1309,7 +1309,7 @@ $yform->setValueField('upload', array("upload","Upload","",".jpg,.gif,.png,.jpeg
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="upload"]
 
-> **Hinweis für die Nutzung im Frontend**: Damit die Zuordnung von temorärem Dateinamen (Präfix ist ein temporärer Hash, z.B. `9f938fb7d400795e6fa998606a3ce126468133e57d86a48116bf6c4195cc460c_meine_datei.pdf`) zu späterem Dateinamen (mit Präfix ist die ID des Datensatzes, z.B. `121_meine_datei.jpg`) erfolgen kann, müssen die Objekt-Parameter `main_table` und `main_where` gesetzt sein. Die Umbenennung von Temp-Datei zur finalen Datei erfolgt durch eine Post-Action von YForm. Die Post-Action wird bspw. nicht ausgeführt, wenn der Datensatz "an YForm vorbei", z.B. durch die YForm-Action `db_query` erstellt oder bearbeitet wird.
+> **Hinweis für die Nutzung im Frontend**: Damit die Zuordnung von temporärem Dateinamen (Präfix ist ein temporärer Hash, z.B. `9f938fb7d400795e6fa998606a3ce126468133e57d86a48116bf6c4195cc460c_meine_datei.pdf`) zu späterem Dateinamen (mit Präfix ist die ID des Datensatzes, z.B. `121_meine_datei.jpg`) erfolgen kann, müssen die Objekt-Parameter `main_table` und `main_where` gesetzt sein. Die Umbenennung von Temp-Datei zur finalen Datei erfolgt durch eine Post-Action von YForm. Die Post-Action wird bspw. nicht ausgeführt, wenn der Datensatz "an YForm vorbei", z.B. durch die YForm-Action `db_query` erstellt oder bearbeitet wird.
 
 > **Hinweis**: Zusammen mit dem PHP-Feld lassen sich komfortabel [E-Mails mit Anhang versenden](demo_email-attachments.md).
 
