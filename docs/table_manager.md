@@ -79,7 +79,7 @@ Priorität | Legt fest, an welcher Position sich die neue Tabelle zwischen beste
 Name | Der Name der Datenbank-Tabelle, wie sie in MySQL heißt und über SQL-Querys aufgerufen wird.
 Bezeichnung | Der Name der Tabelle, wie sie im Menü aufgelistet wird.
 Beschreibung | Informationen zur Tabelle, zum Beispiel eine Kurzanleitung für den Kunden oder Informationen über den Aufbau der Tabelle als Merkhilfe. Die Beschreibung wird angezeigt beim direkten Aufruf einer Tabelle.
-aktiv | Legt fest, ob die Tabelle bearbeitet werden kann oder nicht.
+aktiv | Legt fest, ob die Tabelle im Hauptmenu angezeigt wird oder nicht.
 Datensätze pro Seite | Legt fest, ab wie vielen Datensätzen die Tabellen-Übersicht in Seiten unterteilt wird.
 Standardsortierung Feld | Legt fest, nach welchem Feld die Tabellen-Übersicht zu Beginn sortiert wird.
 Standardsortierung Richtung |  Legt fest, ob das gewählte Feld auf- oder absteigend sortiert wird.
