@@ -114,8 +114,8 @@ MyTable::query()
 $table = rex_yform_manager_table::get('rex_data_product');
 
 $products = $table->query()
-    ->joinRelation('category_id', 'c') // Join auf rex_data_product_category gemäß Relationsfeld category_id, mit Alias "c" für weitere Verwendung
-    ->select('c.name', 'category_name') // Aus der gejointen Tabelle den Kategorienamen mit auslesen mit dem Alias "category_name"
+    ->joinRelation('category_id', 'c') // Join auf rex_data_product_category gemäß Relationsfeld category_id, mit Alias 'c' für weitere Verwendung
+    ->select('c.name', 'category_name') // Aus der gejointen Tabelle den Kategorienamen mit auslesen mit dem Alias 'category_name'
     ->where('status', 1)
     ->find();
 
@@ -155,7 +155,7 @@ $yform->setObjectparams('form_method','get');
 // Ziel des Formulars, sonst erhält man nur Index.php ...
 $yform->setObjectparams('form_action',rex_getUrl(REX_ARTICLE_ID));
 // Sollen die Daten des Datensatzes ausgelesen werden? (true = ja , false = nein)
-$yform->setObjectparams("getdata",true);
+$yform->setObjectparams('getdata',true);
 $yform->setActionField('showtext',array('','Gespeichert'));
 // Ausgabe des Formulars
 echo $dataset->executeForm($yform);
