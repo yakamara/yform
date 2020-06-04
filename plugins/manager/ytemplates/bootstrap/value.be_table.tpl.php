@@ -73,19 +73,28 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                     $table = $this.parents('.formbe_table').children('table'),
                     tr = $('<tr/>'),
                     regexp = [
-                        // REX_MEDIA
+
                         new RegExp("(REX_MEDIA_)", 'g'),
                         new RegExp("(openREXMedia\\()", 'g'),
                         new RegExp("(addREXMedia\\()", 'g'),
                         new RegExp("(deleteREXMedia\\()", 'g'),
                         new RegExp("(viewREXMedia\\()", 'g'),
-                        // REX_MEDIALIST
+
                         new RegExp("(REX_MEDIALIST_SELECT_)", 'g'),
                         new RegExp("(moveREXMedialist\\()", 'g'),
                         new RegExp("(openREXMedialist\\()", 'g'),
                         new RegExp("(addREXMedialist\\()", 'g'),
                         new RegExp("(deleteREXMedialist\\()", 'g'),
                         new RegExp("(viewREXMedialist\\()", 'g'),
+
+                        new RegExp("(REX_LINK_)", 'g'),
+                        new RegExp("(deleteREXLink\\()", 'g'),
+
+                        new RegExp("(REX_LINKLIST_SELECT_)", 'g'),
+                        new RegExp("(moveREXLinklist\\()", 'g'),
+                        new RegExp("(openREXLinklist\\()", 'g'),
+                        new RegExp("(deleteREXLinklist\\()", 'g'),
+
                     ],
                     row_html = '\
                     <?php
