@@ -13,39 +13,29 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
     {
         $template_name = $this->getElement(2);
         if ($etpl = rex_yform_email_template::getTemplate($template_name)) {
-            $mail_to = rex::getErrorEmail();
+            $email_to = rex::getErrorEmail();
 
-            if ($this->getElement(3) != false && $this->getElement(3) != '') {
-                if(!filter_var($this->getElement(3), FILTER_VALIDATE_EMAIL)) {
-                    foreach ($this->params['value_pool']['email'] as $key => $value) {
-                        if ($this->getElement(3) == $key) {
-                            $mail_to = $value;
-                            break;
-                        }
-                    }
-                } else {
-                    $mail_to = $this->getElement(3);
-
-                    if ($this->getElement(4) != false && $this->getElement(4) != '') {
-                        $mail_to_name = $this->getElement(4);
-                    } else {
-                        $mail_to_name = $mail_to;
+            if (filter_var($this->getElement(3), FILTER_VALIDATE_EMAIL)) {
+                $email_to = $this->getElement(3);
+            } else {
+                foreach ($this->params['value_pool']['email'] as $key => $value) {
+                    if ($this->getElement(3) == $key) {
+                        $email_to = $value;
+                        break;
                     }
                 }
             }
 
-            // ---- fix mailto from definition
-            // Diesen Teil für Kompatibilität zu bisherigem 4./5. Parameter wahren
-            if ($this->getElement(4) != false && $this->getElement(4) != '' && filter_var($this->getElement(3), FILTER_VALIDATE_EMAIL)) {
-                $mail_to = $this->getElement(4);
-            }
+            $email_to_name = $this->getElement(4);
+            $warning_message = $this->getElement(5);
 
-            if ($this->getElement(5) != false && $this->getElement(5) != '') {
-                $mail_to_name = $this->getElement(5);
-            } else {
-                $mail_to_name = $mail_to;
+            // BC
+            if ('' == $this->getElement(3) && filter_var($this->getElement(4), FILTER_VALIDATE_EMAIL)) {
+                $email_to = $this->getElement(4);
+                $email_to_name = $this->getElement(5);
+                $warning_message = $this->getElement(6);
             }
-            // Ende Kompatibilität
+            // End BC
 
             if ($this->params['debug']) {
                 dump($etpl);
@@ -53,10 +43,10 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
             $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
 
-            $etpl['mail_to'] = $mail_to;
-            $etpl['mail_to_name'] = $mail_to_name;
+            $etpl['mail_to'] = $email_to;
+            $etpl['mail_to_name'] = $email_to_name;
 
-            if ($etpl['attachments'] != '') {
+            if ('' != $etpl['attachments']) {
                 $f = explode(',', $etpl['attachments']);
                 $etpl['attachments'] = [];
                 foreach ($f as $v) {
@@ -80,8 +70,8 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 if ($this->params['debug']) {
                     dump('email could not be sent');
                 }
-                if ($this->getElement(6) != false && $this->getElement(6) != '') {
-                    $this->params['output'] .= $this->getElement(6);
+                if ('' != $warning_message) {
+                    $this->params['output'] .= $warning_message;
                 }
                 return false;
             }
@@ -99,6 +89,6 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
 
     public function getDescription()
     {
-        return 'action|tpl2email|emailtemplate|emaillabel|[email@domain.de]|[email_name]|[Fehlermeldung wenn Versand fehlgeschlagen ist/html]';
+        return 'action|tpl2email|emailtemplate|[email@domain.de/email_label]|[email_name]|[Fehlermeldung wenn Versand fehlgeschlagen ist/html]';
     }
 }
