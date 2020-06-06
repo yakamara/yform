@@ -4,6 +4,8 @@
 
 YOrm erleichtert den Umgang mit in YForm Table Manager angemeldeten Tabellen und deren Daten. So ist es möglich mittels eigener Modelclasses die Daten zu verarbeiten und aufbereitet auszugeben. Werden im Table Manager neue Felder hinzugefügt oder entfernt, passen sich über YOrm ausgegegebene Formulare sofort darauf an. Die übliche PIPE oder PHP-Programmierung entfällt. Formulare müssen meist nur durch wenige Parameter ergänzt werden um sofort zu funktionieren.
 
+[Im Rahmen einer REDAXOHour ist eine Video Einführung entstanden, die viele Punkte dieses Kapitels erklärt.](https://www.youtube.com/watch?v=o88DHxsOLOs)
+
 > - [YOrm ohne eigene Model Class verwenden](#ohne-model-class)
 > - [YOrm mit eigener Model Class verwenden](#eigene-model-class)
 >   - [Klasse erstellen](#klasse-erstellen)
