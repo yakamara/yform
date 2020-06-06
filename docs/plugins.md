@@ -196,6 +196,8 @@ Die Klasse muss zunächst registriert werden siehe [YOrm](yorm.md), damit auf di
 
 Die Schnittstelle orientiert sich an https://jsonapi.org/format/. Aufrufe und JSON Formate sind ähnlich bis exakt so aufgebaut.
 
+[Im Rahmen einer REDAXOHour ist eine Video Einführung entstanden, die viele Punkte dieses Kapitels erklärt.](https://www.youtube.com/watch?v=o88DHxsOLOs)
+
 ### Konfiguration / Endpoints
 
 Die Zugriff über REST muss für jeden Endpoint einzeln definiert werden. D.h. man muss für jede Tabelle und für unterschiedliche Nutzungszenarien diese fest definieren.
