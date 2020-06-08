@@ -120,7 +120,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $filepath = (string) $this->upload_getFolder() . '/' . $this->getParam('main_id') . '_' . $filename;
             if (file_exists($filepath)) {
                 $real_filepath = $filepath;
-                $this->unsetSessionVar('value');
             } else {
                 $this->unsetSessionVar('value');
                 $filename = '';
