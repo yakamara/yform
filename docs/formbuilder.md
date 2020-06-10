@@ -422,7 +422,7 @@ Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in 
 	// In PHP
 	$yform->setObjectparams('form_exit',1);
 
-    # YForm-Modul: Values
+## YForm-Modul: Values
 
 > **Hinweis:** 
 > Dieser Abschnitt der Doku ist noch nicht fertig. Du kannst dich auf [GitHub](https://github.com/yakamara/redaxo_yform_docs/) an der Fertigstellung beteiligen.
