@@ -114,7 +114,8 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     }
 
                     if (function_exists('bcmod')) {
-                        $w = bcmod($newString, '97') == 1;
+                        $w = !(bcmod($newString, '97') == 1);
+
                     } else {
                         $x = $newString;
                         $y = '97';
@@ -128,7 +129,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         }
                         while (strlen($x));
 
-                        $w = (int)$mod == 1;
+                        $w = !((int)$mod == 1);
                     }
                 }
 
