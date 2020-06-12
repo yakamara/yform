@@ -5,6 +5,8 @@ Changelog
 Version 3.4 – 12.06.2020
 --------------------------
 
+### Korrekturen, Anpassungen, Bugs
+
 * fields: be_media, mediafile, be_link: Medien und Artikel sind nun nicht mehr löschbar wenn in YForm vorhanden
 * EP YFORM_MANAGER_DATA_PAGE_HEADER ergänzt, um sich in den Titel einer Tabelle zu hängen
 * action: Email2tpl umgebau: E-Mail oder Label nun als 3. Feldparameter erlaubt
