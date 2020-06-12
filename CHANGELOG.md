@@ -38,7 +38,6 @@ Version 3.4 – 12.06.2020
 * be_table: Diverse Anpassungen. Importproblem behoben, REX_LINK ermöglicht
 * Diverse dumps, notices entfernt, Fehlermeldung optimiert ..
 * action: redirect - wenn Fehler - dann wird kein redirect ausgeführt
-
 * Bug: plugin: tools: in neueeren REDAXO Version gingen die Tools wegen eines Fehlers nicht mehr. rex:ready
 * Bug: Transaction bei YForm DataImport korrigiert.
 * Bug: Negativer Uniquekey für unter anderen bei InlineRelationen zu Fehlern
