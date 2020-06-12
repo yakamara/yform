@@ -1,5 +1,5 @@
 package: yform
-version: '3.3.1'
+version: '3.4'
 author: 'Jan Kristinus, Gregor Harlan'
 supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
 
@@ -9,45 +9,45 @@ page:
     icon: rex-icon rex-icon-module
     subpages:
         overview: { title: 'translate:overview', perm: admin }
-        docs: 
+        docs:
             title: 'Hilfe'
             perm: admin[]
             pjax: false
             itemclass: pull-right
-            subpages: 
-                intro: 
+            subpages:
+                intro:
                     title: 'translate:yform_docs_intro'
                     perm: admin[]
                     pjax: false
                     subPath: docs/intro.md
-                table_manager: 
+                table_manager:
                     title: 'translate:yform_docs_table_manager'
                     perm: admin[]
                     pjax: false
                     subPath: docs/table_manager.md
-                formbuilder: 
+                formbuilder:
                     title: 'translate:yform_docs_formbuilder'
                     perm: admin[]
                     pjax: false
                     subPath: docs/formbuilder.md
-                demos: 
+                demos:
                     title: 'translate:yform_docs_demos'
                     perm: admin[]
                     pjax: false
                     subPath: docs/demos.md
-                yorm: 
+                yorm:
                     title: 'translate:yform_docs_yorm'
                     perm: admin[]
                     pjax: false
                     subPath: docs/yorm.md
-                plugins: 
+                plugins:
                     title: 'translate:yform_docs_plugins'
                     perm: admin[]
                     pjax: false
                     subPath: docs/plugins.md
-                    
 
-    
+
+
 stylesheets:
     - yform.css
     - popup.css
@@ -58,7 +58,7 @@ requires:
     redaxo: '^5.8.0'
     php:
         version: '^7.0'
-        
+
 system_plugins:
     - manager
     - email

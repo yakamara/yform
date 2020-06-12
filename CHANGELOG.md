@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-Version 3.4b1 – xx.06.2020
+Version 3.4 – 12.06.2020
 --------------------------
 
 * fields: be_media, mediafile, be_link: Medien und Artikel sind nun nicht mehr löschbar wenn in YForm vorhanden
