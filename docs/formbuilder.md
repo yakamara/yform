@@ -1376,7 +1376,7 @@ Vergleicht ein Feld mit einem angegebenen Wert mit Hilfe von Operatoren.
 ```php
 // In PHP
 $yform->setValueField('text', array("wert1","Wert 1"));
-$yform->setValidateField('compare_value', array("wert1","wert2","<", "Der Wert ist kleiner als 2!"));
+$yform->setValidateField('compare_value', array("wert1",2,"<", "Der Wert ist kleiner als 2!"));
 ```
 
 	
