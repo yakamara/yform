@@ -46,4 +46,4 @@ yform_rest_token_access_updated = La entrada ha sido actualizada.
 yform_rest_token_access_datetime_created = Acceso en
 yform_rest_token_url = URL
 
-yform_rest_token_token_paths = Puntos finales permitidos
+yform_rest_token_token_paths = Endpoints permitidos
