@@ -240,6 +240,9 @@ yform_values_choice_placeholder_notice = Use this setting to display an extra "e
 yform_values_choice_preferred_choices = Preferred choices
 yform_values_choice_preferred_choices_notice = Use this setting to move certain options to the beginning of the option list. A visual delimiter will be added to separate these choices from the rest.
 
+yform_values_status_output_values = Enter output values
+yform_values_status_output_values_notice = 2 comma separated values. Ex. offline, online OR ▢,▣
+
 yform_values_message_is_missing = [Warningmessage for field `{1}` is missing]
 
 yform_validate_object_is_missing = Object `{1}` for validation `{1}` is missing
@@ -258,3 +261,12 @@ yform_never = never
 yform_values_number_error_precision = Please enter a number between {0} and {1} for the number of digits (PRECISION)
 yform_values_number_error_scale = Please enter a number between {0} and {1} for the number of decimal places (SCALE)
 yform_values_number_error_compare = The number of decimal places must be lower than the number of digits
+
+
+yform_docs_intro = Intro
+yform_docs_table_manager = Manager
+yform_docs_formbuilder = Form builder
+yform_docs_demos = Demos
+yform_docs_yorm = Yorm
+yform_docs_plugins = Plugins
+
