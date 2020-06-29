@@ -64,6 +64,8 @@ yform_values_upload_description =				Un <b>campo de carga</b> que carga un archi
 yform_values_ip_description =                   Un <b>campo IP</b>, que se almacena aquí
 yform_values_showvalue_description =            Un campo que solo muestra el valor del campo pero no se puede cambiar.
 
+yform_values_checked = seleccionado
+yform_values_not_checked = no seleccionado
 
 yform_values_defaults_name = Nombre
 yform_values_defaults_label = Designación
@@ -238,6 +240,9 @@ yform_values_choice_placeholder_notice = Esta opción determina si una opción e
 yform_values_choice_preferred_choices = Opciones preferidas
 yform_values_choice_preferred_choices_notice = Esta opción mueve ciertas opciones a la parte superior de la lista, colocando un separador óptico entre ellas y el resto de las opciones.
 
+yform_values_status_output_values = Ingrese valores de salida
+yform_values_status_output_values_notice = 2 valores separados por comas. p.ej. fuera de línea, en línea o ▢, ▣
+
 yform_values_message_is_missing = [Falta un mensaje de advertencia para el campo `{1}`]
 
 yform_validate_object_is_missing = El objeto `{1}` para la validación `{1}` falta
@@ -256,3 +261,12 @@ yform_never = Nunca
 yform_values_number_error_precision = Ingrese un número entre {0} y {1} en la cantidad de dígitos (PRECISION)
 yform_values_number_error_scale = Ingrese un número entre {0} y {1} en el número de decimales (ESCALA)
 yform_values_number_error_compare = Los lugares decimales no deben ser más altos que el número de dígitos.
+
+
+yform_docs_intro = Introducción
+yform_docs_table_manager = Gerente
+yform_docs_formbuilder = Formbuilder
+yform_docs_demos = Demos
+yform_docs_yorm = Yorm
+yform_docs_plugins = PlugIns
+
