@@ -64,6 +64,8 @@ yform_values_upload_description =				Ett <b> filöverföringsfält </ b> för at
 yform_values_ip_description =                   Ett <b> IP-fält </ b>, som lagras här
 yform_values_showvalue_description =            Ett fält som bara visar fältets värde men inte kan ändras.
 
+yform_values_checked = utvald
+yform_values_not_checked = inte utvald
 
 yform_values_defaults_name = Namn
 yform_values_defaults_label = Beteckning
@@ -238,6 +240,9 @@ yform_values_choice_placeholder_notice = Det här alternativet avgör om ett spe
 yform_values_choice_preferred_choices = Föredragna val (preferred_choices)
 yform_values_choice_preferred_choices_notice = Det här alternativet flyttar vissa val överst i listan, placera en optisk separator mellan dem och resten av alternativen.
 
+yform_values_status_output_values = Ange utgångsvärden
+yform_values_status_output_values_notice = 2 värden separerade med komma-tecken. t.ex. offline, online eller ▢, ▣
+
 yform_values_message_is_missing = [Varningsmeddelande för fältet `{1}` saknas]
 
 yform_validate_object_is_missing = Objektet `{1}` för validering `{1}` saknas
@@ -256,3 +261,12 @@ yform_never = aldrig
 yform_values_number_error_precision = Ange ett tal mellan {0} och {1} för antalet siffror (PRECISION)
 yform_values_number_error_scale = Ange ett tal mellan {0} och {1} i antal decimaler (SCALE)
 yform_values_number_error_compare = Decimalerna får inte vara högre än antalet siffror
+
+
+yform_docs_intro = Intro
+yform_docs_table_manager = Manager
+yform_docs_formbuilder = Formbuilder
+yform_docs_demos = Demon
+yform_docs_yorm = Yorm
+yform_docs_plugins = Plugins
+
