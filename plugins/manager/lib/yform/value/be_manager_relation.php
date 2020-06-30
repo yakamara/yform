@@ -191,6 +191,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $yform->setObjectparams('submit_btn_show', false);
             $yform->setObjectparams('csrf_protection', false);
+            if (isset($this->params['original_func'])) {
+                $yform->setObjectparams('original_func', $this->params['original_func']);
+            }
             $form_elements = [];
             foreach ($yform->objparams['form_elements'] as $form_element) {
                 if ('prio' == $form_element[0] && $form_element[1] == $prioFieldName) {
@@ -224,6 +227,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
                     $yform->setObjectparams('submit_btn_show', false);
                     $yform->setObjectparams('csrf_protection', false);
+                    if (isset($this->params['original_func'])) {
+                        $yform->setObjectparams('original_func', $this->params['original_func']);
+                    }
                     $form_elements = [];
                     foreach ($yform->objparams['form_elements'] as $form_element) {
                         if ('prio' == $form_element[0] && $form_element[1] == $prioFieldName) {
@@ -238,7 +244,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform->objparams['form_elements'] = $form_elements;
 
                     $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relation->getId() . '" />';
-                    if (isset($this->params['func']) && 'copy' == $this->params['func']) {
+                    if (isset($this->params['original_func']) && 'copy' == $this->params['original_func']) {
                         $hiddenId = '';
                     }
 
