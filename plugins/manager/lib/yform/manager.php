@@ -265,6 +265,7 @@ class rex_yform_manager
             if (
                     ('add' == $func && $this->hasDataPageFunction('add')) ||
                     ('edit' == $func && $data_id) ||
+                    ('copy' == $func && $data_id && $this->table->isDatasetCopyAllowed()) ||
                     ('collection_edit' == $func && $this->table->isMassEditAllowed())
             ) {
                 $back = rex_view::info('<a href="index.php?' . http_build_query(array_merge($rex_link_vars)) . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
@@ -334,17 +335,22 @@ class rex_yform_manager
                 $yform->setObjectparams('fixdata', $rex_yform_set);
 
                 $yform_clone = clone $yform;
-                $yform->setHiddenField('func', $func); // damit es neu im clone gesetzt werden kann
 
                 if ('edit' == $func && $data_id) {
                     $yform->setHiddenField('data_id', $data_id);
                     $yform->setObjectparams('getdata', true);
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+                } elseif ('copy' == $func && $data_id) {
+                    $func = 'add';
+                    $yform->setObjectparams('getdata', true);
+                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 } elseif ('add' == $func) {
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 } elseif ('collection_edit' === $func) {
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 }
+
+                $yform->setHiddenField('func', $func); // damit es neu im clone gesetzt werden kann
 
                 $sql_db = rex_sql::factory();
                 $sql_db->beginTransaction();
@@ -548,6 +554,14 @@ class rex_yform_manager
                     $list->setColumnParams(rex_i18n::msg('yform_function'), array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
 
                     $colspan = 1;
+
+                    if ($this->table->isDatasetCopyAllowed()) {
+                        ++$colspan;
+
+                        $list->addColumn(rex_i18n::msg('yform_copy'), '<i class="rex-icon rex-icon-duplicate"></i> ' . rex_i18n::msg('yform_copy'));
+                        $list->setColumnLayout(rex_i18n::msg('yform_copy'), ['', '<td class="rex-table-action">###VALUE###</td>']);
+                        $list->setColumnParams(rex_i18n::msg('yform_copy'), array_merge(['data_id' => '###id###', 'func' => 'copy'], $rex_yform_list));
+                    }
 
                     if ($this->hasDataPageFunction('delete')) {
                         ++$colspan;
