@@ -238,6 +238,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform->objparams['form_elements'] = $form_elements;
 
                     $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relation->getId() . '" />';
+                    if (isset($this->params['func']) && 'copy' == $this->params['func']) {
+                        $hiddenId = '';
+                    }
 
                     $forms[] = $hiddenId . $yform->getForm();
                 }
