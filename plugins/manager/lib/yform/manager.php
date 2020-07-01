@@ -341,7 +341,7 @@ class rex_yform_manager
                     $yform->setObjectparams('getdata', true);
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                 } elseif ('copy' == $func && $data_id) {
-                    $yform->setObjectparams('original_func', $func);
+                    $yform->setObjectparams('copied_from', $data_id);
                     $yform->setObjectparams('getdata', true);
                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                     $func = 'add';
