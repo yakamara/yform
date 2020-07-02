@@ -551,12 +551,8 @@ class rex_yform_manager_dataset
         $oldData = $this->getData();
 
         if (isset($yform->objparams['copied_from'])) {
-            $copy = clone($this);
-            $copy->id = null;
-            $copy->exists = false;
-            $copy->data['id'] = null;
             /** @var rex_yform $yform */
-            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, ['table' => $this->getTable(), 'copied_from_data_id' => $this->id, 'data' => $copy]));
+            $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, ['table' => $this->getTable(), 'copied_from_data_id' => $this->id, 'data' => $this]));
         } elseif ($exists) {
             /** @var rex_yform $yform */
             $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));

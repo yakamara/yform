@@ -280,8 +280,19 @@ class rex_yform_manager
 
                     $yform = $data->getForm();
                 } else {
+                    /** @var rex_yform_manager_dataset $data */
                     $data = 'add' == $func ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
 
+                    if ('copy' == $func) {
+                        $dataOriginal = $this->table->getRawDataset($data_id);
+                        $data = $this->table->createDataset();
+                        foreach ($dataOriginal->getData() as $key => $value) {
+                            if ('id' == $key) {
+                                continue;
+                            }
+                            $data->setValue($key, $value);
+                        }
+                    }
                     $yform = $data->getForm();
                     $yform->setObjectparams('form_name', 'data_edit-'.$this->table->getTableName());
                 }
