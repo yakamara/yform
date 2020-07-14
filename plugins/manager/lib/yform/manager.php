@@ -1225,9 +1225,11 @@ class rex_yform_manager
 
                 $values = [];
                 $i = 1;
-                foreach ($definitions['values'] as $key => $_) {
-                    $key = $this->getFieldName($key, $field['type_id']);
-                    if (isset($field[$key])) {
+                foreach ($definitions['values'] as $orig_key => $_) {
+                    $key = $this->getFieldName($orig_key, $field['type_id']);
+                    if ( $definitions['values'][$orig_key]['type']=='choice') {
+                        $values[] = htmlspecialchars($definitions['values'][$orig_key]['choices'][$field[$key]]);
+                    } elseif (isset($field[$key])) {
                         $values[] = htmlspecialchars($field[$key]);
                     } elseif (isset($field['f' . $i])) {
                         $values[] = htmlspecialchars($field['f' . $i]);
