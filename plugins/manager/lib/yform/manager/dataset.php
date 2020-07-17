@@ -580,6 +580,7 @@ class rex_yform_manager_dataset
                 $this->id = $dbAction->getParam('main_id') ?: null;
                 if ($this->id) {
                     self::addInstance($this->id, $this);
+                    rex_yform_value_be_manager_relation::clearCache($this->table);
                 }
             }, rex_extension::EARLY);
         }

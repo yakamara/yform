@@ -595,6 +595,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         return self::$yform_list_values[$table][$field][$filterHash];
     }
 
+    public static function clearCache(string $table)
+    {
+        unset(self::$yform_list_values[$table]);
+    }
+
     private static function getNameConcatFields($field)
     {
         preg_match_all('/(?:^|(?<=,))\s*((\'|")(.*?)\2|[^\'"\s].*?)\s*(?:(?=,)|$)/', $field, $matches, PREG_SET_ORDER);
