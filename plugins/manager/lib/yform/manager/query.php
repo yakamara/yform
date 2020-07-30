@@ -402,6 +402,28 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
+     * Where the comma separated list column contains the given value or any of the given values.
+     *
+     * @param string           $column Column with comma separated list
+     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     *
+     * @return $this
+     */
+    public function whereListContains($column, $value)
+    {
+        if (!is_array($value)) {
+            $this->where[] = sprintf('FIND_IN_SET(%s, %s)', $this->addParam($value), $this->quoteIdentifier($column));
+
+            return $this;
+        }
+
+        $regex = '(^|,)('.implode('|', array_map('intval', $value)).')(,|$)';
+        $this->where[] = sprintf('%s REGEXP %s', $this->quoteIdentifier($column), $this->addParam($regex));
+
+        return $this;
+    }
+
+    /**
      * @param string $where
      * @param array  $params
      *
