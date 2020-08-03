@@ -1,6 +1,23 @@
 Changelog
 =========
 
+Version 3.4.1 – 03.08.2019
+--------------------------
+
+### Korrekturen, Anpassungen, Bugs
+
+* Sprachersetzungen ergänzt
+* Doku angepasst
+* Inline relations: Orginal verlor die eigenen Relation-Ids, Fehler beseitigt : Inline relation in inline relation
+* Copy Objekt erstellt
+* be_relation: Cache löschen nach Anlegen neuer Datensätze
+* query: neue Methode whereListContains()
+* manager: field identifier in manager rex_list had conflicts with Label
+* be_select_category - permission check was wrong
+* validate: compare_value type select wasnt working
+* multiple related popups wasnt working. id management.
+
+Danke an: Fernando Averanga, Jürgen Weiss, Yves Torres
 
 Version 3.4 – 12.06.2020
 --------------------------
