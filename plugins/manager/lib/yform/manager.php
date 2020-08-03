@@ -544,29 +544,33 @@ class rex_yform_manager
                     ]
                     );
                 } else {
-                    $list->addColumn(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
-                    $list->setColumnParams(rex_i18n::msg('yform_function'), array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
+
+                    // to take care, that db field are not in conflict with th names, ' ' have been added to identifier
+
+                    $list->addColumn(rex_i18n::msg('yform_function').' ', '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
+                    $list->setColumnParams(rex_i18n::msg('yform_function').' ', array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
 
                     $colspan = 1;
 
                     if ($this->hasDataPageFunction('delete')) {
                         ++$colspan;
 
-                        $list->addColumn(rex_i18n::msg('yform_delete'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete'));
-                        $list->setColumnLayout(rex_i18n::msg('yform_delete'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-                        $list->setColumnParams(rex_i18n::msg('yform_delete'), array_merge(['data_id' => '###id###', 'func' => 'delete'], $rex_yform_list));
-                        $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
+                        $list->addColumn(rex_i18n::msg('yform_delete').' ', '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete'));
+                        $list->setColumnLayout(rex_i18n::msg('yform_delete').' ', ['', '<td class="rex-table-action">###VALUE###</td>']);
+                        $list->setColumnParams(rex_i18n::msg('yform_delete').' ', array_merge(['data_id' => '###id###', 'func' => 'delete'], $rex_yform_list));
+                        $list->addLinkAttribute(rex_i18n::msg('yform_delete').' ', 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
                     }
 
                     if (!$popup && $this->table->hasHistory()) {
                         ++$colspan;
 
-                        $list->addColumn(rex_i18n::msg('yform_history'), '<i class="rex-icon fa-history"></i> ' . rex_i18n::msg('yform_history'));
-                        $list->setColumnLayout(rex_i18n::msg('yform_history'), ['', '<td class="rex-table-action">###VALUE###</td>']);
-                        $list->setColumnParams(rex_i18n::msg('yform_history'), ['func' => 'history', 'dataset_id' => '###id###', 'filter_dataset' => 1]);
+                        $list->addColumn(rex_i18n::msg('yform_history').' ', '<i class="rex-icon fa-history"></i> ' . rex_i18n::msg('yform_history'));
+                        $list->setColumnLayout(rex_i18n::msg('yform_history').' ', ['', '<td class="rex-table-action">###VALUE###</td>']);
+                        $list->setColumnParams(rex_i18n::msg('yform_history').' ', ['func' => 'history', 'dataset_id' => '###id###', 'filter_dataset' => 1]);
                     }
 
-                    $list->setColumnLayout(rex_i18n::msg('yform_function'), ['<th class="rex-table-action" colspan="'.$colspan.'">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+                    $list->setColumnLayout(rex_i18n::msg('yform_function').' ', ['<th class="rex-table-action" colspan="'.$colspan.'">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+
                 }
 
                 $list = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST', $list, ['table' => $this->table]));
