@@ -1,11 +1,14 @@
 
 function openYFormDataset(id, field, link)
 {
-    newLinkMapWindow(link+'&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field+'&rex_yform_manager_opener[multiple]=0');
+    var newWindowLink = link + '&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field+'&rex_yform_manager_opener[multiple]=0';
+    return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
 }
+
 function openYFormDatasetList(id, field, link)
 {
-    newLinkMapWindow(link+'&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field+'&rex_yform_manager_opener[multiple]=1');
+    var newWindowLink = link + '&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field+'&rex_yform_manager_opener[multiple]=1';
+    return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
 }
 
 function deleteYFormDataset(id){
