@@ -494,6 +494,7 @@ echo $post->executeForm($yform)
   - where
   - whereNested
   - whereRaw
+  - whereListContains
 
 <a name="dataset-methoden"></a>
 
