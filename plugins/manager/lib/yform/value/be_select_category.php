@@ -62,7 +62,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
                 $add($rootCat);
             }
         } else {
-            if (!$checkPerms || rex::getUser()->isAdmin() || rex::getUser()->hasPerm('csw[0]')) {
+            if (!$checkPerms || rex::getUser()->isAdmin() || rex::getUser()->getComplexPerm('structure')->hasCategoryPerm(0)) {
                 if ($rootCats = rex_category::getRootCategories($ignoreOfflines, $clang)) {
                     foreach ($rootCats as $rootCat) {
                         $add($rootCat);
@@ -71,7 +71,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
             } elseif (rex::getUser()->getComplexPerm('structure')->hasMountpoints()) {
                 $mountpoints = rex::getUser()->getComplexPerm('structure')->getMountpoints();
                 foreach ($mountpoints as $id) {
-                    $cat = rex_category::getCategoryById($id, $clang);
+                    $cat = rex_category::get($id, $clang);
                     if ($cat && !rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($cat->getParentId())) {
                         $add($cat);
                     }
