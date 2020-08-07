@@ -14,6 +14,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     {
         $choiceList = self::createChoiceList([
             'choice_attributes' => $this->getElement('choice_attributes'),
+            'choice_label' => $this->getElement('choice_label'),
             'choices' => $this->getElement('choices'),
             'expanded' => $this->getElement('expanded'),
             'group_by' => $this->getElement('group_by'),
@@ -124,6 +125,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 'choice_attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_attributes'), 'notice' => rex_i18n::msg('yform_values_choice_choice_attributes_notice')],
                 'notice' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
+                'choice_label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_label'), 'notice' => rex_i18n::msg('yform_values_choice_choice_label_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_choice_description'),
             'db_type' => ['text', 'int','tinyint(1)','varchar(191)'],
@@ -152,6 +154,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
             $choiceList = self::createChoiceList([
                 'choice_attributes' => (isset($field['choice_attributes'])) ? $field['choice_attributes'] : '',
+                'choice_label' => (isset($field['choice_label'])) ? $field['choice_label'] : '',
                 'choices' => (isset($field['choices'])) ? $field['choices'] : [],
                 'expanded' => (isset($field['expanded'])) ? $field['expanded'] : '',
                 'group_by' => (isset($field['group_by'])) ? $field['group_by'] : '',
@@ -197,6 +200,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     {
         $choiceList = self::createChoiceList([
             'choice_attributes' => (isset($params['field']['choice_attributes'])) ? $params['field']['choice_attributes'] : '',
+            'choice_label' => (isset($params['field']['choice_label'])) ? $params['field']['choice_label'] : '',
             'choices' => (isset($params['field']['choices'])) ? $params['field']['choices'] : [],
             'expanded' => (isset($params['field']['expanded'])) ? $params['field']['expanded'] : '',
             'group_by' => (isset($params['field']['group_by'])) ? $params['field']['group_by'] : '',
@@ -274,6 +278,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             'group_by' => null,
             'placeholder' => null,
             'choice_attributes' => [],
+            'choice_label' => [],
         ];
 
         if ($elements['expanded'] == '1') {
@@ -293,6 +298,9 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         }
         if ($elements['choice_attributes'] !== false) {
             $options['choice_attributes'] = $elements['choice_attributes'];
+        }
+        if ($elements['choice_label'] !== false) {
+            $options['choice_label'] = $elements['choice_label'];
         }
         $choicesElement = $elements['choices'];
 

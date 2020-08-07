@@ -48,7 +48,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
                 <?= $view->getAttributesAsString() ?>
             />
             <i class="form-helper"></i>
-            <?= rex_escape($view->getLabel()) ?>
+            <?= $view->getLabel() ?>
         </label>
     </div>
 <?php
@@ -65,7 +65,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 <?php
     } ?>
 
-<?php 
+<?php
     if (!isset($groupAttributes['id'])) {
         $groupAttributes['id'] = $this->getHTMLId();
     }

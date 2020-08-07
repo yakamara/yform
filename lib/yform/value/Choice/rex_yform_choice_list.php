@@ -71,6 +71,7 @@ class rex_yform_choice_list
 
         $preferredChoices = $this->options['preferred_choices'];
         $choiceAttributes = $this->options['choice_attributes'];
+        $choiceLabel = $this->options['choice_label'];
 
         if (!is_callable($preferredChoices) && !empty($preferredChoices)) {
             $preferredChoices = function ($choice) use ($preferredChoices) {
@@ -83,6 +84,11 @@ class rex_yform_choice_list
                 $otherGroupChoices = [];
                 $preferredGroupChoices = [];
                 foreach ($value as $nestedLabel => $nestedValue) {
+                    if (is_callable($choiceLabel)) {
+                        $nestedLabel = call_user_func($choiceLabel, $nestedValue, $nestedLabel);
+                    } else {
+                        $nestedLabel = rex_escape($nestedLabel);
+                    }
                     $view = new rex_yform_choice_view($nestedValue, $nestedLabel, $choiceAttributes, $requiredAttributes);
 
                     if ($preferredChoices && call_user_func($preferredChoices, $nestedValue, $nestedLabel)) {
@@ -100,6 +106,12 @@ class rex_yform_choice_list
                 }
 
                 continue;
+            }
+
+            if (is_callable($choiceLabel)) {
+                $label = call_user_func($choiceLabel, $value, $label);
+            } else {
+                $label = rex_escape($label);
             }
 
             $view = new rex_yform_choice_view($value, $label, $choiceAttributes, $requiredAttributes);
