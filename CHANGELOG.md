@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 3.4.1 – 03.08.2019
+Version 3.4.1 – 03.08.2020
 --------------------------
 
 ### Korrekturen, Anpassungen, Bugs
