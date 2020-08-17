@@ -9,8 +9,8 @@
 
 class rex_yform_value_time extends rex_yform_value_abstract
 {
-    const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'H:i:s';
-    const VALUE_TIME_SHOW_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
+    const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'HH:ii:ss';
+    const VALUE_TIME_SHOW_FORMATS = ['HH:ii:ss' => 'HH:ii:ss', 'HH:ii' => 'HH:ii', 'HH' => 'HH'];
 
     public function preValidateAction()
     {
@@ -77,7 +77,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             return;
         }
 
-        $format = "HH:ii:ss";
+        $format = self::time_getFormat($this->getElement('format'));
 
         if ($this->getElement('hours') != '') {
             $hours = explode(',', trim($this->getElement('hours')));
