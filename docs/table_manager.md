@@ -814,7 +814,7 @@ Option | Erläuterung
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
 \1. Feldname | Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `checkbox_agb`, `newsletter_consent`
 Vergleichswert | Fest definierter Wert, der für den Vergleich herangezogen wird, z. B. `1` (bei Checkboxen) 
-Vergleichsart |  Operator, wie `Feld 1` und `Vergleichswert` vergleichen werden sollen, z. B. `!=`, `!=`, `>`, `<` 
+Vergleichsart |  Operator, wie `Feld 1` und `Vergleichswert` vergleichen werden sollen, z. B. `==`, `!=`, `>`, `<` 
 Fehlermeldung | Hinweis, der erscheint, wenn die Bedingung des Vergleichs erfüllt ist.
 
 > Merkhilfe: Wenn die Bedingung erfüllt ist, dann wird eine Fehlermeldung ausgegeben.
