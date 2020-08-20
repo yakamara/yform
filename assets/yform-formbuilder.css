@@ -60,6 +60,10 @@ table.yform-table-help tr.yform-classes-famous .btn-default {
     border-color: #a1a9b4
 }
 
+table.yform-table-help tr.yform-classes-famous .example-code {
+    display: inline-block;
+}
+
 table.yform-table-help tr.yform-classes-deprecated {
     background: #f1a9b4;
 }
