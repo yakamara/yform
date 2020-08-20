@@ -669,7 +669,7 @@ class rex_yform
                         $definitions = $class->getDefinitions();
                         $definition_desc = $definitions['description'] ?? '';
                         if ('' != $desc) {
-                            $desc = '<code>' . $desc . '</code>';
+                            $desc = '<code class="example-code">' . nl2br($desc) . '</code>';
                         }
                         if ('' != $definition_desc) {
                             $desc = $definition_desc . '<br />' . $desc;
