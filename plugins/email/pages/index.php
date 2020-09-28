@@ -21,15 +21,15 @@ $template_id = rex_request('template_id', 'int');
 $content = '';
 $show_list = true;
 
-if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
+if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
-} elseif ($func == 'delete') {
+} elseif ('delete' == $func) {
     $query = "delete from $table where id='" . $template_id . "' ";
     $delsql = rex_sql::factory();
     $delsql->setQuery($query);
 
     $content = rex_view::success(rex_i18n::msg('yform_email_info_template_deleted'));
-} elseif ($func == 'edit' || $func == 'add') {
+} elseif ('edit' == $func || 'add' == $func) {
     echo rex_view::info(rex_i18n::rawMsg('yform_email_info_text'));
     $form_data = [];
 
@@ -53,7 +53,7 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'textarea|body_html|translate:yform_email_body_html|||{"class":"form-control codemirror","codemirror-mode":"php/htmlmixed"}';
     $form_data[] = 'be_media|attachments|translate:yform_email_attachments|0|1';
 
-    $form_data[] = 'datestamp|updatedate||mysql||0';
+    $form_data[] = 'datestamp|updatedate||||0';
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/email/index');
@@ -64,8 +64,7 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $yform_clone = clone $yform;
 
-
-    if ($func == 'edit') {
+    if ('edit' == $func) {
         $title = rex_i18n::msg('yform_email_update');
         $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
         $yform->setHiddenField('template_id', $template_id);
@@ -76,7 +75,6 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
         $yform->setObjectparams('main_where', "id=$template_id");
         $yform->setObjectparams('main_table', $table);
         $yform->setObjectparams('getdata', true);
-
     } else {
         $yform->setHiddenField('func', $func);
         $title = rex_i18n::msg('yform_email_create');
@@ -89,8 +87,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $submit_type = 1; // normal, 2=apply
     foreach ($yform->objparams['values'] as $f) {
-        if ($f->getName() == 'submit') {
-            if ($f->getValue() == 2) { // apply
+        if ('submit' == $f->getName()) {
+            if (2 == $f->getValue()) { // apply
                 $submit_type = 2;
             }
         }
@@ -99,8 +97,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $content = $yform->executeActions();
 
     if ($yform->objparams['actions_executed']) {
-        if ($func == 'edit') {
-            if ($submit_type == 2) {
+        if ('edit' == $func) {
+            if (2 == $submit_type) {
                 $fragment = new rex_fragment();
                 $fragment->setVar('class', 'edit', false);
                 $fragment->setVar('title', $title);
@@ -111,8 +109,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
             } else {
                 $content = rex_view::success(rex_i18n::msg('yform_email_info_template_updated'));
             }
-        } elseif ($func == 'add') {
-            if ($submit_type == 2) {
+        } elseif ('add' == $func) {
+            if (2 == $submit_type) {
                 $title = rex_i18n::msg('yform_email_update');
                 $template_id = $yform->objparams['main_id'];
                 $func = 'edit';

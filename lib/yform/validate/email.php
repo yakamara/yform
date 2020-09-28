@@ -17,7 +17,7 @@ class rex_yform_validate_email extends rex_yform_validate_abstract
             return;
         }
 
-        if ($Object->getValue() == '') {
+        if ('' == $Object->getValue()) {
             return;
         }
 

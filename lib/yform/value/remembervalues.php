@@ -11,10 +11,10 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
 {
     public function postValidateAction()
     {
-        if ($this->params['send'] == 0) {
+        if (0 == $this->params['send']) {
             $fields = explode(',', $this->getElement(3));
             $cookiename = $this->getName();
-            if ($cookiename == '') {
+            if ('' == $cookiename) {
                 $cookiename = 'dummyremembercookie';
             }
             if (isset($_COOKIE[$cookiename])) {
@@ -42,9 +42,9 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
 
     public function postFormAction()
     {
-        if ($this->params['send'] == 1) {
+        if (1 == $this->params['send']) {
             $c = [];
-            if ($this->getValue() == 1) {
+            if (1 == $this->getValue()) {
                 $fields = explode(',', $this->getElement(3));
                 foreach ($this->obj as $o) {
                     if (in_array($o->getName(), $fields)) {
@@ -54,7 +54,7 @@ class rex_yform_value_remembervalues extends rex_yform_value_abstract
             }
             $c = base64_encode(serialize($c));
             $cookiename = $this->getName();
-            if ($cookiename == '') {
+            if ('' == $cookiename) {
                 $cookiename = 'dummyremembercookie';
             }
             $lastfor = (int) $this->getElement(5);

@@ -30,16 +30,16 @@ if (!in_array($divider, [';', ',', 'tab'])) {
 // 1 = ignore missing fields
 // 2 = addfield if missing
 // 3 = error if fields are missing
-if ($missing_columns != 2 && $missing_columns != 3) {
+if (2 != $missing_columns && 3 != $missing_columns) {
     $missing_columns = 1;
 }
-if ($debug != 1) {
+if (1 != $debug) {
     $debug = 0;
 }
 
-if (rex_request('send', 'int', 0) == 1) {
+if (1 == rex_request('send', 'int', 0)) {
     // Daten wurden übertragen
-    if (!isset($_FILES['file_new']) || $_FILES['file_new']['tmp_name'] == '') {
+    if (!isset($_FILES['file_new']) || '' == $_FILES['file_new']['tmp_name']) {
         echo rex_view::error(rex_i18n::msg('yform_manager_import_error_missingfile'));
     } else {
         $func = '';
@@ -49,7 +49,7 @@ if (rex_request('send', 'int', 0) == 1) {
         $filename = $_FILES['file_new']['tmp_name'];
 
         $div = $divider;
-        if ($div == 'tab') {
+        if ('tab' == $div) {
             $div = "\t";
         }
 
@@ -88,8 +88,8 @@ if (rex_request('send', 'int', 0) == 1) {
                 }
 
                 $idColumn = null;
-                while (($line_array = fgetcsv($fp, 30384, $div)) !== false) {
-                    if (count($fieldarray) == 0) {
+                while (false !== ($line_array = fgetcsv($fp, 30384, $div))) {
+                    if (0 == count($fieldarray)) {
                         $fieldarray = $line_array;
                         $fieldarray = array_map('rex_string::normalize', $fieldarray);
 
@@ -111,7 +111,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         foreach ($fieldarray as $k => $v) {
                             $v = rex_string::normalize($v);
                             $fieldarray[$k] = $v;
-                            if (!array_key_exists($fieldarray[$k], $fields) && $fieldarray[$k] != 'id') {
+                            if (!array_key_exists($fieldarray[$k], $fields) && 'id' != $fieldarray[$k]) {
                                 $mc[$fieldarray[$k]] = $fieldarray[$k];
                             }
                             if ('id' === $fieldarray[$k]) {
@@ -120,13 +120,13 @@ if (rex_request('send', 'int', 0) == 1) {
                         }
 
                         if (count($mc) > 0) {
-                            if ($missing_columns == 3) {
+                            if (3 == $missing_columns) {
                                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_missingfields', implode(', ', $mc)));
                                 $show_importform = true;
                                 $func = 'import';
                                 break;
                             }
-                            if ($missing_columns == 2) {
+                            if (2 == $missing_columns) {
                                 $error = false;
                                 $i = rex_sql::factory();
                                 foreach ($mc as $mcc) {
@@ -201,7 +201,7 @@ if (rex_request('send', 'int', 0) == 1) {
                         if ($messages = $dataset->getMessages()) {
                             $messages = array_unique($messages);
                             foreach ($messages as $key => $msg) {
-                                if ($msg == '') {
+                                if ('' == $msg) {
                                     $msg = rex_i18n::msg('yform_manager_import_error_messagemissing');
                                 } else {
                                     $msg = rex_i18n::translate($msg);
@@ -279,17 +279,17 @@ if ($show_importform) {
     $formElements = [];
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column_ignore') . '</label>';
-    $n['field'] = '<input type="radio" name="missing_columns" value="1"' . (($missing_columns == '1') ? 'checked' : '') . ' />';
+    $n['field'] = '<input type="radio" name="missing_columns" value="1"' . (('1' == $missing_columns) ? 'checked' : '') . ' />';
     $formElements[] = $n;
 
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column_addtext') . '</label>';
-    $n['field'] = '<input type="radio" name="missing_columns" value="2"' . (($missing_columns == '2') ? 'checked' : '') . ' />';
+    $n['field'] = '<input type="radio" name="missing_columns" value="2"' . (('2' == $missing_columns) ? 'checked' : '') . ' />';
     $formElements[] = $n;
 
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_if_no_column_break') . '</label>';
-    $n['field'] = '<input type="radio" name="missing_columns" value="3"' . (($missing_columns == '3') ? 'checked' : '') . ' />';
+    $n['field'] = '<input type="radio" name="missing_columns" value="3"' . (('3' == $missing_columns) ? 'checked' : '') . ' />';
     $formElements[] = $n;
 
     $fragment = new rex_fragment();

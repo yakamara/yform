@@ -16,7 +16,7 @@ class rex_yform_value_recaptcha_v3 extends rex_yform_value_abstract
         $errorMessage = $this->getElement(4);
         $loadScript = $this->getElement(5);
 
-        if ($this->params['send'] == 1) {
+        if (1 == $this->params['send']) {
             $ObjectId = $this->getId();
             try {
                 $ch = curl_init();
@@ -25,15 +25,15 @@ class rex_yform_value_recaptcha_v3 extends rex_yform_value_abstract
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($ch, CURLOPT_POST, 1);
                 curl_setopt($ch, CURLOPT_POSTFIELDS, [
-                    'secret'    => $privateKey,
-                    'response'  => rex_post('g-recaptcha-response', 'string', ''),
-                    'remoteip'  => $_SERVER['REMOTE_ADDR']
+                    'secret' => $privateKey,
+                    'response' => rex_post('g-recaptcha-response', 'string', ''),
+                    'remoteip' => $_SERVER['REMOTE_ADDR'],
                 ]);
 
                 $result = json_decode(curl_exec($ch));
 
                 $success = false;
-                if ($result->success === true && $result->score > 0.5) {
+                if (true === $result->success && $result->score > 0.5) {
                     $success = true;
                 }
 

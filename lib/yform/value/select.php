@@ -11,7 +11,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $multiple = $this->getElement('multiple') == 1;
+        $multiple = 1 == $this->getElement('multiple');
         $options = $this->getArrayFromString($this->getElement('options'));
 
         if ($multiple) {
@@ -43,7 +43,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
             $value = (string) $this->getValue();
 
             if (!isset($options[$value])) {
-                if ($default !== null) {
+                if (null !== $default) {
                     $this->setValue([$default]);
                 } else {
                     reset($options);
@@ -155,7 +155,7 @@ class rex_yform_value_select extends rex_yform_value_abstract
         $self = new self();
         $values = $self->getArrayFromString($params['value']);
 
-        $multiple = $params['field']->getElement('multiple') == 1;
+        $multiple = 1 == $params['field']->getElement('multiple');
 
         $where = [];
         foreach ($values as $value) {

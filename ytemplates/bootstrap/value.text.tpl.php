@@ -1,13 +1,13 @@
 <?php
 
-$type = isset($type) ? $type : 'text';
-$class = $type == 'text' ? '' : 'form-' . $type . ' ';
+$type = $type ?? 'text';
+$class = 'text' == $type ? '' : 'form-' . $type . ' ';
 if (!isset($value)) {
     $value = $this->getValue();
 }
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {

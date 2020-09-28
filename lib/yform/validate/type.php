@@ -17,7 +17,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             return;
         }
 
-        if ($this->getElement('not_required') == 1 && $Object->getValue() == '') {
+        if (1 == $this->getElement('not_required') && '' == $Object->getValue()) {
             return;
         }
 
@@ -27,13 +27,13 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             case 'int':
             case 'integer':
                 $xsRegEx_int = '/^[0-9]+$/i';
-                if (preg_match($xsRegEx_int, $Object->getValue()) == 0) {
+                if (0 == preg_match($xsRegEx_int, $Object->getValue())) {
                     $w = true;
                 }
                 break;
             case 'float':
                 $xsRegEx_float = "/^([0-9]+|([0-9]+\.[0-9]+))$/i";
-                if (preg_match($xsRegEx_float, $Object->getValue()) == 0) {
+                if (0 == preg_match($xsRegEx_float, $Object->getValue())) {
                     $w = true;
                 }
                 break;
@@ -51,14 +51,14 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 break;
             case 'url':
                 $xsRegEx_url = '/^(?:http[s]?:\/\/)[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:[a-zA-Z0-9][a-zA-Z0-9._-]*\.)*[a-zA-Z]{2,20}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/';
-                if (preg_match($xsRegEx_url, $Object->getValue()) == 0) {
+                if (0 == preg_match($xsRegEx_url, $Object->getValue())) {
                     $w = true;
                 }
                 break;
             case 'time':
                 $w = true;
                 $ex = explode(':', $Object->getValue());
-                if (count($ex) == 3 && $ex[0] > -839 && $ex[0] < 839 && $ex[1] >= 0 && $ex[1] < 60 && $ex[2] >= 0 && $ex[2] < 60) {
+                if (3 == count($ex) && $ex[0] > -839 && $ex[0] < 839 && $ex[1] >= 0 && $ex[1] < 60 && $ex[2] >= 0 && $ex[2] < 60) {
                     $w = false;
                 }
                 break;
@@ -80,7 +80,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 break;
             case 'hex':
                 $xsRegEx_hex = '/^[0-9a-fA-F]+$/i';
-                if (preg_match($xsRegEx_hex, $Object->getValue()) == 0) {
+                if (0 == preg_match($xsRegEx_hex, $Object->getValue())) {
                     $w = true;
                 }
                 break;
@@ -88,21 +88,21 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 $iban = strtolower($Object->getValue());
 
                 $countries = [
-                    'al'=>28,'ad'=>24,'at'=>20,'az'=>28,'bh'=>22,'be'=>16,'ba'=>20,'br'=>29,'bg'=>22,'cr'=>21,'hr'=>21,'cy'=>28,'cz'=>24,
-                    'dk'=>18,'do'=>28,'ee'=>20,'fo'=>18,'fi'=>18,'fr'=>27,'ge'=>22,'de'=>22,'gi'=>23,'gr'=>27,'gl'=>18,'gt'=>28,'hu'=>28,
-                    'is'=>26,'ie'=>22,'il'=>23,'it'=>27,'jo'=>30,'kz'=>20,'kw'=>30,'lv'=>21,'lb'=>28,'li'=>21,'lt'=>20,'lu'=>20,'mk'=>19,
-                    'mt'=>31,'mr'=>27,'mu'=>30,'mc'=>27,'md'=>24,'me'=>22,'nl'=>18,'no'=>15,'pk'=>24,'ps'=>29,'pl'=>28,'pt'=>25,'qa'=>29,
-                    'ro'=>24,'sm'=>27,'sa'=>24,'rs'=>22,'sk'=>24,'si'=>19,'es'=>24,'se'=>24,'ch'=>21,'tn'=>24,'tr'=>26,'ae'=>23,'gb'=>22,'vg'=>24
+                    'al' => 28, 'ad' => 24, 'at' => 20, 'az' => 28, 'bh' => 22, 'be' => 16, 'ba' => 20, 'br' => 29, 'bg' => 22, 'cr' => 21, 'hr' => 21, 'cy' => 28, 'cz' => 24,
+                    'dk' => 18, 'do' => 28, 'ee' => 20, 'fo' => 18, 'fi' => 18, 'fr' => 27, 'ge' => 22, 'de' => 22, 'gi' => 23, 'gr' => 27, 'gl' => 18, 'gt' => 28, 'hu' => 28,
+                    'is' => 26, 'ie' => 22, 'il' => 23, 'it' => 27, 'jo' => 30, 'kz' => 20, 'kw' => 30, 'lv' => 21, 'lb' => 28, 'li' => 21, 'lt' => 20, 'lu' => 20, 'mk' => 19,
+                    'mt' => 31, 'mr' => 27, 'mu' => 30, 'mc' => 27, 'md' => 24, 'me' => 22, 'nl' => 18, 'no' => 15, 'pk' => 24, 'ps' => 29, 'pl' => 28, 'pt' => 25, 'qa' => 29,
+                    'ro' => 24, 'sm' => 27, 'sa' => 24, 'rs' => 22, 'sk' => 24, 'si' => 19, 'es' => 24, 'se' => 24, 'ch' => 21, 'tn' => 24, 'tr' => 26, 'ae' => 23, 'gb' => 22, 'vg' => 24,
                 ];
                 $chars = [
-                    'a'=>10,'b'=>11,'c'=>12,'d'=>13,'e'=>14,'f'=>15,'g'=>16,'h'=>17,'i'=>18,'j'=>19,'k'=>20,'l'=>21,'m'=>22,
-                    'n'=>23,'o'=>24,'p'=>25,'q'=>26,'r'=>27,'s'=>28,'t'=>29,'u'=>30,'v'=>31,'w'=>32,'x'=>33,'y'=>34,'z'=>35
+                    'a' => 10, 'b' => 11, 'c' => 12, 'd' => 13, 'e' => 14, 'f' => 15, 'g' => 16, 'h' => 17, 'i' => 18, 'j' => 19, 'k' => 20, 'l' => 21, 'm' => 22,
+                    'n' => 23, 'o' => 24, 'p' => 25, 'q' => 26, 'r' => 27, 's' => 28, 't' => 29, 'u' => 30, 'v' => 31, 'w' => 32, 'x' => 33, 'y' => 34, 'z' => 35,
                 ];
 
-                if (!isset($countries[substr($iban,0,2)]) || strlen($iban) != $countries[substr($iban,0,2)]) {
+                if (!isset($countries[substr($iban, 0, 2)]) || strlen($iban) != $countries[substr($iban, 0, 2)]) {
                     $w = true;
                 } else {
-                    $movedChar = substr($iban, 4).substr($iban,0,4);
+                    $movedChar = substr($iban, 4).substr($iban, 0, 4);
                     $movedCharArray = str_split($movedChar);
                     $newString = '';
 
@@ -114,8 +114,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     }
 
                     if (function_exists('bcmod')) {
-                        $w = !(bcmod($newString, '97') == 1);
-
+                        $w = !(1 == bcmod($newString, '97'));
                     } else {
                         $x = $newString;
                         $y = '97';
@@ -123,20 +122,19 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         $mod = '';
 
                         do {
-                            $a = (int)$mod.substr($x, 0, $take);
+                            $a = (int) $mod.substr($x, 0, $take);
                             $x = substr($x, $take);
                             $mod = $a % $y;
-                        }
-                        while (strlen($x));
+                        } while (strlen($x));
 
-                        $w = !((int)$mod == 1);
+                        $w = !(1 == (int) $mod);
                     }
                 }
 
                 break;
             case 'json':
                 json_decode($Object->getValue());
-                if (json_last_error() != JSON_ERROR_NONE) {
+                if (JSON_ERROR_NONE != json_last_error()) {
                     $w = true;
                 }
                 break;

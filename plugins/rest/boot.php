@@ -9,7 +9,7 @@
  * @var rex_plugin $this
  */
 
-rex_extension::register('PACKAGES_INCLUDED', function () {
+rex_extension::register('PACKAGES_INCLUDED', static function () {
     if (!\rex::isBackend()) {
         \rex_yform_rest::handleRoutes();
     }

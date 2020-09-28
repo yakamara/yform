@@ -2,7 +2,7 @@
 
 $class = 'form-captcha';
 $class .= $this->getElement('required') ? 'form-is-required ' : '';
-$notice = $this->getElement('notice') != '' ? '<p class="help-block">' . $this->getElement('notice') . '</p>' : '';
+$notice = '' != $this->getElement('notice') ? '<p class="help-block">' . $this->getElement('notice') . '</p>' : '';
 
 $class_group = trim('form-group ' . $class . $this->getWarningClass());
 $class_control = trim('form-control');

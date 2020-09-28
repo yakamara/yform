@@ -3,14 +3,14 @@
         <?php echo $this->getLabel() ?>
     </label>
 
-    <input class="upload <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" accept="<?php echo $this->getElement("types") ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" type="file" />
+    <input class="upload <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" accept="<?php echo $this->getElement('types') ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" type="file" />
 </p>
 <?php
 
 $value = $this->getValue();
-if ($value != '') {
+if ('' != $value) {
     $values = explode('_', $value, 2);
-    if (count($values) == 2) {
+    if (2 == count($values)) {
         echo '<input type="hidden" name="'.$this->getFieldName().'" value="'.$values[0].'" />';
 
         $a_a = '';

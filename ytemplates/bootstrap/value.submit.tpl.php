@@ -1,7 +1,7 @@
 <?php
 
 $css_classes = [];
-if ($this->getElement('css_classes') != '') {
+if ('' != $this->getElement('css_classes')) {
     $css_classes = explode(',', $this->getElement('css_classes'));
 }
 
@@ -17,11 +17,11 @@ foreach ($labels as $index => $label) {
     $classes[] = 'btn';
     // $classes[] = 'btn-primary';
 
-    if (isset($css_classes[$index]) && trim($css_classes[$index]) != '') {
+    if (isset($css_classes[$index]) && '' != trim($css_classes[$index])) {
         $classes[] = trim($css_classes[$index]);
     }
 
-    if ($this->getWarningClass() != '') {
+    if ('' != $this->getWarningClass()) {
         $classes[] = $this->getWarningClass();
     }
 

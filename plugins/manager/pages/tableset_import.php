@@ -43,7 +43,7 @@ if ($yform->objparams['actions_executed']) {
     }
 }
 
-if ($form != '') {
+if ('' != $form) {
     $fragment = new rex_fragment();
     $fragment->setVar('class', 'edit', false);
     $fragment->setVar('title', rex_i18n::msg('yform_manager_tableset_import'));

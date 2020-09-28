@@ -1,7 +1,7 @@
 <?php
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -19,7 +19,7 @@ $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarn
 
 <div class="<?= $class_group ?>">
     <label for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
-    <input type="file" id="<?= $this->getFieldId() ?>" name="file_<?= md5($this->getFieldName('file')) ?>" accept="<?= $this->getElement("types") ?>" />
+    <input type="file" id="<?= $this->getFieldId() ?>" name="file_<?= md5($this->getFieldName('file')) ?>" accept="<?= $this->getElement('types') ?>" />
     <?php if ($this->getValue()): ?>
         <div class="help-block">
             <dl class="<?= $this->getHTMLClass() ?>-info">

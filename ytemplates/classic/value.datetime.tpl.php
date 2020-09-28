@@ -9,7 +9,7 @@
     $replace = [];
 
     $pos = strpos($format, 'YYYY');
-    if ($pos !== false) {
+    if (false !== $pos) {
         $replace_i = '<select id="'.$this->getFieldId('year').'" name="'.$this->getFieldName($this->getName()).'[year]" class="'.$this->getWarningClass().'" size="1">';
         $replace_i .= '<option value="00">--</option>';
         for ($i = $yearStart; $i <= $yearEnd; ++$i):
@@ -22,7 +22,7 @@
     }
 
     $pos = strpos($format, 'MM');
-    if ($pos !== false) {
+    if (false !== $pos) {
         $replace_i = '<select id="'.$this->getFieldId('month').'" name="'.$this->getFieldName($this->getName()).'[month]" class="'.$this->getWarningClass().'" size="1">';
         $replace_i .= '<option value="00">--</option>';
         for ($i = 1; $i < 13; ++$i):
@@ -35,7 +35,7 @@
     }
 
     $pos = strpos($format, 'DD');
-    if ($pos !== false) {
+    if (false !== $pos) {
         $replace_i = '<select id="'.$this->getFieldId('day').'" name="'.$this->getFieldName($this->getName()).'[day]" class="'.$this->getWarningClass().'" size="1">';
         $replace_i .= '<option value="00">--</option>';
         for ($i = 1; $i < 32; ++$i):
@@ -48,7 +48,7 @@
     }
 
     $pos = strpos($format, 'HH');
-    if ($pos !== false) {
+    if (false !== $pos) {
         $replace_i = '<select id="'.$this->getFieldId('hour').'" name="'.$this->getFieldName($this->getName()).'[hour]" class="'.$this->getWarningClass().'" size="1">';
         foreach ($hours as $i):
             $selected = (@$hour == $i) ? ' selected="selected"' : '';
@@ -60,7 +60,7 @@
     }
 
     $pos = strpos($format, 'ii');
-    if ($pos !== false) {
+    if (false !== $pos) {
         $replace_i = '<select id="'.$this->getFieldId('minute').'" name="'.$this->getFieldName($this->getName()).'[minute]" class="'.$this->getWarningClass().'" size="1">';
         foreach ($minutes as $i):
             $selected = (@$minute == $i) ? ' selected="selected"' : '';
@@ -72,7 +72,7 @@
     }
 
     $pos = strpos($format, 'ss');
-    if ($pos !== false) {
+    if (false !== $pos) {
         $replace_i = '<select id="'.$this->getFieldId('second').'" name="'.$this->getFieldName($this->getName()).'[second]" class="'.$this->getWarningClass().'" size="1">';
         for ($i = 0; $i < 60; ++$i):
             $selected = (@$second == $i) ? ' selected="selected"' : '';

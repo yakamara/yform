@@ -2,7 +2,7 @@
 
 class rex_yform_validate_password_policy extends rex_yform_validate_abstract
 {
-    const PASSWORD_POLICY_DEFAULT_RULES = '{"length":{"min":8},"letter":{"min":1},"lowercase":{"min":1},"uppercase":{"min":1},"digit":{"min":1},"symbol":{"min":1}}';
+    public const PASSWORD_POLICY_DEFAULT_RULES = '{"length":{"min":8},"letter":{"min":1},"lowercase":{"min":1},"uppercase":{"min":1},"digit":{"min":1},"symbol":{"min":1}}';
 
     public function enterObject()
     {
@@ -13,15 +13,15 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
         }
 
         $rules = json_decode($this->getElement('rules'), true);
-        if (count($rules) == 0) {
+        if (0 == count($rules)) {
             $rules = json_decode(self::PASSWORD_POLICY_DEFAULT_RULES, true);
         }
 
         $PasswordPolicy = new rex_password_policy($rules);
 
-        if ($Object->getValue() != '' && true !== $msg = $PasswordPolicy->check($Object->getValue())) {
+        if ('' != $Object->getValue() && true !== $msg = $PasswordPolicy->check($Object->getValue())) {
             $this->params['warning'][$Object->getId()] = $this->params['error_class'];
-            $this->params['warning_messages'][$Object->getId()] = trim($this->getElement('message')) == '' ? $msg : $this->getElement('message');
+            $this->params['warning_messages'][$Object->getId()] = '' == trim($this->getElement('message')) ? $msg : $this->getElement('message');
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
-$type = isset($type) ? $type : 'text';
-$class = $type == 'text' ? '' : $type . ' ';
+$type = $type ?? 'text';
+$class = 'text' == $type ? '' : $type . ' ';
 $value = $this->getValue();
 
 $attributes = [

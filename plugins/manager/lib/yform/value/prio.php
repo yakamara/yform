@@ -57,9 +57,9 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             }
         }
 
-        if (!$this->params['send'] && $this->getValue() == '') {
-            if ($this->getElement('default') == '') {
-                $this->setValue(isset($prio) ? $prio : '');
+        if (!$this->params['send'] && '' == $this->getValue()) {
+            if ('' == $this->getElement('default')) {
+                $this->setValue($prio ?? '');
             } else {
                 $this->setValue($this->getElement('default'));
             }

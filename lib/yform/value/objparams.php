@@ -15,7 +15,7 @@ class rex_yform_value_objparams extends rex_yform_value_abstract
         $value = trim($this->getElement(2));
         $when = trim($this->getElement(3));
 
-        if ($when != 'runtime') { // -> init
+        if ('runtime' != $when) { // -> init
             $this->setObjectParamsValue($key, $value);
         }
     }
@@ -26,7 +26,7 @@ class rex_yform_value_objparams extends rex_yform_value_abstract
         $value = trim($this->getElement(2));
         $when = trim($this->getElement(3));
 
-        if ($when == 'runtime') {
+        if ('runtime' == $when) {
             $this->setObjectParamsValue($key, $value);
         }
     }
@@ -52,7 +52,7 @@ class rex_yform_value_objparams extends rex_yform_value_abstract
         }
 
         $vars = explode('.', $key);
-        if (count($vars) == 3) {
+        if (3 == count($vars)) {
             $ObjectType = trim($vars[0]);
             $ObjectName = trim($vars[1]);
             $ElementKey = trim($vars[2]);

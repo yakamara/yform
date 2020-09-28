@@ -17,7 +17,7 @@ class rex_yform_rest_auth_token
 
         $TokenAuths = \rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token').' where status=1 and token=? and FIND_IN_SET(?, paths)', [$myToken, $route->getPath()]);
 
-        if (count($TokenAuths) != 1) {
+        if (1 != count($TokenAuths)) {
             return false;
         }
 
@@ -57,7 +57,7 @@ class rex_yform_rest_auth_token
 
     public static function get($id)
     {
-        if (count(self::$tokenList) == 0) {
+        if (0 == count(self::$tokenList)) {
             self::$tokenList = rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token'));
         }
 

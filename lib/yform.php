@@ -398,44 +398,49 @@ class rex_yform
         if (1 == $this->objparams['send'] && !$hasWarnings && !$hasWarningMessages) {
             $this->objparams['form_show'] = false;
 
-            // ----- pre Actions
-            foreach ($this->objparams['fields'] as $t => $types) {
-                foreach ($types as $Objects) {
-                    if (!is_array($Objects)) {
-                        $Objects = [$Objects];
-                    }
-                    foreach ($Objects as $Object) {
-                        $Object->preAction();
+            try {
+                // ----- pre Actions
+                foreach ($this->objparams['fields'] as $t => $types) {
+                    foreach ($types as $Objects) {
+                        if (!is_array($Objects)) {
+                            $Objects = [$Objects];
+                        }
+                        foreach ($Objects as $Object) {
+                            $Object->preAction();
+                        }
                     }
                 }
-            }
-            $this->objparams['preactions_executed'] = true;
+                $this->objparams['preactions_executed'] = true;
 
-            // ----- normal Actions
-            foreach ($this->objparams['fields'] as $t => $types) {
-                foreach ($types as $Objects) {
-                    if (!is_array($Objects)) {
-                        $Objects = [$Objects];
-                    }
-                    foreach ($Objects as $Object) {
-                        $Object->executeAction();
+                // ----- normal Actions
+                foreach ($this->objparams['fields'] as $t => $types) {
+                    foreach ($types as $Objects) {
+                        if (!is_array($Objects)) {
+                            $Objects = [$Objects];
+                        }
+                        foreach ($Objects as $Object) {
+                            $Object->executeAction();
+                        }
                     }
                 }
-            }
-            $this->objparams['actions_executed'] = true;
+                $this->objparams['actions_executed'] = true;
 
-            // ----- post Actions
-            foreach ($this->objparams['fields'] as $types) {
-                foreach ($types as $Objects) {
-                    if (!is_array($Objects)) {
-                        $Objects = [$Objects];
-                    }
-                    foreach ($Objects as $Object) {
-                        $Object->postAction();
+                // ----- post Actions
+                foreach ($this->objparams['fields'] as $types) {
+                    foreach ($types as $Objects) {
+                        if (!is_array($Objects)) {
+                            $Objects = [$Objects];
+                        }
+                        foreach ($Objects as $Object) {
+                            $Object->postAction();
+                        }
                     }
                 }
+                $this->objparams['postactions_executed'] = true;
+            } catch (Exception $e) {
+                $this->objparams['form_show'] = true;
+                $this->objparams['form_exit'] = false;
             }
-            $this->objparams['postactions_executed'] = true;
         }
 
         if ($this->objparams['form_exit']) {

@@ -54,7 +54,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 <?php
 } ?>
 
-<?php $choiceGroupOutput = function (rex_yform_choice_group_view $view) use ($choiceOutput) {
+<?php $choiceGroupOutput = static function (rex_yform_choice_group_view $view) use ($choiceOutput) {
         ?>
     <div class="form-check-group">
         <label><?= rex_escape($view->getLabel()) ?></label>
@@ -65,7 +65,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 <?php
     } ?>
 
-<?php 
+<?php
     if (!isset($groupAttributes['id'])) {
         $groupAttributes['id'] = $this->getHTMLId();
     }

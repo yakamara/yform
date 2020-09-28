@@ -7,10 +7,10 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
         $values = explode(',', $this->getValue());
         $default = explode(',', $this->getElement('default'));
 
-        if (count($values) == 2) {
+        if (2 == count($values)) {
             $valueLat = $this->google_geocode_floattostr($values[0]);
             $valueLng = $this->google_geocode_floattostr($values[1]);
-        } elseif (count($default) == 2) {
+        } elseif (2 == count($default)) {
             $valueLat = $this->google_geocode_floattostr($default[0]);
             $valueLng = $this->google_geocode_floattostr($default[1]);
         } else {
@@ -23,16 +23,16 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
         $this->setValue($value);
 
         $mapWidth = '100%';
-        if ($this->getElement('width') != '') {
+        if ('' != $this->getElement('width')) {
             $mapWidth = $this->getElement('width');
         }
         $mapHeight = 300;
-        if ($this->getElement('height') != '') {
+        if ('' != $this->getElement('height')) {
             $mapHeight = $this->getElement('height');
         }
 
         $mapZoom = 8;
-        if ($this->getElement('zoom') != '') {
+        if ('' != $this->getElement('zoom')) {
             $mapZoom = $this->getElement('zoom');
         }
 
@@ -86,6 +86,6 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
     public function google_geocode_floattostr($val)
     {
         preg_match("#^([\+\-]|)([0-9]*)(\.([0-9]*?)|)(0*)$#", trim($val), $o);
-        return @$o[1] . sprintf('%d', @$o[2]) . (@$o[3] != '.' ? @$o[3] : '');
+        return @$o[1] . sprintf('%d', @$o[2]) . ('.' != @$o[3] ? @$o[3] : '');
     }
 }

@@ -2,10 +2,10 @@
 
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
-$id = sprintf('%u', crc32($this->params['form_name']. rand(0, 100). $this->getId()));
+$id = sprintf('%u', crc32($this->params['form_name']. random_int(0, 100). $this->getId()));
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -29,7 +29,7 @@ if (count($notice) > 0) {
 
         $select = new rex_select();
 
-        if ($this->relation['relation_type'] == 1) {
+        if (1 == $this->relation['relation_type']) {
             $select->setName($this->getFieldName() . '[]');
             $select->setMultiple();
             $select->setSize($this->relation['size']);
@@ -54,7 +54,7 @@ if (count($notice) > 0) {
         <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabelStyle($this->relation['label']) ?></label>
         <?php
         $e = [];
-        if ($this->relation['relation_type'] == 4) {
+        if (4 == $this->relation['relation_type']) {
             $e['field'] = '<input type="hidden" name="' . $this->getFieldName() . '" id="YFORM_DATASET_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
             if ($this->params['main_id'] > 0) {
                 $e['functionButtons'] = '<a class="btn btn-popup" href="javascript:void(0);" onclick="newPoolWindow(\'' . $link . '\');return false;">' . rex_i18n::msg('yform_relation_edit_relations') . '</a>';
@@ -65,7 +65,7 @@ if (count($notice) > 0) {
             $fragment = new rex_fragment();
             $fragment->setVar('elements', [$e], false);
             echo $fragment->parse('core/form/widget.php');
-        } elseif ($this->relation['relation_type'] == 2) {
+        } elseif (2 == $this->relation['relation_type']) {
             $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  htmlspecialchars($valueName) . '" id="YFORM_DATASET_SELECT_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $this->getFieldName() . '" id="YFORM_DATASET_FIELD_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
             $e['functionButtons'] = '
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="openYFormDataset(' . $id . ', \'' . $this->relation['source_table'] . '.' . $this->getName() . '\', \'' . $link . '\',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>

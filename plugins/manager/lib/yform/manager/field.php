@@ -11,7 +11,7 @@ class rex_yform_manager_field implements ArrayAccess
     {
         $class = 'rex_yform_' . $values['type_id'] . '_' . $values['type_name'];
 
-        if (count($values) == 0 || !class_exists($class)) {
+        if (0 == count($values) || !class_exists($class)) {
             throw new Exception(rex_i18n::msg('yform_field_not_found'));
         }
 
@@ -73,7 +73,7 @@ class rex_yform_manager_field implements ArrayAccess
 
     public function getDatabaseFieldType()
     {
-        if (!isset($this->values['db_type']) || $this->values['db_type'] == '') {
+        if (!isset($this->values['db_type']) || '' == $this->values['db_type']) {
             return $this->object->getDatabaseFieldDefaultType();
         }
         return $this->values['db_type'];

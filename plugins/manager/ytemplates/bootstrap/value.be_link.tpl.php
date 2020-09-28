@@ -5,7 +5,7 @@ $categoryId = 0;
 $name = $this->getFieldName();
 $value = htmlspecialchars($this->getValue());
 
-if ($this->getElement('multiple') == 1) {
+if (1 == $this->getElement('multiple')) {
     $widget = rex_var_linklist::getWidget($buttonId, $name, $value, []);
 } else {
     $widget = rex_var_link::getWidget($buttonId, $name, $value, []);
@@ -14,7 +14,7 @@ if ($this->getElement('multiple') == 1) {
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {

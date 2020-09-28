@@ -48,8 +48,8 @@ class rex_yform_choice_list
     public function createListFromSqlArray($choices)
     {
         foreach ($choices as $choice) {
-            $value = isset($choice['value']) ? $choice['value'] : $choice['id'];
-            $label = isset($choice['label']) ? $choice['label'] : $choice['name'];
+            $value = $choice['value'] ?? $choice['id'];
+            $label = $choice['label'] ?? $choice['name'];
             $label = rex_i18n::translate((string) $label, false);
 
             // Im Template werden im `select` optgroup erstellt
@@ -73,7 +73,7 @@ class rex_yform_choice_list
         $choiceAttributes = $this->options['choice_attributes'];
 
         if (!is_callable($preferredChoices) && !empty($preferredChoices)) {
-            $preferredChoices = function ($choice) use ($preferredChoices) {
+            $preferredChoices = static function ($choice) use ($preferredChoices) {
                 return in_array($choice, $preferredChoices, true);
             };
         }

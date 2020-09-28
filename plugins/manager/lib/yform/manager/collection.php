@@ -48,17 +48,10 @@ class rex_yform_manager_collection extends \SplFixedArray
     {
         foreach ($data as $dataset) {
             if (!$dataset instanceof rex_yform_manager_dataset) {
-                throw new InvalidArgumentException(sprintf(
-                    '$data has to be an array of rex_yform_manager_dataset objects, found "%s" array element.',
-                    is_object($dataset) ? get_class($dataset) : gettype($dataset)
-                ));
+                throw new InvalidArgumentException(sprintf('$data has to be an array of rex_yform_manager_dataset objects, found "%s" array element.', is_object($dataset) ? get_class($dataset) : gettype($dataset)));
             }
             if ($dataset->getTableName() !== $this->table) {
-                throw new InvalidArgumentException(sprintf(
-                    '$data has to be an array of rex_yform_manager_dataset objects of table "%s", found dataset of table "%s".',
-                    $this->table,
-                    $dataset->getTableName()
-                ));
+                throw new InvalidArgumentException(sprintf('$data has to be an array of rex_yform_manager_dataset objects of table "%s", found dataset of table "%s".', $this->table, $dataset->getTableName()));
             }
         }
 
@@ -197,7 +190,7 @@ class rex_yform_manager_collection extends \SplFixedArray
             $keys = array_reverse($keys);
         }
 
-        $setValue = function (&$array, array $keys, rex_yform_manager_dataset $dataset) use (&$setValue, $value) {
+        $setValue = static function (&$array, array $keys, rex_yform_manager_dataset $dataset) use (&$setValue, $value) {
             if (!$keys) {
                 $array[] = $value ? $dataset->getValue($value) : $dataset;
                 return;
@@ -472,7 +465,7 @@ class rex_yform_manager_collection extends \SplFixedArray
         $validations = [];
         $useValidations = [];
         foreach ($this->getTable()->getFields() as $field) {
-            if ($field->getType() == 'action') {
+            if ('action' == $field->getType()) {
                 continue;
             }
 
@@ -499,7 +492,7 @@ class rex_yform_manager_collection extends \SplFixedArray
                 continue;
             }
 
-            if ($field->getType() == 'validate') {
+            if ('validate' == $field->getType()) {
                 if ($name = $field->getElement('name')) {
                     $validations[$name][] = ['type' => $field->getTypeName(), 'values' => $values];
                 }
@@ -566,7 +559,7 @@ class rex_yform_manager_collection extends \SplFixedArray
             call_user_func($afterFieldsExecuted, $yform);
         }
 
-        if ($yform->objparams['send'] == 1 && !$yform->objparams['warning_messages']) {
+        if (1 == $yform->objparams['send'] && !$yform->objparams['warning_messages']) {
             $ignoreFields = [];
             /** @var rex_yform_value_abstract $field */
             foreach ($yform->objparams['values'] as $field) {

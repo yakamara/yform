@@ -17,14 +17,14 @@ class rex_yform_value_submit extends rex_yform_value_abstract
     public function enterObject()
     {
         $labels = $this->getElement('labels');
-        if ($labels == '') {
+        if ('' == $labels) {
             $labels = [$this->getElement('label')];
         } else {
             $labels = explode(',', $this->getElement('labels'));
         }
 
         $values = $this->getElement('values');
-        if ($values == '') {
+        if ('' == $values) {
             $values = [];
         } else {
             $values = explode(',', $values);
@@ -48,11 +48,11 @@ class rex_yform_value_submit extends rex_yform_value_abstract
 
         $this->setValue($value);
 
-        if (count($labels) == 0) {
+        if (0 == count($labels)) {
             $labels = [$value];
         }
 
-        if (count($labels) == 1 && $this->getElement('css_classes') == '') {
+        if (1 == count($labels) && '' == $this->getElement('css_classes')) {
             $this->setElement('css_classes', 'btn-primary');
         }
 
@@ -60,12 +60,12 @@ class rex_yform_value_submit extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php', compact('labels'));
         }
 
-        if (!isset($this->params['value_pool']['email'][$this->getName()]) || $this->params['value_pool']['email'][$this->getName()] == '') {
+        if (!isset($this->params['value_pool']['email'][$this->getName()]) || '' == $this->params['value_pool']['email'][$this->getName()]) {
             $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         }
 
-        if ($this->saveInDb() && $this->getElement(3) != 'no_db') { // BC element[3]
-            if (!isset($this->params['value_pool']['sql'][$this->getName()]) || $this->params['value_pool']['sql'][$this->getName()] == '') {
+        if ($this->saveInDb() && 'no_db' != $this->getElement(3)) { // BC element[3]
+            if (!isset($this->params['value_pool']['sql'][$this->getName()]) || '' == $this->params['value_pool']['sql'][$this->getName()]) {
                 $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
             }
         }

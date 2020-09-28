@@ -31,7 +31,7 @@ class rex_var_yform_table_data extends rex_var
                 return false;
             }
 
-            if ($tableName == '') {
+            if ('' == $tableName) {
                 return self::quote('[table param not defined]');
             }
 
@@ -49,7 +49,7 @@ class rex_var_yform_table_data extends rex_var
             if ($this->hasArg('multiple') && $this->getArg('multiple')) {
                 $options = [];
                 $values = [];
-                if ($value != '') {
+                if ('' != $value) {
                     $valueArray = explode(',', $value);
                     foreach ($valueArray as $valueId) {
                         $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $valueId]);
@@ -129,7 +129,7 @@ class rex_var_yform_table_data extends rex_var
     {
         $link = $args['link'];
         $valueName = '';
-        if ($value != '') {
+        if ('' != $value) {
             $valueName = rex_escape(trim(sprintf('%s [%s]', $args['valueName'], $value)));
         }
 

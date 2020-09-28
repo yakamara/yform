@@ -11,13 +11,13 @@ class rex_yform_validate_in_names extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        if ($this->getElement(3) == '') {
+        if ('' == $this->getElement(3)) {
             $minamount = 1;
         } else {
             $minamount = (int) $this->getElement(3);
         }
 
-        if ($this->getElement(4) == '') {
+        if ('' == $this->getElement(4)) {
             $maxamount = 1000;
         } else {
             $maxamount = (int) $this->getElement(4);
@@ -27,7 +27,7 @@ class rex_yform_validate_in_names extends rex_yform_validate_abstract
 
         $value = 0;
         foreach ($this->getObjects() as $Object) {
-            if (in_array($Object->getName(), $fields) && $Object->getValue() != '') {
+            if (in_array($Object->getName(), $fields) && '' != $Object->getValue()) {
                 ++$value;
             }
         }

@@ -4,7 +4,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 {
     private $table;
 
-    private $alias = null;
+    private $alias;
     private $selectResetted = false;
     private $select = [];
 
@@ -20,7 +20,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 
     private $groupBy = [];
 
-    private $limit = null;
+    private $limit;
 
     /**
      * @param string $table
@@ -425,7 +425,6 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 
     /**
      * @param string $where
-     * @param array  $params
      *
      * @return $this
      */
@@ -631,8 +630,6 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param rex_pager $pager
-     *
      * @return rex_yform_manager_collection
      */
     public function paginate(rex_pager $pager)

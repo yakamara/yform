@@ -23,7 +23,7 @@ class rex_yform_manager_table_api
             $table_insert->setTable(rex_yform_manager_table::table());
             $table_insert->setValue('table_name', $table_name);
 
-            if (!isset($table['name']) || $table['name'] == '') {
+            if (!isset($table['name']) || '' == $table['name']) {
                 $table['name'] = $table['table_name'];
             }
 
@@ -46,7 +46,7 @@ class rex_yform_manager_table_api
                 }
             }
 
-            if (!isset($table['name']) || $table['name'] == '') {
+            if (!isset($table['name']) || '' == $table['name']) {
                 $table['name'] = $table['table_name'];
             }
 
@@ -139,11 +139,11 @@ class rex_yform_manager_table_api
     {
         unset($table_field['id']);
 
-        if ($table_name == '') {
+        if ('' == $table_name) {
             throw new Exception('table_name must be set');
         }
 
-        if (count($table_field) == 0) {
+        if (0 == count($table_field)) {
             throw new Exception('field must be a filled array');
         }
 
@@ -156,7 +156,7 @@ class rex_yform_manager_table_api
         $currentFields = rex_yform_manager_table::get($table_name)->getFields($fieldIdentifier);
 
         // validate specials
-        if ($table_field['type_id'] == 'validate') {
+        if ('validate' == $table_field['type_id']) {
             $table_field['list_hidden'] = 1;
             $table_field['search'] = 0;
         }
@@ -166,7 +166,7 @@ class rex_yform_manager_table_api
         if (count($currentFields) > 1) {
             throw new Exception('more than one field found for table: ' . $table_name . ' with Fieldidentifier: ' . implode(', ', $fieldIdentifier) . '');
         }
-        if (count($currentFields) == 0) {
+        if (0 == count($currentFields)) {
             // Insert
             $field_insert = rex_sql::factory();
             $field_insert->setDebug(self::$debug);
@@ -227,7 +227,7 @@ class rex_yform_manager_table_api
     {
         $columns = rex_sql::showColumns($table_name);
 
-        if (count($columns) == 0) {
+        if (0 == count($columns)) {
             throw new Exception('`' . $table_name . '` does not exists or no fields available');
         }
 
@@ -239,12 +239,12 @@ class rex_yform_manager_table_api
 
         $autoincrement = [];
         foreach ($columns as $column) {
-            if ($column['extra'] == 'auto_increment') {
+            if ('auto_increment' == $column['extra']) {
                 $autoincrement = $column;
             }
         }
 
-        if (count($autoincrement) > 0 && $autoincrement['name'] == 'id') {
+        if (count($autoincrement) > 0 && 'id' == $autoincrement['name']) {
             // everything is ok
         } elseif ($convert_id && count($autoincrement) > 1) {
             rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` CHANGE `' . $autoincrement['name'] . '` `id` INT( 11 ) NOT NULL AUTO_INCREMENT ');
@@ -256,7 +256,7 @@ class rex_yform_manager_table_api
         self::setTable($table);
 
         foreach ($columns as $column) {
-            if ($column['name'] != 'id') {
+            if ('id' != $column['name']) {
                 self::migrateField($table_name, $column);
             }
         }
@@ -264,7 +264,7 @@ class rex_yform_manager_table_api
 
     public static function migrateField($table_name, $column)
     {
-        if ($column['name'] == 'id') {
+        if ('id' == $column['name']) {
             return [];
         }
 
@@ -335,7 +335,7 @@ class rex_yform_manager_table_api
                 break;
 
             case 'enum':
-                $options = array_map(function ($option) {
+                $options = array_map(static function ($option) {
                     $option = trim($option, '\'" ');
                     return $option . '=' . $option;
                 }, explode(',', $column['length']));
@@ -353,7 +353,7 @@ class rex_yform_manager_table_api
                 break;
 
             case 'set':
-                $options = array_map(function ($option) {
+                $options = array_map(static function ($option) {
                     $option = trim($option, '\'" ');
                     return $option . '=' . $option;
                 }, explode(',', $column['length']));
@@ -547,10 +547,10 @@ class rex_yform_manager_table_api
             ->ensurePrimaryIdColumn();
 
         foreach ($table->getFields() as $field) {
-            if ($field->getType() == 'value') {
+            if ('value' == $field->getType()) {
                 $db_type = $field->getDatabaseFieldType();
 
-                if ($db_type != 'none' && $db_type != '') {
+                if ('none' != $db_type && '' != $db_type) {
                     $hooks = $field->getHooks();
                     if (isset($hooks['preCreate'])) {
                         $result = call_user_func($hooks['preCreate'], $field, $db_type);
@@ -591,9 +591,9 @@ class rex_yform_manager_table_api
         $EnsureTable
             ->ensure();
 
-        if ($delete_old === true) {
+        if (true === $delete_old) {
             foreach ($savedColumns as $savedColumn) {
-                if ($savedColumn['name'] != 'id') {
+                if ('id' != $savedColumn['name']) {
                     $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` DROP `' . $savedColumn['name'] . '` ');
                 }
             }

@@ -46,14 +46,14 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
         if ($this->needsOutput()) {
             $groupAttributes = [];
-            if ($this->getElement('group_attributes') !== false) {
+            if (false !== $this->getElement('group_attributes')) {
                 $groupAttributes = $this->getAttributes('group_attributes', $groupAttributes);
             }
 
             $choiceAttributes = [];
             $elementAttributes = [];
             if ($choiceList->isExpanded()) {
-                if ($this->getElement('attributes') !== false) {
+                if (false !== $this->getElement('attributes')) {
                     $elementAttributes = $this->getAttributes('attributes', $elementAttributes);
                 }
 
@@ -75,7 +75,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                     $elementAttributes['multiple'] = 'multiple';
                     $elementAttributes['size'] = count($choiceList->getChoices());
                 }
-                if ($this->getElement('attributes') !== false) {
+                if (false !== $this->getElement('attributes')) {
                     $elementAttributes = $this->getAttributes('attributes', $elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
                 }
             }
@@ -126,7 +126,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
             ],
             'description' => rex_i18n::msg('yform_values_choice_description'),
-            'db_type' => ['text', 'int','tinyint(1)','varchar(191)'],
+            'db_type' => ['text', 'int', 'tinyint(1)', 'varchar(191)'],
             'famous' => true,
         ];
     }
@@ -234,7 +234,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $self = new self();
         $values = $self->getArrayFromString($params['value']);
 
-        $multiple = $params['field']->getElement('multiple') == 1;
+        $multiple = 1 == $params['field']->getElement('multiple');
 
         $where = [];
         foreach ($values as $value) {
@@ -276,35 +276,35 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             'choice_attributes' => [],
         ];
 
-        if ($elements['expanded'] == '1') {
+        if ('1' == $elements['expanded']) {
             $options['expanded'] = true;
         }
-        if ($elements['multiple'] == '1') {
+        if ('1' == $elements['multiple']) {
             $options['multiple'] = true;
         }
-        if ($elements['group_by'] !== false) {
+        if (false !== $elements['group_by']) {
             $options['group_by'] = $elements['group_by'];
         }
-        if ($elements['preferred_choices'] !== false) {
+        if (false !== $elements['preferred_choices']) {
             $options['preferred_choices'] = $self->getArrayFromString($elements['preferred_choices']);
         }
-        if ($elements['placeholder'] !== false && trim($elements['placeholder']) !== '') {
+        if (false !== $elements['placeholder'] && '' !== trim($elements['placeholder'])) {
             $options['placeholder'] = rex_i18n::translate($elements['placeholder']);
         }
-        if ($elements['choice_attributes'] !== false) {
+        if (false !== $elements['choice_attributes']) {
             $options['choice_attributes'] = $elements['choice_attributes'];
         }
         $choicesElement = $elements['choices'];
 
         $choiceList = new rex_yform_choice_list($options);
 
-        if (is_string($choicesElement) && rex_sql::getQueryType($choicesElement) == 'SELECT') {
+        if (is_string($choicesElement) && 'SELECT' == rex_sql::getQueryType($choicesElement)) {
             $sql = rex_sql::factory();
             $sql->setDebug($self->getParam('debug'));
             $choiceList->createListFromSqlArray(
                 $sql->getArray($choicesElement)
             );
-        } elseif (is_string($choicesElement) && strlen(trim($choicesElement)) > 0 && substr(trim($choicesElement), 0, 1) == '{' && substr(trim($choicesElement), 0, 2) != '{{') {
+        } elseif (is_string($choicesElement) && strlen(trim($choicesElement)) > 0 && '{' == substr(trim($choicesElement), 0, 1) && '{{' != substr(trim($choicesElement), 0, 2)) {
             $choiceList->createListFromJson($choicesElement);
         } else {
             $choiceList->createListFromStringArray(

@@ -42,7 +42,7 @@ if (rex::isBackend() && rex::getUser()) {
                 $be_page->setHidden();
             }
 
-            if (rex_request('page', 'string') == 'yform/manager/data_edit' && rex_request('table_name', 'string') == $table->getTableName()) {
+            if ('yform/manager/data_edit' == rex_request('page', 'string') && rex_request('table_name', 'string') == $table->getTableName()) {
                 $be_page->setIsActive();
 
                 $main_page = $this->getAddon()->getProperty('page');
@@ -52,7 +52,7 @@ if (rex::isBackend() && rex::getUser()) {
                 $rex_yform_manager_popup = rex_request('rex_yform_manager_popup', 'int');
                 $rex_yform_filter = rex_request('rex_yform_filter', 'array');
 
-                if ((isset($rex_yform_manager_opener['id']) && $rex_yform_manager_opener['id'] != '') || $rex_yform_manager_popup == 1) {
+                if ((isset($rex_yform_manager_opener['id']) && '' != $rex_yform_manager_opener['id']) || 1 == $rex_yform_manager_popup) {
                     $main_page['popup'] = true;
                 }
 
@@ -71,7 +71,7 @@ if (rex::isBackend() && rex::getUser()) {
 \rex_extension::register('MEDIA_IS_IN_USE', 'rex_yform_value_be_media::isMediaInUse');
 \rex_extension::register('PACKAGES_INCLUDED', 'rex_yform_value_be_link::isArticleInUse');
 
-rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
+rex_extension::register('REX_YFORM_SAVED', static function (rex_extension_point $ep) {
     if ($ep->getSubject() instanceof Exception) {
         return;
     }

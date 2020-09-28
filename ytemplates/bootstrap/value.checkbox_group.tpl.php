@@ -1,7 +1,7 @@
 <?php
 
 $notices = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -15,7 +15,7 @@ if (count($notices) > 0) {
 
 ?>
 
-<?php if (trim($this->getLabel()) != ''): ?>
+<?php if ('' != trim($this->getLabel())): ?>
 <div class="checkbox-group form-group">
     <label class="control-label"><?php echo $this->getLabel() ?></label>
 
@@ -34,6 +34,6 @@ if (count($notices) > 0) {
 <?php endforeach ?>
 <?php echo $notice; ?>
 
-<?php if (trim($this->getLabel()) != ''): ?>
+<?php if ('' != trim($this->getLabel())): ?>
 </div>
 <?php endif; ?>

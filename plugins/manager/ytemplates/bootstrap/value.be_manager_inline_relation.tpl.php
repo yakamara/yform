@@ -2,10 +2,10 @@
 
 $class_group = trim('form-group ' . $this->getHTMLClass()); // . ' ' . $this->getWarningClass()
 
-$id = sprintf('%u', crc32($this->params['form_name'])) . rand(0, 10000) . $this->getId();
+$id = sprintf('%u', crc32($this->params['form_name'])) . random_int(0, 10000) . $this->getId();
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -20,7 +20,7 @@ if (count($notice) > 0) {
 $prototypeForm = $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-'.rex_escape($relationKey), 'form' => $prototypeForm, 'prioFieldName' => $prioFieldName]);
 
 $sortable = 'data-yform-be-relation-sortable';
-if ($prioFieldName == '') {
+if ('' == $prioFieldName) {
     $sortable = '';
 }
 

@@ -78,12 +78,12 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         $query = $params['params']['field']['query'];
         $query_params = [];
         $pos = mb_strrpos(mb_strtoupper($query), 'ORDER BY ');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $query = mb_substr($query, 0, $pos);
         }
 
         $pos = mb_strrpos(mb_strtoupper($query), 'LIMIT ');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $query = mb_substr($query, 0, $pos);
         }
 
@@ -91,7 +91,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
         $query_params[] = $params['value'];
 
         $pos = mb_strrpos(mb_strtoupper($query), 'WHERE ');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $query = mb_substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . mb_substr($query, $pos + mb_strlen('WHERE '));
         } else {
             $query .= ' WHERE ' . $where;
@@ -104,7 +104,7 @@ class rex_yform_value_radio_sql extends rex_yform_value_abstract
             $return[] = $entry['name'];
         }
 
-        if (count($return) == 0 && $params['value'] != '' && $params['value'] != '0') {
+        if (0 == count($return) && '' != $params['value'] && '0' != $params['value']) {
             $return[] = $params['value'];
         }
 

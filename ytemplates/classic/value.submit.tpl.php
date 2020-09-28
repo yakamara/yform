@@ -1,13 +1,13 @@
 <?php
 
-if (count($labels) == 1) {
+if (1 == count($labels)) {
     echo '<p class="formsubmit '.$this->getHTMLClass().'">';
 } else {
     echo '<p class="formsubmit formsubmits '.$this->getHTMLClass().'">';
 }
 
 $css_classes = $this->getElement('css_classes');
-if ($css_classes == '') {
+if ('' == $css_classes) {
     $css_classes = [];
 } else {
     $css_classes = explode(',', $this->getElement('css_classes'));
@@ -17,7 +17,7 @@ foreach ($labels as $label_index => $label) {
     $classes = [];
     $classes[] = 'submit';
 
-    if ($this->getWarningClass() != '') {
+    if ('' != $this->getWarningClass()) {
         $classes[] = $this->getWarningClass();
     }
 
@@ -30,7 +30,7 @@ foreach ($labels as $label_index => $label) {
     }
 
     $key = array_search($label, $labels);
-    if ($key !== false && isset($css_classes[$key])) {
+    if (false !== $key && isset($css_classes[$key])) {
         $classes[] = $css_classes[$key];
     }
 

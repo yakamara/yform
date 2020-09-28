@@ -41,7 +41,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        if ($params['value'] == '') {
+        if ('' == $params['value']) {
             return '-';
         }
         $ids = explode(',', $params['value']);
@@ -67,8 +67,8 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
     public static function isArticleInUse(\rex_extension_point $ep)
     {
         $rexApiCall = rex_request(\rex_api_function::REQ_CALL_PARAM, 'string', '');
-        if ($rexApiCall == 'category_delete' || $rexApiCall == 'article_delete') {
-            $id = ($rexApiCall == 'category_delete') ? rex_request('category-id', 'int', 0) : rex_request('article_id', 'int', 0);
+        if ('category_delete' == $rexApiCall || 'article_delete' == $rexApiCall) {
+            $id = ('category_delete' == $rexApiCall) ? rex_request('category-id', 'int', 0) : rex_request('article_id', 'int', 0);
             $article = \rex_article::get($id);
             if ($article) {
                 $sql = \rex_sql::factory();
@@ -86,7 +86,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                         $tableName = $field['table_name'];
                         $condition = $sql->escapeIdentifier($field['name']).' = '.$article->getId();
 
-                        if (isset($field['multiple']) && $field['multiple'] == 1) {
+                        if (isset($field['multiple']) && 1 == $field['multiple']) {
                             $condition = 'FIND_IN_SET('.$article->getId().', '.$sql->escapeIdentifier($field['name']).')';
                         }
                         $tables[$tableName][] = $condition;
@@ -110,10 +110,10 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                         }
                     }
 
-                    if ($messages != '') {
+                    if ('' != $messages) {
                         $_REQUEST[\rex_api_function::REQ_CALL_PARAM] = '';
 
-                        \rex_extension::register('PAGE_TITLE_SHOWN', function (\rex_extension_point $ep) use ($article, $messages) {
+                        \rex_extension::register('PAGE_TITLE_SHOWN', static function (\rex_extension_point $ep) use ($article, $messages) {
                             $warning = $article->isStartArticle() ? \rex_i18n::msg('yform_structure_category_could_not_be_deleted') : \rex_i18n::msg('yform_structure_article_could_not_be_deleted');
                             $warning .= '<br /><ul>'.$messages.'</ul>';
                             $subject = $ep->getSubject();
@@ -124,5 +124,4 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             }
         }
     }
-
 }

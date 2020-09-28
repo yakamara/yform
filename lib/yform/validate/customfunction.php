@@ -20,7 +20,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
         $parameter = $this->getElement('params');
 
         $comparator = true;
-        if (is_string($func) && mb_substr($func, 0, 1) == '!') {
+        if (is_string($func) && '!' == mb_substr($func, 0, 1)) {
             $comparator = false;
             $func = mb_substr($func, 1);
         }
@@ -39,7 +39,7 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
             $ObjectValues[$k] = $Object->getValue();
         }
 
-        if (count($ObjectValues) == 1) {
+        if (1 == count($ObjectValues)) {
             $ObjectValues = current($ObjectValues);
             $names = $names[0];
         }
@@ -61,21 +61,21 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
 
     public function preValidateAction()
     {
-        if ($this->getElement('validate_type') == 'pre') {
+        if ('pre' == $this->getElement('validate_type')) {
             return $this->customfunction_execute();
         }
     }
 
     public function enterObject()
     {
-        if ($this->getElement('validate_type') != 'pre' && $this->getElement('validate_type') != 'post') {
+        if ('pre' != $this->getElement('validate_type') && 'post' != $this->getElement('validate_type')) {
             return $this->customfunction_execute();
         }
     }
 
     public function postValueAction()
     {
-        if ($this->getElement('validate_type') == 'post') {
+        if ('post' == $this->getElement('validate_type')) {
             return $this->customfunction_execute();
         }
     }

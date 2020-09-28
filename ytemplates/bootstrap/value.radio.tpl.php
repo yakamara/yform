@@ -1,7 +1,7 @@
 <?php
 
 $notices = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -17,7 +17,7 @@ $class_label = '';
 $class = $this->getElement('required') ? 'form-is-required ' : '';
 $class_group = trim('radio-group form-group ' . $class . $this->getWarningClass());
 
-if (trim($this->getLabel()) != '') {
+if ('' != trim($this->getLabel())) {
     echo '<div class="'.$class_group.'">
     <label class="control-label'.$class_label.'">'.$this->getLabel().'</label>';
 }
@@ -25,7 +25,7 @@ if (trim($this->getLabel()) != '') {
 foreach ($options as $key => $value) {
     echo '<div class="radio';
     echo (bool) $this->getElement('inline') ? '-inline' : '';
-    echo trim($this->getLabel()) == '' ? $this->getWarningClass() : '';
+    echo '' == trim($this->getLabel()) ? $this->getWarningClass() : '';
     echo '">';
 
     $attributes = [
@@ -50,6 +50,6 @@ foreach ($options as $key => $value) {
 
 echo $notice;
 
-if (trim($this->getLabel()) != '') {
+if ('' != trim($this->getLabel())) {
     echo '</div>';
 }

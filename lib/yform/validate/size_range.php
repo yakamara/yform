@@ -17,19 +17,19 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
             return;
         }
 
-        if ($Object->getValue() == '') {
+        if ('' == $Object->getValue()) {
             return;
         }
 
         $w = false;
 
         $minsize = -1;
-        if ($this->getElement('min') != '') {
+        if ('' != $this->getElement('min')) {
             $minsize = (int) $this->getElement('min');
         }
 
         $maxsize = -1;
-        if ($this->getElement('max') != '') {
+        if ('' != $this->getElement('max')) {
             $maxsize = (int) $this->getElement('max');
         }
 

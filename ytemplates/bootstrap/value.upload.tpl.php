@@ -1,7 +1,7 @@
 <?php
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -21,7 +21,7 @@ $class_control = trim('form-control');
 ?>
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" accept="<?php echo $this->getElement("types") ?>" name="<?php echo $unique ?>" />
+    <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" accept="<?php echo $this->getElement('types') ?>" name="<?php echo $unique ?>" />
     <?php echo $notice ?>
     <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo rex_escape($unique, 'html'); ?>" />
 </div>
@@ -29,10 +29,10 @@ $class_control = trim('form-control');
 <?php
 
 $value = $this->getValue();
-if ($filename != '') {
+if ('' != $filename) {
     $label = htmlspecialchars($filename);
 
-    if (rex::isBackend() && $download_link != "") {
+    if (rex::isBackend() && '' != $download_link) {
         $label = '<a href="' . $download_link . '">' . $label . '</a>';
     }
 

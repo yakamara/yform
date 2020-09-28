@@ -83,7 +83,7 @@ class rex_radio
      */
     public function setStyle($style)
     {
-        if (strpos($style, 'class=') !== false) {
+        if (false !== strpos($style, 'class=')) {
             if (preg_match('/class=["\']?([^"\']*)["\']?/i', $style, $matches)) {
                 $this->setAttribute('class', $matches[1]);
             }
@@ -142,7 +142,7 @@ class rex_radio
 
         $selected = '';
         foreach ($this->options as $option) {
-            if ($selected == '') {
+            if ('' == $selected) {
                 $selected = $option['value'];
             }
 

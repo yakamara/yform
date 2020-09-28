@@ -1,7 +1,7 @@
 <?php
 
 $notices = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -22,8 +22,7 @@ $search = [];
 $replace = [];
 
 $pos = strpos($format, 'YYYY');
-if ($pos !== false) {
-
+if (false !== $pos) {
     $attributes = $this->getAttributeElements([
         'class' => trim('form-control ' . $this->getWarningClass()),
         'id' => $this->getFieldId('year'),
@@ -34,7 +33,7 @@ if ($pos !== false) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = $yearStart; $i <= $yearEnd; ++$i):
         $selected = (@$year == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 4, "0", STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 4, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['YYYY'] = $replace_i;
@@ -42,8 +41,7 @@ if ($pos !== false) {
 }
 
 $pos = strpos($format, 'MM');
-if ($pos !== false) {
-
+if (false !== $pos) {
     $attributes = $this->getAttributeElements([
         'class' => trim('form-control ' . $this->getWarningClass()),
         'id' => $this->getFieldId('month'),
@@ -54,7 +52,7 @@ if ($pos !== false) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 13; ++$i):
         $selected = (@$month == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['MM'] = $replace_i;
@@ -62,8 +60,7 @@ if ($pos !== false) {
 }
 
 $pos = strpos($format, 'DD');
-if ($pos !== false) {
-
+if (false !== $pos) {
     $attributes = $this->getAttributeElements([
         'class' => trim('form-control ' . $this->getWarningClass()),
         'id' => $this->getFieldId('day'),
@@ -74,7 +71,7 @@ if ($pos !== false) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 32; ++$i):
         $selected = (@$day == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['DD'] = $replace_i;
@@ -82,8 +79,7 @@ if ($pos !== false) {
 }
 
 $pos = strpos($format, 'HH');
-if ($pos !== false) {
-
+if (false !== $pos) {
     $attributes = $this->getAttributeElements([
         'class' => trim('form-control ' . $this->getWarningClass()),
         'id' => $this->getFieldId('hour'),
@@ -93,7 +89,7 @@ if ($pos !== false) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     foreach ($hours as $i):
         $selected = (@$hour == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
     endforeach;
     $replace_i .= '</select>';
     $replace['HH'] = $replace_i;
@@ -101,8 +97,7 @@ if ($pos !== false) {
 }
 
 $pos = strpos($format, 'ii');
-if ($pos !== false) {
-
+if (false !== $pos) {
     $attributes = $this->getAttributeElements([
         'class' => trim('form-control ' . $this->getWarningClass()),
         'id' => $this->getFieldId('minute'),
@@ -112,7 +107,7 @@ if ($pos !== false) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     foreach ($minutes as $i):
         $selected = (@$minute == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
     endforeach;
     $replace_i .= '</select>';
     $replace['ii'] = $replace_i;
@@ -120,8 +115,7 @@ if ($pos !== false) {
 }
 
 $pos = strpos($format, 'ss');
-if ($pos !== false) {
-
+if (false !== $pos) {
     $attributes = $this->getAttributeElements([
         'class' => trim('form-control ' . $this->getWarningClass()),
         'id' => $this->getFieldId('second'),
@@ -131,7 +125,7 @@ if ($pos !== false) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     foreach ($seconds as $i): // ($i = 0; $i < 60; ++$i):
         $selected = (@$second == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, "0", STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
     endforeach;
     $replace_i .= '</select>';
     $replace['ss'] = $replace_i;

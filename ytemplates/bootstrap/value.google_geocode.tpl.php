@@ -9,7 +9,7 @@ foreach ($this->params['values'] as $address_value) {
     }
 }
 
-if ($googleapikey != '') {
+if ('' != $googleapikey) {
     echo '<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key='.$googleapikey.'&sensor=false"></script>';
 } else {
     echo '<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>';

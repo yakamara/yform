@@ -11,14 +11,14 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
 {
     public function preValidateAction()
     {
-        $generated_key = md5($this->params['form_name'].uniqid(rand(), true));
+        $generated_key = md5($this->params['form_name'].uniqid(random_int(0, getrandmax()), true));
 
-        if ($this->getElement('only_empty') != 1) {
+        if (1 != $this->getElement('only_empty')) {
             // wird immer neu gesetzt
             $this->setValue($generated_key);
-        } elseif ($this->getValue() != '') {
+        } elseif ('' != $this->getValue()) {
             // wenn Wert vorhanden ist direkt zurück
-        } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->getValue($this->getName()) != '') {
+        } elseif (isset($this->params['sql_object']) && '' != $this->params['sql_object']->getValue($this->getName())) {
             // sql object vorhanden und Wert gesetzt ?
         } else {
             $this->setValue($generated_key);
@@ -27,7 +27,7 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->needsOutput() && $this->getElement('show_value') == 1) {
+        if ($this->needsOutput() && 1 == $this->getElement('show_value')) {
             $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php');
         }
 

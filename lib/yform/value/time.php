@@ -9,8 +9,8 @@
 
 class rex_yform_value_time extends rex_yform_value_abstract
 {
-    const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'H:i:s';
-    const VALUE_TIME_SHOW_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
+    public const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'H:i:s';
+    public const VALUE_TIME_SHOW_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
 
     public function preValidateAction()
     {
@@ -42,18 +42,15 @@ class rex_yform_value_time extends rex_yform_value_abstract
                     str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($second, 2, '0', STR_PAD_LEFT);
-
             }
 
             $this->setValue($value);
         }
-
     }
 
     public static function time_getFormat($format = '')
     {
         return (in_array($format, self::VALUE_TIME_SHOW_FORMATS, true)) ? $format : self::VALUE_TIME_SHOW_DEFAULT_FORMAT;
-
     }
 
     public static function time_getFormattedTime($iso_timestring, $format)
@@ -62,7 +59,6 @@ class rex_yform_value_time extends rex_yform_value_abstract
         $minute = (int) substr($iso_timestring, 3, 2);
         $second = (int) substr($iso_timestring, 6, 2);
         return date($format, mktime($hour, $minute, $second, 1, 1, 2000)); // dummy date
-
     }
 
     public function enterObject()
@@ -77,9 +73,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
             return;
         }
 
-        $format = "HH:ii:ss";
+        $format = 'HH:ii:ss';
 
-        if ($this->getElement('hours') != '') {
+        if ('' != $this->getElement('hours')) {
             $hours = explode(',', trim($this->getElement('hours')));
         } else {
             $hours = [];
@@ -88,7 +84,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             }
         }
 
-        if ($this->getElement('minutes') != '') {
+        if ('' != $this->getElement('minutes')) {
             $minutes = explode(',', trim($this->getElement('minutes')));
         } else {
             $minutes = [];
@@ -106,7 +102,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
         $minute = (int) substr($this->getValue(), 3, 2);
         $second = (int) substr($this->getValue(), 6, 2);
 
-        if ($this->getElement('widget') == 'input:text') {
+        if ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
         } else {
@@ -144,6 +140,5 @@ class rex_yform_value_time extends rex_yform_value_abstract
     public static function getListValue($params)
     {
         return '<nobr>'.self::time_getFormattedTime($params['subject'], self::time_getFormat($params['params']['field']['format'])).'</nobr>';
-
     }
 }

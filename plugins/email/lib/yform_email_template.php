@@ -13,7 +13,7 @@ class rex_yform_email_template
     {
         $gt = rex_sql::factory();
         $gt->setQuery('select * from ' . rex::getTablePrefix() . 'yform_email_template where name=:name', [':name' => $name]);
-        if ($gt->getRows() == 1) {
+        if (1 == $gt->getRows()) {
             $b = $gt->getArray();
             return current($b);
         }
@@ -112,15 +112,15 @@ class rex_yform_email_template
         $mail->AddAddress($template['mail_to'], $template['mail_to_name']);
         $mail->SetFrom($template['mail_from'], $template['mail_from_name']);
 
-        if ($template['mail_reply_to'] != '') {
+        if ('' != $template['mail_reply_to']) {
             $mail->AddReplyTo($template['mail_reply_to'], $template['mail_reply_to_name']);
         }
 
         $mail->Subject = $template['subject'];
         $mail->Body = $template['body'];
-        if ($template['body_html'] != '') {
+        if ('' != $template['body_html']) {
             $mail->MsgHTML($template['body_html']);
-            if ($template['body'] != '') {
+            if ('' != $template['body']) {
                 $mail->AltBody = $template['body'];
             }
         } else {

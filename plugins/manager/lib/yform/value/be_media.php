@@ -46,7 +46,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
     {
         $files = explode(',', $params['subject']);
 
-        if (count($files) == 1) {
+        if (1 == count($files)) {
             $filename = $params['subject'];
             if (strlen($params['subject']) > 16) {
                 $filename = mb_substr($params['subject'], 0, 6) . ' ... ' . mb_substr($params['subject'], -6);
@@ -76,15 +76,15 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         $value = $params['value'];
         $field = $params['field']->getName();
 
-        if ($value == '(empty)') {
+        if ('(empty)' == $value) {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
         }
-        if ($value == '!(empty)') {
+        if ('!(empty)' == $value) {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 
         $pos = strpos($value, '*');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $value = str_replace('%', '\%', $value);
             $value = str_replace('*', '%', $value);
             return $sql->escapeIdentifier($field) . ' LIKE ' . $sql->escape($value);
@@ -116,7 +116,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             $tableName = $field['table_name'];
             $condition = $sql->escapeIdentifier($field['name']).' = '.$escapedFilename;
 
-            if (isset($field['multiple']) && $field['multiple'] == 1) {
+            if (isset($field['multiple']) && 1 == $field['multiple']) {
                 $condition = 'FIND_IN_SET('.$escapedFilename.', '.$sql->escapeIdentifier($field['name']).')';
             }
             $tables[$tableName][] = $condition;
@@ -135,7 +135,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             }
         }
 
-        if ($messages != '') {
+        if ('' != $messages) {
             $warning[] = 'Tabelle<br /><ul>'.$messages.'</ul>';
         }
 

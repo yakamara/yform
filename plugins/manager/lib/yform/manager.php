@@ -544,7 +544,6 @@ class rex_yform_manager
                     ]
                     );
                 } else {
-
                     // to take care, that db field are not in conflict with th names, ' ' have been added to identifier
 
                     $list->addColumn(rex_i18n::msg('yform_function').' ', '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
@@ -570,7 +569,6 @@ class rex_yform_manager
                     }
 
                     $list->setColumnLayout(rex_i18n::msg('yform_function').' ', ['<th class="rex-table-action" colspan="'.$colspan.'">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
-
                 }
 
                 $list = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST', $list, ['table' => $this->table]));

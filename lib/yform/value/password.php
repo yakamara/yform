@@ -11,7 +11,7 @@ class rex_yform_value_password extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        if ($this->getValue() == '' && !$this->params['send']) {
+        if ('' == $this->getValue() && !$this->params['send']) {
             $this->setValue($this->getElement(3));
         }
 

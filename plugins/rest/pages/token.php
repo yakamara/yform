@@ -21,26 +21,26 @@ $content = '';
 $show_list = true;
 
 $routes = [];
-foreach(rex_yform_rest::getRoutes() as $route) {
+foreach (rex_yform_rest::getRoutes() as $route) {
     $routes[] = $route->getPath();
 }
 
-if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
+if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
-} elseif ($func == 'delete') {
+} elseif ('delete' == $func) {
     $query = "delete from $table where id='" . $data_id . "' ";
     $delsql = rex_sql::factory();
     $delsql->setQuery($query);
     $content = rex_view::success(rex_i18n::msg('yform_rest_token_deleted'));
-} elseif ($func == 'edit' || $func == 'add') {
+} elseif ('edit' == $func || 'add' == $func) {
     $form_data = [];
 
-    $dummyToken = bin2hex(random_bytes((32-(32%2))/2));
+    $dummyToken = bin2hex(random_bytes((32 - (32 % 2)) / 2));
 
     $form_data[] = 'checkbox|status|translate:yform_rest_token_status';
     $form_data[] = 'text|name|translate:yform_rest_token_name';
     $form_data[] = 'validate|empty|name|translate:yform_rest_token_name_validate';
-    $form_data[] = 'text|token|translate:yform_rest_token_token|#notice:'.rex_i18n::msg('yform_rest_token_token_notice', $dummyToken);;
+    $form_data[] = 'text|token|translate:yform_rest_token_token|#notice:'.rex_i18n::msg('yform_rest_token_token_notice', $dummyToken);
     $form_data[] = 'validate|empty|token|translate:yform_rest_token_token_validate';
     $form_data[] = 'choice|interval|translate:yform_rest_token_interval|translate:yform_rest_token_none=none,translate:yform_rest_token_overall=overall,translate:yform_rest_token_per_hour=hour,translate:yform_rest_token_per_day=day,translate:yform_rest_token_per_month=month|#attributes:{"class": "form-control yform-rest-token-interval-select"}';
     $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
@@ -55,7 +55,7 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $yform_clone = clone $yform;
 
-    if ($func == 'edit') {
+    if ('edit' == $func) {
         $title = rex_i18n::msg('yform_rest_token_update');
         $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
         $yform->setHiddenField('data_id', $data_id);
@@ -78,8 +78,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $submit_type = 1; // normal, 2=apply
     foreach ($yform->objparams['values'] as $f) {
-        if ($f->getName() == 'submit') {
-            if ($f->getValue() == 2) { // apply
+        if ('submit' == $f->getName()) {
+            if (2 == $f->getValue()) { // apply
                 $submit_type = 2;
             }
         }
@@ -88,8 +88,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $content = $yform->executeActions();
 
     if ($yform->objparams['actions_executed']) {
-        if ($func == 'edit') {
-            if ($submit_type == 2) {
+        if ('edit' == $func) {
+            if (2 == $submit_type) {
                 $fragment = new rex_fragment();
                 $fragment->setVar('class', 'edit', false);
                 $fragment->setVar('title', $title);
@@ -100,8 +100,8 @@ if ($func == 'delete' && !rex_csrf_token::factory($_csrf_key)->isValid()) {
             } else {
                 $content = rex_view::success(rex_i18n::msg('yform_rest_token_updated'));
             }
-        } elseif ($func == 'add') {
-            if ($submit_type == 2) {
+        } elseif ('add' == $func) {
+            if (2 == $submit_type) {
                 $title = rex_i18n::msg('yform_email_update');
                 $data_id = $yform->objparams['main_id'];
                 $func = 'edit';
@@ -178,15 +178,15 @@ if ($show_list) {
 
     $list->setColumnLabel('token', rex_i18n::msg('yform_rest_token_token'));
 
-    $list->setColumnFormat('amount', 'custom', function ($params) {
+    $list->setColumnFormat('amount', 'custom', static function ($params) {
         $subject = $params['subject'];
-        /* @var $list rex_list */
+        /** @var rex_list $list */
         $list = $params['list'];
         $maxHits = $list->getValue('amount');
 
         $return = $maxHits;
 
-        if ($list->getValue('interval') != 'none') {
+        if ('none' != $list->getValue('interval')) {
             $currentHits = \rex_yform_rest_auth_token::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
             $return = $currentHits . ' / ' . $maxHits . ' / ' . $list->getValue('interval') . '';
         }

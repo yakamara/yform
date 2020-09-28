@@ -11,7 +11,7 @@ $historyId = rex_request('history_id', 'int');
 
 $_csrf_key = 'data_edit_history-'.$this->table->getTableName();
 
-if ($subfunc != '' && in_array($subfunc, ['restore', 'delete_old', 'delete_all'])) {
+if ('' != $subfunc && in_array($subfunc, ['restore', 'delete_old', 'delete_all'])) {
     if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
         echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
         $subfunc = '';
@@ -154,20 +154,20 @@ $list->setColumnLabel('dataset_id', rex_i18n::msg('yform_history_dataset_id'));
 $list->setColumnLabel('title', rex_i18n::msg('yform_history_dataset'));
 
 $list->setColumnLabel('action', rex_i18n::msg('yform_history_action'));
-$list->setColumnFormat('action', 'custom', function (array $params) {
+$list->setColumnFormat('action', 'custom', static function (array $params) {
     static $classes = [
         rex_yform_manager_dataset::ACTION_CREATE => 'success',
         rex_yform_manager_dataset::ACTION_UPDATE => 'primary',
         rex_yform_manager_dataset::ACTION_DELETE => 'danger',
     ];
-    $class = isset($classes[$params['subject']]) ? $classes[$params['subject']] : 'default';
+    $class = $classes[$params['subject']] ?? 'default';
     return sprintf('<span class="label label-%s">%s</span>', $class, rex_i18n::msg('yform_history_action_'.$params['subject']));
 });
 
 $list->setColumnLabel('user', rex_i18n::msg('yform_history_user'));
 
 $list->setColumnLabel('timestamp', rex_i18n::msg('yform_history_timestamp'));
-$list->setColumnFormat('timestamp', 'custom', function (array $params) {
+$list->setColumnFormat('timestamp', 'custom', static function (array $params) {
     return (new DateTime($params['subject']))->format('d.m.Y H:i:s');
 });
 

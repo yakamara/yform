@@ -6,15 +6,15 @@ $value = htmlspecialchars($this->getValue());
 
 $widget_params = [];
 $widget_params['category'] = 0;
-if ($this->getElement('category') != '') {
+if ('' != $this->getElement('category')) {
     $widget_params['category'] = (int) ($this->getElement('category'));
 }
 $widget_params['preview'] = $this->getElement('preview');
-if ($this->getElement('types') != '') {
+if ('' != $this->getElement('types')) {
     $widget_params['types'] = trim($this->getElement('types'));
 }
 
-if ($this->getElement('multiple') == 1) {
+if (1 == $this->getElement('multiple')) {
     $widget = rex_var_medialist::getWidget($buttonId, $name, $value, $widget_params);
 } else {
     $widget = rex_var_media::getWidget($buttonId, $name, $value, $widget_params);
@@ -23,7 +23,7 @@ if ($this->getElement('multiple') == 1) {
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $notice = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {

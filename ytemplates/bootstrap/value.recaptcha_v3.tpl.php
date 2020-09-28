@@ -1,6 +1,6 @@
 <?php
 
-if ($loadScript == 1) {
+if (1 == $loadScript) {
     echo '<script src="https://www.google.com/recaptcha/api.js?render=' . $publicKey . '"></script>';
 }
 

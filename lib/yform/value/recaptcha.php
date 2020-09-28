@@ -16,7 +16,7 @@ class rex_yform_value_recaptcha extends rex_yform_value_abstract
         $errorMessage = $this->getElement(4);
         $loadScript = $this->getElement(5);
 
-        if ($this->params['send'] == 1) {
+        if (1 == $this->params['send']) {
             $ObjectId = $this->getId();
             try {
                 $ch = curl_init();

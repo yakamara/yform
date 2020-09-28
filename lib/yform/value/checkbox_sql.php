@@ -86,24 +86,24 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
 
         $query = $params['params']['field']['query'];
         $pos = mb_strrpos(mb_strtoupper($query), 'ORDER BY ');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $query = mb_substr($query, 0, $pos);
         }
 
         $pos = mb_strrpos(mb_strtoupper($query), 'LIMIT ');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $query = mb_substr($query, 0, $pos);
         }
 
         $multiple = (int) $params['params']['field']['multiple'];
-        if ($multiple != 1) {
+        if (1 != $multiple) {
             $where = ' `id` = ' . $db->escape($params['value']) . ' ';
         } else {
             $where = ' FIND_IN_SET(`id`, ' . $db->escape($params['value']) . ')';
         }
 
         $pos = mb_strrpos(mb_strtoupper($query), 'WHERE ');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $query = mb_substr($query, 0, $pos) . ' WHERE ' . $where . ' AND ' . mb_substr($query, $pos + mb_strlen('WHERE '));
         } else {
             $query .= ' WHERE ' . $where;
@@ -115,7 +115,7 @@ class rex_yform_value_checkbox_sql extends rex_yform_value_abstract
             $return[] = $entry['name'];
         }
 
-        if (count($return) == 0 && $params['value'] != '' && $params['value'] != '0') {
+        if (0 == count($return) && '' != $params['value'] && '0' != $params['value']) {
             $return[] = $params['value'];
         }
 

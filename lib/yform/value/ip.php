@@ -11,7 +11,7 @@ class rex_yform_value_ip extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $sk = ($this->getElement('server_var') != '') ? $this->getElement('server_var') : 'REMOTE_ADDR';
+        $sk = ('' != $this->getElement('server_var')) ? $this->getElement('server_var') : 'REMOTE_ADDR';
         $this->setValue($_SERVER[$sk]);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();

@@ -13,7 +13,7 @@ if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
                         <li class="el_<?php echo $k ?>"><?php echo rex_i18n::translate("$v", null) ?></li>
                     <?php endforeach ?>
 
-                    <?php if ($this->objparams['unique_error'] != ''): ?>
+                    <?php if ('' != $this->objparams['unique_error']): ?>
                         <li><?php echo rex_i18n::translate(preg_replace('~\\*|:|\\(.*\\)~Usim', '', $this->objparams['unique_error'])) ?></li>
                     <?php endif ?>
                 </ul>

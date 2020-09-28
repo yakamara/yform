@@ -39,7 +39,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public function getFieldId($k = '')
     {
         $form_name_array = array_merge([$this->params['form_name']], $this->params['form_array']);
-        if ($k === '') {
+        if ('' === $k) {
             return 'yform-' . implode('_', $form_name_array) . '-field-' . $this->getId();
         }
         return 'yform-' . implode('_', $form_name_array) . '-field-' . $this->getId() . '_' . $k;
@@ -49,7 +49,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         $params = [];
         $params[] = $this->getId();
-        if ($k != '') {
+        if ('' != $k) {
             $params[] = $k;
         }
         return $this->params['this']->getFieldName($this->getName(), $params);
@@ -58,11 +58,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public function getHTMLId($suffix = '')
     {
         $form_name_array = array_merge([$this->params['form_name']], $this->params['form_array']);
-        if ($suffix != '') {
-            return 'yform-' . implode('_',$form_name_array) . '-' . $this->getName() . '-' . $suffix;
+        if ('' != $suffix) {
+            return 'yform-' . implode('_', $form_name_array) . '-' . $this->getName() . '-' . $suffix;
         }
-        if ($this->getName() != '') {
-            return 'yform-' . implode('_',$form_name_array) . '-' . $this->getName();
+        if ('' != $this->getName()) {
+            return 'yform-' . implode('_', $form_name_array) . '-' . $this->getName();
         }
         return '';
     }
@@ -86,7 +86,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     public function getValueFromKey($v = '')
     {
-        if ($v == '') {
+        if ('' == $v) {
             $v = $this->getValue();
         }
 
@@ -237,7 +237,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         $label = rex_i18n::translate($label, null);
 
-        if ($this->params['form_label_type'] == 'html') {
+        if ('html' == $this->params['form_label_type']) {
         } else {
             $label = nl2br(htmlspecialchars($label));
         }
@@ -302,12 +302,11 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public function saveInDB($elementKey = 'no_db')
     {
         // is no_db set
-        if (in_array($this->getElement($elementKey), [1,"1",true,"no_db"], true)) {
+        if (in_array($this->getElement($elementKey), [1, '1', true, 'no_db'], true)) {
             return false;
         }
         return true;
     }
-
 
     // ------------ Trigger
 

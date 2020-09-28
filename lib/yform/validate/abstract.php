@@ -13,16 +13,16 @@ abstract class rex_yform_validate_abstract extends rex_yform_base_abstract
 
     public function getValueObject($valueName = '')
     {
-        if ($valueName == '') {
+        if ('' == $valueName) {
             $valueName = $this->getElement('name');
         }
 
-        if ($valueName == '') {
+        if ('' == $valueName) {
             $valueName = $this->getElement(2);
         }
 
         foreach ($this->getObjects() as $Object) {
-            if (strcmp($Object->getName(), trim($valueName)) == 0) {
+            if (0 == strcmp($Object->getName(), trim($valueName))) {
                 return $Object;
             }
         }

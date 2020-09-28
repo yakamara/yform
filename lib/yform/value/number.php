@@ -11,7 +11,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        if ($this->getValue() == '' && !$this->params['send']) {
+        if ('' == $this->getValue() && !$this->params['send']) {
             $this->setValue($this->getElement('default'));
         }
 
@@ -61,7 +61,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
             'description' => rex_i18n::msg('yform_values_number_description'),
             'db_type' => ['DECIMAL({precision},{scale})'],
             'hooks' => [
-                'preCreate' => function (rex_yform_manager_field $field, $db_type) {
+                'preCreate' => static function (rex_yform_manager_field $field, $db_type) {
                     $db_type = str_replace('{precision}', $field->getElement('precision') ?? 6, $db_type);
                     $db_type = str_replace('{scale}', $field->getElement('scale') ?? 2, $db_type);
                     return $db_type;
@@ -73,7 +73,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        return (!empty($params['params']['field']['unit']) && $params['subject'] != '') ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
+        return (!empty($params['params']['field']['unit']) && '' != $params['subject']) ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
     }
 
     public static function getSearchField($params)
@@ -88,10 +88,10 @@ class rex_yform_value_number extends rex_yform_value_abstract
         $value = $params['value'];
         $field = $sql->escapeIdentifier($params['field']->getName());
 
-        if ($value == '(empty)') {
+        if ('(empty)' == $value) {
             return ' (' . $field . ' = "" or ' . $field . ' IS NULL) ';
         }
-        if ($value == '!(empty)') {
+        if ('!(empty)' == $value) {
             return ' (' . $field . ' <> "" and ' . $field . ' IS NOT NULL) ';
         }
 

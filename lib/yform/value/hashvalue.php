@@ -11,12 +11,12 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
 {
     public function postFormAction()
     {
-        if ($this->params['value_pool']['email'][$this->getElement('field')] != '') {
+        if ('' != $this->params['value_pool']['email'][$this->getElement('field')]) {
             $salt = $this->getElement('salt');
             $origin = $this->params['value_pool']['email'][$this->getElement(3)];
             $func = $this->getElement('function');
 
-            if ($func == '' || !function_exists($func)) {
+            if ('' == $func || !function_exists($func)) {
                 $func = 'md5';
             }
 

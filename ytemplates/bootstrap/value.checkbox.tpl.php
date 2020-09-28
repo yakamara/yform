@@ -3,7 +3,7 @@
 /** @var rex_yform_value_checkbox $this */
 
 $notices = [];
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -23,7 +23,7 @@ $attributes = [
     'name' => $this->getFieldName(),
     'value' => 1,
 ];
-if ($value == 1) {
+if (1 == $value) {
     $attributes['checked'] = 'checked';
 }
 

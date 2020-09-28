@@ -15,5 +15,5 @@
             <label for="<?php echo $this->getFieldId('delete') ?>">Datei löschen</label>
         </span>
     <?php endif ?>
-    <input class="uploadbox clickmedia <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" accept="<?= $this-getElement("types") ?>" type="file" />
+    <input class="uploadbox clickmedia <?php echo $this->getWarningClass() ?>" id="<?php echo $this->getFieldId() ?>" name="file_<?php echo md5($this->getFieldName('file')) ?>" accept="<?= $this - getElement('types') ?>" type="file" />
 </p>

@@ -18,16 +18,16 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
 
         $captchaRequest = rex_request('captcha', 'string');
 
-        if ($captchaRequest == 'show') {
+        if ('show' == $captchaRequest) {
             while (@ob_end_clean());
             $this->captcha_showImage();
             exit;
         }
 
-        if ($this->params['send'] == 1 && isset($_SESSION['captcha']) && $_SESSION['captcha'] != '' && md5(mb_strtolower($this->getValue())) == $_SESSION['captcha']) {
+        if (1 == $this->params['send'] && isset($_SESSION['captcha']) && '' != $_SESSION['captcha'] && md5(mb_strtolower($this->getValue())) == $_SESSION['captcha']) {
             $_SESSION['captcha'] = '';
-        } elseif ($this->params['send'] == 1) {
-            if ($this->getElement(4) == 1) {
+        } elseif (1 == $this->params['send']) {
+            if (1 == $this->getElement(4)) {
                 $this->params['warning'] = [];
                 $this->params['warning_messages'] = [];
             }
@@ -43,10 +43,10 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
             return;
         }
 
-        if ($this->getElement(3) != '') {
+        if ('' != $this->getElement(3)) {
             $link = $this->getElement(3);
             if (preg_match("/\?/", $link)) {
-                if (mb_substr($link, -1) != '&') {
+                if ('&' != mb_substr($link, -1)) {
                     $link .= '&';
                 }
             } else {
@@ -95,10 +95,10 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
         $color = imagecolorallocate($this->captcha_image, $color[0], $color[1], $color[2]);
 
         for ($i = 0; $i < $noise; ++$i) {
-            if (rand(1, 100) > $dust_vs_scratches) {
-                imageline($this->captcha_image, rand(0, $max_x), rand(0, $max_y), rand(0, $max_x), rand(0, $max_y), $color);
+            if (random_int(1, 100) > $dust_vs_scratches) {
+                imageline($this->captcha_image, random_int(0, $max_x), random_int(0, $max_y), random_int(0, $max_x), random_int(0, $max_y), $color);
             } else {
-                imagesetpixel($this->captcha_image, rand(0, $max_x), rand(0, $max_y), $color);
+                imagesetpixel($this->captcha_image, random_int(0, $max_x), random_int(0, $max_y), $color);
             }
         }
     }
@@ -109,7 +109,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
 
         $font_path = rex_addon::get('yform')->getPath('data/fonts');
 
-        list($padding_top, $padding_right, $padding_bottom, $padding_left) = $this->captcha_split($padding);
+        [$padding_top, $padding_right, $padding_bottom, $padding_left] = $this->captcha_split($padding);
         $box_width = ($width - ($padding_left + $padding_right)) / $letters_no;
         $box_height = $height - ($padding_top + $padding_bottom);
 
@@ -134,19 +134,19 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
         unset($a);
 
         for ($i = 0; $i < $letters_no; ++$i) {
-            $size_index = rand(0, $font_size_count);
+            $size_index = random_int(0, $font_size_count);
             $size = $font_size[$size_index];
 
-            $angle = ((rand(0, ($letter_precession * 2)) - $letter_precession) + 360) % 360;
+            $angle = ((random_int(0, ($letter_precession * 2)) - $letter_precession) + 360) % 360;
 
             $x = $padding_left + ($box_width * $i);
             $y = $padding_top + $size + (($box_height - $size) / 2);
 
-            $color_index = (rand(0, $fg_colors_count));
+            $color_index = (random_int(0, $fg_colors_count));
             $color = $fg_colors[$color_index];
             $color = imagecolorallocate($this->captcha_image, $color[0], $color[1], $color[2]);
 
-            $font_index = rand(0, $fonts_count);
+            $font_index = random_int(0, $fonts_count);
             $font = $fonts[$font_index];
 
             imagettftext($this->captcha_image, $size, $angle, $x, $y, $color, $font, $this->captcha_letters[$i]);
@@ -161,7 +161,7 @@ class rex_yform_value_captcha extends rex_yform_value_abstract
         $letters_max = (count($letters) - 1);
 
         for ($i = 0; $i < $letters_no; ++$i) {
-            $letter_index = rand(0, $letters_max);
+            $letter_index = random_int(0, $letters_max);
             $rtn_val[] = $letters[$letter_index];
         }
 

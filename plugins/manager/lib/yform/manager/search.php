@@ -6,8 +6,8 @@ class rex_yform_manager_search
     private $scriptPath = '';
 
     /** @var rex_yform_manager_table */
-    protected $table = null;
-    protected $fields = null;
+    protected $table;
+    protected $fields;
 
     public function __construct(rex_yform_manager_table $table)
     {
@@ -58,7 +58,7 @@ class rex_yform_manager_search
         }
 
         foreach ($this->fields as $field) {
-            if ($field->getTypeName() && $field->getType() == 'value' && $field->isSearchable()) {
+            if ($field->getTypeName() && 'value' == $field->getType() && $field->isSearchable()) {
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchField')) {
                     call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchField', [
                         'searchForm' => $yform,
@@ -91,7 +91,7 @@ class rex_yform_manager_search
 
         $return = [];
         foreach ($yform->objparams['values'] as $i => $valueObject) {
-            if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
+            if (isset($fieldValues[$i]) && '' != $fieldValues[$i]) {
                 $return[$yform->getFieldName($valueObject->getLabel(), [$i])] = $fieldValues[$i];
             }
         }
@@ -112,7 +112,7 @@ class rex_yform_manager_search
 
         $vars = [];
         foreach ($yform->objparams['values'] as $i => $valueObject) {
-            if (isset($fieldValues[$i]) && $fieldValues[$i] != '') {
+            if (isset($fieldValues[$i]) && '' != $fieldValues[$i]) {
                 $vars[$valueObject->getName()] = $fieldValues[$i];
             }
         }
@@ -121,7 +121,7 @@ class rex_yform_manager_search
         }
 
         foreach ($this->fields as $field) {
-            if (array_key_exists($field->getName(), $vars) && $field->getType() == 'value' && $field->isSearchable()) {
+            if (array_key_exists($field->getName(), $vars) && 'value' == $field->getType() && $field->isSearchable()) {
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                     $qf = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
                         [
@@ -130,7 +130,7 @@ class rex_yform_manager_search
                             'value' => $vars[$field->getName()],
                         ]
                     );
-                    if ($qf != '') {
+                    if ('' != $qf) {
                         $queryFilter[] = $qf;
                     }
                 }

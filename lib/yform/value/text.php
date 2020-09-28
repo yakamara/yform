@@ -13,7 +13,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
     {
         $this->setValue((string) $this->getValue());
 
-        if ($this->getValue() == '' && !$this->params['send']) {
+        if ('' == $this->getValue() && !$this->params['send']) {
             $this->setValue($this->getElement('default'));
         }
 
@@ -52,7 +52,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
             'db_type' => ['varchar(191)', 'text'],
             'famous' => true,
             'hooks' => [
-                'preDefault' => function (rex_yform_manager_field $field) {
+                'preDefault' => static function (rex_yform_manager_field $field) {
                     return $field->getElement('default');
                 },
             ],
@@ -70,15 +70,15 @@ class rex_yform_value_text extends rex_yform_value_abstract
         $value = $params['value'];
         $field = $params['field']->getName();
 
-        if ($value == '(empty)') {
+        if ('(empty)' == $value) {
             return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
         }
-        if ($value == '!(empty)') {
+        if ('!(empty)' == $value) {
             return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
         }
 
         $pos = strpos($value, '*');
-        if ($pos !== false) {
+        if (false !== $pos) {
             $value = str_replace('%', '\%', $value);
             $value = str_replace('*', '%', $value);
             return $sql->escapeIdentifier($field) . ' LIKE ' . $sql->escape($value);

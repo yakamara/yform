@@ -22,7 +22,7 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
         }
         $data = $gd->getArray('select * from ' . $this->getElement(2) . ' where ' . $gd->escapeIdentifier($this->getElement(3)) . ' = ' . $gd->escape($value) . ' ');
 
-        if (count($data) == 1) {
+        if (1 == count($data)) {
             $data = current($data);
             foreach ($data as $k => $v) {
                 $this->params['value_pool']['email'][$k] = $v;

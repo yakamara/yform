@@ -11,7 +11,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        if ($this->getValue() == '' && !$this->params['send']) {
+        if ('' == $this->getValue() && !$this->params['send']) {
             $this->setValue($this->getElement('default'));
         }
 
@@ -57,7 +57,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        return (!empty($params['params']['field']['unit']) && $params['subject'] != '') ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
+        return (!empty($params['params']['field']['unit']) && '' != $params['subject']) ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
     }
 
     public static function getSearchField($params)
@@ -72,10 +72,10 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         $value = $params['value'];
         $field = $sql->escapeIdentifier($params['field']->getName());
 
-        if ($value == '(empty)') {
+        if ('(empty)' == $value) {
             return ' (' . $field . ' = "" or ' . $field . ' IS NULL) ';
         }
-        if ($value == '!(empty)') {
+        if ('!(empty)' == $value) {
             return ' (' . $field . ' <> "" and ' . $field . ' IS NOT NULL) ';
         }
 

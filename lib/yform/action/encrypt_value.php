@@ -21,10 +21,10 @@ class rex_yform_action_encrypt_value extends rex_yform_action_abstract
 
         // Label to save in
         $ls = @$this->getElement(4);
-        if ($ls == '') {
+        if ('' == $ls) {
             $ls = $l[0];
         }
-        if ($ls == '') {
+        if ('' == $ls) {
             return false;
         }
 
@@ -36,7 +36,7 @@ class rex_yform_action_encrypt_value extends rex_yform_action_abstract
             }
         }
 
-        if ($k != '') {
+        if ('' != $k) {
             $this->params['value_pool']['sql'][$ls] = $f($k);
             $this->params['value_pool']['email'][$ls] = $f($k);
         }

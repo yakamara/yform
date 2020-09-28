@@ -44,7 +44,7 @@ class rex_yform_rest
 
     public static function handleRoutes()
     {
-        if (self::$preRoute != '') {
+        if ('' != self::$preRoute) {
             if (substr(self::getCurrentPath(), 0, strlen(self::$preRoute)) != self::$preRoute) {
                 return false;
             }
@@ -59,14 +59,14 @@ class rex_yform_rest
 
             $paths = explode('/', substr(self::getCurrentPath(), strlen($routePath)));
 
-            $paths = array_filter($paths, function ($p) {
+            $paths = array_filter($paths, static function ($p) {
                 if (!empty($p)) {
                     return true;
                 }
                 return false;
             });
 
-            /* @var $route \rex_yform_rest_route */
+            /** @var \rex_yform_rest_route $route */
 
             if (!$route->hasAuth()) {
                 self::sendError(400, 'no-access');
@@ -74,7 +74,6 @@ class rex_yform_rest
                 $route
                 ->handleRequest($paths, $_GET);
             }
-
         }
     }
 
@@ -84,7 +83,7 @@ class rex_yform_rest
         $message['errors'] = [
             'message' => $error,
             'status' => $status,
-            'descriptions' => $descriptions
+            'descriptions' => $descriptions,
         ];
         self::sendContent($status, $message);
     }
@@ -103,11 +102,11 @@ class rex_yform_rest
         $headers = [];
 
         foreach ($_SERVER as $k => $v) {
-            if (substr($k, 0, 5) == 'HTTP_') {
+            if ('HTTP_' == substr($k, 0, 5)) {
                 $headers[str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($k, 5))))] = $v;
-            } elseif ($k == 'CONTENT_TYPE') {
+            } elseif ('CONTENT_TYPE' == $k) {
                 $headers['Content-Type'] = $v;
-            } elseif ($k == 'CONTENT_LENGTH') {
+            } elseif ('CONTENT_LENGTH' == $k) {
                 $headers['Content-Length'] = $v;
             }
         }
@@ -116,11 +115,11 @@ class rex_yform_rest
             $value = $headers[$key];
         }
 
-        if ($value == '') {
+        if ('' == $value) {
             $value = rex_get($key, 'string', '');
         }
 
-        if ($value == '') {
+        if ('' == $value) {
             $value = $default;
         }
 
@@ -129,10 +128,9 @@ class rex_yform_rest
 
     public static function getLinkByPath($route, $params = [], $additionalPaths = [])
     {
-
-        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
             $url = 'https://';
-        } elseif ( (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443) || (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off')) {
+        } elseif ((isset($_SERVER['SERVER_PORT']) && 443 == $_SERVER['SERVER_PORT']) || (isset($_SERVER['HTTPS']) && 'off' != strtolower($_SERVER['HTTPS']))) {
             $url = 'https://';
         } else {
             $url = 'http://';
@@ -145,12 +143,11 @@ class rex_yform_rest
         }
 
         $query = http_build_query($params, '', '&');
-        $query = ($query != '') ? '?' . $query : $query;
+        $query = ('' != $query) ? '?' . $query : $query;
 
         $path = implode('/', array_merge([$route->getPath()], $additionalPaths));
 
-        return $url . self::$preRoute . $path . $query ;
-
+        return $url . self::$preRoute . $path . $query;
     }
 
     public static function getRouteByInstance($instance)
@@ -164,13 +161,10 @@ class rex_yform_rest
         }
 
         return null;
-
     }
 
     public static function getCurrentUrl()
     {
         return $_SERVER['REQUEST_URI'];
-
     }
-
 }

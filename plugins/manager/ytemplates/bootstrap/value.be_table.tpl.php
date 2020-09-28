@@ -2,8 +2,8 @@
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $data_index = 0;
-$notice     = [];
-if ($this->getElement('notice') != '') {
+$notice = [];
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -16,7 +16,7 @@ if (count($notice) > 0) {
 }
 
 $ytemplates = $this->params['this']->getObjectparams('form_ytemplate');
-$main_id    = $this->params['this']->getObjectparams('main_id');
+$main_id = $this->params['this']->getObjectparams('main_id');
 
 ?>
 <div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
@@ -41,11 +41,11 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                     $field->params['this']->setObjectparams('form_name', $this->getName() . '.' . $i);
                     $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
                     $field->params['this']->setObjectparams('main_id', $main_id);
-                    $field->params['form_name']       = $field->getName();
+                    $field->params['form_name'] = $field->getName();
                     $field->params['form_label_type'] = 'html';
-                    $field->params['send']            = false;
+                    $field->params['send'] = false;
 
-                    if ($field->getElement(0) == 'be_manager_relation') {
+                    if ('be_manager_relation' == $field->getElement(0)) {
                         $field->params['main_table'] = $field->getElement('table');
                         $field->setName($field->getElement('field'));
                     }
@@ -66,7 +66,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
     <script type="text/javascript">
         (function () {
             var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
-                be_table_cnt = <?= (int)$data_index ?>;
+                be_table_cnt = <?= (int) $data_index ?>;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row, #<?= $this->getHTMLId() ?>-add-mobile-row').click(function () {
                 var $this = $(this),
@@ -108,7 +108,7 @@ $main_id    = $this->params['this']->getObjectparams('main_id');
                             $field->params['form_label_type'] = 'html';
                             $field->params['send'] = false;
 
-                            if ($field->getElement(0) == 'be_manager_relation') {
+                            if ('be_manager_relation' == $field->getElement(0)) {
                                 $field->params['main_table'] = $field->getElement('table');
                                 $field->setName($field->getElement('field'));
                             }

@@ -4,7 +4,7 @@ $sortable = false;
 $sortButtons = '';
 $sorthandle = '';
 
-if ($prioFieldName != '') {
+if ('' != $prioFieldName) {
     $sorthandle = '<span class="sorthandle"></span>';
     $sortButtons = '
             <div class="btn-group btn-group-xs">

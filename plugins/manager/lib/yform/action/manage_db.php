@@ -29,13 +29,13 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
         $sql->setDebug($this->params['debug']);
 
         $main_table = '';
-        if ($this->getElement(2) != '') {
+        if ('' != $this->getElement(2)) {
             $main_table = $this->getElement(2);
         } else {
             $main_table = $this->params['main_table'];
         }
 
-        if ($main_table == '') {
+        if ('' == $main_table) {
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
             $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
@@ -48,7 +48,7 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
         }
         $alterTable = [];
         foreach ($this->params['value_pool']['sql'] as $field => $value) {
-            if ($value != '' && !isset($columns[$field])) {
+            if ('' != $value && !isset($columns[$field])) {
                 $alterTable[] = 'ADD `' . $field . '` TEXT NOT NULL';
                 $columns[$field] = true;
             }
@@ -60,7 +60,7 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
         $sql->setTable($main_table);
 
         $where = '';
-        if (trim($this->getElement(3)) != '') {
+        if ('' != trim($this->getElement(3))) {
             $where = trim($this->getElement(3));
         }
 
@@ -68,12 +68,12 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
             if (isset($columns[$key])) {
                 $sql->setValue($key, $value);
             }
-            if ($where != '') {
+            if ('' != $where) {
                 $where = str_replace('###' . $key . '###', addslashes($value), $where);
             }
         }
 
-        if ($where != '') {
+        if ('' != $where) {
             $sql->setWhere($where);
             $sql->update();
             $flag = 'update';
@@ -85,7 +85,7 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
             $this->params['value_pool']['email']['ID'] = $id;
             $this->params['main_id'] = $id;
             // $this->params["value_pool"]["sql"]["ID"] = $id;
-            if ($id == 0) {
+            if (0 == $id) {
                 $this->params['form_show'] = true;
                 $this->params['hasWarnings'] = true;
                 $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];

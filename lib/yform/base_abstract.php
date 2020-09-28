@@ -9,7 +9,7 @@
 
 abstract class rex_yform_base_abstract
 {
-    public $id = null;
+    public $id;
     public $params = [];
     public $obj;
     public $elements;
@@ -20,8 +20,8 @@ abstract class rex_yform_base_abstract
         $this->params = &$params;
         $offset = 0;
         foreach ($elements as $key => $value) {
-            if (is_string($value) && !empty($value) && $value[0] == '#' && false !== strpos($value, ':')) {
-                list($key, $value) = explode(':', substr($value, 1), 2);
+            if (is_string($value) && !empty($value) && '#' == $value[0] && false !== strpos($value, ':')) {
+                [$key, $value] = explode(':', substr($value, 1), 2);
                 ++$offset;
             }
             $this->setElement(is_numeric($key) ? $key - $offset : $key, $value);

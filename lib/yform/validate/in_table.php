@@ -45,13 +45,13 @@ class rex_yform_validate_in_table extends rex_yform_validate_abstract
 
         $sql = 'select * from ' . $table . ' WHERE (' . implode(' AND ', $qfields) . ')';
         $extras = trim($this->getElement(6));
-        if ($extras != '') {
+        if ('' != $extras) {
             $sql .= ' and ('.$extras.')';
         }
         $sql .= ' LIMIT 2';
 
         $db->setQuery($sql);
-        if ($db->getRows() == 0) {
+        if (0 == $db->getRows()) {
             foreach ($qfields as $qfield_id => $qfield_name) {
                 $this->params['warning'][$qfield_id] = $this->params['error_class'];
             }

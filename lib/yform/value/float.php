@@ -11,7 +11,7 @@ class rex_yform_value_float extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        if ($this->getValue() == '' && !$this->params['send']) {
+        if ('' == $this->getValue() && !$this->params['send']) {
             $this->setValue($this->getElement('default'));
         }
 
@@ -63,10 +63,10 @@ class rex_yform_value_float extends rex_yform_value_abstract
         $value = $params['value'];
         $field = $sql->escapeIdentifier($params['field']->getName());
 
-        if ($value == '(empty)') {
+        if ('(empty)' == $value) {
             return ' (' . $field . ' = "" or ' . $field . ' IS NULL) ';
         }
-        if ($value == '!(empty)') {
+        if ('!(empty)' == $value) {
             return ' (' . $field . ' <> "" and ' . $field . ' IS NOT NULL) ';
         }
 
