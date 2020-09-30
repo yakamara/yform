@@ -46,6 +46,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
         }
         $ids = explode(',', $params['value']);
 
+        $names = [];
         foreach ($ids as $article_id) {
             $article = $article = rex_article::get($article_id);
             if ($article) {
@@ -53,15 +54,14 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             }
         }
 
-        if ($names) {
-            if (count($names) > 4) {
-                $names = array_slice($names, 0, 4);
-                $names[] = '...';
-            }
-            return implode('<br />', $names);
+        if (0 == count($names)) {
+            return '-';
         }
-
-        return '-';
+        if (count($names) > 4) {
+            $names = array_slice($names, 0, 4);
+            $names[] = '...';
+        }
+        return implode('<br />', $names);
     }
 
     public static function isArticleInUse(\rex_extension_point $ep)
