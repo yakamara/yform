@@ -611,6 +611,8 @@ class rex_yform_manager_dataset
         if ('backend' == $user && rex::getUser()) {
             $user = rex::getUser()->getLogin();
         }
+        // ep to overwrite user
+        $user = rex_extension::registerPoint(new rex_extension_point('YFORM_HISTORY_USER', $user));
 
         $sql = rex_sql::factory();
         $sql->setDebug(self::$debug);
