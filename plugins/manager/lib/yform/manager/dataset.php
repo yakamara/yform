@@ -612,7 +612,7 @@ class rex_yform_manager_dataset
             $user = rex::getUser()->getLogin();
         }
         // ep to overwrite user
-        $user = rex_extension::registerPoint(new rex_extension_point('YFORM_HISTORY_USER', $user));
+        $user = rex_extension::registerPoint(new rex_extension_point('YCOM_HISTORY_USER', $user));
 
         $sql = rex_sql::factory();
         $sql->setDebug(self::$debug);
