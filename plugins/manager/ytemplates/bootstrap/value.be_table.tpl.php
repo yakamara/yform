@@ -49,7 +49,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                         $field->params['main_table'] = $field->getElement('table');
                         $field->setName($field->getElement('field'));
                     }
-                    $field->setValue($rowData[$i] ?: '');
+                    $field->setValue($rowData[$i] ?? '');
                     $field->setId($data_index);
                     $field->enterObject();
                     $field_output = trim($field->params['form_output'][$field->getId()]);
