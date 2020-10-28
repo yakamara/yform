@@ -422,6 +422,17 @@ Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in 
 	// In PHP
 	$yform->setObjectparams('form_exit',1);
 
+### Objparams zur Auswertung des Formulars
+
+#### Versandmethode des Formulars
+
+```php
+// In PHP
+$yform->getObjectparams('warning')
+```
+
+Mit `count($yform->getObjectparams('warning')) > 0` kann geprüft werden ob Fehler im Formular vorliegen.
+
 ## YForm-Modul: Values
 
 > **Hinweis:** 
