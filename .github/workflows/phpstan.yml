@@ -1,7 +1,8 @@
 name: PHP Checks
 
 on:
-  push:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 jobs:
 
@@ -23,4 +24,4 @@ jobs:
             run: composer install --prefer-dist
 
           - run: |
-                vendor/bin/phpstan analyse --no-progress --error-format=checkstyle | cs2pr
+                vendor/bin/phpstan analyse --no-progress

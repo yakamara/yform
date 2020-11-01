@@ -1,9 +1,14 @@
 {
-    "require-dev": {
-        "redaxo/source": "dev-master",
-        "phpstan/phpstan": "^0.12.11"
-    },
+    "name": "yakamara/redaxo_yform",
 
+    "require-dev": {
+        "redaxo/source": "^5.8",
+        "phpstan/phpstan": "0.12.52"
+    },
+    "scripts": {
+        "phpstan": "phpstan analyse",
+        "phpstan-baseline": "phpstan analyse --generate-baseline"
+    },
     "autoload-dev": {
         "classmap": [
             "lib/",
