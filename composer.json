@@ -3,7 +3,7 @@
 
     "require-dev": {
         "redaxo/source": "^5.8",
-        "phpstan/phpstan": "0.12.52"
+        "phpstan/phpstan": "^0.12.52"
     },
     "scripts": {
         "phpstan": "phpstan analyse",
