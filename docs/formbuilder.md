@@ -433,87 +433,62 @@ $yform->getObjectparams('warning')
 ### Verfügbare Objparams
 
 Folgende Objparams find verfügbar:
+- 'action': Array
 - 'actions': Aktionen des Formulars
+- 'actions_executed': Boolean. Wenn true sind die Aktionen ausgeführt. Siehe auch 'preactions_executed' und 'postactions_executed'.
 - 'answertext': Antworttext
 - 'article_id': Ziel Artikel ID des aFormulars
 - 'clang': Sprach ID des Formulars
+- 'csrf_protection': Boolean. Aktiviert den CSRF Schutz. Hierbei wird ein Cookie gesetzt.
+- 'csrf_protection_error_message': CSRF Fehlermeldung. Standard: '{{ csrf.error }}'
+- 'data': Boolean.
+- 'debug': Boolean. Aktiviert den Debugmodus
 - 'error_class': CSS Klasse des Fehlerfelds
-- 'form_action':
+- 'Error-occured': Freitext oberhalb auftgetretener Fehlermeldungen.
+- 'Error-Code-EntryNotFound': Standard: 'ErrorCode - EntryNotFound'
+- 'Error-Code-InsertQueryError': Standard 'ErrorCode - InsertQueryError'
+- 'fieldsets_opened':
+- 'form_action': 
 - 'form_anchor': Sprunganker zu dem das Formular nach Absenden springt
+- 'form_array':
 - 'form_class': CSS Klasse des Formulars
+- 'form_data': Formular in pipe Notation
+- 'form_elements':
+- 'form_hiddenfields': Versteckte Felder des Formulars
+- 'form_label_type': Label Typ. html (Standard) oder plain.
 - 'form_name': Name des Formulars
 - 'form_method': Sendemethode des Formulars: post oder get
+- 'form_needs_output': Boolean.
+- 'form_output':
 - 'form_show': Boolean, wenn true wird das Formular angezeigt.
 - 'form_showformafterupdate': Boolean, wenn true wird das Formular nach dem Absenden erneut angezeigt.
 - 'form_wrap_class': Klasse der div, die das Formular umgibt. Standard ist 'yform'.
 - 'form_wrap_id': ID der div, die das Formular umgibt. Standard ist 'rex-yform'.
+- 'form_ytemplate': YForm Template. Standard: 'bootstrap,classic';
+- 'getdata': Boolean
+- 'get_field_type': Standard 'request';
+- 'hide_field_warning_messages': Boolean. Blendet Fehlermeldung die Eingabefelder betreffend aus oder ein. Standard ist ein.
+- 'hide_top_warning_messages': Boolean.
+- 'main_id': Datenbank Datensatz ID
+- 'main_table': Tabellenname der Haupttabelle
+- 'main_where': Hauptbestandteil der SQL WHERE Abfrage, z.B. "id=12"
+- 'output': Finale Ausgabe des Formulars
+- 'preactions_executed': Boolean. Wenn true sind die Pre Aktionen ausgeführt. Siehe auch 'actions_executed' und 'postactions_executed'.
+- 'postactions_executed':Boolean. Wenn true sind die Post Aktionen ausgeführt. Siehe auch 'actions_executed' und 'preactions_executed'.
 - 'real_field_names': Boolean, wenn true erhalten die Felder im Formular im ausgegeben HTML auch den im Formbuilder angegebenen Namen.
+- 'sql_object': SQL Objekt
 - 'submit_btn_label': Beschriftung des Absenden Buttons
 - 'submit_btn_show': Boolean, wenn false wird kein Absenden Button angezeigt
+- 'this': YForm Objekt
 - 'unique_error':
 - 'unique_field_warning':
-- 'values': Value Felder des Formulars
+- 'validate': Array
 - 'validates': Validierungsfelder des Formulars
-
-        $this->objparams['form_label_type'] = 'html'; // plain
-
-        $this->objparams['form_ytemplate'] = 'bootstrap,classic';
-
-        $this->objparams['actions_executed'] = false;
-        $this->objparams['postactions_executed'] = false;
-        $this->objparams['preactions_executed'] = false;
-
-        $this->objparams['Error-occured'] = '';
-        $this->objparams['Error-Code-EntryNotFound'] = 'ErrorCode - EntryNotFound';
-        $this->objparams['Error-Code-InsertQueryError'] = 'ErrorCode - InsertQueryError';
-
-        $this->objparams['csrf_protection'] = true;
-        $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
-
-        $this->objparams['getdata'] = false;
-        $this->objparams['data'] = false;
-        $this->objparams['get_field_type'] = 'request';
-
-
-        // --------------------------- do not edit
-
-        $this->objparams['debug'] = false;
-
-        $this->objparams['form_data'] = ''; // Forms with pipe notation
-        $this->objparams['output'] = ''; // Final output of form
-
-        // predefined dataset via sql
-        $this->objparams['main_where'] = ''; // like "id=12" for db
-        $this->objparams['main_id'] = -1; // unique Dataset ID
-        $this->objparams['main_table'] = ''; // for db and unique
-        $this->objparams['sql_object'] = null; // rex_sql
-
-        $this->objparams['form_hiddenfields'] = [];
-
-        $this->objparams['warning'] = [];
-        $this->objparams['warning_messages'] = [];
-
-        $this->objparams['hide_top_warning_messages'] = false;
-        $this->objparams['hide_field_warning_messages'] = true;
-
-        $this->objparams['fieldsets_opened'] = 0;
-
-        $this->objparams['form_elements'] = [];
-        $this->objparams['form_output'] = [];
-        $this->objparams['form_needs_output'] = true;
-
-        $this->objparams['value_pool'] = [];
-        $this->objparams['value_pool']['email'] = [];
-        $this->objparams['value_pool']['sql'] = [];
-        $this->objparams['value_pool']['files'] = [];
-
-        $this->objparams['value'] = [];
-        $this->objparams['validate'] = [];
-        $this->objparams['action'] = [];
-
-        $this->objparams['form_array'] = '';
-
-        $this->objparams['this'] = $this;
+- 'value': Array
+- 'value_pool': Array. Schlüssel der Elemente sind 'email', 'files', 'sql', die ebenfalls Arrays beinhalten.
+- 'values': Value Felder des Formulars
+- 'warning': Fehlermeldung des Formulars. Hat das Formular keine Fehler, ist das Feld leer.
+- 'warning_messages': Fehlermeldungen des Formulars als Array
 
 ## YForm-Modul: Values
 
