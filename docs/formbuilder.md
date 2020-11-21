@@ -422,16 +422,98 @@ Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in 
 	// In PHP
 	$yform->setObjectparams('form_exit',1);
 
-### Objparams zur Auswertung des Formulars
+### Objparams auslesen
 
-#### Versandmethode des Formulars
+Über folgende Methode können Objparams ausgelesen werden:
 
 ```php
-// In PHP
 $yform->getObjectparams('warning')
 ```
 
-Mit `count($yform->getObjectparams('warning')) > 0` kann geprüft werden ob Fehler im Formular vorliegen.
+### Verfügbare Objparams
+
+Folgende Objparams find verfügbar:
+- 'actions': Aktionen des Formulars
+- 'answertext': Antworttext
+- 'article_id': Ziel Artikel ID des aFormulars
+- 'clang': Sprach ID des Formulars
+- 'error_class': CSS Klasse des Fehlerfelds
+- 'form_method': Sendemethode des Formulars: post oder get
+- 'real_field_names': Boolean, wenn true erhalten die Felder im Formular im ausgegeben HTML auch den im Formbuilder angegebenen Namen .
+- 'submit_btn_label': Beschriftung des Absenden Buttons
+- 'submit_btn_show': Boolean, wenn false wird kein Absenden Button angezeigt
+- 'unique_error':
+- 'unique_field_warning':
+- 'values': Value Felder des Formulars
+- 'validates': Validierungsfelder des Formulars
+        $this->objparams['form_action'] = 'index.php';
+        $this->objparams['form_anchor'] = '';
+        $this->objparams['form_showformafterupdate'] = 0;
+        $this->objparams['form_show'] = true;
+        $this->objparams['form_name'] = 'formular';
+        $this->objparams['form_class'] = 'rex-yform';
+        $this->objparams['form_wrap_id'] = 'rex-yform';
+        $this->objparams['form_wrap_class'] = 'yform';
+
+        $this->objparams['form_label_type'] = 'html'; // plain
+
+        $this->objparams['form_ytemplate'] = 'bootstrap,classic';
+
+        $this->objparams['actions_executed'] = false;
+        $this->objparams['postactions_executed'] = false;
+        $this->objparams['preactions_executed'] = false;
+
+        $this->objparams['Error-occured'] = '';
+        $this->objparams['Error-Code-EntryNotFound'] = 'ErrorCode - EntryNotFound';
+        $this->objparams['Error-Code-InsertQueryError'] = 'ErrorCode - InsertQueryError';
+
+        $this->objparams['csrf_protection'] = true;
+        $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
+
+        $this->objparams['getdata'] = false;
+        $this->objparams['data'] = false;
+        $this->objparams['get_field_type'] = 'request';
+
+
+        // --------------------------- do not edit
+
+        $this->objparams['debug'] = false;
+
+        $this->objparams['form_data'] = ''; // Forms with pipe notation
+        $this->objparams['output'] = ''; // Final output of form
+
+        // predefined dataset via sql
+        $this->objparams['main_where'] = ''; // like "id=12" for db
+        $this->objparams['main_id'] = -1; // unique Dataset ID
+        $this->objparams['main_table'] = ''; // for db and unique
+        $this->objparams['sql_object'] = null; // rex_sql
+
+        $this->objparams['form_hiddenfields'] = [];
+
+        $this->objparams['warning'] = [];
+        $this->objparams['warning_messages'] = [];
+
+        $this->objparams['hide_top_warning_messages'] = false;
+        $this->objparams['hide_field_warning_messages'] = true;
+
+        $this->objparams['fieldsets_opened'] = 0;
+
+        $this->objparams['form_elements'] = [];
+        $this->objparams['form_output'] = [];
+        $this->objparams['form_needs_output'] = true;
+
+        $this->objparams['value_pool'] = [];
+        $this->objparams['value_pool']['email'] = [];
+        $this->objparams['value_pool']['sql'] = [];
+        $this->objparams['value_pool']['files'] = [];
+
+        $this->objparams['value'] = [];
+        $this->objparams['validate'] = [];
+        $this->objparams['action'] = [];
+
+        $this->objparams['form_array'] = '';
+
+        $this->objparams['this'] = $this;
 
 ## YForm-Modul: Values
 
