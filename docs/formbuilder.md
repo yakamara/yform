@@ -438,22 +438,22 @@ Folgende Objparams find verfügbar:
 - 'article_id': Ziel Artikel ID des aFormulars
 - 'clang': Sprach ID des Formulars
 - 'error_class': CSS Klasse des Fehlerfelds
+- 'form_action':
+- 'form_anchor': Sprunganker zu dem das Formular nach Absenden springt
+- 'form_class': CSS Klasse des Formulars
+- 'form_name': Name des Formulars
 - 'form_method': Sendemethode des Formulars: post oder get
-- 'real_field_names': Boolean, wenn true erhalten die Felder im Formular im ausgegeben HTML auch den im Formbuilder angegebenen Namen .
+- 'form_show': Boolean, wenn true wird das Formular angezeigt.
+- 'form_showformafterupdate': Boolean, wenn true wird das Formular nach dem Absenden erneut angezeigt.
+- 'form_wrap_class': Klasse der div, die das Formular umgibt. Standard ist 'yform'.
+- 'form_wrap_id': ID der div, die das Formular umgibt. Standard ist 'rex-yform'.
+- 'real_field_names': Boolean, wenn true erhalten die Felder im Formular im ausgegeben HTML auch den im Formbuilder angegebenen Namen.
 - 'submit_btn_label': Beschriftung des Absenden Buttons
 - 'submit_btn_show': Boolean, wenn false wird kein Absenden Button angezeigt
 - 'unique_error':
 - 'unique_field_warning':
 - 'values': Value Felder des Formulars
 - 'validates': Validierungsfelder des Formulars
-        $this->objparams['form_action'] = 'index.php';
-        $this->objparams['form_anchor'] = '';
-        $this->objparams['form_showformafterupdate'] = 0;
-        $this->objparams['form_show'] = true;
-        $this->objparams['form_name'] = 'formular';
-        $this->objparams['form_class'] = 'rex-yform';
-        $this->objparams['form_wrap_id'] = 'rex-yform';
-        $this->objparams['form_wrap_class'] = 'yform';
 
         $this->objparams['form_label_type'] = 'html'; // plain
 
