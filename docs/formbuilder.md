@@ -434,12 +434,12 @@ $yform->getObjectparams('warning')
 
 Folgende Objparams find verfügbar:
 - `action`: Array
-- `actions`: Aktionen des Formulars
-- `actions_executed`: Boolean. Wenn true sind die Aktionen ausgeführt. Siehe auch `preactions_executed` und `postactions_executed`.
-- `answertext`: Antworttext
-- `article_id`: Ziel Artikel ID des aFormulars
-- `clang`: Sprach ID des Formulars
-- `csrf_protection`: Boolean. Aktiviert den CSRF Schutz. Hierbei wird ein Cookie gesetzt.
+- `actions`: Dem Formular zugeordnete YForm-Actions.
+- `actions_executed`: Gibt an, ob YForm-Actions ausgeführt wurden `true` oder `false`. Siehe auch `preactions_executed` und `postactions_executed`.
+- `answertext`: Text, der nach erfolgreichem Absenden des Formulars mit oder anstelle des Formulars ausgegeben wird.
+- `article_id`: Artikel-ID, dessen URL als Ziel für das Formular dient.
+- `clang`: Clang-ID des Formulars (Sprache).
+- `csrf_protection`: Boolean. Aktiviert den CSRF-Schutz. Hierbei wird ein Cookie gesetzt.
 - `csrf_protection_error_message`: CSRF Fehlermeldung. Standard: '{{ csrf.error }}'
 - `data`: Boolean.
 - `debug`: Boolean. Aktiviert den Debugmodus
@@ -449,7 +449,7 @@ Folgende Objparams find verfügbar:
 - `Error-Code-InsertQueryError`: Standard 'ErrorCode - InsertQueryError'
 - `fieldsets_opened`:
 - `form_action`: 
-- `form_anchor`: Sprunganker zu dem das Formular nach Absenden springt
+- `form_anchor`: S(optional) ID des HTML-Sprungankers, um nach Absenden zu einem HTML-Element zu scrollen.
 - `form_array`:
 - `form_class`: CSS Klasse des Formulars
 - `form_data`: Formular in pipe Notation
@@ -457,7 +457,7 @@ Folgende Objparams find verfügbar:
 - `form_hiddenfields`: Versteckte Felder des Formulars
 - `form_label_type`: Label Typ. html (Standard) oder plain.
 - `form_name`: Name des Formulars
-- `form_method`: Sendemethode des Formulars: post oder get
+- `form_method`: Übertragungsweg des Formulars: `POST` (Standard) oder `GET`.
 - `form_needs_output`: Boolean.
 - `form_output`:
 - `form_show`: Boolean, wenn true wird das Formular angezeigt.
@@ -469,7 +469,7 @@ Folgende Objparams find verfügbar:
 - `get_field_type`: Standard 'request';
 - `hide_field_warning_messages`: Boolean. Blendet Fehlermeldung die Eingabefelder betreffend aus oder ein. Standard ist ein.
 - `hide_top_warning_messages`: Boolean.
-- `main_id`: Datenbank Datensatz ID
+- `main_id`: optional: Primär-Schlüssel / ID des Datensatz, der bearbeitet wird.
 - `main_table`: Tabellenname der Haupttabelle
 - `main_where`: Hauptbestandteil der SQL WHERE Abfrage, z.B. "id=12"
 - `output`: Finale Ausgabe des Formulars
