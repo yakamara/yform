@@ -206,9 +206,9 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             ->setValue('originalname', $FILENAME)
             ->setValue('filesize', $FILESIZE)
             ->setValue('category_id', $rex_media_category_id)
-            ->setValue('createdate', date('Y-m-d H:i:s'))
+            ->setValue('createdate', date(rex_sql::FORMAT_DATETIME))
             ->setValue('createuser', $mediapool_user)
-            ->setValue('updatedate', date('Y-m-d H:i:s'))
+            ->setValue('updatedate', date(rex_sql::FORMAT_DATETIME))
             ->setValue('updateuser', $mediapool_user);
 
         // get widht height

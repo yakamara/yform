@@ -317,7 +317,7 @@ Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen z
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
-> Tipp: Zum konvertieren des MySQL-Date-Formats in PHP `date('Y-m-d H:i:s', strtotime($datetime))` verwenden
+> Tipp: Zum konvertieren des MySQL-Date-Formats in PHP `date(rex_sql::FORMAT_DATETIME, strtotime($datetime))` verwenden
 
 ### datestamp
 

@@ -787,7 +787,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         }
 
         if ($value instanceof DateTimeInterface) {
-            return $value->format('Y-m-d H:i:s');
+            return $value->format(rex_sql::FORMAT_DATETIME);
         }
 
         if (is_object($value)) {
