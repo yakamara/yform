@@ -50,7 +50,7 @@ class rex_yform_rest_auth_token
         \rex_sql::factory()
             ->setTable(rex::getTable('yform_rest_token_access'))
             ->setValue('token_id', $TokenAuth['id'])
-            ->setValue('datetime_created', date('Y-m-d H:i:s'))
+            ->setValue('datetime_created', date(rex_sql::FORMAT_DATETIME))
             ->setValue('url', \rex_yform_rest::getCurrentUrl())
             ->insert();
     }

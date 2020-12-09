@@ -11,7 +11,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
     public function preValidateAction()
     {
-        $format = 'Y-m-d H:i:s';
+        $format = rex_sql::FORMAT_DATETIME;
         $default_value = date($format);
         $value = $this->getValue();
         $this->showValue = self::datestamp_getValueByFormat($value, $this->getElement('format'));
