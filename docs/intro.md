@@ -19,6 +19,5 @@ Der Admin kann mit Hilfe des Table Managers auch Datenbank-Tabellen "zusammenkli
 Nach einer [Einführung](table_manager_intro.md) werden die [Tabellenoptionen](table_manager_optionen.md) sowie [Feldtypen](table_manager_feldtypen.md) ausfürlich abgehandelt. Auch die [Feld-Validierung](table_manager_validierungen.md) und die [Verknüpfung von Tabellen](table_manager_feldtypen_be-relation.md) kommen zur Sprache.
 
 > **Hinweis:**  
-> Diese Dokumentation wird auf Github gepflegt:  
-> https://github.com/yakamara/redaxo_yform_docs
-> Ergänzungen oder Korrekturen bitte am besten direkt dort als Issue oder Pull request erstellen.
+> Diese Dokumentation wird auf GitHub gepflegt.  
+> [Ergänzungen oder Korrekturen](https://github.com/yakamara/redaxo_yform/tree/master/docs) bitte am besten direkt dort als Issue oder Pull request erstellen.
