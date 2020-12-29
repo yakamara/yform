@@ -16,7 +16,7 @@ YForm kann aber nicht nur Formulare für das Frontend generieren sowie Formulare
 
 Der Admin kann mit Hilfe des Table Managers auch Datenbank-Tabellen "zusammenklicken" und diese - ergänzt z. B. durch Validierungen - im Backend samt Eingabemaske zur Verfügung stellen. Diese automatisch erzeugten Daten-Verwaltungen können dann wiederum den Code für ein dazu passendes Frontend-Formular generieren.
 
-Nach einer Einführung in das [Einführung](table_manager_intro.md) werden die [Tabellenoptionen](table_manager_optionen.md) sowie [Feldtypen](table_manager_feldtypen.md) ausfürlich abgehandelt. Auch die [Feld-Validierung](table_manager_validierungen.md) und die [Verknüpfung von Tabellen](table_manager_feldtypen_be-relation.md) kommen zur Sprache.
+Nach einer [Einführung](table_manager_intro.md) werden die [Tabellenoptionen](table_manager_optionen.md) sowie [Feldtypen](table_manager_feldtypen.md) ausfürlich abgehandelt. Auch die [Feld-Validierung](table_manager_validierungen.md) und die [Verknüpfung von Tabellen](table_manager_feldtypen_be-relation.md) kommen zur Sprache.
 
 > **Hinweis:**  
 > Diese Dokumentation wird auf Github gepflegt:  
