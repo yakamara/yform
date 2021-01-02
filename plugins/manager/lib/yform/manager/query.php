@@ -444,7 +444,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereNested($nested, $operator = 'AND')
     {
-        $operator = mb_strtoupper(trim($operator));
+        $operator = strtoupper(trim($operator));
 
         if (is_array($nested)) {
             $this->where[] = $this->buildNestedWhere($nested, $operator);
