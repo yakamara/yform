@@ -306,6 +306,10 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             );
         } elseif (is_string($choicesElement) && strlen(trim($choicesElement)) > 0 && '{' == substr(trim($choicesElement), 0, 1) && '{{' != substr(trim($choicesElement), 0, 2)) {
             $choiceList->createListFromJson($choicesElement);
+        } elseif (is_callable($choicesElement)) {
+            $choiceList->createListFromJson(
+                call_user_func($choicesElement)
+            );
         } else {
             $choiceList->createListFromStringArray(
                 $self->getArrayFromString($choicesElement)
