@@ -105,10 +105,10 @@ class rex_yform_manager_table_api
             $export_table = rex_yform_manager_table::get($table_name);
             $export_fields = [];
             foreach ($export_table->getFields() as $field) {
-                $export_fields[] = $field->toArray();
+                $export_fields[] = array_diff_key($field->toArray(), ['id'=>0]);
             }
             $export[$export_table['table_name']] = [
-                'table' => $export_table->toArray(),
+                'table' => array_diff_key($export_table->toArray(), ['id'=>0,'prio'=>0]),
                 'fields' => $export_fields,
             ];
         }
