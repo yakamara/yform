@@ -154,7 +154,13 @@ class rex_yform_manager_field implements ArrayAccess
     // sobald die yform value klassen umgebaut worden sind.
     public function toArray()
     {
-        return $this->values;
+        $keys = array_unique(
+            array_merge(
+                ['id','table_name','prio','type_id','type_name','db_type','list_hidden','search','name','label','not_required'],
+                array_keys( $this->definitions['values'] ?? [] )
+            )
+        );
+        return array_intersect_key($this->values, array_flip($keys));
     }
 
     // ------------------------------------------- Array Access
