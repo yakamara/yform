@@ -544,6 +544,7 @@ class rex_yform_manager
                     ]
                     );
                 } else {
+
                     // to take care, that db field are not in conflict with th names, ' ' have been added to identifier
 
                     $list->addColumn(rex_i18n::msg('yform_function').' ', '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
@@ -569,6 +570,7 @@ class rex_yform_manager
                     }
 
                     $list->setColumnLayout(rex_i18n::msg('yform_function').' ', ['<th class="rex-table-action" colspan="'.$colspan.'">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+
                 }
 
                 $list = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST', $list, ['table' => $this->table]));
@@ -670,13 +672,6 @@ class rex_yform_manager
                     $item['attributes']['class'][] = 'btn-default';
                     $table_links[] = $item;
                 }
-                if (count($table_links) > 0) {
-                    $fragment = new rex_fragment();
-                    $fragment->setVar('size', 'xs', false);
-                    $fragment->setVar('buttons', $table_links, false);
-                    $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_table') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
-                }
-
                 $field_links = [];
                 if (!$popup && rex::getUser()->isAdmin()) {
                     $item = [];
@@ -684,6 +679,19 @@ class rex_yform_manager
                     $item['url'] = 'index.php?page=yform/manager/table_field&table_name=' . $this->table->getTableName();
                     $item['attributes']['class'][] = 'btn-default';
                     $field_links[] = $item;
+                }
+                ['table_links' => $table_links, 'field_links' => $field_links] = rex_extension::registerPoint(
+                    new rex_extension_point(
+                        'YFORM_DATA_LIST_LINKS',
+                        ['table_links' => $table_links, 'field_links' => $field_links],
+                        ['table' => $this->table, 'popup' => $popup]
+                    )
+                );
+                if (count($table_links) > 0) {
+                    $fragment = new rex_fragment();
+                    $fragment->setVar('size', 'xs', false);
+                    $fragment->setVar('buttons', $table_links, false);
+                    $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_table') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
                 }
                 if (count($field_links) > 0) {
                     $fragment = new rex_fragment();
