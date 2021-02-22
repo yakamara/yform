@@ -377,7 +377,7 @@ if (!rex::getUser()->isAdmin()) {
     foreach ($tables as $table) {
         if ($table->isActive() && !$table->isHidden() && (rex::getUser()->isAdmin() || rex::getUser()->hasPerm($table->getPermKey()))) {
             echo '<li><a href="index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName() . '">' . $table->getNameLocalized() . '</a></li>';
-       }
+        }
     }
 
     echo '</ul></div>';
