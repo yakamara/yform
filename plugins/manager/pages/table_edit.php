@@ -325,11 +325,15 @@ if ($show_list && rex::getUser()->isAdmin()) {
 
     $list->setColumnLabel('name', rex_i18n::msg('yform_manager_name').' / '.rex_i18n::msg('yform_manager_table_name'));
     $list->setColumnFormat('name', 'custom', static function ($params) {
-        $name = $params['list']->getValue('name');
-        if ($name === $params['value']) {
+        $name = $params['value'];
+        if ($name === $params['list']->getValue('table_name')) {
             $name = 'translate:'.$name;
         }
-        return rex_i18n::translate($name).' [###table_name###]<p><a href="index.php?page=yform/manager/data_edit&table_name=###table_name###"><i class="rex-icon rex-icon-edit"></i> '.rex_i18n::msg('yform_edit_datatable').'</a></p>';
+        $name = rex_i18n::translate($name);
+        if (preg_match ('/^\[translate:(.*?)\]$/',$name, $match)) {
+            $name = $match[1];
+        }
+        return $name.' [###table_name###]<p><a href="index.php?page=yform/manager/data_edit&table_name=###table_name###"><i class="rex-icon rex-icon-edit"></i> '.rex_i18n::msg('yform_edit_datatable').'</a></p>';
     });
 
     $list->setColumnLabel('status', rex_i18n::msg('yform_manager_table_status'));
