@@ -137,7 +137,7 @@ class rex_yform_manager
         echo rex_extension::registerPoint(
             new rex_extension_point(
                 'YFORM_MANAGER_DATA_PAGE_HEADER',
-                rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_i18n::translate($this->table->getName()) . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', ''),
+                rex_view::title(rex_i18n::msg('yform_table') . ': ' . $this->table->getNameLocalized() . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', ''),
                 [
                     'yform' => $this,
                 ]
@@ -832,7 +832,7 @@ class rex_yform_manager
 
         $table = $this->table;
 
-        $table_info = '<b>' . rex_i18n::translate($table->getName()) . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id='.$table->getId().'&func=edit">' . $table->getTableName() . '</a>]</b> ';
+        $table_info = '<b>' . $table->getNameLocalized() . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id='.$table->getId().'&func=edit">' . $table->getTableName() . '</a>]</b> ';
         echo rex_view::info($table_info);
 
         $_csrf_key = 'table_field-'.$table->getTableName();

@@ -117,6 +117,20 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['name'];
     }
 
+    public function getNameLocalized()
+    {
+        $table_name = $this->getTableName();
+        $name = $this->getName();
+        if ($name === $table_name) {
+            $name = 'translate:'.$name;
+        }
+        $name = rex_i18n::translate($name);
+        if (preg_match ('/^\[translate:(.*?)\]$/',$name, $match)) {
+            $name = $match[1];
+        }
+        return \rex_i18n::translate($name);
+    }
+    
     public function getId()
     {
         return $this->values['id'];

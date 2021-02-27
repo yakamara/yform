@@ -33,7 +33,7 @@ if (rex::isBackend() && rex::getUser()) {
     $prio = 1;
     foreach ($tables as $table) {
         if ($table->isActive() && rex::getUser()->getComplexPerm('yform_manager_table')->hasPerm($table->getTableName())) {
-            $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), rex_i18n::translate($table->getName()));
+             $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), $table->getNameLocalized() );
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName());
             $be_page->setIcon('rex-icon rex-icon-module');
             $be_page->setPrio($prio);

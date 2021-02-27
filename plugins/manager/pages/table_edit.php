@@ -325,7 +325,15 @@ if ($show_list && rex::getUser()->isAdmin()) {
 
     $list->setColumnLabel('name', rex_i18n::msg('yform_manager_name').' / '.rex_i18n::msg('yform_manager_table_name'));
     $list->setColumnFormat('name', 'custom', static function ($params) {
-        return rex_i18n::translate($params['value']).' [###table_name###]<p><a href="index.php?page=yform/manager/data_edit&table_name=###table_name###"><i class="rex-icon rex-icon-edit"></i> '.rex_i18n::msg('yform_edit_datatable').'</a></p>';
+        $name = $params['value'];
+        if ($name === $params['list']->getValue('table_name')) {
+            $name = 'translate:'.$name;
+        }
+        $name = rex_i18n::translate($name);
+        if (preg_match ('/^\[translate:(.*?)\]$/',$name, $match)) {
+            $name = $match[1];
+        }
+        return $name.' [###table_name###]<p><a href="index.php?page=yform/manager/data_edit&table_name=###table_name###"><i class="rex-icon rex-icon-edit"></i> '.rex_i18n::msg('yform_edit_datatable').'</a></p>';
     });
 
     $list->setColumnLabel('status', rex_i18n::msg('yform_manager_table_status'));
@@ -372,7 +380,7 @@ if (!rex::getUser()->isAdmin()) {
     $tables = rex_yform_manager_table::getAll();
     foreach ($tables as $table) {
         if ($table->isActive() && !$table->isHidden() && (rex::getUser()->isAdmin() || rex::getUser()->hasPerm($table->getPermKey()))) {
-            echo '<li><a href="index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName() . '">' . rex_i18n::translate($table->getName()) . '</a></li>';
+            echo '<li><a href="index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName() . '">' . $table->getNameLocalized() . '</a></li>';
         }
     }
 
