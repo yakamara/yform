@@ -476,7 +476,7 @@ class rex_yform
         foreach ($templates as $template) {
             foreach ($ytemplates as $ytemplate => $_) {
                 foreach (array_reverse(self::$TemplatePaths) as $path) {
-                    $template_path = $path . '/' . $ytemplate . '/' . $template;
+                    $template_path = $path . '/' . trim($ytemplate) . '/' . $template;
                     if (file_exists($template_path)) {
                         return $template_path;
                     }
