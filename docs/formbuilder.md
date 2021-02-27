@@ -10,16 +10,16 @@ Innerhalb von YForm gibt es im Menüpunkt `Übersicht` unter `Setup` den Button 
 
 Im Eingabefeld des Formbuilder-Moduls kann man die Values, Validierungen und Aktionen direkt eintragen. Eine kurze Syntaxerklärung aller Komponenten ist im Modul zu finden.
 
-#### [Value-Felder](yform_modul_values.md)
+#### [Value-Felder](#values)
 Value-Felder sind die am häufigstgen verwendeten Felder, die normalerweise im Formular direkt auftauchen: einfache Textfelder, Selectfelder, Checkboxen, aber auch versteckte Felder, Geburtsdaten, Datenbank-Selectfelder, etc.
 
-#### [Validate-Felder](yform_modul_validates.md)
+#### [Validate-Felder](#validierung)
 Mit Validate-Feldern werden die Werte der Value-Felder überprüft. Das heißt, damit wird z. B. valdiert, ob ein Wert eingetragen wurde (`empty`) oder ob ein `String`, `Integer` oder sonstiger Wert eingetragen wurde. Es kann aber auch überprüft werden, ob ein Datenbankfeld mit diesem Wert schon existiert.
 
-#### [Action-Felder](yform_modul_actions.md)
+#### [Action-Felder](#actions)
 Action-Felder sind für spätere Verwendungen wichtig: Soll z. B. eine E-Mail verschickt werden und/oder ein Eintrag in die Datenbank erfolgen?
 
-#### [Objparams](yform_modul_objparams.md)
+#### [Objparams-Definitionen](#objparams)
 Objektparameter sind Einstellungen, die das ganze Formular betreffen. Mann kann dort z. B. CSS-Klassen oder IDs für das Formular festlegen oder das Ziel das Formularversands definieren.
 
 ### Syntax
@@ -490,7 +490,7 @@ Folgende Objparams find verfügbar:
 - `warning`: Fehlermeldung des Formulars. Hat das Formular keine Fehler, ist das Feld leer.
 - `warning_messages`: Fehlermeldungen des Formulars als Array
 
-## YForm-Modul: Values
+## Values
 
 > **Hinweis:** 
 > Dieser Abschnitt der Doku ist noch nicht fertig. Du kannst dich auf [GitHub](https://github.com/yakamara/redaxo_yform_docs/) an der Fertigstellung beteiligen.
