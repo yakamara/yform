@@ -37,7 +37,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $error_messages['type_error'] = isset($error_messages[2]) ? rex_i18n::translate($error_messages[2]) : 'type_error';
         $error_messages['empty_error'] = isset($error_messages[3]) ? rex_i18n::translate($error_messages[3]) : 'empty_error';
         $error_messages['delete_file'] = isset($error_messages[4]) ? rex_i18n::translate($error_messages[4]) : 'delete ';
-        $error_messages['destination_error'] = isset($error_messages[4]) ? rex_i18n::translate($error_messages[4]) : 'destination_error ';
+        $error_messages['destination_error'] = isset($error_messages[5]) ? rex_i18n::translate($error_messages[5]) : 'destination_error ';
 
         $errors = [];
 
