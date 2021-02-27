@@ -262,7 +262,7 @@ yform_values_number_error_precision = Bitte gib bei der Anzahl der Ziffern (PREC
 yform_values_number_error_scale = Bitte gib bei der Anzahl der Nachkommastellen (SCALE) eine Zahl zwischen {0} und {1} ein
 yform_values_number_error_compare = Die Nachkommastellen dürfen nicht höher sein als die Anzahl der Ziffern.
 
-
+yform_docs = Dokumentation
 yform_docs_intro = Intro
 yform_docs_table_manager = Manager
 yform_docs_formbuilder = Formbuilder

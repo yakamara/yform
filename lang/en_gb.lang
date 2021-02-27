@@ -262,7 +262,7 @@ yform_values_number_error_precision = Please enter a number between {0} and {1} 
 yform_values_number_error_scale = Please enter a number between {0} and {1} for the number of decimal places (SCALE)
 yform_values_number_error_compare = The number of decimal places must be lower than the number of digits
 
-
+yform_docs = Documentation
 yform_docs_intro = Intro
 yform_docs_table_manager = Manager
 yform_docs_formbuilder = Form builder

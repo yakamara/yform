@@ -10,10 +10,11 @@ page:
     subpages:
         overview: { title: 'translate:overview', perm: admin }
         docs:
-            title: 'Hilfe'
+            title: 'translate:docs'
             perm: admin[]
             pjax: false
             itemclass: pull-right
+            icon: rex-icon fa-info-circle
             subpages:
                 intro:
                     title: 'translate:yform_docs_intro'
