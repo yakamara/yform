@@ -422,6 +422,74 @@ Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in 
 	// In PHP
 	$yform->setObjectparams('form_exit',1);
 
+### Objparams auslesen
+
+Über folgende Methode können Objparams ausgelesen werden:
+
+```php
+$yform->getObjectparams('warning')
+```
+
+### Verfügbare Objparams
+
+Folgende Objparams find verfügbar:
+- `action`: Array
+- `actions`: Dem Formular zugeordnete YForm-Actions.
+- `actions_executed`: Gibt an, ob YForm-Actions ausgeführt wurden `true` oder `false`. Siehe auch `preactions_executed` und `postactions_executed`.
+- `answertext`: Text, der nach erfolgreichem Absenden des Formulars mit oder anstelle des Formulars ausgegeben wird.
+- `article_id`: Artikel-ID, dessen URL als Ziel für das Formular dient.
+- `clang`: Clang-ID des Formulars (Sprache).
+- `csrf_protection`: Boolean. Aktiviert den CSRF-Schutz. Hierbei wird ein Cookie gesetzt.
+- `csrf_protection_error_message`: CSRF Fehlermeldung. Standard: '{{ csrf.error }}'
+- `data`: Boolean.
+- `debug`: Boolean. Aktiviert den Debugmodus
+- `error_class`: CSS Klasse des Fehlerfelds
+- `Error-occured`: Freitext oberhalb auftgetretener Fehlermeldungen.
+- `Error-Code-EntryNotFound`: Standard: 'ErrorCode - EntryNotFound'
+- `Error-Code-InsertQueryError`: Standard 'ErrorCode - InsertQueryError'
+- `fieldsets_opened`:
+- `form_action`: 
+- `form_anchor`: S(optional) ID des HTML-Sprungankers, um nach Absenden zu einem HTML-Element zu scrollen.
+- `form_array`:
+- `form_class`: CSS Klasse des Formulars
+- `form_data`: Formular in pipe Notation
+- `form_elements`:
+- `form_hiddenfields`: Versteckte Felder des Formulars
+- `form_label_type`: Label Typ. html (Standard) oder plain.
+- `form_name`: Name des Formulars
+- `form_method`: Übertragungsweg des Formulars: `POST` (Standard) oder `GET`.
+- `form_needs_output`: Boolean.
+- `form_output`:
+- `form_show`: Boolean, wenn true wird das Formular angezeigt.
+- `form_showformafterupdate`: Boolean, wenn true wird das Formular nach dem Absenden erneut angezeigt.
+- `form_wrap_class`: Klasse der div, die das Formular umgibt. Standard ist 'yform'.
+- `form_wrap_id`: ID der div, die das Formular umgibt. Standard ist 'rex-yform'.
+- `form_ytemplate`: YForm Template. Standard: 'bootstrap,classic';
+- `getdata`: Boolean
+- `get_field_type`: Standard 'request';
+- `hide_field_warning_messages`: Boolean. Blendet Fehlermeldung die Eingabefelder betreffend aus oder ein. Standard ist ein.
+- `hide_top_warning_messages`: Boolean.
+- `main_id`: optional: Primär-Schlüssel / ID des Datensatz, der bearbeitet wird.
+- `main_table`: Tabellenname der Haupttabelle
+- `main_where`: Hauptbestandteil der SQL WHERE Abfrage, z.B. "id=12"
+- `output`: Finale Ausgabe des Formulars
+- `preactions_executed`: Boolean. Wenn true sind die Pre Aktionen ausgeführt. Siehe auch `actions_executed` und `postactions_executed`.
+- `postactions_executed`:Boolean. Wenn true sind die Post Aktionen ausgeführt. Siehe auch `actions_executed` und `preactions_executed`.
+- `real_field_names`: Boolean, wenn true erhalten die Felder im Formular im ausgegeben HTML auch den im Formbuilder angegebenen Namen.
+- `sql_object`: SQL Objekt
+- `submit_btn_label`: Beschriftung des Absenden Buttons
+- `submit_btn_show`: Boolean, wenn false wird kein Absenden Button angezeigt
+- `this`: YForm Objekt
+- `unique_error`:
+- `unique_field_warning`:
+- `validate`: Array
+- `validates`: Validierungsfelder des Formulars
+- `value`: Array
+- `value_pool`: Array. Schlüssel der Elemente sind `email`, `files`, `sql`, die ebenfalls Arrays beinhalten.
+- `values`: Value Felder des Formulars
+- `warning`: Fehlermeldung des Formulars. Hat das Formular keine Fehler, ist das Feld leer.
+- `warning_messages`: Fehlermeldungen des Formulars als Array
+
 ## YForm-Modul: Values
 
 > **Hinweis:** 
