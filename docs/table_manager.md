@@ -10,11 +10,11 @@ Der Table Manager in YForm dient zum Erstellen und Bearbeiten von Datenbanktabel
 
 Im Wesentlichen sind folgende Schritte notwendig, um mit dem Table Manager zu starten:
 
-1. [Tabelle im Table Manager erstellen](table_manager_optionen.md).
-2. [Felder der neuen Tabelle hinzufügen](table_manager_feldtypen.md). 
+1. [Tabelle im Table Manager erstellen](#tabellen-und-optionen).
+2. [Felder der neuen Tabelle hinzufügen](#feldtypen). 
 3. Datensätze in die Felder der neuen Tabelle eintragen.
 
-> Tipp für Neulinge: Alternativ zu Schritt 1 und 2 kann auch ein vorkonfiguriertes Tableset importiert werden, das bereits Tabelle und Felder enthält. Eine Anleitung mit Muster-Tablesets für Kontaktformular, Team und Projekte gibt es im Abschnitt [Tableset importieren](table_manager_optionen.md#tableset-importieren)
+> Tipp für Neulinge: Alternativ zu Schritt 1 und 2 kann auch ein vorkonfiguriertes Tableset importiert werden, das bereits Tabelle und Felder enthält. Eine Anleitung mit Muster-Tablesets für Kontaktformular, Team und Projekte gibt es im Abschnitt [Tableset importieren](#tableset-importieren-exportieren)
 
 ### Aufbau des Table Manager
 
@@ -61,7 +61,7 @@ Um Tabellen im Table Manager zu bearbeiten, gibt es drei verschiedene Möglichke
 
 * eine neue [Datenbank-Tabelle erstellen](#tabelle-erstellen).
 * eine vorhandene Datenbank-Tabelle in den [Table Manager migrieren](#tabelle-migrieren)
-* eine neue Datenbank-Tabelle einschließlich aller benötigten Felder anhand eines [Tablesets imporiteren](#tableset-importieren).
+* eine neue Datenbank-Tabelle einschließlich aller benötigten Felder anhand eines [Tablesets imporiteren](#tableset-importieren-exportieren).
 
 ### Tabelle erstellen
 
@@ -179,7 +179,7 @@ Mehrfachauswahl | Gibt an, ob ein (1:n) oder mehrere (m:n) Datensätze ausgewäh
 Mit "Leer-Option" | Gibt an, ob "keine Auswahl" erlaubt ist.
 Fehlermeldung, wenn "Leer-Option" nicht aktiviert ist | Fehlermeldung, die dem Nutzer mitteilt, dass eine Auswahl getroffen werden muss. 
 Höhe der Auswahlbox | Höhe der Auswahlbox, wenn `Mehrfachauswahl` als select-Feld aktiviert wurde. 
-Zusätzliche Angaben in einer speziellen Syntax, die in [be_relation-Tutorial](table_manager_feldtypen_be-manager-relation.md) erläutert werden.  
+Zusätzliche Angaben in einer speziellen Syntax, die in [be_relation-Tutorial](#anhang) erläutert werden.  
 Vorab: [Diskussion auf GitHub](https://github.com/yakamara/redaxo_yform_docs/issues/12)  
 Relationstabelle | [optional] Name der Tabelle, in der die m:n-Beziehungen abgelegt sind, z. B. `rex_project_news_tags`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben. 
@@ -188,7 +188,7 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 
 > **Hinweise:**
 > **Tipp für Anfänger:** Um die verknüpften Datensätze im Frontend auszugeben, wird eine SELECT-Abfrage mit einem `JOIN` benötigt.
-> **Tipp:** Details zu den umfangreichen Einstellungsmöglichkeiten gibt's im [be_relation-Tutorial](table_manager_feldtypen_be-manager-relation.md).
+> **Tipp:** Details zu den umfangreichen Einstellungsmöglichkeiten gibt's im [be_relation-Tutorial](#anhang).
 
 ### be_media
 
@@ -945,10 +945,10 @@ Tabelle [opt] | Name der Tabelle, in der die Felder durchsucht werden.
 
 ## Table Manager Snippets
 
-- [Table Manager: Spalte ausblenden](#spalteausblenden)
-- [Table Manager: Spalteninhalt vor Anzeige in Übersicht ändern](#Spalteninhalt)
-- [Table Manager: Bilderspalte in Tabellenansicht (Bild statt Dateiname)](#ytbilder)
-- [Table Manager: Extensionpoint / Listensortierung beeinflussen)](#ytlistsort)
+- [Table Manager: Spalte ausblenden](#table-manager-spalte-ausblenden)
+- [Table Manager: Spalteninhalt vor Anzeige in Übersicht ändern](#table-manager-spalteninhalt-vor-anzeige-in-uebersicht-aendern)
+- [Table Manager: Bilderspalte in Tabellenansicht (Bild statt Dateiname)](#table-manager-bilderspalte-in-tabellenansicht-bild-statt-dateiname)
+- [Table Manager: Extensionpoint / Listensortierung beeinflussen)](#table-manager-extensionpoint-listensortierung-beeinflussen)
 
 ### Table Manager: Spalte ausblenden
 
@@ -1084,7 +1084,7 @@ rex_extension::register('YFORM_DATA_LIST_SQL', function ($ep) {
 ### be_manager_relation
 
 > **Hinweis:**  
-> Dieser Abschnitt der Doku ist noch nicht fertig. Du kannst dich auf [GitHub](https://github.com/yakamara/redaxo_yform_docs/) an der Fertigstellung beteiligen.
+> Dieser Abschnitt der Doku ist noch nicht fertig. Du kannst dich auf [GitHub](https://github.com/yakamara/redaxo_yform/) an der Fertigstellung beteiligen.
 
 In diesem Tutorial wird die Anwendung des be_manager_relation Feld-Typs erklärt.
 
