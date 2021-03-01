@@ -78,8 +78,8 @@ yform_values_defaults_showvalue = Wert anzeigen
 yform_validate_defaults_message = Fehlermeldung
 yform_values_defaults_unit = Maßeinheit (z.B. € $ m mm %)
 
-yform_values_number_precision = Anzahl der Ziffern (23335443.23 wäre z.B. 10 Ziffern) (PRECISION)
-yform_values_number_scale = Anzahl der Nachkommastellen der Ziffern (23335443.23 wäre z.B. 2 Nachkommastellen) (SCALE)
+yform_values_number_precision = Anzahl der Ziffern inkl. Dezimalstellen insg., z. B. <code>6</code> eingeben für <code>4999,95</code> oder <code>100.000</code> (PRECISION)
+yform_values_number_scale = Davon: Anzahl der Ziffern für Nachkommastellen, z. B. <code>2</code> eingeben für <code>4999,95</code> oder <code>0</code> für <code>100.000</code> (SCALE)
 
 yform_search_defaults_wildcard_notice = Beispiele: *name / !(empty) / (empty)
 yform_search_integer_notice = Beispiele: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
