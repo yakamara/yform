@@ -75,9 +75,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                     $elementAttributes['multiple'] = 'multiple';
                     $elementAttributes['size'] = count($choiceList->getChoices());
                 }
-                if (false !== $this->getElement('attributes')) {
-                    $elementAttributes = $this->getAttributes('attributes', $elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
-                }
+                $elementAttributes = $this->getAttributes('attributes', $elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
             }
 
             $choiceListView = $choiceList->createView($choiceAttributes);
@@ -309,7 +307,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         } elseif (is_callable($choicesElement)) {
             $res = call_user_func($choicesElement);
             if (is_array($res)) {
-                $choiceList->createListFromStringArray($res);    
+                $choiceList->createListFromStringArray($res);
             } else {
                 $choiceList->createListFromJson($res);
             }
