@@ -3,16 +3,18 @@
 /**
  * yform.
  *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
+ * @author mail[at]alexplus[dot]de Alexander Walther
+ * @author <a href="https://www.alexplus.de">www.alexplus.de</a>
  */
 
 class rex_yform_value_uuid extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $this->setValue(self::guidv4());
-
+        if(!$this->getValue()) {
+            $this->setValue(self::guidv4());
+        }
+        
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
