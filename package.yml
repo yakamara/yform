@@ -58,7 +58,7 @@ requires:
         phpmailer: '^2.0.0'
     redaxo: '^5.8.0'
     php:
-        version: '^7.0'
+        version: '>=7, <9'
 
 system_plugins:
     - manager
