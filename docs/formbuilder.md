@@ -700,6 +700,7 @@ $yform->setValueField('checkbox_sql', array("checkbox_sql","Checkbox SQL","SELEC
 ###### **Definition**
 Erzeugt eine Selectbox, eine Radiobutton Auswahl oder ein Checkbox-Feld. Wahlweise mit Multiple Auswahl oder Gruppiert (optgroup). Das Feld choice ersetzt mit der YFORM Version 3.0 die Felder checkbox_sql, radio, radio_sql, select und select_sql.
 Die Options können entweder als kommaseparierte Liste `label1=val1,label2=val2...`, als JSON `{"Europa": {"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}, "Südamerika": {"Bolivien": "BO"}}` oder als SQL Query `SELECT id AS value, name AS label FROM country` bzw. `SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id` angegeben werden. SQL muss die Felder `value` und `label` sowie `group_label` für gruppierte Felder zurückgeben. Der Alias `group_label` kann frei gewählt werden und muss beim Parameter `group_by` angegeben werden (Siehe Beispiel 6). Mit der Syntax als kommaseparierte Liste sind keine gruppierten Felder (optgroups) möglich.
+Die Options können auch als Callable angegeben. Die Funktion kann ein Array oder ein JSON zurückgeben, welches dem obigen Aufbau entspricht.
 
 *Hinweis*
 Die SQL Syntax unterscheidet sich zur früheren Syntax! Es werden nun die Felder `label` und `value` statt `id` und `name` erwartet.
