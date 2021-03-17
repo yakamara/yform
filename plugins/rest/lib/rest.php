@@ -19,7 +19,7 @@ class rex_yform_rest
         500 => '500 Internal Server Error',
     ];
     public static $preRoute = '/rest';
-
+    protected static $additionalHeaders = [];
     protected static $routes = [];
 
     /**
@@ -86,6 +86,11 @@ class rex_yform_rest
         return true;
     }
 
+    public static function setHeader(string $name, string $value)
+    {
+        self::$additionalHeaders[$name] = $value;
+    }
+
     /**
      * @param string $status
      * @param string $error
@@ -109,6 +114,10 @@ class rex_yform_rest
      */
     public static function sendContent($status, $content, $contentType = 'application/json')
     {
+        foreach (self::$additionalHeaders as $name => $value) {
+            rex_response::setHeader($name, $value);
+        }
+
         rex_response::setStatus(self::$status[$status]);
         rex_response::sendContent(json_encode($content), $contentType);
         exit;

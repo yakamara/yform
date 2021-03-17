@@ -13,6 +13,8 @@ class rex_yform_rest_route
 
     public static $requestMethods = ['get', 'post', 'delete'];
 
+    private $additionalHeaders = [];
+
     /**
      * rex_yform_rest_route constructor.
      *
@@ -27,11 +29,33 @@ class rex_yform_rest_route
         $this->query = $this->config['query'];
         $this->instance = $this->table->createDataset();
         $this->path = ('/' == substr($this->config['path'], -1)) ? substr($this->config['path'], 0, -1) : $this->config['path'];
+        return $this;
     }
 
     /**
-     * @return bool
+     * @return $this
      */
+    public function setHeader(string $name, string $value)
+    {
+        $this->additionalHeaders[$name] = $value;
+        return $this;
+    }
+
+    /**
+     * @param        $status
+     * @param        $content
+     * @param string $contentType
+     */
+    public function sendContent($status, $content, $contentType = 'application/json')
+    {
+        foreach ($this->additionalHeaders as $name => $value) {
+            rex_yform_rest::setHeader($name, $value);
+        }
+
+        rex_yform_rest::sendContent($status, $content, $contentType);
+        exit;
+    }
+
     public function hasAuth(): bool
     {
         if (isset($this->config['auth'])) {
@@ -250,7 +274,7 @@ class rex_yform_rest_route
                     }
                 }
 
-                rex_yform_rest::sendContent(200, $data);
+                $this->sendContent(200, $data);
 
                 break;
 

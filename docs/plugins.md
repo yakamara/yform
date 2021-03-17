@@ -302,8 +302,12 @@ In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung
 
 #### GET
 
-* Filter
-* Felder
+##### Filter
+
+Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuchen verwendet werden (getSearchFilter). Über einen oder mehrere filter[feldname]=suchwert Parameter werden die Suchfilter verwendet. Ein Suchfeld kann nur verwendet werden, wenn es in der Route als Feld definiert wurde.
+
+
+##### Felder
 
 #### POST
 
@@ -325,6 +329,17 @@ Wenn im Model folgende Authentifizerung angegeben wurde: `'\rex_yform_rest_auth_
 Die hier erstellen Token werden entsprechend überprüft und müssen im Header übergeben werden. `token=###meintoken###` Nur aktive Tokens funktionieren. 
 Über das REST PlugIn kann man im Backend diese Zugriffe einschränken und tracken. D.h. Es können Einschränkungen wir Zugriffe / Stunde oder ähnliches eingestellt werden. 
 Jeder Zugriff auf die REST-API wird erfasst. 
+
+### Header
+
+Man kann eigene Header setzen indem man allgemein der REST Api Header zuweist
+
+``\rex_yform_rest::setHeader('Access-Control-Allow-Origin', '*');``
+
+oder einer Route einen speziellen eigenen Header zuweist, welcher der allgemeinen Header überschreiben würde.
+
+``$route->setHeader('Access-Control-Allow-Origin', 'redaxo.org');``
+
 
 ## Tools-Plugin
 
