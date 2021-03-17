@@ -13,7 +13,12 @@ class rex_yform_rest_route
 
     public static $requestMethods = ['get', 'post', 'delete'];
 
-    public function __construct($config)
+    /**
+     * rex_yform_rest_route constructor.
+     *
+     * @param array $config
+     */
+    public function __construct(array $config)
     {
         $this->config = $config;
         $this->config['table'] = $config['type']::table();
@@ -24,6 +29,9 @@ class rex_yform_rest_route
         $this->path = ('/' == substr($this->config['path'], -1)) ? substr($this->config['path'], 0, -1) : $this->config['path'];
     }
 
+    /**
+     * @return bool
+     */
     public function hasAuth(): bool
     {
         if (isset($this->config['auth'])) {
@@ -35,12 +43,20 @@ class rex_yform_rest_route
         return true;
     }
 
+    /**
+     * @return string
+     */
     public function getPath()
     {
         return $this->path;
     }
 
-    public function handleRequest($paths, $get)
+    /**
+     * @param $paths
+     * @param $get
+     * @throws rex_api_exception
+     */
+    public function handleRequest(array $paths, array $get)
     {
         if (!isset($this->config['table'])) {
             rex_yform_rest::sendError(400, 'table-not-available');
@@ -370,7 +386,13 @@ class rex_yform_rest_route
         }
     }
 
-    public function getFields($type = 'get', $instance = null)
+    /**
+     * @param string $type
+     * @param null   $instance
+     * @throws rex_api_exception
+     * @return rex_yform_manager_field[]
+     */
+    public function getFields(string $type = 'get', $instance = null):array
     {
         $class = $this->getTypeFromInstance($instance);
 
@@ -406,7 +428,13 @@ class rex_yform_rest_route
         return $returnFields;
     }
 
-    public function getFilterQuery($query, $fields, $get)
+    /**
+     * @param $query
+     * @param $fields
+     * @param $get
+     * @return rex_yform_manager_query
+     */
+    public function getFilterQuery($query, $fields, $get): rex_yform_manager_query
     {
         /** @var rex_yform_manager_query $query */
         $tableAlias = $query->getTableAlias();
@@ -443,6 +471,12 @@ class rex_yform_rest_route
         return $query;
     }
 
+    /**
+     * @param       $instance
+     * @param       $paths
+     * @param false $onlyId
+     * @return array
+     */
     public function getInstanceData($instance, $paths, $onlyId = false): array
     {
         $links = [];
@@ -466,6 +500,11 @@ class rex_yform_rest_route
                 ];
     }
 
+    /**
+     * @param rex_yform_manager_dataset $instance
+     * @throws rex_api_exception
+     * @return array
+     */
     public function getInstanceAttributes(rex_yform_manager_dataset $instance): array
     {
         $data = [];
@@ -480,6 +519,11 @@ class rex_yform_rest_route
         return $data;
     }
 
+    /**
+     * @param rex_yform_manager_dataset $instance
+     * @throws rex_api_exception
+     * @return array
+     */
     public function getInstanceRelationships(rex_yform_manager_dataset $instance): array
     {
         $paths[] = $instance->getId();
@@ -526,11 +570,20 @@ class rex_yform_rest_route
         return $return;
     }
 
+    /**
+     * @param       $instance
+     * @param       $key
+     * @param false $attributCall
+     * @return mixed
+     */
     public function getInstanceValue($instance, $key, $attributCall = false)
     {
         return $instance->getValue($key, $attributCall);
     }
 
+    /**
+     * @return string
+     */
     public function getRequestMethod(): string
     {
         if (isset($_SERVER['X-HTTP-Method-Override'])) {
@@ -539,11 +592,15 @@ class rex_yform_rest_route
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    public function getTypeFromInstance($instance = null)
+    /**
+     * @param null $instance
+     * @return string
+     */
+    public function getTypeFromInstance($instance = null): string
     {
         $type = get_class($instance);
 
-        if ('rex_yform_manager_dataset' == $type || 'rex_yform_rest_route' == $instance || !$instance) {
+        if ('rex_yform_manager_dataset' == $type || 'rex_yform_rest_route' == $instance || !$instance || !$type) {
             $type = 'not-defined';
         }
         return $type;
