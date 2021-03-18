@@ -131,6 +131,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
+                'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_time_description'),
             'db_type' => ['time'],
