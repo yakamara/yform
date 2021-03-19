@@ -48,7 +48,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
                 <?= $view->getAttributesAsString() ?>
             />
             <i class="form-helper"></i>
-            <?= rex_escape($view->getLabel()) ?>
+            <?= $view->getLabel() ?>
         </label>
     </div>
 <?php
