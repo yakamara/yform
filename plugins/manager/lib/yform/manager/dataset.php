@@ -566,7 +566,7 @@ class rex_yform_manager_dataset
         }
 
         if (!$this->id) {
-            rex_extension::register('REX_YFORM_SAVED', function (rex_extension_point $ep) {
+            rex_extension::register('YFORM_SAVED', function (rex_extension_point $ep) {
                 if ($ep->getSubject() instanceof Exception) {
                     return;
                 }

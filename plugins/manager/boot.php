@@ -71,7 +71,7 @@ if (rex::isBackend() && rex::getUser()) {
 \rex_extension::register('MEDIA_IS_IN_USE', 'rex_yform_value_be_media::isMediaInUse');
 \rex_extension::register('PACKAGES_INCLUDED', 'rex_yform_value_be_link::isArticleInUse');
 
-rex_extension::register('REX_YFORM_SAVED', static function (rex_extension_point $ep) {
+rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep) {
     if ($ep->getSubject() instanceof Exception) {
         return;
     }

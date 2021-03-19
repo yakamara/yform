@@ -84,6 +84,21 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 dump($this->params['warning_messages']);
             }
         } else {
+
+            rex_extension::registerPoint(new rex_extension_point('YFORM_SAVED', $sql,
+                [
+                    'form' => $this,
+                    'sql' => $sql,
+                    'table' => $main_table,
+                    'action' => $action,
+                    'id' => $this->params['main_id'],
+                    'yform' => true,
+                ]
+            ));
+
+            /**
+             * @deprecated since 3.4.1 use EP YFORM_SAVED instead
+             */
             rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql,
                 [
                     'form' => $this,
