@@ -104,6 +104,7 @@ class rex_yform_manager_table_api
             }
             $settable = $table['table'];
             $fields = $table['fields'];
+            $settable['schema_overwrite'] = 1;
             self::setTable($settable, $fields);
         }
         self::generateTablesAndFields();
