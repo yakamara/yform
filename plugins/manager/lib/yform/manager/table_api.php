@@ -6,12 +6,9 @@ class rex_yform_manager_table_api
     public static $debug = false;
 
     /**
-     * @param array $table
-     * @param array $table_fields
      * @throws rex_sql_exception
-     * @return null|rex_yform_manager_table
      */
-    public static function setTable(array $table, array $table_fields = [])
+    public static function setTable(array $table, array $table_fields = []): ?rex_yform_manager_table
     {
         if (!isset($table['table_name'])) {
             throw new Exception('table[table_name] must be set');
@@ -80,7 +77,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param array $tables
      * @throws rex_sql_exception
      */
     public static function setTables(array $tables)
@@ -91,9 +87,7 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param string $tableset_content
      * @throws rex_sql_exception
-     * @return bool
      */
     public static function importTablesets(string $tableset_content): bool
     {
@@ -112,7 +106,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param array $table_names
      * @return false|string
      */
     public static function exportTablesets(array $table_names)
@@ -122,10 +115,10 @@ class rex_yform_manager_table_api
             $export_table = rex_yform_manager_table::get($table_name);
             $export_fields = [];
             foreach ($export_table->getFields() as $field) {
-                $export_fields[] = $field->toArray();
+                $export_fields[] = array_diff_key($field->toArray(), ['id' => 0]);
             }
             $export[$export_table['table_name']] = [
-                'table' => $export_table->toArray(),
+                'table' => array_diff_key($export_table->toArray(), ['id' => 0, 'prio' => 0]),
                 'fields' => $export_fields,
             ];
         }
@@ -134,7 +127,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param string $table_name
      * @throws rex_sql_exception
      */
     public static function removeTable(string $table_name)
@@ -155,8 +147,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param string $table_name
-     * @param array  $table_field
      * @throws rex_sql_exception
      */
     public static function setTableField(string $table_name, array $table_field)
@@ -238,8 +228,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param string $table_name
-     * @param string $field_name
      * @throws rex_sql_exception
      */
     public static function removeTablefield(string $table_name, string $field_name)
@@ -252,8 +240,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param string $table_name
-     * @param bool   $schema_overwrite
      * @throws rex_sql_exception
      */
     public static function migrateTable(string $table_name, bool $schema_overwrite = false)
@@ -562,7 +548,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param rex_yform_manager_table $table
      * @param false                   $delete_old
      * @throws rex_sql_exception
      */

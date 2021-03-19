@@ -6,7 +6,13 @@ class rex_yform_manager_field implements ArrayAccess
     protected $definitions = [];
     protected static $debug = false;
     protected static $types = ['value', 'validate', 'action'];
+    protected static $protected_fields = ['id', 'table_name', 'prio', 'type_id', 'type_name', 'db_type', 'list_hidden', 'search', 'name', 'label', 'not_required'];
 
+    /**
+     * rex_yform_manager_field constructor.
+     *
+     * @throws Exception
+     */
     public function __construct(array $values)
     {
         $class = 'rex_yform_' . $values['type_id'] . '_' . $values['type_name'];
@@ -34,7 +40,10 @@ class rex_yform_manager_field implements ArrayAccess
         return rex::getTablePrefix() . 'yform_field';
     }
 
-    // value, validate, action
+    /**
+     * value, validate, action.
+     * @return false|mixed
+     */
     public function getType()
     {
         $type_id = $this->values['type_id'];
@@ -44,7 +53,10 @@ class rex_yform_manager_field implements ArrayAccess
         return $type_id;
     }
 
-    // rex_yform_select
+    /**
+     * example: rex_yform_select
+     * @return mixed|string
+     */
     public function getTypeName()
     {
         if (!isset($this->values['type_name'])) {
@@ -150,11 +162,16 @@ class rex_yform_manager_field implements ArrayAccess
         return false;
     }
 
-    // deprecated
-    // sobald die yform value klassen umgebaut worden sind.
     public function toArray()
     {
-        return $this->values;
+        $keys = array_unique(
+            array_merge(
+                self::$protected_fields,
+                array_keys($this->definitions['values'] ?? [])
+            )
+        );
+
+        return array_intersect_key($this->values, array_flip($keys));
     }
 
     // ------------------------------------------- Array Access
