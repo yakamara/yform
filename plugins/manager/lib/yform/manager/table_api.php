@@ -171,11 +171,12 @@ class rex_yform_manager_table_api
             throw new Exception('field must be a filled array');
         }
 
-        $fieldIdentifier = [
-            'type_id' => $table_field['type_id'],
-            'type_name' => $table_field['type_name'],
-            'name' => $table_field['name'],
-        ];
+        $fieldIdentifier = [];
+        $fieldIdentifier['type_id'] = $table_field['type_id'];
+        $fieldIdentifier['name'] = $table_field['name'];
+        if ('validate' == $fieldIdentifier['type_id']) {
+            $fieldIdentifier['type_name'] = $table_field['type_name'];
+        }
 
         $currentFields = rex_yform_manager_table::get($table_name)->getFields($fieldIdentifier);
 
@@ -217,7 +218,7 @@ class rex_yform_manager_table_api
 
             $add_where = [];
             foreach ($fieldIdentifier as $field => $value) {
-                $add_where[] = '`' . $field . '`= ' . $field_update->escape($table_name) . ' ';
+                $add_where[] = '`' . $field . '`= ' . $field_update->escape($value) . ' ';
             }
 
             $where = 'table_name=' . $field_update->escape($table_name) . '';
