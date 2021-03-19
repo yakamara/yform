@@ -304,10 +304,11 @@ In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung
 
 ##### Filter
 
-Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuchen verwendet werden (getSearchFilter). Über einen oder mehrere filter[feldname]=suchwert Parameter werden die Suchfilter verwendet. Ein Suchfeld kann nur verwendet werden, wenn es in der Route als Feld definiert wurde.
+Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuchen verwendet werden (getSearchFilter). Über einen oder mehrere ```filter[feldname]=suchwert``` Parameter werden die Suchfilter verwendet. Ein Suchfeld kann nur verwendet werden, wenn es in der Route als Feld definiert wurde.
 
+##### Includes
 
-##### Felder
+über ```include=title,user.login,user.email``` kann man entscheiden welche Werte man empfangen möchte. So kann man z.B. für kompakter Ergebnislisten sorgen, falls bestimmte Relation oder Werte nicht nötig sind.
 
 #### POST
 

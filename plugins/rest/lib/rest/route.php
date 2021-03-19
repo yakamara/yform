@@ -11,14 +11,14 @@ class rex_yform_rest_route
     public $query;
     public $instance;
 
+    private $includes;
+
     public static $requestMethods = ['get', 'post', 'delete'];
 
     private $additionalHeaders = [];
 
     /**
      * rex_yform_rest_route constructor.
-     *
-     * @param array $config
      */
     public function __construct(array $config)
     {
@@ -196,11 +196,12 @@ class rex_yform_rest_route
                         }
 
                         if ('be_manager_relation' == $fields[$attribute]->getTypeName()) {
+                            echo $attribute;
                             $instances = $instance->getRelatedCollection($attribute);
                             if (count($instances) > 0) {
                                 $instance = $instances->current();
                             }
-                            $fields = self::getFields('get', $instance);
+                            $fields = $this->getFields('get', $instance);
                             $instance = null;
                         }
                     }
@@ -411,12 +412,11 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param string $type
      * @param null   $instance
      * @throws rex_api_exception
      * @return rex_yform_manager_field[]
      */
-    public function getFields(string $type = 'get', $instance = null):array
+    public function getFields(string $type = 'get', $instance = null): array
     {
         $class = $this->getTypeFromInstance($instance);
 
@@ -456,7 +456,6 @@ class rex_yform_rest_route
      * @param $query
      * @param $fields
      * @param $get
-     * @return rex_yform_manager_query
      */
     public function getFilterQuery($query, $fields, $get): rex_yform_manager_query
     {
@@ -499,9 +498,8 @@ class rex_yform_rest_route
      * @param       $instance
      * @param       $paths
      * @param false $onlyId
-     * @return array
      */
-    public function getInstanceData($instance, $paths, $onlyId = false): array
+    public function getInstanceData($instance, $paths, $onlyId = false, $parents = []): array
     {
         $links = [];
         $links['self'] = rex_yform_rest::getLinkByPath($this, [], $paths);
@@ -518,46 +516,84 @@ class rex_yform_rest_route
                 [
                     'id' => $instance->getId(),
                     'type' => $this->getTypeFromInstance($instance),
-                    'attributes' => $this->getInstanceAttributes($instance),
-                    'relationships' => $this->getInstanceRelationships($instance),
+                    'attributes' => $this->getInstanceAttributes($instance, $parents),
+                    'relationships' => $this->getInstanceRelationships($instance, $parents),
                     'links' => $links,
                 ];
     }
 
     /**
-     * @param rex_yform_manager_dataset $instance
      * @throws rex_api_exception
-     * @return array
      */
-    public function getInstanceAttributes(rex_yform_manager_dataset $instance): array
+    public function getInstanceAttributes(rex_yform_manager_dataset $instance, $parents = []): array
     {
         $data = [];
 
         $fields = $this->getFields('get', $instance);
+        $fields = $this->filterFieldsByInclude($fields, $parents);
 
         foreach ($fields as $fieldName => $field) {
             if ('be_manager_relation' != $field->getTypeName()) {
                 $data[$fieldName] = $instance->getValue($field->getName());
             }
         }
+
         return $data;
     }
 
+    private function getIncludes(): array
+    {
+        if (null === $this->includes) {
+            $includes = @rex_request('include', 'string', '');
+            if ('' == $includes) {
+                $this->includes = [];
+            } else {
+                foreach (explode(',', $includes) as $include) {
+                    $this->includes[$include] = $include;
+                    while (false !== strrpos($include, '.')) {
+                        $include = substr($include, 0, strrpos($include, '.'));
+                        $this->includes[$include] = $include;
+                    }
+                }
+            }
+        }
+        return $this->includes;
+    }
+
+    private function filterFieldsByInclude(array $fields, array $parents = []): array
+    {
+        if (0 == count($this->getIncludes())) {
+            return $fields;
+        }
+
+        $newFields = [];
+        foreach ($fields as $key => $field) {
+            $compareKey = 0 == count($parents) ? $key : implode('.', $parents).'.'.$key;
+            if (in_array($compareKey, $this->getIncludes(), true)) {
+                $newFields[$key] = $field;
+            }
+        }
+
+        return $newFields;
+    }
+
     /**
-     * @param rex_yform_manager_dataset $instance
      * @throws rex_api_exception
-     * @return array
      */
-    public function getInstanceRelationships(rex_yform_manager_dataset $instance): array
+    public function getInstanceRelationships(rex_yform_manager_dataset $instance, $parents = []): array
     {
         $paths[] = $instance->getId();
 
         $fields = $this->getFields('get', $instance);
+        $fields = $this->filterFieldsByInclude($fields, $parents);
 
         $return = [];
 
         foreach ($fields as $field) {
             if ('be_manager_relation' == $field->getTypeName()) {
+                $fieldParents = $parents;
+                $fieldParents[] = $field->getName();
+
                 $relationInstances = $instance->getRelatedCollection($field->getName());
 
                 $data = [];
@@ -569,7 +605,8 @@ class rex_yform_rest_route
                     $data[] = $this->getInstanceData(
                         $relationInstance,
                         array_merge($paths, [$field->getName(), $relationInstance->getId()]),
-                        $onlyId
+                        $onlyId,
+                        $fieldParents
                     );
                 }
                 $return[$field->getName()] = [
@@ -605,9 +642,6 @@ class rex_yform_rest_route
         return $instance->getValue($key, $attributCall);
     }
 
-    /**
-     * @return string
-     */
     public function getRequestMethod(): string
     {
         if (isset($_SERVER['X-HTTP-Method-Override'])) {
@@ -618,7 +652,6 @@ class rex_yform_rest_route
 
     /**
      * @param null $instance
-     * @return string
      */
     public function getTypeFromInstance($instance = null): string
     {
