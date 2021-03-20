@@ -75,7 +75,7 @@ E-Mail-Templates können jedoch auch von einem YForm-Formular losgelöst verwend
 Nachfolgend ein angepasster Formular-Code, um die E-Mail separat zu versenden. Dabei wird ein eigener, zusätzlicher Platzhalter definiert, der sich nicht im Formular befindet. Bitte die Kommentare beachten.
 
 ```php
-<?
+<?php
 $yform = new rex_yform();
 $yform->setObjectparams('form_ytemplate', 'bootstrap');
 $yform->setObjectparams('form_showformafterupdate', 0); // Muss 0 sein, damit if($form) funktioniert
@@ -143,7 +143,7 @@ REX_YFORM_DATA[field="custom"]
 Dieser Code basiert auf [plugins/email/lib/yform_action_tpl2email.php](https://github.com/yakamara/redaxo_yform/blob/master/plugins/email/lib/yform_action_tpl2email.php).
 
 ```php
-<?
+<?php
 $yform_email_template_key = 'test'; // Key, wie im Backend unter YForm > E-Mail-Templates hinterlegt
 $debug = 0;
 
@@ -210,6 +210,7 @@ Hier ein Beispiel, um YCom-User über die REST-API zu verwalten:
 
 
 ```php
+<?php
 
 // diese Zeile ist normalerweise nötig. Dieses Bespiel nutzt aber eine YCom-Tabelle, die bereits über das AddOn registriert ist.
 ##rex_yform_manager_dataset::setModelClass('rex_ycom_user', rex_ycom_user::class);
@@ -315,6 +316,8 @@ Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuch
 Es kann sein, das man datenbankunabhängige Felder haben möchte, die z.B. Berechnungen beinhaltet oder Daten in einer anderen Form wiedergibt. Um das zu erreichen muss man diese Felder anmelden und beim Auslesen abfangen. Folgendes Beispiel sollte das erläutern.
 
 ```php
+<?php
+
 class eigeneyormklasse extends rex_yform_manager_dataset 
 {
     public function getValue($key)

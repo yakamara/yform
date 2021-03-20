@@ -32,9 +32,10 @@ Die empfohlene Dateigrößen-Begrenzung hängt von der gewählten PHPMailer-Konf
 
 #### PHP-Schreibweise
 ```php
+<?php
 $yform->setValueField('upload', array('upload','Dateianhang','100,10000','.pdf,.odt,.doc,.docx,.xls,.xlsx,.png,.jpg,.jpeg,.zip'));
-
 $yform->setValueField('php', array('php_attach','Datei anhängen','<?php if (isset($this->params[\'value_pool\'][\'files\'])) { $this->params[\'value_pool\'][\'email_attachments\'] = $this->params[\'value_pool\'][\'files\']; } ?>'));
+
 ```
 
 #### Pipe-Schreibweise
@@ -52,6 +53,7 @@ Es können auch bestehende Dateien direkt aus dem Medienpool als E-Mail-Anhang v
 
 #### PHP-Schreibweise
 ```php
+<?php
 $yform->setValueField('php', array('php_attach', 'Datei anhängen', '<?php $this->params[\'value_pool\'][\'email_attachments\'][] = [\'agb.pdf\', rex_path::media(\'agb.pdf\')]; ?>'));
 ```
 
@@ -65,6 +67,7 @@ php|php_attach|Datei anhängen|<?php $this->params[\'value_pool\'][\'email_attac
 z.B. Bilder eines Artikels (Medialist) als E-Mail-Anhang
 
 ```php
+<?php
 $dateiliste = explode(',', $sql->getValue('objekt_bilderliste'));
 foreach ($dateiliste as $file) {
     $yform->setValueField('php', array('php_attach', 'Datei anhängen', '<?php $this->params[\'value_pool\'][\'email_attachments\'][] = [\''.$file.'\', rex_path::media(\''.$file.'\')]; ?>'));
@@ -182,6 +185,7 @@ Wenn die Formulardaten in einer Datenbanktabelle gespeichert werden sollen, kann
 **PHP-Schreibweise** 
 
 ```php
+<?php
 $yform->setHiddenField("summe", 150);
 ```
 
@@ -194,6 +198,7 @@ $yform->setHiddenField("summe", 150);
 **PHP-Schreibweise** 
 
 ```php
+<?php
 $yform->setHiddenField("summe", $bestellung_summe);
 ```
 
@@ -204,6 +209,7 @@ $yform->setHiddenField("summe", $bestellung_summe);
 #### Wert aus dem GET-Parameter lesen
 
 ```php
+<?php
 // www.domain.de/meinformular/?q=Foo
 $yform->setValueField('hidden', array("suche", "q", REQUEST));
 ```
@@ -224,6 +230,7 @@ Schreibt den Wert `Foo` des GET-Parameters `q` in das YForm-Feld `q`.
 **PHP-Schreibweise** 
 
 ```php
+<?php
 $yform->setValueField('text', array('anzahl','Anzahl','0','0','{"type":"hidden"}'));
 ```
 
@@ -240,6 +247,7 @@ Erzeugt im Formular Eingabefeld, das z. B. per Javascript verändert werden ka
 Das YForm-Objekt verfügt über zwei weitere Objekt-Methoden: `setHiddenField()` und `setHiddenFields()`. Diese legen jedoch ihre Werte nicht in den sog. `value_pool` ab, sondern als Objektparameter unter dem key `form_hiddenfields` - d.h. diese Werte sind nicht für Aktionen wie `tpl2email` oder `db` sichtbar und werden demzufolge nicht an ein E-Mail-Template oder die Datenbank übergeben.
 
 ```php
+<?php
 $yform->setHiddenField('versteckt', 1);
 $yform->setHiddenFields(["a" => "b","c" => "d"]);
 ```
@@ -247,6 +255,7 @@ $yform->setHiddenFields(["a" => "b","c" => "d"]);
 Auslesen über die Methode `getObjectparams()`
 
 ```php
+<?php
 $yform->getObjectparams('form_hiddenfields')['versteckt'];
 $yform->getObjectparams('form_hiddenfields')['a'];
 $yform->getObjectparams('form_hiddenfields')['c'];
@@ -292,6 +301,7 @@ Siehe [YForm Formbuilder Values](yform_modul_values.md#captcha_calc)
 3. Nachfolgende Funktion hinterlegen, die via `custom_function` aufgerufen wird.
 
 ```php
+<?php
 function yform_validate_timer($label,$microtime,$seconds)
     {
         if (($microtime + $seconds) > microtime(true)) {

@@ -117,7 +117,7 @@ Die **allgemeine Syntax** für das Setzen eines objparams lautet so:
 	objparams|key|newvalue|[init/runtime]
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('key', 'newvalue', '[init/runtime]');
 ```
 
@@ -134,7 +134,7 @@ $yform->setObjectparams('key', 'newvalue', '[init/runtime]');
 	objparams|form_show|0
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_show','1');
 ```
 
@@ -148,7 +148,7 @@ Der Defaultwert ist `1` (anzeigen).
 	objparams|form_name|formular
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_name','zweites_formular');
 ```
 
@@ -161,7 +161,7 @@ Der Defaultwert ist `formular`.
 	objparams|form_class|contact_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_class','contact_form');
 ```
 
@@ -175,7 +175,7 @@ Default-Ausgabe:
 	objparams|form_wrap_id|contact_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_wrap_id','contact_form');
 ```
 Damit kann dem das Formular umgebenden Container eine individuelle CSS-ID vergeben werden.  
@@ -188,7 +188,7 @@ Default-Ausgabe:
 	objparams|form_wrap_class|contact_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_wrap_class','contact_form');
 ```
 
@@ -202,7 +202,7 @@ Default-Ausgabe:
 	objparams|form_label_type|html
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_label_type','html');
 ```
 
@@ -215,7 +215,7 @@ Default ist `html`.
 	objparams|csrf_protection|0
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('csrf_protection', false);
 ```
 
@@ -235,7 +235,7 @@ Der CSRF-Schutz sollte daher immer aktiviert bleiben, außer, wenn der direkte A
 	objparams|form_ytemplate|classic
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_ytemplate','classic');
 ```
 
@@ -248,7 +248,7 @@ Der Defaultwert lautet `bootstrap`, d.h. als Basis-Theme ist das HTML-Schema des
 	objparams|submit_btn_label|Formular senden
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('submit_btn_label','Formular senden');
 ```
 
@@ -260,7 +260,7 @@ Damit kann die Standard-Button-Beschriftung `Abschicken` verändert werden.
 	objparams|submit_btn_show|0
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('submit_btn_show',0);
 ```
 
@@ -273,7 +273,7 @@ Default ist `1` (Anzeigen).
 	objparams|error_class|my_form_error
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('error_class','my_form_error');
 ```
 
@@ -292,7 +292,7 @@ Die Default-CSS-Klasse ist `form_warning`.
 	objparams|real_field_names|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('real_field_names',1);
 ```
 
@@ -308,7 +308,7 @@ Der Default-Wert ist `0`.
 	// Im YForm-Formbuilder
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_method','get');
 ```
 
@@ -322,7 +322,8 @@ Der Defaultwert ist `post`.
 	objparams|form_action|zielseite.html
 
 ```php
-// In PHP mit rex_getUrl() auf die Artikel-ID 5
+<?php
+<?php mit rex_getUrl() auf die Artikel-ID 5
 $yform->setObjectparams('form_action',rex_getUrl(5));
 ```
 
@@ -339,7 +340,8 @@ objparams|form_action_query_params|key1,key2,key3
 ```
 
 ```php
-// In PHP mit rex_getUrl() auf die Artikel-ID 5
+<?php
+<?php mit rex_getUrl() auf die Artikel-ID 5
 $yform->setObjectparams('form_action_query_params',`key1,key2,key3`);
 ```
 
@@ -349,7 +351,7 @@ $yform->setObjectparams('form_action_query_params',`key1,key2,key3`);
 	objparams|form_anchor|my_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_anchor','my_form');
 ```
 
@@ -362,7 +364,7 @@ Der Defaultwert ist leer.
 	objparams|form_showformafterupdate|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_showformafterupdate',1);
 ```
 
@@ -376,7 +378,7 @@ Default ist `0` (nicht anzeigen).
 	objparams|debug|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('debug',1);
 ```
 
@@ -389,7 +391,7 @@ Mit dem Wert `1` kann man zb Aktionen Formular debuggen und Aktion prüfen.
 	objparams|hide_top_warning_messages|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('hide_top_warning_messages',1);
 ```
 
@@ -404,7 +406,7 @@ Mit dem Wert `1` können die Fehlermeldung die über eine Validierung ausgegeben
 	objparams|main_table|rex_table
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('getdata',1);
 $yform->setObjectparams('main_where','id=1');
 $yform->setObjectparams('main_table','rex_table');
@@ -419,7 +421,7 @@ Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in 
 	// Im YForm-Formbuilder
 	objparams|form_exit|1
 
-	// In PHP
+	<?php
 	$yform->setObjectparams('form_exit',1);
 
 ### Objparams auslesen
@@ -1422,7 +1424,7 @@ Vergleicht zwei Felder mit Hilfe von Operatoren.
 	validate|compare|wert1|wert2|!=|Die beiden Felder haben unterschiedliche Werte|
 
 ```php
-// in PHP
+<?php
 $yform->setValueField('text', array("wert1","Wert 1"));
 $yform->setValueField('text', array("wert2","Wert 2"));
 $yform->setValidateField('compare', array("wert1","wert2","!=", "Die Felder haben unterschiedliche Werte"));
@@ -1443,7 +1445,7 @@ Vergleicht ein Feld mit einem angegebenen Wert mit Hilfe von Operatoren.
 	validate|compare_value|wert1|2|<|Der Wert ist kleiner als 2!|
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("wert1","Wert 1"));
 $yform->setValidateField('compare_value', array("wert1",2,"<", "Der Wert ist kleiner als 2!"));
 ```
@@ -1470,7 +1472,7 @@ Damit können eigene Überprüfungen via Funktion oder Klasse/Methode durchgefü
 	validate|email|email|Das Feld enthält keine korrekte E-Mail-Adresse!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("email","E-Mail"));
 $yform->setValidateField('email', array("email", "Das Feld enthält keine korrekte E-Mail-Adresse!"));
 ```
@@ -1487,7 +1489,7 @@ $yform->setValidateField('email', array("email", "Das Feld enthält keine korrek
 	validate|empty|name|Bitte geben Sie einen Namen an!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("name","Nachname"));
 $yform->setValidateField('empty', array("name","Bitte geben Sie einen Namen an!"));
 ```
@@ -1511,7 +1513,7 @@ $yform->setValidateField('empty', array("name","Bitte geben Sie einen Namen an!"
 	validate|intfromto|wert|2|4|Der Wert ist kleiner als 2 und größer als 4! 
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("wert","Wert"));
 $yform->setValidateField('intfromto', array("wert","2", "4", "Der Wert ist kleiner als 2 und größer als 4! "));
 ```
@@ -1559,7 +1561,7 @@ $yform->setValidateField('labelexist', array("vorname, name, tel", "1", "2", "Fe
 	validate|preg_match|eingabe|/[a-z]+/|Es dürfen nur ein oder mehrere klein geschriebene 	Buchstaben eingegeben werden!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("eingabe","Eingabe"));
 $yform->setValidateField('preg_match', array("eingabe","/[a-z]+/", "Es dürfen nur ein oder mehrere klein geschriebene Buchstaben eingegeben werden!"));
 ```
@@ -1576,7 +1578,7 @@ $yform->setValidateField('preg_match', array("eingabe","/[a-z]+/", "Es dürfen n
 	validate|size|plz|5|Die Eingabe hat nicht die korrekte Zeichenlänge!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("plz","PLZ"));
 $yform->setValidateField('size', array("plz","5", "Die Eingabe hat nicht die korrekte Zeichenlänge!"));
 ```
@@ -1595,7 +1597,7 @@ $yform->setValidateField('size', array("plz","5", "Die Eingabe hat nicht die kor
 	validate|size_range|summe|3|10|Die Eingabe hat nicht die korrekte Zeichenlänge (mind. 3, max 10 Zeichen)!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("summe","Summe"));
 $yform->setValidateField('size_range', array("summe", "3", "10", "Die Eingabe hat nicht die korrekte Zeichenlänge (mind. 3, max 10 Zeichen)!"));
 ```
@@ -1612,7 +1614,7 @@ $yform->setValidateField('size_range', array("summe", "3", "10", "Die Eingabe ha
 	validate|type|wert|numeric|Die Eingabe ist keine Nummer!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("wert","Wert"));
 $yform->setValidateField('type', array("wert", "numeric", "Die Eingabe ist keine Nummer!"));
 ```
@@ -1629,7 +1631,7 @@ $yform->setValidateField('type', array("wert", "numeric", "Die Eingabe ist keine
 	validate|unique|email|Ein User mit dieser E-Mail-Adresse existiert schon!|rex_user
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("email","E-Mail"));
 $yform->setValidateField('unique', array("email", "Ein User mit dieser E-Mail-Adresse existiert schon!","rex_user"));
 ```
@@ -1678,7 +1680,7 @@ Ruf eine Funktion oder Klasse auf.
 	folgt ...
 
 ```php
-// in PHP
+<?php
 folgt ...
 ```
 
@@ -1698,7 +1700,7 @@ Kopiert Eingaben vom Feld mit dem Label `label_from` in das Feld mit dem Label `
 	action|html|Daten gespeichert	
 
 ```php
-// in PHP	
+<?php	
 $yform->setValueField('hidden', array("user"));
 $yform->setValueField('text', array("name","Name"));
 $yform->setActionField('copy_value', array("name","user"));
@@ -1722,7 +1724,7 @@ Mit %TABLE_PREFIX% im Tabellennamen kann man den Prefix der REDAXO Tabellen setz
 	action|create_table|rex_order
 
 ```php
-// in PHP
+<?php
 $yform->setValueField('text', array("vorname","Vorname"));
 $yform->setValueField('text', array("name","Name"));
 
@@ -1779,7 +1781,7 @@ Führt eine Abfrage aus, z. B. um hier Werte aus Eingabefeldern in die Abfrage
 	action|db_query|insert into rex_ycom_user set name = ?, email = ?|name,email
 
 ```php
-// in PHP
+<?php
 $yform->setValueField('text', array("name","Name"));
 $yform->setValueField('text', array("email","|E-Mail-Adresse"));
 $yform->setActionField('db_query', array("insert into rex_ycom_user set name = ?, email = ?", "name,email"));
@@ -1836,7 +1838,7 @@ Erklärung folgt.
 	folgt 
 
 ```php
-// in PHP
+<?php
 folgt
 ```
 
@@ -1851,7 +1853,7 @@ Gibt HTML-Code aus.
 	action|html|<b>fett</b>
 
 ```php
-// In PHP
+<?php
 $yform->setActionField('html', array("<b>fett</b>"));
 ```
 
@@ -1868,7 +1870,7 @@ Damit kann man anhand eines Eingabefeldes Daten aus einer Tabellen selektieren. 
 	action|readtable|shop_user|fname|name
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("name","Name"));
 $yform->setActionField('readtable', array("shop_user", "fname", "name"));
 ```
@@ -1889,7 +1891,7 @@ action|redirect|32
 action|redirect|https://www.example.org/kontakt/?mein_parameter=mein_wert
 ```
 
-	// In PHP
+	<?php
 ```php
 $yform->setActionField('redirect', array("32"));
 // mit Übergabe von URL-Parameter(n):

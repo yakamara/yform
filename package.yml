@@ -8,46 +8,15 @@ page:
     pjax: false
     icon: rex-icon rex-icon-module
     subpages:
-        overview: { title: 'translate:overview', perm: admin }
+        overview:
+            title: 'translate:overview'
+            perm: admin
         docs:
             title: 'translate:docs'
             perm: admin[]
             pjax: false
             itemclass: pull-right
             icon: rex-icon fa-info-circle
-            subpages:
-                intro:
-                    title: 'translate:yform_docs_intro'
-                    perm: admin[]
-                    pjax: false
-                    subPath: docs/intro.md
-                table_manager:
-                    title: 'translate:yform_docs_table_manager'
-                    perm: admin[]
-                    pjax: false
-                    subPath: docs/table_manager.md
-                formbuilder:
-                    title: 'translate:yform_docs_formbuilder'
-                    perm: admin[]
-                    pjax: false
-                    subPath: docs/formbuilder.md
-                demos:
-                    title: 'translate:yform_docs_demos'
-                    perm: admin[]
-                    pjax: false
-                    subPath: docs/demos.md
-                yorm:
-                    title: 'translate:yform_docs_yorm'
-                    perm: admin[]
-                    pjax: false
-                    subPath: docs/yorm.md
-                plugins:
-                    title: 'translate:yform_docs_plugins'
-                    perm: admin[]
-                    pjax: false
-                    subPath: docs/plugins.md
-
-
 
 stylesheets:
     - yform.css

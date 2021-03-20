@@ -838,6 +838,7 @@ Fehlermeldung | Hinweis, der erscheint, wenn die Bedingung des Vergleichs erfül
 Diese Funktion z. B. im `project`-Addon in der boot.php hinterlegen:
 
 ```php
+<?php
 function yform_validate_custom($label, $value, $param)
 {
 	if($value > $param) { // eigene Validierung. Hier: Prüft, ob der Formular-Eingabewert größer ist als der Parameter
@@ -955,7 +956,7 @@ Tabelle [opt] | Name der Tabelle, in der die Felder durchsucht werden.
 Beim Einsatz einer YForm-Tabelle im eigenen AddOn können beliebige Spalten über den Einsatz des folgenden Extension points ausgeblendet werden (hier als Beispiel die Spalte ID):
 
 ```php
-
+<?php
 if (rex::isBackend())
 {
 	rex_extension::register("YFORM_DATA_LIST", function( $ep ) {  
@@ -973,7 +974,8 @@ if (rex::isBackend())
 
 Beim Einsatz einer YForm-Tabelle im eigenen AddOn kann für beliebige Spalten vor der Anzeige in der Übersicht der Wert manipuliert und ggf. mit Werten aus derselben Tabellenzeile kombiniert werden. Konkret wird hier in der Anzeige der Spalte "title" der Wert der Spalte "name" angehängt.
 
-```php 
+```php
+<?php
 if (rex::isBackend())
 {
 	rex_extension::register('YFORM_DATA_LIST', function( $ep ) {  
@@ -1007,6 +1009,7 @@ Das Snippet kommt am besten in die boot.php des project-AddOns.
 Der Code kommt entweder in die boot Datei des Projekt AddOns oder in die Boot Datei des Theme Addons (wer damit arbeitet) oder in eine anderweitige Boot Datei.
 
 ```php 
+<?php
 // Es soll nur im Backend passieren und nur, wenn der table_name rex_test requestet wird (ggf. eigenen table_name verwenden)
 if (rex::isBackend() && rex_request('table_name') == 'rex_test') {
     // am Extensionpoint YFORM_DATA_LIST einklinken
@@ -1034,6 +1037,7 @@ Folgendes Snippet kann im Projekt Addon oder Theme Addon platziert werden und er
 #### Ausführliches Beispiel
 
 ```php
+<?php
 if(rex::isBackend() && rex_addon::get('yform')->isAvailable() && rex_plugin::get('yform', 'manager')->isAvailable() &&
    rex_be_controller::getCurrentPage() == 'yform/manager/data_edit' && rex_request('table_name') == '<TABLE_NAME>') {
 	rex_extension::register('YFORM_DATA_LIST_SQL', function(rex_extension_point $ep){
@@ -1061,6 +1065,7 @@ if(rex::isBackend() && rex_addon::get('yform')->isAvailable() && rex_plugin::get
 #### Einfaches Beispiel zur Verwendung des EP
 
 ```php
+<?php
 rex_extension::register('YFORM_DATA_LIST_SQL', function ($ep) {
   $params  = $ep->getParams(); // EP Params holen
   $subject = $ep->getSubject(); // EP Subject (SQL) holen
