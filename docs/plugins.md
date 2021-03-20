@@ -310,6 +310,36 @@ Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuch
 
 über ```include=title,user.login,user.email``` kann man entscheiden welche Werte man empfangen möchte. So kann man z.B. für kompakter Ergebnislisten sorgen, falls bestimmte Relation oder Werte nicht nötig sind.
 
+##### Erweitern um eigene API Felder
+
+Es kann sein, das man datenbankunabhängige Felder haben möchte, die z.B. Berechnungen beinhaltet oder Daten in einer anderen Form wiedergibt. Um das zu erreichen muss man diese Felder anmelden und beim Auslesen abfangen. Folgendes Beispiel sollte das erläutern.
+
+```php
+class eigeneyormklasse extends rex_yform_manager_dataset 
+{
+    public function getValue($key)
+    {
+        if ('kosten' == $key) {
+            return $this->getValue('einzelpreis')*10;
+        }
+        return parent::getValue($key);
+    }
+
+    public static function getAdditionalAPIFields()
+    {
+        $additionalFields = [];
+        $additionalFields['kosten'] = new rex_yform_manager_field([
+            'name' => 'kosten',
+            'type_id' => 'value',
+            'type_name' => 'text',
+        ]);
+
+        return $additionalFields;
+    }
+}
+```
+
+
 #### POST
 
 * Anlegen von Datensätzen
