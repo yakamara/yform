@@ -146,27 +146,31 @@ class rex_yform
                 $this->objparams['form_elements'][] = explode('|', trim($form_element));
             }
         }
+        return $this;
     }
 
-    public function setValueField($type = '', $values = [])
+    public function setValueField($type = '', $values = []): self
     {
         $values = array_merge([$type], $values);
         $this->objparams['form_elements'][] = $values;
+        return $this;
     }
 
-    public function setValidateField($type = '', $values = [])
+    public function setValidateField($type = '', $values = []): self
     {
         $values = array_merge(['validate', $type], $values);
         $this->objparams['form_elements'][] = $values;
+        return $this;
     }
 
-    public function setActionField($type = '', $values = [])
+    public function setActionField($type = '', $values = []): self
     {
         $values = array_merge(['action', $type], $values);
         $this->objparams['form_elements'][] = $values;
+        return $this;
     }
 
-    public function setRedaxoVars($aid = '', $clang = '', $params = [])
+    public function setRedaxoVars($aid = '', $clang = '', $params = []): self
     {
         if ('' == $clang) {
             $clang = rex_clang::getCurrentId();
@@ -176,18 +180,21 @@ class rex_yform
         }
 
         $this->setObjectparams('form_action', rex_getUrl($aid, $clang, $params));
+        return $this;
     }
 
-    public function setHiddenField($key, $value)
+    public function setHiddenField($key, $value): self
     {
         $this->objparams['form_hiddenfields'][$key] = $value;
+        return $this;
     }
 
-    public function setHiddenFields(array $fields)
+    public function setHiddenFields(array $fields): self
     {
         foreach ($fields as $key => $value) {
             $this->objparams['form_hiddenfields'][$key] = $value;
         }
+        return $this;
     }
 
     public function setObjectparams($k, $v, $refresh = true)
@@ -215,7 +222,7 @@ class rex_yform
         return $this->executeActions();
     }
 
-    public function executeFields()
+    public function executeFields(): self
     {
         if (!$this->fieldsInitialized) {
             $this->initializeFields();
@@ -319,9 +326,10 @@ class rex_yform
         foreach ($this->objparams['values'] as $ValueObject) {
             $ValueObject->postFormAction();
         }
+        return $this;
     }
 
-    public function initializeFields()
+    public function initializeFields(): self
     {
         $this->objparams['values'] = [];
         $this->objparams['validates'] = [];
@@ -380,6 +388,7 @@ class rex_yform
         }
 
         $this->fieldsInitialized = true;
+        return $this;
     }
 
     public function executeActions()
@@ -497,7 +506,7 @@ class rex_yform
         return ob_get_clean();
     }
 
-    public static function getTypes()
+    public static function getTypes(): array
     {
         return ['value', 'validate', 'action'];
     }
@@ -556,7 +565,7 @@ class rex_yform
                     }
                 }
                 if (!$value) {
-                    $value = isset($_REQUEST['FORM'][$this->objparams['form_name']]) ? $_REQUEST['FORM'][$this->objparams['form_name']] : null;
+                    $value = $_REQUEST['FORM'][$this->objparams['form_name']] ?? null;
                 }
                 break;
 
@@ -741,8 +750,9 @@ class rex_yform
         return $return;
     }
 
-    private function setCSRFField()
+    private function setCSRFField(): self
     {
         $this->objparams['form_elements'][] = ['csrf', 'name' => '_csrf_token'];
+        return $this;
     }
 }
