@@ -45,7 +45,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
         $proofedValues = $choiceList->getProofedValues($values);
 
-        if ($this->needsOutput()) {
+        if ($this->needsOutput() && $this->isViewable()) {
             $groupAttributes = [];
             if (false !== $this->getElement('group_attributes')) {
                 $groupAttributes = $this->getAttributes('group_attributes', $groupAttributes);
@@ -82,7 +82,14 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $choiceListView = $choiceList->createView($choiceAttributes);
 
             $template = $choiceList->isExpanded() ? 'value.choice.check.tpl.php' : 'value.choice.select.tpl.php';
-            $html = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+
+            if (!$this->isEditable()) {
+                $template = str_replace('choice','choice-view', $template);
+                $html = $this->parse(['value.view.tpl.php', $template], compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            } else {
+                $html = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            }
+
             $html = trim(preg_replace(['/\s{2,}/', '/>\s+/', '/\s+</'], [' ', '>', '<'], $html));
             $this->params['form_output'][$this->getId()] = $html;
         }

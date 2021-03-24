@@ -2,12 +2,28 @@
 
 $value = $this->getValue() ?? '';
 
-$length = strlen($value);
-$title = $value;
-$maxsize = 400;
-if ($length > $maxsize) {
-    $value = mb_substr($value, 0, $maxsize/2).' ... '.mb_substr($value, -($maxsize/2));
+if (is_array($value)) {
+
+    foreach($value as $k => $v) {
+        $value[$k] = '<li>'.rex_escape($v).'</li>';
+    }
+    $value = '<ul>'.implode('', $value).'</ul>';
+
+} else {
+
+    $length = strlen($value);
+    $title = $value;
+    $maxsize = 400;
+    if ($length > $maxsize) {
+        $value = mb_substr($value, 0, $maxsize/2).' ... '.mb_substr($value, -($maxsize/2));
+    }
+    $value = rex_escape($value);
 }
+
+
+
+
+
 
 $notice = [];
 if ('' != $this->getElement('notice')) {
@@ -33,7 +49,7 @@ $class_label[] = 'control-label';
 echo '
     <div class="'.implode(' ', $class_group).'" id="'.$this->getHTMLId().'">
         <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
-        <div>'. rex_escape($value). ' ' . $notice . '</div>
+        <div>' . $value . ' ' . $notice . '</div>
     </div>';
 
 ?>

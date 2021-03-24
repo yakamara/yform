@@ -21,6 +21,17 @@ class rex_yform_value_email extends rex_yform_value_abstract
             $this->params['form_output'][$this->getId()] = $this->parse(['value.email.tpl.php', 'value.text.tpl.php'], ['type' => 'email']);
         }
 
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
+                $attributes['readonly'] = 'readonly';
+                $this->setElement('attributes', json_encode($attributes));
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.email-view.tpl.php', 'value.text-view.tpl.php', 'value.view.tpl.php'], ['type' => 'email']);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.email.tpl.php', 'value.text.tpl.php'], ['type' => 'email']);
+            }
+        }
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();

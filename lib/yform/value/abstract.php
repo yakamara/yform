@@ -305,6 +305,44 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return true;
     }
 
+    public function canEdit(bool $editable = true)
+    {
+        $this->editable = $editable;
+    }
+
+    public function canView(bool $viewable = true)
+    {
+        $this->viewable = $viewable;
+    }
+
+    public function isEditable()
+    {
+        /** @var $yform rex_yform */
+        $yform = $this->params['this'];
+        if (!$yform->isEditable()) {
+            return false;
+        }
+
+        // TODO:
+        // fieldabfrage
+
+        return true;
+    }
+
+    public function isViewable()
+    {
+        /** @var $yform rex_yform */
+        $yform = $this->params['this'];
+        if (!$yform->isViewable()) {
+            return false;
+        }
+
+        // TODO:
+        // fieldabfrage
+
+        return true;
+    }
+
     public function enterObject()
     {
     }

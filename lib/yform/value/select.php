@@ -65,8 +65,12 @@ class rex_yform_value_select extends rex_yform_value_abstract
             $this->setElement('disabled', true);
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.select-view.tpl.php', 'value.select.tpl.php'], compact('options', 'multiple', 'size'));
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+            }
         }
 
         $this->setValue(implode(',', $this->getValue()));

@@ -135,34 +135,6 @@ abstract class rex_yform_base_abstract
         return false;
     }
 
-    public function isEditable()
-    {
-        /** @var $yform rex_yform */
-        $yform = $this->params['this'];
-        if (!$yform->isEditable()) {
-            return false;
-        }
-
-        // TODO:
-        // fieldabfrage
-
-        return true;
-    }
-
-    public function isViewable()
-    {
-        /** @var $yform rex_yform */
-        $yform = $this->params['this'];
-        if (!$yform->isViewable()) {
-            return false;
-        }
-
-        // TODO:
-        // fieldabfrage
-
-        return true;
-    }
-
     public function init()
     {
     }
