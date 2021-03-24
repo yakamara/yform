@@ -38,6 +38,9 @@ class rex_yform_action_db extends rex_yform_action_abstract
         }
 
         try {
+            if (0 == count($this->params['value_pool']['sql'])) {
+                throw new Exception('no values given');
+            }
 
             foreach ($this->params['value_pool']['sql'] as $key => $value) {
                 $sql->setValue($key, $value);
