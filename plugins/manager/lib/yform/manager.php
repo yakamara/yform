@@ -383,6 +383,10 @@ class rex_yform_manager
                             $yform->setObjectparams('submit_btn_show', false);
 
                             if (isset($rex_yform_manager_opener['id'])) {
+
+                                // TODO:
+                                // Übernehmen aus dem Datensatz heraus
+
                                 // $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
 
                                 /*return '<a href="javascript:setYFormDataset('.$params['params']['opener_id'].',###id###,\''.rex_escape(
@@ -393,7 +397,6 @@ class rex_yform_manager
                                     ).'</a>';
                                 */
                             }
-
 
                         }
                     } elseif ('add' == $func) {
@@ -421,80 +424,79 @@ class rex_yform_manager
                         });
 
                         $sql_db->commit();
+                        if ($yform->objparams['actions_executed']) {
+                            if ('edit' == $func) {
+                                $mainMessages[] = [
+                                    'type' => 'info',
+                                    'message' => rex_i18n::msg('yform_thankyouforupdate'),
+                                ];
+                            } elseif ('add' == $func) {
+                                $mainMessages[] = [
+                                    'type' => 'info',
+                                    'message' => rex_i18n::msg('yform_thankyouforentry'),
+                                ];
+
+                                $submit_type = 1; // normal, 2=apply
+                                foreach ($yform->objparams['values'] as $valueObject) {
+                                    /** @var rex_yform_value_abstract $valueObject */
+                                    if ('submit' == $valueObject->getName()) {
+                                        if (2 == $valueObject->getValue()) { // apply
+                                            $submit_type = 2;
+                                        }
+                                    }
+                                }
+
+                                if (2 == $submit_type) {
+                                    $data_id = $yform->objparams['main_id'];
+                                    $func = 'edit';
+                                    $yform = $yform_clone;
+                                    $yform->setFieldValue('send', [], '');
+                                    $yform->setHiddenField('func', $func);
+                                    $yform->setHiddenField('data_id', $data_id);
+                                    $yform->setObjectparams('main_id', $data_id);
+                                    $yform->setObjectparams('main_where', "id=$data_id");
+                                    $yform->setObjectparams('getdata', true);
+                                    $yform->setObjectparams('send', false);
+                                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+                                    $form = $yform->getForm();
+                                    echo "1";
+                                }
+                            }
+                        }
+                        if ($yform->objparams['form_show'] || ($yform->objparams['form_showformafterupdate'])) {
+                            if ('collection_edit' === $func) {
+                                $title = rex_i18n::msg('yform_editdata_collection', $data->count());
+                            } elseif ('add' == $func) {
+                                $title = rex_i18n::msg('yform_adddata');
+                            } else {
+                                $title = rex_i18n::rawMsg('yform_editdata', $data_id);
+                            }
+
+                            $fragment = new rex_fragment();
+                            $fragment->setVar('class', 'edit', false);
+                            $fragment->setVar('title', $title);
+                            $fragment->setVar('body', $form, false);
+                            // $fragment->setVar('buttons', $buttons, false);
+                            $form = $fragment->parse('core/page/section.php');
+
+                            $mainFragment->setVar('detailForm', $form, false);
+
+                            $mainMessages[] = [
+                                'type' => 'info',
+                                'message' => rex_i18n::msg('yform_back_to_overview'),
+                                'link' => 'index.php?' . http_build_query(array_merge($rex_link_vars)),
+                            ];
+                        }
+
                     } catch (\Throwable $e) {
                         $sql_db->rollBack();
                         $transactionErrorMessage = $e->getMessage();
-
                         if ($transactionErrorMessage) {
                             $mainMessages[] = [
                                 'type' => 'error',
                                 'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage),
                             ];
                         }
-                    }
-
-                    if ($yform->objparams['actions_executed']) {
-                        if ('edit' == $func) {
-                            $mainMessages[] = [
-                                'type' => 'info',
-                                'message' => rex_i18n::msg('yform_thankyouforupdate'),
-                            ];
-                        } elseif ('add' == $func) {
-                            $mainMessages[] = [
-                                'type' => 'info',
-                                'message' => rex_i18n::msg('yform_thankyouforentry'),
-                            ];
-
-                            $submit_type = 1; // normal, 2=apply
-                            foreach ($yform->objparams['values'] as $valueObject) {
-                                /** @var rex_yform_value_abstract $valueObject */
-                                if ('submit' == $valueObject->getName()) {
-                                    if (2 == $valueObject->getValue()) { // apply
-                                        $submit_type = 2;
-                                    }
-                                }
-                            }
-
-                            if (2 == $submit_type) {
-                                $data_id = $yform->objparams['main_id'];
-                                $func = 'edit';
-                                $yform = $yform_clone;
-                                $yform->setFieldValue('send', [], '');
-                                $yform->setHiddenField('func', $func);
-                                $yform->setHiddenField('data_id', $data_id);
-                                $yform->setObjectparams('main_id', $data_id);
-                                $yform->setObjectparams('main_where', "id=$data_id");
-                                $yform->setObjectparams('getdata', true);
-                                $yform->setObjectparams('send', false);
-                                $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
-                                $form = $yform->getForm();
-                            }
-                        }
-                    }
-
-                    if ($yform->objparams['form_show'] || ($yform->objparams['form_showformafterupdate'])) {
-                        if ('collection_edit' === $func) {
-                            $title = rex_i18n::msg('yform_editdata_collection', $data->count());
-                        } elseif ('add' == $func) {
-                            $title = rex_i18n::msg('yform_adddata');
-                        } else {
-                            $title = rex_i18n::rawMsg('yform_editdata', $data_id);
-                        }
-
-                        $fragment = new rex_fragment();
-                        $fragment->setVar('class', 'edit', false);
-                        $fragment->setVar('title', $title);
-                        $fragment->setVar('body', $form, false);
-                        // $fragment->setVar('buttons', $buttons, false);
-                        $form = $fragment->parse('core/page/section.php');
-
-                        $mainFragment->setVar('detailForm', $form, false);
-
-                        $mainMessages[] = [
-                            'type' => 'info',
-                            'message' => rex_i18n::msg('yform_back_to_overview'),
-                            'link' => 'index.php?' . http_build_query(array_merge($rex_link_vars)),
-                        ];
                     }
                 }
                 break;
