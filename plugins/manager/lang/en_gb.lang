@@ -140,6 +140,7 @@ yform_function = Function
 yform_add = add
 yform_add_apply = apply
 yform_edit = edit
+yform_view = show
 yform_save = save
 yform_save_apply = apply
 yform_delete = delete

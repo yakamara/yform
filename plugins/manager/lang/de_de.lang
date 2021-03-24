@@ -140,6 +140,7 @@ yform_function = Funktion
 yform_add = hinzufügen
 yform_add_apply = übernehmen
 yform_edit = editieren
+yform_view = anzeigen
 yform_save = speichern
 yform_save_apply = übernehmen
 yform_delete = löschen
@@ -297,3 +298,8 @@ yform_will_set_to = wird
 yform_field_add = Feld hinzufügen
 yform_field_update = Feld aktualisieren
 yform_field_db_type = Datenbank-Feldtyp
+
+yform_manager_table_data_view_roles = Datenansicht beschränkt auf
+yform_manager_table_data_edit_roles = Datenbearbeitung beschränkt auf
+
+yform_manager_table_nopermission = Keine Berechtigung auf diese Tabelle

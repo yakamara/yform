@@ -111,6 +111,20 @@ class rex_yform_manager_field implements ArrayAccess
         return $this->object->getDatabaseFieldDefault();
     }
 
+    public function getRelationTableNames()
+    {
+        $tables = [];
+        if ('be_manager_relation' == $this->getTypeName()) {
+            if ('' != $this->values['table']) {
+                $tables[] = $this->values['table'];
+            }
+            if ('' != $this->values['relation_table']) {
+                $tables[] = $this->values['relation_table'];
+            }
+        }
+        return $tables;
+    }
+
     public function getHooks()
     {
         return (isset($this->definitions['hooks'])) ? $this->definitions['hooks'] : [];

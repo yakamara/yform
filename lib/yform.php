@@ -15,6 +15,8 @@ class rex_yform
     public $objparams = [];
 
     private $fieldsInitialized = false;
+    private $editable = true;
+    private $viewable = true;
 
     public function __construct(array $params = [])
     {
@@ -116,17 +118,40 @@ class rex_yform
         return new $class($params);
     }
 
+    public function canEdit(bool $editable): self
+    {
+        $this->editable = $editable;
+        return $this;
+    }
+
+    public function isEditable(): bool
+    {
+        return $this->editable;
+    }
+
+    public function canView(bool $viewable): self
+    {
+        $this->viewable = $viewable;
+        return $this;
+    }
+
+    public function isViewable(): bool
+    {
+        return $this->viewable;
+    }
+
     public static function addTemplatePath($path)
     {
         self::$TemplatePaths[] = $path;
     }
 
-    public function setDebug($s = true)
+    public function setDebug($s = true): self
     {
         $this->objparams['debug'] = $s;
+        return $this;
     }
 
-    public function setFormData($form_definitions, $refresh = true)
+    public function setFormData($form_definitions, $refresh = true): self
     {
         $this->setObjectparams('form_data', $form_definitions, $refresh);
 

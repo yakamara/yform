@@ -16,8 +16,8 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public $label;
     public $type;
     public $keys = [];
-
-    // ------------
+    public $editable = true;
+    public $viewable = true;
 
     public function setArticleId($aid)
     {
@@ -33,8 +33,6 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         return $this->value;
     }
-
-    //  ------------ keys
 
     public function getFieldId($k = '')
     {
@@ -71,8 +69,6 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     {
         return 'form' . $this->type;
     }
-
-    // ------------ helpers
 
     public function setKey($k, $v)
     {
@@ -198,8 +194,6 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return $this->getElement('validation_disabled');
     }
 
-    // ------------
-
     public function loadParams(&$params, $elements = [])
     {
         parent::loadParams($params, $elements);
@@ -242,7 +236,6 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
             $label = nl2br(htmlspecialchars($label));
         }
         return $label;
-        return '<span style="color:#f90">' . ($label) . '</span>';
     }
 
     protected function getValueForKey($key)
@@ -301,14 +294,16 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     public function saveInDB($elementKey = 'no_db')
     {
+        // TODO: find es better naming instead of "saveInDb"
+        if (!$this->isEditable()) {
+            return false;
+        }
         // is no_db set
         if (in_array($this->getElement($elementKey), [1, '1', true, 'no_db'], true)) {
             return false;
         }
         return true;
     }
-
-    // ------------ Trigger
 
     public function enterObject()
     {
@@ -317,4 +312,5 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public function init()
     {
     }
+
 }

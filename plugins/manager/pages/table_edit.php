@@ -88,9 +88,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $yform->setObjectparams('main_table', rex_yform_manager_table::table());
 
     $yform->setValueField('html', ['html' => '<div class="row"><div class="col-md-6">']);
-
     $yform->setValueField('html', ['html' => '<label>'.rex_i18n::msg('yform_manager_table_basic_info').'</label>']);
-
     $yform->setValueField('checkbox', ['status', rex_i18n::msg('yform_tbl_active')]);
     $yform->setValueField('prio', ['prio', rex_i18n::msg('yform_manager_table_prio'), 'name']);
 
@@ -159,6 +157,18 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
         'DESC' => rex_i18n::msg('yform_manager_sortorder_desc'),
     ]]);
 
+    $yform->setValueField('html', ['html' => '</div></div>']);
+
+    $rolesArray = rex_sql::factory()->getArray('SELECT id, name FROM ' . rex::getTablePrefix() . 'user_role ORDER BY name');
+    $roles = [];
+    foreach($rolesArray as $role) {
+        $roles[$role['id']] = $role['name'];
+    }
+
+    $yform->setValueField('html', ['html' => '<br /><div class="row"><div class="col-md-6">']);
+    $yform->setValueField('choice', ['name' => 'exclusive_view_roles', 'label' => rex_i18n::msg('yform_manager_table_data_view_roles'), 'choices' => $roles, 'multiple' => true, 'default' => 0]);
+    $yform->setValueField('html', ['html' => '</div><div class="col-md-6">']);
+    $yform->setValueField('choice', ['name' => 'exclusive_edit_roles', 'label' => rex_i18n::msg('yform_manager_table_data_edit_roles'), 'choices' => $roles, 'multiple' => true, 'default' => 0]);
     $yform->setValueField('html', ['html' => '</div></div>']);
 
     $yform->setValueField('html', ['html' => '</div></div>']);
