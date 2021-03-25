@@ -7,10 +7,10 @@ class rex_yform_manager_table_authorization
 
     public static $tableAuthorizations = null;
 
-    public static function onAttribute(string $attribute, rex_yform_manager_table $table, rex_user $user = null): bool
+    public static function onAttribute(string $attribute, rex_yform_manager_table $userTable, rex_user $user = null): bool
     {
         if (null !== self::$tableAuthorizations) {
-            if (array_key_exists($attribute, self::$tableAuthorizations[$table->getTableName()] ?? [])) {
+            if (array_key_exists($attribute, self::$tableAuthorizations[$userTable->getTableName()] ?? [])) {
                 return true;
             }
             return false;
@@ -34,7 +34,7 @@ class rex_yform_manager_table_authorization
             }
         }
 
-        return self::onAttribute($attribute, $table, $user);
+        return self::onAttribute($attribute, $userTable, $user);
     }
 
     private static function canView(rex_yform_manager_table $table, rex_user $user = null): bool
