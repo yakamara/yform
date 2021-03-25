@@ -11,7 +11,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $value = $this->getValue();
+        $value = $this->getValue() ?? '';
         $showValue = $this->getValue();
 
         // translate:yform_always=0,translate:yform_onlyifempty=1,translate:yform_never=2
