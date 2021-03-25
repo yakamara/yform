@@ -49,8 +49,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 
         $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
         $this->params['form_output'][$this->getId()] .= $this->parse(
-            'value.google_geocode.tpl.php',
-            compact('includeGoogleMaps', 'value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey')
+            'value.google_geocode.tpl.php', compact( 'value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey')
         );
     }
 
