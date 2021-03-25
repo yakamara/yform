@@ -15,13 +15,13 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $this->setValue('');
         }
 
-        $media_category_id = ('' == $this->getElement(8)) ? 0 : (int) $this->getElement(8);
+        $media_category_id = ('' == $this->getElement(8)) ? 0 : (int) $this->getElement('category');
         $media_category = rex_media_category::get($media_category_id);
         if (null === $media_category) {
             $media_category_id = 0;
         }
 
-        $mediapool_user = ('' == $this->getElement(9)) ? 'yform::mediafile' : $this->getElement(9);
+        $mediapool_user = ('' == $this->getElement(9)) ? 'yform::mediafile' : $this->getElement('user');
         $pool = $this->params['value_pool']['email'];
         $mediapool_user = preg_replace_callback('/###(\w+)###/',
                                                             static function ($m) use ($pool) {
@@ -30,12 +30,10 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                                                             },
                                                             $mediapool_user);
 
-        // MIN/MAX SIZES
-        $sizes = explode(',', $this->getElement(3));
+        $sizes = array_map('intval', explode(',', $this->getElement('max_size')));
         $minsize = count($sizes) > 1 ? (int) ($sizes[0] * 1024) : 0;
         $maxsize = count($sizes) > 1 ? (int) ($sizes[1] * 1024) : (int) ($sizes[0] * 1024);
 
-        // ERR MSGS
         $error = [];
         $err_msgs = explode(',', $this->getElement(6)); // min_err,max_err,type_err,empty_err
         $err_msgs['min_err'] = $err_msgs[0];
