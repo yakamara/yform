@@ -338,8 +338,14 @@ class rex_yform
 
         // ----- create form
 
-        foreach ($this->objparams['values'] as $ValueObject) {
-            $ValueObject->enterObject();
+        try {
+            foreach ($this->objparams['values'] as $ValueObject) {
+                $ValueObject->enterObject();
+            }
+        } catch (Exception $e) {
+            dump($ValueObject);
+            dump($e);
+            throw $e;
         }
 
         if (1 == $this->objparams['send']) {
@@ -404,7 +410,7 @@ class rex_yform
                 // special case - submit button shows up by default
                 if (($rows - 1) == $i && $this->objparams['submit_btn_show']) {
                     ++$rows;
-                    $this->objparams['form_elements'][] = ['submit', 'name' => 'rex_yform_submit', 'label' => $this->objparams['submit_btn_label'], 'no_db' => 'no_db'];
+                    $this->objparams['form_elements'][] = ['submit', 'name' => 'rex_yform_submit', 'labels' => $this->objparams['submit_btn_label'], 'no_db' => 'no_db'];
                     $this->objparams['submit_btn_show'] = false;
                 }
             } else {
