@@ -69,7 +69,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() && !$this->isViewable()) {
             return;
         }
 
@@ -102,7 +102,10 @@ class rex_yform_value_time extends rex_yform_value_abstract
         $minute = (int) substr($this->getValue(), 3, 2);
         $second = (int) substr($this->getValue(), 6, 2);
 
-        if ('input:text' == $this->getElement('widget')) {
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.time-view.tpl.php', 'value.view.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
+        } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
         } else {

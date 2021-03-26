@@ -77,7 +77,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() && !$this->isViewable()) {
             return;
         }
 
@@ -136,7 +136,10 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         $format = self::datetime_getFormat($this->getElement('format'));
         $input_value = self::datetime_getFromFormattedDatetime($this->getValue(), 'YYYY-MM-DD HH:ii:ss', $format);
 
-        if ('input:text' == $this->getElement('widget')) {
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php'], ['type' => 'text', 'value' => $input_value]);
+
+        }else if ('input:text' == $this->getElement('widget')) {
             if ('00000000000000' == self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss')) {
                 $input_value = '';
             }

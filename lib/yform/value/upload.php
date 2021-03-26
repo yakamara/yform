@@ -54,6 +54,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $this->setSessionVar('original_value', (string) $this->getValue());
         }
 
+        if (!$this->isEditable()) {
+            unset($_FILES[$this->getSessionKey()]);
+        }
+
         $FILE = null;
         if (isset($_FILES[$this->getSessionKey()]) && '' != $_FILES[$this->getSessionKey()]['name']) {
             $FILE['size'] = $_FILES[$this->getSessionKey()]['size'];
@@ -184,13 +188,22 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $download_link = self::upload_getDownloadLink($this->params['main_table'], $this->getName(), $this->params['main_id']);
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', [
-                'unique' => $this->getSessionKey(),
-                'filename' => $filename,
-                'error_messages' => $error_messages,
-                'download_link' => $download_link,
-            ]);
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.upload-view.tpl.php', 'value.view.tpl.php'], [
+                    'unique' => $this->getSessionKey(),
+                    'filename' => $filename,
+                    'error_messages' => $error_messages,
+                    'download_link' => $download_link,
+                ]);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', [
+                    'unique' => $this->getSessionKey(),
+                    'filename' => $filename,
+                    'error_messages' => $error_messages,
+                    'download_link' => $download_link,
+                ]);
+            }
         }
 
         return $this;

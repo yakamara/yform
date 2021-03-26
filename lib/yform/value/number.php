@@ -21,8 +21,14 @@ class rex_yform_value_number extends rex_yform_value_abstract
             $this->setValue($this->getValue());
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.number-view.tpl.php', 'value.integer-view.tpl.php', 'value.view.tpl.php'], ['prepend' => $this->getElement('unit')]);
+
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
+
+            }
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
