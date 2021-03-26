@@ -383,7 +383,6 @@ class rex_yform_manager
                             $yform->setObjectparams('submit_btn_show', false);
 
                             if (isset($rex_yform_manager_opener['id'])) {
-
                                 // TODO:
                                 // Übernehmen aus dem Datensatz heraus
 
@@ -397,7 +396,6 @@ class rex_yform_manager
                                     ).'</a>';
                                 */
                             }
-
                         }
                     } elseif ('add' == $func) {
                         $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
@@ -425,17 +423,7 @@ class rex_yform_manager
 
                         $sql_db->commit();
                         if ($yform->objparams['actions_executed']) {
-                            if ('edit' == $func) {
-                                $mainMessages[] = [
-                                    'type' => 'info',
-                                    'message' => rex_i18n::msg('yform_thankyouforupdate'),
-                                ];
-                            } elseif ('add' == $func) {
-                                $mainMessages[] = [
-                                    'type' => 'info',
-                                    'message' => rex_i18n::msg('yform_thankyouforentry'),
-                                ];
-
+                            if ('add' == $func) {
                                 $submit_type = 1; // normal, 2=apply
                                 foreach ($yform->objparams['values'] as $valueObject) {
                                     /** @var rex_yform_value_abstract $valueObject */
@@ -459,7 +447,6 @@ class rex_yform_manager
                                     $yform->setObjectparams('send', false);
                                     $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                                     $form = $yform->getForm();
-                                    echo "1";
                                 }
                             }
                         }
@@ -488,6 +475,23 @@ class rex_yform_manager
                             ];
                         }
 
+                        if ($yform->hasWarnings()) {
+                            $mainMessages[] = [
+                                'type' => 'error',
+                                'message' => rex_i18n::msg('yform_errors_occurred'),
+                            ];
+                        } elseif ('edit' == $func) {
+                            $mainMessages[] = [
+                                'type' => 'info',
+                                'message' => rex_i18n::msg('yform_thankyouforupdate'),
+                            ];
+                        } elseif ('add' == $func) {
+                            $mainMessages[] = [
+                                'type' => 'info',
+                                'message' => rex_i18n::msg('yform_thankyouforentry'),
+                            ];
+                        }
+
                     } catch (\Throwable $e) {
                         $sql_db->rollBack();
                         $transactionErrorMessage = $e->getMessage();
@@ -501,6 +505,9 @@ class rex_yform_manager
                 }
                 break;
         }
+
+
+
 
         $sql = $this->getDataListQuery($rex_yform_filter, $searchObject, $this->table);
 

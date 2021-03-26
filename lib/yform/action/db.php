@@ -76,7 +76,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
         } catch (Exception $e) {
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
-            if ($this->params['debug']) {
+            if ($this->params['debug'] || rex::isBackend()) {
                 $this->params['warning_messages'][] = $e->getMessage();
             } else {
                 $this->params['warning_messages'][] = $this->params['Error-Code-QueryError'];

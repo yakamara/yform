@@ -786,4 +786,11 @@ class rex_yform
         $this->objparams['form_elements'][] = ['csrf', 'name' => '_csrf_token'];
         return $this;
     }
+
+    public function hasWarnings()
+    {
+        $hasWarnings = 0 != count($this->objparams['warning']);
+        $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
+        return ($hasWarnings || $hasWarningMessages);
+    }
 }

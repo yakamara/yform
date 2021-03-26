@@ -8,7 +8,7 @@ yform_alltables = All tables
 yform_back_to_overview = Back to overview
 yform_updatetable = Update table/s
 yform_tablesupdated = Table/s updated
-
+yform_errors_occurred  = Error occurred
 yform_help_empty = Empty entries can be searched with (empty)
 yform_help_multipleselect = Select multiple while holding down CTRL or CMD
 yform_updatetable_with_delete = with field deletion

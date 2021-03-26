@@ -8,7 +8,7 @@ yform_alltables = Alle Tabellen
 yform_back_to_overview = Zurück zur Übersicht
 yform_updatetable = aktualisieren
 yform_tablesupdated = Tabelle/n wurde/n aktualisiert
-
+yform_errors_occurred = Es sind Fehler aufgetreten
 yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
 yform_help_multipleselect = Mehrfachauswahl mit gedrückter CTRL/CMD Taste
 yform_updatetable_with_delete = mit Feldlöschung
