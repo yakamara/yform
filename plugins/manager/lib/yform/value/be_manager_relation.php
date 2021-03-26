@@ -232,14 +232,15 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform = $relation->getForm();
                     $yform->setObjectparams('form_name', $form_name);
                     $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
-
                     $yform->setObjectparams('form_action', '');
                     $yform->setObjectparams('form_showformafterupdate', 1);
-
                     $yform->setObjectparams('getdata', true);
-
                     $yform->setObjectparams('submit_btn_show', false);
                     $yform->setObjectparams('csrf_protection', false);
+
+                    $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
+                    $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
+
                     $form_elements = [];
                     foreach ($yform->objparams['form_elements'] as $form_element) {
                         if ('prio' == $form_element[0] && $form_element[1] == $prioFieldName) {
@@ -271,13 +272,15 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform = $data->getForm();
                         $yform->setObjectparams('form_name', $form_name);
                         $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
-
                         $yform->setObjectparams('form_action', '');
                         $yform->setObjectparams('form_showformafterupdate', 1);
                         $yform->setObjectparams('data', $form);
-
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
+
+                        $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
+                        $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
+
                         $form_elements = [];
 
                         $relation_field = '';
@@ -324,8 +327,13 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
 
             $this->params['value_pool']['email'][$this->getName()] = $value;
-
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName', 'relationKey'));
+            if ($this->isViewable()) {
+                if (!$this->isEditable()) {
+                    $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation-view.tpl.php', compact('forms', 'fieldkey', 'prioFieldName', 'relationKey'));
+                } else {
+                    $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName', 'relationKey'));
+                }
+            }
         }
     }
 
