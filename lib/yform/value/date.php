@@ -77,10 +77,10 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue() ?? '';
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() || !$this->isViewable()) {
             return;
         }
 
@@ -111,7 +111,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $format = self::date_getFormat($this->getElement('format'));
         $input_value = self::date_getFromFormattedDate($this->getValue(), 'YYYY-MM-DD', $format);
 
-        if ('input:text' == $this->getElement('widget')) {
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.date-view.tpl.php', 'value.datetime-view.tpl.php', 'value.view.tpl.php'],
+                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
+            );
+        } elseif ('input:text' == $this->getElement('widget')) {
             if ('00000000' == self::date_getFromFormattedDate($this->getValue(), $format, 'YYYYMMDD')) {
                 $input_value = '';
             }
