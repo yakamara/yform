@@ -40,17 +40,21 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 
         $address = str_replace(' ', '', $this->getElement('address'));
 
-        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-
-        if (!$this->needsOutput()) {
-            return;
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.google_geocode-view.tpl.php', 'value.view.tpl.php']);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
+                $this->params['form_output'][$this->getId()] .= $this->parse(
+                    'value.google_geocode.tpl.php', compact('value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey')
+                );
+            }
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
-        $this->params['form_output'][$this->getId()] .= $this->parse(
-            'value.google_geocode.tpl.php', compact( 'value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey')
-        );
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+        if ($this->saveInDB()) {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
     }
 
     public function getDescription()
