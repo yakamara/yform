@@ -17,10 +17,10 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->saveInDb()) {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue() ?? '';
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() || !$this->isViewable()) {
             return;
         }
 
@@ -53,7 +53,7 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
                 }
             }
         };
-        if ($rootId = $this->getElement('category')) {
+        if ($rootId = (int) $this->getElement('category')) {
             if ($rootCat = rex_media_category::get($rootId, $clang)) {
                 $add($rootCat);
             }
@@ -88,7 +88,13 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
             $this->setValue(explode(',', $this->getValue()));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(['value.be_media_category-view.tpl.php', 'value.view.tpl.php'], compact('options', 'multiple', 'size'));
+
+        } else {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+
+        }
 
         $this->setValue(implode(',', $this->getValue()));
     }
