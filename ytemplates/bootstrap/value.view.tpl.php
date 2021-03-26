@@ -4,7 +4,7 @@ $value = $value ?? $this->getValue() ?? '';
 
 if (is_array($value)) {
     foreach ($value as $k => $v) {
-        $value[$k] = '<li>'.rex_escape($v).' ['.rex_escape('key: '.$k).']</li>';
+        $value[$k] = '<li>'.rex_escape($v).'</li>';
     }
     $value = '<ul>'.implode('', $value).'</ul>';
 } else {
