@@ -424,64 +424,62 @@ class rex_yform
 
     public function executeActions()
     {
-        // *************************************************** ACTION OBJEKTE
+        if ($this->isEditable()) {
+            if ($this->objparams['main_id'] > 0) {
+                /** @deprecated use 'id' instead of 'ID' */
+                $this->objparams['value_pool']['email']['ID'] = $this->objparams['main_id'];
+                $this->objparams['value_pool']['email']['id'] = $this->objparams['main_id'];
+            }
 
-        // ID setzen, falls vorhanden
-        if ($this->objparams['main_id'] > 0) {
-            /** @deprecated use 'id' instead of 'ID' */
-            $this->objparams['value_pool']['email']['ID'] = $this->objparams['main_id'];
-            $this->objparams['value_pool']['email']['id'] = $this->objparams['main_id'];
-        }
+            $hasWarnings = 0 != count($this->objparams['warning']);
+            $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
 
-        $hasWarnings = 0 != count($this->objparams['warning']);
-        $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
+            if (1 == $this->objparams['send'] && !$hasWarnings && !$hasWarningMessages) {
+                $this->objparams['form_show'] = false;
 
-        // ----- Actions
-        if (1 == $this->objparams['send'] && !$hasWarnings && !$hasWarningMessages) {
-            $this->objparams['form_show'] = false;
-
-            try {
-                // ----- pre Actions
-                foreach ($this->objparams['fields'] as $t => $types) {
-                    foreach ($types as $Objects) {
-                        if (!is_array($Objects)) {
-                            $Objects = [$Objects];
-                        }
-                        foreach ($Objects as $Object) {
-                            $Object->preAction();
+                try {
+                    // ----- pre Actions
+                    foreach ($this->objparams['fields'] as $t => $types) {
+                        foreach ($types as $Objects) {
+                            if (!is_array($Objects)) {
+                                $Objects = [$Objects];
+                            }
+                            foreach ($Objects as $Object) {
+                                $Object->preAction();
+                            }
                         }
                     }
-                }
-                $this->objparams['preactions_executed'] = true;
+                    $this->objparams['preactions_executed'] = true;
 
-                // ----- normal Actions
-                foreach ($this->objparams['fields'] as $t => $types) {
-                    foreach ($types as $Objects) {
-                        if (!is_array($Objects)) {
-                            $Objects = [$Objects];
-                        }
-                        foreach ($Objects as $Object) {
-                            $Object->executeAction();
+                    // ----- normal Actions
+                    foreach ($this->objparams['fields'] as $t => $types) {
+                        foreach ($types as $Objects) {
+                            if (!is_array($Objects)) {
+                                $Objects = [$Objects];
+                            }
+                            foreach ($Objects as $Object) {
+                                $Object->executeAction();
+                            }
                         }
                     }
-                }
-                $this->objparams['actions_executed'] = true;
+                    $this->objparams['actions_executed'] = true;
 
-                // ----- post Actions
-                foreach ($this->objparams['fields'] as $types) {
-                    foreach ($types as $Objects) {
-                        if (!is_array($Objects)) {
-                            $Objects = [$Objects];
-                        }
-                        foreach ($Objects as $Object) {
-                            $Object->postAction();
+                    // ----- post Actions
+                    foreach ($this->objparams['fields'] as $types) {
+                        foreach ($types as $Objects) {
+                            if (!is_array($Objects)) {
+                                $Objects = [$Objects];
+                            }
+                            foreach ($Objects as $Object) {
+                                $Object->postAction();
+                            }
                         }
                     }
+                    $this->objparams['postactions_executed'] = true;
+                } catch (Exception $e) {
+                    $this->objparams['form_show'] = true;
+                    $this->objparams['form_exit'] = false;
                 }
-                $this->objparams['postactions_executed'] = true;
-            } catch (Exception $e) {
-                $this->objparams['form_show'] = true;
-                $this->objparams['form_exit'] = false;
             }
         }
 
@@ -791,6 +789,6 @@ class rex_yform
     {
         $hasWarnings = 0 != count($this->objparams['warning']);
         $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
-        return ($hasWarnings || $hasWarningMessages);
+        return $hasWarnings || $hasWarningMessages;
     }
 }
