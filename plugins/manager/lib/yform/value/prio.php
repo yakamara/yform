@@ -69,14 +69,21 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             $this->setValue(explode(',', $this->getValue()));
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', ['options' => $options, 'multiple' => false, 'size' => 1]);
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.select-view.tpl.php', 'value.view.tpl.php'], ['options' => $options, 'multiple' => false, 'size' => 1]);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', ['options' => $options, 'multiple' => false, 'size' => 1]);
+            }
         }
 
         $this->setValue(implode(',', $this->getValue()));
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+
+        if ($this->saveInDB()) {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
     }
 
     public function getDescription()
