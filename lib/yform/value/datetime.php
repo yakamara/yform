@@ -9,10 +9,8 @@
 
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
-    public const
-        VALUE_DATETIME_DEFAULT_FORMAT = 'YYYY-MM-DD HH:ii:ss';
-    public const
-        VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
+    public const VALUE_DATETIME_DEFAULT_FORMAT = 'YYYY-MM-DD HH:ii:ss';
+    public const VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
 
     public function preValidateAction()
     {
@@ -135,14 +133,12 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         $format = self::datetime_getFormat($this->getElement('format'));
         $input_value = self::datetime_getFromFormattedDatetime($this->getValue(), 'YYYY-MM-DD HH:ii:ss', $format);
-
+        if ('00000000000000' == self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss')) {
+            $input_value = '';
+        }
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php'], ['type' => 'text', 'value' => $input_value]);
-
-        }else if ('input:text' == $this->getElement('widget')) {
-            if ('00000000000000' == self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss')) {
-                $input_value = '';
-            }
+        } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(

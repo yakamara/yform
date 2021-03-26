@@ -110,16 +110,16 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         $format = self::date_getFormat($this->getElement('format'));
         $input_value = self::date_getFromFormattedDate($this->getValue(), 'YYYY-MM-DD', $format);
+        if ('00000000' == self::date_getFromFormattedDate($this->getValue(), $format, 'YYYYMMDD')) {
+            $input_value = '';
+        }
 
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date-view.tpl.php', 'value.datetime-view.tpl.php', 'value.view.tpl.php'],
-                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
+                array_merge(compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day'), ['value' => $input_value])
             );
         } elseif ('input:text' == $this->getElement('widget')) {
-            if ('00000000' == self::date_getFromFormattedDate($this->getValue(), $format, 'YYYYMMDD')) {
-                $input_value = '';
-            }
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(

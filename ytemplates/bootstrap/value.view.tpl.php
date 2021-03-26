@@ -1,6 +1,6 @@
 <?php
 
-$value = $this->getValue() ?? '';
+$value = $value ?? $this->getValue() ?? '';
 
 if (is_array($value)) {
     foreach ($value as $k => $v) {
