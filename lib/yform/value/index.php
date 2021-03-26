@@ -15,10 +15,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             return;
         }
 
-        $value = $this->getValue();
-        if (!$value) {
-            $value = '';
-        }
+        $value = $this->getValue() ?? '';
 
         if ('' != $this->getElement('names')) {
             $index_labels = explode(',', $this->getElement('names'));
@@ -53,9 +50,9 @@ class rex_yform_value_index extends rex_yform_value_abstract
             $fnc = trim($this->getElement('function'));
             if ('' != $fnc) {
                 if (1 == $this->getElement('add_this_param')) {
-                    $value = call_user_func($fnc, $value, $this);
+                    $value = call_user_func($fnc, $value, $this) ?? '';
                 } else {
-                    $value = call_user_func($fnc, $value);
+                    $value = call_user_func($fnc, $value) ?? '';
                 }
             }
         }
