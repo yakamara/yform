@@ -3,27 +3,19 @@
 $value = $this->getValue() ?? '';
 
 if (is_array($value)) {
-
-    foreach($value as $k => $v) {
-        $value[$k] = '<li>'.rex_escape($v).'</li>';
+    foreach ($value as $k => $v) {
+        $value[$k] = '<li>'.rex_escape($v).' ['.rex_escape('key: '.$k).']</li>';
     }
     $value = '<ul>'.implode('', $value).'</ul>';
-
 } else {
-
     $length = strlen($value);
     $title = $value;
     $maxsize = 400;
     if ($length > $maxsize) {
-        $value = mb_substr($value, 0, $maxsize/2).' ... '.mb_substr($value, -($maxsize/2));
+        $value = mb_substr($value, 0, $maxsize / 2).' ... '.mb_substr($value, -($maxsize / 2));
     }
     $value = rex_escape($value);
 }
-
-
-
-
-
 
 $notice = [];
 if ('' != $this->getElement('notice')) {
