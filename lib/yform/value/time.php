@@ -33,11 +33,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $value = $this->getValue();
 
             if (is_array($value)) {
-                // widget: selects
                 $hour = (int) substr(@$value['hour'], 0, 2);
                 $minute = (int) substr(@$value['minute'], 0, 2);
                 $second = (int) substr(@$value['second'], 0, 2);
-
                 $value =
                     str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
@@ -63,6 +61,18 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        $value = $this->getValue();
+        if (is_array($value)) {
+            $hour = (int) substr(@$value['hour'], 0, 2);
+            $minute = (int) substr(@$value['minute'], 0, 2);
+            $second = (int) substr(@$value['second'], 0, 2);
+            $value =
+                str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($second, 2, '0', STR_PAD_LEFT);
+        }
+        $this->setValue($value);
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {

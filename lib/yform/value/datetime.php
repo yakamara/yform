@@ -69,6 +69,24 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        $value = $this->getValue();
+        if (is_array($value)) {
+            $year = (int) substr(@$value['year'], 0, 4);
+            $month = (int) substr(@$value['month'], 0, 2);
+            $day = (int) substr(@$value['day'], 0, 2);
+            $hour = (int) substr(@$value['hour'], 0, 2);
+            $minute = (int) substr(@$value['minute'], 0, 2);
+            $second = (int) substr(@$value['second'], 0, 2);
+            $value =
+                str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
+                str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
+                str_pad($day, 2, '0', STR_PAD_LEFT) . ' ' .
+                str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($minute, 2, '0', STR_PAD_LEFT) . ':'.
+                str_pad($second, 2, '0', STR_PAD_LEFT);
+        }
+        $this->setValue($value);
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
