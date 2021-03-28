@@ -121,7 +121,7 @@ class rex_yform_email_template
                 $mail->AltBody = $template['body'];
             }
         } else {
-            $mail->Body = strip_tags($template['body']);
+            $mail->Body = $template['body'];
         }
 
         if (is_array($template['attachments'])) {
