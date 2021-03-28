@@ -74,7 +74,6 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public function enterObject()
     {
-
         $value = $this->getValue();
         if (is_array($value)) {
             $year = (int) substr(@$value['year'], 0, 4);
@@ -219,7 +218,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $value = trim($params['value']);
         $format = self::date_getFormat($params['field']->getElement('format'));
         $field = $params['field']->getName();
-        $field = 't0.' . rex_sql::factory()->escapeIdentifier($field);
+        $field = rex_sql::factory()->escapeIdentifier($field);
         return self::getDateFilterWhere($value, $field, $format);
     }
 
