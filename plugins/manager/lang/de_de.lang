@@ -128,6 +128,7 @@ yform_visible = sichtbar
 
 # edit.inc.php
 yform_thankyouforupdate = Datensatz wurde aktualisiert.
+yform_thankyouforupdates = Datensätze wurde aktualisiert.
 yform_thankyouforentry = Datensatz wurde eingetragen.
 yform_editdata = Datensatz editieren [id: {0}]
 yform_editdata_collection = {0} Datensätze editieren

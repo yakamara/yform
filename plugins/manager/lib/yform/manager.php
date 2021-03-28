@@ -174,16 +174,16 @@ class rex_yform_manager
 
         if ($this->table->isGranted('EDIT', rex::getUser())) {
             $func = !in_array($func, ['delete', 'dataset_delete', 'truncate_table', 'add',
-                'edit', 'import', 'history', 'dataset_export', 'collection_edit']) ? '' : $func;
+                'edit', 'import', 'history', 'dataset_export', 'collection_edit', ]) ? '' : $func;
         } else {
-            $func = ($func != 'edit') ? '' : 'edit';
+            $func = ('edit' != $func) ? '' : 'edit';
         }
 
         if ('' != $func) {
             if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
                 $mainMessages[] = [
                     'type' => 'error',
-                    'message' => rex_i18n::msg('csrf_token_invalid'),
+                    'message' => "XXX".rex_i18n::msg('csrf_token_invalid'),
                 ];
             }
         }
@@ -300,7 +300,6 @@ class rex_yform_manager
                     ('edit' == $func && $data_id) ||
                     ('collection_edit' == $func && $this->table->isMassEditAllowed())
                 ) {
-
                     if ('collection_edit' === $func) {
                         $query = $this->table->query();
                         $where = $this->getDataListQueryWhere(array_merge($rex_yform_filter, $rex_yform_set), $searchObject, $this->table);
@@ -309,6 +308,8 @@ class rex_yform_manager
                         }
                         $data = $query->find();
                         $yform = $data->getForm();
+                        $yform->setObjectparams('csrf_protection', false);
+
                     } else {
                         $data = 'add' == $func ? $this->table->createDataset() : $this->table->getRawDataset($data_id);
                         $yform = $data->getForm();
@@ -365,18 +366,10 @@ class rex_yform_manager
                     }
 
                     $yform->setObjectparams('fixdata', $rex_yform_set);
-
                     $yform_clone = clone $yform;
-
-                    if (!$yform->isEditable() && $func != 'edit') {
-                        // TODO:
-                        // kommst das überhaupt hier an
-                        break;
-                    }
-
                     $yform->setHiddenField('func', $func); // damit es neu im clone gesetzt werden kann
 
-                    switch($func) {
+                    switch ($func) {
                         case 'edit':
                             $yform->setHiddenField('data_id', $data_id);
                             $yform->setObjectparams('getdata', true);
@@ -392,7 +385,6 @@ class rex_yform_manager
                     if ($yform->isEditable()) {
                         $yform->setValueField('submit', ['name' => 'submit', 'labels' => $buttonLabels, 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                     } else {
-
                         $yform->setFieldValue('send', [], '');
                         $yform->setObjectparams('submit_btn_show', false);
                         if (isset($rex_yform_manager_opener['id'])) {
@@ -484,12 +476,18 @@ class rex_yform_manager
                         }
 
                         if ($yform->objparams['actions_executed']) {
+
                             if ($yform->hasWarnings()) {
                                 $mainMessages[] = [
                                     'type' => 'error',
                                     'message' => rex_i18n::msg('yform_errors_occurred'),
                                 ];
                             } elseif (!$yform->isEditable()) {
+                            } elseif ('collection_edit' == $func) {
+                                $mainMessages[] = [
+                                    'type' => 'info',
+                                    'message' => rex_i18n::msg('yform_thankyouforupdates'),
+                                ];
                             } elseif ('edit' == $func) {
                                 $mainMessages[] = [
                                     'type' => 'info',

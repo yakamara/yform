@@ -128,6 +128,7 @@ yform_visible = visible
 
 # edit.inc.php
 yform_thankyouforupdate = Record updated.
+yform_thankyouforupdates = Records updated.
 yform_thankyouforentry = Record added.
 yform_editdata = Edit record [id: {0}]
 yform_editdata_collection = Edit {0} records
