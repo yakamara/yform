@@ -173,24 +173,18 @@ class rex_yform_manager
         $mainMessages = [];
 
         if ($this->table->isGranted('EDIT', rex::getUser())) {
-            if ('' != $func && in_array($func, ['delete', 'dataset_delete', 'truncate_table', 'add', 'edit', 'import', 'history', 'dataset_export', 'collection_edit'])) {
-                if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
-                    $mainMessages[] = [
-                        'type' => 'error',
-                        'message' => rex_view::error(rex_i18n::msg('csrf_token_invalid')),
-                    ];
-                    $func = '';
-                }
-            }
+            $func = !in_array($func, ['delete', 'dataset_delete', 'truncate_table', 'add',
+                'edit', 'import', 'history', 'dataset_export', 'collection_edit']) ? '' : $func;
         } else {
-            if ('' != $func && in_array($func, ['edit'])) {
-                if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
-                    $mainMessages[] = [
-                        'type' => 'error',
-                        'message' => rex_view::error(rex_i18n::msg('csrf_token_invalid')),
-                    ];
-                    $func = '';
-                }
+            $func = ($func != 'edit') ? '' : 'edit';
+        }
+
+        if ('' != $func) {
+            if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
+                $mainMessages[] = [
+                    'type' => 'error',
+                    'message' => rex_i18n::msg('csrf_token_invalid'),
+                ];
             }
         }
 
@@ -656,7 +650,7 @@ class rex_yform_manager
 
                 $list->addColumn(rex_i18n::msg('yform_history').' ', '<i class="rex-icon fa-history"></i> ' . rex_i18n::msg('yform_history'));
                 $list->setColumnLayout(rex_i18n::msg('yform_history').' ', ['', '<td class="rex-table-action">###VALUE###</td>']);
-                $list->setColumnParams(rex_i18n::msg('yform_history').' ', ['func' => 'history', 'dataset_id' => '###id###', 'filter_dataset' => 1]);
+                $list->setColumnParams(rex_i18n::msg('yform_history').' ', array_merge(['func' => 'history', 'dataset_id' => '###id###', 'filter_dataset' => 1], $rex_yform_list));
             }
         } else {
             $list->addColumn(rex_i18n::msg('yform_function').' ', '<i class="rex-icon rex-icon-view"></i> ' . rex_i18n::msg('yform_view'));
