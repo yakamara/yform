@@ -54,7 +54,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_integer_description'),
-            'db_type' => ['int'],
+            'db_type' => ['int', 'bigint'],
             'db_null' => true,
         ];
     }
