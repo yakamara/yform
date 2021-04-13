@@ -478,7 +478,14 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'table' => ['type' => 'table',   'label' => rex_i18n::msg('yform_values_be_manager_relation_table')],
                 'field' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_manager_relation_field')],
-                'type' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_be_manager_relation_type'), 'choices' => ['0' => 'select (single)', '1' => 'select (multiple)', '2' => 'popup (single)', '3' => 'popup (multiple)', '4' => 'popup (multiple 1-n)', '5' => 'inline (multiple 1-n)']], // ,popup (multiple / relation)=4
+                'type' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_be_manager_relation_type'), 'choices' => [
+                    '0' => 'Single (select)',
+                    '2' => 'Single (popup)',
+                    '1' => 'Multiple (select)',
+                    '3' => 'Multiple (popup)',
+                    '5' => '1-n (inline)',
+                    '4' => '1-n (popup)',
+                ]], // ,popup (multiple / relation)=4
                 'empty_option' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_be_manager_relation_empty_option')],
                 'empty_value' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_manager_relation_empty_value')],
                 'size' => ['type' => 'text', 'name' => 'boxheight',    'label' => rex_i18n::msg('yform_values_be_manager_relation_size')],
