@@ -59,9 +59,9 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 $day = (int) substr(@$value['day'], 0, 2);
 
                 $value =
-                    str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
-                    str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
-                    str_pad($day, 2, '0', STR_PAD_LEFT);
+                    str_pad((string) $year, 4, '0', STR_PAD_LEFT) . '-' .
+                    str_pad((string) $month, 2, '0', STR_PAD_LEFT) . '-' .
+                    str_pad((string) $day, 2, '0', STR_PAD_LEFT);
             } else {
                 // widget: input:text
                 $format = self::date_getFormat($this->getElement('format'));
@@ -153,21 +153,21 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if (false !== $pos) {
             $year = (int) substr($datestring, $pos, 4);
         }
-        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
+        $year = str_pad((string) $year, 4, '0', STR_PAD_LEFT);
 
         $month = 0;
         $pos = strpos($format, 'MM');
         if (false !== $pos) {
             $month = (int) substr($datestring, $pos, 2);
         }
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+        $month = str_pad((string) $month, 2, '0', STR_PAD_LEFT);
 
         $day = 0;
         $pos = strpos($format, 'DD');
         if (false !== $pos) {
             $day = (int) substr($datestring, $pos, 2);
         }
-        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
+        $day = str_pad((string) $day, 2, '0', STR_PAD_LEFT);
 
         return str_replace(['YYYY', 'MM', 'DD'], [$year, $month, $day], $returnDateFormat);
     }
