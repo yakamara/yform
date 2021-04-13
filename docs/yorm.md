@@ -81,7 +81,7 @@ $items = MyTable::query()
 $item = MyTable::create()
               ->setValue('user_id', 5)
               ->setValue('article_id', 6)
-              ->save();;
+              ->save();
 ```
 
 ```php
