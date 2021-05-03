@@ -1504,7 +1504,7 @@ $yform->setValueField('text', array("name","Nachname"));
 $yform->setValidateField('empty', array("name","Bitte geben Sie einen Namen an!"));
 ```
 
-#### existintable (wird nicht mehr fortgeführt)
+#### in_table (früher existintable, wird nicht mehr fortgeführt)
 
 Überprüft, ob ein Feld in einer Tabelle existiert.
  
@@ -1528,7 +1528,7 @@ $yform->setValueField('text', array("wert","Wert"));
 $yform->setValidateField('intfromto', array("wert","2", "4", "Der Wert ist kleiner als 2 und größer als 4! "));
 ```
 
-#### labelexist
+#### in_names (früher: labelexist)
 
 Überprüft mit einem Minimal- und Maximalwert, ob eine bestimmte Menge an Feldern ausgefüllt wurden.
 
