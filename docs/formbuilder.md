@@ -614,6 +614,9 @@ echo $yform->getForm();
 	REX_YFORM_DATA[field="table"]
 
 
+> **Tipp:** In be_table lassen sich auch weitere YForm-Feldtypen in Pipe-Schreibweise hinterlegen, z.B. `text|title|Titel,textarea|text|Beschreibung,be_media|image|Bild`
+
+
 #### captcha
 		
 ###### Definition
@@ -1188,12 +1191,19 @@ $yform->setValueField('radio_sql', array("radio_sql","Radio SQL","SELECT id, nam
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="radio_sql"]
 
+#### remembervalues
+
+###### Definition
+	Speichert Werte des Formulars in einem Cookie
+
+###### Beispiel Formbuilder
+	remembervalues|name|label|label1,label2,label3,label4|opt:default:1/0|opt:dauerinsekunden
+
 #### resetbutton
-definiert einen Reset-Button, mit dem Eingaben zurückgesetzt werden können.
 
 
 ###### Definition
-	resetbutton|name|label|value|cssclassname
+	definiert einen Reset-Button, mit dem Eingaben zurückgesetzt werden können.
 	
 ###### Beispiel Formbuilder
 	resetbutton|reset|reset|Reset
