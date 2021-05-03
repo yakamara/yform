@@ -174,9 +174,17 @@ if ($show_list) {
     $list->setColumnParams('name', ['page' => $page, 'func' => 'edit', 'template_id' => '###id###']);
 
     $list->setColumnLabel('mail_from', rex_i18n::msg('yform_email_header_template_mail_from'));
-    $list->setColumnLabel('mail_from_name', rex_i18n::msg('yform_email_header_template_mail_from_name'));
+    $list->setColumnFormat('mail_from', "custom", function () {
+        return "###mail_from###<br />###mail_from_name###";
+    });
+    $list->setColumnLabel('mail_reply_to', rex_i18n::msg('yform_email_header_template_mail_reply_to'));
+    $list->setColumnFormat('mail_reply_to', "custom", function () {
+        return "###mail_reply_to###<br />###mail_reply_to_name###";
+    });
     $list->setColumnLabel('subject', rex_i18n::msg('yform_email_header_template_subject'));
 
+    $list->removeColumn('mail_from_name');
+    $list->removeColumn('mail_reply_to_name');
     $list->removeColumn('body');
     $list->removeColumn('body_html');
     $list->removeColumn('attachments');
