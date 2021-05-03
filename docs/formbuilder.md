@@ -1266,6 +1266,7 @@ $yform->setValueField('select_sql', array("select_sql","Select SQL","SELECT id, 
 	
 ###### Beispiel PHP
 ```php
+$yform->setValueField('showvalue', array("name","label","defaultwert","notice"));
 ```
 
 ###### Beispiel Pipe
