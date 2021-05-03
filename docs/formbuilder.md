@@ -795,11 +795,11 @@ $yform->setValueField('date', array("date","Datum","2016","+5","DD/MM/YYYY","1",
 	
 ###### Beispiel PHP
 ```php
-$yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","","0"));
+$yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","0","0"));
 ```
 
 ###### Beispiel Pipe
-	datestamp|createdate|Zeitstempel|mysql||0|
+	datestamp|createdate|Zeitstempel|mysql|wert anzeigen 0/1|0|
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="createdate"]
