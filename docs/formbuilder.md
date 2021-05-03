@@ -1867,6 +1867,10 @@ Gibt HTML-Code aus.
 $yform->setActionField('html', array("<b>fett</b>"));
 ```
 
+#### manage_db
+
+Die Action legt bei Bedarf nicht vorhandene Felder an.
+
 #### readtable
 
 Liest aus der angegebenen Tabelle den Feldinhalt von `feldname` anhand der Eingabe im Formular-Feld `label` den gefundenen Datensatz. Das gesuchte Tabellen-Feld `label`muss im Formular vorhanden sein.  
