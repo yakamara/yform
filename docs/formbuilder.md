@@ -614,6 +614,9 @@ echo $yform->getForm();
 	REX_YFORM_DATA[field="table"]
 
 
+> **Tipp:** In be_table lassen sich auch weitere YForm-Feldtypen in Pipe-Schreibweise hinterlegen, z.B. `text|title|Titel,textarea|text|Beschreibung,be_media|image|Bild`
+
+
 #### captcha
 		
 ###### Definition
@@ -792,11 +795,11 @@ $yform->setValueField('date', array("date","Datum","2016","+5","DD/MM/YYYY","1",
 	
 ###### Beispiel PHP
 ```php
-$yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","","0"));
+$yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","0","0"));
 ```
 
 ###### Beispiel Pipe
-	datestamp|createdate|Zeitstempel|mysql||0|
+	datestamp|createdate|Zeitstempel|mysql|wert anzeigen 0/1|0|
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="createdate"]
@@ -1188,12 +1191,19 @@ $yform->setValueField('radio_sql', array("radio_sql","Radio SQL","SELECT id, nam
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="radio_sql"]
 
+#### remembervalues
+
+###### Definition
+	Speichert Werte des Formulars in einem Cookie
+
+###### Beispiel Formbuilder
+	remembervalues|name|label|label1,label2,label3,label4|opt:default:1/0|opt:dauerinsekunden
+
 #### resetbutton
-definiert einen Reset-Button, mit dem Eingaben zurückgesetzt werden können.
 
 
 ###### Definition
-	resetbutton|name|label|value|cssclassname
+	definiert einen Reset-Button, mit dem Eingaben zurückgesetzt werden können.
 	
 ###### Beispiel Formbuilder
 	resetbutton|reset|reset|Reset
@@ -1494,7 +1504,7 @@ $yform->setValueField('text', array("name","Nachname"));
 $yform->setValidateField('empty', array("name","Bitte geben Sie einen Namen an!"));
 ```
 
-#### existintable (wird nicht mehr fortgeführt)
+#### in_table (früher existintable, wird nicht mehr fortgeführt)
 
 Überprüft, ob ein Feld in einer Tabelle existiert.
  
@@ -1518,7 +1528,7 @@ $yform->setValueField('text', array("wert","Wert"));
 $yform->setValidateField('intfromto', array("wert","2", "4", "Der Wert ist kleiner als 2 und größer als 4! "));
 ```
 
-#### labelexist
+#### in_names (früher: labelexist)
 
 Überprüft mit einem Minimal- und Maximalwert, ob eine bestimmte Menge an Feldern ausgefüllt wurden.
 
@@ -1856,6 +1866,10 @@ Gibt HTML-Code aus.
 <?php
 $yform->setActionField('html', array("<b>fett</b>"));
 ```
+
+#### manage_db
+
+Die Action legt bei Bedarf nicht vorhandene Felder an.
 
 #### readtable
 

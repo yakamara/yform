@@ -544,6 +544,26 @@ Datei `/redaxo/src/addons/yform/plugins/manager/lib/yform/manager/dataset.php` u
 
 ## Tricks
 
+<a name="dataset-yform"></a>
+
+
+### Dataset als YForm-Formular editieren / absenden
+
+```php
+// Datensatz aus Tabelle mit ID 2
+$dataset = rex_yform_manager_dataset::get(2,Tabelle);
+// Formular auslesen
+$yform = $dataset->getForm();
+// Parameter festlegen
+$yform->setObjectparams('form_method','get');
+// Ziel des Formulars, sonst erhält man nur Index.php ...
+$yform->setObjectparams('form_action',rex_getUrl(13));
+// Sollen die Daten des Datensatzes ausgelesen werden? (true = ja , false = nein) 
+$yform->setObjectparams("getdata",true);
+echo $dataset->executeForm($yform);
+} ?>
+```
+
 <a name="dataset-filter"></a>
 
 ### Aus dem Dataset ungewollte Felder (z. B. für's Frontend) herausfiltern
