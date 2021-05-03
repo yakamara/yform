@@ -10,6 +10,9 @@ Innerhalb von YForm gibt es im Menüpunkt `Übersicht` unter `Setup` den Button 
 
 Im Eingabefeld des Formbuilder-Moduls kann man die Values, Validierungen und Aktionen direkt eintragen. Eine kurze Syntaxerklärung aller Komponenten ist im Modul zu finden.
 
+#### [Objektparameter](#objektparameter)
+**Objektparameter** fungieren vor allem als Einstellungen, die das ganze Formular betreffen. Diese Paramenter können - ähnlich wie die Values oder Validates – als einzeilige Anweisung gesetzt werden.
+
 #### [Value-Felder](#values)
 Value-Felder sind die am häufigstgen verwendeten Felder, die normalerweise im Formular direkt auftauchen: einfache Textfelder, Selectfelder, Checkboxen, aber auch versteckte Felder, Geburtsdaten, Datenbank-Selectfelder, etc.
 
@@ -103,9 +106,9 @@ Dann werden bei den im Textarea-Feld eingetragenen Felder die `<br>`-Tags heraus
 Ebenfalls in der Modulausgabe kann man erkennen (nicht im obigen Beispiel enthalten), wie die vordefinierten Aktionen aufgebaut sind. So wird z. B. im Modul-Output der nach dem Abschicken sichtbare Text und das Anzeige-Format definiert oder der E-Mail-Versand konfiguriert.  
 Alle diese Aktionen lassen sich auch leicht in eigenem PHP-Code auslösen; das YForm-Builder-Modul erleichtert lediglich diese Arbeit.
 
-## Objparams
+## Formular-Parameter (Objektparameter)
 
-### Zweck der Objparams
+### Zweck der Objektparameter
 
 **Objektparameter** fungieren vor allem als Einstellungen, die das ganze Formular betreffen. Diese Paramenter können - ähnlich wie die Values oder Validates – als einzeilige Anweisung gesetzt werden.
 
@@ -2029,7 +2032,7 @@ Zu guter Letzt über den Parameter `form_ytemplate` das zusätzliche Template f�
 **Pipe-Schreibweise**
 
 ```text
-objparam|form_ytemplate|dein_template,bootstrap
+objparam|form_ytemplate|dein_template,bootstrap,classic
 ```
 
 > **Tipp:** Es genügt, einzelne Template-Dateien abzuändern und ggf. zu überschreiben - alle Template-Dateien, die nicht in `dein_template` abgelegt sind, werden dann weiterhin vom `bootstrap`-Template verwendet.
