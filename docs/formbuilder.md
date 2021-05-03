@@ -641,13 +641,17 @@ echo $yform->getForm();
 #### reCaptcha
 
 ###### Definition
-Nutzt den Google-Service reCAPTCHA v2.  
+Nutzt den Google-Service reCAPTCHA v3.  
 Für den API-Key ist eine Registrierung bei Google unter https://www.google.com/recaptcha notwendig.  
-**Achtung:** Es muss die reCAPTCHA Version 2 (v2) verwendet werden.   
-Eine Nutzung der Versionen v1 und v3 ist derzeit nicht möglich.  
+**Achtung:** Es muss die reCAPTCHA Version 3 (v3) verwendet werden.   
+
+###### Beispiel PHP
+	$yform->setValueField('recaptcha', array('botcheck','PUBLIC_KEY', true));
+	$yform->setValidateField('recaptcha', array("botcheck", "PRIVATE_KEY", "Bitte bestätigen Sie, dass Ihre Nachricht kein Spam ist, indem Sie den Sicherheits-Check durchführen."));
 
 ###### Beispiel Pipe
-	recaptcha|Sicherheitsüberprüfung|<PUBLIC_KEY>|<PRIVATE_KEY>|Die Sicherheitsüberprüfung schlug fehl.|1|
+	recaptcha|botcheck|<PUBLIC_KEY>|true
+	validate|recaptcha|botcheck|<PRIVATE_KEY>|Bitte bestätigen Sie, dass Ihre Nachricht kein Spam ist, indem Sie den Sicherheits-Check durchführen.
 	
 
 #### checkbox
