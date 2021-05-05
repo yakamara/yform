@@ -15,13 +15,13 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
             $this->setValue('');
         }
 
-        $media_category_id = ('' == $this->getElement(8)) ? 0 : (int) $this->getElement(8);
+        $media_category_id = ('' == $this->getElement(8)) ? 0 : (int) $this->getElement('category');
         $media_category = rex_media_category::get($media_category_id);
         if (null === $media_category) {
             $media_category_id = 0;
         }
 
-        $mediapool_user = ('' == $this->getElement(9)) ? 'yform::mediafile' : $this->getElement(9);
+        $mediapool_user = ('' == $this->getElement('user')) ? 'yform::mediafile' : $this->getElement('user');
         $pool = $this->params['value_pool']['email'];
         $mediapool_user = preg_replace_callback('/###(\w+)###/',
                                                             static function ($m) use ($pool) {
@@ -30,14 +30,12 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
                                                             },
                                                             $mediapool_user);
 
-        // MIN/MAX SIZES
-        $sizes = explode(',', $this->getElement(3));
+        $sizes = array_map('intval', explode(',', $this->getElement('max_size')));
         $minsize = count($sizes) > 1 ? (int) ($sizes[0] * 1024) : 0;
         $maxsize = count($sizes) > 1 ? (int) ($sizes[1] * 1024) : (int) ($sizes[0] * 1024);
 
-        // ERR MSGS
         $error = [];
-        $err_msgs = explode(',', $this->getElement(6)); // min_err,max_err,type_err,empty_err
+        $err_msgs = explode(',', $this->getElement('messages')); // min_err,max_err,type_err,empty_err
         $err_msgs['min_err'] = $err_msgs[0];
         $err_msgs['max_err'] = $err_msgs[1] ?? $err_msgs[0];
         $err_msgs['type_err'] = $err_msgs[2] ?? $err_msgs[0];
@@ -45,6 +43,10 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
 
         $rdelete = md5($this->getFieldName('delete'));
         $rfile = 'file_' . md5($this->getFieldName('file'));
+
+        if (!$this->isEditable()) {
+            unset($_FILES[$rfile]);
+        }
 
         // SIZE CHECK
         if ($this->params['send'] && isset($_FILES[$rfile]) && '' != $_FILES[$rfile]['name'] && ($_FILES[$rfile]['size'] > $maxsize || $_FILES[$rfile]['size'] < $minsize)) {
@@ -89,25 +91,28 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         }
 
         if ($this->params['send']) {
-            $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
+            $this->params['value_pool']['email'][$this->getElement('name')] = $this->getValue();
             if ($this->saveInDb()) {
-                $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
+                $this->params['value_pool']['sql'][$this->getElement('name')] = $this->getValue();
             }
         }
 
         //# check for required file
-        if ($this->params['send'] && 1 == $this->getElement(5) && '' == $this->getValue()) {
+        if ($this->params['send'] && 1 == $this->getElement('required') && '' == $this->getValue()) {
             $error[] = $err_msgs['empty_err'];
         }
 
-        //# setting up error Message
         if ($this->params['send'] && count($error) > 0) {
             $this->params['warning'][$this->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$this->getId()] = implode(', ', $error);
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.mediafile.tpl.php');
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.mediafile-view.tpl.php', 'value.view.tpl.php']);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.mediafile.tpl.php');
+            }
         }
     }
 

@@ -14,12 +14,20 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         static $counter = 0;
         ++$counter;
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter'));
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.be_media-view.tpl.php'],
+                    ['counter' => $counter, 'value' => explode(',', $this->getValue())]
+                );
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter'));
+            }
         }
 
         $this->params['value_pool']['email'][$this->getElement(1)] = $this->getValue();
-        $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
+        if ($this->saveInDB()) {
+            $this->params['value_pool']['sql'][$this->getElement(1)] = $this->getValue();
+        }
     }
 
     public function getDefinitions()
@@ -92,7 +100,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         return $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value);
     }
 
-    public static function isMediaInUse(\rex_extension_point $ep)
+    public static function isMediaInUse(rex_extension_point $ep)
     {
         $params = $ep->getParams();
         $warning = $ep->getSubject();

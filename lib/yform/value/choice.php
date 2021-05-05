@@ -14,6 +14,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     {
         $choiceList = self::createChoiceList([
             'choice_attributes' => $this->getElement('choice_attributes'),
+            'choice_label' => $this->getElement('choice_label'),
             'choices' => $this->getElement('choices'),
             'expanded' => $this->getElement('expanded'),
             'group_by' => $this->getElement('group_by'),
@@ -44,7 +45,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
         $proofedValues = $choiceList->getProofedValues($values);
 
-        if ($this->needsOutput()) {
+        if ($this->needsOutput() && $this->isViewable()) {
             $groupAttributes = [];
             if (false !== $this->getElement('group_attributes')) {
                 $groupAttributes = $this->getAttributes('group_attributes', $groupAttributes);
@@ -75,15 +76,20 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                     $elementAttributes['multiple'] = 'multiple';
                     $elementAttributes['size'] = count($choiceList->getChoices());
                 }
-                if (false !== $this->getElement('attributes')) {
-                    $elementAttributes = $this->getAttributes('attributes', $elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
-                }
+                $elementAttributes = $this->getAttributes('attributes', $elementAttributes, ['autocomplete', 'disabled', 'pattern', 'readonly', 'required', 'size']);
             }
 
             $choiceListView = $choiceList->createView($choiceAttributes);
 
             $template = $choiceList->isExpanded() ? 'value.choice.check.tpl.php' : 'value.choice.select.tpl.php';
-            $html = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+
+            if (!$this->isEditable()) {
+                $template = str_replace('choice','choice-view', $template);
+                $html = $this->parse(['value.view.tpl.php', $template], compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            } else {
+                $html = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+            }
+
             $html = trim(preg_replace(['/\s{2,}/', '/>\s+/', '/\s+</'], [' ', '>', '<'], $html));
             $this->params['form_output'][$this->getId()] = $html;
         }
@@ -101,7 +107,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'choice|name|label|choices|[expanded type: boolean; default: 0, 0,1]|[multiple type: boolean; default: 0, 0,1]|[default]|[group_by]|[preferred_choices]|[group_attributes]|[choice_attributes]|[attributes]|[notice]|[no_db]';
+        return 'choice|name|label|choices|[expanded type: boolean; default: 0, 0,1]|[multiple type: boolean; default: 0, 0,1]|[default]|[group_by]|[preferred_choices]|[placeholder]|[group_attributes]|[attributes]|[choice_attributes]|[notice]|[no_db]';
     }
 
     public function getDefinitions()
@@ -124,6 +130,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 'choice_attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_attributes'), 'notice' => rex_i18n::msg('yform_values_choice_choice_attributes_notice')],
                 'notice' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
+                'choice_label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_label'), 'notice' => rex_i18n::msg('yform_values_choice_choice_label_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_choice_description'),
             'db_type' => ['text', 'int', 'tinyint(1)', 'varchar(191)'],
@@ -152,6 +159,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
             $choiceList = self::createChoiceList([
                 'choice_attributes' => (isset($field['choice_attributes'])) ? $field['choice_attributes'] : '',
+                'choice_label' => (isset($field['choice_label'])) ? $field['choice_label'] : '',
                 'choices' => (isset($field['choices'])) ? $field['choices'] : [],
                 'expanded' => (isset($field['expanded'])) ? $field['expanded'] : '',
                 'group_by' => (isset($field['group_by'])) ? $field['group_by'] : '',
@@ -197,6 +205,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     {
         $choiceList = self::createChoiceList([
             'choice_attributes' => (isset($params['field']['choice_attributes'])) ? $params['field']['choice_attributes'] : '',
+            'choice_label' => (isset($params['field']['choice_label'])) ? $params['field']['choice_label'] : '',
             'choices' => (isset($params['field']['choices'])) ? $params['field']['choices'] : [],
             'expanded' => (isset($params['field']['expanded'])) ? $params['field']['expanded'] : '',
             'group_by' => (isset($params['field']['group_by'])) ? $params['field']['group_by'] : '',
@@ -274,6 +283,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             'group_by' => null,
             'placeholder' => null,
             'choice_attributes' => [],
+            'choice_label' => [],
         ];
 
         if ('1' == $elements['expanded']) {
@@ -294,6 +304,9 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         if (false !== $elements['choice_attributes']) {
             $options['choice_attributes'] = $elements['choice_attributes'];
         }
+        if ($elements['choice_label'] !== false) {
+            $options['choice_label'] = $elements['choice_label'];
+        }
         $choicesElement = $elements['choices'];
 
         $choiceList = new rex_yform_choice_list($options);
@@ -306,6 +319,13 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             );
         } elseif (is_string($choicesElement) && strlen(trim($choicesElement)) > 0 && '{' == substr(trim($choicesElement), 0, 1) && '{{' != substr(trim($choicesElement), 0, 2)) {
             $choiceList->createListFromJson($choicesElement);
+        } elseif (is_callable($choicesElement)) {
+            $res = call_user_func($choicesElement);
+            if (is_array($res)) {
+                $choiceList->createListFromStringArray($res);
+            } else {
+                $choiceList->createListFromJson($res);
+            }
         } else {
             $choiceList->createListFromStringArray(
                 $self->getArrayFromString($choicesElement)

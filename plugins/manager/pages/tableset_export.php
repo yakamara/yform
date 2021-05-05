@@ -15,12 +15,7 @@ $page = rex_request('page', 'string', '');
 $yform_tables = [];
 foreach (rex_yform_manager_table::getAll() as $g_table) {
     $table_name = $g_table->getTableName();
-
-    if ('[translate:'.$table_name.']' != rex_i18n::msg($table_name)) {
-        $table_name = rex_i18n::msg($table_name);
-    }
-
-    $yform_tables[$g_table->getTableName()] = $table_name.' ['.$g_table->getTableName().']';
+    $yform_tables[$table_name] = rex_i18n::translate($g_table->getNameLocalized()).' ['.$table_name.']';
 }
 
 $yform = new rex_yform();

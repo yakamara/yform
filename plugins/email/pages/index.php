@@ -35,6 +35,8 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $form_data[] = 'text|name|translate:yform_email_key';
     $form_data[] = 'validate|empty|name|Bitte key eintragen';
+    $form_data[] = 'validate|unique|name|Dieser key existiet bereits|'.$table;
+    $form_data[] = 'validate|preg_match|name|([a-z0-9_.]+)|Bitte nur Buchstaben (Kleinschreibung), Zahlen und "_" für den key verwenden|'.$table;
 
     $form_data[] = 'html|html1|<div class="row"><div class="col-md-6">';
     $form_data[] = 'text|mail_from|translate:yform_email_from';

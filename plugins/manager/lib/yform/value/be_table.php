@@ -162,7 +162,13 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
             $data = [];
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_table-view.tpl.php', 'value.view.tpl.php'], compact('columns', 'data'));
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.be_table.tpl.php', compact('columns', 'data'));
+            }
+        }
 
         if ($this->getParam('send')) {
             $this->setValue(json_encode($this->fieldData));

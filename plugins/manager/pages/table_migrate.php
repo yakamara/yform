@@ -12,7 +12,8 @@ $_csrf_key = 'table_migrate';
 
 $page = rex_request('page', 'string', '');
 
-$available_tables = rex_sql::showTables();
+$available_tables = rex_sql::factory()->getTablesAndViews();
+
 $yform_tables = [];
 $missing_tables = [];
 
@@ -31,15 +32,15 @@ $yform->setObjectparams('form_showformafterupdate', 1);
 $yform->setObjectparams('form_name', $_csrf_key);
 $yform->setHiddenField('page', $page);
 $yform->setValueField('choice', ['name' => 'table_name', 'label' => rex_i18n::msg('yform_table'), 'choices' => $missing_tables]);
-$yform->setValueField('checkbox', ['convert_id', rex_i18n::msg('yform_manager_migrate_table_id_convert')]);
+$yform->setValueField('checkbox', ['schema_overwrite', rex_i18n::msg('yform_manager_table_schema_overwrite')]);
 $form = $yform->getForm();
 
 if ($yform->objparams['actions_executed']) {
-    $table_name = $yform->objparams['value_pool']['sql']['table_name'];
-    $convert_id = $yform->objparams['value_pool']['sql']['convert_id'];
+    $table_name = (string) $yform->objparams['value_pool']['sql']['table_name'];
+    $schema_overwrite = (int) $yform->objparams['value_pool']['sql']['schema_overwrite'];
 
     try {
-        rex_yform_manager_table_api::migrateTable($table_name, $convert_id); // with convert id / auto_increment finder
+        rex_yform_manager_table_api::migrateTable($table_name, (0 == $schema_overwrite) ? false : true); // with convert id / auto_increment finder
         echo rex_view::success(rex_i18n::msg('yform_manager_table_migrated_success'));
 
         unset($missing_tables[$table_name]);
@@ -48,7 +49,7 @@ if ($yform->objparams['actions_executed']) {
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setHiddenField('page', $page);
         $yform->setValueField('choice', ['name' => 'table_name', 'label' => rex_i18n::msg('yform_table'), 'choices' => $missing_tables]);
-        $yform->setValueField('checkbox', ['convert_id', rex_i18n::msg('yform_manager_migrate_table_id_convert')]);
+        $yform->setValueField('checkbox', ['schema_overwrite', rex_i18n::msg('yform_manager_table_schema_overwrite')]);
         $form = $yform->getForm();
     } catch (Exception $e) {
         echo rex_view::warning(rex_i18n::msg('yform_manager_table_migrated_failed', $table_name, $e->getMessage()));

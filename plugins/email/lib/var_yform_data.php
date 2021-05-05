@@ -1,12 +1,15 @@
 <?php
 
 /**
- * REX_VALUE[1],.
+ * REX_YFORM_DATA[1],.
  *
  * @package redaxo\structure\content
  */
 class rex_var_yform_data extends rex_var
 {
+    /**
+     * @return false|string|bool
+     */
     protected function getOutput()
     {
         $field = $this->getArg('field', 0, true);

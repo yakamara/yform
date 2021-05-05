@@ -1,9 +1,5 @@
 <?php
 
-/*
- *
- */
-
 class rex_yform_rest
 {
     protected $config = [];
@@ -23,25 +19,37 @@ class rex_yform_rest
         500 => '500 Internal Server Error',
     ];
     public static $preRoute = '/rest';
-
+    protected static $additionalHeaders = [];
     protected static $routes = [];
 
-    public static function addRoute($route)
+    /**
+     * @param $route
+     */
+    public static function addRoute(rex_yform_rest_route $route)
     {
         self::$routes[] = $route;
     }
 
+    /**
+     * @return array
+     */
     public static function getRoutes()
     {
         return self::$routes;
     }
 
+    /**
+     * @return mixed|string
+     */
     public static function getCurrentPath()
     {
         $url = parse_url($_SERVER['REQUEST_URI']);
         return $url['path'] ?? '';
     }
 
+    /**
+     * @return bool
+     */
     public static function handleRoutes()
     {
         if ('' != self::$preRoute) {
@@ -75,8 +83,19 @@ class rex_yform_rest
                 ->handleRequest($paths, $_GET);
             }
         }
+        return true;
     }
 
+    public static function setHeader(string $name, string $value)
+    {
+        self::$additionalHeaders[$name] = $value;
+    }
+
+    /**
+     * @param string $status
+     * @param string $error
+     * @param array  $descriptions
+     */
     public static function sendError($status = '404', $error = 'error', $descriptions = [])
     {
         $message = [];
@@ -88,17 +107,30 @@ class rex_yform_rest
         self::sendContent($status, $message);
     }
 
+    /**
+     * @param        $status
+     * @param        $content
+     * @param string $contentType
+     */
     public static function sendContent($status, $content, $contentType = 'application/json')
     {
-        \rex_response::setStatus(self::$status[$status]);
-        \rex_response::sendContent(json_encode($content), $contentType);
+        foreach (self::$additionalHeaders as $name => $value) {
+            rex_response::setHeader($name, $value);
+        }
+
+        rex_response::setStatus(self::$status[$status]);
+        rex_response::sendContent(json_encode($content), $contentType);
         exit;
     }
 
+    /**
+     * @param string $key
+     * @param string $default
+     * @return mixed|string
+     */
     public static function getHeader($key = '', $default = '')
     {
         $value = '';
-
         $headers = [];
 
         foreach ($_SERVER as $k => $v) {
@@ -126,7 +158,11 @@ class rex_yform_rest
         return $value;
     }
 
-    public static function getLinkByPath($route, $params = [], $additionalPaths = [])
+    /**
+     * @param array $params
+     * @param array $additionalPaths
+     */
+    public static function getLinkByPath(rex_yform_rest_route $route, $params = [], $additionalPaths = []): string
     {
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
             $url = 'https://';
@@ -142,7 +178,7 @@ class rex_yform_rest
             $url .= @$_SERVER['HTTP_HOST'];
         }
 
-        $query = http_build_query($params, '', '&');
+        $query = http_build_query($params);
         $query = ('' != $query) ? '?' . $query : $query;
 
         $path = implode('/', array_merge([$route->getPath()], $additionalPaths));
@@ -150,6 +186,10 @@ class rex_yform_rest
         return $url . self::$preRoute . $path . $query;
     }
 
+    /**
+     * @param $instance
+     * @return null|mixed
+     */
     public static function getRouteByInstance($instance)
     {
         $instanceType = get_class($instance);
@@ -163,7 +203,7 @@ class rex_yform_rest
         return null;
     }
 
-    public static function getCurrentUrl()
+    public static function getCurrentUrl(): string
     {
         return $_SERVER['REQUEST_URI'];
     }

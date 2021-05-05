@@ -9,10 +9,8 @@
 
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
-    public const
-        VALUE_DATETIME_DEFAULT_FORMAT = 'YYYY-MM-DD HH:ii:ss';
-    public const
-        VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
+    public const VALUE_DATETIME_DEFAULT_FORMAT = 'YYYY-MM-DD HH:ii:ss';
+    public const VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
 
     public function preValidateAction()
     {
@@ -71,13 +69,31 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        $value = $this->getValue();
+        if (is_array($value)) {
+            $year = (int) substr(@$value['year'], 0, 4);
+            $month = (int) substr(@$value['month'], 0, 2);
+            $day = (int) substr(@$value['day'], 0, 2);
+            $hour = (int) substr(@$value['hour'], 0, 2);
+            $minute = (int) substr(@$value['minute'], 0, 2);
+            $second = (int) substr(@$value['second'], 0, 2);
+            $value =
+                str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
+                str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
+                str_pad($day, 2, '0', STR_PAD_LEFT) . ' ' .
+                str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($minute, 2, '0', STR_PAD_LEFT) . ':'.
+                str_pad($second, 2, '0', STR_PAD_LEFT);
+        }
+        $this->setValue($value);
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() && !$this->isViewable()) {
             return;
         }
 
@@ -135,11 +151,12 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
         $format = self::datetime_getFormat($this->getElement('format'));
         $input_value = self::datetime_getFromFormattedDatetime($this->getValue(), 'YYYY-MM-DD HH:ii:ss', $format);
-
-        if ('input:text' == $this->getElement('widget')) {
-            if ('00000000000000' == self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss')) {
-                $input_value = '';
-            }
+        if ('00000000000000' == self::datetime_getFromFormattedDatetime($this->getValue(), $format, 'YYYYMMDDHHiiss')) {
+            $input_value = '';
+        }
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php'], ['type' => 'text', 'value' => $input_value]);
+        } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(

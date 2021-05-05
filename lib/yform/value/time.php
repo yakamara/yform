@@ -33,11 +33,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $value = $this->getValue();
 
             if (is_array($value)) {
-                // widget: selects
                 $hour = (int) substr(@$value['hour'], 0, 2);
                 $minute = (int) substr(@$value['minute'], 0, 2);
                 $second = (int) substr(@$value['second'], 0, 2);
-
                 $value =
                     str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
                     str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
@@ -63,13 +61,25 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        $value = $this->getValue();
+        if (is_array($value)) {
+            $hour = (int) substr(@$value['hour'], 0, 2);
+            $minute = (int) substr(@$value['minute'], 0, 2);
+            $second = (int) substr(@$value['second'], 0, 2);
+            $value =
+                str_pad($hour, 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($minute, 2, '0', STR_PAD_LEFT) . ':' .
+                str_pad($second, 2, '0', STR_PAD_LEFT);
+        }
+        $this->setValue($value);
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() && !$this->isViewable()) {
             return;
         }
 
@@ -102,7 +112,10 @@ class rex_yform_value_time extends rex_yform_value_abstract
         $minute = (int) substr($this->getValue(), 3, 2);
         $second = (int) substr($this->getValue(), 6, 2);
 
-        if ('input:text' == $this->getElement('widget')) {
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.time-view.tpl.php', 'value.view.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
+        } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
         } else {
@@ -131,6 +144,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
+                'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_time_description'),
             'db_type' => ['time'],

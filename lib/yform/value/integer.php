@@ -21,8 +21,12 @@ class rex_yform_value_integer extends rex_yform_value_abstract
             $this->setValue((int) $this->getValue());
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse(['value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.integer-view.tpl.php', 'value.view.tpl.php'], ['prepend' => $this->getElement('unit')]);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
+            }
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -50,7 +54,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_integer_description'),
-            'db_type' => ['int'],
+            'db_type' => ['int', 'bigint'],
             'db_null' => true,
         ];
     }

@@ -9,23 +9,20 @@
 
 class rex_yform_value_date extends rex_yform_value_abstract
 {
-    public const
-        VALUE_DATE_DEFAULT_FORMAT = 'YYYY-MM-DD';
-    public const
-        VALUE_DATE_FORMATS = ['DD.MM.YYYY' => 'DD.MM.YYYY', 'YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY', 'YYYY' => 'YYYY', 'MM' => 'MM', 'MM-YYYY' => 'MM-YYYY', 'YYYY-MM' => 'YYYY-MM'];
+    public const VALUE_DATE_DEFAULT_FORMAT = 'YYYY-MM-DD';
+    public const VALUE_DATE_FORMATS = ['DD.MM.YYYY' => 'DD.MM.YYYY', 'YYYY-MM-DD' => 'YYYY-MM-DD', 'DD-MM-YYYY' => 'DD-MM-YYYY', 'MM-DD-YYYY' => 'MM-DD-YYYY', 'YYYY' => 'YYYY', 'MM' => 'MM', 'MM-YYYY' => 'MM-YYYY', 'YYYY-MM' => 'YYYY-MM'];
 
     // Um im Suchformular weitergehende Auswertungen zu machen
-    public const
-        VALUE_SEARCH_PATTERN = [
-            'DD.MM.YYYY' => '(?:(?<d>\d{1,2}(?=\.\d{1,2}\.))\.)?(?:(?<m>\d{1,2})\.)?(?<y>(?:\d{2}|\d{4}))',
-            'YYYY-MM-DD' => '(?<y>(?:\d{2}|\d{4}))(?:-(?<m>\d{1,2}))?(?:-(?<d>\d{1,2}))?',
-            'DD-MM-YYYY' => '(?:(?<d>\d{1,2}(?=-\d{1,2}-))-)?(?:(?<m>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
-            'MM-DD-YYYY' => '(?:(?<m>\d{1,2})-)?(?:(?<d>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
-            'YYYY' => '(?<y>(?:\d{2}|\d{4}))',
-            'MM' => '(?<m>\d{1,2})',
-            'MM-YYYY' => '(?:(?<m>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
-            'YYYY-MM' => '(?<y>(?:\d{2}|\d{4}))(?:-(?<m>\d{1,2}))?',
-        ];
+    public const VALUE_SEARCH_PATTERN = [
+        'DD.MM.YYYY' => '(?:(?<d>\d{1,2}(?=\.\d{1,2}\.))\.)?(?:(?<m>\d{1,2})\.)?(?<y>(?:\d{2}|\d{4}))',
+        'YYYY-MM-DD' => '(?<y>(?:\d{2}|\d{4}))(?:-(?<m>\d{1,2}))?(?:-(?<d>\d{1,2}))?',
+        'DD-MM-YYYY' => '(?:(?<d>\d{1,2}(?=-\d{1,2}-))-)?(?:(?<m>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
+        'MM-DD-YYYY' => '(?:(?<m>\d{1,2})-)?(?:(?<d>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
+        'YYYY' => '(?<y>(?:\d{2}|\d{4}))',
+        'MM' => '(?<m>\d{1,2})',
+        'MM-YYYY' => '(?:(?<m>\d{1,2})-)?(?<y>(?:\d{2}|\d{4}))',
+        'YYYY-MM' => '(?<y>(?:\d{2}|\d{4}))(?:-(?<m>\d{1,2}))?',
+    ];
 
     public function preValidateAction()
     {
@@ -62,9 +59,9 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 $day = (int) substr(@$value['day'], 0, 2);
 
                 $value =
-                    str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
-                    str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
-                    str_pad($day, 2, '0', STR_PAD_LEFT);
+                    str_pad((string) $year, 4, '0', STR_PAD_LEFT) . '-' .
+                    str_pad((string) $month, 2, '0', STR_PAD_LEFT) . '-' .
+                    str_pad((string) $day, 2, '0', STR_PAD_LEFT);
             } else {
                 // widget: input:text
                 $format = self::date_getFormat($this->getElement('format'));
@@ -77,13 +74,25 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        $value = $this->getValue();
+        if (is_array($value)) {
+            $year = (int) substr(@$value['year'], 0, 4);
+            $month = (int) substr(@$value['month'], 0, 2);
+            $day = (int) substr(@$value['day'], 0, 2);
+            $value =
+                str_pad($year, 4, '0', STR_PAD_LEFT) . '-' .
+                str_pad($month, 2, '0', STR_PAD_LEFT) . '-' .
+                str_pad($day, 2, '0', STR_PAD_LEFT);
+        }
+        $this->setValue($value);
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
-            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue() ?? '';
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() || !$this->isViewable()) {
             return;
         }
 
@@ -113,11 +122,16 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
         $format = self::date_getFormat($this->getElement('format'));
         $input_value = self::date_getFromFormattedDate($this->getValue(), 'YYYY-MM-DD', $format);
+        if ('00000000' == self::date_getFromFormattedDate($this->getValue(), $format, 'YYYYMMDD')) {
+            $input_value = '';
+        }
 
-        if ('input:text' == $this->getElement('widget')) {
-            if ('00000000' == self::date_getFromFormattedDate($this->getValue(), $format, 'YYYYMMDD')) {
-                $input_value = '';
-            }
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.date-view.tpl.php', 'value.datetime-view.tpl.php', 'value.view.tpl.php'],
+                array_merge(compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day'), ['value' => $input_value])
+            );
+        } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.text.tpl.php'], ['type' => 'text', 'value' => $input_value]);
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse(
@@ -139,21 +153,21 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if (false !== $pos) {
             $year = (int) substr($datestring, $pos, 4);
         }
-        $year = str_pad($year, 4, '0', STR_PAD_LEFT);
+        $year = str_pad((string) $year, 4, '0', STR_PAD_LEFT);
 
         $month = 0;
         $pos = strpos($format, 'MM');
         if (false !== $pos) {
             $month = (int) substr($datestring, $pos, 2);
         }
-        $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+        $month = str_pad((string) $month, 2, '0', STR_PAD_LEFT);
 
         $day = 0;
         $pos = strpos($format, 'DD');
         if (false !== $pos) {
             $day = (int) substr($datestring, $pos, 2);
         }
-        $day = str_pad($day, 2, '0', STR_PAD_LEFT);
+        $day = str_pad((string) $day, 2, '0', STR_PAD_LEFT);
 
         return str_replace(['YYYY', 'MM', 'DD'], [$year, $month, $day], $returnDateFormat);
     }
@@ -188,11 +202,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $format = self::date_getFormat(($params['params']['field']['format']) ?? '');
-        if (($d = DateTime::createFromFormat('Y-m-d', $params['subject'])) && $d->format('Y-m-d') == $params['subject']) {
-            return '<nobr>'.self::date_getFromFormattedDate($params['subject'], 'YYYY-MM-DD', $format).'</nobr>';
-        }
-        return '[' . $params['subject'] . ']';
+        $format = self::date_getFormat(($params['params']['field']['format']) ?? self::VALUE_DATE_DEFAULT_FORMAT);
+        return '<nobr>'.self::date_getFromFormattedDate($params['subject'], self::VALUE_DATE_DEFAULT_FORMAT, $format).'</nobr>';
     }
 
     public static function getSearchField($params)
@@ -207,7 +218,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $value = trim($params['value']);
         $format = self::date_getFormat($params['field']->getElement('format'));
         $field = $params['field']->getName();
-        $field = 't0.' . rex_sql::factory()->escapeIdentifier($field);
+        $field = rex_sql::factory()->escapeIdentifier($field);
         return self::getDateFilterWhere($value, $field, $format);
     }
 

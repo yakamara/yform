@@ -64,6 +64,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // ---------- check values
         $options = [];
+        $viewOptions = [];
         $valueName = '';
         $values = [];
 
@@ -74,6 +75,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $values[] = $v;
                     $valueName = $listValues[$v] . ' [id=' . $v . ']';
                     $options[] = ['id' => $v, 'name' => $valueName];
+                    $viewOptions[] = $valueName;
                 }
             }
             $this->setValue($values);
@@ -91,10 +93,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         // ---------- save
         $this->params['value_pool']['email'][$this->getName()] = implode(',', $this->getValue());
         if (!$this->getElement('relation_table') && (4 != $this->relation['relation_type'] && 5 != $this->relation['relation_type'])) {
-            $this->params['value_pool']['sql'][$this->getName()] = implode(',', $this->getValue());
+            if ($this->saveInDB()) {
+                $this->params['value_pool']['sql'][$this->getName()] = implode(',', $this->getValue());
+            }
         }
 
-        if (!$this->needsOutput()) {
+        if (!$this->needsOutput() && $this->isViewable()) {
             return;
         }
 
@@ -105,14 +109,20 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             if (0 == $this->relation['relation_type'] && 1 == $this->relation['eoption']) {
                 $options[] = ['id' => '', 'name' => '-'];
             }
+            $viewOptions = [];
             foreach (self::getListValues($this->relation['target_table'], $this->relation['target_field'], $filter) as $id => $name) {
                 if (strlen($name) > 50) {
                     $name = mb_substr($name, 0, 45) . ' ... ';
                 }
+                $viewOptions[] = $name;
                 $options[] = ['id' => $id, 'name' => $name . ' [id=' . $id . ']'];
             }
 
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('options'));
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.be_manager_relation.tpl.php'], ['value' => $viewOptions]);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('options'));
+            }
         }
 
         // ------------------------------------ POPUP, single, multiple 1-1, n-m
@@ -121,7 +131,13 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             foreach ($filter as $key => $value) {
                 $link .= '&rex_yform_filter[' . $key . ']=' . $value . '&rex_yform_set[' . $key . ']=' . $value;
             }
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.be_manager_relation.tpl.php'], ['value' => $viewOptions]);
+
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
+
+            }
         }
 
         // ------------------------------------ POPUP, 1-n
@@ -216,14 +232,15 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform = $relation->getForm();
                     $yform->setObjectparams('form_name', $form_name);
                     $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
-
                     $yform->setObjectparams('form_action', '');
                     $yform->setObjectparams('form_showformafterupdate', 1);
-
                     $yform->setObjectparams('getdata', true);
-
                     $yform->setObjectparams('submit_btn_show', false);
                     $yform->setObjectparams('csrf_protection', false);
+
+                    $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
+                    $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
+
                     $form_elements = [];
                     foreach ($yform->objparams['form_elements'] as $form_element) {
                         if ('prio' == $form_element[0] && $form_element[1] == $prioFieldName) {
@@ -255,13 +272,15 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform = $data->getForm();
                         $yform->setObjectparams('form_name', $form_name);
                         $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
-
                         $yform->setObjectparams('form_action', '');
                         $yform->setObjectparams('form_showformafterupdate', 1);
                         $yform->setObjectparams('data', $form);
-
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
+
+                        $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
+                        $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
+
                         $form_elements = [];
 
                         $relation_field = '';
@@ -308,8 +327,13 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
 
             $this->params['value_pool']['email'][$this->getName()] = $value;
-
-            $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName', 'relationKey'));
+            if ($this->isViewable()) {
+                if (!$this->isEditable()) {
+                    $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation-view.tpl.php', compact('forms', 'fieldkey', 'prioFieldName', 'relationKey'));
+                } else {
+                    $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_inline_relation.tpl.php', compact('forms', 'prototypeForm', 'fieldkey', 'prioFieldName', 'relationKey'));
+                }
+            }
         }
     }
 
@@ -454,7 +478,14 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'table' => ['type' => 'table',   'label' => rex_i18n::msg('yform_values_be_manager_relation_table')],
                 'field' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_manager_relation_field')],
-                'type' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_be_manager_relation_type'), 'choices' => ['0' => 'select (single)', '1' => 'select (multiple)', '2' => 'popup (single)', '3' => 'popup (multiple)', '4' => 'popup (multiple 1-n)', '5' => 'inline (multiple 1-n)']], // ,popup (multiple / relation)=4
+                'type' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_be_manager_relation_type'), 'choices' => [
+                    '0' => 'Single (select)',
+                    '2' => 'Single (popup)',
+                    '1' => 'Multiple (select)',
+                    '3' => 'Multiple (popup)',
+                    '5' => '1-n (inline)',
+                    '4' => '1-n (popup)',
+                ]], // ,popup (multiple / relation)=4
                 'empty_option' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_be_manager_relation_empty_option')],
                 'empty_value' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_manager_relation_empty_value')],
                 'size' => ['type' => 'text', 'name' => 'boxheight',    'label' => rex_i18n::msg('yform_values_be_manager_relation_size')],

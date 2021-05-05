@@ -117,6 +117,20 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['name'];
     }
 
+    public function getNameLocalized()
+    {
+        $table_name = $this->getTableName();
+        $name = $this->getName();
+        if ($name === $table_name) {
+            $name = 'translate:'.$name;
+        }
+        $name = rex_i18n::translate($name);
+        if (preg_match('/^\[translate:(.*?)\]$/', $name, $match)) {
+            $name = $match[1];
+        }
+        return \rex_i18n::translate($name);
+    }
+
     public function getId()
     {
         return $this->values['id'];
@@ -300,13 +314,22 @@ class rex_yform_manager_table implements ArrayAccess
         return ['source' => $source, 'target' => $target];
     }
 
+    public function getRelationTableNames(): array
+    {
+        $tables = [];
+        foreach ($this->getFields() as $field) {
+            $tables = array_merge($tables, $field->getRelationTableNames());
+        }
+        return $tables;
+    }
+
     // Database Fielddefinition
     public function getColumns()
     {
         return $this->columns;
     }
 
-    public function getMissingFields()
+    public function getMissingFields(): array
     {
         $xfields = $this->getValueFields();
         $rfields = self::getColumns();
@@ -493,5 +516,10 @@ class rex_yform_manager_table implements ArrayAccess
     private static function cachePath()
     {
         return rex_path::pluginCache('yform', 'manager', 'tables.cache');
+    }
+
+    public function isGranted($type, rex_user $user)
+    {
+        return rex_yform_manager_table_authorization::onAttribute($type, $this, $user);
     }
 }

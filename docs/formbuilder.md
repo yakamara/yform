@@ -10,16 +10,16 @@ Innerhalb von YForm gibt es im Menüpunkt `Übersicht` unter `Setup` den Button 
 
 Im Eingabefeld des Formbuilder-Moduls kann man die Values, Validierungen und Aktionen direkt eintragen. Eine kurze Syntaxerklärung aller Komponenten ist im Modul zu finden.
 
-#### [Value-Felder](yform_modul_values.md)
+#### [Value-Felder](#values)
 Value-Felder sind die am häufigstgen verwendeten Felder, die normalerweise im Formular direkt auftauchen: einfache Textfelder, Selectfelder, Checkboxen, aber auch versteckte Felder, Geburtsdaten, Datenbank-Selectfelder, etc.
 
-#### [Validate-Felder](yform_modul_validates.md)
+#### [Validate-Felder](#validierung)
 Mit Validate-Feldern werden die Werte der Value-Felder überprüft. Das heißt, damit wird z. B. valdiert, ob ein Wert eingetragen wurde (`empty`) oder ob ein `String`, `Integer` oder sonstiger Wert eingetragen wurde. Es kann aber auch überprüft werden, ob ein Datenbankfeld mit diesem Wert schon existiert.
 
-#### [Action-Felder](yform_modul_actions.md)
+#### [Action-Felder](#actions)
 Action-Felder sind für spätere Verwendungen wichtig: Soll z. B. eine E-Mail verschickt werden und/oder ein Eintrag in die Datenbank erfolgen?
 
-#### [Objparams](yform_modul_objparams.md)
+#### [Objparams-Definitionen](#objparams)
 Objektparameter sind Einstellungen, die das ganze Formular betreffen. Mann kann dort z. B. CSS-Klassen oder IDs für das Formular festlegen oder das Ziel das Formularversands definieren.
 
 ### Syntax
@@ -117,7 +117,7 @@ Die **allgemeine Syntax** für das Setzen eines objparams lautet so:
 	objparams|key|newvalue|[init/runtime]
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('key', 'newvalue', '[init/runtime]');
 ```
 
@@ -134,7 +134,7 @@ $yform->setObjectparams('key', 'newvalue', '[init/runtime]');
 	objparams|form_show|0
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_show','1');
 ```
 
@@ -148,7 +148,7 @@ Der Defaultwert ist `1` (anzeigen).
 	objparams|form_name|formular
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_name','zweites_formular');
 ```
 
@@ -161,7 +161,7 @@ Der Defaultwert ist `formular`.
 	objparams|form_class|contact_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_class','contact_form');
 ```
 
@@ -175,7 +175,7 @@ Default-Ausgabe:
 	objparams|form_wrap_id|contact_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_wrap_id','contact_form');
 ```
 Damit kann dem das Formular umgebenden Container eine individuelle CSS-ID vergeben werden.  
@@ -188,7 +188,7 @@ Default-Ausgabe:
 	objparams|form_wrap_class|contact_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_wrap_class','contact_form');
 ```
 
@@ -202,7 +202,7 @@ Default-Ausgabe:
 	objparams|form_label_type|html
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_label_type','html');
 ```
 
@@ -215,7 +215,7 @@ Default ist `html`.
 	objparams|csrf_protection|0
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('csrf_protection', false);
 ```
 
@@ -235,7 +235,7 @@ Der CSRF-Schutz sollte daher immer aktiviert bleiben, außer, wenn der direkte A
 	objparams|form_ytemplate|classic
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_ytemplate','classic');
 ```
 
@@ -248,7 +248,7 @@ Der Defaultwert lautet `bootstrap`, d.h. als Basis-Theme ist das HTML-Schema des
 	objparams|submit_btn_label|Formular senden
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('submit_btn_label','Formular senden');
 ```
 
@@ -260,7 +260,7 @@ Damit kann die Standard-Button-Beschriftung `Abschicken` verändert werden.
 	objparams|submit_btn_show|0
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('submit_btn_show',0);
 ```
 
@@ -273,7 +273,7 @@ Default ist `1` (Anzeigen).
 	objparams|error_class|my_form_error
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('error_class','my_form_error');
 ```
 
@@ -292,7 +292,7 @@ Die Default-CSS-Klasse ist `form_warning`.
 	objparams|real_field_names|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('real_field_names',1);
 ```
 
@@ -308,7 +308,7 @@ Der Default-Wert ist `0`.
 	// Im YForm-Formbuilder
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_method','get');
 ```
 
@@ -322,7 +322,8 @@ Der Defaultwert ist `post`.
 	objparams|form_action|zielseite.html
 
 ```php
-// In PHP mit rex_getUrl() auf die Artikel-ID 5
+<?php
+<?php mit rex_getUrl() auf die Artikel-ID 5
 $yform->setObjectparams('form_action',rex_getUrl(5));
 ```
 
@@ -339,7 +340,8 @@ objparams|form_action_query_params|key1,key2,key3
 ```
 
 ```php
-// In PHP mit rex_getUrl() auf die Artikel-ID 5
+<?php
+<?php mit rex_getUrl() auf die Artikel-ID 5
 $yform->setObjectparams('form_action_query_params',`key1,key2,key3`);
 ```
 
@@ -349,7 +351,7 @@ $yform->setObjectparams('form_action_query_params',`key1,key2,key3`);
 	objparams|form_anchor|my_form
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_anchor','my_form');
 ```
 
@@ -362,7 +364,7 @@ Der Defaultwert ist leer.
 	objparams|form_showformafterupdate|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('form_showformafterupdate',1);
 ```
 
@@ -376,7 +378,7 @@ Default ist `0` (nicht anzeigen).
 	objparams|debug|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('debug',1);
 ```
 
@@ -389,7 +391,7 @@ Mit dem Wert `1` kann man zb Aktionen Formular debuggen und Aktion prüfen.
 	objparams|hide_top_warning_messages|1
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('hide_top_warning_messages',1);
 ```
 
@@ -404,7 +406,7 @@ Mit dem Wert `1` können die Fehlermeldung die über eine Validierung ausgegeben
 	objparams|main_table|rex_table
 
 ```php
-// In PHP
+<?php
 $yform->setObjectparams('getdata',1);
 $yform->setObjectparams('main_where','id=1');
 $yform->setObjectparams('main_table','rex_table');
@@ -419,10 +421,78 @@ Mit `form_exit` wird gesteuert, ob die Abarbeitung des weiteren Codes, bspw. in 
 	// Im YForm-Formbuilder
 	objparams|form_exit|1
 
-	// In PHP
+	<?php
 	$yform->setObjectparams('form_exit',1);
 
-## YForm-Modul: Values
+### Objparams auslesen
+
+Über folgende Methode können Objparams ausgelesen werden:
+
+```php
+$yform->getObjectparams('warning')
+```
+
+### Verfügbare Objparams
+
+Folgende Objparams find verfügbar:
+- `action`: Array
+- `actions`: Dem Formular zugeordnete YForm-Actions.
+- `actions_executed`: Gibt an, ob YForm-Actions ausgeführt wurden `true` oder `false`. Siehe auch `preactions_executed` und `postactions_executed`.
+- `answertext`: Text, der nach erfolgreichem Absenden des Formulars mit oder anstelle des Formulars ausgegeben wird.
+- `article_id`: Artikel-ID, dessen URL als Ziel für das Formular dient.
+- `clang`: Clang-ID des Formulars (Sprache).
+- `csrf_protection`: Boolean. Aktiviert den CSRF-Schutz. Hierbei wird ein Cookie gesetzt.
+- `csrf_protection_error_message`: CSRF Fehlermeldung. Standard: '{{ csrf.error }}'
+- `data`: Boolean.
+- `debug`: Boolean. Aktiviert den Debugmodus
+- `error_class`: CSS Klasse des Fehlerfelds
+- `Error-occured`: Freitext oberhalb auftgetretener Fehlermeldungen.
+- `Error-Code-EntryNotFound`: Standard: 'ErrorCode - EntryNotFound'
+- `Error-Code-InsertQueryError`: Standard 'ErrorCode - InsertQueryError'
+- `fieldsets_opened`:
+- `form_action`: 
+- `form_anchor`: S(optional) ID des HTML-Sprungankers, um nach Absenden zu einem HTML-Element zu scrollen.
+- `form_array`:
+- `form_class`: CSS Klasse des Formulars
+- `form_data`: Formular in pipe Notation
+- `form_elements`:
+- `form_hiddenfields`: Versteckte Felder des Formulars
+- `form_label_type`: Label Typ. html (Standard) oder plain.
+- `form_name`: Name des Formulars
+- `form_method`: Übertragungsweg des Formulars: `POST` (Standard) oder `GET`.
+- `form_needs_output`: Boolean.
+- `form_output`:
+- `form_show`: Boolean, wenn true wird das Formular angezeigt.
+- `form_showformafterupdate`: Boolean, wenn true wird das Formular nach dem Absenden erneut angezeigt.
+- `form_wrap_class`: Klasse der div, die das Formular umgibt. Standard ist 'yform'.
+- `form_wrap_id`: ID der div, die das Formular umgibt. Standard ist 'rex-yform'.
+- `form_ytemplate`: YForm Template. Standard: 'bootstrap,classic';
+- `getdata`: Boolean
+- `get_field_type`: Standard 'request';
+- `hide_field_warning_messages`: Boolean. Blendet Fehlermeldung die Eingabefelder betreffend aus oder ein. Standard ist ein.
+- `hide_top_warning_messages`: Boolean.
+- `main_id`: optional: Primär-Schlüssel / ID des Datensatz, der bearbeitet wird.
+- `main_table`: Tabellenname der Haupttabelle
+- `main_where`: Hauptbestandteil der SQL WHERE Abfrage, z.B. "id=12"
+- `output`: Finale Ausgabe des Formulars
+- `preactions_executed`: Boolean. Wenn true sind die Pre Aktionen ausgeführt. Siehe auch `actions_executed` und `postactions_executed`.
+- `postactions_executed`:Boolean. Wenn true sind die Post Aktionen ausgeführt. Siehe auch `actions_executed` und `preactions_executed`.
+- `real_field_names`: Boolean, wenn true erhalten die Felder im Formular im ausgegeben HTML auch den im Formbuilder angegebenen Namen.
+- `sql_object`: SQL Objekt
+- `submit_btn_label`: Beschriftung des Absenden Buttons
+- `submit_btn_show`: Boolean, wenn false wird kein Absenden Button angezeigt
+- `this`: YForm Objekt
+- `unique_error`:
+- `unique_field_warning`:
+- `validate`: Array
+- `validates`: Validierungsfelder des Formulars
+- `value`: Array
+- `value_pool`: Array. Schlüssel der Elemente sind `email`, `files`, `sql`, die ebenfalls Arrays beinhalten.
+- `values`: Value Felder des Formulars
+- `warning`: Fehlermeldung des Formulars. Hat das Formular keine Fehler, ist das Feld leer.
+- `warning_messages`: Fehlermeldungen des Formulars als Array
+
+## Values
 
 > **Hinweis:** 
 > Dieser Abschnitt der Doku ist noch nicht fertig. Du kannst dich auf [GitHub](https://github.com/yakamara/redaxo_yform_docs/) an der Fertigstellung beteiligen.
@@ -544,6 +614,9 @@ echo $yform->getForm();
 	REX_YFORM_DATA[field="table"]
 
 
+> **Tipp:** In be_table lassen sich auch weitere YForm-Feldtypen in Pipe-Schreibweise hinterlegen, z.B. `text|title|Titel,textarea|text|Beschreibung,be_media|image|Bild`
+
+
 #### captcha
 		
 ###### Definition
@@ -632,6 +705,7 @@ $yform->setValueField('checkbox_sql', array("checkbox_sql","Checkbox SQL","SELEC
 ###### **Definition**
 Erzeugt eine Selectbox, eine Radiobutton Auswahl oder ein Checkbox-Feld. Wahlweise mit Multiple Auswahl oder Gruppiert (optgroup). Das Feld choice ersetzt mit der YFORM Version 3.0 die Felder checkbox_sql, radio, radio_sql, select und select_sql.
 Die Options können entweder als kommaseparierte Liste `label1=val1,label2=val2...`, als JSON `{"Europa": {"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}, "Südamerika": {"Bolivien": "BO"}}` oder als SQL Query `SELECT id AS value, name AS label FROM country` bzw. `SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id` angegeben werden. SQL muss die Felder `value` und `label` sowie `group_label` für gruppierte Felder zurückgeben. Der Alias `group_label` kann frei gewählt werden und muss beim Parameter `group_by` angegeben werden (Siehe Beispiel 6). Mit der Syntax als kommaseparierte Liste sind keine gruppierten Felder (optgroups) möglich.
+Die Options können auch als Callable angegeben. Die Funktion kann ein Array oder ein JSON zurückgeben, welches dem obigen Aufbau entspricht.
 
 *Hinweis*
 Die SQL Syntax unterscheidet sich zur früheren Syntax! Es werden nun die Felder `label` und `value` statt `id` und `name` erwartet.
@@ -721,11 +795,11 @@ $yform->setValueField('date', array("date","Datum","2016","+5","DD/MM/YYYY","1",
 	
 ###### Beispiel PHP
 ```php
-$yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","","0"));
+$yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","0","0"));
 ```
 
 ###### Beispiel Pipe
-	datestamp|createdate|Zeitstempel|mysql||0|
+	datestamp|createdate|Zeitstempel|mysql|wert anzeigen 0/1|0|
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="createdate"]
@@ -1117,12 +1191,19 @@ $yform->setValueField('radio_sql', array("radio_sql","Radio SQL","SELECT id, nam
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="radio_sql"]
 
+#### remembervalues
+
+###### Definition
+	Speichert Werte des Formulars in einem Cookie
+
+###### Beispiel Formbuilder
+	remembervalues|name|label|label1,label2,label3,label4|opt:default:1/0|opt:dauerinsekunden
+
 #### resetbutton
-definiert einen Reset-Button, mit dem Eingaben zurückgesetzt werden können.
 
 
 ###### Definition
-	resetbutton|name|label|value|cssclassname
+	definiert einen Reset-Button, mit dem Eingaben zurückgesetzt werden können.
 	
 ###### Beispiel Formbuilder
 	resetbutton|reset|reset|Reset
@@ -1353,7 +1434,7 @@ Vergleicht zwei Felder mit Hilfe von Operatoren.
 	validate|compare|wert1|wert2|!=|Die beiden Felder haben unterschiedliche Werte|
 
 ```php
-// in PHP
+<?php
 $yform->setValueField('text', array("wert1","Wert 1"));
 $yform->setValueField('text', array("wert2","Wert 2"));
 $yform->setValidateField('compare', array("wert1","wert2","!=", "Die Felder haben unterschiedliche Werte"));
@@ -1374,7 +1455,7 @@ Vergleicht ein Feld mit einem angegebenen Wert mit Hilfe von Operatoren.
 	validate|compare_value|wert1|2|<|Der Wert ist kleiner als 2!|
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("wert1","Wert 1"));
 $yform->setValidateField('compare_value', array("wert1",2,"<", "Der Wert ist kleiner als 2!"));
 ```
@@ -1401,7 +1482,7 @@ Damit können eigene Überprüfungen via Funktion oder Klasse/Methode durchgefü
 	validate|email|email|Das Feld enthält keine korrekte E-Mail-Adresse!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("email","E-Mail"));
 $yform->setValidateField('email', array("email", "Das Feld enthält keine korrekte E-Mail-Adresse!"));
 ```
@@ -1418,12 +1499,12 @@ $yform->setValidateField('email', array("email", "Das Feld enthält keine korrek
 	validate|empty|name|Bitte geben Sie einen Namen an!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("name","Nachname"));
 $yform->setValidateField('empty', array("name","Bitte geben Sie einen Namen an!"));
 ```
 
-#### existintable (wird nicht mehr fortgeführt)
+#### in_table (früher existintable, wird nicht mehr fortgeführt)
 
 Überprüft, ob ein Feld in einer Tabelle existiert.
  
@@ -1442,12 +1523,12 @@ $yform->setValidateField('empty', array("name","Bitte geben Sie einen Namen an!"
 	validate|intfromto|wert|2|4|Der Wert ist kleiner als 2 und größer als 4! 
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("wert","Wert"));
 $yform->setValidateField('intfromto', array("wert","2", "4", "Der Wert ist kleiner als 2 und größer als 4! "));
 ```
 
-#### labelexist
+#### in_names (früher: labelexist)
 
 Überprüft mit einem Minimal- und Maximalwert, ob eine bestimmte Menge an Feldern ausgefüllt wurden.
 
@@ -1490,7 +1571,7 @@ $yform->setValidateField('labelexist', array("vorname, name, tel", "1", "2", "Fe
 	validate|preg_match|eingabe|/[a-z]+/|Es dürfen nur ein oder mehrere klein geschriebene 	Buchstaben eingegeben werden!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("eingabe","Eingabe"));
 $yform->setValidateField('preg_match', array("eingabe","/[a-z]+/", "Es dürfen nur ein oder mehrere klein geschriebene Buchstaben eingegeben werden!"));
 ```
@@ -1507,7 +1588,7 @@ $yform->setValidateField('preg_match', array("eingabe","/[a-z]+/", "Es dürfen n
 	validate|size|plz|5|Die Eingabe hat nicht die korrekte Zeichenlänge!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("plz","PLZ"));
 $yform->setValidateField('size', array("plz","5", "Die Eingabe hat nicht die korrekte Zeichenlänge!"));
 ```
@@ -1526,7 +1607,7 @@ $yform->setValidateField('size', array("plz","5", "Die Eingabe hat nicht die kor
 	validate|size_range|summe|3|10|Die Eingabe hat nicht die korrekte Zeichenlänge (mind. 3, max 10 Zeichen)!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("summe","Summe"));
 $yform->setValidateField('size_range', array("summe", "3", "10", "Die Eingabe hat nicht die korrekte Zeichenlänge (mind. 3, max 10 Zeichen)!"));
 ```
@@ -1543,7 +1624,7 @@ $yform->setValidateField('size_range', array("summe", "3", "10", "Die Eingabe ha
 	validate|type|wert|numeric|Die Eingabe ist keine Nummer!
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("wert","Wert"));
 $yform->setValidateField('type', array("wert", "numeric", "Die Eingabe ist keine Nummer!"));
 ```
@@ -1560,7 +1641,7 @@ $yform->setValidateField('type', array("wert", "numeric", "Die Eingabe ist keine
 	validate|unique|email|Ein User mit dieser E-Mail-Adresse existiert schon!|rex_user
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("email","E-Mail"));
 $yform->setValidateField('unique', array("email", "Ein User mit dieser E-Mail-Adresse existiert schon!","rex_user"));
 ```
@@ -1609,7 +1690,7 @@ Ruf eine Funktion oder Klasse auf.
 	folgt ...
 
 ```php
-// in PHP
+<?php
 folgt ...
 ```
 
@@ -1629,7 +1710,7 @@ Kopiert Eingaben vom Feld mit dem Label `label_from` in das Feld mit dem Label `
 	action|html|Daten gespeichert	
 
 ```php
-// in PHP	
+<?php	
 $yform->setValueField('hidden', array("user"));
 $yform->setValueField('text', array("name","Name"));
 $yform->setActionField('copy_value', array("name","user"));
@@ -1653,7 +1734,7 @@ Mit %TABLE_PREFIX% im Tabellennamen kann man den Prefix der REDAXO Tabellen setz
 	action|create_table|rex_order
 
 ```php
-// in PHP
+<?php
 $yform->setValueField('text', array("vorname","Vorname"));
 $yform->setValueField('text', array("name","Name"));
 
@@ -1710,7 +1791,7 @@ Führt eine Abfrage aus, z. B. um hier Werte aus Eingabefeldern in die Abfrage
 	action|db_query|insert into rex_ycom_user set name = ?, email = ?|name,email
 
 ```php
-// in PHP
+<?php
 $yform->setValueField('text', array("name","Name"));
 $yform->setValueField('text', array("email","|E-Mail-Adresse"));
 $yform->setActionField('db_query', array("insert into rex_ycom_user set name = ?, email = ?", "name,email"));
@@ -1767,7 +1848,7 @@ Erklärung folgt.
 	folgt 
 
 ```php
-// in PHP
+<?php
 folgt
 ```
 
@@ -1782,9 +1863,13 @@ Gibt HTML-Code aus.
 	action|html|<b>fett</b>
 
 ```php
-// In PHP
+<?php
 $yform->setActionField('html', array("<b>fett</b>"));
 ```
+
+#### manage_db
+
+Die Action legt bei Bedarf nicht vorhandene Felder an.
 
 #### readtable
 
@@ -1799,7 +1884,7 @@ Damit kann man anhand eines Eingabefeldes Daten aus einer Tabellen selektieren. 
 	action|readtable|shop_user|fname|name
 
 ```php
-// In PHP
+<?php
 $yform->setValueField('text', array("name","Name"));
 $yform->setActionField('readtable', array("shop_user", "fname", "name"));
 ```
@@ -1820,7 +1905,7 @@ action|redirect|32
 action|redirect|https://www.example.org/kontakt/?mein_parameter=mein_wert
 ```
 
-	// In PHP
+	<?php
 ```php
 $yform->setActionField('redirect', array("32"));
 // mit Übergabe von URL-Parameter(n):

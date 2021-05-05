@@ -8,7 +8,7 @@ yform_alltables = All tables
 yform_back_to_overview = Back to overview
 yform_updatetable = Update table/s
 yform_tablesupdated = Table/s updated
-
+yform_errors_occurred  = Error occurred
 yform_help_empty = Empty entries can be searched with (empty)
 yform_help_multipleselect = Select multiple while holding down CTRL or CMD
 yform_updatetable_with_delete = with field deletion
@@ -128,6 +128,7 @@ yform_visible = visible
 
 # edit.inc.php
 yform_thankyouforupdate = Record updated.
+yform_thankyouforupdates = Records updated.
 yform_thankyouforentry = Record added.
 yform_editdata = Edit record [id: {0}]
 yform_editdata_collection = Edit {0} records
@@ -140,6 +141,7 @@ yform_function = Function
 yform_add = add
 yform_add_apply = apply
 yform_edit = edit
+yform_view = show
 yform_save = save
 yform_save_apply = apply
 yform_delete = delete

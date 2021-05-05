@@ -8,7 +8,7 @@ yform_alltables = Alle Tabellen
 yform_back_to_overview = Zurück zur Übersicht
 yform_updatetable = aktualisieren
 yform_tablesupdated = Tabelle/n wurde/n aktualisiert
-
+yform_errors_occurred = Es sind Fehler aufgetreten
 yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
 yform_help_multipleselect = Mehrfachauswahl mit gedrückter CTRL/CMD Taste
 yform_updatetable_with_delete = mit Feldlöschung
@@ -76,7 +76,7 @@ yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
 yform_manager_table_allow_mass_edit = Massenbearbeitung erlauben
 yform_manager_table_history = Historie anlegen
 yform_manager_tablefield_overview = Feldübersicht
-yform_manager_table_schema_overwrite = Datenbankfelder IMMER mit Schemadefinition überschreiben
+yform_manager_table_schema_overwrite = Datenbankfelder werden entsprechend des erkannten Schemas angeglichen
 yform_manager_table_basic_info = Basisinfo
 yform_manager_table_func = Tabellenfunktionen
 yform_manager_table_user_func = Benutzer-Komfortfunktionen
@@ -128,6 +128,7 @@ yform_visible = sichtbar
 
 # edit.inc.php
 yform_thankyouforupdate = Datensatz wurde aktualisiert.
+yform_thankyouforupdates = Datensätze wurde aktualisiert.
 yform_thankyouforentry = Datensatz wurde eingetragen.
 yform_editdata = Datensatz editieren [id: {0}]
 yform_editdata_collection = {0} Datensätze editieren
@@ -140,6 +141,7 @@ yform_function = Funktion
 yform_add = hinzufügen
 yform_add_apply = übernehmen
 yform_edit = editieren
+yform_view = anzeigen
 yform_save = speichern
 yform_save_apply = übernehmen
 yform_delete = löschen
@@ -297,3 +299,8 @@ yform_will_set_to = wird
 yform_field_add = Feld hinzufügen
 yform_field_update = Feld aktualisieren
 yform_field_db_type = Datenbank-Feldtyp
+
+yform_manager_table_data_view_roles = Datenansicht beschränkt auf
+yform_manager_table_data_edit_roles = Datenbearbeitung beschränkt auf
+
+yform_manager_table_nopermission = Keine Berechtigung auf diese Tabelle

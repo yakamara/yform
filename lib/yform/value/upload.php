@@ -37,7 +37,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $error_messages['type_error'] = isset($error_messages[2]) ? rex_i18n::translate($error_messages[2]) : 'type_error';
         $error_messages['empty_error'] = isset($error_messages[3]) ? rex_i18n::translate($error_messages[3]) : 'empty_error';
         $error_messages['delete_file'] = isset($error_messages[4]) ? rex_i18n::translate($error_messages[4]) : 'delete ';
-        $error_messages['destination_error'] = isset($error_messages[4]) ? rex_i18n::translate($error_messages[4]) : 'destination_error ';
+        $error_messages['destination_error'] = isset($error_messages[5]) ? rex_i18n::translate($error_messages[5]) : 'destination_error ';
 
         $errors = [];
 
@@ -52,6 +52,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         if (!$this->params['send']) {
             $this->setSessionVar('value', (string) $this->getValue());
             $this->setSessionVar('original_value', (string) $this->getValue());
+        }
+
+        if (!$this->isEditable()) {
+            unset($_FILES[$this->getSessionKey()]);
         }
 
         $FILE = null;
@@ -184,13 +188,22 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $download_link = self::upload_getDownloadLink($this->params['main_table'], $this->getName(), $this->params['main_id']);
         }
 
-        if ($this->needsOutput()) {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', [
-                'unique' => $this->getSessionKey(),
-                'filename' => $filename,
-                'error_messages' => $error_messages,
-                'download_link' => $download_link,
-            ]);
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.upload-view.tpl.php', 'value.view.tpl.php'], [
+                    'unique' => $this->getSessionKey(),
+                    'filename' => $filename,
+                    'error_messages' => $error_messages,
+                    'download_link' => $download_link,
+                ]);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', [
+                    'unique' => $this->getSessionKey(),
+                    'filename' => $filename,
+                    'error_messages' => $error_messages,
+                    'download_link' => $download_link,
+                ]);
+            }
         }
 
         return $this;

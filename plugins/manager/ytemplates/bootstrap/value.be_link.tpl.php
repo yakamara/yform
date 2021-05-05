@@ -1,6 +1,6 @@
 <?php
 
-$buttonId = $counter;
+$buttonId = 'yf_'.uniqid().'_'.$counter;
 $categoryId = 0;
 $name = $this->getFieldName();
 $value = htmlspecialchars($this->getValue());

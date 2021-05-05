@@ -75,7 +75,7 @@ E-Mail-Templates können jedoch auch von einem YForm-Formular losgelöst verwend
 Nachfolgend ein angepasster Formular-Code, um die E-Mail separat zu versenden. Dabei wird ein eigener, zusätzlicher Platzhalter definiert, der sich nicht im Formular befindet. Bitte die Kommentare beachten.
 
 ```php
-<?
+<?php
 $yform = new rex_yform();
 $yform->setObjectparams('form_ytemplate', 'bootstrap');
 $yform->setObjectparams('form_showformafterupdate', 0); // Muss 0 sein, damit if($form) funktioniert
@@ -143,7 +143,7 @@ REX_YFORM_DATA[field="custom"]
 Dieser Code basiert auf [plugins/email/lib/yform_action_tpl2email.php](https://github.com/yakamara/redaxo_yform/blob/master/plugins/email/lib/yform_action_tpl2email.php).
 
 ```php
-<?
+<?php
 $yform_email_template_key = 'test'; // Key, wie im Backend unter YForm > E-Mail-Templates hinterlegt
 $debug = 0;
 
@@ -210,6 +210,7 @@ Hier ein Beispiel, um YCom-User über die REST-API zu verwalten:
 
 
 ```php
+<?php
 
 // diese Zeile ist normalerweise nötig. Dieses Bespiel nutzt aber eine YCom-Tabelle, die bereits über das AddOn registriert ist.
 ##rex_yform_manager_dataset::setModelClass('rex_ycom_user', rex_ycom_user::class);
@@ -302,8 +303,45 @@ In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung
 
 #### GET
 
-* Filter
-* Felder
+##### Filter
+
+Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuchen verwendet werden (getSearchFilter). Über einen oder mehrere ```filter[feldname]=suchwert``` Parameter werden die Suchfilter verwendet. Ein Suchfeld kann nur verwendet werden, wenn es in der Route als Feld definiert wurde.
+
+##### Includes
+
+über ```include=title,user.login,user.email``` kann man entscheiden welche Werte man empfangen möchte. So kann man z.B. für kompakter Ergebnislisten sorgen, falls bestimmte Relation oder Werte nicht nötig sind.
+
+##### Erweitern um eigene API Felder
+
+Es kann sein, das man datenbankunabhängige Felder haben möchte, die z.B. Berechnungen beinhaltet oder Daten in einer anderen Form wiedergibt. Um das zu erreichen muss man diese Felder anmelden und beim Auslesen abfangen. Folgendes Beispiel sollte das erläutern.
+
+```php
+<?php
+
+class eigeneyormklasse extends rex_yform_manager_dataset 
+{
+    public function getValue($key)
+    {
+        if ('kosten' == $key) {
+            return $this->getValue('einzelpreis')*10;
+        }
+        return parent::getValue($key);
+    }
+
+    public static function getAdditionalAPIFields()
+    {
+        $additionalFields = [];
+        $additionalFields['kosten'] = new rex_yform_manager_field([
+            'name' => 'kosten',
+            'type_id' => 'value',
+            'type_name' => 'text',
+        ]);
+
+        return $additionalFields;
+    }
+}
+```
+
 
 #### POST
 
@@ -325,6 +363,17 @@ Wenn im Model folgende Authentifizerung angegeben wurde: `'\rex_yform_rest_auth_
 Die hier erstellen Token werden entsprechend überprüft und müssen im Header übergeben werden. `token=###meintoken###` Nur aktive Tokens funktionieren. 
 Über das REST PlugIn kann man im Backend diese Zugriffe einschränken und tracken. D.h. Es können Einschränkungen wir Zugriffe / Stunde oder ähnliches eingestellt werden. 
 Jeder Zugriff auf die REST-API wird erfasst. 
+
+### Header
+
+Man kann eigene Header setzen indem man allgemein der REST Api Header zuweist
+
+``\rex_yform_rest::setHeader('Access-Control-Allow-Origin', '*');``
+
+oder einer Route einen speziellen eigenen Header zuweist, welcher der allgemeinen Header überschreiben würde.
+
+``$route->setHeader('Access-Control-Allow-Origin', 'redaxo.org');``
+
 
 ## Tools-Plugin
 

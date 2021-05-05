@@ -2,12 +2,13 @@
 
 class rex_yform_manager_table_api
 {
-    public static $table_fields = ['status', 'name', 'description', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import'];
+    public static $table_fields = ['status', 'name', 'description', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import', 'schema_overwrite'];
     public static $debug = false;
 
-    // ---------- TABLES
-
-    public static function setTable(array $table, array $table_fields = [])
+    /**
+     * @throws rex_sql_exception
+     */
+    public static function setTable(array $table, array $table_fields = []): ?rex_yform_manager_table
     {
         if (!isset($table['table_name'])) {
             throw new Exception('table[table_name] must be set');
@@ -39,7 +40,6 @@ class rex_yform_manager_table_api
         } else {
             $currentTable = $currentTable->toArray();
 
-            // Update
             foreach (self::$table_fields as $field) {
                 if (isset($table[$field])) {
                     $currentTable[$field] = $table[$field];
@@ -76,6 +76,9 @@ class rex_yform_manager_table_api
         return rex_yform_manager_table::get($table_name);
     }
 
+    /**
+     * @throws rex_sql_exception
+     */
     public static function setTables(array $tables)
     {
         foreach ($tables as $table) {
@@ -83,7 +86,10 @@ class rex_yform_manager_table_api
         }
     }
 
-    public static function importTablesets($tableset_content)
+    /**
+     * @throws rex_sql_exception
+     */
+    public static function importTablesets(string $tableset_content): bool
     {
         $tableset_content = json_decode($tableset_content, true);
         foreach ($tableset_content as $table) {
@@ -92,23 +98,27 @@ class rex_yform_manager_table_api
             }
             $settable = $table['table'];
             $fields = $table['fields'];
+            $settable['schema_overwrite'] = 1;
             self::setTable($settable, $fields);
         }
         self::generateTablesAndFields();
         return true;
     }
 
-    public static function exportTablesets($table_names)
+    /**
+     * @return false|string
+     */
+    public static function exportTablesets(array $table_names)
     {
         $export = [];
         foreach ($table_names as $table_name) {
             $export_table = rex_yform_manager_table::get($table_name);
             $export_fields = [];
             foreach ($export_table->getFields() as $field) {
-                $export_fields[] = $field->toArray();
+                $export_fields[] = array_diff_key($field->toArray(), ['id' => 0]);
             }
             $export[$export_table['table_name']] = [
-                'table' => $export_table->toArray(),
+                'table' => array_diff_key($export_table->toArray(), ['id' => 0, 'prio' => 0]),
                 'fields' => $export_fields,
             ];
         }
@@ -116,7 +126,10 @@ class rex_yform_manager_table_api
         return json_encode($export);
     }
 
-    public static function removeTable($table_name)
+    /**
+     * @throws rex_sql_exception
+     */
+    public static function removeTable(string $table_name)
     {
         $table = rex_yform_manager_table::get($table_name);
 
@@ -133,9 +146,10 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-    // ---------- FIELDS
-
-    public static function setTableField($table_name, array $table_field)
+    /**
+     * @throws rex_sql_exception
+     */
+    public static function setTableField(string $table_name, array $table_field)
     {
         unset($table_field['id']);
 
@@ -147,11 +161,12 @@ class rex_yform_manager_table_api
             throw new Exception('field must be a filled array');
         }
 
-        $fieldIdentifier = [
-            'type_id' => $table_field['type_id'],
-            'type_name' => $table_field['type_name'],
-            'name' => $table_field['name'],
-        ];
+        $fieldIdentifier = [];
+        $fieldIdentifier['type_id'] = $table_field['type_id'];
+        $fieldIdentifier['name'] = $table_field['name'];
+        if ('validate' == $fieldIdentifier['type_id']) {
+            $fieldIdentifier['type_name'] = $table_field['type_name'];
+        }
 
         $currentFields = rex_yform_manager_table::get($table_name)->getFields($fieldIdentifier);
 
@@ -193,7 +208,7 @@ class rex_yform_manager_table_api
 
             $add_where = [];
             foreach ($fieldIdentifier as $field => $value) {
-                $add_where[] = '`' . $field . '`= ' . $field_update->escape($table_name) . ' ';
+                $add_where[] = '`' . $field . '`= ' . $field_update->escape($value) . ' ';
             }
 
             $where = 'table_name=' . $field_update->escape($table_name) . '';
@@ -212,7 +227,10 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-    public static function removeTablefield($table_name, $field_name)
+    /**
+     * @throws rex_sql_exception
+     */
+    public static function removeTablefield(string $table_name, string $field_name)
     {
         $f = rex_sql::factory();
         $f->setDebug(self::$debug);
@@ -221,9 +239,10 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
-    // ---------- MIGRATION und Erstellung
-
-    public static function migrateTable($table_name, $convert_id = false)
+    /**
+     * @throws rex_sql_exception
+     */
+    public static function migrateTable(string $table_name, bool $schema_overwrite = false)
     {
         $columns = rex_sql::showColumns($table_name);
 
@@ -234,22 +253,17 @@ class rex_yform_manager_table_api
         $table = [
             'table_name' => $table_name,
             'status' => 1,
-            'schema_overwrite' => 0,
+            'schema_overwrite' => $schema_overwrite ? 1 : 0,
         ];
 
-        $autoincrement = [];
+        $error = true;
         foreach ($columns as $column) {
-            if ('auto_increment' == $column['extra']) {
-                $autoincrement = $column;
+            if ('auto_increment' == $column['extra'] && 'id' == $column['name']) {
+                $error = false;
             }
         }
 
-        if (count($autoincrement) > 0 && 'id' == $autoincrement['name']) {
-            // everything is ok
-        } elseif ($convert_id && count($autoincrement) > 1) {
-            rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` CHANGE `' . $autoincrement['name'] . '` `id` INT( 11 ) NOT NULL AUTO_INCREMENT ');
-            $columns = rex_sql::showColumns($table_name);
-        } else {
+        if ($error) {
             throw new Exception('`id`-field with auto_increment is missing.');
         }
 
@@ -262,6 +276,12 @@ class rex_yform_manager_table_api
         }
     }
 
+    /**
+     * @param $table_name
+     * @param $column
+     * @throws rex_sql_exception
+     * @return array
+     */
     public static function migrateField($table_name, $column)
     {
         if ('id' == $column['name']) {
@@ -499,6 +519,10 @@ class rex_yform_manager_table_api
         }
     }
 
+    /**
+     * @param $field
+     * @throws rex_sql_exception
+     */
     public static function createMissingFieldColumns($field)
     {
         $columns = [];
@@ -523,13 +547,17 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
+    /**
+     * @param false                   $delete_old
+     * @throws rex_sql_exception
+     */
     public static function generateTableAndFields(rex_yform_manager_table $table, $delete_old = false)
     {
         $tableName = $table->getTableName();
         rex_yform_manager_table::deleteCache();
 
         $table = rex_yform_manager_table::get($tableName);
-        if (!$table) {
+        if (!$table || !$table->overwriteSchema()) {
             return;
         }
 
@@ -601,6 +629,10 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
     }
 
+    /**
+     * @param false $delete_old
+     * @throws rex_sql_exception
+     */
     public static function generateTablesAndFields($delete_old = false)
     {
         rex_yform_manager_table::deleteCache();

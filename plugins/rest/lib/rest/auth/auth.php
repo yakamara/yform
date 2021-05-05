@@ -11,11 +11,16 @@ class rex_yform_rest_auth_token
     ];
     public static $tokenList = [];
 
-    public static function checkToken(rex_yform_rest_route $route)
+    /**
+     * @param rex_yform_rest_route $route
+     * @throws rex_sql_exception
+     * @return bool
+     */
+    public static function checkToken(rex_yform_rest_route $route): bool
     {
-        $myToken = \rex_yform_rest::getHeader('token');
+        $myToken = rex_yform_rest::getHeader('token');
 
-        $TokenAuths = \rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token').' where status=1 and token=? and FIND_IN_SET(?, paths)', [$myToken, $route->getPath()]);
+        $TokenAuths = rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token').' where status=1 and token=? and FIND_IN_SET(?, paths)', [$myToken, $route->getPath()]);
 
         if (1 != count($TokenAuths)) {
             return false;
@@ -45,17 +50,26 @@ class rex_yform_rest_auth_token
         return false;
     }
 
-    public static function addHit($TokenAuth)
+    /**
+     * @param array $TokenAuth
+     * @throws rex_sql_exception
+     */
+    public static function addHit(array $TokenAuth)
     {
-        \rex_sql::factory()
+        rex_sql::factory()
             ->setTable(rex::getTable('yform_rest_token_access'))
             ->setValue('token_id', $TokenAuth['id'])
             ->setValue('datetime_created', date(rex_sql::FORMAT_DATETIME))
-            ->setValue('url', \rex_yform_rest::getCurrentUrl())
+            ->setValue('url', rex_yform_rest::getCurrentUrl())
             ->insert();
     }
 
-    public static function get($id)
+    /**
+     * @param int $id
+     * @throws rex_sql_exception
+     * @return null|mixed
+     */
+    public static function get(int $id)
     {
         if (0 == count(self::$tokenList)) {
             self::$tokenList = rex_sql::factory()->getArray('select * from '.rex::getTable('yform_rest_token'));
@@ -69,7 +83,13 @@ class rex_yform_rest_auth_token
         return null;
     }
 
-    public static function getCurrentIntervalAmount($interval, $token_id)
+    /**
+     * @param string $interval
+     * @param $token_id
+     * @throws rex_sql_exception
+     * @return null|mixed
+     */
+    public static function getCurrentIntervalAmount(string $interval, $token_id)
     {
         switch ($interval) {
             case 'month':

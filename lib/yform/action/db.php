@@ -38,6 +38,9 @@ class rex_yform_action_db extends rex_yform_action_abstract
         }
 
         try {
+            if (0 == count($this->params['value_pool']['sql'])) {
+                throw new Exception('no values given');
+            }
 
             foreach ($this->params['value_pool']['sql'] as $key => $value) {
                 $sql->setValue($key, $value);
@@ -66,13 +69,14 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 $action = 'insert';
                 $id = $sql->getLastId();
                 $this->params['main_id'] = $id;
+                /** @deprecated since 3.4.1 use id (lowercase) instead */
                 $this->params['value_pool']['email']['ID'] = $id;
-                // $this->params["value_pool"]["sql"]["ID"] = $id;
+                $this->params['value_pool']['email']['id'] = $id;
             }
         } catch (Exception $e) {
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
-            if ($this->params['debug']) {
+            if ($this->params['debug'] || rex::isBackend()) {
                 $this->params['warning_messages'][] = $e->getMessage();
             } else {
                 $this->params['warning_messages'][] = $this->params['Error-Code-QueryError'];
@@ -84,6 +88,21 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 dump($this->params['warning_messages']);
             }
         } else {
+
+            rex_extension::registerPoint(new rex_extension_point('YFORM_SAVED', $sql,
+                [
+                    'form' => $this,
+                    'sql' => $sql,
+                    'table' => $main_table,
+                    'action' => $action,
+                    'id' => $this->params['main_id'],
+                    'yform' => true,
+                ]
+            ));
+
+            /**
+             * @deprecated since 3.4.1 use EP YFORM_SAVED instead
+             */
             rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql,
                 [
                     'form' => $this,

@@ -124,7 +124,6 @@ abstract class rex_yform_base_abstract
 
     public function executeAction()
     {
-        return $this->execute();
     }
 
     public function postAction()
@@ -134,11 +133,6 @@ abstract class rex_yform_base_abstract
     public function isDeprecated()
     {
         return false;
-    }
-
-    /* deprecated */
-    public function execute()
-    {
     }
 
     public function init()
