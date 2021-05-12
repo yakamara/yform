@@ -698,10 +698,6 @@ $yform->setValueField('checkbox_sql', array("checkbox_sql","Checkbox SQL","SELEC
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="checkbox_sql"]
-	REX_YFORM_DATA[field="checkbox_sql_LABELS"]
-	REX_YFORM_DATA[field="checkbox_sql_LIST"]
-
-> Tipp: Bei E-Mails werden über das Suffix `_LABELS` bzw. `_LIST` die in
 
 #### choice
 
