@@ -776,7 +776,7 @@ $yform->setValueField('choice',["mycheckboxfield","Vor- und Nachspeisen",'{"Vors
 	REX_YFORM_DATA[field="checkbox_sql_LABELS"]
 	REX_YFORM_DATA[field="checkbox_sql_LIST"]
 
-> Tipp: Bei E-Mails werden über das Feld-Suffix `_LABELS` bzw. `_LIST` direkt die Beschriftungen als kommaseparierter Text bzw. mit Zeilenumbrüchen zurückgegeben.
+> Tipp: Bei E-Mails werden über das Feld-Suffix `_LABELS` direkt die Beschriftungen als kommaseparierter Text bzw. `_LIST` mit Zeilenumbrüchen zurückgegeben.
  
 #### date
 
