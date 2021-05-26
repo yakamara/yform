@@ -183,7 +183,7 @@ class rex_yform_manager
             if (!rex_csrf_token::factory($_csrf_key)->isValid()) {
                 $mainMessages[] = [
                     'type' => 'error',
-                    'message' => "XXX".rex_i18n::msg('csrf_token_invalid'),
+                    'message' => rex_i18n::msg('csrf_token_invalid'),
                 ];
             }
         }
