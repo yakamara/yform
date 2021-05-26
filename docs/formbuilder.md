@@ -699,7 +699,6 @@ $yform->setValueField('checkbox_sql', array("checkbox_sql","Checkbox SQL","SELEC
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="checkbox_sql"]
 
-
 #### choice
 
 ###### **Definition**
@@ -771,6 +770,14 @@ $yform->setValueField('choice',["mycheckboxfield","Vor- und Nachspeisen",'{"Vors
     Die Datensätze mit der Id 8 und 5 stehen am Anfang des Select (preferred choices).
 	
 
+###### Beispiel E-Mail
+
+	REX_YFORM_DATA[field="choice"]
+	REX_YFORM_DATA[field="choice_LABELS"]
+	REX_YFORM_DATA[field="choice_LIST"]
+
+> Tipp: Bei E-Mails werden über das Feld-Suffix `_LABELS` direkt die Beschriftungen als kommaseparierter Text bzw. `_LIST` mit Zeilenumbrüchen zurückgegeben.
+ 
 #### date
 
 ###### Definition
