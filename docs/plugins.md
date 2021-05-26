@@ -311,6 +311,10 @@ Man kann das Ergebnis filtern. Über URL Parameter können die internen Feldsuch
 
 über ```include=title,user.login,user.email``` kann man entscheiden welche Werte man empfangen möchte. So kann man z.B. für kompakter Ergebnislisten sorgen, falls bestimmte Relation oder Werte nicht nötig sind.
 
+##### Weitere Parameter
+
+Mit ```per_page=x``` kann man die Anzahl der Treffer pro Seite einschränken oder erweitern. Durch ```page=x``` besteht die Möglichkeit direkt auf untere Ergebnisseiten zu springen und über ```order[Feldname]=asc oder desc``` lassen sich die Ergebislisten entsprechend der Feldnamen sortieren. order lasst sich auch mehrfach verwenden um unterschiedliche Sortierungen zu kombinieren.
+
 ##### Erweitern um eigene API Felder
 
 Es kann sein, das man datenbankunabhängige Felder haben möchte, die z.B. Berechnungen beinhaltet oder Daten in einer anderen Form wiedergibt. Um das zu erreichen muss man diese Felder anmelden und beim Auslesen abfangen. Folgendes Beispiel sollte das erläutern.
