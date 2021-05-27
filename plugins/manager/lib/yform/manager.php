@@ -86,7 +86,7 @@ class rex_yform_manager
         $rex_yform_list['sorttype'] = rex_request('sorttype', 'string');
         $rex_yform_list['start'] = rex_request('start', 'int', null) ?? rex_request($rex_yform_list['list'].'_start', 'int', null) ?? 0;
 
-        $_csrf_key = $this->table->getCRSFKey();
+        $_csrf_key = $this->table->getCSRFKey();
         $rex_yform_list += rex_csrf_token::factory($_csrf_key)->getUrlParams();
 
         $popup = false;
@@ -902,7 +902,7 @@ class rex_yform_manager
         $table_info = '<b>' . $table->getNameLocalized() . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id='.$table->getId().'&func=edit">' . $table->getTableName() . '</a>]</b> ';
         echo rex_view::info($table_info);
 
-        $_csrf_key = $this->table->getCRSFKey();
+        $_csrf_key = $this->table->getCSRFKey();
 
         if ('' != $func && in_array($func, ['delete', 'updatetablewithdelete', 'updatetable'])) {
             if (!rex_csrf_token::factory($_csrf_key)->isValid()) {

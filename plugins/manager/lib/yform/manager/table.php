@@ -523,7 +523,7 @@ class rex_yform_manager_table implements ArrayAccess
         return rex_yform_manager_table_authorization::onAttribute($type, $this, $user);
     }
 
-    public function getCRSFKey()
+    public function getCSRFKey()
     {
         return 'table_field-'.$this->getTableName();
     }
