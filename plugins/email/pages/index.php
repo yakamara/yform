@@ -167,19 +167,34 @@ if ($show_list) {
 
     $tdIcon = '<i class="rex-icon rex-icon-template"></i>';
     $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey(rex_i18n::msg('create_template'), 'add') . ' title="' . rex_i18n::msg('create_template') . '"><i class="rex-icon rex-icon-add-template"></i></a>';
-    $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
+    $list->addColumn($thIcon, $tdIcon, 0, [
+        '<th class="rex-table-icon">###VALUE###</th>',
+        '<td class="rex-table-icon">###VALUE###</td>'
+    ]);
 
     $list->setColumnLabel('id', 'ID');
-    $list->setColumnLayout('id', ['<th class="rex-small">###VALUE###</th>', '<td class="rex-small">###VALUE###</td>']);
+    $list->setColumnLayout('id', [
+        '<th class="rex-small">###VALUE###</th>',
+        '<td class="rex-small">###VALUE###</td>'
+    ]);
 
     $list->setColumnLabel('name', rex_i18n::msg('yform_email_header_template_description'));
     $list->setColumnParams('name', ['page' => $page, 'func' => 'edit', 'template_id' => '###id###']);
 
     $list->setColumnLabel('mail_from', rex_i18n::msg('yform_email_header_template_mail_from'));
-    $list->setColumnLabel('mail_from_name', rex_i18n::msg('yform_email_header_template_mail_from_name'));
+
+    $list->setColumnFormat('mail_from', "custom", function ($a) {
+        return "###mail_from###<br />###mail_from_name###";
+    });
+
+    $list->setColumnLabel('mail_reply_to', rex_i18n::msg('yform_email_header_template_mail_reply_to'));
+    $list->setColumnFormat('mail_reply_to', "custom", function ($a) {
+        return "###mail_reply_to###<br />###mail_reply_to_name###";
+    });
+
     $list->setColumnLabel('subject', rex_i18n::msg('yform_email_header_template_subject'));
 
-    $list->removeColumn('mail_reply_to');
+    $list->removeColumn('mail_from_name');
     $list->removeColumn('mail_reply_to_name');
     $list->removeColumn('body');
     $list->removeColumn('body_html');
