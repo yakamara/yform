@@ -24,7 +24,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
                 $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
                 $attributes['disabled'] = 'disabled';
                 $this->setElement('attributes', json_encode($attributes));
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.checkbox-view.tpl.php', 'value.view.tpl.php', 'value.checkbox.tpl.php'], ['value' => $this->getValue()]);
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.checkbox-view.tpl.php', 'value.checkbox.tpl.php'], ['value' => $this->getValue()]);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.checkbox.tpl.php', ['value' => $this->getValue()]);
             }
@@ -109,5 +109,10 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         }
 
         return $params['subject'];
+    }
+
+    public function getViewValue()
+    {
+        return 'hihih';
     }
 }
