@@ -1,6 +1,44 @@
 Changelog
 =========
 
+Version 3.5.0 – xx.06.2021
+--------------------------
+
+### Neu
+* läuft nun auch auf PHP 8
+* Neue Rechtestruktur. Rechte werden in den Tabellen selbst an REDAXO Rollen vergeben
+* Viewansicht ergänzt. Automatische Viewansicht bei Relationstabellen.
+* UUID Feld ergönzt
+* Migration von Tabellen ohne Änderungen der Tabell möglich
+* ecaptcha v3- Feld ergänzt
+
+### Korrekturen, Anpassungen, Bugs
+* Export Tabellen und Felder optimiert. Danke @christophboecker
+* empty name nun auch in der Suche
+* Dokuansicht korrigiert, ergänzt und optisch verbessert
+* Email-Templateansicht erweitert
+* date-feld umd typ HTML-date ergänzt
+* Relation Typansicht/reihenfolge geändert
+* Int Feld um BigInt erweitert
+* E-Mail Versand, plain message Striptags entfernt
+* E-Mail Template werden nun nach key validiert
+* Manager: Datesuche korrigiert
+* be_table Bugs behoben, date felder gingen nicht
+* Fehlermeldungen bei nicht speicherbaren Formularen sind nun klarer
+* Codestyling
+* RESTAPI: Eigene individuelle Felder sind nun ergönzbar. In Doku beschrieben
+* Choice. Callback bei Labels nun möglich
+* RESTAPI: include bei URL Params ergänzt und Felder einschränken zu können, die man gerne hätte
+* Manager: Tabellenansicht verbessert
+* Tablesetexport ist nun aufs nötigste beschränkt
+* time-Feld: notices bei ergänzt
+* number-Feld: Attributes ergänzt
+* RESTAPI: Eigene Header nun möglich
+* choice-Feld: Attributes ergänzt
+
+
+Danke Alexander Walther, Christoph Boecker, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
+
 Version 3.4.1 – 03.08.2020
 --------------------------
 
