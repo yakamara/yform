@@ -5,7 +5,8 @@ Version 4.0.0 – xx.06.2021
 --------------------------
 
 ### deprecated entfernt
-* Validierung mach email entfernt. Bitte mit type und email ersetzen
+* Validierung nach email entfernt. Bitte mit type und email ersetzen
+* Validierung nach captcha, captcha_calc entfernt, bitte stattdessen das addon yform_spam_protection verwenden
 
 ### Neu
 * läuft nun auch auf PHP 8
