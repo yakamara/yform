@@ -12,7 +12,7 @@ Version 4.0.0 – xx.06.2021
 
 ### Neu
 * läuft nun auch auf PHP 8
-* Neue Rechtestruktur. Rechte werden in den Tabellen selbst an REDAXO Rollen vergeben
+* Neue Rechtestruktur. Es gibt nun Ansichtsrechte und/oder Editier für Rollen
 * Viewansicht ergänzt. Automatische Viewansicht bei Relationstabellen.
 * UUID Feld ergönzt
 * Migration von Tabellen ohne Änderungen der Tabell möglich
