@@ -85,11 +85,12 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yform_history_field') . '` CONVERT
 
 $addon = rex_addon::get('yform');
 if ($addon->isInstalled() && rex_version::compare($addon->getVersion(), '3.6', '<')) {
-    // Update of Userroles. Pull Permissions from Useraccount to YForm Table.
-    $userRoles = rex_sql::factory()->getArray('SELECT * FROM ' . rex::getTablePrefix() . 'user_role');
-    // TODO:
-
-
+    foreach (rex_sql::factory()->getArray('SELECT id, perms FROM ' . rex::getTablePrefix() . 'user_role') as $role) {
+        if (false === strpos($role['perms'], '"yform_manager_table_edit":')) {
+            $perms = str_replace('"yform_manager_table":', '"yform_manager_table_edit":', $role['perms']);
+            rex_sql::factory()->setDebug()->setQuery('UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?', [$perms, $role['id']]);
+        }
+    }
 }
 
 if (class_exists('rex_yform_manager_table')) {
