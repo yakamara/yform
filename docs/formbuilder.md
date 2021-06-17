@@ -30,7 +30,7 @@ Im Normalfall folgt die Syntax folgendem Schema: zuerst kommt der Feldtyp, dann 
 
 	text|name|Nachname
 	validate|empty|name|Bitte einen Nachnamen eingeben
-	select|anrede|Anrede|Anrede=,Frau=w,Herr=m
+	choice|anrede|Anrede|Anrede=,Frau=w,Herr=m
 	action|db|adressen|
 
 Die vollständigen Optionen für jedes Feld kann man direkt im YForm-Modul ersehen. Beim Textfeld finden sich z. B. folgende Optionen:
@@ -57,7 +57,7 @@ $yform = new rex_yform();
 // auskommentieren, um Probleme zu finden
 $yform->setValueField('text', array("name","Nachname"));
 $yform->setValidateField('empty', array("name","Bitte einen Nachnamen eingeben"));
-$yform->setValueField('select', array("anrede","Anrede","Anrede=,Frau=w,Herr=m"));
+$yform->setValueField('choice', array("anrede","Anrede","Anrede=,Frau=w,Herr=m"));
 $yform->setActionField('db', array('adressen'));
 echo $yform->getForm();
 ```
@@ -616,31 +616,6 @@ echo $yform->getForm();
 
 > **Tipp:** In be_table lassen sich auch weitere YForm-Feldtypen in Pipe-Schreibweise hinterlegen, z.B. `text|title|Titel,textarea|text|Beschreibung,be_media|image|Bild`
 
-
-#### captcha
-		
-###### Definition
-	captcha|Beschreibungstext|Fehlertext
-	
-###### Beispiel Formbuilder
-	_
-	
-###### Beispiel PHP
-	_
-
-
-#### captcha_calc
-
-###### Definition
-	captcha_calc|Beschreibungstext|Fehlertext
-	
-###### Beispiel Formbuilder
-	_
-	
-###### Beispiel PHP
-	_
-
-
 #### reCaptcha
 
 ###### Definition
@@ -651,6 +626,11 @@ Eine Nutzung der Versionen v1 und v3 ist derzeit nicht möglich.
 
 ###### Beispiel Pipe
 	recaptcha|Sicherheitsüberprüfung|<PUBLIC_KEY>|<PRIVATE_KEY>|Die Sicherheitsüberprüfung schlug fehl.|1|
+
+#### article
+
+###### Definition
+    Gibt den Inhalt eines Artikels aus. Es muss die ID übergeben werden. Besser nicht auf sich selbst verweisen ;)
 	
 
 #### checkbox
@@ -678,26 +658,6 @@ $yform->setValueField('checkbox', array("checkbox","Checkbox","1"));
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="checkbox"]
-
-	
-
-#### checkbox_sql
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-###### Definition
-	Ein oder mehrere Checkbox-Felder mit Werten, die aus einer SQL-Abfrage stammen.
-	
-###### Beispiel PHP
-```php
-$yform->setValueField('checkbox_sql', array("checkbox_sql","Checkbox SQL","SELECT id, name FROM rex_yf_table WHERE name = paul ORDER BY prio"));
-```
-
-###### Beispiel Pipe
-	checkbox_sql|checkbox_sql|Checkbox SQL|SELECT id, name FROM rex_yf_table WHERE name = paul ORDER BY prio|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="checkbox_sql"]
 
 #### choice
 
@@ -810,8 +770,6 @@ $yform->setValueField('datestamp', array("createdate","Zeitstempel","mysql","0",
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="createdate"]
-
-	
 
 #### datetime
 
@@ -1082,7 +1040,7 @@ In diesem Beispiel kann die Spalte 6 Stellen mit 2 Dezimalstellen speichern. Dah
 
 
 
-#### !!password
+#### password
 
 ###### Beispiel Formbuilder
 	password|name|label|default_value
@@ -1127,76 +1085,6 @@ $yform->setValueField('prio', array("prio","Reihenfolge"));
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="prio"]
-	
-
-
-
-
-#### radio
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-###### Definition
-	Ein Auswahlfeld, um Datensätze in eine bestimmte Reihenfolge zu sortieren.
-	
-###### Beispiel PHP
-```php
-$yform->setValueField('radio', array("radio","Radio","schlecht=-1,ok=0,gut=1","0"));
-```
-
-###### Beispiel Pipe
-	radio|radio|Radio|schlecht=-1,ok=0,gut=1|0|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="radio"]
-
-#### readtable
-liest einen Datensatz und übergibt die ausgelesenen Werte in den E-mail value_pool, die einem E-Mail-Template über Platzhalter werden können.
-
-###### Definition
-	readtable|tablename|feldname|label
-	Ein Auswahlfeld, um Datensätze in eine bestimmte Reihenfolge zu sortieren.
-	
-###### Beispiel Formbuilder
-	text|name|Name
-	readtable|rex_user|name|name
-	action|tpl2email|testtemplate||info@mustermann.de
-
-
-###### Beispiel PHP
-```php
-$yform->setValueField('text', array("name","Name"));
-$yform->setValueField('readtable', array("rex_user","name","name"));
-$yform->setActionField('tpl2email', array("testtemplate","","info@mustermann.de"));
-```
-
-liest aus der Tabelle **rex_user** einen Datensatz 
-
-```SQL
-SELECT * FROM rex_user WHERE name='[eingabe feld name]'
-```
-
-und sendet eine E-Mail mit dem E-Mail-Template "testtemplate" and die E-Mail-Adresse:
-
-
-
-#### radio_sql
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-###### Definition
-	Ein oder mehrere Auswahlfelder als Radio-Buttons.
-	
-###### Beispiel PHP
-```php
-$yform->setValueField('radio_sql', array("radio_sql","Radio SQL","SELECT id, name FROM rex_yf_table WHERE name = paul ORDER BY prio"));
-```
-
-###### Beispiel Pipe
-	radio_sql|radio_sql|Radio SQL|SELECT id, name FROM rex_yf_table WHERE name = paul ORDER BY prio|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="radio_sql"]
 
 #### remembervalues
 
@@ -1215,59 +1103,10 @@ $yform->setValueField('radio_sql', array("radio_sql","Radio SQL","SELECT id, nam
 ###### Beispiel Formbuilder
 	resetbutton|reset|reset|Reset
 
-#### !!uniqueform
-
-###### Definition
-	uniqueform|name|table|Fehlermeldung
-	
-###### Beispiel Formbuilder
-	_
-	
-
 ###### Beispiel PHP
 ```php
 $yform->setValueField('resetbutton', array("reset","reset","Reset"));
 ```
-
-#### select
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-###### Definition
-	Ein Auswahlfeld mit vordefinierten Werten.
-	
-###### Beispiel PHP
-```php
-$yform->setValueField('select', array("select","Select","schlecht=-1,ok=0,gut=1","","0","0"));
-```
-
-###### Beispiel Pipe
-	select|select|Select|schlecht=-1,ok=0,gut=1||0|0|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="select"]
-
-
-#### select_sql 
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-###### Definition
-	Ein Auswahlfeld mit Werten, die aus einer SQL-Abfrage stammen.
-	
-###### Beispiel PHP
-```php
-$yform->setValueField('select_sql', array("select_sql","Select SQL","SELECT id, name FROM rex_yf_table WHERE name = paul ORDER BY prio","","","0","","0"));
-```
-
-###### Beispiel Pipe
-	select_sql|select_sql|Select SQL|SELECT id, name FROM rex_yf_table WHERE name = paul ORDER BY prio|||0||0|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="select_sql"]
-
-	
-	
 	
 #### showvalue
 
@@ -1363,22 +1202,6 @@ $yform->setValueField('time', array("time","Zeit","","00,15,30,45","HH:ii","","s
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="time"]
 
-
-
-	
-	
-#### !!uniqueform
-
-###### Definition
-	uniqueform|name|table|Fehlermeldung
-	
-###### Beispiel Formbuilder
-	_
-	
-###### Beispiel PHP
-```php
-```
-
 #### upload
 
 ###### Definition
@@ -1400,6 +1223,15 @@ $yform->setValueField('upload', array("upload","Upload","",".jpg,.gif,.png,.jpeg
 > **Hinweis für die Nutzung im Frontend**: Damit die Zuordnung von temporärem Dateinamen (Präfix ist ein temporärer Hash, z.B. `9f938fb7d400795e6fa998606a3ce126468133e57d86a48116bf6c4195cc460c_meine_datei.pdf`) zu späterem Dateinamen (mit Präfix ist die ID des Datensatzes, z.B. `121_meine_datei.jpg`) erfolgen kann, müssen die Objekt-Parameter `main_table` und `main_where` gesetzt sein. Die Umbenennung von Temp-Datei zur finalen Datei erfolgt durch eine Post-Action von YForm. Die Post-Action wird bspw. nicht ausgeführt, wenn der Datensatz "an YForm vorbei", z.B. durch die YForm-Action `db_query` erstellt oder bearbeitet wird.
 
 > **Hinweis**: Zusammen mit dem PHP-Feld lassen sich komfortabel [E-Mails mit Anhang versenden](demo_email-attachments.md).
+
+#### uuid
+
+###### Definition
+    erstellt eine eindeutige UUID
+
+###### Beispiel Formbuilder
+	uuid|name|
+
 
 ## Validierung
 	
