@@ -159,18 +159,6 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
 
     $yform->setValueField('html', ['html' => '</div></div>']);
 
-    $rolesArray = rex_sql::factory()->getArray('SELECT id, name FROM ' . rex::getTablePrefix() . 'user_role ORDER BY name');
-    $roles = [];
-    foreach($rolesArray as $role) {
-        $roles[$role['id']] = $role['name'];
-    }
-
-    $yform->setValueField('html', ['html' => '<br /><div class="row"><div class="col-md-6">']);
-    $yform->setValueField('choice', ['name' => 'exclusive_view_roles', 'label' => rex_i18n::msg('yform_manager_table_data_view_roles'), 'choices' => $roles, 'multiple' => true, 'default' => 0]);
-    $yform->setValueField('html', ['html' => '</div><div class="col-md-6">']);
-    $yform->setValueField('choice', ['name' => 'exclusive_edit_roles', 'label' => rex_i18n::msg('yform_manager_table_data_edit_roles'), 'choices' => $roles, 'multiple' => true, 'default' => 0]);
-    $yform->setValueField('html', ['html' => '</div></div>']);
-
     $yform->setValueField('html', ['html' => '</div></div>']);
 
     $form = $yform->getForm();
@@ -381,22 +369,4 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $fragment->setVar('content', $content, false);
     $content = $fragment->parse('core/page/section.php');
     echo $content;
-}
-
-// ********************************************* LISTE OF TABLES TO EDIT FOR NOt ADMINS
-
-if (!rex::getUser()->isAdmin()) {
-    echo '<div class="rex-addon-output">';
-    echo '<h2 class="rex-hl2">' . rex_i18n::msg('yform_table_overview') . '</h2>';
-    echo '<div class="rex-addon-content"><ul>';
-
-    $tables = rex_yform_manager_table::getAll();
-    foreach ($tables as $table) {
-        if ($table->isActive() && !$table->isHidden() && (rex::getUser()->isAdmin() || rex::getUser()->hasPerm($table->getPermKey()))) {
-            echo '<li><a href="index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName() . '">' . $table->getNameLocalized() . '</a></li>';
-        }
-    }
-
-    echo '</ul></div>';
-    echo '</div>';
 }

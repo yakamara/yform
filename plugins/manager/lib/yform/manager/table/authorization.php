@@ -19,7 +19,6 @@ class rex_yform_manager_table_authorization
         self::$tableAuthorizations = [];
 
         foreach (rex_yform_manager_table::getAll() as $table) {
-
             if (self::canEdit($table, $user)) {
                 self::$tableAuthorizations[$table->getTableName()][self::VIEW] = 1;
                 self::$tableAuthorizations[$table->getTableName()][self::EDIT] = 1;
@@ -47,26 +46,11 @@ class rex_yform_manager_table_authorization
             return true;
         }
 
-        $userRoles = [];
-        if ('' != $user->getValue('role')) {
-            $userRoles = explode(',', $user->getValue('role'));
-        }
-
-        if ('' == $table['exclusive_view_roles']) {
-            return false;
-        }
-
-        foreach (explode(',', $table['exclusive_view_roles']) as $roleId) {
-            if (in_array($roleId, $userRoles, true)) {
-                return true;
-            }
-        }
-        return false;
+        return $user->getComplexPerm('yform_manager_table_view')->hasPerm($table->getTableName());
     }
 
     private static function canEdit(rex_yform_manager_table $table, rex_user $user = null): bool
     {
-
         if (!$user) {
             return false;
         }
@@ -75,21 +59,6 @@ class rex_yform_manager_table_authorization
             return true;
         }
 
-        $userRoles = [];
-        if ('' != $user->getValue('role')) {
-            $userRoles = explode(',', $user->getValue('role'));
-        }
-
-        if ('' == $table['exclusive_edit_roles']) {
-            return false;
-        }
-
-        foreach (explode(',', $table['exclusive_edit_roles']) as $roleId) {
-            if (in_array($roleId, $userRoles, true)) {
-                return true;
-            }
-        }
-
-        return false;
+        return $user->getComplexPerm('yform_manager_table_edit')->hasPerm($table->getTableName());
     }
 }

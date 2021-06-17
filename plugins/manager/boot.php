@@ -10,7 +10,8 @@
  */
 
 rex_yform::addTemplatePath(rex_path::plugin('yform', 'manager', 'ytemplates'));
-rex_complex_perm::register('yform_manager_table', 'rex_yform_manager_table_perm');
+rex_complex_perm::register('yform_manager_table_edit', 'rex_yform_manager_table_perm_edit');
+rex_complex_perm::register('yform_manager_table_view', 'rex_yform_manager_table_perm_view');
 
 if (rex::isBackend() && rex::getUser()) {
     rex_view::addJsFile($this->getAssetsUrl('manager.js'));

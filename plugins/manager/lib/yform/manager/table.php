@@ -343,11 +343,6 @@ class rex_yform_manager_table implements ArrayAccess
         return $c;
     }
 
-    public function getPermKey()
-    {
-        return 'yform[table:' . $this->getTableName() . ']';
-    }
-
     public function toArray()
     {
         return $this->values;

@@ -304,3 +304,6 @@ yform_manager_table_data_view_roles = Datenansicht beschränkt auf
 yform_manager_table_data_edit_roles = Datenbearbeitung beschränkt auf
 
 yform_manager_table_nopermission = Keine Berechtigung auf diese Tabelle
+
+yform_manager_tables_edit = Tabellen mit Bearbeitungsrechten
+yform_manager_tables_view = Tabellen mit Recht zur Ansicht
