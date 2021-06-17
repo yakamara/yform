@@ -1,8 +1,11 @@
 Changelog
 =========
 
-Version 3.5.0 – xx.06.2021
+Version 4.0.0 – xx.06.2021
 --------------------------
+
+### deprecated entfernt
+* Validierung mach email entfernt. Bitte mit type und email ersetzen
 
 ### Neu
 * läuft nun auch auf PHP 8
