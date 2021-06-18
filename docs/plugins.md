@@ -299,7 +299,15 @@ In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung
 
 ##### Datensätze abrufen
 
-[fehlt noch]
+RequestType: ````GET````
+
+URL: ```https://url.localhost/rest/v1/users/[id]```
+
+Header: 
+```
+Content-Type: application/x-www-form-urlencoded
+token: [token]
+```
 
 
 ##### Filter
