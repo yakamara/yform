@@ -290,18 +290,17 @@ Beispiel
 
 * **\rex_ycom_user::table()**
 
-`get`
-
-`post`
-
-`delete`
-
 ### Nutzung eines Endpoints
 
 URL (z. B. https://domain/rest/v1/user)
 In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung gibt. Um zu sehen wie die Aufrufe funktionieren bitte hier https://jsonapi.org/format/ nachschlagen. 
 
 #### GET
+
+##### Datensätze abrufen
+
+[fehlt noch]
+
 
 ##### Filter
 
@@ -349,14 +348,64 @@ class eigeneyormklasse extends rex_yform_manager_dataset
 
 #### POST
 
-* Anlegen von Datensätzen
-* Update von Datensätzen
-* Validierung
+###### Anlegen eines Datensatzes
+
+Hier ein Beispiel für das Anlegen eines Datensatzes:
+
+RequestType: ````POST````
+
+URL: ```https://url.localhost/rest/v1/users/```
+
+Header: 
+```
+Content-Type: application/x-www-form-urlencoded
+token: [token]
+```
+
+Body: 
+```
+{
+    "data": {
+        "type": "rex_ycom_user",
+        "attributes": {
+            "login": "jannie",
+            "email": "jan.kristinus@yakamara.de"
+        },
+        "relationships": {
+            "ycom_groups": {
+                "data": [
+                    { "type": "tags", "id": "2" },
+                    { "type": "tags", "id": "3" }
+                ]
+            }
+        }
+    }
+}
+```
+
+###### Aktualisieren von Datensätzen
+
+[fehlt noch]
 
 #### DELETE
 
-* Filter
-* Nach ID
+###### Löschen mit Filtern
+
+[fehlt noch]
+
+###### Löschen mit einer ID
+
+Hier ein Beispiel für das Löschen eines Datensatzes mit einer ID:
+
+RequestType: ````DELETE````
+
+URL: ```https://url.localhost/rest/v1/users/[id]```
+
+Header:
+```
+Content-Type: application/x-www-form-urlencoded
+token: [token]
+```
 
 ### Authentifizierung
 
