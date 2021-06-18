@@ -31,8 +31,6 @@ function writeYFormDatasetlist(id){
     writeREX(id, 'YFORM_DATASETLIST_FIELD_', 'YFORM_DATASETLIST_SELECT_');
 }
 
-rex_retain_popup_event_handlers("rex:YForm_selectData");
-
 function setYFormDataset(id, data_id, data_name, multiple){
 
     var event = opener.jQuery.Event("rex:YForm_selectData");
