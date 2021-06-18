@@ -87,6 +87,7 @@ if (1 == rex_request('send', 'int', 0)) {
                     rewind($fp);
                 }
 
+
                 $idColumn = null;
                 while (false !== ($line_array = fgetcsv($fp, 30384, $div))) {
                     if (0 == count($fieldarray)) {
@@ -202,12 +203,12 @@ if (1 == rex_request('send', 'int', 0)) {
                             $messages = array_unique($messages);
                             foreach ($messages as $key => $msg) {
                                 if ('' == $msg) {
-                                    $msg = rex_i18n::msg('yform_manager_import_error_messagemissing');
+                                    $msg = rex_i18n::msg('yform_values_message_is_missing', '', $key);
                                 } else {
                                     $msg = rex_i18n::translate($msg);
                                 }
+                                $messages[$key] = $msg;
                             }
-
                             ++$dcounter;
                             $dataId = 'ID: '.$id;
                             echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, '<br />* ' .implode('<br />* ', $messages)));
@@ -317,7 +318,8 @@ if ($show_importform) {
 
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_file') . '</label>';
-    $n['field'] = '<input class="form-control" type="file" name="file_new" />';
+    $n['field'] = '<input class="form-control" type="file" name="file_new" />'
+                .rex_csrf_token::factory($_csrf_key)->getHiddenField();
     $formElements[] = $n;
 
     $fragment = new rex_fragment();
