@@ -428,7 +428,27 @@ Response:
 
 ###### Löschen mit Filtern
 
-[fehlt noch]
+RequestType: ````DELETE````
+
+URL: ```https://url.localhost/rest/v1/users/?filter[login]=jannie```
+
+Header:
+```
+Content-Type: application/x-www-form-urlencoded
+token: [token]
+```
+
+Response:
+```
+{
+    "all": 1,
+    "deleted": 1,
+    "failed": 0,
+    "dataset": [{
+        "id": "[id]"
+    }]
+}
+```
 
 ###### Löschen mit einer ID
 
