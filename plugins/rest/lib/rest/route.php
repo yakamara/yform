@@ -367,13 +367,13 @@ class rex_yform_rest_route
 
                 if ($queryClone === $query && isset($get['filter'])) {
                     rex_yform_rest::sendError($status, 'no-available-filter-set');
-                } elseif ($queryClone !== $query) {
+                } elseif ($queryClone->getQuery() !== $query->getQuery()) {
                     // filter set -> true
                     $status = 200;
                 } elseif (0 == count($paths)) {
                     rex_yform_rest::sendError($status, 'no-id-set');
                 } else {
-                    $id = $paths[0];
+                    $id = current($paths);
                     $query->where('id', $id);
                     $status = 200;
                 }
