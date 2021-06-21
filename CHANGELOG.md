@@ -1,7 +1,14 @@
 Changelog
 =========
 
-Version 3.4.1 – 03.08.2019
+Version 3.4.2 – 21.06.2021
+--------------------------
+
+### Korrekturen, Anpassungen, Bugs
+
+* Media-Widgets: Kompatibilität zu REDAXO 5.12.1
+
+Version 3.4.1 – 03.08.2020
 --------------------------
 
 ### Korrekturen, Anpassungen, Bugs
