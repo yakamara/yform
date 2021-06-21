@@ -75,29 +75,12 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
 
     public static function getSearchField($params)
     {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel()]);
+        rex_yform_value_text::getSearchField($params);
     }
 
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
-        $value = $params['value'];
-        $field = $params['field']->getName();
-
-        if ('(empty)' == $value) {
-            return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        }
-        if ('!(empty)' == $value) {
-            return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
-        }
-
-        $pos = strpos($value, '*');
-        if (false !== $pos) {
-            $value = str_replace('%', '\%', $value);
-            $value = str_replace('*', '%', $value);
-            return $sql->escapeIdentifier($field) . ' LIKE ' . $sql->escape($value);
-        }
-        return $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value);
+        return rex_yform_value_text::getSearchFilter($params);
     }
 
     public static function isMediaInUse(rex_extension_point $ep)

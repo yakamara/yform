@@ -71,26 +71,37 @@ class rex_yform_value_integer extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
-
         $value = $params['value'];
-        $field = $sql->escapeIdentifier($params['field']->getName());
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
+        $field = $params['field']->getName();
 
         if ('(empty)' == $value) {
-            return ' (' . $field . ' = "" or ' . $field . ' IS NULL) ';
+            return $query->whereNested(function (rex_yform_manager_query $query) use ($field) {
+                $query
+                    ->where($field, '')
+                    ->where($field, NULL)
+                ;
+            }, 'OR');
         }
         if ('!(empty)' == $value) {
-            return ' (' . $field . ' <> "" and ' . $field . ' IS NOT NULL) ';
+            return $query->whereNested(function (rex_yform_manager_query $query) use ($field) {
+                $query
+                    ->where($field, '', '<>')
+                    ->where($field, NULL, '<>')
+                ;
+            }, 'OR');
         }
 
         if (preg_match('/^\s*(-?\d+)\s*\.\.\s*(-?\d+)\s*$/', $value, $match)) {
             $match[1] = (int) $match[1];
             $match[2] = (int) $match[2];
-            return ' ' . $field . ' BETWEEN ' . $match[1] . ' AND ' . $match[2];
+            return $query->whereBetween($field, $match[1], $match[2]);
         }
         preg_match('/^\s*(<|<=|>|>=|<>|!=)?\s*(.*)$/', $value, $match);
         $comparator = $match[1] ?: '=';
         $value = (int) $match[2];
-        return ' ' . $field . ' ' . $comparator . ' ' . $value;
+
+        return $query->where($field, $value, $comparator);
     }
 }

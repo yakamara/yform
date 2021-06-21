@@ -218,26 +218,14 @@ class rex_yform_value_date extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = trim($params['value']);
-        $format = self::date_getFormat($params['field']->getElement('format'));
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
         $field = $params['field']->getName();
-        $field = rex_sql::factory()->escapeIdentifier($field);
-        return self::getDateFilterWhere($value, $field, $format);
-    }
 
-    /**
-     * allow external call in not-searchform-context.
-     *
-     * @param string $value  search criteria
-     * @param string $field  db-field
-     * @param string $format date-format as defined in self::VALUE_DATE_FORMATS
-     *
-     * @return string WHERE-clause
-     */
-    public static function getDateFilterWhere($value, $field, $format)
-    {
-        // kein Suchtext => kein Filter
+        $format = self::date_getFormat($params['field']->getElement('format'));
+
         if ('' == $value) {
-            return '';
+            return $query;
         }
 
         // Auswertung über Pattern: <|<=|=|>=|> $value
@@ -256,7 +244,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 if (null != $month) {
                     // Abfrage auf ein konkretes Datum YYYY-MM-DD, etc.
                     if (null != $day) {
-                        return '( ' . self::createDbDateComparison($field, $comparator, $year, $month, $day) . ' )';
+                        return $query->whereRaw('('.self::createDbDateComparison($field, $comparator, $year, $month, $day).')');
                     }
 
                     // Abfrage auf YYYY-MM (=)
@@ -264,7 +252,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                     if ('=' == $comparator) {
                         $from = self::createDbDateComparison($field, '>=', $year, $month, '00');
                         $to = self::createDbDateComparison($field, '<=', $year, $month, '99');
-                        return "( $from AND $to )";
+                        return $query->whereRaw('(' . $from . ' AND ' . $to . ')');
                     }
 
                     // Abfrage auf YYYY-MM (alle übrigen)
@@ -273,15 +261,15 @@ class rex_yform_value_date extends rex_yform_value_abstract
                     // >=2020-02  -->  > 2020-02-00
                     // >2020-02   -->  > 2020-02-99
                     $day = ('<' == $comparator || '>=' == $comparator) ? '00' : '99';
-                    return '( ' . self::createDbDateComparison($field, $comparator, $year, $month) . ' )';
+                    return $query->whereRaw('('.self::createDbDateComparison($field, $comparator, $year, $month).')');
                 }
 
                 // Abfrage auf YYYY
-                return "( YEAR($field) $comparator $year )";
+                return $query->whereRaw('( YEAR('.$field.') '.$comparator.' '.$year.' )');
             }
 
             if (null != $month) {
-                return "( MONTH($field) $comparator $month )";
+                return $query->whereRaw('( MONTH('.$field.') '.$comparator.' '.$month.' )');
             }
         }
 
@@ -304,21 +292,21 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $day_to = $match['d2'] ?: '99';
 
             if ('YYYY' == $format) {
-                return "( YEAR($field) >= $year_from AND YEAR($field) <= $year_to )";
+                return $query->whereRaw('( YEAR('.$field.') >= '.$year_from.' AND YEAR('.$field.') <= '.$year_to.' )');
             }
 
             if ('MM' == $format) {
-                return "( MONTH($field) >= $month_from AND MONTH($field) <= $month_to )";
+                return $query->whereRaw('( MONTH('.$field.') >= '.$month_from.' AND MONTH('.$field.') <= '.$month_to.' )');
             }
 
             $from = self::createDbDateComparison($field, '>=', $year_from, $month_from, $day_from);
             $to = self::createDbDateComparison($field, '<=', $year_to, $month_to, $day_to);
-            return "( $from AND $to )";
+            return $query->whereRaw('( '.$from.' AND '.$to.' )');
         }
 
         // ungültige bzw. nicht verwertbare Eingabe ( kein valides SQL möglich )
         // -> interpretiert als: "kein Satz entspricht dem Kriterium"
-        return '( false )';
+        return $query->whereRaw('( false )');
     }
 
     /**

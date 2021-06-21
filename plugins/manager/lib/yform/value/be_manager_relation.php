@@ -773,14 +773,17 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = $params['value'];
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
+        $field = $params['field']->getName();
 
         if (null !== $value && !is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
-            return null;
+            return $query;
         }
         $value = (string) $value;
 
         if ('' == $value) {
-            return null;
+            return $query;
         }
 
         /** @var rex_yform_manager_field $field */
@@ -788,21 +791,21 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $sql = rex_sql::factory();
 
         if (!$field->getElement('relation_table')) {
-            return 'FIND_IN_SET(' . $sql->escape($value) . ', ' . $sql->escapeIdentifier($field) . ')';
+            return $query->whereListContains($field, $value);
         }
 
         $relationTableFields = self::getRelationTableFieldsForTables($field->getElement('table_name'), $field->getElement('relation_table'), $field->getElement('table'));
         if (!$relationTableFields['source'] || !$relationTableFields['target']) {
-            return null;
+            return $query;
         }
 
-        return sprintf(
+        return $query->whereRaw('('.sprintf(
             'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
             $sql->escapeIdentifier($field->getElement('relation_table')),
             $sql->escapeIdentifier($relationTableFields['source']),
             $sql->escapeIdentifier($relationTableFields['target']),
             (int) $value
-        );
+        ).')');
     }
 
     private static function getRelationTableFieldsForTables($mainTable, $relationTable, $targetTable)

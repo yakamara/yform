@@ -24,10 +24,8 @@ class rex_yform_value_number extends rex_yform_value_abstract
         if ($this->needsOutput() && $this->isViewable()) {
             if (!$this->isEditable()) {
                 $this->params['form_output'][$this->getId()] = $this->parse(['value.number-view.tpl.php', 'value.integer-view.tpl.php', 'value.view.tpl.php'], ['prepend' => $this->getElement('unit')]);
-
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
-
             }
         }
 
@@ -78,39 +76,18 @@ class rex_yform_value_number extends rex_yform_value_abstract
         ];
     }
 
-    public static function getListValue($params)
-    {
-        return (!empty($params['params']['field']['unit']) && '' != $params['subject']) ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
-    }
-
     public static function getSearchField($params)
     {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_search_integer_notice'), 'prepend' => $params['field']->getElement('unit')]);
+        rex_yform_value_integer::getSearchField($params);
     }
 
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
+        return rex_yform_value_integer::getSearchFilter($params);
+    }
 
-        $value = $params['value'];
-        $field = $sql->escapeIdentifier($params['field']->getName());
-
-        if ('(empty)' == $value) {
-            return ' (' . $field . ' = "" or ' . $field . ' IS NULL) ';
-        }
-        if ('!(empty)' == $value) {
-            return ' (' . $field . ' <> "" and ' . $field . ' IS NOT NULL) ';
-        }
-
-        if (preg_match('/^\s*(-?\d+)\s*\.\.\s*(-?\d+)\s*$/', $value, $match)) {
-            $match[1] = (int) $match[1];
-            $match[2] = (int) $match[2];
-            return ' ' . $field . ' BETWEEN ' . $match[1] . ' AND ' . $match[2];
-        }
-        preg_match('/^\s*(<|<=|>|>=|<>|!=)?\s*(.*)$/', $value, $match);
-        $comparator = $match[1] ?: '=';
-        $value = $match[2];
-        $value = $sql->escape($value);
-        return ' ' . $field . ' ' . $comparator . ' ' . $value;
+    public static function getListValue($params)
+    {
+        return rex_yform_value_integer::getListValue($params);
     }
 }

@@ -129,7 +129,7 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
         $return = [];
 
         foreach (explode(',', $params['value']) as $id) {
-            if ($cat = rex_media_category::get($id, (int) $params['params']['field']['clang'])) {
+            if ($cat = rex_media_category::get($id)) { // , (int) $params['params']['field']['clang']
                 $return[] = $cat->getName();
             }
         }

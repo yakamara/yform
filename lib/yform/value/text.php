@@ -24,7 +24,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
             if (!$this->isEditable()) {
                 $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
                 $attributes['readonly'] = 'readonly';
-                $this->setElement('attributes', json_encode($attributes) );
+                $this->setElement('attributes', json_encode($attributes));
                 $this->params['form_output'][$this->getId()] = $this->parse(['value.text-view.tpl.php', 'value.view.tpl.php', 'value.text.tpl.php'], $templateParams);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php', $templateParams);
@@ -76,24 +76,35 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
-        $value = $params['value'];
+        $value = trim($params['value']);
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
         $field = $params['field']->getName();
 
         if ('(empty)' == $value) {
-            return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
+            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
+                $query
+                    ->where($field, '')
+                    ->where($field, null)
+                ;
+            }, 'OR');
         }
         if ('!(empty)' == $value) {
-            return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
+            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
+                $query
+                    ->where($field, '', '<>')
+                    ->where($field, null, '<>')
+                ;
+            }, 'OR');
         }
 
         $pos = strpos($value, '*');
         if (false !== $pos) {
             $value = str_replace('%', '\%', $value);
             $value = str_replace('*', '%', $value);
-            return $sql->escapeIdentifier($field) . ' LIKE ' . $sql->escape($value);
+            return $query->where($field, $value, 'LIKE');
         }
-        return $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value);
+        return $query->where($field, $value);
     }
 
     public static function getListValue($params)

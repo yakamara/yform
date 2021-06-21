@@ -332,6 +332,16 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         return '';
     }
 
+    public static function getSearchField($params)
+    {
+        rex_yform_value_text::getSearchField($params);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        return rex_yform_value_text::getSearchFilter($params);
+    }
+
     public static function getListValue($params)
     {
         $value = $params['subject'];
@@ -350,33 +360,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
 
         return $return;
-    }
-
-    public static function getSearchField($params)
-    {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel()]);
-    }
-
-    public static function getSearchFilter($params)
-    {
-        $sql = rex_sql::factory();
-        $value = $params['value'];
-        $field = $params['field']->getName();
-
-        if ('(empty)' == $value) {
-            return ' (' . $sql->escapeIdentifier($field) . ' = "" or ' . $sql->escapeIdentifier($field) . ' IS NULL) ';
-        }
-        if ('!(empty)' == $value) {
-            return ' (' . $sql->escapeIdentifier($field) . ' <> "" and ' . $sql->escapeIdentifier($field) . ' IS NOT NULL) ';
-        }
-
-        $pos = strpos($value, '*');
-        if (false !== $pos) {
-            $value = str_replace('%', '\%', $value);
-            $value = str_replace('*', '%', $value);
-            return $sql->escapeIdentifier($field) . ' LIKE ' . $sql->escape($value);
-        }
-        return $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value);
     }
 
     public function getSessionKey()

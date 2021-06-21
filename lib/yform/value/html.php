@@ -49,8 +49,4 @@ class rex_yform_value_html extends rex_yform_value_abstract
         ];
     }
 
-    public static function getSearchField($params)
-    {
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel()]);
-    }
 }

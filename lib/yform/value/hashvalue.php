@@ -55,4 +55,19 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
             'multi_edit' => false,
         ];
     }
+
+    public static function getSearchField($params)
+    {
+        rex_yform_value_text::getSearchField($params);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        return rex_yform_value_text::getSearchFilter($params);
+    }
+
+    public static function getListValue($params)
+    {
+        return rex_yform_value_text::getListValue($params);
+    }
 }

@@ -86,11 +86,11 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = $params['value'];
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
         $field = $params['field']->getName();
 
-        $sql = rex_sql::factory();
-
-        return ' ' . $sql->escapeIdentifier($field) . ' =  ' . $sql->escape($value) . '';
+        return $query->where($field, $value);
     }
 
     public static function getListValue($params)

@@ -12,11 +12,16 @@ Version 4.0.0 – xx.06.2021
 
 ### Neu
 * läuft nun auch auf PHP 8
-* Neue Rechtestruktur. Es gibt nun Ansichtsrechte und/oder Editier für Rollen
+* Neue Rechtestruktur. Es gibt nun Ansichtsrechte und/oder Editierrechte für Rollen
 * Viewansicht ergänzt. Automatische Viewansicht bei Relationstabellen.
 * UUID Feld ergönzt
 * Migration von Tabellen ohne Änderungen der Tabell möglich
-* ecaptcha v3- Feld ergänzt
+* recaptcha v3 - Feld ergänzt
+* Manager: Umbau der Suchen, Exporte etc. von eigenen SQL Einbindungen zu Yorm. Bedeutet auch dass die EPs: 
+* rex_yform_list ergänzt. Ersetzt rex_list und YORM Queries entgegennehmen
+* EP: YFORM_DATA_LIST_QUERY statt YFORM_DATA_LIST_SQL (nun entfernt)
+* EP: YFORM_LIST_GET statt REX_LIST_GET (aus der rex list)
+* YFORM_DATA_TABLE_EXPORT nun mit anderen Parametern ($query als Subject)
 
 ### Korrekturen, Anpassungen, Bugs
 * Export Tabellen und Felder optimiert. Danke @christophboecker
@@ -41,7 +46,6 @@ Version 4.0.0 – xx.06.2021
 * number-Feld: Attributes ergänzt
 * RESTAPI: Eigene Header nun möglich
 * choice-Feld: Attributes ergänzt
-
 
 Danke Alexander Walther, Christoph Boecker, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
 

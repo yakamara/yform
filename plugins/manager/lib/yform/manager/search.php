@@ -98,13 +98,11 @@ class rex_yform_manager_search
         return $return;
     }
 
-    public function getQueryFilterArray()
+    function getQueryFilter($query)
     {
         if (!$this->table->isSearchable()) {
-            return [];
+            return $query;
         }
-
-        $queryFilter = [];
 
         $yform = $this->getYForm();
         $yform->getForm();
@@ -123,19 +121,20 @@ class rex_yform_manager_search
         foreach ($this->fields as $field) {
             if (array_key_exists($field->getName(), $vars) && 'value' == $field->getType() && $field->isSearchable()) {
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
-                    $qf = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
+                    $query = call_user_func('rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
                         [
                             'field' => $field,
                             'fields' => $this->fields,
                             'value' => $vars[$field->getName()],
+                            'query' => $query,
                         ]
                     );
-                    if ('' != $qf) {
-                        $queryFilter[] = $qf;
+                    if ('rex_yform_manager_query' != get_class($query)) {
+                        throw new Exception('getSearchFilter in rex_yform_value_' . $field->getTypeName() . ' does not return a rex_yform_manager_query');
                     }
                 }
             }
         }
-        return $queryFilter;
+        return $query;
     }
 }

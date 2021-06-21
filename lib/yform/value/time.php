@@ -155,4 +155,14 @@ class rex_yform_value_time extends rex_yform_value_abstract
     {
         return '<nobr>'.self::time_getFormattedTime($params['subject'], self::time_getFormat($params['params']['field']['format'])).'</nobr>';
     }
+
+    public static function getSearchField($params)
+    {
+        rex_yform_value_text::getSearchField($params);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        return rex_yform_value_text::getSearchFilter($params);
+    }
 }

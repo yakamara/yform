@@ -236,38 +236,34 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
-
+        $value = $params['value'];
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
         $field = $params['field']->getName();
 
         $self = new self();
-        $values = $self->getArrayFromString($params['value']);
-
+        $values = $self->getArrayFromString($value);
         $multiple = 1 == $params['field']->getElement('multiple');
 
-        $where = [];
         foreach ($values as $value) {
             switch ($value) {
                 case '(empty)':
-                    $where[] = ' '.$sql->escapeIdentifier($field).' = ""';
+                    $query->where($field, '');
                     break;
                 case '!(empty)':
-                    $where[] = ' '.$sql->escapeIdentifier($field).' != ""';
+                    $query->where($field, '', '<>');
                     break;
                 default:
                     if ($multiple) {
-                        $where[] = ' ( FIND_IN_SET( '.$sql->escape($value).', '.$sql->escapeIdentifier($field).') )';
+                        $query->whereListContains($field, $value);
                     } else {
-                        $where[] = ' ( '.$sql->escape($value).' = '.$sql->escapeIdentifier($field).' )';
+                        $query->where($field, $value);
                     }
-
                     break;
             }
         }
 
-        if (count($where) > 0) {
-            return ' ( '.implode(' or ', $where).' )';
-        }
+        return $query;
     }
 
     private static function createChoiceList($elements)
