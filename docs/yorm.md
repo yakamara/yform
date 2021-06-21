@@ -601,3 +601,67 @@ Model-Class in boot.php z. B. im project Addon registrieren
 <?php
 rex_yform_manager_dataset::setModelClass('rex_my_table', rex_data_mydata::class);
 ```
+
+## Problemlösung bei AND und OR innheralb eines Queries
+
+Beispiel: Wir wollen WHERE foo=1 OR bar=2 haben.
+
+**Möglichkeit 1:**
+
+Den Where-Operator generell auf OR statt AND setzen. Dann werden aber alle where() per OR verknüpft.
+
+```
+$query
+  ->setWhereOperator('OR')
+  ->where('foo', 1)
+  ->where('bar', 2)
+;
+```
+
+Nachteil: Nun hat man die gleiche Schwierigkeit mit AND, die man vorher mit OR hatte. setWhereOperator bezieht sich immer auf alle(!) where()-Aufrufe, auch auf die vorherigen.
+
+**Möglichkeit 2:**
+
+Mit `whereRaw` arbeiten.
+
+```
+$query->whereRaw('(foo = :foo OR bar = :bar)', ['foo' => 1, 'bar' => 2]);
+```
+
+**Möglichkeit 3:**
+
+Mit whereNested in der Array-Notation arbeiten:
+
+```
+$query->whereNested(['foo' => 1, 'bar' => 2], 'OR');
+```
+
+Nachteil: Man kann keine anderen Operatoren als = verwenden.
+
+**Möglichkeit 4:**
+
+Mit `whereNested` in der Callback-Notation arbeiten:
+
+```
+$query->whereNested(function (rex_yform_manager_query $query) {
+  $query
+    ->where('foo', 1)
+    ->where('bar', 2)
+  ;
+}, 'OR');
+```
+
+Nachteil: Recht umständlich zu schreiben.
+
+Vorteil: Flexibel, und man kann die unterschiedlichen Methoden whereNull, whereBetween etc. in dem Sub-Query-Objekt nutzen.
+
+---
+
+in meinem text oben fehlt übrigens noch eine variante.
+wenn foo und bar gleich sind, also `"foo = 1 OR foo = 2"`, dann sollte man das nutzen:
+
+```
+->where('foo', [1, 2])
+```
+
+(daraus wird dann foo IN (1, 2))

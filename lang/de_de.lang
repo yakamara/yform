@@ -271,5 +271,8 @@ yform_docs_table_manager = Manager
 yform_docs_formbuilder = Formbuilder
 yform_docs_demos = Demos
 yform_docs_yorm = Yorm
-yform_docs_plugins = PlugIns
+yform_docs_email = PlugIn: E-Mail Templates
+yform_docs_rest = PlugIn: REST-API
+yform_docs_tools = PlugIn: Tools
+
 
