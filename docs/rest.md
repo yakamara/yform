@@ -113,7 +113,38 @@ In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung
 
 #### Datensätze abrufen
 
-[fehlt noch]
+RequestType: ````GET````
+
+URL: ```https://url.localhost/rest/v1/users/[id]```
+
+Header:
+```
+Content-Type: application/x-www-form-urlencoded
+token: [token]
+```
+
+Response:
+```
+{
+    "id": "[id]",
+    "type": "rex_ycom_user",
+     "attributes": {
+            "login": "jannie",
+            "email": "jan.kristinus@yakamara.de"
+        },
+        "relationships": {
+            "ycom_groups": {
+                "data": [
+                    { "type": "tags", "id": "2" },
+                    { "type": "tags", "id": "3" }
+                ]
+            }
+        },
+    "links": {
+        "self": "https:\/\/url.localhost\/rest\/v1\/users\/[id]"
+    }
+}
+```
 
 
 #### Filter
@@ -173,7 +204,27 @@ Body:
 
 ##### Löschen mit Filtern
 
-[fehlt noch]
+RequestType: ````DELETE````
+
+URL: ```https://url.localhost/rest/v1/users/?filter[login]=jannie```
+
+Header:
+```
+Content-Type: application/x-www-form-urlencoded
+token: [token]
+```
+
+Response:
+```
+{
+    "all": 1,
+    "deleted": 1,
+    "failed": 0,
+    "dataset": [{
+        "id": "[id]"
+    }]
+}
+```
 
 ##### Löschen mit einer ID
 
@@ -182,6 +233,7 @@ Hier ein Beispiel für das Löschen eines Datensatzes mit einer ID:
 RequestType: ````DELETE````
 
 URL: ```https://url.localhost/rest/v1/users/[id]```
+oder ```https://url.localhost/rest/v1/users/?filter[id]=[id]```
 
 Header:
 ```
@@ -189,6 +241,26 @@ Content-Type: application/x-www-form-urlencoded
 token: [token]
 ```
 
+Response:
+```
+{
+    "all": 1,
+    "deleted": 1,
+    "failed": 0,
+    "dataset": [{
+        "id": "[id]"
+    }]
+}
+```
+
+Response ohne Treffer:
+```
+{
+    "all": 0,
+    "deleted": 0,
+    "failed": 0
+}
+```
 ## Authentifizierung
 
 ### Standardauthentifizierung
