@@ -203,15 +203,15 @@ $(document).on('rex:ready', function (event, container) {
     });
 
     var regexpMedia = [
-      new RegExp("(openREXMedia\\(?\\d+)", 'g'),
-      new RegExp("(addREXMedia\\(?\\d+)", 'g'),
-      new RegExp("(deleteREXMedia\\(?\\d+)", 'g'),
-      new RegExp("(viewREXMedia\\(?\\d+)", 'g'),
-      new RegExp("(moveREXMedialist\\(?\\d+)", 'g'),
-      new RegExp("(openREXMedialist\\(?\\d+)", 'g'),
-      new RegExp("(addREXMedialist\\(?\\d+)", 'g'),
-      new RegExp("(deleteREXMedialist\\(?\\d+)", 'g'),
-      new RegExp("(viewREXMedialist\\(?\\d+)", 'g'),
+      new RegExp("(openREXMedia\\('?\\d+)", 'g'),
+      new RegExp("(addREXMedia\\('?\\d+)", 'g'),
+      new RegExp("(deleteREXMedia\\('?\\d+)", 'g'),
+      new RegExp("(viewREXMedia\\('?\\d+)", 'g'),
+      new RegExp("(moveREXMedialist\\('?\\d+)", 'g'),
+      new RegExp("(openREXMedialist\\('?\\d+)", 'g'),
+      new RegExp("(addREXMedialist\\('?\\d+)", 'g'),
+      new RegExp("(deleteREXMedialist\\('?\\d+)", 'g'),
+      new RegExp("(viewREXMedialist\\('?\\d+)", 'g'),
     ];
 
     $(this)
