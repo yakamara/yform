@@ -439,9 +439,6 @@ class rex_yform_rest_route
         }
 
         $availableFields = $table->getValueFields();
-        if (method_exists($class, 'getAdditionalAPIFields')) {
-            $availableFields = array_merge($class::getAdditionalAPIFields(), $availableFields);
-        }
 
         foreach ($availableFields as $key => $availableField) {
             if ('none' != $availableField->getDatabaseFieldType()) {
