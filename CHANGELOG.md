@@ -6,9 +6,12 @@ Version 4.0.0 – xx.06.2021
 
 ### deprecated entfernt
 * Validierung nach email entfernt. Bitte mit type und email ersetzen
-* Felder captcha, captcha_calc entfernt, bitte stattdessen das addon yform_spam_protection verwenden
-* Feld float entfernt, Bitte stattdessen das number Feld verwenden
-* Felder checkbox_sql, radio, radio_sql, select_sql, select entfernt. Bitte stattdessen das choice Feld verwenden
+* Felder captcha, captcha_calc,recaptcha(_v3) sind entfernt worden und werden auch bei der Installation direkt aus den Datenbanken entfernt, bitte stattdessen das addon yform_spam_protection verwenden
+* Feld float entfernt, Bitte stattdessen das number Feld verwenden. Im Table-Manager wird es bei installation/Update automatisch zu number umgewandelt
+* Felder checkbox_sql, radio, radio_sql, select_sql, select entfernt. Die Felder werden im Table-Manager bei Installation/Update zu choice umgewandelt. Bitte stattdessen das choice Feld verwenden
+* Feld password entfernt. Wird automatisch mit text ersetzt und sollte mit ycom und ycom_password ersetzt werden
+* Feld generate_password entfernt. Bitte stattdessen generate_key verwenden.
+* classic ytemplates entfernt, da diese nicht und nie vollständig waren und fehler produzierten. wurde wohl auch nie genutzt
 
 ### Neu
 * läuft nun auch auf PHP 8
