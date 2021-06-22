@@ -91,6 +91,118 @@ if ($addon->isInstalled() && rex_version::compare($addon->getVersion(), '3.6', '
             rex_sql::factory()->setDebug()->setQuery('UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?', [$perms, $role['id']]);
         }
     }
+
+    // alte felder entfernen
+    foreach (rex_sql::factory()->getArray('select * from `' . rex::getTable('yform_field') . '`') as $field) {
+        if ('value' == $field['type_id']) {
+            switch ($field['type_name']) {
+                case 'captcha':
+                case 'captcha_calc':
+                case 'recaptcha':
+                case 'recaptcha_v3':
+                    // remove this fields
+                    rex_sql::factory()->setQuery('delete from `' . rex::getTable('yform_field') . '` where id = :id', ['id' => $field['id']]);
+                    break;
+
+                case 'float':
+                    // change to number
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "number", db_type = "", default = ""
+                        where id = :id', ['id' => $field['id']]);
+                    break;
+
+                case 'select':
+                    // change to choice
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "choice",
+                        db_type = "text",
+                        expanded = 0,
+                        choices = :choices,
+                        choice_attributes = :choice_attributes
+                        where id = :id',
+                        [
+                            'id' => $field['id'],
+                            'choices' => $field['options'],
+                            'choice_attributes' => $field['attributes'],
+                        ]);
+                    break;
+
+                case 'radio':
+                    // change to choice
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "choice",
+                        db_type = "text",
+                        expanded = 1,
+                        multiple = 0,
+                        choices = :choices,
+                        choice_attributes = :choice_attributes
+                        where id = :id',
+                        [
+                            'id' => $field['id'],
+                            'choices' => $field['options'],
+                            'choice_attributes' => $field['attributes'],
+                        ]);
+                    break;
+
+                case 'checkbox_sql':
+                    // change to choice
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "choice",
+                        db_type = "text",
+                        expanded = 1,
+                        multiple = 1,
+                        choices = :choices
+                        where id = :id',
+                        [
+                            'id' => $field['id'],
+                            'choices' => $field['query'],
+                        ]);
+                    break;
+
+                case 'radio_sql':
+                    // change to choice
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "choice",
+                        db_type = "text",
+                        expanded = 1,
+                        multiple = 0,
+                        choices = :choices,
+                        choice_attributes = :choice_attributes
+                        where id = :id',
+                        [
+                            'id' => $field['id'],
+                            'choices' => $field['query'],
+                            'choice_attributes' => $field['attributes'],
+                        ]);
+                    break;
+
+                case 'select_sql':
+                    // change to choice
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "choice",
+                        db_type = "text",
+                        expanded = 0,
+                        choices = :choices,
+                        choice_attributes = :choice_attributes
+                        where id = :id',
+                        [
+                            'id' => $field['id'],
+                            'choices' => $field['query'],
+                            'choice_attributes' => $field['attributes'],
+                        ]);
+                    break;
+                case 'password':
+                    // change to text
+                    rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
+                        type_name = "text",
+                        where id = :id',
+                        [
+                            'id' => $field['id'],
+                        ]);
+                    break;
+            }
+        }
+    }
 }
 
 if (class_exists('rex_yform_manager_table')) {
