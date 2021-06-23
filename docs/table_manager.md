@@ -43,6 +43,24 @@ Daten im Table Manager werden in der SQL-Datenbank abgelegt, die bei der Redaxo-
 
 > Tipp: Um z. B. jede News oder jedes Produkt statt via GET-Parameter über eine eigene URL aufzurufen, obwohl kein eigener Artikel existiert, kann das [URL-Addon von Thomas Blum](https://github.com/tbaddade/redaxo_url) verwendet werden.
 
+### Widget Ausgabe im Backend
+
+Mit folgenden Widgets kann man eine Auswahl für den Redakteur im Backend (z.B. in einem Modul) zur Verfügung stellen:
+
+Modul Eingabe:
+
+```
+REX_YFORM_TABLE_DATA[id=1 table="tablename"]
+REX_YFORM_TABLE_DATA[id=1 table="tablename" widget=1]
+REX_YFORM_TABLE_DATA[id=1 table="tablename" field=name widget=1]
+REX_YFORM_TABLE_DATA[id=1 table="tablename" field=name widget=1 multiple=1]
+ ```
+ Modul Ausgabe:
+ 
+ ```
+REX_YFORM_TABLE_DATA[1]
+ ```
+Als Werte werden die IDs der Datensätze ausgegeben. Diese können dann beliebig weiter verarbeitet werden.
 
 ### Backups der Table Manager-Tabellen
 
