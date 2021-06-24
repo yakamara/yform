@@ -12,6 +12,15 @@ if (!array_key_exists($currenMDFile, $mdFiles)) {
 
 $page = \rex_be_controller::getPageObject('yform/docs');
 
+uksort($mdFiles, function($a, $b) {
+    $titleA = rex_i18n::msg('yform_docs_'.$a);
+    $titleB = rex_i18n::msg('yform_docs_'.$b);
+    if ($titleA == $titleB) {
+        return 0;
+    }
+    return ($titleA < $titleB) ? -1 : 1;
+});
+
 foreach ($mdFiles as $key => $mdFile) {
     $page->addSubpage((new rex_be_page($key, rex_i18n::msg('yform_docs_'.$key)))
         ->setSubPath($mdFile)
