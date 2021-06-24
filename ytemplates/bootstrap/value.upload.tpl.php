@@ -28,7 +28,6 @@ $class_control = trim('form-control');
 
 <?php
 
-$value = $this->getValue();
 if ('' != $filename) {
     $label = htmlspecialchars($filename);
 
