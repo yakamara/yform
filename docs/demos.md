@@ -275,23 +275,6 @@ Von Haus aus liefert `YForm` für den Formbuilder zwei Feldtypen, um sicherzuste
 
 Siehe [YForm Spamschutz](https://github.com/alexplusde/yform_spam_protection/);
 
-### Captcha 
-
-Siehe [YForm Formbuilder Values](yform_modul_values.md#captcha)
-
-**Nachteile**
-
-* Nicht barrierefrei
-* Zusätzlicher Aufwand für den Nutzer
-
-### Captcha Calc
-
-Siehe [YForm Formbuilder Values](yform_modul_values.md#captcha_calc)
-
-**Nachteile**
-
-* Zusätzlicher Aufwand für den Nutzer
-
 ### via Zeitstempel 
 
 **Vorgehensweise**
@@ -348,15 +331,6 @@ Sobald Spambots das input-Feld namens `email` als Eingabe-Feld erkennen, werden 
 * Unter Umständen wird das versteckte Feld von Browsern vorausgefüllt. Lösung: Autocomplete abschalten, indem das Eingabe-Feld via JSON das Attribut `{"autocomplete":"off"}` bekommt.
 * Das korrekte E-Mail-Feld wird nicht mehr vom Browser vorausgefüllt.
 * Die Lösung ist nur bedingt barrierefrei.
-
-
-### Google reCaptcha
-
-Siehe [YForm Formbuilder Values](yform_modul_values.md#recaptcha)
-
-**Nachteile**
-
-* Übermittlung von personenbezogenen Daten an Google
 
 ## Mitgliedsantrag
 
