@@ -1,8 +1,23 @@
-<?php if ('open' == $option): ?>
-    <fieldset class="<?php echo $this->getHTMLClass(), ' ', $this->getElement(3) ?>" id="<?php echo $this->getHTMLId() ?>">
-        <?php if ($this->getLabel()): ?>
-            <legend id="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></legend>
-        <?php endif ?>
-<?php elseif ('close' == $option): ?>
-    </fieldset>
-<?php endif ?>
+<?php
+
+// exception. Is also called in form.tpl.php, not in field mode
+if ('close' == $option) {
+    echo '</fieldset>';
+    return;
+}
+
+$attributes = [
+    'class' => $this->getHTMLClass(),
+    'id' => $this->getHTMLId(),
+];
+
+$attributes = $this->getAttributeElements($attributes, []);
+
+if ('open' == $option) {
+    echo '<fieldset '.implode(' ', $attributes).'>';
+    if ($this->getLabel()) {
+        echo '<legend id="'.$this->getFieldId().'">'.$this->getLabel().'</legend>';
+    }
+} elseif ('close' == $option) {
+    echo '</fieldset>';
+}
