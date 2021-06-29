@@ -29,12 +29,11 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
 
         // deprecated
         // BC yform < Version 4
-        if (0 == count($attributes) && '' != $this->getElement('attributes')) {
+        if ('' != $this->getElement('attributes') && !is_array($attributes)) {
             $attributes['class'] = $this->getElement('attributes');
         }
 
         $this->setElement('attributes', $attributes);
-        dump($attributes);
 
         switch ($option) {
             case 'closeandopen':
