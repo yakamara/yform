@@ -275,6 +275,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform->setObjectparams('form_action', '');
                         $yform->setObjectparams('form_showformafterupdate', 1);
                         $yform->setObjectparams('data', $form);
+                        $form['id'] = isset($form['id']) ? intval($form['id']) : 0;
+                        if (0 < $form['id']) {
+                            $yform->setObjectparams('main_where', 'id='.$form['id']);
+                        }
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
 
