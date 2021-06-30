@@ -44,6 +44,10 @@ rex_sql_table::get(rex::getTable('yform_field'))
     ->ensureColumn(new rex_sql_column('name', 'text'))
     ->ensureColumn(new rex_sql_column('label', 'text'))
     ->ensureColumn(new rex_sql_column('not_required', 'text'))
+    ->ensureColumn(new rex_sql_column('multiple', 'text'))
+    ->ensureColumn(new rex_sql_column('expanded', 'text'))
+    ->ensureColumn(new rex_sql_column('choices', 'text'))
+    ->ensureColumn(new rex_sql_column('choice_attributes', 'text'))
     ->ensure();
 
 rex_sql_table::get(rex::getTable('yform_history'))
