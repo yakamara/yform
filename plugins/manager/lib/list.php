@@ -149,7 +149,7 @@ class rex_yform_list implements rex_url_provider_interface
         }
 
         // TODO: Performance
-        $this->rows = count($this->query->findValues('id'));
+        $this->rows = count($this->query->findValues($this->query->getTableAlias().'.id'));
         $this->pager->setRowCount($this->rows);
 
         $rowsPerPage = $this->pager->getRowsPerPage();

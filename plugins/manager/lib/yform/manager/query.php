@@ -591,7 +591,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 
         if (!$this->orderBy && !$this->orderByResetted) {
             $table = $this->getTable();
-            $this->orderBy($table->getSortFieldName(), $table->getSortOrderName());
+            $this->orderBy($this->getTableAlias().'.'.$table->getSortFieldName(), $table->getSortOrderName());
         }
 
         if ($this->orderBy) {
