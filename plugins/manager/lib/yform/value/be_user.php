@@ -34,7 +34,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
                 // if empty / bei create
                 if ('' == $showValue) {
                     $value = $user_login;
-                    $showValue = 'will be set to: '.$value;
+                    $showValue = rex_i18n::msg('yform_will_set_to').': '.$value;
                 }
                 break;
             default:
