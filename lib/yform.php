@@ -151,9 +151,19 @@ class rex_yform
         return $this;
     }
 
-    public function setFormData($form_definitions, $refresh = true): self
+    public function setData($data)
     {
-        $this->setObjectparams('form_data', $form_definitions, $refresh);
+        $this->setObjectparams('data', $data);
+        $data['id'] = isset($data['id']) ? intval($data['id']) : 0;
+        if (0 < $data['id']) {
+            $this->setObjectparams('main_where', 'id='.$data['id']);
+        }
+        return $this;
+    }
+
+    public function setFormData(string $pipelineNotification, $refresh = true): self
+    {
+        $this->setObjectparams('form_data', $pipelineNotification, $refresh);
 
         $this->objparams['form_data'] = str_replace("\n\r", "\n", $this->objparams['form_data']); // Die Definitionen
         $this->objparams['form_data'] = str_replace("\r", "\n", $this->objparams['form_data']); // Die Definitionen

@@ -267,18 +267,14 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $relationVars = $yform->getFieldValue('', []);
 
                 if (is_array($relationVars)) {
-                    foreach ($relationVars as $counter => $form) {
+                    foreach ($relationVars as $counter => $relatedVarData) {
                         $data = $table->createDataset();
                         $yform = $data->getForm();
                         $yform->setObjectparams('form_name', $form_name);
                         $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
                         $yform->setObjectparams('form_action', '');
                         $yform->setObjectparams('form_showformafterupdate', 1);
-                        $yform->setObjectparams('data', $form);
-                        $form['id'] = isset($form['id']) ? intval($form['id']) : 0;
-                        if (0 < $form['id']) {
-                            $yform->setObjectparams('main_where', 'id='.$form['id']);
-                        }
+                        $yform->setData($relatedVarData);
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
 
