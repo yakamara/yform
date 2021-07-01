@@ -155,7 +155,7 @@ class rex_yform_manager
         if ($data_id > 0) {
             $data_query = $this->table->query()
                 ->alias('t0')
-                ->where('id', $data_id);
+                ->where('t0.id', $data_id);
             $data_query = $this->getDataListQuery($data_query, array_merge($rex_yform_filter, $rex_yform_set), $searchObject);
             $data_collection = $data_query->find();
 
