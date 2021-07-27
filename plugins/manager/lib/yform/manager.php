@@ -1241,10 +1241,10 @@ class rex_yform_manager
                 }
             }
 
-            $notation_php .= "\n\n"  . '$yform->setActionField(\'tpl2email\', [\'emailtemplate\', \'emaillabel\', \'email@domain.de\']);';
+            $notation_php .= "\n\n"  . '$yform->setActionField(\'tpl2email\', [\'emailtemplate\', \'emailfieldname/email@example.org\']);';
             $notation_php .= "\n".'echo $yform->getForm();';
 
-            $notation_pipe .= "\n\n"  . 'action|tpl2email|emailtemplate|emaillabel|email@domain.de';
+            $notation_pipe .= "\n\n"  . 'action|tpl2email|emailtemplate|emailfieldname/email@example.org';
 
             $fragment = new rex_fragment();
             $fragment->setVar('title', 'PHP');
