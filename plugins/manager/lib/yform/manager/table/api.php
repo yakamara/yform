@@ -495,6 +495,7 @@ class rex_yform_manager_table_api
             case 'year':
             case 'binary':
             case 'varbinary':
+            case 'json'
                 // do nothing.
                 break;
 
