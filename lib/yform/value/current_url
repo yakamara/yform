@@ -1,0 +1,55 @@
+<?php
+
+class rex_yform_value_current_url extends rex_yform_value_abstract
+{
+    public function enterObject()
+    {
+        if(class_exists(rex_yrewrite)) {
+            $this->setValue(rex_yrewrite::getFullUrlByArticleId(rex_article::getCurrent()->getId()));
+         }
+        else {
+            $this->setValue(rex_article::getCurrent()->getUrl());
+        }
+
+        $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
+
+        if ($this->saveInDb()) {
+            $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
+    }
+
+    public function getDescription()
+    {
+        return 'current_url|name|[no_db]|';
+    }
+
+    public function getDefinitions()
+    {
+        return [
+            'type' => 'value',
+            'name' => 'current_url',
+            'values' => [
+                'name' => ['type' => 'name',        'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'label' => ['type' => 'text',       'label' => rex_i18n::msg('yform_values_defaults_label')],
+                'no_db' => ['type' => 'no_db',      'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+            ],
+            'description' => rex_i18n::msg('yform_values_current_url_description'),
+            'db_type' => ['varchar(191)', 'text'],
+        ];
+    }
+
+    public static function getSearchField($params)
+    {
+        rex_yform_value_text::getSearchField($params);
+    }
+
+    public static function getSearchFilter($params)
+    {
+        return rex_yform_value_text::getSearchFilter($params);
+    }
+
+    public static function getListValue($params)
+    {
+        return '<a target="_blank" href="'.  strip_tags(rex_yform_value_text::getListValue($params)) .'">'. rex_yform_value_text::getListValue($params) .'</a>';
+    }
+}
