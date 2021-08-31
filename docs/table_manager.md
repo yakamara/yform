@@ -40,6 +40,18 @@ Außerdem kann der Table Manager anhand einer Table Manager-Tabelle den Formular
 
 Die Daten können dann in Modulen und Addons im Frontend und Backend verwendet werden.
 
+### Direkte Ausgabe des Formulars
+
+Das Formular lässt sich ohne Umwege mit den hinterlegten Feldern des Table Managers ausgeben. Alternativ lässt sich in der Felddefinition jeder Table Manager-Tabelle direkt auslesen und um weitere Felder und Actions ergänzen:
+
+```php
+$dataset = rex_yform_manager_dataset::create('rex_my_yform_table');
+$yform = $dataset->getForm();
+$yform->setObjectparams('form_action', rex_getUrl(rex_article::getCurrentId()));
+$yform->setActionField('showtext', array('',"Thank you."));
+echo $dataset->executeForm($yform);
+```
+
 ### Ausgabe der Table Manager-Daten im Frontend
 
 Daten im Table Manager werden in der SQL-Datenbank abgelegt, die bei der Redaxo-Installation angegeben wurde. Die einfachste Möglichkeit ist daher, über das [rex_sql-Objekt](https://github.com/redaxo/redaxo/wiki/Aenderungen-in-REDAXO-5#rex_sql) die Daten auszulesen.
