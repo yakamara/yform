@@ -37,6 +37,7 @@ yform_validate_empty_notices_name = Wenn mehrere Felder ausgewählt werden muss 
 
 yform_values_checkbox_description = 			Eine <b>Checkbox</b> mit vordefinierten Werten.
 yform_values_checkbox_sql_description =			Eine <b>Checkbox</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
+yform_values_privacy_policy_description =       Eine <b>Checkbox</b>, die einen <b>Zeitstempel</b> für eine Einwilligung speichert.
 yform_values_date_description =					Eine Reihe von Auswahlfeldern, in der ein <b>Datum</b> (Tag, Monat, Jahr) ausgewählt wird.
 yform_values_datestamp_description =			Ein unsichtbares Feld, in das ein <b>Zeitstempel</b> gespeichert wird, wenn der Datensatz hinzugefügt oder bearbeitet wird.
 yform_values_datestamp_notice =                 Formatierung entsprechend der PHP date() Funktion (http://php.net/manual/de/function.date.php)
@@ -91,6 +92,9 @@ yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_values = Werte (0,1) (nicht angeklickt,angeklickt)
 yform_values_checkbox_default = Defaultstatus
 yform_values_checkbox_sql_query = Query mit "select id, name from ..""
+yform_values_privacy_policy_text = Text zur Erläuterung
+yform_values_privacy_policy_linktext = Linktitel
+yform_values_privacy_policy_article_id = REDAXO-Artikel
 yform_values_date_year_start = Startjahr
 yform_values_date_year_end = Endjahr
 yform_values_date_format = Anzeigeformat
@@ -274,5 +278,3 @@ yform_docs_yorm = Yorm
 yform_docs_email = E-Mail Templates
 yform_docs_rest = REST-API
 yform_docs_tools = Tools
-
-
