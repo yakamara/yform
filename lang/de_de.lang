@@ -58,6 +58,7 @@ yform_values_select_description =				Ein <b>Auswahlfeld</b> mit vordefinierten W
 yform_values_select_sql_description =			Ein <b>Auswahlfeld</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
 yform_values_submit_description =				Ein oder mehrere <b>Submit-Buttons</b> zum Absenden des Formulars.
 yform_values_text_description =					Ein <b>einfaches Eingabefeld</b> für Text.
+yform_values_password_description =             Ein <b>Eingabefeld</b> für Passwörter
 yform_values_textarea_description =				Ein <b>mehrzeiliges Eingabefeld</b> für Text.
 yform_values_time_description =					Eine Reihe von Auswahlfeldern, in der die <b>Uhrzeit</b> (Stunden, Minuten, Sekunden) ausgewählt wird.
 yform_values_upload_description =				Ein <b>Upload-Feld</b>, mit dem eine Datei in <b>die Datenbank oder ein Verzeichnis</b> hochgeladen wird.
