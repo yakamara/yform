@@ -488,6 +488,19 @@ echo $post->executeForm($yform)
   - whereRaw
   - whereListContains
 
+Beispiel für whereListContains
+
+```php
+// Entweder kann nach einem einzelnen Wert gesucht werden
+$query->whereListContains('my_column', 5);
+$query->whereListContains('my_column', 'my_value');
+
+// Oder mit einem Array von Werten, ob mindestens einer davon enthalten ist
+// dann aber nur mit integer-Werten!
+$query->whereListContains('my_column', [3, 5, 9]);
+```
+
+
 <a name="dataset-methoden"></a>
 
 ### dataset-Methoden
