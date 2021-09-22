@@ -25,7 +25,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
             if (!$this->isEditable()) {
                 $this->params['form_output'][$this->getId()] = $this->parse(['value.number-view.tpl.php', 'value.integer-view.tpl.php', 'value.view.tpl.php'], ['prepend' => $this->getElement('unit')]);
             } else {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit'),'type' => $this->getElement('widget')]);
             }
         }
 
@@ -37,7 +37,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
 
     public function getDescription()
     {
-        return 'number|name|label|precision|scale|defaultwert|[no_db]|[unit]|[notice]|[attributes]';
+        return 'number|name|label|precision|scale|defaultwert|[no_db]|[unit]|[notice]|[attributes]|number/text';
     }
 
     public function getDefinitions()
@@ -55,6 +55,8 @@ class rex_yform_value_number extends rex_yform_value_abstract
                 'unit' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_unit')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
+                'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['number' => 'input:number','text' => 'input:text'], 'default' => 'number'],
+
             ],
             'validates' => [
                 ['type' => ['name' => 'precision', 'type' => 'integer', 'message' => rex_i18n::msg('yform_values_number_error_precision', '1', '65'), 'not_required' => false]],
