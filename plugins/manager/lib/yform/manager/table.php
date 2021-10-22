@@ -62,6 +62,17 @@ class rex_yform_manager_table implements ArrayAccess
         return self::$tables[$tableName] = new self($cache[$tableName]);
     }
 
+    public static function require(string $tableName): self
+    {
+        $table = self::get($tableName);
+
+        if (!$table) {
+            throw new rex_exception('Table "'.$tableName.'" does not exist');
+        }
+
+        return $table;
+    }
+
     /**
      * @param int $tableId
      *
