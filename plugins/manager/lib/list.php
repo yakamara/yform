@@ -173,7 +173,7 @@ class rex_yform_list implements rex_url_provider_interface
     }
 
     /**
-     * @param string      $query
+     * @param rex_yform_manager_query      $query
      * @param int         $rowsPerPage
      * @param string|null $listName
      * @param bool        $debug
@@ -195,6 +195,23 @@ class rex_yform_list implements rex_url_provider_interface
     }
 
     // ---------------------- setters/getters
+
+    /**
+     * @return rex_yform_manager_query
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * @return rex_yform_manager_query
+     */
+    public function setQuery(rex_yform_manager_query $query)
+    {
+        $this->query = $query;
+        return $this->query;
+    }
 
     /**
      * Gibt den Namen es Formulars zurück.
