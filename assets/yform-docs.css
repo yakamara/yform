@@ -37,7 +37,7 @@ blockquote {
 .rex-docs pre {
     background-color: #f5f5f5;
     line-height: 1.7;
-    white-space: nowrap; // pre-wrap
+    white-space: pre-wrap;
 }
 
 .rex-docs-sidebar {
