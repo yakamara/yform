@@ -694,6 +694,12 @@ $yform->setValueField('choice',["selectfield","Verkehrsmittel","Auto,Bus,Fahrrad
 $yform->setValueField('choice',["mycheckboxfield","Vor- und Nachspeisen",'{"Vorspeisen": {"Gemischter Salat":"insalata_mista","Tagessuppe":"piatto_del_giorno"},"Dessert":{"Spaghettieis":"spaghetti_di_ghiaccio","Tiramisu":"tiramisu"}}',1,1]);
 ```
 
+3. Options als JSON, Nutzung von choice_attributes, um z. B. an eine Option das Attribut disabled anzufügen
+
+```php
+$yform->setValueField('choice', ['choice','choice','{"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}','0','0','','','','','','','{"class": "choicable","DE": {"disabled":"disabled"}}','','0']);
+```
+
 ###### **Beispiel Pipe**
 *Syntax*
 
@@ -701,19 +707,19 @@ $yform->setValueField('choice',["mycheckboxfield","Vor- und Nachspeisen",'{"Vors
 
 *Beispiele*
 
-3. Select, Options als kommaseparierte Liste
+4. Select, Options als kommaseparierte Liste
 
         choice|colors|Farben|Blau,Rot,Grün,Gelb,Lila|0|0|
 	
-4. Checkboxfeld, Options als kommaseparierte Liste mit Vorauswahl
+5. Checkboxfeld, Options als kommaseparierte Liste mit Vorauswahl
 
         choice|colors|Farben|Blau,Rot,Grün,Gelb,Lila|1|1|Rot,Grün
 	
-5. Gruppierte Radiobutton, Options als JSON
+6. Gruppierte Radiobutton, Options als JSON
 
         choice|drinks|Trinken|{"Kalte Getränke": {"Apfelschorle":"01","Orangensaft":"02"},"Warme Getränke":{"Kaffee":"11","Tee":"12"}}|1|0|
 
-6. Select aus SQL, gruppiert mit Leeroption und bevorzugter Auswahl
+7. Select aus SQL, gruppiert mit Leeroption und bevorzugter Auswahl
 
         choice|artikel|Artikel|SELECT name label, id value, catname FROM rex_article ORDER BY catname|0|0||catname|8,5|--- bitte auswählen ---
 
