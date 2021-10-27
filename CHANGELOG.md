@@ -4,6 +4,11 @@ Changelog
 Version 4.0.0 – xx.06.2021
 --------------------------
 
+### wichtige Änderungen
+* Der Manager ist technisch stark umgebaut worden. Bitte unbedingt Info dazu lesen
+* Viele deprecated Felder sind entfernt worden. Bitte genau durchlesen und beachten
+
+
 ### deprecated entfernt
 * Validierung nach email entfernt. Bitte mit type und email ersetzen
 * Felder captcha, captcha_calc,recaptcha(_v3) sind entfernt worden und werden auch bei der Installation direkt aus den Datenbanken entfernt, bitte stattdessen das addon yform_spam_protection verwenden
@@ -18,9 +23,8 @@ Version 4.0.0 – xx.06.2021
 * Neue Rechtestruktur. Es gibt nun Ansichtsrechte und/oder Editierrechte für Rollen
 * Viewansicht ergänzt. Automatische Viewansicht bei Relationstabellen.
 * UUID Feld ergönzt
-* Migration von Tabellen ohne Änderungen der Tabell möglich
-* recaptcha v3 - Feld ergänzt
-* Manager: Umbau der Suchen, Exporte etc. von eigenen SQL Einbindungen zu Yorm. Bedeutet auch dass die EPs: 
+* Migration von Tabellen ohne Änderungen der Tabelle möglich
+* Manager: Umbau der Suchen, Exporte etc. von eigenen SQL Einbindungen zu Yorm. EPs laufen hier nun anders.
 * rex_yform_list ergänzt. Ersetzt rex_list und YORM Queries entgegennehmen
 * EP: YFORM_DATA_LIST_QUERY statt YFORM_DATA_LIST_SQL (nun entfernt)
 * EP: YFORM_LIST_GET statt REX_LIST_GET (aus der rex list)
@@ -40,9 +44,8 @@ Version 4.0.0 – xx.06.2021
 * be_table Bugs behoben, date felder gingen nicht
 * Fehlermeldungen bei nicht speicherbaren Formularen sind nun klarer
 * Codestyling
-* RESTAPI: Eigene individuelle Felder sind nun ergönzbar. In Doku beschrieben
 * Choice. Callback bei Labels nun möglich
-* RESTAPI: include bei URL Params ergänzt und Felder einschränken zu können, die man gerne hätte
+* REST-API: include bei URL Params ergänzt und Felder einschränken zu können, die man gerne hätte
 * Manager: Tabellenansicht verbessert
 * Tablesetexport ist nun aufs nötigste beschränkt
 * time-Feld: notices bei ergänzt
