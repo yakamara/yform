@@ -469,8 +469,9 @@ class rex_yform_manager_table implements ArrayAccess
         }
 
         $cachePath = self::cachePath();
-        if (file_exists($cachePath)) {
-            return self::$cache = rex_file::getCache($cachePath);
+        self::$cache = rex_file::getCache($cachePath);
+        if (self::$cache) {
+            return self::$cache;
         }
 
         self::$cache = [];
