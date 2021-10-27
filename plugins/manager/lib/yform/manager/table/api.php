@@ -191,7 +191,7 @@ class rex_yform_manager_table_api
             foreach ($table_field as $field_name => $field_value) {
                 $field_insert->setValue($field_name, $field_value);
             }
-            if (!isset($table['prio'])) {
+            if (!isset($table_field['prio'])) {
                 $field_insert->setValue('prio', rex_yform_manager_table::get($table_name)->getMaximumPrio() + 1);
             }
             $field_insert->insert();
