@@ -369,9 +369,8 @@ Für das Tutorial werden demzufolge benötigt:
 2. An der Tabelle `rex_yf_member` auf `Felder hinzufügen` klicken
 3. Die gewünschten Felder hinzufügen:
 
-| Feldtyp | Feldname | Label | Weitere Optionen |
-| ------- | -------- |:-----:| ----------------:|
-radio|salutation|Anrede|Herr,Frau<br>{"required":"required"}|
+| Feldtyp | Feldname | Label | Individuelle Attribute | Felder | Optional Codierfunktion | Input-Feld | Salt | Wann soll Wert gesetzt werden | 
+| ------- | -------- |:-----:| ----------------:| ----------------:| ----------------:| ----------------:| ----------------:| ----------------:|
 text|firstname|Vorname|{"required":"required"}|
 text|lastname|Nachname|{"required":"required"}|
 text|street|Straße|{"required":"required"}|
@@ -381,10 +380,10 @@ text|bankname|Kreditinstitut|
 text|iban|IBAN|{"required":"required"}|
 text|bic|BIC|
 text|email|E-Mail-Adresse|{"required":"required","type":"email"}|
-index|key|key|email|md5|
-hashvalue|token|Token|iban|sha512|/Ru7Vz(%tQ5VV%vkV#VYB=KhaQYAavf/?APtYpe}59ynUTybL\|
-datestamp|createdate|Angemeldet am...|mysql||1|
-datestamp|updatedate|Aktualisiert am|mysql||0|
+index|key|key| | email|md5|
+hashvalue|token|Token| | |sha512| iban |/Ru7Vz(%tQ5VV%vkV#VYB=KhaQYAavf/?APtYpe}59ynUTybL\|
+datestamp|createdate|Angemeldet am | | | | | | nur wenn leer |
+datestamp|updatedate|Aktualisiert am | | | | | | immer |
 
 ** Erläuterungen **
 
