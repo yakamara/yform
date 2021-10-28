@@ -267,11 +267,11 @@ yform_values_number_error_scale = Bitte gib bei der Anzahl der Nachkommastellen 
 yform_values_number_error_compare = Die Nachkommastellen dürfen nicht höher sein als die Anzahl der Ziffern.
 
 yform_docs = Dokumentation
-yform_docs_intro = Intro
-yform_docs_table_manager = Manager
+yform_docs_intro = Einführung
+yform_docs_table_manager = Table Manager
 yform_docs_formbuilder = Formbuilder
 yform_docs_demos = Demos
-yform_docs_yorm = Yorm
+yform_docs_yorm = YOrm
 yform_docs_email = E-Mail Templates
 yform_docs_rest = REST-API
 yform_docs_tools = Tools

@@ -1,13 +1,14 @@
+# Tools (Plugin)
+
 > **Hinweis:**
 > Plugins erweitern YForm und können optional aktiviert werden.
 
-## Tools-Plugin
 
 > Dieses Plugin hilft bei bestimmten Eingabearten. Datumsfelder, DatumZeit-Felder und Textfelder die bestimmte Eingaben verlangen, die man bereits bei der Eingabe erzwingen möchte.
 
 Dabei werden die entsprechenden Bibliotheken bei der Aktivierung des AddOns bereits installiert und initialisiert. D.h. man muss die gewünschten Funktionen nur durch Definition von CSS Attributen zuweisen.
 
-### select2
+## select2
 
 diese Bibliothek [https://select2.github.io/](https://select2.github.io/) hilft dabei, Selectfelder zu vereinfachen und entsprechend des Typs verschiedene Varianten zu aktivieren.
 
@@ -24,7 +25,7 @@ Eine weitere Variante wäre der Tag-Mode
 	{"data-yform-tools-select2": "tags", "placeholder": "My Placeholder"}
 
 
-### inputmask
+## inputmask
 
 Diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. z. B. kann ein bestimmtes Datumsformat erzwungen werden.
 
@@ -49,7 +50,7 @@ Das kann man im Manager über das Attributefeld innerhalb von z. B. text so se
 
     {"data-yform-tools-inputmask":"dd/mm/yyyy"}
 
-### daterangepicker
+## daterangepicker
 
 Diese Bibliothek [http://www.daterangepicker.com/](http://www.daterangepicker.com/) dient für die Auswahl von Datumsfeldern oder Datumzeiträumen. Dabei kann auch eine Uhrzeit selektiert werden.
 
@@ -77,7 +78,7 @@ kann man im Manager über das Attibutefeld innerhalb von z. B. date mit input:
     {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii"}
 
 
-### Ein paar Beispiele für Kombinationen aus datepicker/datetimepicker und Inputmask
+## Ein paar Beispiele für Kombinationen aus datepicker/datetimepicker und Inputmask
 
 datepicker und Inputmask:
 

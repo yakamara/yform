@@ -1,7 +1,7 @@
+# Table Manager (PlugIn)
+
 > **Hinweis:**
 > Plugins erweitern YForm und können optional aktiviert werden.
-
-# Table Manager
 
 ## Einführung
 

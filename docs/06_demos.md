@@ -1,4 +1,4 @@
-# Tutorials
+# Demos (Tutorials)
 
 * E-Mail mit Dateianhang versenden
 * Glossar / oder FAQ
