@@ -59,6 +59,7 @@ class rex_yform_manager_dataset
         /** @var class-string<static> $class */
         $class = self::tableToModel($table);
         $dataset = new $class($table);
+        $dataset->data = [];
         $dataset->dataLoaded = true;
         $dataset->exists = false;
 
