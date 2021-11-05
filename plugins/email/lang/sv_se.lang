@@ -5,6 +5,7 @@ yform_email_from = Avsändare e-post (t.ex. info@redaxo.de)
 yform_email_from_name = Avsändarens namn (t.ex. REDAXO server)
 yform_email_reply_to = Reply-To-E-Mail [t.ex. yform@redaxo.de]
 yform_email_reply_to_name = Reply-To-Name [t.ex. YForm Server]
+yform_email_header_template_mail_reply_to = Svar till
 yform_email_subject = Ämne
 yform_email_body = Body
 yform_email_body_html = Body (HTML)

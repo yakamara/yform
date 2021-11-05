@@ -58,9 +58,11 @@ yform_values_select_description =				Ett <b>urvalsfält</b> med fördefinierade 
 yform_values_select_sql_description =			Ett <b>urvalsfält</b> med värden som kommer från en <b>SQL-förfrågning</b>
 yform_values_submit_description =				En eller flera <b>submit buttons</b> för att skicka formuläret.
 yform_values_text_description =					Ett <b>enkelt inmatningsfält</b> för textinmatning.
+yform_values_password_description =             Ett <b> inmatningsfält </b> för lösenord
 yform_values_textarea_description =				Ett enkelt <b>inmatningsfält med flera rader</b> för textinmatning.
 yform_values_time_description =					Ett antal urvalsfält i vilken <b>tiden </ b> (timmar, minuter, sekunder) kan bestämmas.
 yform_values_upload_description =				Ett <b> filöverföringsfält </ b> för att ladda upp en enstaka fil till en <b> databas eller katalog </ b>.
+yform_values_uuid_description =         Ett fält där det skapas universella <b> unika UUID / GUID </b>.
 yform_values_ip_description =                   Ett <b> IP-fält </ b>, som lagras här
 yform_values_showvalue_description =            Ett fält som bara visar fältets värde men inte kan ändras.
 
@@ -220,6 +222,8 @@ yform_values_choice_attributes = Attribut för elementet (attributes)
 yform_values_choice_attributes_notice = Med det här alternativet kan HTML-attribut läggas till i någon <code> div </ code> eller <code> select </ code>. Callable: <code> foo ($ attribut) </ code>; <code> foo :: bar ($ attribut) </ code> eller JSON: <code> {"class": "group-item"} </ code> eller <code> {"size": "5"} < / code>
 yform_values_choice_choice_attributes = Attribut för varje urval (choice_attributes)
 yform_values_choice_choice_attributes_notice = Med det här alternativet kan ytterligare HTML-attribut läggas till för varje urval. Callable: <code> foo ($attributes, $value, $label) </ code>; <code> foo :: bar ($attributes, $value, $label) </ code> eller JSON: <code> {"class": "choicable", "DE": {"data-language": "de-de"}} </ code>
+yform_values_choice_choice_label = Påverka label via Callable (choice_label)
+yform_values_choice_choice_label_notice = Urvalsmöjligheter
 yform_values_choice_choices = Val (choices)
 yform_values_choice_choices_notice = Det här är det enklaste sättet att ange vilka alternativ som ska användas av det här fältet. Alternativet är antingen en kommaseparerad sträng (label = value), en JSON-array, där matrisnyckeln är elementets etikett och arrayvärdet är elementets värde eller en fråga "SELECT id, namn FROM table"
 yform_values_choice_choices_table = <table class="table"><colgroup><col width="32%" /><col width="69%" /></colgroup><thead valign="bottom"><tr><th>Beskrivning</th><th>Exempel</th></tr></thead><tbody valign="top"><tr><td>kommaseparerad string</td><td><code>Danmark=DK,Tyskland=DE,Österrike=AT,Schweiz=CH</code></td></tr><tr><td>JSON-Array</td><td><code>{"Danmark": "DK", "Tyskland": "DE", "Österrike": "AT", "Schweiz": "CH"}</code></td></tr><tr><td>JSON-Array med <code>optgroup</code> för select tag</td><td><code>{"Europa": {"Danmark": "DK", "Tyskland": "DE", "Österrike": "AT", "Schweiz": "CH"}, "Sydamerika": {"Bolivia": "BO"}}</code></td></tr><tr><td>Query</td><td><code>SELECT id AS value, name AS label FROM country</code></td></tr><tr><td>Query med <code>optgroup</code> för select tag<br /> (I optionen <code>group_by</code> måste <code>group_label</code> noteras)</td><td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td></tr></tbody></table>
@@ -262,11 +266,14 @@ yform_values_number_error_precision = Ange ett tal mellan {0} och {1} för antal
 yform_values_number_error_scale = Ange ett tal mellan {0} och {1} i antal decimaler (SCALE)
 yform_values_number_error_compare = Decimalerna får inte vara högre än antalet siffror
 
-
+yform_docs = Dokumentation
 yform_docs_intro = Intro
 yform_docs_table_manager = Manager
 yform_docs_formbuilder = Formbuilder
 yform_docs_demos = Demon
 yform_docs_yorm = Yorm
-yform_docs_plugins = Plugins
+yform_docs_email = E-Mail mallar
+yform_docs_rest = REST-API
+yform_docs_tools = Verktyg
+
 
