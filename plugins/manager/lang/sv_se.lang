@@ -8,7 +8,7 @@ yform_alltables = Alla tabeller
 yform_back_to_overview = Tillbaa till översikten
 yform_updatetable = aktualisera tabell/er
 yform_tablesupdated = Tabell/er aktualiserades
-
+yform_errors_occurred = Fel uppstod
 yform_help_empty = Tomma inmatningar kan sökas med (empty)
 yform_help_multipleselect = Välj flera samtidigt genom att håller ned CTRL eller CMD
 yform_updatetable_with_delete = med fältradering
@@ -128,6 +128,7 @@ yform_visible = Synligt
 
 # edit.inc.php
 yform_thankyouforupdate = Datasatsen aktualiserades.
+yform_thankyouforupdates = Datasatser aktualiserades.
 yform_thankyouforentry = Datasatsen tillfogades.
 yform_editdata = Redigera datasats
 yform_editdata_collection = Redigera {0} datasatser
@@ -140,6 +141,7 @@ yform_function = Funktion
 yform_add = tillfoga
 yform_add_apply = ta över
 yform_edit = redigera
+yform_view = visa
 yform_save = spara
 yform_save_apply = ta över
 yform_delete = radera
@@ -297,3 +299,11 @@ yform_will_set_to = kommer att bli
 yform_field_add = Tillfoga fält
 yform_field_update = Updatera fält
 yform_field_db_type = Databas fälttyp
+
+yform_manager_table_data_view_roles = Datavy begränsad till
+yform_manager_table_data_edit_roles = Databehandling begränsad till
+
+yform_manager_table_nopermission = Ingen behörighet till den här tabellen
+
+yform_manager_tables_edit = Tabeller med redigeringsrättigheter
+yform_manager_tables_view = Tabeller med påsiktsrättigheter
