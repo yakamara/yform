@@ -11,7 +11,7 @@ class rex_yform_validate_in_table extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        $db = rex_sql::factory();
+        $db = rex_sql::factory($this->params['db_connection_id']);
         $db->setDebug($this->params['debug']);
 
         $table = $this->getElement(3);

@@ -16,7 +16,7 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
         }
         $value = $this->params['value_pool']['email'][$this->getElement(4)];
 
-        $gd = rex_sql::factory();
+        $gd = rex_sql::factory($this->params['db_connection_id']);
         if ($this->params['debug']) {
             $gd->setDebug();
         }

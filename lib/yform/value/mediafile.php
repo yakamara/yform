@@ -203,7 +203,7 @@ class rex_yform_value_mediafile extends rex_yform_value_abstract
         $RETURN['ok'] = true;
         $RETURN['filename'] = $NFILENAME;
 
-        $saveSQL = rex_sql::factory()
+        $saveSQL = rex_sql::factory($this->params['db_connection_id'])
             ->setTable(rex::getTablePrefix() . 'media')
             ->setValue('title', '')
             ->setValue('filetype', $FILETYPE)
