@@ -460,7 +460,7 @@ class rex_yform_manager
                             }
                         }
                     } catch (\Throwable $e) {
-                        dump($e);
+                        // dump($e);
                         $sql_db->rollBack();
                         $transactionErrorMessage = $e->getMessage();
                         if ($transactionErrorMessage) {
