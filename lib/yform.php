@@ -353,8 +353,8 @@ class rex_yform
                 $ValueObject->enterObject();
             }
         } catch (Exception $e) {
-            dump($ValueObject);
-            dump($e);
+            // dump($ValueObject);
+            // dump($e);
             throw $e;
         }
 
