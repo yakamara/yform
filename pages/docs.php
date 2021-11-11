@@ -24,7 +24,10 @@ foreach ($mdFiles as $key => $mdFile) {
 
 echo rex_view::title($this->i18n('yform'));
 
-[$Toc, $Content] = rex_markdown::factory()->parseWithToc(rex_file::require($mdFiles[$currenMDFile]), 2, 3, false);
+[$Toc, $Content] = rex_markdown::factory()->parseWithToc(rex_file::require($mdFiles[$currenMDFile]), 2, 3, [
+    rex_markdown::SOFT_LINE_BREAKS => false,
+    rex_markdown::HIGHLIGHT_PHP => true,
+]);
 
 $fragment = new rex_fragment();
 $fragment->setVar('content', $Content, false);
