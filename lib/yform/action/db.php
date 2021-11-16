@@ -12,7 +12,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
 {
     public function executeAction()
     {
-        $sql = rex_sql::factory($this->params['db_connection_id']);
+        $sql = rex_sql::factory($this->params['db_id']);
         $sql->setDebug($this->params['debug']);
 
         if (!$main_table = $this->getElement(2)) {
@@ -57,7 +57,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 $action = 'update';
 
                 if ($this->params['main_id'] <= 0) {
-                    $sql_id = rex_sql::factory($this->params['db_connection_id']);
+                    $sql_id = rex_sql::factory($this->params['db_id']);
                     $sql_id->setTable($main_table);
                     $sql_id->setWhere($where);
                     $sql_id->select('id');

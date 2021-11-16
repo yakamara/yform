@@ -11,7 +11,7 @@ class rex_yform_validate_unique extends rex_yform_validate_abstract
 {
     public function enterObject()
     {
-        $cd = rex_sql::factory($this->params['db_connection_id']);
+        $cd = rex_sql::factory($this->params['db_id']);
 
         $table = $this->params['main_table'];
         if ('' != $this->getElement('table')) {

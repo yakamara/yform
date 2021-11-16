@@ -75,7 +75,7 @@ class rex_yform
         $this->objparams['output'] = ''; // Final output of form
 
         // predefined dataset via sql
-        $this->objparams['db_connection_id'] = 1; // ID of db connection in config.yml
+        $this->objparams['db_id'] = 1; // ID of db connection in config.yml
         $this->objparams['main_where'] = ''; // like "id=12" for db
         $this->objparams['main_id'] = -1; // unique Dataset ID
         $this->objparams['main_table'] = ''; // for db and unique
@@ -279,7 +279,7 @@ class rex_yform
         // 2. setValue defaults via sql_object
         if ($this->objparams['getdata']) {
             if (!$this->objparams['sql_object'] instanceof rex_sql) {
-                $this->objparams['sql_object'] = rex_sql::factory($this->objparams['db_connection_id']);
+                $this->objparams['sql_object'] = rex_sql::factory($this->objparams['db_id']);
                 $this->objparams['sql_object']->setDebug($this->objparams['debug']);
                 $this->objparams['sql_object']->setQuery('SELECT * from ' . $this->objparams['main_table'] . ' WHERE ' . $this->objparams['main_where']);
             }

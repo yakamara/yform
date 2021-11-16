@@ -22,7 +22,7 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
         }
 
         try {
-            $sql = rex_sql::factory($this->params['db_connection_id']);
+            $sql = rex_sql::factory($this->params['db_id']);
             $sql->setDebug($this->params['debug']);
 
             $params = [];

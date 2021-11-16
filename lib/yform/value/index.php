@@ -107,7 +107,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
     private function getRelationValues(array $relations)
     {
         $table = rex_yform_manager_table::get($this->params['main_table']);
-        $sql = rex_sql::factory($this->params['db_connection_id']);
+        $sql = rex_sql::factory($this->params['db_id']);
         $sql->setDebug($this->params['debug']);
 
         foreach ($relations as $name => $sub) {
