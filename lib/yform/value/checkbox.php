@@ -88,7 +88,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         $value = $params['value'];
         /** @var rex_yform_manager_query $query */
         $query = $params['query'];
-        $field = $params['field']->getName();
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         return $query->where($field, $value);
     }

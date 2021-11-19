@@ -273,14 +273,18 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         // $value = self::date_convertFromFormatToIsoDate($this->getValue(), self::date_getFormat($this->getElement('format')));
 
         $value = trim($params['value']);
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
+
         if ('' == $value) {
-            return;
+            return $query;
         }
 
         $sql = rex_sql::factory();
         $format = $params['field']->getElement('format');
         $format_len = strlen($format);
-        $field = $params['field']->getName();
+        $field = $sql->escapeIdentifier($query->getTableAlias()) . '.' . $sql->escapeIdentifier($params['field']->getName());
         $firstchar = substr($value, 0, 1);
 
         switch ($firstchar) {
@@ -289,14 +293,14 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             case '=':
                 $date = substr($value, 1);
                 $date = self::datetime_getFromFormattedDatetime($date, $format);
-                return '(' . $sql->escapeIdentifier($field) . ' ' . $firstchar . ' ' . $sql->escape($date) . ')';
+                return $query->whereRaw('(' . $field . ' ' . $firstchar . ' ' . $sql->escape($date) . ')');
                 break;
         }
 
         // date
         if (strlen($value) == $format_len) {
             $date = self::datetime_getFromFormattedDatetime($value, $format);
-            return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($date) . ')';
+            return $query->whereRaw('(' . $field . ' = ' . $sql->escape($date) . ')');
         }
 
         $dates = explode(' - ', $value);
@@ -305,13 +309,14 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $date_from = self::datetime_getFromFormattedDatetime($dates[0], $format);
             $date_to = self::datetime_getFromFormattedDatetime($dates[1], $format);
 
-            return ' (
-            ' . $sql->escapeIdentifier($field) . '>= ' . $sql->escape($date_from) . ' and
-            ' . $sql->escapeIdentifier($field) . '<= ' . $sql->escape($date_to) . '
-            ) ';
+            return $query->whereRaw('(
+            ' . $field . '>= ' . $sql->escape($date_from) . ' and
+            ' . $field . '<= ' . $sql->escape($date_to) . '
+            )');
         }
 
-        // wenn alles nicht hilfe -> plain rein
-        return '(' . $sql->escapeIdentifier($field) . ' = ' . $sql->escape($value) . ')';
+        // wenn alles nicht hilft -> einfacher Vergleich
+        return $query->whereRaw('(' . $field . ' = ' . $sql->escape($value) . ')');
+
     }
 }

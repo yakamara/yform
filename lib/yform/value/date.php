@@ -220,7 +220,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $value = trim($params['value']);
         /** @var rex_yform_manager_query $query */
         $query = $params['query'];
-        $field = $params['field']->getName();
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         $format = self::date_getFormat($params['field']->getElement('format'));
 

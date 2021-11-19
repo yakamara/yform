@@ -74,7 +74,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         $value = $params['value'];
         /** @var rex_yform_manager_query $query */
         $query = $params['query'];
-        $field = $params['field']->getName();
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         if ('(empty)' == $value) {
             return $query->whereNested(function (rex_yform_manager_query $query) use ($field) {
