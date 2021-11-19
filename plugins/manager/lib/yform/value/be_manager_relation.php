@@ -775,7 +775,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $value = $params['value'];
         /** @var rex_yform_manager_query $query */
         $query = $params['query'];
-        $field = $params['field']->getName();
 
         if (null !== $value && !is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
             return $query;
@@ -791,7 +790,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $sql = rex_sql::factory();
 
         if (!$field->getElement('relation_table')) {
-            return $query->whereListContains($field, $value);
+            return $query->whereListContains($query->getTableAlias().'.'.$field->getName(), $value);
         }
 
         $relationTableFields = self::getRelationTableFieldsForTables($field->getElement('table_name'), $field->getElement('relation_table'), $field->getElement('table'));
