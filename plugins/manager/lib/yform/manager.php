@@ -375,7 +375,7 @@ class rex_yform_manager
                                 if ('submit' == $valueObject->getName()) {
                                     if (2 == $valueObject->getValue()) { // apply
                                         $yform->setObjectparams('form_showformafterupdate', 1);
-                                        $yform->executeFields();
+                                        // $yform->executeFields();
                                     }
                                 }
                             }
