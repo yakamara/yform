@@ -12,7 +12,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     public const VALUE_DATETIME_DEFAULT_FORMAT = 'YYYY-MM-DD HH:ii:ss';
     public const VALUE_DATETIME_FORMATS = ['DD.MM.YYYY HH:ii' => 'DD.MM.YYYY HH:ii', 'YYYY-MM-DD HH:ii:ss' => 'YYYY-MM-DD HH:ii:ss', 'DD-MM-YYYY HH:ii:ss' => 'DD-MM-YYYY HH:ii:ss', 'MM-DD-YYYY HH:ii:ss' => 'MM-DD-YYYY HH:ii:ss', 'MM-YYYY HH:ii:ss' => 'MM-YYYY HH:ii:ss', 'YYYY-MM HH:ii:ss' => 'YYYY-MM HH:ii:ss', 'DD-MM HH:ii:ss' => 'DD-MM HH:ii:ss', 'MM-DD HH:ii:ss' => 'MM-DD HH:ii:ss'];
 
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         // if date is unformated
         $value = $this->getValue();
@@ -218,12 +218,12 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         return str_replace(['YYYY', 'MM', 'DD', 'HH', 'ii', 'ss'], [$year, $month, $day, $hour, $minute, $second], $returnDatetimeFormat);
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'datetime|name|label| jahrstart | jahrsende | minutenformate 00,15,30,45 | [Anzeigeformat YYYY-MM-DD HH:ii:ss] |[1/Aktuelles Datum voreingestellt]|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

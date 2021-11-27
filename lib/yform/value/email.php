@@ -38,12 +38,12 @@ class rex_yform_value_email extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'email|name|label|defaultwert|[no_db]|[attributes]|[notice]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

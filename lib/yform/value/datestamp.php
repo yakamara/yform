@@ -9,7 +9,7 @@
 
 class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         $format = rex_sql::FORMAT_DATETIME;
         $default_value = date($format);
@@ -48,12 +48,12 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'datestamp|name|label|[YmdHis/U/dmy/mysql]|[no_db]|[0-always,1-only if empty,2-never]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

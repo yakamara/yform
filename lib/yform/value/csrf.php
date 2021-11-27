@@ -39,12 +39,12 @@ class rex_yform_value_csrf extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return rex_escape('csrf|name|label|message');
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

@@ -105,12 +105,12 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'choice|name|label|choices|[expanded type: boolean; default: 0, 0,1]|[multiple type: boolean; default: 0, 0,1]|[default]|[group_by]|[preferred_choices]|[placeholder]|[group_attributes]|[attributes]|[choice_attributes]|[notice]|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

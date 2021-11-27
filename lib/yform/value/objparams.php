@@ -31,7 +31,7 @@ class rex_yform_value_objparams extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'objparams|key|newvalue|[init/runtime]';
     }

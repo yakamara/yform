@@ -35,12 +35,12 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'integer|name|label|defaultwert|[no_db]|[notice]|[unit]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

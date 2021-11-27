@@ -9,7 +9,7 @@
 
 class rex_yform_value_generate_key extends rex_yform_value_abstract
 {
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         $generated_key = md5($this->params['form_name'].uniqid(random_int(0, getrandmax()), true));
 
@@ -37,12 +37,12 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'generate_key|name|label|[no_db][0-always,1-only if empty,2-never]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

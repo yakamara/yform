@@ -2,19 +2,18 @@
 
 class rex_yform_action_php extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $php = $this->getElement(2);
 
         if ('' == $php) {
-            return false;
+            return;
         }
 
         eval('?>'.$php.'<?php ');
-        return true;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|php|&lt;?php echo date("mdY"); ?&gt;';
     }

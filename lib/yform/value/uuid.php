@@ -36,12 +36,12 @@ class rex_yform_value_uuid extends rex_yform_value_abstract
         return vsprintf('%s%s-%s-%s-%s-%s%s%s', str_split(bin2hex($data), 4));
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'uuid|name|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

@@ -339,7 +339,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     // -------------------------------------------------------------------------
 
-    public function postAction()
+    public function postAction(): void
     {
         if ($this->needsOutput()) {
             if (5 == $this->relation['relation_type'] && $this->params['main_id'] > 0) {
@@ -429,7 +429,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
 
         if ($source_id < 1 || '' == $this->params['main_table']) {
-            return false;
+            return;
         }
 
         $relationTableField = $this->getRelationTableFields();
@@ -468,7 +468,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     // -------------------------------------------------------------------------
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

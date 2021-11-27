@@ -9,7 +9,7 @@
 
 class rex_yform_value_index extends rex_yform_value_abstract
 {
-    public function postFormAction()
+    public function postFormAction(): void
     {
         if (1 != $this->params['send']) {
             return;
@@ -65,12 +65,12 @@ class rex_yform_value_index extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'index|name|label|name1,name2,name3|[no_db]|[func/md5/sha]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

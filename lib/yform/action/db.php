@@ -10,7 +10,7 @@ declare(strict_types=1);
  */
 class rex_yform_action_db extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $sql = rex_sql::factory();
         $sql->setDebug($this->params['debug']);
@@ -25,8 +25,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
             $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
-
-            return false;
+            return;
         }
 
         $sql->setTable($main_table);
@@ -36,6 +35,8 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 $where = $this->params['main_where'];
             }
         }
+
+        $action = null;
 
         try {
             if (0 == count($this->params['value_pool']['sql'])) {
@@ -48,8 +49,6 @@ class rex_yform_action_db extends rex_yform_action_abstract
                     $where = str_replace('###'.$key.'###', addslashes((string) $value), $where);
                 }
             }
-
-            $action = null;
 
             if ('' != $where) {
                 $sql->setWhere($where);
@@ -88,8 +87,9 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 dump($this->params['warning_messages']);
             }
         } else {
-
-            rex_extension::registerPoint(new rex_extension_point('YFORM_SAVED', $sql,
+            rex_extension::registerPoint(new rex_extension_point(
+                'YFORM_SAVED',
+                $sql,
                 [
                     'form' => $this,
                     'sql' => $sql,
@@ -103,7 +103,9 @@ class rex_yform_action_db extends rex_yform_action_abstract
             /**
              * @deprecated since 3.4.1 use EP YFORM_SAVED instead
              */
-            rex_extension::registerPoint(new rex_extension_point('REX_YFORM_SAVED', $sql,
+            rex_extension::registerPoint(new rex_extension_point(
+                'REX_YFORM_SAVED',
+                $sql,
                 [
                     'form' => $this,
                     'sql' => $sql,
@@ -116,7 +118,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|db|tblname|[where(id=2)/main_where]';
     }

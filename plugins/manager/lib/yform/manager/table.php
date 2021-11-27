@@ -221,7 +221,7 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['list_amount'];
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->values['description'];
     }

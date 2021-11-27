@@ -9,7 +9,7 @@
 
 class rex_yform_action_tpl2email extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $template_name = $this->getElement(2);
         if ($etpl = rex_yform_email_template::getTemplate($template_name)) {
@@ -73,21 +73,21 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 if ('' != $warning_message) {
                     $this->params['output'] .= $warning_message;
                 }
-                return false;
+                return;
             }
             if ($this->params['debug']) {
                 dump('email sent');
             }
-            return true;
+            return;
         }
         if ($this->params['debug']) {
             dump('Template: "' . htmlspecialchars($template_name) . '" not found');
         }
 
-        return false;
+        return;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|tpl2email|emailtemplate|[email@domain.de/email_label]|[email_name]|[Fehlermeldung wenn Versand fehlgeschlagen ist/html]';
     }

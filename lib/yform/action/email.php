@@ -9,7 +9,7 @@
 
 class rex_yform_action_email extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $mail_from = $this->getElement(2);
         $mail_to = $this->getElement(3);
@@ -38,7 +38,7 @@ class rex_yform_action_email extends rex_yform_action_abstract
         $mail->Send();
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|email|from@email.de|to@email.de|Mailsubject|Mailbody###name###';
     }

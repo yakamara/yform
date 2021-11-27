@@ -35,12 +35,12 @@ class rex_yform_value_number extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'number|name|label|precision|scale|defaultwert|[no_db]|[unit]|[notice]|[attributes]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

@@ -37,7 +37,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'hidden|fieldname|value||[no_db]'."\n".'hidden|fieldname|key|REQUEST/GET/POST/SESSION|[no_db]';
     }

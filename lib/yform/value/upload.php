@@ -209,7 +209,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         return $this;
     }
 
-    public function postAction()
+    public function postAction(): void
     {
         if ($this->getSessionVar('file', 'array', null)) {
             $FILE = $this->getSessionVar('file', 'array', null);
@@ -238,9 +238,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             }
         }
 
-        $this->unsetSessionVar('file');
-        $this->unsetSessionVar('value');
-        $this->unsetSessionVar('original_value');
+        if (1 != $this->params['send']) {
+            $this->unsetSessionVar('file');
+            $this->unsetSessionVar('value');
+            $this->unsetSessionVar('original_value');
+        }
 
         // delete temp files from this formfield
         $temp_folder = rex_path::pluginData('yform', 'manager', 'upload/temp');
@@ -299,12 +301,12 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'upload|name|label|Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder *| pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg ';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',
@@ -381,7 +383,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function setSessionVar($key, $value)
     {
-        $sessionVars = rex_session($this->getSessionKey(), 'array', []);
+        $sessionVars = rex_request::session($this->getSessionKey(), 'array', []);
         $sessionVars[$key] = $value;
         rex_set_session($this->getSessionKey(), $sessionVars);
     }

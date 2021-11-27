@@ -9,7 +9,7 @@
 
 class rex_yform_action_db_query extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $query = trim($this->getElement(2));
         $labels = explode(',', $this->getElement(3));
@@ -43,7 +43,7 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|db_query|query|labels[name,email,id]';
     }

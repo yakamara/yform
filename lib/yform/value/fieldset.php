@@ -64,12 +64,12 @@ class rex_yform_value_fieldset extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $output;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'fieldset|name|label|[attributes]|[onlyclose/onlycloseall/onlyopen/closeandopen]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

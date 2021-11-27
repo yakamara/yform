@@ -15,12 +15,12 @@ class rex_yform_value_password extends rex_yform_value_text
         parent::enterObject();
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'password|name|label|defaultwert|[no_db]|[attributes]|[notice]|[prepend]|[append]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         $return = parent::getDefinitions();
         $return['type'] = 'password';

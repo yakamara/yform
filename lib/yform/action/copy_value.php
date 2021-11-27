@@ -9,7 +9,7 @@
 
 class rex_yform_action_copy_value extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $label_from = $this->getElement(2);
         $label_to = $this->getElement(3);
@@ -22,7 +22,7 @@ class rex_yform_action_copy_value extends rex_yform_action_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|copy_value|label_from|label_to';
     }

@@ -26,12 +26,12 @@ class rex_yform_value_html extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $html;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return htmlspecialchars('html|name|label|<div class="block"></div>');
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

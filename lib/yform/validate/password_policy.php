@@ -25,12 +25,12 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'password_policy -> validate|password_policy|pswfield|warning_message|[config]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'validate',

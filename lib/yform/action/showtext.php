@@ -9,7 +9,7 @@
 
 class rex_yform_action_showtext extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         $text = $this->getElement(2);
 
@@ -28,7 +28,7 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
         $this->params['output'] .= $text;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|showtext|Antworttext|&lt;p&gt;|&lt;/p&gt;|[0 for specialchars + nl2br]';
     }

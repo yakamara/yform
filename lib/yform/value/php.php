@@ -25,12 +25,12 @@ class rex_yform_value_php extends rex_yform_value_abstract
         $this->params['form_output'][$this->getId()] = $out;
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return rex_escape('php|name|label|<?php echo date("mdY"); ?>');
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

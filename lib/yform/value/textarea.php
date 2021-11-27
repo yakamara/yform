@@ -41,12 +41,12 @@ class rex_yform_value_textarea extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'textarea|name|label|default|[no_db]|[attributes]|notice';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

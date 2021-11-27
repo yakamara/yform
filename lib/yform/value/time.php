@@ -12,7 +12,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
     public const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'H:i:s';
     public const VALUE_TIME_SHOW_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
 
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         if (is_array($this->getValue())) {
             $a = $this->getValue();
@@ -125,12 +125,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'time|name|label|[stundenraster 0,1,2,3,4,5]|[minutenraster 00,15,30,45]|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',
