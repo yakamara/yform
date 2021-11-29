@@ -95,16 +95,13 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         return $return;
     }
 
+    public static function getSearchField($params)
+    {
+        rex_yform_value_datetime::getSearchField($params);
+    }
+
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
-
-        $value = $params['value'];
-        $field = $sql->escapeIdentifier($params['field']->getName());
-
-        preg_match('/^\s*(<|<=|>|>=|<>|!=)?\s*(.*)$/', $value, $match);
-        $comparator = $match[1] ?: '=';
-        $value = $match[2];
-        return ' ' . $field . ' ' . $comparator . ' ' . $sql->escape($value);
+        return rex_yform_value_datetime::getSearchFilter($params);
     }
 }
