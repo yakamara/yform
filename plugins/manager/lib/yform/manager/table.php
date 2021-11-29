@@ -31,7 +31,14 @@ class rex_yform_manager_table implements ArrayAccess
     {
         $this->values = $data['table'];
         $this->columns = $data['columns'];
-        $this->fields = $data['fields'];
+        $this->fields = [];
+        foreach ($data['fields'] as $field) {
+            try {
+                $this->fields[] = new rex_yform_manager_field($field);
+            } catch (Exception $e) {
+                // ignore missing fields
+            }
+        }
     }
 
     /**
@@ -474,11 +481,6 @@ class rex_yform_manager_table implements ArrayAccess
         $cachePath = self::cachePath();
         self::$cache = rex_file::getCache($cachePath);
         if (self::$cache) {
-            foreach (self::$cache as $table_name => $table) {
-                foreach ($table['fields'] as $k => $field) {
-                    self::$cache[$table_name]['fields'][$k] = unserialize($field);
-                }
-            }
             return self::$cache;
         }
 
@@ -507,21 +509,11 @@ class rex_yform_manager_table implements ArrayAccess
         $fields = $sql->getArray('select * from ' . rex_yform_manager_field::table() . ' order by prio');
         foreach ($fields as $field) {
             if (isset(self::$cache[$field['table_name']])) {
-                try {
-                    self::$cache[$field['table_name']]['fields'][] = serialize(new rex_yform_manager_field($field));
-                } catch (Exception $e) {
-                    // ignore missing fields
-                }
+                self::$cache[$field['table_name']]['fields'][] = $field;
             }
         }
 
         rex_file::putCache($cachePath, self::$cache);
-
-        foreach (self::$cache as $table_name => $table) {
-            foreach ($table['fields'] as $k => $field) {
-                self::$cache[$table_name]['fields'][$k] = unserialize($field);
-            }
-        }
 
         return self::$cache;
     }
