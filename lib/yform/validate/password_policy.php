@@ -13,7 +13,7 @@ class rex_yform_validate_password_policy extends rex_yform_validate_abstract
         }
 
         $rules = json_decode($this->getElement('rules'), true);
-        if (0 == count($rules)) {
+        if (!is_array($rules) || 0 == count($rules)) {
             $rules = json_decode(self::PASSWORD_POLICY_DEFAULT_RULES, true);
         }
 
