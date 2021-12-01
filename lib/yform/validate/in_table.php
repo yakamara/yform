@@ -59,7 +59,7 @@ class rex_yform_validate_in_table extends rex_yform_validate_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'validate|in_table|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
     }

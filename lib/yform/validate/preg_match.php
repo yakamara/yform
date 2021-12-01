@@ -28,12 +28,12 @@ class rex_yform_validate_preg_match extends rex_yform_validate_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'validate|preg_match|name|/[a-z]/i|warning_message ';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'validate',

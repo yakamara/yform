@@ -38,12 +38,12 @@ class rex_yform_value_text extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'text|name|label|defaultwert|[no_db]|[attributes]|[notice]|[prepend]|[append]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

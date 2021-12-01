@@ -314,8 +314,8 @@ class rex_yform
 
         // 4. setValue direct via fixdata
         $fixdata = $this->getObjectparams('fixdata');
-        if ($fixdata && is_array($fixdata) && count($fixdata) > 0) {
-            foreach ($this->objparams['values'] as $i => $valueObject) {
+        if ($fixdata && is_array($fixdata) && 0 < count($fixdata)) {
+            foreach ($this->objparams['values'] as $valueObject) {
                 if (isset($fixdata[$valueObject->getName()])) {
                     $valueObject->setValue($fixdata[$valueObject->getName()]);
                 }
@@ -353,8 +353,6 @@ class rex_yform
                 $ValueObject->enterObject();
             }
         } catch (Exception $e) {
-            // dump($ValueObject);
-            // dump($e);
             throw $e;
         }
 
@@ -449,7 +447,7 @@ class rex_yform
 
                 try {
                     // ----- pre Actions
-                    foreach ($this->objparams['fields'] as $t => $types) {
+                    foreach ($this->objparams['fields'] as $types) {
                         foreach ($types as $Objects) {
                             if (!is_array($Objects)) {
                                 $Objects = [$Objects];
@@ -462,7 +460,7 @@ class rex_yform
                     $this->objparams['preactions_executed'] = true;
 
                     // ----- normal Actions
-                    foreach ($this->objparams['fields'] as $t => $types) {
+                    foreach ($this->objparams['fields'] as $types) {
                         foreach ($types as $Objects) {
                             if (!is_array($Objects)) {
                                 $Objects = [$Objects];
@@ -515,7 +513,7 @@ class rex_yform
         return $this->objparams['output'];
     }
 
-    public function getTemplatePath($template)
+    public function getTemplatePath($template): string
     {
         $templates = (array) $template;
         foreach (explode(',', $this->objparams['form_ytemplate']) as $form_ytemplate) {
@@ -560,7 +558,7 @@ class rex_yform
                 // 2. SpecialKey
                 $label .= '['.$this->prepareLabel($params[1]).']';
             }
-            return ($label) ? $label : current($params);
+            return ($label) ?: current($params);
         }
 
         if (0 == count($params)) {
@@ -593,7 +591,7 @@ class rex_yform
         switch ($this->getObjectparams('get_field_type')) {
             case 'request':
                 if ($this->objparams['real_field_names']) {
-                    $value = $_REQUEST ?? null;
+                    $value = $_REQUEST;
                     // specialcase
                     if (count($params) > 1) {
                         // 1. FormID
@@ -619,7 +617,7 @@ class rex_yform
             return '';
         }
 
-        foreach ($params as $counter => $param) {
+        foreach ($params as $param) {
             $param = $this->prepareLabel($param);
 
             if (is_array($value) && array_key_exists($param, $value)) {
@@ -686,17 +684,17 @@ class rex_yform
         return $value;
     }
 
-    public function prepareLabel($label)
+    public function prepareLabel($label): string
     {
         return preg_replace('/[^a-zA-Z\-_0-9]/', '-', $label);
     }
 
-    public static function unhtmlentities($text)
+    public static function unhtmlentities($text): string
     {
         return html_entity_decode($text);
     }
 
-    public static function showHelp()
+    public static function showHelp(): string
     {
         $arr = [
             'value' => 'rex_yform_value_',
@@ -759,7 +757,7 @@ class rex_yform
         return $return;
     }
 
-    public static function getTypeArray()
+    public static function getTypeArray(): array
     {
         $return = [];
 
@@ -795,7 +793,7 @@ class rex_yform
         return $this;
     }
 
-    public function hasWarnings()
+    public function hasWarnings(): bool
     {
         $hasWarnings = 0 != count($this->objparams['warning']);
         $hasWarningMessages = 0 != count($this->objparams['warning_messages']);

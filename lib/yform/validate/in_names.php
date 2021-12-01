@@ -45,7 +45,7 @@ class rex_yform_validate_in_names extends rex_yform_validate_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'validate|in_names|name,name2,name3|[minnames]|[maximalnames]|Fehlermeldung';
     }

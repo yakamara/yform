@@ -53,7 +53,7 @@ yform_tbl_inactive = inaktiv
 yform_manager_table_updated = Tabelle und Felder wurden erstellt und/oder aktualisiert
 yform_manager_table_entry_saved = Vielen Dank fuer die Eintragung
 yform_manager_table_enter_name = Bitte tragen Sie die Tabellenbezeichnung ein
-yform_manager_table_enter_specialchars = Bitte tragen Sie beim Tabellenname nur Buchstaben und Zahlen ein. Das erste Zeichen muss ein Buchstabe sein
+yform_manager_table_enter_specialchars = Bitte tragen Sie beim Tabellenname nur Kleinbuchstaben und Zahlen ein. Das erste Zeichen muss ein Buchstabe sein
 yform_manager_table_exists = Dieser Tabellenname ist bereits vorhanden
 
 yform_manager_table_prio = Priorität

@@ -8,8 +8,8 @@ page:
     pjax: false
     icon: rex-icon rex-icon-module
     subpages:
-        overview:
-            title: 'translate:overview'
+        setup:
+            title: 'translate:setup'
             perm: admin
         docs:
             title: 'translate:docs'
@@ -23,9 +23,7 @@ stylesheets:
     - popup.css
 
 requires:
-    packages:
-        phpmailer: '^2.0.0'
-    redaxo: '^5.8.0'
+    redaxo: '^5.13.0'
     php:
         version: '>=7, <9'
 

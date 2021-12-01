@@ -24,7 +24,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         'YYYY-MM' => '(?<y>(?:\d{2}|\d{4}))(?:-(?<m>\d{1,2}))?',
     ];
 
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         // if date is unformated
         $value = $this->getValue();
@@ -174,12 +174,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
         return str_replace(['YYYY', 'MM', 'DD'], [$year, $month, $day], $returnDateFormat);
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'date|name|label| [jahrstart/-5] | [jahrende/+5 ]| [Anzeigeformat YYYY-MM-DD] | [1/Aktuelles Datum voreingestellt] | [no_db] ';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

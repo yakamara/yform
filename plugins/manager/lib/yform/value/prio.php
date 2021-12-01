@@ -86,12 +86,12 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'prio|name|label|fields|scope|defaultwert';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',
@@ -111,7 +111,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
         ];
     }
 
-    public function postAction()
+    public function postAction(): void
     {
         $sql = rex_sql::factory();
         if ($this->debug) {

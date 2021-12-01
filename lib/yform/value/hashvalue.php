@@ -9,7 +9,7 @@
 
 class rex_yform_value_hashvalue extends rex_yform_value_abstract
 {
-    public function postFormAction()
+    public function postFormAction(): void
     {
         if ('' != $this->params['value_pool']['email'][$this->getElement('field')]) {
             $salt = $this->getElement('salt');
@@ -32,12 +32,12 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'hashvalue|name|[label]|field|(md5/sha1/sha512/...)|[salt]|[no_db]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

@@ -59,33 +59,33 @@ class rex_yform_validate_customfunction extends rex_yform_validate_abstract
         }
     }
 
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         if ('pre' == $this->getElement('validate_type')) {
-            return $this->customfunction_execute();
+            $this->customfunction_execute();
         }
     }
 
     public function enterObject()
     {
         if ('pre' != $this->getElement('validate_type') && 'post' != $this->getElement('validate_type')) {
-            return $this->customfunction_execute();
+            $this->customfunction_execute();
         }
     }
 
-    public function postValueAction()
+    public function postValueAction(): void
     {
         if ('post' == $this->getElement('validate_type')) {
-            return $this->customfunction_execute();
+            $this->customfunction_execute();
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'validate|customfunction|name[s]|[!]function/class::method|weitere_parameter|warning_message|type[default:normal,pre,post]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'validate',

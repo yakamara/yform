@@ -69,12 +69,12 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'validate|compare|name1|name2|[!=/</>/==/>=/<=]|warning_message|';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'validate',

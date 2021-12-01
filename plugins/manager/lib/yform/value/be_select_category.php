@@ -97,7 +97,7 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
         $this->setValue(implode(',', $this->getValue()));
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

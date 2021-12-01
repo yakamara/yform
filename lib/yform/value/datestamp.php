@@ -9,7 +9,7 @@
 
 class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         $format = rex_sql::FORMAT_DATETIME;
         $default_value = date($format);
@@ -48,12 +48,12 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'datestamp|name|label|[YmdHis/U/dmy/mysql]|[no_db]|[0-always,1-only if empty,2-never]';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',
@@ -95,16 +95,13 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         return $return;
     }
 
+    public static function getSearchField($params)
+    {
+        rex_yform_value_datetime::getSearchField($params);
+    }
+
     public static function getSearchFilter($params)
     {
-        $sql = rex_sql::factory();
-
-        $value = $params['value'];
-        $field = $sql->escapeIdentifier($params['field']->getName());
-
-        preg_match('/^\s*(<|<=|>|>=|<>|!=)?\s*(.*)$/', $value, $match);
-        $comparator = $match[1] ?: '=';
-        $value = $match[2];
-        return ' ' . $field . ' ' . $comparator . ' ' . $sql->escape($value);
+        return rex_yform_value_datetime::getSearchFilter($params);
     }
 }

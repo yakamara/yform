@@ -332,6 +332,45 @@ Sobald Spambots das input-Feld namens `email` als Eingabe-Feld erkennen, werden 
 * Das korrekte E-Mail-Feld wird nicht mehr vom Browser vorausgefüllt.
 * Die Lösung ist nur bedingt barrierefrei.
 
+
+## Eigene Templates verwenden
+
+Um vorhandenen ytemplates wie z.B. value.text.tpl.php überschreiben zu können, muss zunächst der eigene neue ytemplate Ordner hinzugefügt werden, damit dieser nach eventuellen Ersetzungen durchsucht werden kann.
+
+Struktur
+
+`addons/project/ytemplates/bootstrap/*`
+
+```php
+<?php
+
+// in die project/boot.php
+
+$path = rex_addon::get('project')->getPath('ytemplates');
+rex_yform::addTemplatePath($path);
+
+?>
+```
+Jetzt wird zunächst dieser Ordner nach einzelnen Templates durchsucht und ersetzt und als Fallback die vorhandenen ytemplates genommen.
+
+Will man eine komplett eigene Templategruppe aufmachen, so muss man zunächst in diesem hinzugefügten Ordner einen neuen Ordner parallel zu bootstrap anlegen, z.B. `meinetemplates`
+
+Um diese neue Gruppe zu verwenden, muss in dem jeweiligen Formular durch setzen den Objparams `form_ytemplate`, die neue Gruppe gesetzt werden.
+
+In der php Schreibweise wäre es z.B. so:
+
+```php
+<?php
+
+// ..
+$yform->setObjectparams('form_ytemplate', 'meinetemplates,bootstrap', true);
+
+?>
+```
+
+
+
+
 ## Mitgliedsantrag
 
 In diesem Tutorial geht es darum, ein Formular zu entwerfen, mit dem Besucher einer Website verbindlich und sicher einen Mitgliedsantrag ausfüllen können.
@@ -524,3 +563,4 @@ if($key && $token) {
         ?>
     </div>
 ```
+

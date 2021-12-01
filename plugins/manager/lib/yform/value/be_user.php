@@ -58,7 +58,7 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
         }
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

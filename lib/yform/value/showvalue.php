@@ -22,12 +22,12 @@ class rex_yform_value_showvalue extends rex_yform_value_abstract
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'showvalue|name|label|defaultwert|notice';
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

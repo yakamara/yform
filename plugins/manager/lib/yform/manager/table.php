@@ -31,7 +31,6 @@ class rex_yform_manager_table implements ArrayAccess
     {
         $this->values = $data['table'];
         $this->columns = $data['columns'];
-
         $this->fields = [];
         foreach ($data['fields'] as $field) {
             try {
@@ -221,7 +220,7 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['list_amount'];
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->values['description'];
     }
@@ -494,7 +493,6 @@ class rex_yform_manager_table implements ArrayAccess
         foreach ($tables as $table) {
             $tableName = $table['table_name'];
             self::$cache[$tableName]['table'] = $table;
-
             self::$cache[$tableName]['columns'] = [];
             try {
                 foreach (rex_sql::showColumns($tableName) as $column) {
@@ -534,5 +532,4 @@ class rex_yform_manager_table implements ArrayAccess
     {
         return 'table_field-'.$this->getTableName();
     }
-
 }

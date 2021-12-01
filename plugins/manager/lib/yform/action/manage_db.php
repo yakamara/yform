@@ -9,7 +9,7 @@
 
 class rex_yform_action_manage_db extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         // START - Spezialfall "be_em_relation"
         /*
@@ -39,7 +39,7 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
             $this->params['form_show'] = true;
             $this->params['hasWarnings'] = true;
             $this->params['warning_messages'][] = $this->params['Error-Code-InsertQueryError'];
-            return false;
+            return;
         }
 
         $columns = [];

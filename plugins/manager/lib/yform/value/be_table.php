@@ -10,7 +10,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 {
     protected $fieldData = [];
 
-    public function preValidateAction()
+    public function preValidateAction(): void
     {
         // bc service for Version < 1.1
         if ('' != $this->getValue() && '' == json_decode($this->getValue())) {
@@ -185,7 +185,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $this->fieldData[$index][$key] = $value;
     }
 
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         return [
             'type' => 'value',

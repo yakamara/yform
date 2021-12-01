@@ -9,18 +9,18 @@
 
 class rex_yform_action_redirect extends rex_yform_action_abstract
 {
-    public function executeAction()
+    public function executeAction(): void
     {
         // spezialfaelle - nur bei request oder label
         switch ($this->getElement(3)) {
             case 'request':
                 if (!isset($_REQUEST[$this->getElement(4)])) {
-                    return false;
+                    return;
                 }
                 break;
             case 'label':
                 if (!isset($this->params['value_pool']['sql'][$this->getElement(4)])) {
-                    return false;
+                    return;
                 }
                 break;
         }
@@ -46,7 +46,7 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
         }
     }
 
-    public function getDescription()
+    public function getDescription(): string
     {
         return 'action|redirect|Artikel-Id oder Externer Link|request/label|field';
     }
