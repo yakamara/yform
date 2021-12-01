@@ -75,7 +75,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $values[] = $v;
                     $valueName = $listValues[$v] . ' [id=' . $v . ']';
                     $options[] = ['id' => $v, 'name' => $valueName];
-                    $viewOptions[] = $valueName;
+                    $viewOptions[$v] = $valueName;
                 }
             }
             $this->setValue($values);
@@ -114,12 +114,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 if (strlen($name) > 50) {
                     $name = mb_substr($name, 0, 45) . ' ... ';
                 }
-                $viewOptions[] = $name;
+                $viewOptions[$id] = $name;
                 $options[] = ['id' => $id, 'name' => $name . ' [id=' . $id . ']'];
             }
 
             if (!$this->isEditable()) {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.be_manager_relation.tpl.php'], ['value' => $viewOptions]);
+                $this->params['form_output'][$this->getId()] = $this->parse([ 'value.be_manager_relation-view.tpl.php', 'value.view.tpl.php'], ['options' => $viewOptions]);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('options'));
             }
@@ -132,11 +132,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $link .= '&rex_yform_filter[' . $key . ']=' . $value . '&rex_yform_set[' . $key . ']=' . $value;
             }
             if (!$this->isEditable()) {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.be_manager_relation.tpl.php'], ['value' => $viewOptions]);
-
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_manager_relation.tpl.php', 'value.view.tpl.php'], ['options' => $viewOptions]);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
-
             }
         }
 
@@ -540,7 +538,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             if ($relationTableFields['source'] && $relationTableFields['target']) {
                 $sql = rex_sql::factory();
                 // $sql->setDebug();
-                $sql->setQuery('
+                $sql->setQuery(
+                    '
                     SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                     FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
                     WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
@@ -740,7 +739,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         if ($relationTableFields['source'] && $relationTableFields['target']) {
             $sql = rex_sql::factory();
             $sql->setDebug($this->params['debug']);
-            $sql->setQuery('
+            $sql->setQuery(
+                '
                 SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                 FROM ' . $sql->escapeIdentifier($this->getElement('relation_table')) . '
                 WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $this->params['main_id']

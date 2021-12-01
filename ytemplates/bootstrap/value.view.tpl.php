@@ -1,14 +1,16 @@
 <?php
 
 $value = $value ?? $this->getValue() ?? '';
+$options = $options ?? [];
 
 if (is_array($value)) {
     if (0 == count($value)) {
         $value = '-';
     } elseif (1 == count($value)) {
-        $value = rex_escape(current($value));
+        $value = (isset($options[current($value)]) ? rex_escape($options[current($value)]) : 'error - no option found for '. rex_escape(current($value)));
     } elseif (1 < count($value)) {
         foreach ($value as $k => $v) {
+            $v = (isset($options[$v]) ? rex_escape($options[$v]) : 'error - no option found for '. rex_escape($v));
             $value[$k] = '<li>'.rex_escape($v).'</li>';
         }
         $value = '<ul>'.implode('', $value).'</ul>';

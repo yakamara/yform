@@ -84,8 +84,12 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $template = $choiceList->isExpanded() ? 'value.choice.check.tpl.php' : 'value.choice.select.tpl.php';
 
             if (!$this->isEditable()) {
-                $template = str_replace('choice','choice-view', $template);
-                $html = $this->parse(['value.view.tpl.php', $template], compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
+                $template = str_replace('choice', 'choice-view', $template);
+                $options = [];
+                foreach ($choiceListView->choices as $choice) {
+                    $options[$choice->getValue()] = $choice->getLabel();
+                }
+                $html = $this->parse([$template, 'value.view.tpl.php'], compact('options', 'choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
             } else {
                 $html = $this->parse($template, compact('choiceList', 'choiceListView', 'elementAttributes', 'groupAttributes'));
             }
@@ -224,7 +228,9 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             unset($choices['']);
         }
 
-        $params['searchForm']->setValueField('choice', [
+        $params['searchForm']->setValueField(
+            'choice',
+            [
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
             'choices' => $choices,
