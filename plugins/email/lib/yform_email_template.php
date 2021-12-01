@@ -25,7 +25,8 @@ class rex_yform_email_template
 
     public static function replaceVars(array $template, $er = [])
     {
-        $r = rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_BEFORE_REPLACEVARS',
+        $r = rex_extension::registerPoint(new rex_extension_point(
+            'YFORM_EMAIL_BEFORE_REPLACEVARS',
             [
                 'template' => $template,
                 'search_replace' => $er,
@@ -48,14 +49,6 @@ class rex_yform_email_template
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
         foreach ($template as $k => $v) {
-            foreach ($er as $er_key => $er_value) {
-                /** @deprecated will be removed. use REX_YFORM_DATA[field="name"] */
-                $template[$k] = str_replace('###' . $er_key . '###', $er_value, $template[$k]);
-                /** @deprecated will be removed. use REX_YFORM_DATA[field="name"] */
-                $template[$k] = str_replace('***' . $er_key . '***', urlencode($er_value), $template[$k]);
-                /** @deprecated will be removed. use REX_YFORM_DATA[field="name"] */
-                $template[$k] = str_replace('+++' . $er_key . '+++', self::makeSingleLine($er_value), $template[$k]);
-            }
             $template[$k] = rex_var::parse($template[$k], '', 'yform_email_template', $er);
         }
 
@@ -89,7 +82,8 @@ class rex_yform_email_template
      */
     public static function sendMail(array $template, string $template_name = '')
     {
-        $r = rex_extension::registerPoint(new rex_extension_point('YFORM_EMAIL_BEFORE_SEND',
+        $r = rex_extension::registerPoint(new rex_extension_point(
+            'YFORM_EMAIL_BEFORE_SEND',
             [
                 'template' => $template,
                 'template_name' => $template_name,
