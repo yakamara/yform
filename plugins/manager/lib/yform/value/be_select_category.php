@@ -92,7 +92,13 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
             $this->setValue(explode(',', $this->getValue()));
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
+        if ($this->needsOutput() && $this->isViewable()) {
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.select-view.tpl.php', 'value.view.tpl.php'], compact('options', 'multiple', 'size'));
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.select.tpl.php', 'value.view.tpl.php'], compact('options', 'multiple', 'size'));
+            }
+        }
 
         $this->setValue(implode(',', $this->getValue()));
     }
@@ -125,13 +131,11 @@ class rex_yform_value_be_select_category extends rex_yform_value_abstract
     public static function getListValue($params)
     {
         $return = [];
-
         foreach (explode(',', $params['value']) as $id) {
             if ($cat = rex_category::get($id, (int) $params['params']['field']['clang'])) {
                 $return[] = $cat->getName();
             }
         }
-
         return implode('<br />', $return);
     }
 }
