@@ -2,8 +2,12 @@
 
 $value = $value ?? $this->getValue() ?? '';
 $options = $options ?? [];
+$download_link = $download_link ?? '';
 
-if (is_array($value)) {
+if ('' != $download_link) {
+    $filename = $filename ?? 'Download';
+    $value = '<a href="'.$download_link.'">'.rex_escape($filename).'</a>';
+} elseif (is_array($value)) {
     if (0 == count($value)) {
         $value = '-';
     } elseif (1 == count($value)) {
@@ -15,7 +19,6 @@ if (is_array($value)) {
         }
         $value = '<ul>'.implode('', $value).'</ul>';
     }
-
 } else {
     $length = strlen($value);
     $title = $value;
