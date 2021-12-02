@@ -97,7 +97,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $yearEnd = date('Y');
         }
 
-        if ($yearEnd <= $yearStart) {
+        if ($yearEnd < $yearStart) {
             $yearEnd = $yearStart + 20;
         }
 

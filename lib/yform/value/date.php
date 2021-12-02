@@ -85,7 +85,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $yearEnd = (int) $this->getElement('year_end');
         }
 
-        if ($yearEnd <= $yearStart) {
+        if ($yearEnd < $yearStart) {
             $yearEnd = date('Y') + 10;
         }
 
