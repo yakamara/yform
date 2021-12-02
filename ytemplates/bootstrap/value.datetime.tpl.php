@@ -1,5 +1,15 @@
 <?php
 
+$second = $second ?? 0;
+$minute = $minute ?? 0;
+$hour = $hour ?? 0;
+$day = $day ?? 0;
+$month = $month ?? 0;
+$year = $year ?? 0;
+$format = $format ?? 'YYYY-MM-DD HH:ii:ss';
+$yearStart = $yearStart ?? '1800';
+$yearEnd = $yearEnd ?? '2100';
+
 $notices = [];
 if ('' != $this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
@@ -87,10 +97,10 @@ if (false !== $pos) {
     ], ['required', 'disabled', 'readonly']);
 
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
-    foreach ($hours as $i):
+    for ($i = 0; $i < 24; ++$i) {
         $selected = (@$hour == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-    endforeach;
+        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad($i, 2, '0', STR_PAD_LEFT).'</option>';
+    }
     $replace_i .= '</select>';
     $replace['HH'] = $replace_i;
     $search[] = 'HH';
@@ -105,10 +115,10 @@ if (false !== $pos) {
     ], ['required', 'disabled', 'readonly']);
 
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
-    foreach ($minutes as $i):
+    for ($i = 0; $i < 60; ++$i) {
         $selected = (@$minute == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-    endforeach;
+        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad($i, 2, '0', STR_PAD_LEFT).'</option>';
+    }
     $replace_i .= '</select>';
     $replace['ii'] = $replace_i;
     $search[] = 'ii';
@@ -123,10 +133,10 @@ if (false !== $pos) {
     ], ['required', 'disabled', 'readonly']);
 
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
-    foreach ($seconds as $i): // ($i = 0; $i < 60; ++$i):
+    for ($i = 0; $i < 60; ++$i) {
         $selected = (@$second == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
-    endforeach;
+        $replace_i .= '<option value="'.$i.'"'.$selected.'>'.str_pad($i, 2, '0', STR_PAD_LEFT).'</option>';
+    }
     $replace_i .= '</select>';
     $replace['ss'] = $replace_i;
     $search[] = 'ss';
