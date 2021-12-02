@@ -704,7 +704,7 @@ class rex_yform_manager
             }
 
             $field_links = [];
-            if (!$popup && rex::getUser()->isAdmin()) {
+            if (rex::getUser()->isAdmin()) {
                 $item = [];
                 $item['label'] = rex_i18n::msg('yform_edit');
                 $item['url'] = 'index.php?page=yform/manager/table_field&table_name=' . $this->table->getTableName();
@@ -741,18 +741,27 @@ class rex_yform_manager
             }
         }
 
-        $fragment = new rex_fragment();
-        $fragment->setVar('title', rex_i18n::msg('yform_tabledata_overview'));
-        $fragment->setVar('options', implode('', $panel_options), false);
-        $fragment->setVar('content', $list->get(), false);
-        $searchlist = $fragment->parse('core/page/section.php');
-
-        $mainFragment->setVar('messages', $mainMessages ?? [], false);
-        $mainFragment->setVar('searchList', $searchlist ?? '', false);
-        if ($this->table->isSearchable() && $this->hasDataPageFunction('search')) {
-            $mainFragment->setVar('searchForm', $searchform ?? '', false);
-        }
+        $mainFragment->setVar('table', $this->table, false);
+        $mainFragment->setVar('this', $this, false);
+        $mainFragment->setVar('overview_title', rex_i18n::msg('yform_tabledata_overview'), false);
+        $mainFragment->setVar('overview_options', $panel_options, false);
+        $mainFragment->setVar('overview_list', $list, false);
+        $mainFragment->setVar('messages', $mainMessages, false);
+        $mainFragment->setVar('searchForm', $searchform, false);
         return $mainFragment->parse('yform/manager/page/layout.php');
+
+        // $fragment = new rex_fragment();
+        // $fragment->setVar('title', rex_i18n::msg('yform_tabledata_overview'));
+        // $fragment->setVar('options', implode('', $panel_options), false);
+        // $fragment->setVar('content', $list->get(), false);
+        // $searchlist = $fragment->parse('core/page/section.php');
+        //
+        // $mainFragment->setVar('messages', $mainMessages ?? [], false);
+        // $mainFragment->setVar('searchList', $searchlist ?? '', false);
+        // if ($this->table->isSearchable() && $this->hasDataPageFunction('search')) {
+        //     $mainFragment->setVar('searchForm', $searchform ?? '', false);
+        // }
+        // return $mainFragment->parse('yform/manager/page/layout.php');
     }
 
     public function getDataListQuery(rex_yform_manager_query $query, array $rex_filter = [], rex_yform_manager_search $searchObject = null)
@@ -779,8 +788,7 @@ class rex_yform_manager
         if ($searchObject) {
             $query = $searchObject->getQueryFilter($query);
         }
-        $query = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST_QUERY', $query, ['filter' => $rex_filter]));
-        return $query;
+        return rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST_QUERY', $query, ['filter' => $rex_filter]));
     }
 
     // ---------------------------------- table functions
@@ -827,8 +835,7 @@ class rex_yform_manager
         }
 
         if ('' != $type_real_field) {
-            $panel = '';
-            $panel .= '<dl class="dl-horizontal text-left">';
+            $panel = '<dl class="dl-horizontal text-left">';
 
             $rfields = $this->table->getColumns();
             foreach ($rfields[$type_real_field] as $k => $v) {
@@ -1058,7 +1065,7 @@ class rex_yform_manager
             }
 
             if (isset($types[$type_id][$type_name]['validates']) && is_array($types[$type_id][$type_name]['validates'])) {
-                foreach ($types[$type_id][$type_name]['validates'] as $k => $v) {
+                foreach ($types[$type_id][$type_name]['validates'] as $v) {
                     $yform->setValidateField(key($v), current($v));
                 }
             }
@@ -1380,7 +1387,7 @@ class rex_yform_manager
                 // $list->setColumnFormat('id', 'Id');
 
                 $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
-                $thIcon = '<a href="' . $list->getUrl(['table_name' => $table->getTableName(), 'func' => 'choosenadd']) . '"' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
+                $thIcon = '<a href="' . $list->getUrl(['table_name' => $table->getTableName(), 'func' => 'choosenadd']) . '" ' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
                 $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
                 $list->setColumnParams($thIcon, ['field_id' => '###id###', 'func' => 'edit', 'type_name' => '###type_name###', 'type_id' => '###type_id###']);
 

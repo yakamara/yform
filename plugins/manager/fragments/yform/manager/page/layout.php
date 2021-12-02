@@ -1,10 +1,25 @@
 <?php
 
-$searchForm = $this->getVar('searchForm');
-$searchList = $this->getVar('searchList');
+/* @var $manager rex_yform_manager */
+$manager = $this->getVar('this');
+
+/* @var $table rex_yform_manager_table */
+$table = $this->getVar('table');
 $detailForm = $this->getVar('detailForm');
 $historyPage = $this->getVar('historyPage');
 $importPage = $this->getVar('importPage');
+
+$searchForm = '';
+if ($table->isSearchable() && $manager->hasDataPageFunction('search')) {
+    $searchForm = $this->getVar('searchForm');
+}
+
+$fragment = new rex_fragment();
+$fragment->setVar('title', $this->getVar('overview_title'));
+$fragment->setVar('options', implode('', $this->getVar('overview_options')), false);
+$fragment->setVar('content', $this->getVar('overview_list')->get(), false);
+$fragment->setVar('search', $this->getVar('list_search'), false);
+$searchList = $fragment->parse('core/page/section.php');
 
 $messages = $this->getVar('messages') ?? [];
 
@@ -44,5 +59,3 @@ if ($importPage) {
 } else {
     echo $searchList;
 }
-
-?>
