@@ -9,15 +9,13 @@
 
 class rex_yform_value_time extends rex_yform_value_abstract
 {
-    public const VALUE_TIME_SHOW_DEFAULT_FORMAT = 'H:i:s';
-    public const VALUE_TIME_SHOW_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
+    public const VALUE_TIME_DEFAULT_FORMAT = 'H:i:s';
+    public const VALUE_TIME_FORMATS = ['H:i:s' => 'H:i:s', 'H:i' => 'H:i', 'H' => 'H', 'G:i' => 'G:i', 'g:i a' => 'g:i a', 'g:i:s a' => 'g:i:s a', 'h:i a' => 'h:i a', 'h:i:s a' => 'h:i:s a'];
 
     public function preValidateAction(): void
     {
         $value = $this->getValue();
-        if (1 == $this->getElement('current_time') && '' == $this->getValue() && $this->params['main_id'] < 1) {
-            $value = date('H:i:s');
-        } else if (is_array($value)) {
+        if (is_array($value)) {
             $hour = (int) @$value['hour'];
             $minute = (int) @$value['minute'];
             $second = (int) @$value['second'];
@@ -35,10 +33,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
     {
         $value = $this->getValue();
         if (is_array($value)) {
-            $hour = (int) substr(@$value['hour'], 0, 2);
-            $minute = (int) substr(@$value['minute'], 0, 2);
-            $second = (int) substr(@$value['second'], 0, 2);
+            $hour = (int) @$value['hour'];
+            $minute = (int) @$value['minute'];
+            $second = (int) @$value['second'];
             $value = sprintf("%02d:%02d:%02d", $hour, $minute, $second);
+        } else {
+            $value = (string) $value;
         }
         $this->setValue($value);
 
@@ -53,17 +53,22 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(
-                ['value.time-view.tpl.php', 'value.view.tpl.php'], ['type' => 'text', 'value' => self::time_getFormattedTime($this->getElement('format'), $this->getValue())]);
+                ['value.time-view.tpl.php', 'value.view.tpl.php'],
+                ['type' => 'text', 'value' => self::time_getFormattedTime($this->getElement('format'), $this->getValue())]
+            );
         } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
-                ['value.text.tpl.php'], ['type' => 'text', 'value' => $this->getValue()]);
+                ['value.text.tpl.php'],
+                ['type' => 'text', 'value' => $this->getValue()]
+            );
         } else {
             $format = 'HH:ii:ss'; // Format of Select Order
             $hour = (int) substr($this->getValue(), 0, 2);
             $minute = (int) substr($this->getValue(), 3, 2);
             $second = (int) substr($this->getValue(), 6, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
-                ['value.time.tpl.php', 'value.datetime.tpl.php'], compact('format', 'hour', 'minute', 'second')
+                ['value.time.tpl.php', 'value.datetime.tpl.php'],
+                compact('format', 'hour', 'minute', 'second')
             );
         }
     }
@@ -81,7 +86,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => self::VALUE_TIME_SHOW_FORMATS],
+                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => self::VALUE_TIME_FORMATS],
                 'current_time' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_time_current_time')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
@@ -95,7 +100,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public static function time_getFormattedTime($format, $time)
     {
-        $format = (in_array($format, self::VALUE_TIME_SHOW_FORMATS, true)) ? $format : self::VALUE_TIME_SHOW_DEFAULT_FORMAT;
+        $format = (in_array($format, self::VALUE_TIME_FORMATS, true)) ? $format : self::VALUE_TIME_DEFAULT_FORMAT;
         $hour = (int) substr($time, 0, 2);
         $minute = (int) substr($time, 3, 2);
         $second = (int) substr($time, 6, 2);
