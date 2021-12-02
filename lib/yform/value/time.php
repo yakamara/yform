@@ -26,6 +26,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
         if (1 == $this->getElement('current_time') && '' == $this->getValue() && $this->params['main_id'] < 1) {
             $value = date('H:i:s');
         }
+        if ('' == $value) {
+            $value = '00:00:00';
+        }
         $this->setValue($value);
     }
 
@@ -75,7 +78,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return 'time|name|label|[stundenraster 0,1,2,3,4,5]|[minutenraster 00,15,30,45]|';
+        return 'time|name|label|';
     }
 
     public function getDefinitions(): array
