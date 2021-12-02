@@ -21,17 +21,29 @@ class rex_yform_value_number extends rex_yform_value_abstract
             $this->setValue($this->getValue());
         }
 
-        if ($this->needsOutput() && $this->isViewable()) {
-            if (!$this->isEditable()) {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.number-view.tpl.php', 'value.integer-view.tpl.php', 'value.view.tpl.php'], ['prepend' => $this->getElement('unit')]);
-            } else {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'], ['prepend' => $this->getElement('unit')]);
-            }
-        }
-
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
+
+        if (!$this->needsOutput() || !$this->isViewable()) {
+            return;
+        }
+
+        if (!$this->isEditable()) {
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.number-view.tpl.php', 'value.integer-view.tpl.php', 'value.view.tpl.php'],
+                ['prepend' => $this->getElement('unit')]
+            );
+        } else {
+            $type = 'text';
+            if ('input:number' == $this->getElement('widget')) {
+                $type = 'number';
+            }
+            $this->params['form_output'][$this->getId()] = $this->parse(
+                ['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'],
+                ['prepend' => $this->getElement('unit'), 'type' => $type]
+            );
         }
     }
 
@@ -52,6 +64,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
                 'scale' => ['type' => 'integer', 'label' => rex_i18n::msg('yform_values_number_scale'), 'default' => '2'],
                 'default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_number_default')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['input:text' => 'input:text', 'input:number' => 'input:number'], 'default' => 'input:text'],
                 'unit' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_unit')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
