@@ -15,23 +15,31 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     public function preValidateAction(): void
     {
         $value = $this->getValue();
-        if (is_array($value)) {
-            $year = (int) @$value['year'];
-            $month = (int) @$value['month'];
-            $day = (int) @$value['day'];
-            $hour = (int) @$value['hour'];
-            $minute = (int) @$value['minute'];
-            $second = (int) @$value['second'];
-            $value = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year, $month, $day, $hour, $minute, $second);
-        } else {
-            $value = (string) $value;
-        }
         if (1 == $this->getElement('current_date') && '' == $this->getValue() && $this->params['main_id'] < 1) {
             $value = date('Y-m-d H:i:s');
         }
-        if ('' == $value) {
-            $value = '0000-00-00 00:00:00';
+        if (is_array($value)) {
+            $year = (int) $value['year'] ?? 0;
+            $month = (int) $value['month'] ?? 0;
+            $day = (int) $value['day'] ?? 0;
+            $hour = (int) $value['hour'] ?? 0;
+            $minute = (int) $value['minute'] ?? 0;
+            $second = (int) $value['second'] ?? 0;
+        } else {
+            $value = (string) $value;
+            $value = explode(" ", $value);
+            if (2 == count($value)) {
+                $date = explode("-", (string) $value[0]);
+                $year = (int) $date[0] ?? 0;
+                $month = (int) $date[1] ?? 0;
+                $day = (int) $date[2] ?? 0;
+                $hms = explode(":", (string) $value[1]);
+                $hour = (int) $hms[0] ?? 0;
+                $minute = (int) $hms[1] ?? 0;
+                $second = (int) $hms[2] ?? 0;
+            }
         }
+        $value = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year ?? 0, $month ?? 0, $day ?? 0, $hour ?? 0, $minute ?? 0, $second ?? 0);
         $this->setValue($value);
     }
 
@@ -39,16 +47,27 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     {
         $value = $this->getValue();
         if (is_array($value)) {
-            $year = (int) @$value['year'];
-            $month = (int) @$value['month'];
-            $day = (int) @$value['day'];
-            $hour = (int) @$value['hour'];
-            $minute = (int) @$value['minute'];
-            $second = (int) @$value['second'];
-            $value = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year, $month, $day, $hour, $minute, $second);
+            $year = (int) $value['year'] ?? 0;
+            $month = (int) $value['month'] ?? 0;
+            $day = (int) $value['day'] ?? 0;
+            $hour = (int) $value['hour'] ?? 0;
+            $minute = (int) $value['minute'] ?? 0;
+            $second = (int) $value['second'] ?? 0;
         } else {
             $value = (string) $value;
+            $value = explode(" ", $value);
+            if (2 == count($value)) {
+                $date = explode("-", (string) $value[0]);
+                $year = (int) $date[0] ?? 0;
+                $month = (int) $date[1] ?? 0;
+                $day = (int) $date[2] ?? 0;
+                $hms = explode(":", (string) $value[1]);
+                $hour = (int) $hms[0] ?? 0;
+                $minute = (int) $hms[1] ?? 0;
+                $second = (int) $hms[2] ?? 0;
+            }
         }
+        $value = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year ?? 0, $month ?? 0, $day ?? 0, $hour ?? 0, $minute ?? 0, $second ?? 0);
         $this->setValue($value);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();

@@ -27,20 +27,20 @@ class rex_yform_value_date extends rex_yform_value_abstract
     public function preValidateAction(): void
     {
         $value = $this->getValue();
-        if (is_array($value)) {
-            $year = (int) @$value['year'];
-            $month = (int) @$value['month'];
-            $day = (int) @$value['day'];
-            $value = sprintf("%04d-%02d-%02d", $year, $month, $day);
-        } else {
-            $value = (string) $value;
-        }
         if (1 == $this->getElement('current_date') && '' == $this->getValue() && $this->params['main_id'] < 1) {
             $value = date('Y-m-d');
         }
-        if ('' == $value) {
-            $value = '0000-00-00';
+        if (is_array($value)) {
+            $year = (int) $value['year'] ?? 0;
+            $month = (int) $value['month'] ?? 0;
+            $day = (int) $value['day'] ?? 0;
+        } else {
+            $value = explode("-", (string) $value);
+            $year = (int) $value[0] ?? 0;
+            $month = (int) $value[1] ?? 0;
+            $day = (int) $value[2] ?? 0;
         }
+        $value = sprintf("%04d-%02d-%02d", $year, $month, $day);
         $this->setValue($value);
     }
 
@@ -48,13 +48,16 @@ class rex_yform_value_date extends rex_yform_value_abstract
     {
         $value = $this->getValue();
         if (is_array($value)) {
-            $year = (int) @$value['year'];
-            $month = (int) @$value['month'];
-            $day = (int) @$value['day'];
-            $value = sprintf("%04d-%02d-%02d", $year, $month, $day);
+            $year = (int) $value['year'] ?? 0;
+            $month = (int) $value['month'] ?? 0;
+            $day = (int) $value['day'] ?? 0;
         } else {
-            $value = (string) $value;
+            $value = explode("-", (string) $value);
+            $year = (int) $value[0] ?? 0;
+            $month = (int) $value[1] ?? 0;
+            $day = (int) $value[2] ?? 0;
         }
+        $value = sprintf("%04d-%02d-%02d", $year, $month, $day);
         $this->setValue($value);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
