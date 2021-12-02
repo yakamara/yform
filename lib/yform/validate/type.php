@@ -56,11 +56,8 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 }
                 break;
             case 'time':
-                $w = true;
-                $ex = explode(':', $Object->getValue());
-                if (3 == count($ex) && $ex[0] > -839 && $ex[0] < 839 && $ex[1] >= 0 && $ex[1] < 60 && $ex[2] >= 0 && $ex[2] < 60) {
-                    $w = false;
-                }
+                $timeObject = DateTime::createFromFormat('Y-m-d H:i:s', '2010-10-10 ' .  $Object->getValue());
+                $w = !($timeObject && $timeObject->format('H:i:s') == $Object->getValue());
                 break;
             case 'date':
                 $w = true;
