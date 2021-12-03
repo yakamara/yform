@@ -26,19 +26,15 @@ class rex_yform_manager_table implements ArrayAccess
     protected static $loadedAllTables = false;
 
     private static $cache;
+    protected $relatedTableNames = [];
+    protected $fieldValues = [];
 
     private function __construct(array $data)
     {
         $this->values = $data['table'];
         $this->columns = $data['columns'];
-        $this->fields = [];
-        foreach ($data['fields'] as $field) {
-            try {
-                $this->fields[] = new rex_yform_manager_field($field);
-            } catch (Exception $e) {
-                // ignore missing fields
-            }
-        }
+        $this->relatedTableNames = $data['related_tables'];
+        $this->fieldValues = $data['fields'];
     }
 
     /**
@@ -232,6 +228,16 @@ class rex_yform_manager_table implements ArrayAccess
      */
     public function getFields(array $filter = [])
     {
+        if (0 == count($this->fields)) {
+            foreach ($this->fieldValues as $field) {
+                try {
+                    $this->fields[] = new rex_yform_manager_field($field);
+                } catch (Exception $e) {
+                    // ignore missing fields
+                }
+            }
+        }
+
         if (!$filter) {
             return $this->fields;
         }
@@ -253,7 +259,7 @@ class rex_yform_manager_table implements ArrayAccess
     public function getValueFields(array $filter = [])
     {
         $fields = [];
-        foreach ($this->fields as $field) {
+        foreach ($this->getFields() as $field) {
             if ('value' !== $field->getType()) {
                 continue;
             }
@@ -326,11 +332,7 @@ class rex_yform_manager_table implements ArrayAccess
 
     public function getRelationTableNames(): array
     {
-        $tables = [];
-        foreach ($this->getFields() as $field) {
-            $tables = array_merge($tables, $field->getRelationTableNames());
-        }
-        return $tables;
+        return $this->relatedTableNames;
     }
 
     // Database Fielddefinition
@@ -510,6 +512,16 @@ class rex_yform_manager_table implements ArrayAccess
         foreach ($fields as $field) {
             if (isset(self::$cache[$field['table_name']])) {
                 self::$cache[$field['table_name']]['fields'][] = $field;
+            }
+        }
+
+        foreach (self::$cache as $tableName => $data) {
+            self::$cache[$tableName]['related_tables'] = [];
+            $table = new self(self::$cache[$tableName]);
+            foreach ($table->getFields() as $field) {
+                foreach ($field->getRelationTableNames() as $relatedTable) {
+                    self::$cache[$tableName]['related_tables'][$relatedTable] = $relatedTable;
+                }
             }
         }
 
