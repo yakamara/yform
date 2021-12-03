@@ -1,13 +1,12 @@
 Changelog
 =========
 
-Version 4.0.0 – xx.06.2021
+Version 4.0.0 – xx.12.2021
 --------------------------
 
 ### wichtige Änderungen
 * Der Manager ist technisch stark umgebaut worden. Bitte unbedingt Info dazu lesen
 * Viele deprecated Felder sind entfernt worden. Bitte genau durchlesen und beachten
-
 
 ### deprecated entfernt
 * Validierung nach email entfernt. Bitte mit type und email ersetzen
@@ -17,10 +16,13 @@ Version 4.0.0 – xx.06.2021
 * Feld password entfernt. Wird automatisch mit text ersetzt und sollte mit ycom und ycom_password ersetzt werden
 * Feld generate_password entfernt. Bitte stattdessen generate_key verwenden.
 * classic ytemplates entfernt, da diese nicht und nie vollständig waren und fehler produzierten. wurde wohl auch nie genutzt
+* E-Mail Templates *** ### Ersetzungen entfernt
+* Doppelten EP YFORM_MANAGER_DATA_PAGE
+* remembervalues Feld entfernt
 
 ### Neu
 * läuft nun auch auf PHP 8
-* Neue Rechtestruktur. Es gibt nun Ansichtsrechte und/oder Editierrechte für Rollen
+* ❤️ Neue Rechtestruktur. Es gibt nun Ansichtsrechte und/oder Editierrechte für Rollen
 * Viewansicht ergänzt. Automatische Viewansicht bei Relationstabellen.
 * UUID Feld ergönzt
 * Migration von Tabellen ohne Änderungen der Tabelle möglich
@@ -29,6 +31,9 @@ Version 4.0.0 – xx.06.2021
 * EP: YFORM_DATA_LIST_QUERY statt YFORM_DATA_LIST_SQL (nun entfernt)
 * EP: YFORM_LIST_GET statt REX_LIST_GET (aus der rex list)
 * YFORM_DATA_TABLE_EXPORT nun mit anderen Parametern ($query als Subject)
+* Manager: fragment layout nun relevanter für BE Ausgaben. Tiefere Änderungen möglich. 
+* First View ist nun Manager Page wenn vorhanden
+* Signature Feld ergänzt
 
 ### Korrekturen, Anpassungen, Bugs
 * Export Tabellen und Felder optimiert. Danke @christophboecker
@@ -49,11 +54,16 @@ Version 4.0.0 – xx.06.2021
 * Manager: Tabellenansicht verbessert
 * Tablesetexport ist nun aufs nötigste beschränkt
 * time-Feld: notices bei ergänzt
-* number-Feld: Attributes ergänzt
+* number-Feld: Attributes ergänzt und nun auch als type number möglich
 * RESTAPI: Eigene Header nun möglich
 * choice-Feld: Attributes ergänzt
+* date/datetime/datestamp angepasst und angeglichen, flexiblere Angaben möglich, Nur noch Standard-ISO Eingaben möglich
+* time angepasst. Stundenraster/Minutenraster entfern
+* validate type - time Überprüfung verbesser
+* datestamp hat nun auch eine Suche
+* Übersetzung der Tabellen bei den Benuterrechten geht wieder
 
-Danke Alexander Walther, Christoph Boecker, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
+Danke Alexander Walther, Norbert Micheel, Christoph Boecker, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
 
 Version 3.4.2 – 21.06.2021
 --------------------------
