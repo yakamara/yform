@@ -1082,13 +1082,8 @@ $yform->setValueField('prio', array("prio","Reihenfolge"));
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="prio"]
 
-#### remembervalues
-
 ###### Definition
 	Speichert Werte des Formulars in einem Cookie
-
-###### Beispiel Formbuilder
-	remembervalues|name|label|label1,label2,label3,label4|opt:default:1/0|opt:dauerinsekunden
 
 #### resetbutton
 

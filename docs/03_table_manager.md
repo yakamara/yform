@@ -56,6 +56,8 @@ echo $dataset->executeForm($yform);
 
 Daten im Table Manager werden in der SQL-Datenbank abgelegt, die bei der Redaxo-Installation angegeben wurde. Die einfachste Möglichkeit ist daher, über das [rex_sql-Objekt](https://github.com/redaxo/redaxo/wiki/Aenderungen-in-REDAXO-5#rex_sql) die Daten auszulesen.
 
+Über YOrm lassen sich die YForm-Daten auslesen, abfragen, filtern und verarbeiten.
+
 > Tipp: Um z. B. jede News oder jedes Produkt statt via GET-Parameter über eine eigene URL aufzurufen, obwohl kein eigener Artikel existiert, kann das [URL-Addon von Thomas Blum](https://github.com/tbaddade/redaxo_url) verwendet werden.
 
 ### Widget Ausgabe im Backend
@@ -308,27 +310,6 @@ Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen z
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
-
-### checkbox_sql
-
-Ein oder mehrere **Checkbox**-Felder mit Werten, die aus einer **SQL-Abfrage** stammen.  
-
-> **Wert in der Datenbank**
-> ids der verknüpften Datenbankeinträge, z. B. `1`, `10,25,58`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern im Formular ein.
-Name | Name des Felds in der Datenbank, z. B. `active_languages`, `tags`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Sichtbar in Sprachen`, `Schlagwörter`
-Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z. B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
-> **Tipp:**  
-> Mit checkbox_sql kann man z. B. in einer News-Tabelle einer News die Sprachen zuordnen, in der sie angezeigt werden sollen. 
-
 ### date
 
 Eine Reihe von Auswahlfeldern, in der ein <b>Datum</b> (Tag, Monat, Jahr) ausgewählt wird.
@@ -447,29 +428,9 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 > **Hinweis:**  
 > Das Feld wird nur aus technischen Gründen angelegt. Das Feld wird nicht mit einem Wert gefüllt.
 
-### float
+### generate_key
 
-> Achtung: Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `number` verwenden.
-
-Ein einfaches Eingabefeld für <b>Gleitkomma-Zahlen.</b>
-
-> **Wert in der Datenbank**
-> Zahl, z. B. `0.1234`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `price`, `fee`.
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Preis in EUR`, `Gebühr`
-Nachkommastellen | Anzahl der erlaubten Stellen nach dem Komma, z. B. `1`, `5`, `42`
-Defaultwert | Zahl, mit der das Eingabfeld vorausgefüllt wird, z. B. `0,1234`, `5` 
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
-> **Tipp:**  
-> Dieses Feld eignet sich besser für Zahlen als das Feld `text`, weil Dezimalzahlen mit `,` als Trennzeichen automatisch in `float`-Zahlen mit `.` als Trennzeichen umgewandelt werden.
+### google_geocode
 
 ### hashvalue
 
@@ -493,6 +454,8 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 
 > **Tipp**
 > Salt sollte immer individuell von Feld zu Feld und Redaxo-Installation zu Redaxo-Installation festegelgt werden, um die Sicherheit zu erhöhen. Als Generator für Salt kann z. B. ein [Passwort-Generator](https://www.passwort-generator.com/) zum Einsazt kommen.
+
+### hidden
 
 ### html
 
@@ -549,6 +512,8 @@ Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen z
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
+### ip
+
 ### mediafile
 
 Ein <b>Upload-Feld</b>, mit dem eine Datei in den Medienpool hochgeladen wird.
@@ -572,6 +537,18 @@ Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen z
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
+### number
+
+Option | Erläuterung
+------ | ------
+`precision` | ist die Anzahl der signifikanten Stellen. Der Bereich von `precision` liegt zwischen 1 und 65.
+
+`scale` | ist die Anzahl der Stellen nach dem Dezimalzeichen. Der Bereich für `scale` ist von `0` bis `30`. MySQL erfordert, dass `scale` kleiner gleich (`<=`) `precision` ist.
+
+### objparams
+
+### password
+
 ### php
 
 Führt <b>PHP-Code</b> an der gewünschten Stelle des Eingabe-Formulars aus.
@@ -586,13 +563,6 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 
 > **Hinweis**: Zusammen mit dem Upload-Feld lassen sich komfortabel [E-Mails mit Anhang versenden](demo_email-attachments.md).
 
-### number 
-
-Option | Erläuterung
------- | ------
-`precision` | ist die Anzahl der signifikanten Stellen. Der Bereich von `precision` liegt zwischen 1 und 65.
-
-`scale` | ist die Anzahl der Stellen nach dem Dezimalzeichen. Der Bereich für `scale` ist von `0` bis `30`. MySQL erfordert, dass `scale` kleiner gleich (`<=`) `precision` ist.
 
 ### prio
 
@@ -616,99 +586,11 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 > **Hinweis:**  
 > Wenn eine Beschränkung ausgewählt wurde, kann es vorkommen, dass ein Datensatz zunächst gespeichert werden muss, damit die Beschränkung greifen kann. Dadurch lässt sich z. B. eine Reihenfolge pro Kategorie festlegen.
 
-### radio
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
-
-> **Wert in der Datenbank** 
-> Wert des gewählten Radio-Buttons, z. B. `3`, `d`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `options`, `ranking`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Optionen`, `Rang`
-Selectdefinition, kommasepariert | Beschriftung und Wert für die Datenbank, z. B. `Erster=1,Zweiter=2,Dritter=3,disqualifiziert=d`
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Defaultwert | Wert, der beim Aufruf des Formulars vorausgewählt ist, z. B. `3` für `Dritter`
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
-### radio_sql
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-Ein oder mehrere Auswahlfelder als <b>Radio-Buttons</b>.
-
-> **Wert in der Datenbank**
-> Wert des gewählten Radio-Buttons, z. B. `3`, `d`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `clang_id`, `type`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Sprache`, `Typ`
-Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z. B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
-### select
-
-Ein <b>Auswahlfeld</b> mit vordefinierten Werten.
-
-> Wert in der Datenbank
-> Werte der gewählten Einträge, z. B. `1,2,3`, `d`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `options`, `ranking`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Optionen`, `Rang`
-Selectdefinition, kommasepariert | Beschriftung und Wert für die Datenbank, z. B. `Erster=1,Zweiter=2,Dritter=3,disqualifiziert=d`
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Defaultwert (opt.) | Wert des Eintrags, der beim Aufruf des Formulars vorausgewählt ist.
-Mehrere Felder möglich | Gibt an, ob ein oder mehrere Einträge ausgewählt werden können und das Feld als `<select multiple>` dargestellt wird.
-Höhe der Auswahlbox | Anzahl der Einträge, die `<select multiple>` auf einmal anzeigt. 
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
-### select_sql
-
-> **Achtung:** Dieser Feldtyp wird demnächst entfernt. Stattdessen Das Feld `choice` verwenden.
-
-Ein <b>Auswahlfeld</b> mit Werten, die aus einer <b>SQL-Abfrage</b> stammen.
-
-> Wert in der Datenbank
-> Werte der gewählten Einträge, z. B. `1,2,3`, `d`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `clang_id`, `type`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Sprache`, `Typ`
-Query mit "select id, name from .."  | SQL-Abfrage, um die Checkbox-Werte abzurufen, z. B. `SELECT id, name FROM rex_clang ORDER BY name`, `SELECT id, tag AS name FROM rex_project_tags ORDER BY id`
-Defaultwert (opt.) | Wert des Eintrags, der beim Aufruf des Formulars vorausgewählt ist.
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Leeroption  | Gibt an, ob es einen Eintrag "Ohne Auswahl" gibt.
-Text bei Leeroption (Bitte auswählen) | Beschriftung des Leeroption-Eintrags, z. B. `Bitte auswählen` oder `keine Auswahl`
-Mehrere Felder möglich | Gibt an, ob ein oder mehrere Einträge ausgewählt werden können und das Feld als `<select multiple>` dargestellt wird.
-Höhe der Auswahlbox | Anzahl der Einträge, die `<select multiple>` auf einmal anzeigt. 
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
-> **Tipp:**  
-> Ein select_sql-Feld kann ähnlich wie be_manager_relation dazu benutzt werden, um Datensätze fremder Tabellen in einer 1:1- oder 1:n-Beziehung zu verknüpfen.
-
 ### showvalue
 
 Zeigt einen Wert in der Ausgabe.
+
+### signature
 
 ### submit
 
@@ -789,8 +671,6 @@ Option | Erläuterung
 Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
 Name | Name des Felds in der Datenbank, z. B. `time`, `time_begin`
 Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Uhrzeit`, `Beginn der Veranstaltung`
-[Stundenraster] | optional: Kommagetrennte Liste an Stunden, die für den Nutzer zur Auswahl stehen sollen, z. B. `0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23`
-[Minutenraster] | optional: Kommagetrennte Liste an Minuten, die für den Nutzer zur Auswahl stehen sollen, z. B. `0,15,30,45`, `0,10,20,30,40,50`
 [Anzeigeformat ###H###h ###I###m] |  Reihenfolge der Auswahlfelder für Stunde und Minute beim bearbeiteten eines Datensatzes, z. B. `um ###H###:###I### Uhr`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
@@ -821,6 +701,9 @@ In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
 > **Hinweis**: Zusammen mit dem PHP-Feld lassen sich komfortabel [E-Mails mit Anhang versenden](demo_email-attachments.md).
+
+### uuid
+
 
 ## Validierung
 
@@ -882,21 +765,6 @@ function yform_validate_custom($label, $value, $param)
 }
 ```
 
-
-### email
-
-Überprüft, ob der Eingabe-Typ eine <b>E-Mail-Adresse</b> ist.
-
-Option | Erläuterung
------- | ------
-Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
-Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `email`, `contact`
-Fehlermeldung | Hinweis, der erscheint, wenn keine gültige E-Mail-Adresse angegeben wurde.
-
-> Hinweis: Falls das E-Mail-Feld ein Pflichtfeld ist, muss auch die Validierung `empty` hinzugefügt werden, da ein leeres Feld eine keine ungültige E-Mail-Adresse darstellt.
-
-> Hinweis: Die Validierung ist seit YForm 1.1 RFC-konform. 
-
 ### empty
 
 Überprüft, ob ein Eingabe-Wert <b>vorhanden</b> ist.
@@ -906,6 +774,8 @@ Option | Erläuterung
 Priorität | Reihenfolge des Feldes in der Feldübersicht und beim Abarbeiten der Validierungen.
 Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z. B. `email`, `name`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe leer ist.
+
+### in_names
 
 ### in_table
 
@@ -930,6 +800,10 @@ Name |  Name des Tabellenfeldes, das für die Überprüfung herangezogen wird, z
 Von | Wert, der mindestens eingegeben werden muss, z. B. `0`, `5`, `1000`
 Bis | Wert, der höchstens eingegeben werden darf, z. B. `5`,`10`,`2030`
 Fehlermeldung | Hinweis, der erscheint, wenn die Eingabe nicht im erlaubten Bereich liegt.
+
+### password_policy
+
+### preg_match
 
 ### size
 
