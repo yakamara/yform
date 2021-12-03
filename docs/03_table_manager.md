@@ -225,6 +225,8 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 > **Tipp für Anfänger:** Um die verknüpften Datensätze im Frontend auszugeben, wird eine SELECT-Abfrage mit einem `JOIN` benötigt.
 > **Tipp:** Details zu den umfangreichen Einstellungsmöglichkeiten gibt's im [be_relation-Tutorial](#anhang).
 
+> Achtung! Feld Typ Auswahl `int` nur bei `Mehrfachauswahl: Single` verwenden
+
 ### be_media
 
 Ein Redaxo-Feld, um eine einzelne oder mehrere <b>Medienpool-Datei/en</b> auszuwählen.
