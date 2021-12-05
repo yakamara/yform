@@ -9,7 +9,7 @@
         "phpstan": "phpstan analyse",
         "phpstan-baseline": "phpstan analyse --generate-baseline"
     },
-    "autoload-dev": {
+    "autoload": {
         "classmap": [
             "lib/",
             "plugins/"
