@@ -7,6 +7,8 @@ Version 4.0.0 – xx.12.2021
 ### wichtige Änderungen
 * Der Manager ist technisch stark umgebaut worden. Bitte unbedingt Info dazu lesen
 * Viele deprecated Felder sind entfernt worden. Bitte genau durchlesen und beachten
+* Wenn eigene Values und abgeleitete Methoden z.B. für z.B. getDefinitions genutzt werden, müssen jetzt die return types übergeben werden
+* Die Links im Table-Manager sind jetzt mit CSRF-Schutz versehen. Weitere Infos dazu in der Doku. 
 
 ### deprecated entfernt
 * Validierung nach email entfernt. Bitte mit type und email ersetzen
