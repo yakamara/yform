@@ -19,14 +19,14 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $value = date('H:i:s');
         }
         if (is_array($value)) {
-            $hour = (int) $value['hour'] ?? 0;
-            $minute = (int) $value['minute'] ?? 0;
-            $second = (int) $value['second'] ?? 0;
+            $hour = (int) ($value['hour'] ?? 0);
+            $minute = (int) ($value['minute'] ?? 0);
+            $second = (int) ($value['second'] ?? 0);
         } else {
             $value = explode(":", (string) $value);
-            $hour = (int) $value[0] ?? 0;
-            $minute = (int) $value[1] ?? 0;
-            $second = (int) $value[2] ?? 0;
+            $hour = (int) ($value[0] ?? 0);
+            $minute = (int) ($value[1] ?? 0);
+            $second = (int) ($value[2] ?? 0);
         }
         $value = sprintf("%02d:%02d:%02d", $hour, $minute, $second);
         $this->setValue($value);
@@ -36,14 +36,14 @@ class rex_yform_value_time extends rex_yform_value_abstract
     {
         $value = $this->getValue();
         if (is_array($value)) {
-            $hour = (int) $value['hour'] ?? 0;
-            $minute = (int) $value['minute'] ?? 0;
-            $second = (int) $value['second'] ?? 0;
+            $hour = (int) ($value['hour'] ?? 0);
+            $minute = (int) ($value['minute'] ?? 0);
+            $second = (int) ($value['second'] ?? 0);
         } else {
             $value = explode(":", (string) $value);
-            $hour = (int) $value[0] ?? 0;
-            $minute = (int) $value[1] ?? 0;
-            $second = (int) $value[2] ?? 0;
+            $hour = (int) ($value[0] ?? 0);
+            $minute = (int) ($value[1] ?? 0);
+            $second = (int) ($value[2] ?? 0);
         }
         $value = sprintf("%02d:%02d:%02d", $hour, $minute, $second);
         $this->setValue($value);

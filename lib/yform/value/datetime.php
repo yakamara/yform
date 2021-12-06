@@ -19,24 +19,24 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $value = date('Y-m-d H:i:s');
         }
         if (is_array($value)) {
-            $year = (int) $value['year'] ?? 0;
-            $month = (int) $value['month'] ?? 0;
-            $day = (int) $value['day'] ?? 0;
-            $hour = (int) $value['hour'] ?? 0;
-            $minute = (int) $value['minute'] ?? 0;
-            $second = (int) $value['second'] ?? 0;
+            $year = (int) ($value['year'] ?? 0);
+            $month = (int) ($value['month'] ?? 0);
+            $day = (int) ($value['day'] ?? 0);
+            $hour = (int) ($value['hour'] ?? 0);
+            $minute = (int) ($value['minute'] ?? 0);
+            $second = (int) ($value['second'] ?? 0);
         } else {
             $value = (string) $value;
             $value = explode(" ", $value);
             if (2 == count($value)) {
                 $date = explode("-", (string) $value[0]);
-                $year = (int) $date[0] ?? 0;
-                $month = (int) $date[1] ?? 0;
-                $day = (int) $date[2] ?? 0;
+                $year = (int) ($date[0] ?? 0);
+                $month = (int) ($date[1] ?? 0);
+                $day = (int) ($date[2] ?? 0);
                 $hms = explode(":", (string) $value[1]);
-                $hour = (int) $hms[0] ?? 0;
-                $minute = (int) $hms[1] ?? 0;
-                $second = (int) $hms[2] ?? 0;
+                $hour = (int) ($hms[0] ?? 0);
+                $minute = (int) ($hms[1] ?? 0);
+                $second = (int) ($hms[2] ?? 0);
             }
         }
         $value = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year ?? 0, $month ?? 0, $day ?? 0, $hour ?? 0, $minute ?? 0, $second ?? 0);
@@ -47,24 +47,24 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     {
         $value = $this->getValue();
         if (is_array($value)) {
-            $year = (int) $value['year'] ?? 0;
-            $month = (int) $value['month'] ?? 0;
-            $day = (int) $value['day'] ?? 0;
-            $hour = (int) $value['hour'] ?? 0;
-            $minute = (int) $value['minute'] ?? 0;
-            $second = (int) $value['second'] ?? 0;
+            $year = (int) ($value['year'] ?? 0);
+            $month = (int) ($value['month'] ?? 0);
+            $day = (int) ($value['day'] ?? 0);
+            $hour = (int) ($value['hour'] ?? 0);
+            $minute = (int) ($value['minute'] ?? 0);
+            $second = (int) ($value['second'] ?? 0);
         } else {
             $value = (string) $value;
             $value = explode(" ", $value);
             if (2 == count($value)) {
                 $date = explode("-", (string) $value[0]);
-                $year = (int) $date[0] ?? 0;
-                $month = (int) $date[1] ?? 0;
-                $day = (int) $date[2] ?? 0;
+                $year = (int) ($date[0] ?? 0);
+                $month = (int) ($date[1] ?? 0);
+                $day = (int) ($date[2] ?? 0);
                 $hms = explode(":", (string) $value[1]);
-                $hour = (int) $hms[0] ?? 0;
-                $minute = (int) $hms[1] ?? 0;
-                $second = (int) $hms[2] ?? 0;
+                $hour = (int) ($hms[0] ?? 0);
+                $minute = (int) ($hms[1] ?? 0);
+                $second = (int) ($hms[2] ?? 0);
             }
         }
         $value = sprintf("%04d-%02d-%02d %02d:%02d:%02d", $year ?? 0, $month ?? 0, $day ?? 0, $hour ?? 0, $minute ?? 0, $second ?? 0);
