@@ -245,7 +245,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $value = $params['value'];
         /** @var rex_yform_manager_query $query */
         $query = $params['query'];
-        $field = $params['field']->getName();
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         $self = new self();
         $values = $self->getArrayFromString($value);
