@@ -11,12 +11,19 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
 {
     public function enterObject()
     {
+        $this->setValue((string) $this->getValue());
+
+        if ('' != $this->getValue() && !rex_media::get($this->getValue())) {
+            $this->setValue('');
+        }
+
         static $counter = 0;
         ++$counter;
 
         if ($this->needsOutput() && $this->isViewable()) {
             if (!$this->isEditable()) {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.view.tpl.php', 'value.be_media-view.tpl.php'],
+                $this->params['form_output'][$this->getId()] = $this->parse(
+                    ['value.view.tpl.php', 'value.be_media-view.tpl.php'],
                     ['counter' => $counter, 'value' => explode(',', $this->getValue())]
                 );
             } else {
