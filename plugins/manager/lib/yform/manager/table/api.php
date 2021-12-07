@@ -212,7 +212,7 @@ class rex_yform_manager_table_api
             }
 
             $where = 'table_name=' . $field_update->escape($table_name) . '';
-            if (count($add_where) > 0) {
+            if (0 < count($add_where)) {
                 $where .= ' and (' . implode(' and ', $add_where) . ') ';
             }
 
@@ -277,12 +277,12 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param $table_name
-     * @param $column
+     * @param string $table_name
+     * @param array $column
      * @throws rex_sql_exception
      * @return array
      */
-    public static function migrateField($table_name, $column)
+    public static function migrateField(string $table_name, array $column): array
     {
         if ('id' == $column['name']) {
             return [];
@@ -517,13 +517,14 @@ class rex_yform_manager_table_api
         foreach ($fields as $field) {
             self::setTableField($table_name, $field);
         }
+        return $fields;
     }
 
     /**
-     * @param $field
+     * @param array $field
      * @throws rex_sql_exception
      */
-    public static function createMissingFieldColumns($field)
+    public static function createMissingFieldColumns(array $field): void
     {
         $columns = [];
         foreach (rex_sql::showColumns(rex_yform_manager_field::table()) as $column) {
@@ -551,7 +552,7 @@ class rex_yform_manager_table_api
      * @param false                   $delete_old
      * @throws rex_sql_exception
      */
-    public static function generateTableAndFields(rex_yform_manager_table $table, $delete_old = false)
+    public static function generateTableAndFields(rex_yform_manager_table $table, bool $delete_old = false): void
     {
         $tableName = $table->getTableName();
         rex_yform_manager_table::deleteCache();
@@ -633,7 +634,7 @@ class rex_yform_manager_table_api
      * @param false $delete_old
      * @throws rex_sql_exception
      */
-    public static function generateTablesAndFields($delete_old = false)
+    public static function generateTablesAndFields(bool $delete_old = false): void
     {
         rex_yform_manager_table::deleteCache();
         foreach (rex_yform_manager_table::getAll() as $table) {
