@@ -653,7 +653,7 @@ Name | Name des Felds in der Datenbank, z. B. `text`, `description`, `message`
 Bezeichnung |  Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. "Text", "Beschreibung", "Nachricht"
 Defaultwert | Wert, der beim Aufruf des Formulars eingetragen ist, z. B. `Geben Sie hier Ihre Nachricht ein`
 Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-individuelle Attribute | Zusätzliche Feld-Attribute im JSON-Format, z. B. `{"class":"form-control redactorEditor-full","id":"textarea1"}`
+individuelle Attribute | Zusätzliche Feld-Attribute im JSON-Format, z. B. `{"class":"form-control redactor-editor--full","id":"textarea1"}`
 Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
