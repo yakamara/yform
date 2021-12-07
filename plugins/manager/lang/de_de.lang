@@ -28,9 +28,9 @@ yform_prio_after = Nach "{0}"
 yform_prio_bottom = Am Ende
 
 yform_truncate_table = leeren
-yform_table_truncated = Tabelle wurde geleert
+yform_table_truncated = Die Datensätze dieser Tabelle wurden gelöscht. 
 yform_table_not_found = Die Tabelle wurde nicht gefunden
-yform_truncate_table_confirm = Wirklich die komplette Tabelle leeren?
+yform_truncate_table_confirm = Alle Datensätze dieser Tabelle werden gelöscht. Fortfahren?
 yform_table_overview = Tabellenübersicht
 
 yform_manager_edit_table = Tabelle editieren
