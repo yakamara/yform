@@ -116,6 +116,9 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $year = (int) substr($this->getValue(), 0, 4);
             $month = (int) substr($this->getValue(), 5, 2);
             $day = (int) substr($this->getValue(), 8, 2);
+            $hour = (int) substr($this->getValue(), 11, 2);
+            $minute = (int) substr($this->getValue(), 14, 2);
+            $second = (int) substr($this->getValue(), 17, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date.tpl.php', 'value.datetime.tpl.php'],
                 compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day', 'hour', 'minute', 'second')

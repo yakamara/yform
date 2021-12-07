@@ -533,6 +533,7 @@ class rex_yform
         }
 
         trigger_error(sprintf('yform template %s not found', $template), E_USER_WARNING);
+        return '';
     }
 
     public function parse($template, array $params = [])
