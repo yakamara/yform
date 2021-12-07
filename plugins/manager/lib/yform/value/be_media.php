@@ -11,7 +11,9 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $this->setValue((string) $this->getValue());
+        if (!is_string($this->getValue())) {
+            $this->setValue('');
+        }
 
         if ('' != $this->getValue() && !rex_media::get($this->getValue())) {
             $this->setValue('');
