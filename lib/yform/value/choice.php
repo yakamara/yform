@@ -21,6 +21,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             'multiple' => $this->getElement('multiple'),
             'placeholder' => $this->getElement('placeholder'),
             'preferred_choices' => $this->getElement('preferred_choices'),
+            'db_id' => $this->params['db_id'],
         ]);
 
         if (null === $this->getValue()) {
@@ -314,7 +315,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $choiceList = new rex_yform_choice_list($options);
 
         if (is_string($choicesElement) && 'SELECT' == rex_sql::getQueryType($choicesElement)) {
-            $sql = rex_sql::factory();
+            $sql = rex_sql::factory($elements['db_id']);
             $sql->setDebug($self->getParam('debug'));
             $choiceList->createListFromSqlArray(
                 $sql->getArray($choicesElement)
