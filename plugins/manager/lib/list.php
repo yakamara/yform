@@ -946,7 +946,7 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function replaceVariable($string, $varname)
     {
-        return str_replace('###' . $varname . '###', rex_escape($this->getValue($varname)), $string);
+        return str_replace(['###' . $varname . '###','___'.$varname.'___'], rex_escape($this->getValue($varname)), $string);
     }
 
     /**
@@ -960,7 +960,7 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function replaceVariables($value)
     {
-        if (!str_contains($value, '###')) {
+        if (!str_contains($value, '###') && !str_contains($value, '___')) {
             return $value;
         }
 
