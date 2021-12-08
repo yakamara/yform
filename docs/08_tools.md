@@ -33,22 +33,22 @@ Dabei wird auch hier ein Attribute im Textfeld gesetzt:
 
     data-yform-tools-inputmask = ""
 
-Man muss einen Wert angeben, damit dem Textfeld klar ist, wie die Überprüfung auszusehen hat. z. B.
+Man muss einen Wert angeben, damit dem Textfeld klar ist, wie die Überprüfung auszusehen hat. z.B.
 
-    dd/mm/yyyy
+    yyyy-mm-dd
 
 oder
 
-    99-99-9999
+    9999-99-99
 
 oder
 
     9-a{1,3}9{1,3}
 
 
-Das kann man im Manager über das Attributefeld innerhalb von z. B. text so setzen:
+Das kann man im Manager über das Attributefeld innerhalb von z.B. text so setzen:
 
-    {"data-yform-tools-inputmask":"dd/mm/yyyy"}
+    {"data-yform-tools-inputmask":"yyyy-mm-dd"}
 
 ## daterangepicker
 
@@ -67,23 +67,22 @@ oder
 
 und auch mit Formaten versehen werden. z. B. beim Datepicker
 
-    DD-MM-YYYY
+    YYYY-MM-DD
 
 oder beim Datetimepicker
 
-    YYYY-MM-DD HH:ii
+    YYYY-MM-DD HH:ii:ss
 
 kann man im Manager über das Attibutefeld innerhalb von z. B. date mit input:text so setzen:
 
-    {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii"}
-
+    {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii:ss"}
 
 ## Ein paar Beispiele für Kombinationen aus datepicker/datetimepicker und Inputmask
 
 datepicker und Inputmask:
 
-    {"data-yform-tools-datepicker":"DD.MM.YYYY", "data-yform-tools-inputmask":"dd.mm.yyyy"}
+    {"data-yform-tools-datepicker":"YYYY-MM-DD", "data-yform-tools-inputmask":"yyyy-mm-dd"}
 
 datetimepicker und Inputmask:
 
-    {"data-yform-tools-datetimepicker":"DD.MM.YYYY HH:ii:ss", "data-yform-tools-inputmask":"datetime", "data-inputmask-mask":"1.2.y h:s:s", "data-inputmask-alias":"dd.mm.yyyy", "data-inputmask-placeholder":"dd.mm.yyyy hh:mm:ss", "data-inputmask-separator":"."} 
+    {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii:ss", "data-yform-tools-inputmask":"datetime", "data-inputmask-mask":"y-2-1 h:s:s", "data-inputmask-alias":"dd.mm.yyyy", "data-inputmask-placeholder":"yyyy-mm-dd hh:mm:mm", "data-inputmask-separator":"-"}

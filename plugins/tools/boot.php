@@ -21,7 +21,7 @@ if (rex::isBackend() && rex::getUser()) {
 
     //rex_view::addCssFile($this->getAssetsUrl('select2-bootstrap-theme/dist/select2-bootstrap.min.css'));
 
-    rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/min/jquery.inputmask.bundle.min.js'));
+    rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/jquery.inputmask.min.js'));
 
     rex_view::addJsFile($this->getAssetsUrl('tools.js'));
 

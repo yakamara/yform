@@ -2,7 +2,7 @@
 ## Definitions
 - A   :     alphabetical uppercasing
 - &   :     alfanumeric uppercasing
-- #  :     hexadecimal
+- \#  :     hexadecimal
 
 ## Aliases
 ### URL
@@ -38,6 +38,13 @@ An VIN mask for entering valid VIN codes.
 
 ```javascript
 Inputmask("vin").mask(selector);
+```
+
+### SSN (Social security number)
+An SSN mask for entering valid SSN numbers.
+
+```javascript
+Inputmask("ssn").mask(selector);
 ```
 
 You can find/modify/extend these aliases in the inputmask.extensions.js

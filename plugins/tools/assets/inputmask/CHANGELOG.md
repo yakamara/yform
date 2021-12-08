@@ -1,21 +1,297 @@
 # Change Log
-All notable changes to this project will be documented in this file.
 
-## [3.3.11 - 2017-11-21]
-### Updates
-- Fix css for use with the androidHack & colorMask option
+## [5.0.6 - 01/06/2021]
 
-## [3.3.10 - 2017-10-16]
+### Addition
+- validationEventTimeOut option
+
 ### Updates
-- Fix changes from PR #1664
+- User Webpack/Terserplugin for minification
+- Fix caret shift with negative numbers in numeric aliases
+- enhance alternation logic
+- update datetime alias
+- datetime prefillYear option  
+    Enable/disable prefilling of the year.  
+    Although you can just over type the proposed value without deleting, many seems to see a problem with the year prediction.  
+    This options is to disable this feature.
+- better handle maxLength
+ 
+### Fixed
+- Decimal mask with maxlength turns integer into real number on maximum length #2260
+- jitMasking removing a decimal after the comma #2494
+- Issue with negative values and prefix in currency mask #2476
+- persian/arabic currency mask with regex #2472
+- Issue with negative values and prefix in currency mask #2476
+- Selecting all + backspace goes to the end of the input #2336
+- Error thrown, if only insert radixpoint and leave field and placeholder = "" #2475
+- Datetime alias with day auto-fill problem #2480
+- Suppress DateTime year autocomplete? #2395
+- Bug in iframes #2461
+- stuck with cursor on / text of date with datetime extension #2464
+- Inputmask with a _space_ as a placeholder and leap year date #2451
+- setvalue() "removes" number before comma when "positionCaretOnClick" and "digitsOptional" are set. #2457
+- Date field results into buggy output: 30/02/yy0y #2456
+- cant enter the leap year using jit masking #2453
+- Basically the same issue appears also when you have a valid date in the input but want to change something. #2435
+- Can't remove "placeholder" from datetime alias #2438
+- showMaskOnFocus: false causes 'Illegal invocation' error #2436
+- Input Mask for search fields (partially filled mask) #2425
+- HandleNativePlaceholder function prevents use of dynamic placeholders. #2433
+- '0' getting added unnecessarily if navigating using arrow key for datetime input mask #2289
+- jitmasking ssn #2420
+- Removing the mask from Input results in TypeError: Cannot read property 'dependencyLib' of undefined #2403
+- Country Code Problem #2397
+- Error thrown in unmask after upgrade to 5.0.5 #2375
+- Inputmask.remove(document.getElementById(selector)) is not working in Node after version 5.0.5 update #2373
+- date format yyyy-mm-dd doesn't work with min and max #2360
+- Datetime inputFormat mm/dd/yyyy allows entry of 02/3 without padding the day #1922
+
+## [5.0.5 - 07/08/2020]
+
+HOT FIX: jqlite dependency error
+
+#### [5.0.4 - 07/08/2020]
+### Addition
+- usePrototypeDefinitions option
+- numeric alias
+    - SetMaxOnOverflow option
+### Updates
+- handle ^ and $ in regex masks
+- datetime alias: add autofill logic to year
+    - complete with current year
+    - allow filled year be overtyped when min date is provided,
+- &lt;input-mask&gt; enhance attribute handling
+
+### Fixed
+- The fractional part cannot be typed if negative values are displayed in parentheses #1836
+- version 3.x to 4.x regex issue #1727
+- unmask regression? #2315
+    - only keep significant parts when using multiple masks
+- Datetime alias 29/02/a valid year does not always allows #2286
+- 'input-mask' has already been defined as a custom element #2285
+- Using min with alias integer not working correctly because of postValidation #2284
+- fix double events when using jQuery.clone function
+- Alternative for removed integerDigits property? #2278
+- Incorrect mask operation when deleting the value set through "value", "val", "setvalue". #2279
+- Cursor jumps to end of mask if changing value during typing #2274
+
+## [5.0.3 - 11/01/2020]
+### Fixed
+- regex mask crashes for long input size #2276
+- Pasted value is getting mixed up #2255
+- Swapped digits on paste with specific prefix #2256
+
+
+## [5.0.2 - 09/01/2020]
+### Addition
+- &lt;input-mask&gt; html element #2247
+
+### Fixed
+- Numeric alias: cannot clear input on blur #2235
+- Datetime alias H3:MM month validation fails #2239
+
+## [5.0.1 - 18/12/2019]
+### Addition
+- ssn mask
+
+### Updates
+- numeric aliases: set value with jQuery.val or native input.value =
+- numeric aliases: make min/max block input instead of setting the min/max value
+- jitMasking: autofill statics to improve the user experience
+
+### Fixed
+- Backspace not removing characters in some cases #2246
+- jitMasking and caret position with static characters #2243
+- datetime does not working in IE11 #2238
+
+## [5.0.0 - 02/12/2019]
+### Addition
+- add indian numbering support in numeric alias (indianns alias)
+- add roundingFN option to numeric alias.  (currency, decimal, ...)
+- input-inputmode support via inputmode option (if supported by browser)
+- add shortcuts option in numeric alias.
+- add insertModeVisual option
+
+### Updates
+- **postValidation**  
+    - add inputchar to arguments  
+    - also validate when the result is false**  
+- **change behavior of keepStatic option**
+    - multiple masks => default true  
+    - all other masks => default false
+- add more tokens for datetime format  
+- refactor inputfallbackevent
+- **drop colormask support** 
+- **drop disablePredictiveText option (was hack via colorMask)**  
+- ignore generated statics in revalidateMask
+- fix mask curruption when alternating and using jitmasking
+- Casing option will also allow case insensitive entry for static symbols  
+- **refactor numeric alias**
+- package & bundling
+- enhance regex alternations. ex: [01][0-9]|2[0-3] => ([01][0-9]|2[0-3])
+- extend command object  
+    - rewritePosition
+- revert insert-mode caret as selection instead of colored caret
+    - make delete/backspace behave like normal
+    - make visual optional
+
+### Fixed
+- Decimal - auto change comma to dot (numeric keyboard) #2098
+- If a decimal < 0.000001 (scale = 6), masked value incorrect. #2110
+- DateTime - HH:MM format doesn't accept some numbers for minutes #2209
+- Set currency prefix to empty by default #2066
+- NumericInput: Pasting integers without selecting results in extra 0s #2165
+- Wrong mask application on decimal field #2188
+- bootstrap-datepicker: date bug in mobile version #2195
+- Time 24 Hours Issue. #2194
+- 'Decimal'. New entered value is automatically prefixed with '.' #2189
+- inputmode not working #2193
+- Does not work on XHTML pages. #2187
+- isInputEventSupported method is creating a non-passive event #2185
+- No message with HTML5 validation #841
+- "setvalue" for empty value and "clearMaskOnLostFocus=false" duplicates mask suffix #2181
+- Uncaught TypeError: $(...).inputmask is not a function #1933
+- 12Hr Format time Hour error #2121
+- Backspace alters value/mask in datetime #2163
+- Suffix and white-space groupSeparator problem #813
+- Char before quantifier gets duplicated in tests #2152
+- FireFox - mask placeholder doesn't disappear #2138
+- im-insert not valid html #2122
+- No message with HTML5 validation #841
+- Manual input via virtual keyboard doesn't work #2116
+- Can't insert more than 2 letters in Firefox #2114
+- InputMask not getting fresh placeholder value #2111
+- Chrome autofill does not work with Inputmask #1330
+- Paste in inputmask #2088
+- The first character is truncated when masking. #2089
+- No leading zero for single-digit hours KO #2061
+- Only 1st placeholder is displayed for fields with same alias numeric #2060
+- Original placeholder disappear when mouseout in IE #2047
+- Document bug with disabled inputs caused by Firefox 64 and older #2045
+- Behaviour of v3 with hours not possible anymore #1918
+- Unmasked value of datetime alias, if empty, returns the placeholder #2039
+- ...
+
+
+## [4.0.4 - 2018-12-03]
+### Addition
+- add url as supported input type
+
+### Updates
+- rework jit enabled quantifiers
+
+### Fixed
+- restore greedy functionality
+- fix focus and mouseenter behavior in IE
+
+## [4.0.3 - 2018-11-07]
+
+### Addition
+- numeric.extensions - add inputType option to specify the type of initial value
+- README_numeric.md => Setting initial values
+
+### Updates
+- fix window.js for node
+
+### Fixed
+- digits: 3 - error on transform #2022
+- "Can not read property 'join' of undefined" when using Inputmask.format #2019
+- Inputmask numeric does no round up when digits is 0 #2018
+- Strange Calendar popup issue in IE Only when used with Daterangepicker #1965
+- incorrect work min max date - #2011, #2013
+
+## [4.0.2 - 2018-09-14]
+
+(4.0.1 => 4.0.2 rebuild dist with newer version of uglify #2000)
+
+### Updates
+- <strong>remove phone alias</strong> (~ use https://github.com/RobinHerbots/inputmask.phone or https://github.com/andr-04/inputmask-multi instead) #1981
+- enhance gettests for jit enabled quantifiers
+- pass initial validation position to postvalidation, to allow prefills in the datetime alias
+- remove caret selection for insertMode => use inputmask.css for visualization
+- update nuget package
+- update dependencies
+
+### Fixed
+- When blur input, inputmask adds attr placeholder to input - #1992
+- Fix endless loop for quantifiers (see tests_dynamic.js - latest unittests) #1983
+- Element keeps the focus to itself in ie11 #1846
+- Changes for min/max options do not get picked up. #1931
+- Behaviour of v3 with hours not possible anymore #1918
+- Multiple alternators #1553
+- jquery.inputmask: clearIncomplete and placeholder don't appear to do anything when array of masks used #1892
+- Problem with delete masked date on iOS #1899
+- Autofill corrupts input on email mask #1908(gl)
+
+## [4.0.0 - 2018-05-26]
+### Addition
+- add support for beforeInput event with inputType (Input Events Level 2 - https://w3c.github.io/input-events/)
+- extend positionCaretOnClick with "ignore" to ignore the click in the input
+- jit enabled dynamic masks
+- add support for input type search
+- new datetime alias
+- extend positionCaretOnClick with "select" to select the whole input on focus
+- add regex option (replaces the Regex alias)
+- CSS Unit Mask #1843
+
+### Updates
+- make behavior of [] an {0,1} consistent
+- change default value from greedy option to false
+- fix unmatched alternations in gettests. ("[0-9]{2}|[0-9]{3}" like masks)
+- code cleanup and refactoring
+    - enhance determineTestTemplate
+    - oncomplete calls
+    - merge setValidPosition and stripValidPositions => revalidateMask
+    - remove canClearPosition hook
+    - change notation of optionalmarker, quantifiermarker, groupmarker
+    - drop prevalidator and cardinality support in definitions
+    - drop Regex alias
+    - drop all date/time related aliases => replaced by new datetime alias
+- improve alternation logic
+- improve inputfallback (Android)
+- better caret handling in colormask
+- disable autocorrect on safari when disablePredictiveText is used
+- rename androidHack option to disablePredictiveText. Make it available for other platforms.
+
+### Fixed
+- Both date and time in same masked textbox #1888
+- time input mask min and max #1674
+- Bug: Using backspace when caret is not at the end messes up static placeholders #1525
+- Fast typing text #1872
+- jitMasking + disablePredictiveText causes android browser tab to stuck when clicked on "backspase" #1862
+- Android 6 issue - Samsung device keyboard #1818
+- Method oncomplete doesn't work correctly with jitMasking #1845
+- isComplete in numeric extensions doesn't take into account negationSymbol #1844
+- Email alias - retype @ removes last . #1324
+- When "clearIncomplete: true" and pressing Enter to Submit Form #1839
+- Hang on combination of optional mask and repeat #698
+- Can't remove inputmask on focus? #1820
+- Not able to input 31.12. in DD.MM date input in v4.x #1803
+- problem with two separate alternations #1722
+- colorMask + Remask = Duplicate im-colormask element #1709
+
+### Note
+Be aware when upgrading from 3.3.11, that the regex alias is removed 
+and that the datetime alias has totally changed. 
+So expect you need todo some changes to your date-masks and regex masks.
+Also some defaults has changed, so have a read through the changes for this release.
+
+There are still many open issues but postponing the release to resolve all issues will take like another year, 
+while there are already many enhancements available.
+
 
 ## [3.3.9 - 2017-10-10]
 ### Updates
 - enhance inputfallback (Android)
 
+### Fixes
+- On Android with date mask input mashing up #1708
+- Currency mask works incorrectly on Android Chrome v58 #1617
+- Can't input character at the end if it's also a placeholder on Android #1648
+
 ## [3.3.8 - 2017-08-24]
-### added
-- added \uFF11-\uFF19 character range to 9 definition #1606
+### Addition
+- Addition \uFF11-\uFF19 character range to 9 definition #1606
 - importDataAttributes option #1633
 - add dot support in regex #1651
 
@@ -38,7 +314,7 @@ All notable changes to this project will be documented in this file.
 - Cannot delete after fill up all the mask Android Chrome browser Jsfiddle #1637
 
 ## [3.3.7 - 2017-06-09]
-### added
+### Addition
 - allow custom operation in casing option by callback #1565
 
 ### Updates
@@ -56,7 +332,7 @@ All notable changes to this project will be documented in this file.
 - ndxInitializer.shift is not a function
 
 ## [3.3.6 - 2017-05-11]
-### added
+### Addition
 - noValuePatching option #1276
 
 ### Updates
@@ -77,7 +353,7 @@ All notable changes to this project will be documented in this file.
 - 29 february of non leap-year #1567
 
 ## [3.3.5 - 2017-04-10]
-### Added
+### Addition
 - add example webpack setup (thx to Kevin Suen)
 - build-in regex support without extension (WIP)
 
@@ -110,7 +386,7 @@ All notable changes to this project will be documented in this file.
 - Form can`t submitted with input[name=disabled] #1473
 
 ## [3.3.4 - 2016-12-22]
-### Added
+### Addition
 - extra extension points: analyseMask
 - colorMask option ~ css styleable mask
 
@@ -157,7 +433,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.2 - 2016-09-09]
 
-### Added
+### Addition
 - mask-level casing => #1352
 - 'casing': 'title' #1277
 - add quantifier syntax for digits option in numeric alias. #1374
@@ -207,7 +483,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.0] - 2016-04-05
 
-### Added
+### Addition
 - nullable option => switch to return the placeholder or null when nothing is entered
 - VIN mask #1199
 
@@ -269,7 +545,7 @@ All notable changes to this project will be documented in this file.
 - fixed "valids is not defined" error #1166
 
 ## [3.2.6] - 2016-01-25
-### Added
+### Addition
 - add jitMasking option
 - supportsInputType option
 - staticDefinitionSymbol (see readme)
@@ -333,7 +609,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.2.3] - 2015-11-09
 
-### Added
+### Addition
 - Inputmask.remove
 - inputmask.binding => automated inputmask binding for html attributes
 - Add tooltip option
@@ -362,7 +638,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.2.1] - 2015-10-07
 
-### Added
+### Addition
 - inputmask.dependencyLib.jquery
 - inputmask.dependencyLib.jqlite
 
@@ -388,7 +664,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.2.0] - 2015-09-04
 
-### Added
+### Addition
 - add option command to set and retrieve options on an inputmask
 - dependencyLib wrapper around needed jQuery functionality
 - mac address alias #986
@@ -460,7 +736,7 @@ All notable changes to this project will be documented in this file.
 - Script looping start when add '.' between decimal values #870 ('.' part)
 
 ## [3.1.63] - 2015-05-04
-### Added
+### Addition
 - Support for CommonJS (Browserify)
 
 ### Updates
@@ -482,7 +758,7 @@ All notable changes to this project will be documented in this file.
 - Phone extention backspace problem #454
 
 ## [3.1.62] - 2015-03-26
-### Added
+### Addition
 - Numeric alias: add unmaskAsNumber option
 - import russian phone codes from inputmask-multi
 - enable masking the text content in a div
