@@ -446,7 +446,6 @@ Folgende Objparams find verfügbar:
 - `data`: Boolean.
 - `debug`: Boolean. Aktiviert den Debugmodus
 - `error_class`: CSS Klasse des Fehlerfelds
-- `Error-occured`: Freitext oberhalb auftgetretener Fehlermeldungen.
 - `Error-Code-EntryNotFound`: Standard: 'ErrorCode - EntryNotFound'
 - `Error-Code-InsertQueryError`: Standard 'ErrorCode - InsertQueryError'
 - `fieldsets_opened`:

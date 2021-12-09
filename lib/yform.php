@@ -55,7 +55,6 @@ class rex_yform
         $this->objparams['postactions_executed'] = false;
         $this->objparams['preactions_executed'] = false;
 
-        $this->objparams['Error-occured'] = '';
         $this->objparams['Error-Code-EntryNotFound'] = 'ErrorCode - EntryNotFound';
         $this->objparams['Error-Code-QueryError'] = 'ErrorCode - QueryError';
 
