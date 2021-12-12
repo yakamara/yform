@@ -295,20 +295,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         }
                         $yform->objparams['form_elements'] = $form_elements;
 
-                        // Wenn Formular abgeschickt und id hatte..
-                        // beibehalten wenn in relations vorhanden
-                        $hiddenId = '';
-                        if (isset($form['id']) && in_array($form['id'], $relationIDs, true)) {
-                            $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $form['id'] . '" />';
-                        }
-
-                        $forms[] = $hiddenId . $yform->getForm();
-
-                        if (isset($form['id']) && in_array($form['id'], $relationIDs, true)) {
-                            $value[] = array_merge(['id' => $form['id']], $yform->getObjectparams('value_pool')['email']);
-                        } else {
-                            $value[] = $yform->getObjectparams('value_pool')['email'];
-                        }
+                        $forms[] = $yform->getForm();
+                        $value[] = $yform->getObjectparams('value_pool')['email'];
 
                         if (count($yform->objparams['warning']) > 0) {
                             $warning = true;
@@ -546,7 +534,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 );
                 while ($sql->hasNext()) {
                     $id = $sql->getValue('id');
-                    $params['value'][$id] = $id;
+                    $params['value'][] = $id;
                     $sql->next();
                 }
             }

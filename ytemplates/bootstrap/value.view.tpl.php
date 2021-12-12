@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_yform_value_abstract $this
+ * @psalm-scope-this rex_yform_value_abstract
+ */
+
 $value = $value ?? $this->getValue() ?? '';
 $options = $options ?? [];
 $download_link = $download_link ?? '';
@@ -24,7 +29,7 @@ if ('' != $download_link) {
     $title = $value;
     $maxsize = 400;
     if ($length > $maxsize) {
-        $value = mb_substr($value, 0, $maxsize / 2).' ... '.mb_substr($value, -($maxsize / 2));
+        $value = mb_substr($value, 0, (int) ($maxsize / 2)).' ... '.mb_substr($value, (int) (-($maxsize / 2)));
     }
     $value = rex_escape($value);
 }

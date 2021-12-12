@@ -54,7 +54,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
 
         $names = [];
         foreach ($ids as $article_id) {
-            $article = $article = rex_article::get($article_id);
+            $article = rex_article::get((int) $article_id);
             if ($article) {
                 $names[] = $article->getValue('name');
             }
@@ -90,10 +90,10 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                     $tables = [];
                     foreach ($fields as $field) {
                         $tableName = $field['table_name'];
-                        $condition = $sql->escapeIdentifier($field['name']).' = '.$article->getId();
+                        $condition = $sql->escapeIdentifier((string) $field['name']).' = '.$article->getId();
 
                         if (isset($field['multiple']) && 1 == $field['multiple']) {
-                            $condition = 'FIND_IN_SET('.$article->getId().', '.$sql->escapeIdentifier($field['name']).')';
+                            $condition = 'FIND_IN_SET('.$article->getId().', '.$sql->escapeIdentifier((string) $field['name']).')';
                         }
                         $tables[$tableName][] = $condition;
                     }

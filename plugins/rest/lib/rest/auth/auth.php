@@ -35,7 +35,7 @@ class rex_yform_rest_auth_token
                 break;
 
             default:
-                $hits = self::getCurrentIntervalAmount($TokenAuth['interval'], $TokenAuth['id']);
+                $hits = self::getCurrentIntervalAmount((string) $TokenAuth['interval'], $TokenAuth['id']);
                 if ($hits < $TokenAuth['amount']) {
                     $return = true;
                 }

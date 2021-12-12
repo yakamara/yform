@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @var rex_yform_value_abstract $this
+ * @psalm-scope-this rex_yform_value_abstract
+ */
+
+$multiple = $multiple ?? false;
+$size = $size ?? 1;
+$options = $options ?? [];
+
 $notice = [];
 if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);

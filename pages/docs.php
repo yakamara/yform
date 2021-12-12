@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_addon $this
+ * @psalm-scope-this rex_addon
+ */
+
 $mdFiles = [];
 foreach (glob(rex_addon::get('yform')->getPath('docs').'/*.md') as $file) {
     $mdFiles[substr(basename($file), 0, -3)] = $file;

@@ -617,7 +617,7 @@ class rex_yform_manager_dataset
                 '(%d, %s, %s)',
                 $historyId,
                 $sql->escape($field),
-                $sql->escape($sql->getValue($field))
+                $sql->escape((string) $sql->getValue($field))
             );
         }
 
@@ -632,7 +632,7 @@ class rex_yform_manager_dataset
 
         $columns = $this->getTable()->getColumns();
         foreach ($sql as $row) {
-            $key = $sql->getValue('field');
+            $key = (string) $sql->getValue('field');
             if (isset($columns[$key])) {
                 $this->setValue($key, $sql->getValue('value'));
             }

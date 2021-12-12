@@ -49,7 +49,7 @@ class rex_yform_email_template
         $er['REX_ARTICLE_ID'] = rex_article::getCurrentId();
 
         foreach ($template as $k => $v) {
-            $template[$k] = rex_var::parse($template[$k], '', 'yform_email_template', $er);
+            $template[$k] = rex_var::parse($template[$k], null, 'yform_email_template', $er);
         }
 
         $template['mail_from'] = rex_file::getOutput(rex_stream::factory('yform/email/template/'.$template['name'].'/mail_from', $template['mail_from']));

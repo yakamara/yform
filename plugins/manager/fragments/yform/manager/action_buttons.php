@@ -1,4 +1,11 @@
-<div class="dropdown">
+<?php
+
+/**
+ * @var rex_fragment $this
+ * @psalm-scope-this rex_fragment
+ */
+
+?><div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
         Aktion
         <span class="caret"></span>

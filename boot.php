@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_addon $this
+ * @psalm-scope-this rex_addon
+ */
+
 rex_yform::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {

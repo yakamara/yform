@@ -1,6 +1,11 @@
 <?php
 
-/** @var rex_yform_value_checkbox $this */
+/**
+ * @var rex_yform_value_checkbox $this
+ * @psalm-scope-this rex_yform_value_checkbox
+ */
+
+$value = $value ?? $this->getValue() ?? '';
 
 $notices = [];
 if ('' != $this->getElement('notice')) {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @var rex_yform_value_checkbox $this
+ * @psalm-scope-this rex_yform_value_checkbox
+ */
+
+$options = $options ?? [];
+
 $notices = [];
 if ('' != $this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
@@ -23,7 +30,7 @@ if (count($notices) > 0) {
 
 <?php foreach ($options as $k => $v): ?>
     <?php
-    $class_group = trim('checkbox ' . $this->getHTMLClass($k) . ' ' . $this->getWarningClass());
+    $class_group = trim('checkbox ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
     ?>
     <div class="<?= $class_group ?>" id="<?= $this->getHTMLId($k) ?>">
         <label>

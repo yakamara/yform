@@ -11,7 +11,7 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
 {
     public function preValidateAction(): void
     {
-        $generated_key = md5($this->params['form_name'].uniqid(random_int(0, getrandmax()), true));
+        $generated_key = md5($this->params['form_name'].uniqid((string) (random_int(0, getrandmax())), true));
 
         if (1 != $this->getElement('only_empty')) {
             // wird immer neu gesetzt

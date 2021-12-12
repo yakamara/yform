@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_yform_value_text $this
+ * @psalm-scope-this rex_yform_value_text
+ */
+
 $type = $type ?? 'text';
 $class = 'text' == $type ? '' : 'form-' . $type . ' ';
 if (!isset($value)) {

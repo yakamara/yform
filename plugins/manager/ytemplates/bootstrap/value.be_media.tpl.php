@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @var rex_yform_value_be_media $this
+ * @psalm-scope-this rex_yform_value_be_media
+ */
+
+$counter = $counter ?? 1;
+
 $buttonId = $counter;
 $name = $this->getFieldName();
 $value = htmlspecialchars($this->getValue());

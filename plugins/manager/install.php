@@ -27,7 +27,7 @@ $table
     ->ensureColumn(new rex_sql_column('import', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('mass_deletion', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('mass_edit', 'tinyint(1)'))
-    ->ensureColumn(new rex_sql_column('schema_overwrite', 'tinyint(1)', false, 1))
+    ->ensureColumn(new rex_sql_column('schema_overwrite', 'tinyint(1)', false, '1'))
     ->ensureColumn(new rex_sql_column('history', 'tinyint(1)'))
     ->ensureIndex(new rex_sql_index('table_name', ['table_name'], rex_sql_index::UNIQUE))
     ->ensure();
@@ -90,8 +90,8 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yform_history_field') . '` CONVERT
 $addon = rex_addon::get('yform');
 if ($addon->isInstalled() && rex_version::compare($addon->getVersion(), '3.6', '<')) {
     foreach (rex_sql::factory()->getArray('SELECT id, perms FROM ' . rex::getTablePrefix() . 'user_role') as $role) {
-        if (false === strpos($role['perms'], '"yform_manager_table_edit":')) {
-            $perms = str_replace('"yform_manager_table":', '"yform_manager_table_edit":', $role['perms']);
+        if (false === strpos((string) $role['perms'], '"yform_manager_table_edit":')) {
+            $perms = str_replace('"yform_manager_table":', '"yform_manager_table_edit":',(string) $role['perms']);
             rex_sql::factory()->setDebug()->setQuery('UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?', [$perms, $role['id']]);
         }
     }

@@ -1,9 +1,15 @@
 <?php
 
+/**
+ * @var rex_yform_value_be_manager_relation $this
+ * @psalm-scope-this rex_yform_value_be_manager_relation
+ */
+
+$fieldkey = $fieldkey ?? '';
+$forms = $forms ?? [];
+$relationKey = $relationKey ?? '';
 $class_group = trim('form-group ' . $this->getHTMLClass()); // . ' ' . $this->getWarningClass()
-
 $id = sprintf('%u', crc32($this->params['form_name'])) . random_int(0, 10000) . $this->getId();
-
 $fieldkey = 'y'.sha1($fieldkey.'-'.rex_escape($relationKey)); // no number first
 
 echo '

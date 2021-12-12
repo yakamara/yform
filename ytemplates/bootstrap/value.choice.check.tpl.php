@@ -1,7 +1,11 @@
 <?php
 
-/** @var rex_yform_choice_list $choiceList */
-/** @var rex_yform_choice_list_view $choiceListView */
+/**
+ * @var rex_yform_value_abstract $this
+ * @psalm-scope-this rex_yform_value_abstract
+ * @var rex_yform_choice_list $choiceList
+ * @var rex_yform_choice_list_view $choiceListView
+ */
 
 $notices = [];
 if ($this->getElement('notice')) {

@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @var rex_yform_value_submit $this
+ * @psalm-scope-this rex_yform_value_submit
+ */
+
+$labels = $labels ?? [];
+
 $css_classes = [];
 if ('' != $this->getElement('css_classes')) {
     $css_classes = explode(',', $this->getElement('css_classes'));

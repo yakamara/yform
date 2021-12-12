@@ -1,3 +1,11 @@
+<?php
+
+/**
+ * @var rex_yform $this
+ * @psalm-scope-this rex_yform
+ */
+
+?>
 <div id="<?php echo $this->objparams['form_wrap_id'] ?>" class="<?php echo $this->objparams['form_wrap_class'] ?>">
 
     <?php

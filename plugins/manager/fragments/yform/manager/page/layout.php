@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_fragment $this
+ * @psalm-scope-this rex_fragment
+ */
+
 /* @var $manager rex_yform_manager */
 $manager = $this->getVar('this');
 

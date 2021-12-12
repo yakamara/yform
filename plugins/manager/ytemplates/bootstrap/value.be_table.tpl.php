@@ -1,4 +1,13 @@
 <?php
+
+/**
+ * @var rex_yform_value_be_table $this
+ * @psalm-scope-this rex_yform_value_be_table
+ */
+
+$columns = $columns ?? [];
+$data = $data ?? [];
+
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $data_index = 0;
@@ -52,6 +61,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     $field->setValue($rowData[$i] ?? '');
                     $field->setId($data_index);
                     $field->enterObject();
+                    /** @var array $field->params['form_output'] */
                     $field_output = trim($field->params['form_output'][$field->getId()]);
                     ?>
                     <td class="be-value-input type-<?= $column['field']->getElement(0) ?>" data-title="<?= rex_escape($column['label'], 'html_attr') ?>"><?= $field_output ?></td>
@@ -115,6 +125,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                             $field->setValue(null);
                             $field->setId('{{FIELD_ID}}');
                             $field->enterObject();
+                            /** @var array $field->params['form_output'] */
                             $field_output = trim(strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]));
 
                             echo '<td class="be-value-input type-'. $column['field']->getElement(0) .'" data-title="'. $column['label'] .'">'. $field_output .'</td>';

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_yform_manager $this
+ * @psalm-scope-this rex_yform_manager
+ */
+
 $rex_yform_filter = $rex_yform_filter ?? [];
 $rex_yform_set = $rex_yform_set ?? [];
 $searchObject = $searchObject ?? null;

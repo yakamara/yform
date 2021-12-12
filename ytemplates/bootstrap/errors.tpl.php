@@ -1,4 +1,11 @@
-<div class="alert alert-danger">
+<?php
+
+/**
+ * @var rex_yform $this
+ * @psalm-scope-this rex_yform
+ */
+
+?><div class="alert alert-danger">
 
 <?php
 if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):

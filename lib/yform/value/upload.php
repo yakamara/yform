@@ -388,7 +388,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         rex_set_session($this->getSessionKey(), $sessionVars);
     }
 
-    public function getSessionVar($key, $varType = 'string', $default = '')
+    public function getSessionVar(string $key, string $varType = 'string', $default = '')
     {
         $sessionVars = rex_session($this->getSessionKey(), 'array', []);
 

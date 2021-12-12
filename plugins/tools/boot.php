@@ -7,6 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  *
  * @var rex_plugin $this
+ * @psalm-scope-this rex_plugin
  */
 
 // rex_yform::addTemplatePath(rex_path::plugin('yform','geo','ytemplates'));
@@ -15,20 +16,15 @@ if (rex::isBackend() && rex::getUser()) {
     rex_view::addJsFile($this->getAssetsUrl('daterangepicker/moment.min.js'));
     rex_view::addJsFile($this->getAssetsUrl('daterangepicker/daterangepicker.js'));
     rex_view::addCssFile($this->getAssetsUrl('daterangepicker/daterangepicker.css'));
-
     rex_view::addJsFile($this->getAssetsUrl('select2/dist/js/select2.min.js'));
     rex_view::addCssFile($this->getAssetsUrl('select2/dist/css/select2.min.css'));
-
     //rex_view::addCssFile($this->getAssetsUrl('select2-bootstrap-theme/dist/select2-bootstrap.min.css'));
-
     rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/jquery.inputmask.min.js'));
-
     rex_view::addJsFile($this->getAssetsUrl('tools.js'));
 
     rex_extension::register('PACKAGES_INCLUDED', function () {
         if ($this->getProperty('compile')) {
             $compiler = new rex_scss_compiler();
-
             $scss_files = [$this->getPath('scss/master.scss')];
             $compiler->setRootDir($this->getPath('scss/'));
             $compiler->setScssFile($scss_files);

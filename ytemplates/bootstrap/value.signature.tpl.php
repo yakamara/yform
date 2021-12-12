@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_yform_value_signature $this
+ * @psalm-scope-this rex_yform_value_signature
+ */
+
 if(!isset($value)) {
     $value = $this->getValue();
 }

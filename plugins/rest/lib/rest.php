@@ -77,7 +77,7 @@ class rex_yform_rest
             /** @var \rex_yform_rest_route $route */
 
             if (!$route->hasAuth()) {
-                self::sendError(400, 'no-access');
+                self::sendError('400', 'no-access');
             } else {
                 $route
                 ->handleRequest($paths, $_GET);

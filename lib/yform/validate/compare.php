@@ -16,6 +16,11 @@ class rex_yform_validate_compare extends rex_yform_validate_abstract
         $field_1 = $this->getElement('name');
         $field_2 = $this->getElement('name2');
 
+        $id_1 = null;
+        $id_2 = null;
+        $value_1 = null;
+        $value_2 = null;
+
         foreach ($this->getObjects() as $o) {
             if ($o->getName() == $field_1) {
                 $id_1 = !isset($id_1) ? $o->getId() : $id_1;

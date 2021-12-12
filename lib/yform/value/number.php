@@ -80,8 +80,8 @@ class rex_yform_value_number extends rex_yform_value_abstract
             'db_type' => ['DECIMAL({precision},{scale})'],
             'hooks' => [
                 'preCreate' => static function (rex_yform_manager_field $field, $db_type) {
-                    $db_type = str_replace('{precision}', $field->getElement('precision') ?? 6, $db_type);
-                    $db_type = str_replace('{scale}', $field->getElement('scale') ?? 2, $db_type);
+                    $db_type = str_replace('{precision}', (string) ($field->getElement('precision') ?? 6), $db_type);
+                    $db_type = str_replace('{scale}', (string) ($field->getElement('scale') ?? 2), $db_type);
                     return $db_type;
                 },
             ],

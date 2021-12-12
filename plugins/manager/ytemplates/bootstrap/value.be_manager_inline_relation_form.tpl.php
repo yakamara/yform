@@ -1,5 +1,9 @@
 <?php
 
+$prioFieldName = $prioFieldName ?? '';
+$counterfieldkey = $counterfieldkey ?? '';
+$form = $form ?? '';
+
 $sortable = false;
 $sortButtons = '';
 $sorthandle = '';

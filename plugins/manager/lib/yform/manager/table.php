@@ -493,7 +493,7 @@ class rex_yform_manager_table implements ArrayAccess
 
         $tables = $sql->getArray('select * from ' . self::table() . ' order by prio');
         foreach ($tables as $table) {
-            $tableName = $table['table_name'];
+            $tableName = (string) $table['table_name'];
             self::$cache[$tableName]['table'] = $table;
             self::$cache[$tableName]['columns'] = [];
             try {

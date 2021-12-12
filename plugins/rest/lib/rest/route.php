@@ -83,12 +83,12 @@ class rex_yform_rest_route
     public function handleRequest(array $paths, array $get)
     {
         if (!isset($this->config['table'])) {
-            rex_yform_rest::sendError(400, 'table-not-available');
+            rex_yform_rest::sendError('400', 'table-not-available');
         }
 
         $requestMethod = $this->getRequestMethod();
         if (in_array($requestMethod, self::$requestMethods) && !isset($this->config[$requestMethod])) {
-            rex_yform_rest::sendError(400, 'request-method-not-available');
+            rex_yform_rest::sendError('400', 'request-method-not-available');
         }
 
         /** @var rex_yform_manager_table $table */
@@ -167,7 +167,7 @@ class rex_yform_rest_route
                         }
 
                         if (!$instance) {
-                            rex_yform_rest::sendError(400, 'dataset-not-found', ['paths' => $paths, 'table' => $instances->getTable()->getTableName()]);
+                            rex_yform_rest::sendError('400', 'dataset-not-found', ['paths' => $paths, 'table' => $instances->getTable()->getTableName()]);
                         }
                         $attribute = null;
                         $instances = null;
@@ -183,7 +183,7 @@ class rex_yform_rest_route
                         $instance = $query->findOne();
 
                         if (!$instance) {
-                            rex_yform_rest::sendError(400, 'dataset-not-found', ['paths' => $paths, 'table' => $query->getTable()->getTableName()]);
+                            rex_yform_rest::sendError('400', 'dataset-not-found', ['paths' => $paths, 'table' => $query->getTable()->getTableName()]);
                         }
 
                         $fields = $this->getFields('get', $instance);
@@ -192,7 +192,7 @@ class rex_yform_rest_route
                         $attribute = $path;
 
                         if (!array_key_exists($attribute, $fields)) {
-                            rex_yform_rest::sendError(400, 'attribute-not-found', ['paths' => $paths, 'table' => $table->getTableName()]);
+                            rex_yform_rest::sendError('400', 'attribute-not-found', ['paths' => $paths, 'table' => $table->getTableName()]);
                         }
 
                         if ('be_manager_relation' == $fields[$attribute]->getTypeName()) {
@@ -275,7 +275,7 @@ class rex_yform_rest_route
                     }
                 }
 
-                $this->sendContent(200, $data);
+                $this->sendContent('200', $data);
 
                 break;
 
@@ -291,7 +291,7 @@ class rex_yform_rest_route
 
                 $data = (array) @$in['data']['attributes'];
                 $type = (string) @$in['data']['type'];
-                $status = 400;
+                $status = '400';
 
                 if (self::getTypeFromInstance($instance) != $type) {
                     rex_yform_rest::sendError($status, 'post-data-type-different');
@@ -303,7 +303,7 @@ class rex_yform_rest_route
                     $dataset = null;
                     if (isset($in['id'])) {
                         $dataset = $table->getDataset($in['id']);
-                        $status = 200; // update
+                        $status = '200'; // update
                     }
 
                     if (!$dataset) {
@@ -313,7 +313,7 @@ class rex_yform_rest_route
                         if (!$dataset) {
                             $dataset = $table->createDataset();
                         }
-                        $status = 201; // created
+                        $status = '201'; // created
                     }
 
                     foreach ($data as $inKey => $inValue) {
@@ -360,7 +360,7 @@ class rex_yform_rest_route
             case 'delete':
                 $instance = $table->createDataset();
                 $fields = $this->getFields('delete', $instance);
-                $status = 404;
+                $status = '404';
 
                 $queryClone = clone $query;
                 $query = $this->getFilterQuery($query, $fields, $get);
@@ -369,13 +369,13 @@ class rex_yform_rest_route
                     rex_yform_rest::sendError($status, 'no-available-filter-set');
                 } elseif ($queryClone->getQuery() !== $query->getQuery()) {
                     // filter set -> true
-                    $status = 200;
+                    $status = '200';
                 } elseif (0 == count($paths)) {
                     rex_yform_rest::sendError($status, 'no-id-set');
                 } else {
                     $id = current($paths);
                     $query->where('id', $id);
-                    $status = 200;
+                    $status = '200';
                 }
 
                 $data = $query->find();
@@ -407,7 +407,7 @@ class rex_yform_rest_route
                         $availableMethods[] = strtoupper($method);
                     }
                 }
-                rex_yform_rest::sendError(404, 'no-request-method-found', ['please only use: ' . implode(',', $availableMethods)]);
+                rex_yform_rest::sendError('404', 'no-request-method-found', ['please only use: ' . implode(',', $availableMethods)]);
         }
     }
 
@@ -480,7 +480,7 @@ class rex_yform_rest_route
                                     $rawQuery = str_replace('`'.$field.'`', '`'.$tableAlias.'`.`'.$field.'`', $rawQuery);
                                 }
                             } catch (Error $e) {
-                                rex_yform_rest::sendError(400, 'field-class-not-found', ['field' => $fieldName]);
+                                rex_yform_rest::sendError('400', 'field-class-not-found', ['field' => $fieldName]);
                                 exit;
                             }
                             $query->whereRaw('(' . $rawQuery . ')');

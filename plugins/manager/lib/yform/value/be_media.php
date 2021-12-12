@@ -114,10 +114,10 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         $escapedFilename = $sql->escape($params['filename']);
         foreach ($fields as $field) {
             $tableName = $field['table_name'];
-            $condition = $sql->escapeIdentifier($field['name']).' = '.$escapedFilename;
+            $condition = $sql->escapeIdentifier((string) $field['name']).' = '.$escapedFilename;
 
             if (isset($field['multiple']) && 1 == $field['multiple']) {
-                $condition = 'FIND_IN_SET('.$escapedFilename.', '.$sql->escapeIdentifier($field['name']).')';
+                $condition = 'FIND_IN_SET('.$escapedFilename.', '.$sql->escapeIdentifier((string) $field['name']).')';
             }
             $tables[$tableName][] = $condition;
         }

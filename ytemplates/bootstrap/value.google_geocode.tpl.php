@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * @var rex_yform_value_google_geocode $this
+ * @psalm-scope-this rex_yform_value_google_geocode
+ */
+
+$address = $address ?? '';
+$googleapikey = $googleapikey ?? '';
+$value = $value ?? $this->getValue() ?? '';
+$mapZoom = $mapZoom ?? 5;
+$mapWidth = $mapWidth ?? 800;
+$mapHeight = $mapHeight ?? 600;
+
 $FieldsAddress = [];
 $LabelsAddress = explode(',', $address);
 

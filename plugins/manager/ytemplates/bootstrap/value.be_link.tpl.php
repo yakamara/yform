@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @var rex_yform_value_be_link $this
+ * @psalm-scope-this rex_yform_value_be_link
+ */
+
+$counter = $counter ?? 1;
+
 $buttonId = 'yf_'.uniqid().'_'.$counter;
 $categoryId = 0;
 $name = $this->getFieldName();

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_yform_value_textarea $this
+ * @psalm-scope-this rex_yform_value_textarea
+ */
+
 $notice = [];
 if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);

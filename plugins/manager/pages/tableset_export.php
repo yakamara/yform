@@ -41,7 +41,7 @@ if ($yform->objparams['actions_executed']) {
         rex_response::sendContent($fileContent, 'application/octetstream');
         exit;
     } catch (Exception $e) {
-        echo rex_view::warning($this->msg('table_export_failed', '', $e->getMessage()));
+        echo rex_view::warning(rex_i18n::msg('table_export_failed', '', $e->getMessage()));
     }
 }
 

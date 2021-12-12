@@ -49,7 +49,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                     $prio = $sql->getValue('prio') + 1;
                     $label = [];
                     foreach ($fields as $field) {
-                        $label[] = rex_i18n::translate($sql->getValue($field), false);
+                        $label[] = rex_i18n::translate((string) $sql->getValue($field), false);
                     }
                     $options[$prio] = rex_i18n::msg('yform_prio_after', implode(' | ', $label));
                 }

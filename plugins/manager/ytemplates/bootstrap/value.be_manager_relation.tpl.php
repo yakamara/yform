@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * @var rex_yform_value_be_manager_relation $this
+ * @psalm-scope-this rex_yform_value_be_manager_relation
+ */
+
+$options = $options ?? [];
+$link = $link ?? '';
+$valueName = $valueName ?? '';
+
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
 $id = sprintf('%u', crc32($this->params['form_name']. random_int(0, 100). $this->getId()));

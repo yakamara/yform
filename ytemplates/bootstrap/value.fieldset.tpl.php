@@ -1,23 +1,26 @@
 <?php
 
-// exception. Is also called in form.tpl.php, not in field mode
-if ('close' == $option) {
-    echo '</fieldset>';
-    return;
-}
+/**
+ * @var rex_yform_value_abstract|rex_yform $this
+ * @psalm-scope-this rex_yform_value_abstract
+ */
 
-$attributes = [
-    'class' => $this->getHTMLClass(),
-    'id' => $this->getHTMLId(),
-];
+$option = $option ?? '';
 
-$attributes = $this->getAttributeElements($attributes, []);
+switch($option) {
+    case 'open':
+        $attributes = [
+            'class' => $this->getHTMLClass(),
+            'id' => $this->getHTMLId(),
+        ];
 
-if ('open' == $option) {
-    echo '<fieldset '.implode(' ', $attributes).'>';
-    if ($this->getLabel()) {
-        echo '<legend id="'.$this->getFieldId().'">'.$this->getLabel().'</legend>';
-    }
-} elseif ('close' == $option) {
-    echo '</fieldset>';
+        $attributes = $this->getAttributeElements($attributes, []);
+        echo '<fieldset '.implode(' ', $attributes).'>';
+        if ($this->getLabel()) {
+            echo '<legend id="'.$this->getFieldId().'">'.$this->getLabel().'</legend>';
+        }
+        break;
+    case 'close':
+        echo '</fieldset>';
+        break;
 }

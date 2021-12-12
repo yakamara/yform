@@ -9,7 +9,9 @@
  * @var rex_yform_manager $this
  */
 
-ini_set('auto_detect_line_endings', true);
+ini_set('auto_detect_line_endings', "true");
+
+$_csrf_key = $_csrf_key ?? '';
 
 $show_importform = true;
 $show_list = false;
@@ -179,7 +181,7 @@ if (1 == rex_request('send', 'int', 0)) {
 
                         if (null !== $idColumn && isset($line_array[$idColumn])) {
                             $id = $line_array[$idColumn];
-                            $dataset = $this->table->getRawDataset($id);
+                            $dataset = $this->table->getRawDataset((int) $id);
                         } else {
                             $id = null;
                             $dataset = $this->table->createDataset();

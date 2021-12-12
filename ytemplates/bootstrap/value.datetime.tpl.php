@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @var rex_yform_value_abstract $this
+ * @psalm-scope-this rex_yform_value_abstract
+ */
+
 $second = $second ?? 0;
 $minute = $minute ?? 0;
 $hour = $hour ?? 0;
@@ -62,7 +67,7 @@ if (false !== $pos) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 13; ++$i):
         $selected = (@$month == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['MM'] = $replace_i;
@@ -81,7 +86,7 @@ if (false !== $pos) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 32; ++$i):
         $selected = (@$day == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 2, '0', STR_PAD_LEFT) . '</option>';
+    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['DD'] = $replace_i;
@@ -99,7 +104,7 @@ if (false !== $pos) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     for ($i = 0; $i < 24; ++$i) {
         $selected = (@$hour == $i) ? ' selected="selected"' : '';
-        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad($i, 2, '0', STR_PAD_LEFT).'</option>';
+        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad((string) $i, 2, '0', STR_PAD_LEFT).'</option>';
     }
     $replace_i .= '</select>';
     $replace['HH'] = $replace_i;
@@ -117,7 +122,7 @@ if (false !== $pos) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     for ($i = 0; $i < 60; ++$i) {
         $selected = (@$minute == $i) ? ' selected="selected"' : '';
-        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad($i, 2, '0', STR_PAD_LEFT).'</option>';
+        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad((string) $i, 2, '0', STR_PAD_LEFT).'</option>';
     }
     $replace_i .= '</select>';
     $replace['ii'] = $replace_i;
@@ -135,7 +140,7 @@ if (false !== $pos) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     for ($i = 0; $i < 60; ++$i) {
         $selected = (@$second == $i) ? ' selected="selected"' : '';
-        $replace_i .= '<option value="'.$i.'"'.$selected.'>'.str_pad($i, 2, '0', STR_PAD_LEFT).'</option>';
+        $replace_i .= '<option value="'.$i.'"'.$selected.'>'.str_pad((string) $i, 2, '0', STR_PAD_LEFT).'</option>';
     }
     $replace_i .= '</select>';
     $replace['ss'] = $replace_i;

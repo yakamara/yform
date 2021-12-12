@@ -8,6 +8,7 @@ $subfunc = rex_request('subfunc', 'string');
 $datasetId = rex_request('dataset_id', 'int');
 $filterDataset = rex_request('filter_dataset', 'bool');
 $historyId = rex_request('history_id', 'int');
+$_csrf_key = $_csrf_key ?? '';
 
 $dataset = null;
 if ($datasetId) {
@@ -25,7 +26,7 @@ if ($filterDataset) {
 
 if ('view' === $subfunc && $dataset && $historyId) {
     $sql = rex_sql::factory();
-    $timestamp = $sql->setQuery(sprintf('SELECT `timestamp` FROM %s WHERE id = %d', rex::getTable('yform_history'), $historyId))->getValue('timestamp');
+    $timestamp = (string) $sql->setQuery(sprintf('SELECT `timestamp` FROM %s WHERE id = %d', rex::getTable('yform_history'), $historyId))->getValue('timestamp');
 
     $data = $sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = %d', rex::getTable('yform_history_field'), $historyId));
     $data = array_column($data, 'value', 'field');
