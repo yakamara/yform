@@ -412,7 +412,7 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param null   $instance
+     * @param $instance
      * @throws rex_api_exception
      * @return rex_yform_manager_field[]
      */
@@ -470,7 +470,7 @@ class rex_yform_rest_route
                     if ($fieldName == $filterKey) {
                         if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                             try {
-                                $rawQuery = $field->object->getSearchFilter([
+                                $rawQuery = $field->getObject()->getSearchFilter([
                                     'value' => $filterValue,
                                     'field' => $field,
                                 ]);
@@ -497,7 +497,7 @@ class rex_yform_rest_route
     /**
      * @param       $instance
      * @param       $paths
-     * @param false $onlyId
+     * @param bool $onlyId
      */
     public function getInstanceData($instance, $paths, $onlyId = false, $parents = []): array
     {
@@ -651,14 +651,17 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param null $instance
+     * @param mixed $instance
      */
     public function getTypeFromInstance($instance = null): string
     {
-        $type = get_class($instance);
-
-        if ('rex_yform_manager_dataset' == $type || 'rex_yform_rest_route' == $instance || !$instance || !$type) {
+        if (!$instance) {
             $type = 'not-defined';
+        } else {
+            $type = get_class($instance);
+            if ('rex_yform_manager_dataset' == $type || 'rex_yform_rest_route' == $instance || !$type) {
+                $type = 'not-defined';
+            }
         }
         return $type;
     }

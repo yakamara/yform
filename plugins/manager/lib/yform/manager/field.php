@@ -8,6 +8,9 @@ class rex_yform_manager_field implements ArrayAccess
     protected static $types = ['value', 'validate', 'action'];
     protected static $protected_fields = ['id', 'table_name', 'prio', 'type_id', 'type_name', 'db_type', 'list_hidden', 'search', 'name', 'label', 'not_required'];
 
+    /** @var rex_yform_value_abstract|rex_yform_validate_abstract $object */
+    protected $object = null;
+
     /**
      * rex_yform_manager_field constructor.
      *
@@ -51,6 +54,14 @@ class rex_yform_manager_field implements ArrayAccess
             return false;
         }
         return $type_id;
+    }
+
+    /**
+     * @return null|mixed|rex_yform_validate_abstract|rex_yform_value_abstract
+     */
+    public function getObject()
+    {
+        return $this->object;
     }
 
     /**

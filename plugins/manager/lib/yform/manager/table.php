@@ -51,7 +51,8 @@ class rex_yform_manager_table implements ArrayAccess
         $cache = self::getCache();
 
         if (!isset($cache[$tableName])) {
-            return self::$tables[$tableName] = null;
+            unset(self::$tables[$tableName]);
+            return null;
         }
 
         return self::$tables[$tableName] = new self($cache[$tableName]);
@@ -304,9 +305,9 @@ class rex_yform_manager_table implements ArrayAccess
     /**
      * @param string $column
      *
-     * @return rex_yform_manager_field
+     * @return rex_yform_manager_field|null
      */
-    public function getRelation($column)
+    public function getRelation(string $column)
     {
         $relations = $this->getRelations();
         return $relations[$column] ?? null;
@@ -510,17 +511,17 @@ class rex_yform_manager_table implements ArrayAccess
 
         $fields = $sql->getArray('select * from ' . rex_yform_manager_field::table() . ' order by prio');
         foreach ($fields as $field) {
-            if (isset(self::$cache[$field['table_name']])) {
-                self::$cache[$field['table_name']]['fields'][] = $field;
+            if (isset(self::$cache[(string) $field['table_name']])) {
+                self::$cache[(string) $field['table_name']]['fields'][] = $field;
             }
         }
 
         foreach (self::$cache as $tableName => $data) {
-            self::$cache[$tableName]['related_tables'] = [];
-            $table = new self(self::$cache[$tableName]);
+            self::$cache[(string) $tableName]['related_tables'] = [];
+            $table = new self(self::$cache[(string) $tableName]);
             foreach ($table->getFields() as $field) {
                 foreach ($field->getRelationTableNames() as $relatedTable) {
-                    self::$cache[$tableName]['related_tables'][$relatedTable] = $relatedTable;
+                    self::$cache[(string) $tableName]['related_tables'][$relatedTable] = $relatedTable;
                 }
             }
         }

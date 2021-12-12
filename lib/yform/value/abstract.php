@@ -19,11 +19,6 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public $editable = true;
     public $viewable = true;
 
-    public function setArticleId($aid)
-    {
-        $this->aid = $aid;
-    }
-
     public function setValue($value)
     {
         $this->value = $value;
@@ -229,7 +224,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
     public function getLabelStyle($label)
     {
-        $label = rex_i18n::translate($label, null);
+        $label = rex_i18n::translate($label, false);
 
         if ('html' == $this->params['form_label_type']) {
         } else {

@@ -31,21 +31,18 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
             $options[0] = rex_i18n::msg('yform_values_be_select_media_category_homepage_title');
         }
 
-        $ignoreOfflines = $this->getElement('ignore_offlines');
         $checkPerms = $this->getElement('check_perms');
-        $clang = (int) $this->getElement('clang');
 
-        $add = static function (rex_media_category $cat, $level = 0) use (&$add, &$options, $ignoreOfflines, $checkPerms, $clang) {
-            if (!$checkPerms || rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($cat->getId())) {
+        $add = static function (rex_media_category $cat, $level = 0) use (&$add, &$options, $checkPerms) {
+            if (!$checkPerms || rex::getUser()->getComplexPerm('media')->hasCategoryPerm($cat->getId())) {
                 $cid = $cat->getId();
                 $cname = $cat->getName();
 
                 if (rex::getUser()->hasPerm('advancedMode[]')) {
                     $cname .= ' [' . $cid . ']';
                 }
-
                 $options[$cid] = str_repeat('&nbsp;&nbsp;&nbsp;', $level) . $cname;
-                $childs = $cat->getChildren($ignoreOfflines);
+                $childs = $cat->getChildren();
                 if (is_array($childs)) {
                     foreach ($childs as $child) {
                         $add($child, $level + 1);
@@ -54,22 +51,14 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
             }
         };
         if ($rootId = (int) $this->getElement('category')) {
-            if ($rootCat = rex_media_category::get($rootId, $clang)) {
+            if ($rootCat = rex_media_category::get($rootId)) {
                 $add($rootCat);
             }
         } else {
-            if (!$checkPerms || rex::getUser()->isAdmin() || rex::getUser()->hasPerm('csw[0]')) {
-                if ($rootCats = rex_media_category::getRootCategories($ignoreOfflines, $clang)) {
+            if (!$checkPerms || rex::getUser()->isAdmin() || rex::getUser()->getComplexPerm('media')->hasCategoryPerm(0)) {
+                if ($rootCats = rex_media_category::getRootCategories()) {
                     foreach ($rootCats as $rootCat) {
                         $add($rootCat);
-                    }
-                }
-            } elseif (rex::getUser()->getComplexPerm('structure')->hasMountpoints()) {
-                $mountpoints = rex::getUser()->getComplexPerm('structure')->getMountpoints();
-                foreach ($mountpoints as $id) {
-                    $cat = rex_media_category::getCategoryById($id, $clang);
-                    if ($cat && !rex::getUser()->getComplexPerm('structure')->hasCategoryPerm($cat->getParentId())) {
-                        $add($cat);
                     }
                 }
             }
@@ -90,10 +79,8 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
 
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(['value.be_media_category-view.tpl.php', 'value.view.tpl.php'], compact('options', 'multiple', 'size'));
-
         } else {
             $this->params['form_output'][$this->getId()] = $this->parse('value.select.tpl.php', compact('options', 'multiple', 'size'));
-
         }
 
         $this->setValue(implode(',', $this->getValue()));
@@ -107,7 +94,6 @@ class rex_yform_value_be_media_category extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'ignore_offlines' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_be_select_media_category_ignore_offlines'), 'default' => 1],
                 'check_perms' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_be_select_media_category_check_perms'), 'default' => 1],
                 'homepage' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_be_select_media_category_homepage'), 'default' => 1],
                 'category' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_be_select_media_category_category'), 'value' => 0],

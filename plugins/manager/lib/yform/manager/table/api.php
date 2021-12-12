@@ -549,7 +549,7 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param false                   $delete_old
+     * @param bool $delete_old
      * @throws rex_sql_exception
      */
     public static function generateTableAndFields(rex_yform_manager_table $table, bool $delete_old = false): void

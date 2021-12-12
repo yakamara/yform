@@ -456,7 +456,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param 'ASC'|'DESC' $direction
+     * @param 'ASC'|'DESC'|'asc'|'desc' $direction
      * @return $this
      */
     public function orderBy(string $column, string $direction = 'ASC'): self

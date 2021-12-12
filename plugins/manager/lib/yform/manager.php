@@ -16,8 +16,8 @@ if (!function_exists('rex_yform_manager_checkField')) {
 
 class rex_yform_manager
 {
-    /** @var rex_yform_manager_table */
-    public $table = '';
+    /** @var rex_yform_manager_table|null */
+    public $table = null;
     public $linkvars = [];
     public $type = '';
     public $dataPageFunctions = [];

@@ -7,6 +7,12 @@ class rex_yform_manager_table_authorization
 
     public static $tableAuthorizations = null;
 
+    /**
+     * @param string                  $attribute
+     * @param rex_yform_manager_table $userTable
+     * @param null|rex_user           $user
+     * @return bool
+     */
     public static function onAttribute(string $attribute, rex_yform_manager_table $userTable, rex_user $user = null): bool
     {
         if (null !== self::$tableAuthorizations) {
@@ -36,6 +42,11 @@ class rex_yform_manager_table_authorization
         return self::onAttribute($attribute, $userTable, $user);
     }
 
+    /**
+     * @param rex_yform_manager_table $table
+     * @param null|rex_user           $user
+     * @return bool
+     */
     private static function canView(rex_yform_manager_table $table, rex_user $user = null): bool
     {
         if (!$user) {
@@ -46,9 +57,17 @@ class rex_yform_manager_table_authorization
             return true;
         }
 
-        return $user->getComplexPerm('yform_manager_table_view')->hasPerm($table->getTableName());
+        /** @var rex_yform_manager_table_perm_view $complexPerm */
+        $complexPerm = $user->getComplexPerm('yform_manager_table_view');
+
+        return $complexPerm->hasPerm($table->getTableName());
     }
 
+    /**
+     * @param rex_yform_manager_table $table
+     * @param null|rex_user           $user
+     * @return bool
+     */
     private static function canEdit(rex_yform_manager_table $table, rex_user $user = null): bool
     {
         if (!$user) {
@@ -59,6 +78,9 @@ class rex_yform_manager_table_authorization
             return true;
         }
 
-        return $user->getComplexPerm('yform_manager_table_edit')->hasPerm($table->getTableName());
+        /** @var rex_yform_manager_table_perm_edit $complexPerm */
+        $complexPerm = $user->getComplexPerm('yform_manager_table_edit');
+
+        return $complexPerm->hasPerm($table->getTableName());
     }
 }

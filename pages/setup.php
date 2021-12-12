@@ -60,7 +60,7 @@ if (rex::getUser()->isAdmin() && rex_addon::get('structure') && rex_addon::get('
     echo $fragment->parse('core/page/section.php');
 }
 
-$content = rex_i18n::rawMsg('yform_description_all', false);
+$content = rex_i18n::rawMsg('yform_description_all');
 
 $fragment = new rex_fragment();
 $fragment->setVar('title', $this->i18n('description'), false);
