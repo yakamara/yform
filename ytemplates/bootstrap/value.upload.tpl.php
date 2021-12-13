@@ -34,24 +34,25 @@ $class_control = trim('form-control');
     <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" accept="<?php echo $this->getElement('types') ?>" name="<?php echo $unique ?>" />
     <?php echo $notice ?>
     <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo rex_escape($unique, 'html'); ?>" />
-</div>
 
 <?php
+    if ('' != $filename) {
+        $label = htmlspecialchars($filename);
 
-if ('' != $filename) {
-    $label = htmlspecialchars($filename);
+        if (rex::isBackend() && '' != $download_link) {
+            $label = '<a href="' . $download_link . '">' . $label . '</a>';
+        }
 
-    if (rex::isBackend() && '' != $download_link) {
-        $label = '<a href="' . $download_link . '">' . $label . '</a>';
+        echo '
+            <div class="form-upload--delete checkbox" id="' . $this->getHTMLId('checkbox') . '">
+                <label>
+                    <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />
+                    ' . $error_messages['delete_file'] . ' "' . $label . '"
+                </label>
+            </div>';
+    } else {
+        echo '<div class="form-upload--delete"><button class="btn btn-xs" type="button" onclick="const file = document.getElementById(\''.$this->getFieldId().'\'); file.value = \'\';">'.$error_messages['delete_file'].'</button></div>';
     }
 
-    echo '
-        <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
-            <label>
-                <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />
-                ' . $error_messages['delete_file'] . ' "' . $label . '"
-            </label>
-        </div>';
-}
-
 ?>
+</div>
