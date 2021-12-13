@@ -31,9 +31,13 @@ $class_control = trim('form-control');
 ?>
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" accept="<?php echo $this->getElement('types') ?>" name="<?php echo $unique ?>" />
+    <div class="input-group">
+        <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" accept="<?php echo $this->getElement('types') ?>" name="<?php echo $unique ?>" />
+        <span class="input-group-btn"><button class="btn btn-default" type="button" onclick="const file = document.getElementById('<?= $this->getFieldId() ?>'); file.value = '';">&times;</button></span>
+    </div>
     <?php echo $notice ?>
     <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo rex_escape($unique, 'html'); ?>" />
+</div>
 
 <?php
     if ('' != $filename) {
@@ -44,15 +48,11 @@ $class_control = trim('form-control');
         }
 
         echo '
-            <div class="form-upload--delete checkbox" id="' . $this->getHTMLId('checkbox') . '">
+            <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
                 <label>
                     <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />
                     ' . $error_messages['delete_file'] . ' "' . $label . '"
                 </label>
             </div>';
-    } else {
-        echo '<div class="form-upload--delete"><button class="btn btn-xs" type="button" onclick="const file = document.getElementById(\''.$this->getFieldId().'\'); file.value = \'\';">'.$error_messages['delete_file'].'</button></div>';
     }
-
 ?>
-</div>
