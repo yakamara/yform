@@ -516,29 +516,6 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 
 ### ip
 
-### mediafile
-
-Ein <b>Upload-Feld</b>, mit dem eine Datei in den Medienpool hochgeladen wird.
-
-> Wert in der Datebank
-> Dateiname, z. B. `default.jpg`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `image`, `attachment`.
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Profilbild`, `Anhang`
-Maximale Größe in Kb oder Range 100,500 | |
-Welche Dateien sollen erlaubt sein, kommaseparierte Liste. ".gif,.png" | |
-Pflichtfeld  | |
-min_err,max_err,type_err,empty_err | |
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Mediakategorie id | |
-Mediapool User (createuser/updateuser) | |
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
 ### number
 
 Option | Erläuterung

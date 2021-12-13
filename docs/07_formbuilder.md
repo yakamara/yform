@@ -999,24 +999,6 @@ $yform->setValueField('integer', array("int","Integer"));
 $yform->setValueField('ip', array("ip"));
 ```
 
-#### mediafile
-
-###### Definition
-	Ein Upload-Feld, mit dem eine Datei in den Medienpool hochgeladen wird.
-	
-###### Beispiel PHP
-```php
-	$yform->setValueField('mediafile', array("media","Bilder","5000",".jpg,.gif,.png,.jpeg","","","","1"));
-	$yform->setValueField('mediafile', array("name","label","[min_size,max_size]/max_size","[allowed extensions]","[required 0,1]","min_err,max_err,type_err,empty_err","[no_db]","media_cat_id","mediapool_user"));	
-```
-
-###### Beispiel Pipe
-	mediafile|media|Bilder|5000|.jpg,.gif,.png,.jpeg||||1|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="media"]
-	
-
 ##### number 
 ###### Beispiel Formbuilder
     number|name|label|precision|scale|defaultwert|[no_db]|[unit]|[notice]

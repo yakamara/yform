@@ -16,7 +16,7 @@ foreach ($this->getInstalledPlugins() as $plugin) {
 }
 
 if ($this->getPlugin('manager')->isInstalled() && rex_string::versionCompare($this->getVersion(), '3', '<')) {
-    $fields_removed = [];
+    $fields_removed = ['remembervalues', 'mediafile'];
     $fields_renamed = ['labelexist' => 'in_names', 'existintable' => 'in_table'];
 
     foreach ($fields_renamed as $field_old_name => $field_new_name) {

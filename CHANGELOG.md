@@ -10,7 +10,7 @@ Version 4.0.0 – xx.12.2021
 * Wenn eigene Values und abgeleitete Methoden z.B. für z.B. getDefinitions genutzt werden, müssen jetzt die return types übergeben werden
 * Die Links im Table-Manager sind jetzt mit CSRF-Schutz versehen. Weitere Infos dazu in der Doku. 
 
-### deprecated entfernt
+### deprecated / entfernt
 * Validierung nach email entfernt. Bitte mit type und email ersetzen
 * Felder captcha, captcha_calc,recaptcha(_v3) sind entfernt worden und werden auch bei der Installation direkt aus den Datenbanken entfernt, bitte stattdessen das addon yform_spam_protection verwenden
 * Feld float entfernt, Bitte stattdessen das number Feld verwenden. Im Table-Manager wird es bei installation/Update automatisch zu number umgewandelt
@@ -21,6 +21,7 @@ Version 4.0.0 – xx.12.2021
 * E-Mail Templates *** ### Ersetzungen entfernt
 * Doppelten EP YFORM_MANAGER_DATA_PAGE
 * remembervalues Feld entfernt
+* mediafile entfernt
 
 ### Neu
 * läuft nun auch auf PHP 8
@@ -64,8 +65,13 @@ Version 4.0.0 – xx.12.2021
 * validate type - time Überprüfung verbesser
 * datestamp hat nun auch eine Suche
 * Übersetzung der Tabellen bei den Benuterrechten geht wieder
+* Suchen mit Relationen mit Relationstabellen sind korrigiert
+* Tools Bibliotheken aktualisiert
+* be_relations verbessert. Suchen gingen nicht richtig wenn eigene Relationstabellen verwendet wurden.
+* viele statische Codetests wurde durchgeführt.
+* be_media_category feld wurde verbessert
 
-Danke Alexander Walther, Norbert Micheel, Christoph Boecker, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
+Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
 
 Version 3.4.2 – 21.06.2021
 --------------------------

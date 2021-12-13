@@ -286,16 +286,6 @@ parameters:
 			path: lib/yform/value/index.php
 
 		-
-			message: "#^Binary operation \"\\*\" between string and 1024 results in an error\\.$#"
-			count: 3
-			path: lib/yform/value/mediafile.php
-
-		-
-			message: "#^Cannot access offset 'ok' on false\\.$#"
-			count: 2
-			path: lib/yform/value/mediafile.php
-
-		-
 			message: "#^Parameter \\#1 \\$input of function str_pad expects string, int given\\.$#"
 			count: 6
 			path: lib/yform/value/time.php
@@ -972,16 +962,6 @@ parameters:
 
 		-
 			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 16
-			path: ytemplates/bootstrap/value.mediafile.tpl.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
-			count: 1
-			path: ytemplates/bootstrap/value.mediafile.tpl.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
 			count: 15
 			path: ytemplates/bootstrap/value.radio.tpl.php
 
@@ -1264,16 +1244,6 @@ parameters:
 			message: "#^Variable \\$this might not be defined\\.$#"
 			count: 3
 			path: ytemplates/classic/value.hidden.tpl.php
-
-		-
-			message: "#^Variable \\$this might not be defined\\.$#"
-			count: 21
-			path: ytemplates/classic/value.mediafile.tpl.php
-
-		-
-			message: "#^Function getElement not found\\.$#"
-			count: 1
-			path: ytemplates/classic/value.mediafile.tpl.php
 
 		-
 			message: "#^Variable \\$this might not be defined\\.$#"
