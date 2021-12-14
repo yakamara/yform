@@ -7,7 +7,7 @@
 
 ?><div class="dropdown">
     <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-        Aktion
+        <?= \rex_i18n::msg('yform_function_button') ?>
         <span class="caret"></span>
     </button>
     <ul class="dropdown-menu dropdown-menu-right">
