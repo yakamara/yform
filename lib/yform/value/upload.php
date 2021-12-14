@@ -18,7 +18,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         // TODO: Ytemplate anpassen und nicht unique kex nehmen, sondern direkt den Feldnamen
         // erstmal so.
         // billiger hack wegen yorm, damit bei yorm save(), der wert nicht gelöscht wird
-        //  TODO?: Solange beim Abschicken die session mit dem value nicht gelöscht wird. ist der vorhanden.
+        // TODO?: Solange beim Abschicken die session mit dem value nicht gelöscht wird. ist der vorhanden.
 
         $upload_folder = self::upload_getFolder();
         $temp_folder = rex_path::pluginData('yform', 'manager', 'upload/temp');
@@ -26,7 +26,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         rex_dir::create($upload_folder);
         rex_dir::create($temp_folder);
 
-        $error_messages = $this->getElement('messages'); // min_err,max_err,type_err,empty_err
+        $error_messages = $this->getElement('messages'); // min_err,max_err,type_err,empty_err,delete_file_msg,system_error
 
         if (!is_array($error_messages)) {
             $error_messages = explode(',', $error_messages);
@@ -37,7 +37,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $error_messages['type_error'] = isset($error_messages[2]) ? rex_i18n::translate($error_messages[2]) : 'type_error';
         $error_messages['empty_error'] = isset($error_messages[3]) ? rex_i18n::translate($error_messages[3]) : 'empty_error';
         $error_messages['delete_file'] = isset($error_messages[4]) ? rex_i18n::translate($error_messages[4]) : 'delete ';
-        $error_messages['destination_error'] = isset($error_messages[5]) ? rex_i18n::translate($error_messages[5]) : 'destination_error ';
+        $error_messages['system_error'] = isset($error_messages[6]) ? rex_i18n::translate($error_messages[6]) : 'system_error';
 
         $errors = [];
 
@@ -74,6 +74,41 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $extensions_array = explode(',', $this->getElement('types'));
             $ext = '.' . pathinfo($FILE['name'], PATHINFO_EXTENSION);
 
+            if ($FILE['error'] !== UPLOAD_ERR_OK) {
+                // copied from https://www.php.net/manual/de/features.file-upload.errors.php
+                switch ($FILE['error']) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $system_message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+                        break;
+                    case UPLOAD_ERR_FORM_SIZE:
+                        $system_message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $system_message = "The uploaded file was only partially uploaded";
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        $system_message = "No file was uploaded";
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        $system_message = "Missing a temporary folder";
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        $system_message = "Failed to write file to disk";
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        $system_message = "File upload stopped by extension";
+                        break;
+                    default:
+                        $system_message = "Unknown upload error";
+                        break;
+                }
+                if ($this->params['debug']) {
+                    dump($system_message);
+                }
+                $errors[] = $error_messages['system_error'];
+                unset($FILE);
+            }
+
             if (
                 ('*' != $this->getElement('types')) &&
                 (!in_array(mb_strtolower($ext), $extensions_array) && !in_array(mb_strtoupper($ext), $extensions_array))
@@ -99,7 +134,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             if (isset($FILE)) {
                 if (!@move_uploaded_file($FILE['tmp_name'], $FILE['tmp_yform_name'])) {
                     if (!@copy($FILE['tmp_name'], $FILE['tmp_yform_name'])) {
-                        $error[] = 'upload failed: destination folder problem';
+                        if ($this->params['debug']) {
+                            dump('uploade file move/copy failed: destination folder problem?');
+                        }
+                        $errors[] = $error_messages['system_error'];
                         unset($FILE);
                     } else {
                         @chmod($FILE['tmp_yform_name'], rex::getFilePerm());
@@ -121,7 +159,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         // Datei war bereits vorhanden - vorbereitung für den Download und setzen des Values
         if ('' != $this->getSessionVar('value', 'string', '')) {
             $filename = (string) $this->getSessionVar('value', 'string', '');
-            $filepath = (string) $this->upload_getFolder() . '/' . $this->getParam('main_id') . '_' . $filename;
+            $filepath = $this->upload_getFolder() . '/' . $this->getParam('main_id') . '_' . $filename;
             if (file_exists($filepath)) {
                 $real_filepath = $filepath;
             } else {
@@ -146,7 +184,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         // Download starten - wenn Dateinamen übereinstimmen
         if (rex::isBackend() &&
             (
-                rex_request('rex_upload_downloadfile', 'string') == $this->getName()) &&
+                rex_request('rex_upload_downloadfile', 'string') == $this->getName()
+            ) &&
                 '' != $filename &&
                 '' != $filepath
             ) {
@@ -303,7 +342,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return 'upload|name|label|Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder *| pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg ';
+        return 'upload|name|label|Maximale Größe in Kb oder Range 100,500 oder leer lassen| endungenmitpunktmitkommasepariert oder *| pflicht=1 | min_error_msg,max_error_msg,type_error_msg,empty_error_msg,delete_file_msg,system_error_msg';
     }
 
     public function getDefinitions(): array
@@ -315,9 +354,9 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'name' => ['type' => 'name',      'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'sizes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_sizes')],
-                'types' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_types')],
+                'types' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_types'),    'notice' => rex_i18n::msg('yform_values_upload_types_notice')],
                 'required' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_upload_required')],
-                'messages' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_messages')],
+                'messages' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_messages'), 'notice' => rex_i18n::msg('yform_values_upload_messages_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_upload_description'),
