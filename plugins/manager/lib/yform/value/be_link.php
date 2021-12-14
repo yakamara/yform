@@ -83,7 +83,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                 $columns = $sql->getFieldnames();
                 $select = in_array('multiple', $columns) ? ', `multiple`' : '';
 
-                $fields = $sql->getArray('SELECT `table_name`, `name`'.$select.' FROM `'.\rex_yform_manager_field::table().'` WHERE `type_id`="value" AND `type_name` IN("be_link","be_select_category")');
+                $fields = $sql->getArray('SELECT `table_name`, `name`'.$select.' FROM `'.\rex_yform_manager_field::table().'` WHERE `type_id`="value" AND `type_name` IN("be_link")');
                 $fields = \rex_extension::registerPoint(new \rex_extension_point('YFORM_ARTICLE_IS_IN_USE', $fields));
 
                 if (count($fields)) {
