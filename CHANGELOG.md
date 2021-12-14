@@ -70,6 +70,7 @@ Version 4.0.0 – xx.12.2021
 * Tools Bibliotheken aktualisiert
 * be_relations verbessert. Suchen gingen nicht richtig wenn eigene Relationstabellen verwendet wurden.
 * viele statische Codetests wurde durchgeführt.
+* upload Feld angepasst um System Fehlermeldungen und einen Reset Button
 
 Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
 
