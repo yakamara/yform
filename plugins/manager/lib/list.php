@@ -485,7 +485,6 @@ class rex_yform_list implements rex_url_provider_interface
      * @return string|null
      *
      * @template T as null|string
-     * @phpstan-template T
      * @psalm-param T $default
      * @psalm-return (T is null ? string : ?string)
      */
