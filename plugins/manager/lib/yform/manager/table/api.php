@@ -558,14 +558,17 @@ class rex_yform_manager_table_api
         rex_yform_manager_table::deleteCache();
 
         $table = rex_yform_manager_table::get($tableName);
-        if (!$table || !$table->overwriteSchema()) {
+        if (!$table) {
             return;
         }
 
         $c = rex_sql::factory();
         $c->setDebug(self::$debug);
         $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table->getTableName() . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
-        $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
+        if ($table->overwriteSchema()) {
+            $c->setQuery('ALTER TABLE `' . $table->getTableName() . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+        }
 
         // remember fields, create and in case delete
         $savedColumns = $table->getColumns();
