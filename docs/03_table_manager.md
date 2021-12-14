@@ -247,31 +247,6 @@ Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen z
 In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
 Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
 
-
-### be_select_category
-
-Ein Redaxo-Feld, um ein oder mehrere <b>Kategorien</b> aus der Struktur auszuwählen.
-
-> **Wert in der Datenbank**
-> ids der gewählten Kategorien (kommagetrennt), z. B. `1,5,20`
-
-Option | Erläuterung
------- | ------
-Priorität | Ordnet das Feld zwischen anderen Feldern in der Tabelle ein.
-Name | Name des Felds in der Datenbank, z. B. `category_id`, oder `category_ids`
-Bezeichnung | Name des Felds, wie er im Frontend oder Backend angezeigt wird, z. B. `Kategorie`, `Kategorien`, `Navigationspunkt`
-Ignoriere Offline-Kategorien  | Gibt an, ob Offline-Kategorien aus dem Auswahl-Dialogfeld ausgeschlossen werden. 
-Prüfe Rechte  | Prüft, ob der Nutzer berechtigt ist, auf die jeweiligen Kategorien zuzugreifen.
-Füge "Homepage"-Eintrag (Root) hinzu  | Gibt an, ob im Auswahl-Dialogfeld die oberste Ebene auswählbar ist.
-Root-id | Startpunkt der Auswahl-Dialogfelds, z. B. die id einer Unterkategorie.
-Sprache |Clang-id der Sprache, aus der die Kategorienamen und der Offline-Status gelesen werden, z.B: `1`
-Mehrere Felder möglich | Gibt an, ob ein oder mehrere Kategorien ausgewählt werden können.
-Höhe der Auswahlbox | Höhe der Auswahlbox, wenn `Mehrere Felder möglich` aktiviert wurde. 
-Nicht in Datenbank speichern | Gibt an, ob das Feld nur angezeigt werden soll oder der Wert auch in der Datenbank gespeichert werden soll.
-Notiz | Hinweis unterhalb des Feldes, um dem Nutzer zusätzliche Instruktionen zur Eingabe mitzugeben.
-In der Liste verstecken |  Versteckt das Feld in der Tabellen-Übersicht.
-Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Option "Suche aktiv" in den Tabellen-Optionen aktiviert wurde.
-
 ### be_table
 
 Eine Reihe von Eingabefeldern, um <b>tabellarische Daten</b> einzugeben.

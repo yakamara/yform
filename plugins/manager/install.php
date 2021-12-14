@@ -104,6 +104,8 @@ if ($addon->isInstalled() && rex_version::compare($addon->getVersion(), '3.6', '
                 case 'captcha_calc':
                 case 'recaptcha':
                 case 'remembervalues':
+                case 'be_media_category':
+                case 'be_select_category':
                 case 'recaptcha_v3':
                     // remove this fields
                     rex_sql::factory()->setQuery('delete from `' . rex::getTable('yform_field') . '` where id = :id', ['id' => $field['id']]);

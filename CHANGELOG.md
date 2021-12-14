@@ -22,6 +22,7 @@ Version 4.0.0 – xx.12.2021
 * Doppelten EP YFORM_MANAGER_DATA_PAGE
 * remembervalues Feld entfernt
 * mediafile entfernt
+* be_media_category und be_select_category entfernt
 
 ### Neu
 * läuft nun auch auf PHP 8
@@ -69,7 +70,6 @@ Version 4.0.0 – xx.12.2021
 * Tools Bibliotheken aktualisiert
 * be_relations verbessert. Suchen gingen nicht richtig wenn eigene Relationstabellen verwendet wurden.
 * viele statische Codetests wurde durchgeführt.
-* be_media_category feld wurde verbessert
 
 Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
 

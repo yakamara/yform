@@ -461,46 +461,6 @@ parameters:
 			path: plugins/manager/lib/yform/value/be_manager_relation.php
 
 		-
-			message: "#^Anonymous function has an unused use \\$clang\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Method rex_media_category\\:\\:getChildren\\(\\) invoked with 1 parameter, 0 required\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Static method rex_media_category\\:\\:get\\(\\) invoked with 2 parameters, 1 required\\.$#"
-			count: 2
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Static method rex_media_category\\:\\:getRootCategories\\(\\) invoked with 2 parameters, 0 required\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Call to an undefined static method rex_media_category\\:\\:getCategoryById\\(\\)\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Parameter \\#1 \\$id of static method rex_media_category\\:\\:get\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_media_category.php
-
-		-
-			message: "#^Anonymous function has an unused use \\$clang\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_select_category.php
-
-		-
-			message: "#^Parameter \\#1 \\$id of static method rex_structure_element\\:\\:get\\(\\) expects int, string given\\.$#"
-			count: 1
-			path: plugins/manager/lib/yform/value/be_select_category.php
-
-		-
 			message: "#^Call to function compact\\(\\) contains possibly undefined variable \\$columns\\.$#"
 			count: 1
 			path: plugins/manager/lib/yform/value/be_table.php

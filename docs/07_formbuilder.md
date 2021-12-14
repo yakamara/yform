@@ -576,28 +576,7 @@ echo $yform->getForm();
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="image"]
 
-	
-	
-	
 
-#### be_select_category
-
-###### Definition
-	Ein Redaxo-Feld, um ein oder mehrere Kategorien aus der Struktur auszuwählen.
-	
-###### Beispiel PHP
-	$yform->setValueField('be_select_category', array("be_select_category","Select Category","1","1","1","","1","0"));
-		
-###### Beispiel Pipe
-	be_select_category|be_select_category|Select Category|1|1|1||1|0|
-
-###### Beispiel E-Mail
-	REX_YFORM_DATA[field="be_select_category"]
-
-	
-	
-	
-	
 	
 #### be_table
 
