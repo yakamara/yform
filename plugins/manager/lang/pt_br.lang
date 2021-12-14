@@ -127,6 +127,7 @@ yform_searchtext = Procurar termo
 yform_searchfields = Campos a serem procurados
 yform_id = Id
 yform_function = Função
+yform_function_button = açao
 yform_add = Adicionar
 yform_add_apply = Aplicar
 yform_edit = Editar

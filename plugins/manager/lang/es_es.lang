@@ -137,6 +137,7 @@ yform_searchtext = Palabra clave
 yform_searchfields = Campos de tabla para buscar
 yform_id = Id
 yform_function = Función
+yform_function_button = Accion
 yform_add = Añadir
 yform_add_apply = Tomar el relevo
 yform_edit = Editar

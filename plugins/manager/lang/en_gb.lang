@@ -138,6 +138,7 @@ yform_searchtext = Search term
 yform_searchfields = The fields to be searched
 yform_id = ID
 yform_function = Function
+yform_function_button = Action
 yform_add = add
 yform_add_apply = apply
 yform_edit = edit

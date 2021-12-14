@@ -1,3 +1,5 @@
+yform_function_button = Aktion
+
 yform_manager = Table Manager
 
 navigation_manager = Tabellen
@@ -138,6 +140,7 @@ yform_searchtext = Suchbegriff
 yform_searchfields = Tabellenfelder über die gesucht wird
 yform_id = Id
 yform_function = Funktion
+yform_function_button = Aktion
 yform_add = hinzufügen
 yform_add_apply = übernehmen
 yform_edit = editieren

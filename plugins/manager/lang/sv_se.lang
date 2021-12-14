@@ -138,6 +138,7 @@ yform_searchtext = Sökbegrepp
 yform_searchfields = Fälten som ska sökas igenom
 yform_id = ID
 yform_function = Funktion
+yform_function_button = Handling
 yform_add = tillfoga
 yform_add_apply = ta över
 yform_edit = redigera
