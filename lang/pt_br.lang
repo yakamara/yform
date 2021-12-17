@@ -66,7 +66,6 @@ yform_values_defaults_showvalue = Mostrar valor
 yform_validate_defaults_message = Mensagem de erro
 
 yform_values_checkbox_values = Valores  (0,1 = não verificado, verificado)
-yform_values_checkbox_values = Valores  (0,1 = não verificado, verificado)
 yform_values_checkbox_default = Status padrão
 yform_values_checkbox_sql_query = Consulta com "SELECT id, name FROM ..."
 yform_values_date_year_start = Ano começa

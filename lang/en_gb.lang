@@ -86,7 +86,6 @@ yform_search_number_notice = Examples: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty
 yform_search_defaults_select_notice = Please use CTRL or COMMAND to select more options
 
 yform_values_checkbox_values = Values (0,1 = unchecked, checked)
-yform_values_checkbox_values = Values (0,1 = unchecked, checked)
 yform_values_checkbox_default = Default status
 yform_values_checkbox_sql_query = Query with "SELECT id, name FROM ..."
 yform_values_date_year_start = Year start

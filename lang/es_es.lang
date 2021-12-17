@@ -86,7 +86,6 @@ yform_search_number_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / !(vacío ) / (vac
 yform_search_defaults_select_notice = Seleccione varios con CTRL o comando
 
 yform_values_checkbox_values = Valores (0,1) (sin hacer clic, hacer clic)
-yform_values_checkbox_values = Valores (0,1) (sin hacer clic, hacer clic)
 yform_values_checkbox_default = Estado por defecto
 yform_values_checkbox_sql_query = Consulta con "seleccionar id, nombre de ...""
 yform_values_date_year_start = Empezar el año
