@@ -1,6 +1,9 @@
 <?php
 
-/** @var rex_addon $this */
+/**
+ * @var rex_addon $this
+ * @psalm-scope-this rex_addon
+ */
 
 try {
     // transaction test.
@@ -25,3 +28,7 @@ foreach ($this->getInstalledPlugins() as $plugin) {
         $plugin->includeFile($file);
     }
 }
+
+rex_dir::delete($this->getDataPath('fonts'));
+
+rex_autoload::removeCache();
