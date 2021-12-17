@@ -5,7 +5,7 @@
  * @psalm-scope-this rex_fragment
  */
 
-?><div class="dropdown yform-dropdown--on-hover">
+?><div class="dropdown yform-dropdown">
     <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
         <?= \rex_i18n::msg('yform_function_button') ?>
         <span class="caret"></span>

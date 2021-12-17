@@ -247,3 +247,7 @@ div.sortable-ghost {
     display: block;
     margin-top: 0;
 }
+
+.yform-dropdown .btn {
+    font-size: inherit;
+}

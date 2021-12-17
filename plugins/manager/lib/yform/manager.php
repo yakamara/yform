@@ -483,12 +483,12 @@ class rex_yform_manager
 
         if ($this->hasDataPageFunction('add') && $this->table->isGranted('EDIT', rex::getUser())) {
             $thIcon = '<a href="index.php?' . http_build_query(array_merge(['func' => 'add'], $rex_link_vars)) . '"' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
-            $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
+            $tdIcon = '<i class="rex-icon rex-icon-editmode"></i>';
             $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon" data-title="' . rex_i18n::msg('id') . '">###VALUE###</td>']);
             $list->setColumnParams($thIcon, array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
         } else {
             $thIcon = '_';
-            $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
+            $tdIcon = '<i class="rex-icon rex-icon-view"></i>';
             $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon" data-title="' . rex_i18n::msg('id') . '">###VALUE###</td>']);
             $list->setColumnParams($thIcon, array_merge(['data_id' => '###id###', 'func' => 'edit'], $rex_yform_list));
         }
@@ -593,7 +593,7 @@ class rex_yform_manager
                 $actionButtons['edit'] = '<a href="'.$list->getUrl(
                     array_merge($rex_link_vars, ['data_id' => '___id___', 'func' => 'edit']),
                     false
-                ).'"><i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit').'</a>';
+                ).'"><i class="rex-icon rex-icon-editmode"></i> ' . rex_i18n::msg('yform_edit').'</a>';
                 if ($this->hasDataPageFunction('delete')) {
                     $actionButtons['delete'] = '<a onclick="return confirm(\' id=___id___ ' . rex_i18n::msg('yform_delete') . ' ?\')" href="'.$list->getUrl(
                         array_merge(['data_id' => '___id___', 'func' => 'delete'], $rex_link_vars),
@@ -1319,7 +1319,7 @@ class rex_yform_manager
 
                 function rex_yform_list_edit_format($p)
                 {
-                    return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit')));
+                    return rex_yform_list_format($p, $p['list']->getColumnLink(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-editmode"></i> ' . rex_i18n::msg('yform_edit')));
                 }
 
                 function rex_yform_list_delete_format($p)
@@ -1396,7 +1396,7 @@ class rex_yform_manager
                 // $list->debug = 1;
                 // $list->setColumnFormat('id', 'Id');
 
-                $tdIcon = '<i class="rex-icon rex-icon-table"></i>';
+                $tdIcon = '<i class="rex-icon rex-icon-editmode"></i>';
                 $thIcon = '<a href="' . $list->getUrl(['table_name' => $table->getTableName(), 'func' => 'choosenadd']) . '" ' . rex::getAccesskey(rex_i18n::msg('add'), 'add') . '><i class="rex-icon rex-icon-add"></i></a>';
                 $list->addColumn($thIcon, $tdIcon, 0, ['<th class="rex-table-icon">###VALUE###</th>', '<td class="rex-table-icon">###VALUE###</td>']);
                 $list->setColumnParams($thIcon, ['field_id' => '###id###', 'func' => 'edit', 'type_name' => '###type_name###', 'type_id' => '###type_id###']);
@@ -1431,7 +1431,7 @@ class rex_yform_manager
                 $list->setColumnLayout('label', ['<th>###VALUE###</th>', '###VALUE###']); // ###VALUE###
                 $list->setColumnFormat('label', 'custom', 'rex_yform_list_format');
 
-                $list->addColumn(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-edit"></i> ' . rex_i18n::msg('yform_edit'));
+                $list->addColumn(rex_i18n::msg('yform_function'), '<i class="rex-icon rex-icon-editmode"></i> ' . rex_i18n::msg('yform_edit'));
                 $list->setColumnParams(rex_i18n::msg('yform_function'), ['field_id' => '###id###', 'func' => 'edit', 'type_name' => '###type_name###', 'type_id' => '###type_id###']);
                 $list->setColumnLayout(rex_i18n::msg('yform_function'), ['<th class="rex-table-action" colspan="2">###VALUE###</th>', '###VALUE###']);
                 $list->setColumnFormat(rex_i18n::msg('yform_function'), 'custom', 'rex_yform_list_edit_format');
