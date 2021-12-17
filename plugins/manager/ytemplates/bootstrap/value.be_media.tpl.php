@@ -10,6 +10,7 @@ $counter = $counter ?? 1;
 $buttonId = $counter;
 $name = $this->getFieldName();
 $value = htmlspecialchars($this->getValue());
+$types = $types ?? $this->getElement('types');
 
 $widget_params = [];
 $widget_params['category'] = 0;
@@ -17,8 +18,8 @@ if ('' != $this->getElement('category')) {
     $widget_params['category'] = (int) ($this->getElement('category'));
 }
 $widget_params['preview'] = $this->getElement('preview');
-if ('' != $this->getElement('types')) {
-    $widget_params['types'] = trim($this->getElement('types'));
+if ('' != $types) {
+    $widget_params['types'] = trim($types);
 }
 
 if (1 == $this->getElement('multiple')) {

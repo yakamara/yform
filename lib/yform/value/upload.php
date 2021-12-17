@@ -71,8 +71,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
             unset($_FILES[$this->getSessionKey()]);
 
-            $extensions_array = explode(',', $this->getElement('types'));
-            $ext = '.' . pathinfo($FILE['name'], PATHINFO_EXTENSION);
+            $extensions_array = explode(',', str_replace('.','', $this->getElement('types')));
+            $ext = pathinfo($FILE['name'], PATHINFO_EXTENSION);
 
             if ($FILE['error'] !== UPLOAD_ERR_OK) {
                 // copied from https://www.php.net/manual/de/features.file-upload.errors.php
@@ -354,7 +354,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'name' => ['type' => 'name',      'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'sizes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_sizes')],
-                'types' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_types'),    'notice' => rex_i18n::msg('yform_values_upload_types_notice')],
+                'types' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_types'),    'notice' => rex_i18n::msg('yform_values_upload_types_notice'), 'default' => '*'],
                 'required' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_upload_required')],
                 'messages' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_messages'), 'notice' => rex_i18n::msg('yform_values_upload_messages_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],

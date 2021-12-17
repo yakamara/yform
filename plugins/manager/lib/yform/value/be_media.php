@@ -22,14 +22,20 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         static $counter = 0;
         ++$counter;
 
+        $types = $this->getElement('types') ?? '';
+        // to be in line with upload field
+        if ($types == '*') {
+            $types = '';
+        }
+
         if ($this->needsOutput() && $this->isViewable()) {
             if (!$this->isEditable()) {
                 $this->params['form_output'][$this->getId()] = $this->parse(
                     ['value.view.tpl.php', 'value.be_media-view.tpl.php'],
-                    ['counter' => $counter, 'value' => explode(',', $this->getValue())]
+                    ['counter' => $counter, 'value' => explode(',', $this->getValue()), 'types' => $types]
                 );
             } else {
-                $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter'));
+                $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter', 'types'));
             }
         }
 
@@ -50,7 +56,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 'preview' => ['type' => 'checkbox',   'label' => rex_i18n::msg('yform_values_be_media_preview')],
                 'multiple' => ['type' => 'checkbox',   'label' => rex_i18n::msg('yform_values_be_media_multiple')],
                 'category' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_be_media_category')],
-                'types' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_be_media_types'),   'notice' => rex_i18n::msg('yform_values_be_media_types_notice')],
+                'types' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_be_media_types'),   'notice' => rex_i18n::msg('yform_values_be_media_types_notice'), 'default' => '*'],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_be_media_description'),
