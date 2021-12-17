@@ -111,7 +111,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
             $viewOptions = [];
             foreach (self::getListValues($this->relation['target_table'], $this->relation['target_field'], $filter) as $id => $name) {
-                if (strlen($name) > 50) {
+                if (mb_strlen($name) > 50) {
                     $name = mb_substr($name, 0, 45) . ' ... ';
                 }
                 $viewOptions[$id] = $name;

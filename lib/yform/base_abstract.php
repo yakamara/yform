@@ -21,7 +21,7 @@ abstract class rex_yform_base_abstract
         $offset = 0;
         foreach ($elements as $key => $value) {
             if (is_string($value) && !empty($value) && '#' == $value[0] && false !== strpos($value, ':')) {
-                [$key, $value] = explode(':', substr($value, 1), 2);
+                [$key, $value] = explode(':', mb_substr($value, 1), 2);
                 ++$offset;
             }
             $this->setElement(is_numeric($key) ? $key - $offset : $key, $value);

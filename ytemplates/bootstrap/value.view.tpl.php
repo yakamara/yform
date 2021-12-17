@@ -25,7 +25,7 @@ if ('' != $download_link) {
         $value = '<ul>'.implode('', $value).'</ul>';
     }
 } else {
-    $length = strlen($value);
+    $length = mb_strlen($value);
     $title = $value;
     $maxsize = 400;
     if ($length > $maxsize) {

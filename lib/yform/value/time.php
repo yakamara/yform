@@ -69,9 +69,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
             );
         } else {
             $format = 'HH:ii:ss'; // Format of Select Order
-            $hour = (int) substr($this->getValue(), 0, 2);
-            $minute = (int) substr($this->getValue(), 3, 2);
-            $second = (int) substr($this->getValue(), 6, 2);
+            $hour = (int) mb_substr($this->getValue(), 0, 2);
+            $minute = (int) mb_substr($this->getValue(), 3, 2);
+            $second = (int) mb_substr($this->getValue(), 6, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.time.tpl.php', 'value.datetime.tpl.php'],
                 compact('format', 'hour', 'minute', 'second')
@@ -107,9 +107,9 @@ class rex_yform_value_time extends rex_yform_value_abstract
     public static function time_getFormattedTime($format, $time)
     {
         $format = (in_array($format, self::VALUE_TIME_FORMATS, true)) ? $format : self::VALUE_TIME_DEFAULT_FORMAT;
-        $hour = (int) substr($time, 0, 2);
-        $minute = (int) substr($time, 3, 2);
-        $second = (int) substr($time, 6, 2);
+        $hour = (int) mb_substr($time, 0, 2);
+        $minute = (int) mb_substr($time, 3, 2);
+        $second = (int) mb_substr($time, 6, 2);
         return date($format, mktime($hour, $minute, $second, 1, 1, 2000)); // dummy date
     }
 

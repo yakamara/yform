@@ -28,7 +28,7 @@ class rex_yform_rest_route
         $this->table = $this->config['table'];
         $this->query = $this->config['query'];
         $this->instance = $this->table->createDataset();
-        $this->path = ('/' == substr($this->config['path'], -1)) ? substr($this->config['path'], 0, -1) : $this->config['path'];
+        $this->path = ('/' == mb_substr($this->config['path'], -1)) ? mb_substr($this->config['path'], 0, -1) : $this->config['path'];
         return $this;
     }
 
@@ -551,7 +551,7 @@ class rex_yform_rest_route
                 foreach (explode(',', $includes) as $include) {
                     $this->includes[$include] = $include;
                     while (false !== strrpos($include, '.')) {
-                        $include = substr($include, 0, strrpos($include, '.'));
+                        $include = mb_substr($include, 0, strrpos($include, '.'));
                         $this->includes[$include] = $include;
                     }
                 }

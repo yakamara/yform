@@ -87,7 +87,7 @@ class rex_var_yform_table_data extends rex_var
         //        $query = rex_yform_manager_dataset::query($table->getTableName());
         //        $method = (strpos($value, ',') === false) ? 'findId' : 'findIDs';
         //        $value = $query->{$method}($value);
-        //        //return 'rex_var::nothing(require rex_stream::factory(substr(__FILE__, 6) . \'/REX_YFORM_DATASET/'.$id.'\', '.self::quote(json_encode($value)).'))';
+        //        //return 'rex_var::nothing(require rex_stream::factory(mb_substr(__FILE__, 6) . \'/REX_YFORM_DATASET/'.$id.'\', '.self::quote(json_encode($value)).'))';
         //        return self::quote(json_encode($value));
         //    }
         //}

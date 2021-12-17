@@ -69,8 +69,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
             return;
         }
 
-        if ('-' == substr($this->getElement('year_start'), 0, 1)) {
-            $minus_years = (int) substr($this->getElement('year_start'), 1);
+        if ('-' == mb_substr($this->getElement('year_start'), 0, 1)) {
+            $minus_years = (int) mb_substr($this->getElement('year_start'), 1);
             $yearStart = date('Y') - $minus_years;
         } elseif ('' == $this->getElement('year_start')) {
             $yearStart = date('Y') - 20;
@@ -78,8 +78,8 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $yearStart = (int) $this->getElement('year_start');
         }
 
-        if ('+' == substr($this->getElement('year_end'), 0, 1)) {
-            $add_years = (int) substr($this->getElement('year_end'), 1);
+        if ('+' == mb_substr($this->getElement('year_end'), 0, 1)) {
+            $add_years = (int) mb_substr($this->getElement('year_end'), 1);
             $yearEnd = date('Y') + $add_years;
         } else {
             $yearEnd = (int) $this->getElement('year_end');
@@ -106,9 +106,9 @@ class rex_yform_value_date extends rex_yform_value_abstract
             );
         } else {
             $format = 'YYYY-MM-DD'; // Format of Select Order
-            $year = (int) substr($this->getValue(), 0, 4);
-            $month = (int) substr($this->getValue(), 5, 2);
-            $day = (int) substr($this->getValue(), 8, 2);
+            $year = (int) mb_substr($this->getValue(), 0, 4);
+            $month = (int) mb_substr($this->getValue(), 5, 2);
+            $day = (int) mb_substr($this->getValue(), 8, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date.tpl.php', 'value.datetime.tpl.php'],
                 compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
@@ -181,7 +181,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if ($ok) {
             $comparator = $match['c'] ?: '=';
             $year = $match['y'] ?: null;
-            if (2 == strlen($year)) {
+            if (2 == mb_strlen($year)) {
                 $year = '20' . $year;
             }
             $month = $match['m'] ?? null;
@@ -226,11 +226,11 @@ class rex_yform_value_date extends rex_yform_value_abstract
         $ok = preg_match($pattern, $value, $match);
         if ($ok) {
             $year_from = $match['y'] ?: '';
-            if (2 == strlen($year_from)) {
+            if (2 == mb_strlen($year_from)) {
                 $year_from = '20' . $year_from;
             }
             $year_to = $match['y2'] ?: '';
-            if (2 == strlen($year_to)) {
+            if (2 == mb_strlen($year_to)) {
                 $year_to = '20' . $year_to;
             }
             $month_from = $match['m'] ?: '00';

@@ -79,8 +79,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             return;
         }
 
-        if ('-' == substr($this->getElement('year_start'), 0, 1)) {
-            $minus_years = (int) substr($this->getElement('year_start'), 1);
+        if ('-' == mb_substr($this->getElement('year_start'), 0, 1)) {
+            $minus_years = (int) mb_substr($this->getElement('year_start'), 1);
             $yearStart = date('Y') - $minus_years;
         } elseif ('' == $this->getElement('year_start')) {
             $yearStart = date('Y') - 20;
@@ -88,8 +88,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $yearStart = (int) $this->getElement('year_start');
         }
 
-        if ('+' == substr($this->getElement('year_end'), 0, 1)) {
-            $add_years = (int) substr($this->getElement('year_end'), 1);
+        if ('+' == mb_substr($this->getElement('year_end'), 0, 1)) {
+            $add_years = (int) mb_substr($this->getElement('year_end'), 1);
             $yearEnd = date('Y') + $add_years;
         } elseif ('' != $this->getElement('year_end')) {
             $yearEnd = (int) $this->getElement('year_end');
@@ -113,12 +113,12 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             );
         } else {
             $format = 'YYYY-MM-DD HH:ii:ss'; // Format of Select Order
-            $year = (int) substr($this->getValue(), 0, 4);
-            $month = (int) substr($this->getValue(), 5, 2);
-            $day = (int) substr($this->getValue(), 8, 2);
-            $hour = (int) substr($this->getValue(), 11, 2);
-            $minute = (int) substr($this->getValue(), 14, 2);
-            $second = (int) substr($this->getValue(), 17, 2);
+            $year = (int) mb_substr($this->getValue(), 0, 4);
+            $month = (int) mb_substr($this->getValue(), 5, 2);
+            $day = (int) mb_substr($this->getValue(), 8, 2);
+            $hour = (int) mb_substr($this->getValue(), 11, 2);
+            $minute = (int) mb_substr($this->getValue(), 14, 2);
+            $second = (int) mb_substr($this->getValue(), 17, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date.tpl.php', 'value.datetime.tpl.php'],
                 compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day', 'hour', 'minute', 'second')
@@ -183,18 +183,18 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         }
 
         $format = 'YYYY-MM-DD HH:ii:ss';
-        $format_len = strlen($format);
-        $firstchar = substr($value, 0, 1);
+        $format_len = mb_strlen($format);
+        $firstchar = mb_substr($value, 0, 1);
 
         switch ($firstchar) {
             case '>':
             case '<':
             case '=':
-                $value = substr($value, 1);
+                $value = mb_substr($value, 1);
                 return $query->where($field, $value, $firstchar);
         }
 
-        if (strlen($value) == $format_len) {
+        if (mb_strlen($value) == $format_len) {
             return $query->where($field, $value);
         }
 

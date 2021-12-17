@@ -92,7 +92,7 @@ class rex_yform_list implements rex_url_provider_interface
         // --------- Validation
         if (!$listName) {
             // use a hopefully unique (per page) hash
-            $listName = substr(md5($query->getQuery()), 0, 8);
+            $listName = mb_substr(md5($query->getQuery()), 0, 8);
         }
 
         // --------- List Attributes

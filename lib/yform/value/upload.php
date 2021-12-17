@@ -386,7 +386,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     public static function getListValue($params)
     {
         $value = $params['subject'];
-        $length = strlen($value);
+        $length = mb_strlen($value);
         $title = $value;
         if ($length > 30) {
             $value = mb_substr($value, 0, 15).' ... '.mb_substr($value, -15);

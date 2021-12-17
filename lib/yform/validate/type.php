@@ -96,11 +96,11 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                     'n' => 23, 'o' => 24, 'p' => 25, 'q' => 26, 'r' => 27, 's' => 28, 't' => 29, 'u' => 30, 'v' => 31, 'w' => 32, 'x' => 33, 'y' => 34, 'z' => 35,
                 ];
 
-                if (!isset($countries[substr($iban, 0, 2)]) || strlen($iban) != $countries[substr($iban, 0, 2)]) {
+                if (!isset($countries[mb_substr($iban, 0, 2)]) || mb_strlen($iban) != $countries[mb_substr($iban, 0, 2)]) {
                     $w = true;
                 } else {
-                    $movedChar = substr($iban, 4).substr($iban, 0, 4);
-                    $movedCharArray = str_split($movedChar);
+                    $movedChar = mb_substr($iban, 4).mb_substr($iban, 0, 4);
+                    $movedCharArray = mb_str_split($movedChar);
                     $newString = '';
 
                     foreach ($movedCharArray as $k => $v) {
@@ -119,10 +119,10 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         $mod = '';
 
                         do {
-                            $a = (int) $mod.substr($x, 0, $take);
-                            $x = substr($x, $take);
+                            $a = (int) $mod.mb_substr($x, 0, $take);
+                            $x = mb_substr($x, $take);
                             $mod = $a % $y;
-                        } while (strlen($x));
+                        } while (mb_strlen($x));
 
                         $w = !(1 == (int) $mod);
                     }

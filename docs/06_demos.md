@@ -127,7 +127,7 @@ foreach($rows as $row)
 {
  $id = $row["id"];
  $begriff = $row["Begriff"];
- $char = strtoupper(substr($begriff,0,1)); // Erster Buchstabe
+ $char = strtoupper(mb_substr($begriff,0,1)); // Erster Buchstabe
  $beschreibung = $row["beschreibung"];
  # $beschreibung = nl2br($beschreibung); // wenn nur eine Textarea ohne WYSIWYG verwendet wird
  $counter++;

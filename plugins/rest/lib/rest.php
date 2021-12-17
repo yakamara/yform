@@ -53,7 +53,7 @@ class rex_yform_rest
     public static function handleRoutes()
     {
         if ('' != self::$preRoute) {
-            if (substr(self::getCurrentPath(), 0, strlen(self::$preRoute)) != self::$preRoute) {
+            if (mb_substr(self::getCurrentPath(), 0, mb_strlen(self::$preRoute)) != self::$preRoute) {
                 return false;
             }
         }
@@ -61,11 +61,11 @@ class rex_yform_rest
         foreach (self::$routes as $route) {
             $routePath = self::$preRoute . $route->getPath();
 
-            if (substr(self::getCurrentPath(), 0, strlen($routePath)) != $routePath) {
+            if (mb_substr(self::getCurrentPath(), 0, mb_strlen($routePath)) != $routePath) {
                 continue;
             }
 
-            $paths = explode('/', substr(self::getCurrentPath(), strlen($routePath)));
+            $paths = explode('/', mb_substr(self::getCurrentPath(), mb_strlen($routePath)));
 
             $paths = array_filter($paths, static function ($p) {
                 if (!empty($p)) {
@@ -134,8 +134,8 @@ class rex_yform_rest
         $headers = [];
 
         foreach ($_SERVER as $k => $v) {
-            if ('HTTP_' == substr($k, 0, 5)) {
-                $headers[str_replace(' ', '-', strtolower(str_replace('_', ' ', substr($k, 5))))] = $v;
+            if ('HTTP_' == mb_substr($k, 0, 5)) {
+                $headers[str_replace(' ', '-', strtolower(str_replace('_', ' ', mb_substr($k, 5))))] = $v;
             } elseif ('CONTENT_TYPE' == $k) {
                 $headers['Content-Type'] = $v;
             } elseif ('CONTENT_LENGTH' == $k) {
