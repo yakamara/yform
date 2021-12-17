@@ -6,7 +6,7 @@
  */
 
 ?><div class="dropdown yform-dropdown--on-hover">
-    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+    <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown">
         <?= \rex_i18n::msg('yform_function_button') ?>
         <span class="caret"></span>
     </button>
