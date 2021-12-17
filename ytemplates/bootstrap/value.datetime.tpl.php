@@ -25,7 +25,7 @@ if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['
 
 $notice = '';
 if (count($notices) > 0) {
-    $notice = '<p class="help-block">' . implode('<br />', $notices) . '</p>';
+    $notice = '<p class="help-block small">' . implode('<br />', $notices) . '</p>';
 }
 
 $class_group = trim('form-group ' . $this->getWarningClass());

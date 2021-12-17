@@ -353,7 +353,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $list->setColumnFormat('hidden', 'custom', 'rex_yform_hidden_col');
 
     $list->addColumn(rex_i18n::msg('yform_delete_definitions'), '<i class="rex-icon rex-icon-delete"></i> ' . rex_i18n::msg('yform_delete_definitions'));
-    $list->setColumnLayout(rex_i18n::msg('yform_delete_definitions'), ['<th></th>', '<td class="rex-table-action">###VALUE###<p class="help-block"><small>' . rex_i18n::msg('yform_delete_definitions_info') . '</small></p></td>']);
+    $list->setColumnLayout(rex_i18n::msg('yform_delete_definitions'), ['<th></th>', '<td class="rex-table-action">###VALUE###<p class="help-block small">' . rex_i18n::msg('yform_delete_definitions_info') . '</p></td>']);
     $list->setColumnParams(rex_i18n::msg('yform_delete_definitions'), ['table_name' => '###table_name###', 'func' => 'delete'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
     $list->addLinkAttribute(rex_i18n::msg('yform_delete_definitions'), 'onclick', 'return confirm(\' [###table_name###] ' . rex_i18n::msg('yform_delete_definitions') . ' ?\')');
 

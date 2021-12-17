@@ -19,7 +19,7 @@ if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['
     $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()]) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
-    $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
+    $notice = '<p class="help-block small">' . implode('<br />', $notice) . '</p>';
 } else {
     $notice = '';
 }

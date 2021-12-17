@@ -21,7 +21,7 @@ if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['
     $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], false) . '</span>'; //    var_dump();
 }
 if (count($notice) > 0) {
-    $notice = '<p class="help-block">' . implode('<br />', $notice) . '</p>';
+    $notice = '<p class="help-block small">' . implode('<br />', $notice) . '</p>';
 } else {
     $notice = '';
 }
@@ -68,7 +68,7 @@ if (count($notice) > 0) {
             if ($this->params['main_id'] > 0) {
                 $e['functionButtons'] = '<a class="btn btn-popup" href="javascript:void(0);" onclick="newPoolWindow(\'' . $link . '\');return false;">' . rex_i18n::msg('yform_relation_edit_relations') . '</a>';
             } else {
-                $e['after'] = '<p class="help-block">' . rex_i18n::msg('yform_relation_first_create_data') . '</p>';
+                $e['after'] = '<p class="help-block small">' . rex_i18n::msg('yform_relation_first_create_data') . '</p>';
             }
 
             $fragment = new rex_fragment();

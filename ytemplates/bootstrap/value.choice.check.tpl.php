@@ -91,6 +91,6 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
     <?php endforeach ?>
 
     <?php if ($notices): ?>
-        <p class="help-block"><?= implode('<br />', $notices) ?></p>
+        <p class="help-block small"><?= implode('<br />', $notices) ?></p>
     <?php endif ?>
 </div>
