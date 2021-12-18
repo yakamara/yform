@@ -166,7 +166,7 @@ if ($show_list) {
     $list->addTableColumnGroup([40, 40, '*', 153, 153]);
 
     $tdIcon = '<i class="rex-icon rex-icon-template"></i>';
-    $thIcon = '<a href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey(rex_i18n::msg('create_template'), 'add') . ' title="' . rex_i18n::msg('create_template') . '"><i class="rex-icon rex-icon-add-template"></i></a>';
+    $thIcon = '<a class="rex-link-expanded" href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey(rex_i18n::msg('create_template'), 'add') . ' title="' . rex_i18n::msg('create_template') . '"><i class="rex-icon rex-icon-add-template"></i></a>';
     $list->addColumn($thIcon, $tdIcon, 0, [
         '<th class="rex-table-icon">###VALUE###</th>',
         '<td class="rex-table-icon">###VALUE###</td>'
