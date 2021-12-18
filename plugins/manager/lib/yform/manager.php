@@ -1300,13 +1300,13 @@ class rex_yform_manager
                     }
                     switch ($p['list']->getValue('type_id')) {
                         case 'validate':
-                            $style = 'color:#aaa;'; // background-color:#cfd9d9;
+                            $styleClass = 'yform-manager-type-validate';
                             break;
                         case 'action':
-                            $style = 'background-color:#cfd9d9;';
+                            $styleClass = 'yform-manager-type-action';
                             break;
                         default:
-                            $style = 'background-color:#eff9f9;';
+                            $styleClass = 'yform-manager-type-default';
                             break;
                     }
 
@@ -1314,7 +1314,7 @@ class rex_yform_manager
                         $p['value'] = rex_i18n::translate($p['value']);
                     }
 
-                    return '<td style="' . $style . '">' . $p['value'] . '</td>';
+                    return '<td class="' . $styleClass . '">' . $p['value'] . '</td>';
                 }
 
                 function rex_yform_list_edit_format($p)

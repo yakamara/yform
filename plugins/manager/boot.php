@@ -14,6 +14,17 @@ rex_complex_perm::register('yform_manager_table_edit', 'rex_yform_manager_table_
 rex_complex_perm::register('yform_manager_table_view', 'rex_yform_manager_table_perm_view');
 
 if (rex::isBackend() && rex::getUser()) {
+    rex_extension::register('PACKAGES_INCLUDED', function() {
+        if ($this->getProperty('compile')) {
+            $compiler = new rex_scss_compiler();
+            $compiler->setRootDir($this->getPath('scss/'));
+            $compiler->setScssFile($this->getPath('scss/manager.scss'));
+            $compiler->setCssFile($this->getPath('assets/manager.css'));
+            $compiler->compile();
+            rex_dir::copy($this->getPath('assets'), $this->getAssetsPath()); // copy whole assets directory
+        }
+    });
+
     rex_view::addJsFile($this->getAssetsUrl('manager.js'));
     rex_view::addCssFile($this->getAssetsUrl('manager.css'));
     rex_view::addJsFile($this->getAssetsUrl('widget.js'));

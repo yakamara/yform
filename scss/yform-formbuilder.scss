@@ -1,0 +1,101 @@
+#yform-formbuilder .form-horizontal .control-label {
+    font-weight: 400;
+    text-align: left;
+}
+
+#yform-formbuilder-classes-showhelp .panel {
+    margin-bottom: 0;
+}
+#yform-formbuilder-classes-showhelp .rex-page-section + .rex-page-section {
+    border-top: 1px solid #c1c9d4;
+}
+#yform-formbuilder-classes-showhelp .panel-title {
+    font-size: 14px;
+}
+
+
+#yform-js-formbuilder-placeholders {
+    position: relative;
+    margin-top: -6px;
+    margin-bottom: 10px;
+    padding: 30px 12px 10px 12px;
+    background-color: #fff;
+    border: 1px solid #c1c9d4;
+}
+#yform-js-formbuilder-placeholders h3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 5px 12px;
+    background: #f3f6fb;
+    color: #324050;
+    font-size: 12px;
+}
+#yform-js-formbuilder-placeholders code {
+    cursor: pointer;
+}
+#yform-js-formbuilder-placeholders-help {
+    margin: 10px -12px -10px -12px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background: #f3f6fb;
+    border-top: 1px solid #dfe3e9;
+    color: #324050;
+    font-size: 12px;
+}
+#yform-formbuilder-info {
+    padding: 5px 0;
+    border-top: 1px solid #c1c9d4;
+    font-size: 12px;
+    text-align: right;
+}
+
+table.yform-table-help tr.yform-classes-famous {
+    background-color: rgba(#4b9ad9, 0.2); // $brand-info
+
+    &:hover {
+        background-color: rgba(#4b9ad9, 0.3);
+    }
+}
+
+table.yform-table-help tr.yform-classes-famous .example-code {
+    display: inline-block;
+}
+
+table.yform-table-help tr.yform-classes-deprecated {
+    background-color: rgba(#d9534f, 0.2); // $brand-danger
+
+    &:hover {
+        background-color: rgba(#d9534f, 0.3);
+    }
+}
+
+@mixin _yform-formbuilder-dark {
+
+    table.yform-table-help tr.yform-classes-famous {
+        background-color: rgba(#1867a6, 0.2); // $dark-brand-info
+
+        &:hover {
+            background-color: rgba(#1867a6, 0.3);
+        }
+    }
+
+    table.yform-table-help tr.yform-classes-deprecated {
+        background-color: rgba(#801919, 0.2); // $dark-brand-danger
+
+        &:hover {
+            background-color: rgba(#801919, 0.3);
+        }
+    }
+}
+
+body.rex-theme-dark {
+    @include _yform-formbuilder-dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    body.rex-has-theme:not(.rex-theme-light) {
+        @include _yform-formbuilder-dark;
+    }
+}
