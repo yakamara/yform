@@ -12,6 +12,20 @@ if (rex::isBackend() && rex::getUser()) {
     rex_view::addCssFile($this->getAssetsUrl('yform.css'));
     rex_view::addCssFile($this->getAssetsUrl('yform-formbuilder.css'));
 
+    rex_extension::register('PACKAGES_INCLUDED', function() {
+        if ($this->getProperty('compile')) {
+            $compiler = new rex_scss_compiler();
+            $compiler->setRootDir($this->getPath('scss/'));
+            $compiler->setScssFile($this->getPath('scss/yform.scss'));
+            $compiler->setCssFile($this->getPath('assets/yform.css'));
+            $compiler->compile();
+            $compiler->setScssFile($this->getPath('scss/yform-formbuilder.scss'));
+            $compiler->setCssFile($this->getPath('assets/yform-formbuilder.css'));
+            $compiler->compile();
+            rex_dir::copy($this->getPath('assets'), $this->getAssetsPath()); // copy whole assets directory
+        }
+    });
+
     rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
         $page = rex_be_controller::getPageObject('yform');
         $subpages = $page->getSubpages();

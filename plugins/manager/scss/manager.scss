@@ -1,0 +1,289 @@
+
+#rex-yform .rex-widget-field {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+
+#rex-yform div.rex-widget {
+    clear:none;
+    float:left;
+    display:block;
+    margin:0px;
+    width:390px;
+    /*margin-left:245px;*/
+    }
+#rex-yform div.rex-widget input.text {
+    padding: 2px;
+    width: 290px;
+    }
+#rex-yform div.rex-widget select{
+    width:335px;
+    }
+div#rex-title h1 span {
+    color:#CBCBCB;
+    font-size:0.5em;
+    }
+
+body#rex-page-yform .yform-manager-searchfield{
+    background:silver;
+    color:white;
+    padding:3px;
+    border-radius:5px;
+    margin:1px;
+    display:inline-block;
+
+}
+
+.rex-yform textarea.yform-textarea-short{
+    height:130px;
+}
+
+.yform-table_field p.rex-button {
+        padding-left: 140px;
+}
+.yform-table_field p.rex-button a.rex-button {
+        float: left;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-left: -140px;
+}
+.yform-table_field p.rex-button span {
+        display: block;
+}
+
+#yform-manager-search-form p.help-block {
+    font-size: 11px;
+}
+
+
+/*    Piped ***********************************************************************
+*******************************************************************************/
+.rex-navi-piped {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+.rex-navi-piped > * {
+    display: inline;
+    padding: 0 5px 0 6px;
+    font-weight: bold;
+}
+.rex-navi-piped > * {
+    background-image: url(../../../redaxo/media/pipe_c2.gif);
+    background-position: 0px 2px;
+}
+.rex-navi-piped > *:first-child {
+    background: none;
+}
+
+
+
+
+
+
+/* be-relation 1-n
+*/
+
+.yform-be-relation-wrapper {
+    margin: auto;
+    padding: 0
+}
+
+.yform-be-relation-wrapper > div {
+    border: 1px solid #bfe0d8;
+    background: #f1fcfa;
+    /*color: #1C94C4;*/
+    margin: 0 0 10px 0;
+    padding: 20px 15px 15px 25px;
+    position: relative
+}
+
+.yform-be-relation-wrapper span.sorthandle {
+    cursor: move;
+    position: absolute;
+    opacity: .5;
+    top: 5px;
+    bottom: 5px;
+    left: 4px;
+    width: 8px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAB3RJTUUH3wIDBycZ/Cj09AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAAWSURBVHjaY2DABhoaGupBGMRmYiAEAKo2BAFbROu9AAAAAElFTkSuQmCC)
+}
+
+.yform-be-relation-wrapper span.sorthandle:hover {
+    opacity: .8
+}
+
+div.sortable-ghost {
+    border: 1px dashed #CCC;
+    opacity: .4
+}
+
+.yform-be-relation-wrapper span.removeadded {
+    position: absolute;
+    right: 15px;
+    top: 9px;
+}
+
+.yform-be-relation-wrapper span.removeadded .btn {
+    cursor: pointer;
+}
+
+.yform-be-relation-wrapper span.removeadded .btn[disabled] {
+    cursor: default;
+}
+
+.yform-be-relation-wrapper span.removeadded .btn .rex-icon {
+    margin: 0 !important;
+}
+
+.yform-be-relation-wrapper > div:after, .yform-be-relation-wrapper-wrapper > div:before {
+    content: "";
+    display: table
+}
+
+.yform-be-relation-wrapper > div:after {
+    clear: both
+}
+
+.yform-be-relation-wrapper > div {
+    zoom: 1
+}
+
+.yform-be-relation-animate {
+    -webkit-transition: opacity 249ms linear, top 149ms ease;
+    -moz-transition: opacity 249ms linear, top 149ms ease;
+    transition: opacity 249ms linear, top 149ms ease;
+}
+
+.panel.yform-be-relation-hidden-panel {
+    background: inherit;
+    border: inherit;
+    margin: inherit;
+}
+
+.hide_sorthandle .sorthandle,
+.hide_removeadded .removeadded {
+    display: none;
+}
+
+.yform-be-relation-wrapper.hide_sorthandle > div {
+    padding-left: 15px;
+}
+.yform-be-relation-wrapper.hide_removeadded > div {
+    padding-top: 15px;
+}
+
+.formbe_table th.rex-table-action {
+    padding: 4px 8px
+}
+
+.formbe_table .add-mobile-btn, .formbe_table th.rex-table-action .btn {
+    border-radius: 0;
+    line-height: 26px
+}
+
+.formbe_table .add-mobile-btn {
+    margin-bottom: 20px;
+    width: 100%
+}
+
+.formbe_table table {
+    margin: 0 0 4px 0
+}
+
+.formbe_table tbody tr td {
+    padding-left: 8px;
+    padding-top: 30px
+}
+
+.formbe_table tbody tr td:before {
+    line-height: 1;
+    width: 100%
+}
+
+.formbe_table tbody tr td.delete-row {
+    padding-top: 8px
+}
+
+@media screen and (min-width: 480px) {
+    .formbe_table tbody tr td {
+        padding-top: 8px;
+        padding-left: 40%
+    }
+
+    .formbe_table tbody tr td:before {
+        line-height: 34px;
+        width: 35%
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .formbe_table tbody tr td {
+        padding-left: 8px
+    }
+}
+
+.formbe_table .be-value-input .form-group {
+    margin: 0
+}
+
+.formbe_table .be-value-input label {
+    display: none
+}
+
+.formbe_table .btn-delete {
+    border-radius: 0;
+    display: block;
+    line-height: 26px
+}
+
+@media screen and (min-width: 768px) {
+    .formbe_table .add-mobile-btn {
+        display: none
+    }
+}
+
+.yform-dropdown--on-hover:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.yform-dropdown .btn {
+    font-size: inherit;
+}
+
+.yform-manager-type-validate {
+    color: #aaa;
+}
+
+.yform-manager-type-action {
+    background-color: #cfd9d9;
+}
+
+.yform-manager-type-default {
+    background-color: #eff9f9;
+}
+
+@mixin _yform-manager-dark {
+    .yform-manager-type-validate {
+        color: rgba(255, 255, 255, 0.45);
+    }
+
+    .yform-manager-type-action {
+        background-color: #1b232c; // $color-grey-2
+    }
+
+    .yform-manager-type-default {
+        background-color: #1a3332; // $color-green-1
+    }
+}
+
+body.rex-theme-dark {
+    @include _yform-manager-dark;
+}
+
+@media (prefers-color-scheme: dark) {
+    body.rex-has-theme:not(.rex-theme-light) {
+        @include _yform-manager-dark;
+    }
+}
