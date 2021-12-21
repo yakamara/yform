@@ -590,25 +590,32 @@ class rex_yform_manager
         } else {
             $actionButtons = [];
             if ($this->table->isGranted('EDIT', rex::getUser())) {
+                $actionButtonParams = array_merge(
+                    $list->getParams(),
+                    $rex_yform_list,
+                    ['rex_yform_manager_opener' => $rex_yform_manager_opener],
+                    ['rex_yform_manager_popup' => $rex_yform_manager_popup],
+                );
+
                 $actionButtons['edit'] = '<a href="'.$list->getUrl(
-                    array_merge($rex_link_vars, ['data_id' => '___id___', 'func' => 'edit']),
+                    array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'edit']),
                     false
                 ).'"><i class="rex-icon rex-icon-editmode"></i> ' . rex_i18n::msg('yform_edit').'</a>';
                 if ($this->hasDataPageFunction('delete')) {
                     $actionButtons['delete'] = '<a onclick="return confirm(\' id=___id___ ' . rex_i18n::msg('yform_delete') . ' ?\')" href="'.$list->getUrl(
-                        array_merge(['data_id' => '___id___', 'func' => 'delete'], $rex_link_vars),
+                        array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'delete']),
                         false
                     ).'"><i class="rex-icon rex-icon-delete"></i> '.rex_i18n::msg('yform_delete').'</a>';
                 }
                 if (!$popup && $this->table->hasHistory()) {
                     $actionButtons['history'] = '<a href="'.$list->getUrl(
-                        array_merge(['data_id' => '___id___', 'func' => 'history', 'filter_dataset' => 1], $rex_link_vars),
+                        array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'history', 'filter_dataset' => 1]),
                         false
                     ).'"><i class="rex-icon fa-history"></i> '.rex_i18n::msg('yform_history').'</a>';
                 }
             } else {
                 $actionButtons['view'] = '<a href="'.$list->getUrl(
-                    array_merge($rex_link_vars, ['data_id' => '___id___', 'func' => 'edit']),
+                    array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'edit']),
                     false
                 ).'"><i class="rex-icon rex-icon-view"></i> ' . rex_i18n::msg('yform_view').'</a>';
             }
@@ -651,10 +658,16 @@ class rex_yform_manager
                 if (is_array($value)) {
                     $relTable = rex_yform_manager_table::get($this->table->getValueField($key)->getElement('table'));
                     foreach ($value as $k => $v) {
-                        $filter[] = $getFilter($relTable->getValueField($k), $v);
+                        $relTableField = $relTable->getValueField($k);
+                        //if ($relTableField) {
+                        $filter[] = $getFilter($relTableField, $v);
+                        //}
                     }
                 } else {
-                    $filter[] = $getFilter($this->table->getValueField($key), $value);
+                    $thisTableField = $this->table->getValueField($key);
+                    if ($thisTableField) {
+                        $filter[] = $getFilter($thisTableField, $value);
+                    }
                 }
             }
             echo rex_view::info(implode('<br>', $filter));
@@ -1113,7 +1126,7 @@ class rex_yform_manager
                 }
 
                 if (!$field->isSearchableDisabled()) {
-                    $yform->setValueField('checkbox', ['name' => 'search', 'label' => rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 'default' => '1']);
+                    $yform->setValueField('checkbox', ['name' => 'search', 'label' => rex_i18n::msg('yform_useassearchfieldalidatenamenotempty'), 'default' => '0']);
                 }
             } elseif ('validate' == $type_id) {
                 $yform->setValueField('hidden', ['list_hidden', 1]);
@@ -1535,5 +1548,4 @@ class rex_yform_manager
 
         return true;
     }
-
 }
