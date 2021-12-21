@@ -58,6 +58,7 @@ class rex_yform
         $this->objparams['Error-occured'] = '';
         $this->objparams['Error-Code-EntryNotFound'] = 'ErrorCode - EntryNotFound';
         $this->objparams['Error-Code-QueryError'] = 'ErrorCode - QueryError';
+        $this->objparams['Error-Code-InsertQueryError'] = 'ErrorCode - InsertQueryError';
 
         $this->objparams['csrf_protection'] = true;
         $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
