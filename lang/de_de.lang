@@ -160,11 +160,11 @@ yform_values_ip_server_var_notice = default: REMOTE_ADDR
 
 yform_validate_compare_firstname = 1. Feldname
 yform_validate_compare_secondname = 2. Feldname
-yform_validate_compare_type = Vergleichsart
+yform_validate_compare_type = Fehlermeldung, wenn...
 yform_validate_compare_message = Fehlermeldung
 yform_validate_compare_value_name = Feldname
 yform_validate_compare_value_compare_value = Vergleichswert
-yform_validate_compare_value_compare_type = Vergleichsart
+yform_validate_compare_value_compare_type = Fehlermeldung, wenn...
 yform_validate_compare_value_message = Fehlermeldung
 yform_validate_customfunction_name = Name
 yform_validate_customfunction_function = Name der Funktion
