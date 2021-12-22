@@ -610,7 +610,7 @@ class rex_yform_manager
                 }
                 if (!$popup && $this->table->hasHistory()) {
                     $actionButtons['history'] = '<a href="'.$list->getUrl(
-                        array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'history', 'filter_dataset' => 1]),
+                        array_merge($actionButtonParams, ['dataset_id' => '___id___', 'func' => 'history', 'filter_dataset' => 1]),
                         false
                     ).'"><i class="rex-icon fa-history"></i> '.rex_i18n::msg('yform_history').'</a>';
                 }
