@@ -594,7 +594,7 @@ class rex_yform_manager
                 $list->getParams(),
                 $rex_yform_list,
                 ['rex_yform_manager_opener' => $rex_yform_manager_opener],
-                ['rex_yform_manager_popup' => $rex_yform_manager_popup],
+                ['rex_yform_manager_popup' => $rex_yform_manager_popup]
             );
 
             if ($this->table->isGranted('EDIT', rex::getUser())) {
