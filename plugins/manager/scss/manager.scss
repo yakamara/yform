@@ -261,7 +261,11 @@ div.sortable-ghost {
 }
 
 .yform-manager-type-default {
-    background-color: #eff9f9;
+    font-weight: 500;
+
+    a {
+        font-weight: 400;
+    }
 }
 
 @mixin _yform-manager-dark {
@@ -271,10 +275,6 @@ div.sortable-ghost {
 
     .yform-manager-type-action {
         background-color: #1b232c; // $color-grey-2
-    }
-
-    .yform-manager-type-default {
-        background-color: #1a3332; // $color-green-1
     }
 }
 
