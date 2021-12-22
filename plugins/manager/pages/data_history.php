@@ -134,6 +134,7 @@ $list = rex_list::factory(
 
 $list->addParam('table_name', $this->table->getTableName());
 $list->addParam('func', 'history');
+$list->addParam('_csrf_token', rex_csrf_token::factory($_csrf_key)->getValue());
 
 if ($filterDataset) {
     $list->addParam('filter_dataset', 1);
