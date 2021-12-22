@@ -41,6 +41,8 @@ $(document).on('rex:ready',function() {
         if (format != "") {
             format = format.toLowerCase();
             $(this).inputmask(format);
+        } else {
+            $(this).inputmask();
         }
     });
 
