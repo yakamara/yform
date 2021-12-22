@@ -589,14 +589,15 @@ class rex_yform_manager
             );
         } else {
             $actionButtons = [];
-            if ($this->table->isGranted('EDIT', rex::getUser())) {
-                $actionButtonParams = array_merge(
-                    $list->getParams(),
-                    $rex_yform_list,
-                    ['rex_yform_manager_opener' => $rex_yform_manager_opener],
-                    ['rex_yform_manager_popup' => $rex_yform_manager_popup],
-                );
 
+            $actionButtonParams = array_merge(
+                $list->getParams(),
+                $rex_yform_list,
+                ['rex_yform_manager_opener' => $rex_yform_manager_opener],
+                ['rex_yform_manager_popup' => $rex_yform_manager_popup],
+            );
+
+            if ($this->table->isGranted('EDIT', rex::getUser())) {
                 $actionButtons['edit'] = '<a href="'.$list->getUrl(
                     array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'edit']),
                     false

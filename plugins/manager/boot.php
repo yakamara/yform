@@ -7,6 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  *
  * @var rex_plugin $this
+ * @psalm-scope-this rex_plugin
  */
 
 rex_yform::addTemplatePath(rex_path::plugin('yform', 'manager', 'ytemplates'));
