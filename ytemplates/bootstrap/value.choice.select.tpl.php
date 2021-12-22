@@ -80,6 +80,10 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
         </label>
     <?php endif ?>
 
+
+    <?php if (rex::isBackend()): ?>
+    <div class="rex-select-style">
+    <?php endif ?>
     <select<?= rex_string::buildAttributes($elementAttributes) ?>>
         <?php if ($choiceList->getPlaceholder() && !$choiceList->isMultiple()): ?>
             <option value=""><?= rex_escape($choiceList->getPlaceholder()) ?></option>
@@ -97,6 +101,9 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
             <?php $view instanceof rex_yform_choice_group_view ? $choiceGroupOutput($view) : $choiceOutput($view) ?>
         <?php endforeach ?>
     </select>
+    <?php if (rex::isBackend()): ?>
+    </div>
+    <?php endif ?>
 
     <?php if ($notices): ?>
         <p class="help-block small"><?= implode('<br />', $notices) ?></p>
