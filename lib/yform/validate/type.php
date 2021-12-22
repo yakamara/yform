@@ -151,7 +151,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
     public function getDescription(): string
     {
-        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/iban/json|warning_message|[1=field not empty]';
+        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/iban/json|warning_message|[1='.rex_i18n::msg('yform_validate_type_not_required').']';
     }
 
     public function getDefinitions(): array
