@@ -27,35 +27,17 @@ Eine weitere Variante wäre der Tag-Mode
 
 ## inputmask
 
-Diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. z. B. kann ein bestimmtes Datumsformat erzwungen werden.
+Diese Bibliothek [https://github.com/RobinHerbots/Inputmask](https://github.com/RobinHerbots/Inputmask) dient dazu, bestimmte Eingabeformate vorzugeben um somit Fehler zu vermeiden. Bestimmte EIngaben können direkt im Frontend erzwungen werden.
 
-Dabei wird auch hier ein Attribute im Textfeld gesetzt:
+Sehr praktisch ist z.B. das Erzwingen des Datumformates
 
-    data-yform-tools-inputmask = ""
-
-Man muss einen Wert angeben, damit dem Textfeld klar ist, wie die Überprüfung auszusehen hat. z.B.
-
-    yyyy-mm-dd
-
-oder
-
-    9999-99-99
-
-oder
-
-    9-a{1,3}9{1,3}
-
-
-Das kann man im Manager über das Attributefeld innerhalb von z.B. text so setzen:
-
-    {"data-yform-tools-inputmask":"yyyy-mm-dd"}
+    {"data-inputmask-alias":"datetime", "data-yform-tools-inputmask":"", "data-inputmask-inputformat":"yyyy-mm-dd"}
 
 ## daterangepicker
 
 Diese Bibliothek [http://www.daterangepicker.com/](http://www.daterangepicker.com/) dient für die Auswahl von Datumsfeldern oder Datumzeiträumen. Dabei kann auch eine Uhrzeit selektiert werden.
 
 > Bitte unbedingt beachten, dass man das selbe Format bei den Date(time)pickern einträgt, wie man es im entsprechenden Feld (z. B. Date) ausgewählt hat.
-
 
 Dabei muss das Textfeld folgendes Attribut bekommen:
 
@@ -81,8 +63,8 @@ kann man im Manager über das Attibutefeld innerhalb von z. B. date mit input:
 
 datepicker und Inputmask:
 
-    {"data-yform-tools-datepicker":"YYYY-MM-DD", "data-yform-tools-inputmask":"yyyy-mm-dd"}
+    {"data-yform-tools-datepicker":"YYYY-MM-DD", "data-inputmask-alias":"datetime", "data-yform-tools-inputmask":"", "data-inputmask-inputformat":"yyyy-mm-dd"}
 
 datetimepicker und Inputmask:
 
-    {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii:ss", "data-yform-tools-inputmask":"datetime", "data-inputmask-mask":"y-2-1 h:s:s", "data-inputmask-alias":"dd.mm.yyyy", "data-inputmask-placeholder":"yyyy-mm-dd hh:mm:mm", "data-inputmask-separator":"-"}
+    {"data-yform-tools-datetimepicker":"YYYY-MM-DD HH:ii:ss", "data-inputmask-alias":"datetime", "data-yform-tools-inputmask":"", "data-inputmask-inputformat":"yyyy-mm-dd hh:mm:mm"}
