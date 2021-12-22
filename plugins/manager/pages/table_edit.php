@@ -304,6 +304,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
 
     $list = rex_list::factory($sql, 200);
 
+    $list->addTableAttribute('class', 'table-hover');
     $list->addParam('start', rex_request('start', 'int'));
 
     $list->setColumnSortable('prio');
