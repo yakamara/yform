@@ -10,6 +10,7 @@ Version 4.0.0 – xx.12.2021
 * Wenn eigene Values und abgeleitete Methoden z.B. für z.B. getDefinitions genutzt werden, müssen jetzt die return types übergeben werden
 * Die Links im Table-Manager sind jetzt mit CSRF-Schutz versehen. Weitere Infos dazu in der Doku. 
 
+
 ### deprecated / entfernt
 * Validierung nach email entfernt. Bitte mit type und email ersetzen
 * Felder captcha, captcha_calc,recaptcha(_v3) sind entfernt worden und werden auch bei der Installation direkt aus den Datenbanken entfernt, bitte stattdessen das addon yform_spam_protection verwenden
@@ -23,6 +24,7 @@ Version 4.0.0 – xx.12.2021
 * remembervalues Feld entfernt
 * mediafile entfernt
 * be_media_category und be_select_category entfernt
+* Tools: select2 entfernt, Ersatz kommt durch REDAXO Core, ist in der YForm Dokumentation beschrieben
 
 ### Neu
 * läuft nun auch auf PHP 8
@@ -38,41 +40,42 @@ Version 4.0.0 – xx.12.2021
 * Manager: fragment layout nun relevanter für BE Ausgaben. Tiefere Änderungen möglich. 
 * First View ist nun Manager Page wenn vorhanden
 * Signature Feld ergänzt
+* Manager: Liste von Datensätzen mit Actionbuttons angepasst, besserer Überblick und Erweiterbarkeit 
 
 ### Korrekturen, Anpassungen, Bugs
 * Export Tabellen und Felder optimiert. Danke @christophboecker
-* empty name nun auch in der Suche
+* Tablesetexport ist nun auf die nötigsten Felder beschränkt, kein Overhead mehr
 * Dokuansicht korrigiert, ergänzt und optisch verbessert
-* Email-Templateansicht erweitert
-* date-feld umd typ HTML-date ergänzt
-* Relation Typansicht/reihenfolge geändert
-* Int Feld um BigInt erweitert
+* E-Mail Templateansicht erweitert
 * E-Mail Versand, plain message Striptags entfernt
 * E-Mail Template werden nun nach key validiert
 * Manager: Datesuche korrigiert
-* be_table Bugs behoben, date felder gingen nicht
+* Manager: Tabellenansicht verbessert
 * Fehlermeldungen bei nicht speicherbaren Formularen sind nun klarer
 * Codestyling
-* Choice. Callback bei Labels nun möglich
 * REST-API: include bei URL Params ergänzt und Felder einschränken zu können, die man gerne hätte
-* Manager: Tabellenansicht verbessert
-* Tablesetexport ist nun aufs nötigste beschränkt
+* REST-API: Eigene Header nun möglich
+* Relation Typansicht/reihenfolge geändert
+* be_relations verbessert. Suchen gingen nicht richtig wenn eigene Relationstabellen verwendet wurden.
+* be_table Bugs behoben, date felder gingen nicht
 * time-Feld: notices bei ergänzt
 * number-Feld: Attributes ergänzt und nun auch als type number möglich
-* RESTAPI: Eigene Header nun möglich
+* date-feld umd typ HTML-date ergänzt
+* empty name nun auch in der Suche
+* Int Feld um BigInt erweitert
+* Choice. Callback bei Labels nun möglich
 * choice-Feld: Attributes ergänzt
 * date/datetime/datestamp angepasst und angeglichen, flexiblere Angaben möglich, Nur noch Standard-ISO Eingaben möglich
 * time angepasst. Stundenraster/Minutenraster entfern
 * validate type - time Überprüfung verbesser
-* datestamp hat nun auch eine Suche
+* datestamp hat nun auch eine Suche und Aktualierungen werden dem Redakteur deutlicher dargestellt
+* upload Feld angepasst um System Fehlermeldungen und einen Reset Button
 * Übersetzung der Tabellen bei den Benuterrechten geht wieder
 * Suchen mit Relationen mit Relationstabellen sind korrigiert
 * Tools Bibliotheken aktualisiert
-* be_relations verbessert. Suchen gingen nicht richtig wenn eigene Relationstabellen verwendet wurden.
 * viele statische Codetests wurde durchgeführt.
-* upload Feld angepasst um System Fehlermeldungen und einen Reset Button
 
-Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter
+Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter, Marco Hanke
 
 Version 3.4.2 – 21.06.2021
 --------------------------
