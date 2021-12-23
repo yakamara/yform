@@ -10,7 +10,7 @@
 class rex_yform_value_datetime extends rex_yform_value_abstract
 {
     public const VALUE_DATETIME_DEFAULT_FORMAT = 'Y-m-d H:i:s';
-    public const VALUE_DATETIME_FORMATS = ['d.m.Y H:i:s' => 'd.m.Y H:i:s', 'Y-m-d H:i:s' => 'Y-m-d H:i:s', 'd-m-Y H:i:s' => 'd-m-Y H:i:s', 'm-d-Y H:i:s' => 'm-d-Y H:i:s', 'm-Y H:i:s' => 'm-Y H:i:s', 'Y-m H:i:s' => 'Y-m H:i:s', 'd-m H:i:s' => 'd-m H:i:s', 'm-d H:i:s' => 'm-d H:i:s', 'Y' => 'Y', 'Y-d' => 'Y-d'];
+    public const VALUE_DATETIME_FORMATS = ['d.m.Y H:i:s' => 'd.m.Y H:i:s', 'Y-m-d H:i:s' => 'Y-m-d H:i:s', 'd-m-Y H:i:s' => 'd-m-Y H:i:s', 'm-d-Y H:i:s' => 'm-d-Y H:i:s', 'm-Y H:i:s' => 'm-Y H:i:s', 'Y-m H:i:s' => 'Y-m H:i:s', 'd-m H:i:s' => 'd-m H:i:s', 'm-d H:i:s' => 'm-d H:i:s', 'Y' => 'Y', 'Y-m' => 'Y-m'];
 
     public function preValidateAction(): void
     {
