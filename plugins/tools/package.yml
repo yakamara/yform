@@ -2,4 +2,3 @@ package: yform/tools
 version: '4.0.0-beta4'
 author: 'Jan Kristinus'
 supportpage: 'https://github.com/yakamara/redaxo_yform/issues'
-compile: 0

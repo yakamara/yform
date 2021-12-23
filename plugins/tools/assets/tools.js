@@ -25,17 +25,6 @@ $(document).on('rex:ready',function() {
         "Sa"
     ];
 
-    $("select[data-yform-tools-select2]").each(function () {
-        var options = $(this).attr('data-yform-tools-select2');
-        var placeholder = $(this).attr("placeholder");
-        if (options == "tags") {
-            options = {"theme":"bootstrap", placeholder: placeholder, allowClear: true, tags: true, tokenSeparators: [','] };
-        } else {
-            options = {"theme":"bootstrap", placeholder: placeholder, allowClear: true };
-        }
-        $(this).select2(options);
-    });
-
     $("input[data-yform-tools-inputmask]").each(function () {
         var format = $(this).attr('data-yform-tools-inputmask');
         if (format != "") {
