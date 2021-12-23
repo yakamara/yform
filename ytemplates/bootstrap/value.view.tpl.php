@@ -40,12 +40,18 @@ if (!empty($this->getWarningClass())) {
     $class_group[$this->getWarningClass()] = $this->getWarningClass();
 }
 
+$notice = $notice ?? '';
+if ('' != $notice) {
+    $notice = '<p class="help-block small">' . rex_i18n::translate($notice, false) . '</p>';
+}
+
 $class_label[] = 'control-label';
 
 echo '
     <div class="'.implode(' ', $class_group).'" id="'.$this->getHTMLId().'">
         <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
         <div>' . $value . '</div>
+        ' . $notice . '
     </div>';
 
 ?>

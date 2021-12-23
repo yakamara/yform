@@ -97,6 +97,7 @@ yform_values_date_current_date = Aktuelles Datum voreingestellt
 yform_values_date_search_notice = Format: {0} - {0}
 yform_values_datestamp_format = Anzeigeformat
 yform_values_datestamp_only_empty = Wann soll Wert gesetzt werden
+yform_values_datestamp_update_notice = Es wird das aktuelle Datum mit Uhrzeit ab dem Versand des Formulares gesetzt
 yform_values_datetime_year_start = Startjahr
 yform_values_datetime_year_end = Endjahr
 yform_values_datetime_minutes = Minutenformate

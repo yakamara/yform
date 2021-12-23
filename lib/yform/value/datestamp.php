@@ -9,11 +9,14 @@
 
 class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
+    private $value_datestamp_currentValue = '';
+
     public function preValidateAction(): void
     {
         $format = rex_sql::FORMAT_DATETIME;
         $default_value = date($format);
         $value = $this->getValue();
+        $this->value_datestamp_currentValue = $value;
         if (2 == $this->getElement('only_empty')) {
             // wird nicht gesetzt
         } elseif (1 != $this->getElement('only_empty')) { // -> == 0
@@ -40,10 +43,31 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             return;
         }
 
-        $this->params['form_output'][$this->getId()] = $this->parse(
-            ['value.datestamp-view.tpl.php','value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
-            ['type' => 'text', 'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->getValue())]
-        );
+        $this->params['form_output'][$this->getId()] = '';
+        if ($this->needsOutput() && $this->isViewable()) {
+            if ($this->isEditable()) {
+                $notice = '';
+                if ($this->value_datestamp_currentValue != $this->getValue()) {
+                    $notice = 'translate:yform_values_datestamp_update_notice';
+                }
+                $this->params['form_output'][$this->getId()] .= $this->parse(
+                    ['value.datestamp-view.tpl.php','value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
+                    [
+                        'type' => 'text',
+                        'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue),
+                        'notice' => $notice
+                    ]
+                );
+            } elseif ('' != $this->value_datestamp_currentValue) {
+                $this->params['form_output'][$this->getId()] .= $this->parse(
+                    ['value.datestamp-view.tpl.php','value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
+                    [
+                        'type' => 'text',
+                        'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue)
+                    ]
+                );
+            }
+        }
 
         $this->params['form_output'][$this->getId()] .= $this->parse('value.hidden.tpl.php');
     }
