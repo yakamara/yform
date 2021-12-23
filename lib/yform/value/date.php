@@ -35,12 +35,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $month = (int) ($value['month'] ?? 0);
             $day = (int) ($value['day'] ?? 0);
         } else {
-            $value = explode("-", (string) $value);
+            $value = explode('-', (string) $value);
             $year = (int) ($value[0] ?? 0);
             $month = (int) ($value[1] ?? 0);
             $day = (int) ($value[2] ?? 0);
         }
-        $value = sprintf("%04d-%02d-%02d", $year, $month, $day);
+        $value = sprintf('%04d-%02d-%02d', $year, $month, $day);
         $this->setValue($value);
     }
 
@@ -52,12 +52,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $month = (int) ($value['month'] ?? 0);
             $day = (int) ($value['day'] ?? 0);
         } else {
-            $value = explode("-", (string) $value);
+            $value = explode('-', (string) $value);
             $year = (int) ($value[0] ?? 0);
             $month = (int) ($value[1] ?? 0);
             $day = (int) ($value[2] ?? 0);
         }
-        $value = sprintf("%04d-%02d-%02d", $year, $month, $day);
+        $value = sprintf('%04d-%02d-%02d', $year, $month, $day);
         $this->setValue($value);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
