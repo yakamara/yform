@@ -8,21 +8,21 @@
 
 Dabei werden die entsprechenden Bibliotheken bei der Aktivierung des AddOns bereits installiert und initialisiert. D.h. man muss die gewünschten Funktionen nur durch Definition von CSS Attributen zuweisen.
 
-## select2
+## Selects erweitern
 
-diese Bibliothek [https://select2.github.io/](https://select2.github.io/) hilft dabei, Selectfelder zu vereinfachen und entsprechend des Typs verschiedene Varianten zu aktivieren.
+Der core liefert eine Bibliothek mit, die dabei hilft Selectfelder für die Eingabe zu vereinfachen.
 
-Dabei muss hier das select-Feld folgendes Attribut bekommen:
+Dabei muss das select-Feld folgendes CSS-Klasse bekommen:
 
-	data-yform-tools-select2 = ""
+	selectpicker
 
 Das kann man im Manager über das Attributefeld innerhalb von z. B. select oder select_sql so setzen:
 
-	{"data-yform-tools-select2": "", "placeholder": "My Placeholder"}
+	{"class": "form-control selectpicker", "placeholder": "My Placeholder"}
 
-Eine weitere Variante wäre der Tag-Mode
+Eine weitere Variante mit einem Suchfeld wäre
 
-	{"data-yform-tools-select2": "tags", "placeholder": "My Placeholder"}
+	{"class": "form-control selectpicker", "data-live-search": "true", "placeholder": "My Placeholder"}
 
 
 ## inputmask
