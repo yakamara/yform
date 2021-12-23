@@ -51,19 +51,19 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                     $notice = 'translate:yform_values_datestamp_update_notice';
                 }
                 $this->params['form_output'][$this->getId()] .= $this->parse(
-                    ['value.datestamp-view.tpl.php','value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
+                    ['value.datestamp-view.tpl.php', 'value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
                     [
                         'type' => 'text',
-                        'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue),
-                        'notice' => $notice
+                        'value' => ('' != $this->value_datestamp_currentValue) ? rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue) : '',
+                        'notice' => $notice,
                     ]
                 );
             } elseif ('' != $this->value_datestamp_currentValue) {
                 $this->params['form_output'][$this->getId()] .= $this->parse(
-                    ['value.datestamp-view.tpl.php','value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
+                    ['value.datestamp-view.tpl.php', 'value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
                     [
                         'type' => 'text',
-                        'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue)
+                        'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue),
                     ]
                 );
             }
