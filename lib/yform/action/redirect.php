@@ -37,6 +37,9 @@ class rex_yform_action_redirect extends rex_yform_action_abstract
         }
 
         foreach ($this->params['value_pool']['email'] as $search => $replace) {
+            if (is_array($replace)) {
+                continue;
+            }
             $url = str_replace('###' . $search . '###', urlencode($replace), $url);
         }
 
