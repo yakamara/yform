@@ -1143,16 +1143,3 @@ Rückwärtskompatible Lösung um den csrf_key auch schon in YForm-Versionen < 4 
 u.a. hier realisiert: 
 
 [Quick-Naviagtion](https://github.com/FriendsOfREDAXO/quick_navigation/blob/1168253ce47e0b2528856ba0a315565be51b6a91/lib/QuickNavigation.php#L481-L482)
-
-
-
-
-
-
-
-
-
-
-
-
-
