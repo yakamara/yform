@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 4.0.0 – xx.12.2021
+Version 4.0.0 – 28.12.2021
 --------------------------
 
 ### wichtige Änderungen
@@ -41,6 +41,7 @@ Version 4.0.0 – xx.12.2021
 * First View ist nun Manager Page wenn vorhanden
 * Signature Feld ergänzt
 * Manager: Liste von Datensätzen mit Actionbuttons angepasst, besserer Überblick und Erweiterbarkeit 
+* Darkmode optimiert
 
 ### Korrekturen, Anpassungen, Bugs
 * Export Tabellen und Felder optimiert. Danke @christophboecker
@@ -75,7 +76,7 @@ Version 4.0.0 – xx.12.2021
 * Tools Bibliotheken aktualisiert
 * viele statische Codetests wurde durchgeführt.
 
-Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter, Marco Hanke
+Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Dirk Schürjohann, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter, Marco Hanke, Wolfgang Bund
 
 Version 3.4.2 – 21.06.2021
 --------------------------
