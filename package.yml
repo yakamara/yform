@@ -37,3 +37,4 @@ conflicts:
         yform_geo_osm: '<1.2.5'
         redaxo_watson: '<2.1.1'
         yform_spam_protection: '<1.2.0'
+        ycom: '<4.0.6'
