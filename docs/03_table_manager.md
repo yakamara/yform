@@ -1122,3 +1122,24 @@ foreach($rows as $row) {
 > die Query ist hier im Dienste der Lesbarkeit auf mehrere Zeilen aufgeteilt. Dass muss natürlich nicht zwingend so sein
 
 [GitHub-Diskussion zum Thema Filter](https://github.com/yakamara/redaxo_yform_docs/issues/3)
+
+## CSRF Schutz der Table-Manager-Links
+
+Möchte man von Außen in einen Datensatz im Table-Manager linken (z.B. aus dem Frontend), ist es zwingend erforderlich die Links mit einem CSRF-Parameter aufzurufen. 
+
+```php
+// Key auslesen per getCSRFKey 
+$_csrf_key = $table->getCSRFKey();
+// Token erstellen
+$_csrf_params = rex_csrf_token::factory($_csrf_key)->getUrlParams();
+```
+
+Der Token muss dann an die URL z.B. per `&_csrf_token='.$_csrf_params.'` angehängt werden. 
+
+Rückwärtskompatible Lösung um den csrf_key auch schon in YForm-Versionen < 4 zu erhalten: 
+
+`$_csrf_key = 'table_field-'.$table->getTableName();`
+
+u.a. hier realisiert: 
+
+[Quick-Naviagtion](https://github.com/FriendsOfREDAXO/quick_navigation/blob/1168253ce47e0b2528856ba0a315565be51b6a91/lib/QuickNavigation.php#L481-L482)
