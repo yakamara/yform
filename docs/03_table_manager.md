@@ -835,6 +835,8 @@ if (rex::isBackend())
 
 Beim Einsatz einer YForm-Tabelle im eigenen AddOn kann für beliebige Spalten vor der Anzeige in der Übersicht der Wert manipuliert und ggf. mit Werten aus derselben Tabellenzeile kombiniert werden. Konkret wird hier in der Anzeige der Spalte "title" der Wert der Spalte "name" angehängt.
 
+Die Snippets kommen am besten in die boot.php des project-AddOns.
+
 ```php
 <?php
 if (rex::isBackend())
@@ -863,7 +865,38 @@ if (rex::isBackend())
 }
 ```
 
-Das Snippet kommt am besten in die boot.php des project-AddOns.
+Beispiel 2: Verlinken mit der Seite "Datensatz editieren" von YForm mit Verwendung des benötigten CSRF-Tokens.
+ 
+```php
+
+    rex_extension::register('YFORM_DATA_LIST', function ($ep) {
+        if ($ep->getParam('table')->getTableName()=="rex_tabelle") { // Tabellenname anpassen
+            $list = $ep->getSubject();
+
+            $list->setColumnFormat(
+                'name', // Feldname, dessen Wert in der Liste verändert werden soll.
+                'custom', // nicht verändern
+
+                function ($a) {
+		
+                    $_csrf_key = rex_yform_manager_table::get('rex_qanda')->getCSRFKey();
+                    $token = rex_csrf_token::factory($_csrf_key)->getUrlParams();
+
+                    $params = array();
+                    $params['table_name'] = 'rex_tabelle'; // Tabellenname anpassen
+                    $params['rex_yform_manager_popup'] = '0';
+                    $params['_csrf_token'] = $token['_csrf_token'];
+                    $params['data_id'] = $a['list']->getValue('id');
+                    $params['func'] = 'edit';
+        
+                    return '<a href="'.rex_url::backendPage('yform/manager/data_edit', $params) .'">'. $a['value'].'</a>';
+                }
+            );
+        }
+    });
+    
+```
+
 
 ### Table Manager: Bilderspalte in Tabellenansicht (Bild statt Dateiname)
 
