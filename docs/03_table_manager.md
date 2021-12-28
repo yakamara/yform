@@ -879,7 +879,7 @@ Beispiel 2: Verlinken mit der Seite "Datensatz editieren" von YForm mit Verwendu
 
                 function ($a) {
 		
-                    $_csrf_key = rex_yform_manager_table::get('rex_qanda')->getCSRFKey();
+                    $_csrf_key = rex_yform_manager_table::get('rex_tabelle')->getCSRFKey();
                     $token = rex_csrf_token::factory($_csrf_key)->getUrlParams();
 
                     $params = array();
