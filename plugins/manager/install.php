@@ -147,7 +147,7 @@ if ($this->isInstalled()) {
                 case 'float':
                     // change to number
                     rex_sql::factory()->setQuery('update `' . rex::getTable('yform_field') . '` set
-                        type_name = "number", db_type = "", default = ""
+                        type_name = "number", db_type = "", `default = ""
                         where id = :id', ['id' => $field['id']]);
                     break;
 
