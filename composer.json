@@ -1,0 +1,15 @@
+{
+
+    "name": "yakamara/redaxo_yform",
+
+    "require-dev": {
+        "redaxo/source": "dev-master"
+    },
+
+    "autoload-dev": {
+        "classmap": [
+            "lib/",
+            "plugins/"
+        ]
+    }
+}
