@@ -6,7 +6,7 @@
         "redaxo/source": "^5.8"
     },
 
-    "autoload-dev": {
+    "autoload": {
         "classmap": [
             "lib/",
             "plugins/"
