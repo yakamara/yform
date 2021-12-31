@@ -3,7 +3,7 @@
     "name": "yakamara/redaxo_yform",
 
     "require-dev": {
-        "redaxo/source": "dev-master"
+        "redaxo/source": "^5.8"
     },
 
     "autoload-dev": {
