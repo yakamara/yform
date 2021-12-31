@@ -98,7 +98,7 @@ if ($this->isInstalled()) {
     foreach (rex_sql::factory()->getArray('SELECT id, perms FROM ' . rex::getTablePrefix() . 'user_role') as $role) {
         if (false === strpos((string) $role['perms'], '"yform_manager_table_edit":')) {
             $perms = str_replace('"yform_manager_table":', '"yform_manager_table_edit":', (string) $role['perms']);
-            rex_sql::factory()->setDebug()->setQuery('UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?', [$perms, $role['id']]);
+            rex_sql::factory()->setQuery('UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?', [$perms, $role['id']]);
         }
     }
 
