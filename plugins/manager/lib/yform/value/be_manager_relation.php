@@ -46,7 +46,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         if (!is_array($this->getValue())) {
             if ($this->getElement('relation_table') && (!$this->params['send'] || null === $this->getValue())) {
                 $this->setValue($this->getRelationTableValues());
-            } elseif ('' == trim($this->getValue())) {
+            } elseif ('' == trim($this->getValue() ?? '')) {
                 $this->setValue([]);
             } else {
                 $this->setValue(explode(',', $this->getValue()));
