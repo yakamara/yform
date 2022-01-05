@@ -200,6 +200,7 @@ class rex_yform_manager_field implements ArrayAccess
     }
 
     // ------------------------------------------- Array Access
+    #[ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         if (null === $offset) {
@@ -209,16 +210,19 @@ class rex_yform_manager_field implements ArrayAccess
         }
     }
 
+    #[ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->values[$offset]);
     }
 
+    #[ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         unset($this->values[$offset]);
     }
 
+    #[ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->values[$offset];
