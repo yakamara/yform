@@ -163,6 +163,8 @@ yform_dataset_delete = Datenergebnis löschen
 yform_dataset_deleted = Datenergebnis wurde geleert
 yform_dataset_delete_confirm = Wirklich das Datenergebnis leeren?
 
+yform_dataset_edit_confirm = Sollen wirklich alle Datensätze bearbeitet werden?
+
 yform_data = Datensatz
 yform_datas = Datensätze
 yform_manager_search = Suche
