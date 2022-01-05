@@ -683,7 +683,7 @@ class rex_yform_manager
                 $item['label'] = rex_i18n::msg('yform_edit');
                 $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'collection_edit'], $rex_link_vars));
                 $item['attributes']['class'][] = 'btn-default';
-                $item['attributes']['data-confirm'][] = rex_i18n::msg('yform_edit_all_datasets');
+                $item['attributes']['data-confirm'][] = rex_i18n::msg('yform_dataset_edit_confirm ');
                 $dataset_links[] = $item;
             }
 
