@@ -15,8 +15,14 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             $this->setValue('');
         }
 
-        if ('' != $this->getValue() && !rex_media::get($this->getValue())) {
-            $this->setValue('');
+        if ('' != $this->getValue()) {
+            $medias = [];
+            foreach (explode(',', $this->getValue()) as $media) {
+                if (rex_media::get($media)) {
+                    $medias[] = $media;
+                }
+            }
+            $this->setValue(implode(',', $medias));
         }
 
         static $counter = 0;
@@ -24,7 +30,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
 
         $types = $this->getElement('types') ?? '';
         // to be in line with upload field
-        if ($types == '*') {
+        if ('*' == $types) {
             $types = '';
         }
 
@@ -69,6 +75,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
     {
         $files = explode(',', $params['subject']);
 
+        $return = [];
         if (1 == count($files)) {
             $filename = $params['subject'];
             if (mb_strlen($params['subject']) > 16) {
@@ -83,6 +90,10 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 }
                 $return[] = '<span style="white-space:nowrap;" title="' . htmlspecialchars($file) . '">' . $filename . '</span>';
             }
+        }
+
+        if (4 < count($return)) {
+            $return = array_merge(array_slice($return, 2, 2), ['...'], array_slice($return, -2, 2));
         }
 
         return implode('<br />', $return);
