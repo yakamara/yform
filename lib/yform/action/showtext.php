@@ -25,7 +25,7 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
             $text = str_replace('###' . $search . '###', $replace, $text);
         }
 
-        $this->params['output'] .= $text;
+        $this->params['output'] .= $this->parse('action.showtext.tpl.php', ['text' => $text]);
     }
 
     public function getDescription(): string
