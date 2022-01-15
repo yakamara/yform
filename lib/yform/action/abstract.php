@@ -15,4 +15,12 @@ abstract class rex_yform_action_abstract extends rex_yform_base_abstract
     {
         return 1;
     }
+    
+    public function parse($template, $params = [])
+    {
+        extract($params);
+        ob_start();
+        include $this->params['this']->getTemplatePath($template);
+        return ob_get_clean();
+    }
 }
