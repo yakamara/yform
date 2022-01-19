@@ -72,6 +72,18 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
     if (!isset($groupAttributes['id'])) {
         $groupAttributes['id'] = $this->getHTMLId();
     }
+
+    // RexSelectStyle im Backend nutzen
+    $useRexSelectStyle = rex::isBackend();
+
+    // RexSelectStyle nicht nutzen, wenn die Klasse `.selectpicker` gesetzt ist
+    if (isset($elementAttributes['class']) && str_contains($elementAttributes['class'], 'selectpicker')) {
+        $useRexSelectStyle = false;
+    }
+    // RexSelectStyle nicht nutzen, wenn das Selectfeld mehrzeilig ist
+    if (isset($elementAttributes['size']) && (int)$elementAttributes['size'] > 1) {
+        $useRexSelectStyle = false;
+    }
  ?>
 <div<?= rex_string::buildAttributes($groupAttributes) ?>>
     <?php if ($this->getLabel()): ?>
@@ -81,7 +93,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
     <?php endif ?>
 
 
-    <?php if (rex::isBackend()): ?>
+    <?php if ($useRexSelectStyle): ?>
     <div class="rex-select-style">
     <?php endif ?>
     <select<?= rex_string::buildAttributes($elementAttributes) ?>>
@@ -101,7 +113,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
             <?php $view instanceof rex_yform_choice_group_view ? $choiceGroupOutput($view) : $choiceOutput($view) ?>
         <?php endforeach ?>
     </select>
-    <?php if (rex::isBackend()): ?>
+    <?php if ($useRexSelectStyle): ?>
     </div>
     <?php endif ?>
 
