@@ -438,7 +438,6 @@ Folgende Objparams find verfügbar:
 - `action`: Array
 - `actions`: Dem Formular zugeordnete YForm-Actions.
 - `actions_executed`: Gibt an, ob YForm-Actions ausgeführt wurden `true` oder `false`. Siehe auch `preactions_executed` und `postactions_executed`.
-- `answertext`: Text, der nach erfolgreichem Absenden des Formulars mit oder anstelle des Formulars ausgegeben wird.
 - `article_id`: Artikel-ID, dessen URL als Ziel für das Formular dient.
 - `clang`: Clang-ID des Formulars (Sprache).
 - `csrf_protection`: Boolean. Aktiviert den CSRF-Schutz. Hierbei wird ein Cookie gesetzt.
