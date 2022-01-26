@@ -175,16 +175,16 @@
         },
         {
             "name": "composer/package-versions-deprecated",
-            "version": "1.11.99.4",
+            "version": "1.11.99.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/package-versions-deprecated.git",
-                "reference": "b174585d1fe49ceed21928a945138948cb394600"
+                "reference": "b4f54f74ef3453349c24a845d22392cd31e65f1d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/b174585d1fe49ceed21928a945138948cb394600",
-                "reference": "b174585d1fe49ceed21928a945138948cb394600",
+                "url": "https://api.github.com/repos/composer/package-versions-deprecated/zipball/b4f54f74ef3453349c24a845d22392cd31e65f1d",
+                "reference": "b4f54f74ef3453349c24a845d22392cd31e65f1d",
                 "shasum": ""
             },
             "require": {
@@ -228,7 +228,7 @@
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
             "support": {
                 "issues": "https://github.com/composer/package-versions-deprecated/issues",
-                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.4"
+                "source": "https://github.com/composer/package-versions-deprecated/tree/1.11.99.5"
             },
             "funding": [
                 {
@@ -244,27 +244,27 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-13T08:41:34+00:00"
+            "time": "2022-01-17T14:14:24+00:00"
         },
         {
             "name": "composer/pcre",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2"
+                "reference": "67a32d7d6f9f560b726ab25a061b38ff3a80c560"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/3d322d715c43a1ac36c7fe215fa59336265500f2",
-                "reference": "3d322d715c43a1ac36c7fe215fa59336265500f2",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/67a32d7d6f9f560b726ab25a061b38ff3a80c560",
+                "reference": "67a32d7d6f9f560b726ab25a061b38ff3a80c560",
                 "shasum": ""
             },
             "require": {
                 "php": "^5.3.2 || ^7.0 || ^8.0"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1",
+                "phpstan/phpstan": "^1.3",
                 "phpstan/phpstan-strict-rules": "^1.1",
                 "symfony/phpunit-bridge": "^4.2 || ^5"
             },
@@ -299,7 +299,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/1.0.0"
+                "source": "https://github.com/composer/pcre/tree/1.0.1"
             },
             "funding": [
                 {
@@ -315,7 +315,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-12-06T15:17:27+00:00"
+            "time": "2022-01-21T20:24:37+00:00"
         },
         {
             "name": "composer/semver",
@@ -1547,16 +1547,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "9.5.11",
+            "version": "9.5.13",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "2406855036db1102126125537adb1406f7242fdd"
+                "reference": "597cb647654ede35e43b137926dfdfef0fb11743"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2406855036db1102126125537adb1406f7242fdd",
-                "reference": "2406855036db1102126125537adb1406f7242fdd",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/597cb647654ede35e43b137926dfdfef0fb11743",
+                "reference": "597cb647654ede35e43b137926dfdfef0fb11743",
                 "shasum": ""
             },
             "require": {
@@ -1634,7 +1634,7 @@
             ],
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.11"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/9.5.13"
             },
             "funding": [
                 {
@@ -1646,7 +1646,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-12-25T07:07:57+00:00"
+            "time": "2022-01-24T07:33:35+00:00"
         },
         {
             "name": "redaxo/psalm-plugin",
@@ -1701,16 +1701,16 @@
         },
         {
             "name": "redaxo/source",
-            "version": "5.13.1",
+            "version": "5.13.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/redaxo/redaxo.git",
-                "reference": "10555f0de8d8d3cdfeb70dd6514f66341e686ea0"
+                "reference": "d42d4ead3126fc5e6f1a6508275b356c554fd303"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/redaxo/redaxo/zipball/10555f0de8d8d3cdfeb70dd6514f66341e686ea0",
-                "reference": "10555f0de8d8d3cdfeb70dd6514f66341e686ea0",
+                "url": "https://api.github.com/repos/redaxo/redaxo/zipball/d42d4ead3126fc5e6f1a6508275b356c554fd303",
+                "reference": "d42d4ead3126fc5e6f1a6508275b356c554fd303",
                 "shasum": ""
             },
             "require": {
@@ -1723,48 +1723,48 @@
             "replace": {
                 "erusev/parsedown": "1.7.4",
                 "erusev/parsedown-extra": "0.8.1",
-                "filp/whoops": "2.14.4",
-                "itsgoingd/clockwork": "v5.1.1",
+                "filp/whoops": "2.14.5",
+                "itsgoingd/clockwork": "v5.1.3",
                 "phpmailer/phpmailer": "v6.5.3",
                 "psr/container": "1.1.1",
                 "psr/http-message": "1.0.1",
                 "psr/log": "1.1.4",
                 "ramsey/collection": "1.2.2",
                 "ramsey/http-range": "1.0.0",
-                "scssphp/scssphp": "v1.8.1",
+                "scssphp/scssphp": "v1.10.0",
                 "splitbrain/php-archive": "1.2.1",
-                "symfony/console": "v5.3.11",
+                "symfony/console": "v5.3.13",
                 "symfony/deprecation-contracts": "v2.5.0",
-                "symfony/http-foundation": "v5.3.11",
+                "symfony/http-foundation": "v5.3.13",
                 "symfony/polyfill-ctype": "*",
                 "symfony/polyfill-php70": "*",
                 "symfony/polyfill-php72": "*",
                 "symfony/polyfill-php73": "*",
-                "symfony/polyfill-php80": "v1.23.1",
-                "symfony/polyfill-php81": "v1.23.0",
+                "symfony/polyfill-php80": "v1.24.0",
+                "symfony/polyfill-php81": "v1.24.0",
                 "symfony/service-contracts": "v2.5.0",
-                "symfony/string": "v5.3.10",
-                "symfony/var-dumper": "v5.3.11",
-                "symfony/yaml": "v5.3.11",
-                "voku/anti-xss": "4.1.34",
+                "symfony/string": "v5.4.2",
+                "symfony/var-dumper": "v5.3.13",
+                "symfony/yaml": "v5.3.13",
+                "voku/anti-xss": "4.1.35",
                 "voku/portable-ascii": "1.5.6",
-                "voku/portable-utf8": "5.4.51"
+                "voku/portable-utf8": "6.0.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "3.3.2",
+                "friendsofphp/php-cs-fixer": "3.4.0",
                 "friendsofredaxo/linter": "1.3.0",
                 "phpstan/extension-installer": "1.1.0",
-                "phpstan/phpstan": "1.2.0",
+                "phpstan/phpstan": "1.3.3",
                 "phpstan/phpstan-deprecation-rules": "1.0.0",
                 "phpstan/phpstan-phpunit": "1.0.0",
-                "phpstan/phpstan-symfony": "1.0.1",
-                "phpunit/phpunit": "^9.3",
+                "phpstan/phpstan-symfony": "1.0.6",
+                "phpunit/phpunit": "^9.5",
                 "psalm/plugin-phpunit": "0.16.1",
-                "psalm/plugin-symfony": "3.0.4",
-                "rector/rector": "0.12.5",
+                "psalm/plugin-symfony": "3.1.2",
+                "rector/rector": "0.12.12",
                 "redaxo/php-cs-fixer-config": "1.0.0",
                 "redaxo/psalm-plugin": "1.0.0",
-                "vimeo/psalm": "4.13.1"
+                "vimeo/psalm": "4.18.1"
             },
             "bin": [
                 "redaxo/bin/console"
@@ -1812,7 +1812,7 @@
             "description": "REDAXO CMS source repository (for static analysis)",
             "support": {
                 "issues": "https://github.com/redaxo/redaxo/issues",
-                "source": "https://github.com/redaxo/redaxo/tree/5.13.1"
+                "source": "https://github.com/redaxo/redaxo/tree/5.13.2"
             },
             "funding": [
                 {
@@ -1820,7 +1820,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-11-29T11:40:59+00:00"
+            "time": "2022-01-10T11:05:32+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2838,16 +2838,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "4.17.0",
+            "version": "4.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "6f4707aa41c9174353a6434bba3fc8840f981d9c"
+                "reference": "dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/6f4707aa41c9174353a6434bba3fc8840f981d9c",
-                "reference": "6f4707aa41c9174353a6434bba3fc8840f981d9c",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb",
+                "reference": "dda05fa913f4dc6eb3386f2f7ce5a45d37a71bcb",
                 "shasum": ""
             },
             "require": {
@@ -2938,9 +2938,9 @@
             ],
             "support": {
                 "issues": "https://github.com/vimeo/psalm/issues",
-                "source": "https://github.com/vimeo/psalm/tree/4.17.0"
+                "source": "https://github.com/vimeo/psalm/tree/4.18.1"
             },
-            "time": "2022-01-01T18:39:47+00:00"
+            "time": "2022-01-08T21:21:26+00:00"
         },
         {
             "name": "webmozart/assert",

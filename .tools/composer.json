@@ -11,8 +11,8 @@
 
     "autoload": {
         "classmap": [
-            "lib/",
-            "plugins/"
+            "../lib/",
+            "../plugins/"
         ]
     }
 }
