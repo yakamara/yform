@@ -106,7 +106,7 @@ body#rex-page-yform .yform-manager-searchfield{
     bottom: 5px;
     left: 4px;
     width: 8px;
-    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAB3RJTUUH3wIDBycZ/Cj09AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAAWSURBVHjaY2DABhoaGupBGMRmYiAEAKo2BAFbROu9AAAAAElFTkSuQmCC)
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAB3RJTUUH3wIDBycZ/Cj09AAAAAlwSFlzAAALEgAACxIB0t1+/AAAAARnQU1BAACxjwv8YQUAAAAWSURBVHjaY2DABhoaGupBGMRmYiAEAKo2BAFbROu9AAAAAElFTkSuQmCC");
 }
 
 .yform-be-relation-wrapper span.sorthandle:hover {
@@ -275,6 +275,11 @@ div.sortable-ghost {
 
     .yform-manager-type-action {
         background-color: #1b232c; // $color-grey-2
+    }
+
+    .yform-be-relation-wrapper > div {
+        border: 1px solid #1b232c; // $color-grey-2
+        background: #1a3332; // $color-grey-5
     }
 }
 
