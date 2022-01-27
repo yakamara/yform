@@ -1552,4 +1552,18 @@ class rex_yform_manager
 
         return true;
     }
+
+    public static function url(string $tableName, int $id, array $params = []): string
+    {
+        $table = rex_yform_manager_table::require($tableName);
+
+        $params['table_name'] = $table->getTableName();
+        $params['data_id'] = $id;
+        $params['func'] = 'edit';
+
+        $_csrf_key = $table->getCSRFKey();
+        $params += rex_csrf_token::factory($_csrf_key)->getUrlParams();
+
+        return rex_url::backendPage('yform/manager/data_edit', $params);
+    }
 }
