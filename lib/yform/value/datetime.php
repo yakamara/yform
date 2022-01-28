@@ -64,7 +64,6 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             } else {
                 $value = explode(' ', $value);
             }
-            dump($value);
             if (2 == count($value)) {
                 $date = explode('-', (string) $value[0]);
                 $year = (int) ($date[0] ?? 0);
