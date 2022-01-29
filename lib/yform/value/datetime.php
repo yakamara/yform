@@ -27,7 +27,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $second = (int) ($value['second'] ?? 0);
         } else {
             $value = (string) $value;
-            if (strpos($value, "T") > 0) {
+            if (strpos($value, "T") !== false) {
                 $value = explode('T', $value);
             } else {
                 $value = explode(' ', $value);
@@ -59,7 +59,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $second = (int) ($value['second'] ?? 0);
         } else {
             $value = (string) $value;
-            if (strpos($value, "T") > 0) {
+            if (strpos($value, "T") !== false) {
                 $value = explode('T', $value);
             } else {
                 $value = explode(' ', $value);
