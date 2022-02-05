@@ -481,7 +481,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_be_manager_relation_description'),
-            'db_type' => ['text', 'varchar(191)', 'int'],
+            'db_type' => ['text', 'varchar(191)', 'int', 'set'],
             'formbuilder' => false,
             'hooks' => [
                 'preCreate' => static function (rex_yform_manager_field $field) {
