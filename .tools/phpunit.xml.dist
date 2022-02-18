@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd"
+     bootstrap="bootstrap.php"
+     beStrictAboutCoversAnnotation="true"
+     beStrictAboutOutputDuringTests="true"
+     beStrictAboutTodoAnnotatedTests="true"
+     failOnWarning="true"
+     failOnRisky="true"
+     verbose="true"
+     colors="true"
+>
+    <testsuites>
+        <testsuite name="yorm">
+            <directory suffix="_test.php">tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

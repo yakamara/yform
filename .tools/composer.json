@@ -1,14 +1,10 @@
 {
-
     "name": "yakamara/redaxo_yform",
-
     "require-dev": {
         "redaxo/source": "^5.13",
         "vimeo/psalm": "^4.14",
-        "redaxo/psalm-plugin": "1.0.0",
-        "phpunit/phpunit": "^9.3"
+        "redaxo/psalm-plugin": "1.0.0"
     },
-
     "autoload": {
         "classmap": [
             "../lib/",
