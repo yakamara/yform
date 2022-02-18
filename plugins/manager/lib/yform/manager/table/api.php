@@ -148,6 +148,9 @@ class rex_yform_manager_table_api
 
     /**
      * @throws rex_sql_exception
+     *
+     * Field will not be automaticaly created
+     * please use: generateTableAndField afterwords
      */
     public static function setTableField(string $table_name, array $table_field)
     {
