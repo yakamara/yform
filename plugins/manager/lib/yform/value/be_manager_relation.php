@@ -44,8 +44,22 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         // ---------- Value angleichen -> immer Array mit IDs daraus machen
         if (!is_array($this->getValue())) {
-            if ($this->getElement('relation_table') && (!$this->params['send'] || null === $this->getValue())) {
-                $this->setValue($this->getRelationTableValues());
+            if ($this->getElement('relation_table')) {
+                if (!$this->params['send']) {
+                    $this->setValue($this->getRelationTableValues());
+                } elseif (null === $this->getValue()) {
+                    // YOrm Erkennung.
+                    // if null in YOrm -> nothing has been set
+                    if ($this->needsOutput()) {
+                        $this->setValue([]);
+                    } else {
+                        $this->setValue($this->getRelationTableValues());
+                    }
+                } elseif (is_scalar($this->getValue()) && !empty($this->getValue())) {
+                    $this->setValue(explode(',', $this->getValue()));
+                } else {
+                    $this->setValue([]);
+                }
             } elseif ('' == trim($this->getValue() ?? '')) {
                 $this->setValue([]);
             } else {
@@ -71,7 +85,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         if (count($this->getValue()) > 0) {
             $listValues = self::getListValues($this->relation['target_table'], $this->relation['target_field'], $filter);
             foreach ((array) $this->getValue() as $v) {
-                if (is_string($v) && isset($listValues[$v])) {
+                if (is_scalar($v) && isset($listValues[$v])) {
                     $values[] = $v;
                     $valueName = $listValues[$v] . ' [id=' . $v . ']';
                     $options[] = ['id' => $v, 'name' => $valueName];
@@ -103,7 +117,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
 
         // ------------------------------------ Selectbox, single 0 or multiple 1
-        if ($this->relation['relation_type'] < 2) {
+        if (0 == $this->relation['relation_type'] || 1 == $this->relation['relation_type']) {
             // ----- SELECT BOX
             $options = [];
             if (0 == $this->relation['relation_type'] && 1 == $this->relation['eoption']) {
@@ -119,7 +133,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
 
             if (!$this->isEditable()) {
-                $this->params['form_output'][$this->getId()] = $this->parse([ 'value.be_manager_relation-view.tpl.php', 'value.view.tpl.php'], ['options' => $viewOptions]);
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_manager_relation-view.tpl.php', 'value.view.tpl.php'], ['options' => $viewOptions]);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('options'));
             }
@@ -499,61 +513,65 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         /** @var rex_yform_manager_field $field */
         $field = $params['params']['field'];
 
-        if (4 == $field['type'] || 5 == $field['type']) {
-            if (!isset($params['list'])) {
-                return '';
-            }
-
-            $link = 'index.php?page=yform/manager/data_edit&table_name=' . $field['table'];
-            if (isset($field['filter']) && $field['filter']) {
-                $filter = self::getFilterArray($field['filter'], $field['table_name'], static function ($key) use ($params) {
-                    return $params['list']->getValue($key);
-                });
-            }
-            $filter[$field['field']] = $params['list']->getValue('id');
-
-            self::addFilterParams($link, $filter);
-            $link = self::addOpenerParams($link);
-
-            return '<a href="' . $link . '">' . rex_i18n::translate($field['label']) . '</a>';
-        }
-
-        // with relation-table
-        if ((3 == $field['type'] || 1 == $field['type']) && @$field['relation_table'] && null === $params['value']) {
-            $params['value'] = [];
-            $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
-
-            if ($relationTableFields['source'] && $relationTableFields['target']) {
-                $sql = rex_sql::factory();
-                // $sql->setDebug();
-                $sql->setQuery(
-                    '
-                    SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
-                    FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
-                    WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
-                );
-                while ($sql->hasNext()) {
-                    $id = $sql->getValue('id');
-                    $params['value'][] = $id;
-                    $sql->next();
+        switch ($field['type']) {
+            case 4:
+            case 5:
+                if (!isset($params['list'])) {
+                    return '';
                 }
-            }
 
-            $params['value'] = implode(',', $params['value']);
+                $link = 'index.php?page=yform/manager/data_edit&table_name=' . $field['table'];
+                if (isset($field['filter']) && $field['filter']) {
+                    $filter = self::getFilterArray($field['filter'], $field['table_name'], static function ($key) use ($params) {
+                        return $params['list']->getValue($key);
+                    });
+                }
+                $filter[$field['field']] = $params['list']->getValue('id');
+
+                self::addFilterParams($link, $filter);
+                $link = self::addOpenerParams($link);
+
+                return '<a href="' . $link . '">' . rex_i18n::translate($field['label']) . '</a>';
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                $params['value'] = [];
+                $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
+
+                if ($relationTableFields['source'] && $relationTableFields['target']) {
+                    $sql = rex_sql::factory();
+                    // $sql->setDebug();
+                    $sql->setQuery(
+                        '
+                            SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
+                            FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
+                            WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
+                    );
+                    while ($sql->hasNext()) {
+                        $id = $sql->getValue('id');
+                        $params['value'][] = $id;
+                        $sql->next();
+                    }
+                }
+
+                $params['value'] = implode(',', $params['value']);
+                // relation_table
+                $listValues = self::getListValues($field['table'], $field['field']);
+
+                // filter values
+                $return = [];
+                foreach (explode(',', $params['value']) as $value) {
+                    if (isset($listValues[$value])) {
+                        $return[] = $listValues[$value];
+                    }
+                }
+
+                return implode('<br />', $return);
+
+            default:
+                return '';
         }
-
-        // relation_table
-        $listValues = self::getListValues($field['table'], $field['field']);
-
-        // filter values
-        $return = [];
-        foreach (explode(',', $params['value']) as $value) {
-            if (isset($listValues[$value])) {
-                $return[] = $listValues[$value];
-            }
-        }
-
-        return implode('<br />', $return);
     }
 
     public static function getListValues($table, $field, array $filter = [])
