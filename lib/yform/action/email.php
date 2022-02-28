@@ -34,6 +34,11 @@ class rex_yform_action_email extends rex_yform_action_abstract
         $mail->Subject = $mail_subject;
         $mail->Body = nl2br($mail_body);
         $mail->AltBody = strip_tags($mail_body);
+        if (isset($this->params['value_pool']['email_attachments']) && is_array($this->params['value_pool']['email_attachments'])) {
+            foreach ($this->params['value_pool']['email_attachments'] as $v) {
+                $mail->AddAttachment($v[1], $v[0]);
+            }
+        }
         // $mail->IsHTML(true);
         $mail->Send();
     }
