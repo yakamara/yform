@@ -29,9 +29,13 @@ if ('' != $download_link) {
     $title = $value;
     $maxsize = 400;
     if ($length > $maxsize) {
-        $value = mb_substr($value, 0, (int) ($maxsize / 2)).' ... '.mb_substr($value, (int) (-($maxsize / 2)));
+        $value = rex_escape($value);
+        $fullValue = '<span class="collapse" id="'.$this->getFieldId().'">... ' . substr($value,strpos($value, ' ', 50), -1) . '</span>';
+        $value = '<div>'.substr($value,0,strpos($value, ' ', 50)) . ' ...</div>' . $fullValue . '
+        <div class="btn-group btn-toggle">
+            <span class="btn btn-default btn-xs" data-toggle="collapse" data-target="#'.$this->getFieldId().'">Ein-/Ausblenden</span>
+        </div>';
     }
-    $value = rex_escape($value);
 }
 
 $class_group = [];
