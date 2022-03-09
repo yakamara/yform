@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 4.0.2 - 09.03.2022
+--------------------------
+
+### Korrekturen/Ergänzungen
+* Fehlerhafte Auswertung und Darstellung der be_relation Werte
+
+
 Version 4.0.1 - 09.03.2022
 --------------------------
 
@@ -94,7 +101,7 @@ Version 4.0.0 – 28.12.2021
 * Tools Bibliotheken aktualisiert
 * viele statische Codetests wurde durchgeführt.
 
-Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Dirk Schürjohann, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter, Marco Hanke, Wolfgang Bund
+Danke Christoph Boecker, Alexander Walther, Norbert Micheel, Thomas Blum, Dirk Schürjohann, Robert Rupf, Markus Staab, Thomas Skerbis, Tobias Krais, Wolfgang Bund, Jelle Schutter, Marco Hanke
 
 Version 3.4.2 – 21.06.2021
 --------------------------
