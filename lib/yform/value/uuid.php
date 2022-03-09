@@ -25,8 +25,7 @@ class rex_yform_value_uuid extends rex_yform_value_abstract
     public static function guidv4($data = null) {
         // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
         $data = $data ?? random_bytes(16);
-        assert(mb_strlen($data) == 16);
-
+   
         // Set version to 0100
         $data[6] = chr(ord($data[6]) & 0x0f | 0x40);
         // Set bits 6-7 to 10
