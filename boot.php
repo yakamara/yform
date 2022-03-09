@@ -12,7 +12,7 @@ if (rex::isBackend() && rex::getUser()) {
     rex_view::addCssFile($this->getAssetsUrl('yform.css'));
     rex_view::addCssFile($this->getAssetsUrl('yform-formbuilder.css'));
 
-    rex_extension::register('PACKAGES_INCLUDED', function() {
+    rex_extension::register('PACKAGES_INCLUDED', function () {
         if ($this->getProperty('compile')) {
             $compiler = new rex_scss_compiler();
             $compiler->setRootDir($this->getPath('scss/'));
@@ -28,8 +28,9 @@ if (rex::isBackend() && rex::getUser()) {
 
     rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
         $page = rex_be_controller::getPageObject('yform');
+
         $subpages = $page->getSubpages();
-        if (isset($subpages['manager'])) {
+        if (isset($subpages['manager']) && rex::getUser()->isAdmin()) {
             $manager = $subpages['manager'];
             unset($subpages['manager']);
             $subpages = array_merge(['manager' => $manager], $subpages);

@@ -15,7 +15,7 @@ rex_complex_perm::register('yform_manager_table_edit', 'rex_yform_manager_table_
 rex_complex_perm::register('yform_manager_table_view', 'rex_yform_manager_table_perm_view');
 
 if (rex::isBackend() && rex::getUser()) {
-    rex_extension::register('PACKAGES_INCLUDED', function() {
+    rex_extension::register('PACKAGES_INCLUDED', function () {
         if ($this->getProperty('compile')) {
             $compiler = new rex_scss_compiler();
             $compiler->setRootDir($this->getPath('scss/'));
@@ -46,8 +46,7 @@ if (rex::isBackend() && rex::getUser()) {
     $prio = 1;
     foreach ($tables as $table) {
         if ($table->isActive() && $table->isGranted('VIEW', rex::getUser())) {
-
-            $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), $table->getNameLocalized() );
+            $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), $table->getNameLocalized());
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName());
             $be_page->setIcon('rex-icon rex-icon-module');
             $be_page->setPrio($prio);
