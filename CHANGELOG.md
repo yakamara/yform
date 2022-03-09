@@ -1,6 +1,24 @@
 Changelog
 =========
 
+Version 4.0.1 - 09.03.2022
+--------------------------
+
+### Korrekturen/Ergänzungen
+* SQL Debugmeldungen beim Install/Update entfernt
+* DOCs korrigiert. 
+* PSALM ergönzt. in .tools -> `./vendor/vimeo/psalm/psalm`
+* Erste phpunit Tests, CS korrigiert. in redaxo -> `phpunit  -c redaxo/src/addons/yform/.tools/phpunit.xml.dist`
+  * Erster YForm Test. Anlegen, Löschen, Relations 
+* be_media Fehler und multiple Nutzung korrigiert
+* selectpicker funktioniere bei Choice nicht
+* darkmode sortable korrigiert
+* Altlasten - Schriften entfernt
+* Warnung bei Massenbearbeitung ergänzt
+* Relation mit Relationstabellen und Speicher, Ausgabe, YForm korrigiert
+* Warning in uuid entfernt
+* Falsche YForm Navigation wenn nur yform[email] ohne Admin korrigiert
+
 Version 4.0.0 – 28.12.2021
 --------------------------
 
