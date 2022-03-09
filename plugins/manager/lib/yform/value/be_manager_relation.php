@@ -536,11 +536,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             case 1:
             case 2:
             case 3:
-                $params['value'] = [];
-                if ($field['relation_table']) {
+                // if values are in relation tables
+                if (isset($field['relation_table']) && '' != $field['relation_table']) {
+                    $params['value'] = [];
                     $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
 
-                    if ($relationTableFields['source'] && $relationTableFields['target']) {
+                    if (isset($relationTableFields['source']) && '' != $relationTableFields['source'] && isset($relationTableFields['target']) && '' != $relationTableFields['target']) {
                         $sql = rex_sql::factory();
                         $sql->setQuery(
                             '
@@ -554,9 +555,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                             $sql->next();
                         }
                     }
+                    $params['value'] = implode(',', $params['value']);
                 }
 
-                $params['value'] = implode(',', $params['value']);
                 // relation_table
                 $listValues = self::getListValues($field['table'], $field['field']);
 
