@@ -537,21 +537,22 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             case 2:
             case 3:
                 $params['value'] = [];
-                $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
+                if ($field['relation_table']) {
+                    $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
 
-                if ($relationTableFields['source'] && $relationTableFields['target']) {
-                    $sql = rex_sql::factory();
-                    // $sql->setDebug();
-                    $sql->setQuery(
-                        '
+                    if ($relationTableFields['source'] && $relationTableFields['target']) {
+                        $sql = rex_sql::factory();
+                        $sql->setQuery(
+                            '
                             SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                             FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
                             WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
-                    );
-                    while ($sql->hasNext()) {
-                        $id = $sql->getValue('id');
-                        $params['value'][] = $id;
-                        $sql->next();
+                        );
+                        while ($sql->hasNext()) {
+                            $id = $sql->getValue('id');
+                            $params['value'][] = $id;
+                            $sql->next();
+                        }
                     }
                 }
 
