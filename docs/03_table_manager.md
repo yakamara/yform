@@ -865,31 +865,31 @@ if (rex::isBackend())
 }
 ```
 
-Beispiel 2: Verlinken mit der Seite "Datensatz editieren" von YForm mit Verwendung des benötigten CSRF-Tokens.
+Beispiel 2: Verlinke das Feld `name` mit der Seite "Datensatz editieren" von YForm mit Verwendung des benötigten CSRF-Tokens.
  
 ```php
 
     rex_extension::register('YFORM_DATA_LIST', function ($ep) {
-        if ($ep->getParam('table')->getTableName()=="rex_tabelle") { // Tabellenname anpassen
+        if ($ep->getParam('table')->getTableName() == "rex_meine_gewünschte_tabelle") { // Tabellenname anpassen
             $list = $ep->getSubject();
 
             $list->setColumnFormat(
-                'name', // Feldname, dessen Wert in der Liste verändert werden soll.
+                'name', // Feldname, dessen Wert in der Liste verlinkt werden soll.
                 'custom', // nicht verändern
 
                 function ($a) {
 		
-                    $_csrf_key = rex_yform_manager_table::get('rex_tabelle')->getCSRFKey();
+		    $_csrf_key = rex_yform_manager_table::get($a['list']->getParams()['table_name'])->getCSRFKey();
                     $token = rex_csrf_token::factory($_csrf_key)->getUrlParams();
 
                     $params = array();
-                    $params['table_name'] = 'rex_tabelle'; // Tabellenname anpassen
+         	    $params['table_name'] = $a['list']->getParams()['table_name'];
                     $params['rex_yform_manager_popup'] = '0';
                     $params['_csrf_token'] = $token['_csrf_token'];
                     $params['data_id'] = $a['list']->getValue('id');
                     $params['func'] = 'edit';
         
-                    return '<a href="'.rex_url::backendPage('yform/manager/data_edit', $params) .'">'. $a['value'].'</a>';
+                    return '<a href="'.rex_url::currentBackendPage($params) .'">'. $a['value'].'</a>';
                 }
             );
         }
