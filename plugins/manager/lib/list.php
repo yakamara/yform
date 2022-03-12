@@ -1061,6 +1061,7 @@ class rex_yform_list implements rex_url_provider_interface
         // Form vars
         $this->addFormAttribute('action', $this->getUrl([], false));
         $this->addFormAttribute('method', 'post');
+        $this->addFormAttribute('class', 'table-responsive');
 
         // Table vars
         $caption = $this->getCaption();
