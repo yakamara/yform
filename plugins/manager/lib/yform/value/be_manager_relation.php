@@ -146,7 +146,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $link .= '&rex_yform_filter[' . $key . ']=' . $value . '&rex_yform_set[' . $key . ']=' . $value;
             }
             if (!$this->isEditable()) {
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_manager_relation.tpl.php', 'value.view.tpl.php'], ['options' => $viewOptions]);
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_manager_relation-view.tpl.php', 'value.view.tpl.php'], ['options' => $viewOptions]);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.be_manager_relation.tpl.php', compact('valueName', 'options', 'link'));
             }
