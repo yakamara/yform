@@ -806,13 +806,15 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return $query;
         }
 
-        return $query->whereRaw('('.sprintf(
-            'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
-            $sql->escapeIdentifier($field->getElement('relation_table')),
-            $sql->escapeIdentifier($relationTableFields['source']),
-            $sql->escapeIdentifier($relationTableFields['target']),
-            (int) $value
-        ).')');
+        $query->whereRaw('('.sprintf(
+                'EXISTS (SELECT * FROM %s WHERE %1$s.%s = `'.$field->getElement('table_name').'`.id AND %1$s.%s = %d)',
+                $sql->escapeIdentifier($field->getElement('relation_table')),
+                $sql->escapeIdentifier($relationTableFields['source']),
+                $sql->escapeIdentifier($relationTableFields['target']),
+                (int) $value
+            ).')');
+
+        return $query;
     }
 
     private static function getRelationTableFieldsForTables($mainTable, $relationTable, $targetTable)
