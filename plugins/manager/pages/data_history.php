@@ -44,6 +44,7 @@ if ('view' === $subfunc && $dataset && $historyId) {
             $value = $class::getListValue([
                 'value' => $value,
                 'subject' => $value,
+                'field' => $field->getName(),
                 'params' => [
                     'field' => $field->toArray(),
                     'fields' => $this->table->getFields(),
