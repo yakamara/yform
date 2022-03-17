@@ -807,7 +807,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         }
 
         $query->whereRaw('('.sprintf(
-                'EXISTS (SELECT * FROM %s WHERE %1$s.%s = `'.$field->getElement('table_name').'`.id AND %1$s.%s = %d)',
+                'EXISTS (SELECT * FROM %s WHERE %1$s.%s = '.$sql->escapeIdentifier($field->getElement('table_name')).'.id AND %1$s.%s = %d)',
                 $sql->escapeIdentifier($field->getElement('relation_table')),
                 $sql->escapeIdentifier($relationTableFields['source']),
                 $sql->escapeIdentifier($relationTableFields['target']),
