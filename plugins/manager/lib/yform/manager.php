@@ -17,7 +17,7 @@ if (!function_exists('rex_yform_manager_checkField')) {
 class rex_yform_manager
 {
     /** @var rex_yform_manager_table|null */
-    public $table = null;
+    public $table;
     public $linkvars = [];
     public $type = '';
     public $dataPageFunctions = [];
@@ -228,7 +228,7 @@ class rex_yform_manager
                 break;
             case 'dataset_delete':
                 if ($this->hasDataPageFunction('truncate_table')) {
-                    $query = $this->table->query();
+                    $query = $this->table->query()->alias('t0');
                     $query = $this->getDataListQuery($query, array_merge($rex_yform_filter, $rex_yform_set), $searchObject);
                     $collection = $query->find();
                     $collection->delete();
@@ -263,7 +263,7 @@ class rex_yform_manager
                     ('collection_edit' == $func && $this->table->isMassEditAllowed())
                 ) {
                     if ('collection_edit' === $func) {
-                        $query = $this->table->query();
+                        $query = $this->table->query()->alias('t0');
                         $query = $this->getDataListQuery($query, array_merge($rex_yform_filter, $rex_yform_set), $searchObject);
                         $data = $query->find();
                         $yform = $data->getForm();
@@ -472,7 +472,7 @@ class rex_yform_manager
                 break;
         }
 
-        $query = $this->table->query();
+        $query = $this->table->query()->alias('t0');
         $query = $this->getDataListQuery($query, $rex_yform_filter, $searchObject);
 
         /** @var rex_yform_list $list */
@@ -505,17 +505,17 @@ class rex_yform_manager
             ['rex_yform_manager_popup' => $rex_yform_manager_popup]
         );
 
-        foreach ($link_list_params as $paramKey => $paramValue) {
-            if (is_array($paramValue)) {
-                foreach ($paramValue as $paramKey2 => $paramValue2) {
-                    if (is_array($paramValue2)) {
-                        throw new \Exception('multi dimensional arrays are not supported!');
-                    }
-                    $list->addParam($paramKey.'['.$paramKey2.']', $paramValue2);
+        $recArray = static function ($key, $paramsArray) use ($list, &$recArray) {
+            if (!is_array($paramsArray)) {
+                $list->addParam($key, $paramsArray);
+            } elseif (is_array($paramsArray)) {
+                foreach ($paramsArray as $k => $v) {
+                    $recArray($key.'['.$k.']', $v);
                 }
-            } else {
-                $list->addParam($paramKey, $paramValue);
             }
+        };
+        foreach ($link_list_params as $mainKey => $link_list_param) {
+            $recArray($mainKey, $link_list_param);
         }
 
         foreach ($this->table->getFields() as $field) {
@@ -646,30 +646,27 @@ class rex_yform_manager
 
         if ($rex_yform_filter) {
             $filter = [];
-            $getFilter = static function (rex_yform_manager_field $field, $value) {
-                if ('be_manager_relation' == $field->getTypeName()) {
-                    $listValues = rex_yform_value_be_manager_relation::getListValues($field->getElement('table'), $field->getElement('field'), ['id' => $value]);
-                    if (isset($listValues[$value])) {
-                        $value = $listValues[$value];
-                    }
+            $getFilter = static function (rex_yform_manager_field $field, $value, $table) {
+                $class = 'rex_yform_value_'.$field->getTypeName();
+                try {
+                    $listValues = $class::getListValue([
+                        'value' => $value,
+                        'subject' => $value,
+                        'field' => $field->getName(),
+                        'params' => [
+                            'field' => $field->toArray(),
+                            'fields' => $table->getFields(),
+                        ],
+                    ]);
+                } catch (Exception $e) {
+                    dump($e);
                 }
-                return '<b>' . rex_i18n::translate($field->getLabel()) .':</b> ' . $value;
+
+                return '<b>' . rex_i18n::translate($field->getLabel()) .':</b> ' . $listValues;
             };
             foreach ($rex_yform_filter as $key => $value) {
-                if (is_array($value)) {
-                    $relTable = rex_yform_manager_table::get($this->table->getValueField($key)->getElement('table'));
-                    foreach ($value as $k => $v) {
-                        $relTableField = $relTable->getValueField($k);
-                        //if ($relTableField) {
-                        $filter[] = $getFilter($relTableField, $v);
-                        //}
-                    }
-                } else {
-                    $thisTableField = $this->table->getValueField($key);
-                    if ($thisTableField) {
-                        $filter[] = $getFilter($thisTableField, $value);
-                    }
-                }
+                $field = $this->table->getValueField($key);
+                $filter[] = $getFilter($field, $value, $this->table);
             }
             echo rex_view::info(implode('<br>', $filter));
         }
@@ -1301,9 +1298,9 @@ class rex_yform_manager
                     'YFORM_MANAGER_TABLE_FIELD_FUNC',
                     $show_list,
                     [
-                'table' => $table,
-                'link_vars' => $this->getLinkVars(),
-            ]
+                        'table' => $table,
+                        'link_vars' => $this->getLinkVars(),
+                    ]
                 )
             );
 

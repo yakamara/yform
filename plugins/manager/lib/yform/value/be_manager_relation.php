@@ -538,24 +538,26 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             case 3:
                 // if values are in relation tables
                 if (isset($field['relation_table']) && '' != $field['relation_table']) {
-                    $params['value'] = [];
-                    $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
+                    if (isset($params['list'])) {
+                        $params['value'] = [];
+                        $relationTableFields = self::getRelationTableFieldsForTables($field['table_name'], $field['relation_table'], $field['table']);
 
-                    if (isset($relationTableFields['source']) && '' != $relationTableFields['source'] && isset($relationTableFields['target']) && '' != $relationTableFields['target']) {
-                        $sql = rex_sql::factory();
-                        $sql->setQuery(
-                            '
+                        if (isset($relationTableFields['source']) && '' != $relationTableFields['source'] && isset($relationTableFields['target']) && '' != $relationTableFields['target']) {
+                            $sql = rex_sql::factory();
+                            $sql->setQuery(
+                                '
                             SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                             FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
                             WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
-                        );
-                        while ($sql->hasNext()) {
-                            $id = $sql->getValue('id');
-                            $params['value'][] = $id;
-                            $sql->next();
+                            );
+                            while ($sql->hasNext()) {
+                                $id = $sql->getValue('id');
+                                $params['value'][] = $id;
+                                $sql->next();
+                            }
                         }
+                        $params['value'] = implode(',', $params['value']);
                     }
-                    $params['value'] = implode(',', $params['value']);
                 }
 
                 // relation_table
@@ -563,7 +565,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
                 // filter values
                 $return = [];
-                foreach (explode(',', $params['value']) as $value) {
+
+                if (!is_array($params['value'])) {
+                    $params['value'] = explode(',', $params['value']);
+                }
+
+                foreach ($params['value'] as $value) {
                     if (isset($listValues[$value])) {
                         $return[] = $listValues[$value];
                     }
@@ -629,7 +636,9 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 }
                 self::$yform_list_values[$table][$field][$filterHash][$entry['id']] = $value;
             }
+            // dump(self::$yform_list_values[$table][$field][$filterHash]);
         }
+
         return self::$yform_list_values[$table][$field][$filterHash];
     }
 
@@ -785,20 +794,29 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $query = $params['query'];
 
         if (null !== $value && !is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
-            return $query;
-        }
-        $value = (string) $value;
+            if (!is_array($value)) {
+                return $query;
+            }
 
-        if ('' == $value) {
-            return $query;
+            $values = array_map('intval', $value);
+        } else {
+            $value = (string) $value;
+
+            if ('' == $value) {
+                return $query;
+            }
+
+            $values = [(int) $value];
         }
+
+        $value = null;
 
         /** @var rex_yform_manager_field $field */
         $field = $params['field'];
         $sql = rex_sql::factory();
 
         if (!$field->getElement('relation_table')) {
-            return $query->whereListContains($query->getTableAlias().'.'.$field->getName(), $value);
+            return $query->whereListContains($query->getTableAlias().'.'.$field->getName(), $values);
         }
 
         $relationTableFields = self::getRelationTableFieldsForTables($field->getElement('table_name'), $field->getElement('relation_table'), $field->getElement('table'));
@@ -806,14 +824,23 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             return $query;
         }
 
-        $query->whereRaw('('.sprintf(
-                'EXISTS (SELECT * FROM %s WHERE %1$s.%s = '.$sql->escapeIdentifier($field->getElement('table_name')).'.id AND %1$s.%s = %d)',
-                $sql->escapeIdentifier($field->getElement('relation_table')),
-                $sql->escapeIdentifier($relationTableFields['source']),
-                $sql->escapeIdentifier($relationTableFields['target']),
-                (int) $value
-            ).')');
+        if (0 < count($values)) {
+            // t0 vs $field->getElement('table_name')
+            // Achtung getSearchFilter immer mit t0 als alias Tabelle aufrufen
 
+            $exists = [];
+            foreach ($values as $value) {
+                $exists[] = '('.sprintf(
+                        'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
+                        $sql->escapeIdentifier($field->getElement('relation_table')),
+                        $sql->escapeIdentifier($relationTableFields['source']),
+                        $sql->escapeIdentifier($relationTableFields['target']),
+                        (int) $value
+                    ).')';
+            }
+
+            $query->whereRaw('('.implode(' OR ', $exists).')');
+        }
         return $query;
     }
 
