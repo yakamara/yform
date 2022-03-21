@@ -159,7 +159,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
     public static function getSearchField($params)
     {
         $format = 'YYYY-MM-DD';
-        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_values_date_search_notice', $format), 'attributes' => '{"data-yform-tools-daterangepicker":"' . $format . '"}']);
+        $params['searchForm']->setValueField('text', [
+            'name' => $params['field']->getName(),
+            'label' => $params['field']->getLabel(),
+            'notice' => rex_i18n::msg('yform_values_date_search_notice', $format),
+            'attributes' => '{"data-yform-tools-daterangepicker":"' . $format . '"}',
+        ]);
     }
 
     public static function getSearchFilter($params)
