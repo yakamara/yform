@@ -42,13 +42,22 @@
             echo $this->parse('value.fieldset.tpl.php', ['option' => 'close']);
         endfor ?>
 
-        <?php foreach ($this->objparams['form_hiddenfields'] as $k => $v): ?>
-            <?php if (is_array($v)): foreach ($v as $l => $w): ?>
-                <input type="hidden" name="<?php echo $k, '[', $l, ']' ?>" value="<?php echo htmlspecialchars($w) ?>" />
-            <?php endforeach; else: ?>
-                <input type="hidden" name="<?php echo $k ?>" value="<?php echo htmlspecialchars($v) ?>" />
-            <?php endif; ?>
-        <?php endforeach ?>
+        <?php
+
+        $recArray = static function ($key, $paramsArray) use (&$recArray) {
+            if (!is_array($paramsArray)) {
+                echo "\n".'<input type="hidden" name="'.$key.'" value="'.rex_escape($paramsArray).'" />';
+            } elseif (is_array($paramsArray)) {
+                foreach ($paramsArray as $k => $v) {
+                    $recArray($key.'['.$k.']', $v);
+                }
+            }
+        };
+        foreach ($this->objparams['form_hiddenfields'] as $k => $v) {
+            $recArray($k, $v);
+        }
+
+        ?>
 
     <?php
     if ('' != $this->objparams['form_action']) {
