@@ -263,6 +263,8 @@ class rex_yform
         if (!$this->fieldsInitialized) {
             $this->initializeFields();
         }
+        
+        rex_extension::registerPoint(new rex_extension_point('YFORM_EXECUTE_FIELDS', $this));
 
         // ---- setValues
 
