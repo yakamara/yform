@@ -9,7 +9,10 @@ $rex_yform_filter = $rex_yform_filter ?? [];
 $rex_yform_set = $rex_yform_set ?? [];
 $searchObject = $searchObject ?? null;
 
-$query = $this->table->query();
+$query = $this
+    ->table
+    ->query()
+    ->alias('t0');
 $query = $this->getDataListQuery($query, array_merge( $rex_yform_filter, $rex_yform_set), $searchObject);
 $query = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_TABLE_EXPORT', $query, ['filter' => $rex_yform_filter, 'set' => $rex_yform_set, 'searchObject' => $searchObject]));
 
