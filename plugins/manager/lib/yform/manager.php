@@ -787,7 +787,7 @@ class rex_yform_manager
         $fields = $query->getTable()->getFields();
 
         foreach ($query->getTable()->getFields() as $field) {
-            if (array_key_exists($field->getName(), $rex_filter) && 'value' == $field->getType() && $field->isSearchable()) {
+            if (array_key_exists($field->getName(), $rex_filter) && 'value' == $field->getType()) { //  && $field->isSearchable()
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                     $query = call_user_func(
                         'rex_yform_value_' . $field->getTypeName() . '::getSearchFilter',
