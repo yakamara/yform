@@ -72,7 +72,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
                 'label' => ['type' => 'text',     'label' => 'Bezeichnung'],
                 'address' => ['type' => 'text',     'label' => 'Adresse'],
                 'width' => ['type' => 'text',     'label' => 'Kartenbreite'],
-                'height' => ['type' => 'text',     'label' => 'Karten&ouml;he'],
+                'height' => ['type' => 'text',     'label' => 'Kartenh&ouml;he'],
                 'googleapikey' => ['type' => 'text',     'label' => 'Google API Key'],
                 'zoom' => ['type' => 'text',     'label' => 'Zoomstufe (Welt=1, Kontinent=5, Stadt=10, Straßen=15, Geb&auml;ude=20)'],
                 'default' => ['type' => 'text',     'label' => 'Default', 'notice' => '0.000,0.000'],
