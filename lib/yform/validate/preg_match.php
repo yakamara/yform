@@ -21,7 +21,7 @@ class rex_yform_validate_preg_match extends rex_yform_validate_abstract
 
         preg_match($pm, $Object->getValue(), $matches);
 
-        if (count($matches) > 0 && current($matches) == $Object->getValue()) {
+        if (is_countable($matches) && count($matches) > 0 && current($matches) == $Object->getValue()) {
         } else {
             $this->params['warning'][$Object->getId()] = $this->params['error_class'];
             $this->params['warning_messages'][$Object->getId()] = $this->getElement(4);
