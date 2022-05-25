@@ -707,7 +707,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 
         if (is_object($value)) {
             if (!method_exists($value, '__toString')) {
-                throw new InvalidArgumentException('Objects withut __toString() method are not supported');
+                throw new InvalidArgumentException('Objects without __toString() method are not supported');
             }
 
             return (string) $value;
