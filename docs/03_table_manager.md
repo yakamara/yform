@@ -517,6 +517,21 @@ Als Suchfeld aufnehmen |  Zeigt das Feld in den Suchoptionen an, sofern die Opti
 
 > **Hinweis**: Zusammen mit dem Upload-Feld lassen sich komfortabel [E-Mails mit Anhang versenden](demo_email-attachments.md).
 
+Codebeispiel, um innerhalb des PHP-Codes auf alle oder bestimmte Werte des aktuellen Datensatzes zuzugreifen:
+```php
+<?php
+if ($this->params['main_id'] > 0 && rex::isBackend()) {
+  foreach ($this->params['values'] as $key => &$entry) {
+    if ($entry->name == 'gesuchtes_feld') {
+      $value = $entry->value;
+      ...
+      break;
+    }
+  }
+}
+?>
+```
+
 
 ### prio
 
