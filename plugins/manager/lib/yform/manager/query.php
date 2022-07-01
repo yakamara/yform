@@ -581,7 +581,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function findIds(array $ids): rex_yform_manager_collection
     {
-        return $this->where('id', $ids)->find();
+        return $this->where($this->getTableAlias().'.id', $ids)->find();
     }
 
     /**
@@ -600,7 +600,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function findId(int $id): ?rex_yform_manager_dataset
     {
-        return $this->where('id', $id)->resetOrderBy()->findOne();
+        return $this->where($this->getTableAlias().'.id', $id)->resetOrderBy()->findOne();
     }
 
     /**
