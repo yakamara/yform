@@ -521,6 +521,11 @@ class rex_yform_manager
         foreach ($this->table->getFields() as $field) {
             if (!$field->isHiddenInList() && $field->getTypeName()) {
                 if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getListValue')) {
+                    // add view-only fields that are not part of the db table
+                    if(!in_array($field->getName(), $list->getColumnNames())) {
+                        $list->addColumn($field->getName(), '');
+                    }
+                    
                     $list->setColumnFormat(
                         $field->getName(),
                         'custom',
