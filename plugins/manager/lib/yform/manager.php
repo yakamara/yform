@@ -668,7 +668,7 @@ class rex_yform_manager
                 $field = $this->table->getValueField($key);
                 $filter[] = $getFilter($field, $value, $this->table);
             }
-            echo rex_view::info(implode('<br>', $filter));
+            echo rex_view::info(implode('<br>', $filter), 'rex-yform-filter');
         }
 
         $panel_options = [];

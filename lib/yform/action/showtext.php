@@ -22,7 +22,9 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
         $text = $this->getElement(3) . $text . $this->getElement(4);
 
         foreach ($this->params['value_pool']['email'] as $search => $replace) {
-            $text = str_replace('###' . $search . '###', $replace, $text);
+            if (is_scalar($search) && is_scalar($replace)) {
+                $text = str_replace('###' . $search . '###', $replace, $text);
+            }
         }
 
         $this->params['output'] .= $text;
