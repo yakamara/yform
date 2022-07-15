@@ -51,7 +51,7 @@ $class_control = trim('form-control');
             <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
                 <label>
                     <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />
-                    ' . $error_messages['delete_file'] . ' "' . $label . '"
+                    ' . ($error_messages['delete_file'] ?? 'delete-file-msg') . ' "' . $label . '"
                 </label>
             </div>';
     }

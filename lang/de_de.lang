@@ -145,17 +145,20 @@ yform_values_textarea_classes = classes
 yform_values_time_format = Anzeigeformat
 yform_values_time_format_notice = Default: HH:ii:ss
 yform_values_time_current_time = Aktuelle Uhrzeit voreingestellt
-yform_values_upload_sizes = Maximale Größe in Kb oder Range 100,500
-yform_values_upload_types = Erlaubte Dateien
+yform_values_upload_sizes = Maximale Größe in Kb oder Range 100,500 (deprecated)
+yform_values_upload_types = Erlaubte Dateien (deprecated)
 yform_values_upload_types_notice = Format: jpg,gif,png ... (kommaseparierte Liste) oder * (für alle Dateien)
 yform_values_upload_required = Pflichtfeld
-yform_values_upload_messages = Fehlermeldungen/Text (kommasepariert)
+yform_values_upload_messages = Fehlermeldungen/Text (kommasepariert) (deprecated)
 yform_values_upload_messages_notice = min_error_msg,max_error_msg,type_error_msg,empty_error_msg,delete_file_msg,system_error_msg
 yform_values_upload_modus = Speichermodus
 yform_values_upload_database_filename_field = bei `database`: Dateiname wird gespeichert in Feldnamen
 yform_values_upload_upload_folder = bei `upload`: Uploadordner festlegen
 yform_values_upload_upload_folder_notice = Relativen Pfad zu "{0}" eintragen
 yform_values_upload_file_prefix = Dateiprefix
+yform_values_upload_config = JSON Configuration
+yform_values_upload_config_notice = Beispiel: <br />{"sizes":{"min":0,"max":15360000},"allowed_extensions":["jpg","zip"],"disallowed_extensions":["exe"],"check":["multiple_extensions","zip_archive"],"messages":{"min_error":"min_error_msg","max_error":"max_error_msg","type_error":"type_error_msg","empty_error":"empty_error_msg","system_error":"system_error_msg","type_multiple_error":"type_multiple-msg","zip-type_error":"zip-type_error-msg {0}","type_zip_error":"type_zip_error-msg","delete_file":"delete_file_msg"}}
+
 yform_values_ip_server_var = Servervariable (optional)
 yform_values_ip_server_var_notice = default: REMOTE_ADDR
 

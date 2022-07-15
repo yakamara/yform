@@ -1156,17 +1156,46 @@ $yform->setValueField('time', array("time","Zeit","","00,15,30,45","HH:ii","","s
 #### upload
 
 ###### Definition
-	Ein Upload-Feld, mit dem eine Datei in die Datenbank oder ein Verzeichnis hochgeladen wird.
-	
+	Ein Upload-Feld, mit dem eine Datei in die Datenbank oder ein Verzeichnis hochgeladen wird. Die Felder Dateigröße, Allowed Extensions und Messages sind deprecated, werden aber noch genutzt. Die JSON Config hat Priorität, wenn beides eingetragen wurde.
+
 ###### Beispiel PHP
 ```php
-$yform->setValueField('upload', array("upload","Upload","",".jpg,.gif,.png,.jpeg"));
+$json_config = '{
+    "sizes":{
+        "min":0,
+        "max":15360000
+    },
+    "allowed_extensions":[
+        "jpg",
+        "zip"
+    ],
+    "disallowed_extensions":[
+        "exe"
+    ],
+    "check":[
+        "multiple_extensions",
+        "zip_archive"
+    ],
+    "messages":{
+        "min_error":"min_error_msg",
+        "max_error":"max_error_msg",
+        "type_error":"type_error_msg",
+        "empty_error":"empty_error_msg",
+        "system_error":"system_error_msg",
+        "type_multiple_error":"type_multiple-msg",
+        "zip-type_error":"zip-type_error-msg {0}",
+        "type_zip_error":"type_zip_error-msg",
+        "delete_file":"delete_file_msg"
+    }
+}';
+
+$yform->setValueField('upload', array("upload","Upload","config" => $json_config));
 ```
 
 ###### Beispiel Pipe
 	upload|upload|Upload||.jpg,.gif,.png,.jpeg|
 
-	upload|name | label | Maximale Größe in Kb oder Range 100,500 | endungenmitpunktmitkommasepariert | pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg | Speichermodus(upload/database/no_save) | `database`: Dateiname wird gespeichert in Feldnamen | Eigener Uploadordner [optional] | Dateiprefix [optional] |
+	upload|name | label | Maximale Größe in Kb oder Range 100,500 | endungenmitpunktmitkommasepariert | pflicht=1 | min_err,max_err,type_err,empty_err,delete_file_msg | JSON CONFIG einzeilig
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="upload"]

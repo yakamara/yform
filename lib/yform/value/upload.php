@@ -26,18 +26,85 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         rex_dir::create($upload_folder);
         rex_dir::create($temp_folder);
 
-        $error_messages = $this->getElement('messages'); // min_err,max_err,type_err,empty_err,delete_file_msg,system_error
+        $configuration = json_decode($this->getElement('config'), true);
 
-        if (!is_array($error_messages)) {
-            $error_messages = explode(',', $error_messages);
+        if (!isset($configuration['sizes'])) {
+            $configuration['sizes'] = [];
+            $sizes = array_map('intval', explode(',', $this->getElement('sizes')));
+            $configuration['sizes']['min'] = count($sizes) > 1 ? (int) ($sizes[0] * 1024) : 0;
+            $configuration['sizes']['max'] = count($sizes) > 1 ? (int) ($sizes[1] * 1024) : (int) ($sizes[0] * 1024);
         }
 
-        $error_messages['min_error'] = isset($error_messages[0]) ? rex_i18n::translate($error_messages[0]) : 'min_err';
-        $error_messages['max_error'] = isset($error_messages[1]) ? rex_i18n::translate($error_messages[1]) : 'max_error';
-        $error_messages['type_error'] = isset($error_messages[2]) ? rex_i18n::translate($error_messages[2]) : 'type_error';
-        $error_messages['empty_error'] = isset($error_messages[3]) ? rex_i18n::translate($error_messages[3]) : 'empty_error';
-        $error_messages['delete_file'] = isset($error_messages[4]) ? rex_i18n::translate($error_messages[4]) : 'delete ';
-        $error_messages['system_error'] = isset($error_messages[6]) ? rex_i18n::translate($error_messages[6]) : 'system_error';
+        if (!isset($configuration['sizes']['min'])) {
+            $configuration['sizes']['min'] = 0;
+        }
+        if (!isset($configuration['sizes']['max'])) {
+            $configuration['sizes']['max'] = 500000;
+        }
+        if (!isset($configuration['allowed_extensions'])) {
+            $configuration['allowed_extensions'] = explode(',', str_replace('.', '', $this->getElement('types')));
+        }
+
+        if (!isset($configuration['disallowed_extensions'])) {
+            $configuration['disallowed_extensions'] = ['exe'];
+        }
+
+        if (!isset($configuration['check'])) {
+            $configuration['check'] = []; // "multiple_extensions","zip_archive"
+        }
+
+        if (!isset($configuration['messages'])) {
+            $configuration['messages'] = [];
+        }
+
+        // deprecated
+        $messages = [];
+        if (!is_array($this->getElement('messages'))) {
+            $messages = explode(',', $this->getElement('messages'));
+        }
+
+        if (!isset($configuration['messages']['min_error'])) {
+            $configuration['messages']['min_error'] = isset($messages[0]) ? rex_i18n::translate($messages[0]) : 'min-error-msg';
+        }
+
+        if (!isset($configuration['messages']['max_error'])) {
+            $configuration['messages']['max_error'] = isset($messages[1]) ? rex_i18n::translate($messages[1]) : 'max-error-msg';
+        }
+
+        if (!isset($configuration['messages']['type_error'])) {
+            $configuration['messages']['type_error'] = isset($messages[2]) ? rex_i18n::translate($messages[2]) : 'type-error-msg';
+        }
+
+        if (!isset($configuration['messages']['empty_error'])) {
+            $configuration['messages']['empty_error'] = isset($messages[3]) ? rex_i18n::translate($messages[3]) : 'empty-error-msg';
+        }
+
+        if (!isset($configuration['messages']['system_error'])) {
+            $configuration['messages']['system_error'] = isset($messages[5]) ? rex_i18n::translate($messages[5]) : 'system_error-msg';
+        }
+
+        if (!isset($configuration['messages']['type_multiple_error'])) {
+            $configuration['messages']['type_multiple_error'] = isset($messages[6]) ? rex_i18n::translate($messages[6]) : 'type_multiple-msg';
+        }
+
+        if (!isset($configuration['messages']['zip-type_error'])) {
+            $configuration['messages']['zip-type_error'] = isset($messages[7]) ? rex_i18n::translate($messages[7]) : 'zip-type_error-msg';
+        }
+
+        if (!isset($configuration['messages']['type_zip_error'])) {
+            $configuration['messages']['type_zip_error'] = isset($messages[8]) ? rex_i18n::translate($messages[8]) : 'type_zip_error-msg';
+        }
+
+        if (!isset($configuration['messages']['extension_zip_type_error'])) {
+            $configuration['messages']['extension_zip_type_error'] = isset($messages[9]) ? rex_i18n::translate($messages[9]) : 'extension_zip_type_error-msg {0}';
+        }
+
+        if (!isset($configuration['messages']['delete_file'])) {
+            $configuration['messages']['delete_file'] = isset($messages[4]) ? rex_i18n::translate($messages[4]) : 'delete-msg';
+        }
+
+        // dump($configuration);
+        // echo '<pre>';echo json_encode($configuration);echo '</pre>';
 
         $errors = [];
 
@@ -71,62 +138,55 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
             unset($_FILES[$this->getSessionKey()]);
 
-            $extensions_array = explode(',', str_replace('.','', $this->getElement('types')));
-            $ext = pathinfo($FILE['name'], PATHINFO_EXTENSION);
-
-            if ($FILE['error'] !== UPLOAD_ERR_OK) {
+            if (UPLOAD_ERR_OK !== $FILE['error']) {
                 // copied from https://www.php.net/manual/de/features.file-upload.errors.php
                 switch ($FILE['error']) {
                     case UPLOAD_ERR_INI_SIZE:
-                        $system_message = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+                        $system_message = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
                         break;
                     case UPLOAD_ERR_FORM_SIZE:
-                        $system_message = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
+                        $system_message = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
                         break;
                     case UPLOAD_ERR_PARTIAL:
-                        $system_message = "The uploaded file was only partially uploaded";
+                        $system_message = 'The uploaded file was only partially uploaded';
                         break;
                     case UPLOAD_ERR_NO_FILE:
-                        $system_message = "No file was uploaded";
+                        $system_message = 'No file was uploaded';
                         break;
                     case UPLOAD_ERR_NO_TMP_DIR:
-                        $system_message = "Missing a temporary folder";
+                        $system_message = 'Missing a temporary folder';
                         break;
                     case UPLOAD_ERR_CANT_WRITE:
-                        $system_message = "Failed to write file to disk";
+                        $system_message = 'Failed to write file to disk';
                         break;
                     case UPLOAD_ERR_EXTENSION:
-                        $system_message = "File upload stopped by extension";
+                        $system_message = 'File upload stopped by extension';
                         break;
                     default:
-                        $system_message = "Unknown upload error";
+                        $system_message = 'Unknown upload error';
                         break;
                 }
                 if ($this->params['debug']) {
                     dump($system_message);
                 }
-                $errors[] = $error_messages['system_error'];
+                $errors[] = $configuration['messages']['system_error'];
                 unset($FILE);
             }
 
-            if (
-                ('*' != $this->getElement('types')) &&
-                (!in_array(mb_strtolower($ext), $extensions_array) && !in_array(mb_strtoupper($ext), $extensions_array))
-            ) {
-                $errors[] = $error_messages['type_error'];
-                unset($FILE);
+            if (isset($FILE['name'])) {
+                $error_extensions = self::upload_checkExtensions($FILE, $configuration);
+                if (0 < count($error_extensions)) {
+                    $errors = $errors + $error_extensions;
+                    unset($FILE);
+                }
             }
 
             if (isset($FILE)) {
-                $sizes = array_map('intval', explode(',', $this->getElement('sizes')));
-                $min_size = count($sizes) > 1 ? (int) ($sizes[0] * 1024) : 0;
-                $max_size = count($sizes) > 1 ? (int) ($sizes[1] * 1024) : (int) ($sizes[0] * 1024);
-
-                if ('' != $this->getElement('sizes') && $FILE['size'] > $max_size) {
-                    $errors[] = $error_messages['max_error'];
+                if ('' != $this->getElement('sizes') && $FILE['size'] > $configuration['sizes']['max']) {
+                    $errors[] = $configuration['messages']['max_error'];
                     unset($FILE);
-                } elseif ('' != $this->getElement('sizes') && $FILE['size'] < $min_size) {
-                    $errors[] = $error_messages['min_error'];
+                } elseif ('' != $this->getElement('sizes') && $FILE['size'] < $configuration['sizes']['min']) {
+                    $errors[] = $configuration['messages']['min_error'];
                     unset($FILE);
                 }
             }
@@ -137,7 +197,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                         if ($this->params['debug']) {
                             dump('uploade file move/copy failed: destination folder problem?');
                         }
-                        $errors[] = $error_messages['system_error'];
+                        $errors[] = $configuration['messages']['system_error'];
                         unset($FILE);
                     } else {
                         @chmod($FILE['tmp_yform_name'], rex::getFilePerm());
@@ -214,7 +274,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
 
         if ($this->params['send'] && 1 == $this->getElement('required') && '' == $filename) {
-            $errors[] = $error_messages['empty_error'];
+            $errors[] = $configuration['messages']['empty_error'];
         }
 
         if ($this->params['send'] && count($errors) > 0) {
@@ -232,14 +292,14 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $this->params['form_output'][$this->getId()] = $this->parse(['value.upload-view.tpl.php', 'value.view.tpl.php'], [
                     'unique' => $this->getSessionKey(),
                     'filename' => $filename,
-                    'error_messages' => $error_messages,
+                    'error_messages' => $configuration['messages'],
                     'download_link' => $download_link,
                 ]);
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.upload.tpl.php', [
                     'unique' => $this->getSessionKey(),
                     'filename' => $filename,
-                    'error_messages' => $error_messages,
+                    'error_messages' => $configuration['messages'],
                     'download_link' => $download_link,
                 ]);
             }
@@ -358,6 +418,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'required' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_upload_required')],
                 'messages' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_messages'), 'notice' => rex_i18n::msg('yform_values_upload_messages_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'config' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_config'), 'notice' => rex_i18n::msg('yform_values_upload_config_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_upload_description'),
             'db_type' => ['text'],
@@ -371,6 +432,81 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             return '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$table_name.'&data_id='.$data_id.'&func=edit&rex_upload_downloadfile='.urlencode($field_name);
         }
         return '';
+    }
+
+    public static function upload_checkExtensions(array $FILE, array $configuration): array
+    {
+        $Filename = $FILE['name'];
+
+        $errors = [];
+        $ext = mb_strtolower(pathinfo($Filename, PATHINFO_EXTENSION));
+        $configuration['allowed_extensions'] = array_map(static function ($a) {
+            return mb_strtolower($a);
+        }, $configuration['allowed_extensions']);
+
+        if (
+            (!in_array('*', $configuration['allowed_extensions'])) &&
+            (!in_array($ext, $configuration['allowed_extensions']))
+        ) {
+            $errors[] = $configuration['messages']['type_error'] ?? 'extension-type-error';
+        }
+
+        if (
+            isset($configuration['check']) &&
+            in_array('multiple_extensions', $configuration['check']) &&
+            0 < count(array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']))
+        ) {
+            $errors[] = $configuration['messages']['type_multiple_error'] ?? 'multiple-extension-type-error: '.implode(', ', array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']));
+        }
+
+        if (
+            isset($configuration['check']) &&
+            in_array('zip_archive', $configuration['check'])
+        ) {
+            $zip = new ZipArchive();
+            if ($zip->open($FILE['tmp_name'])) {
+                $zip = new ZipArchive();
+                if (isset($FILE) && 'zip' == $ext) {
+                    if ($zip->open($FILE['tmp_name'])) {
+                        /** @var zipArchive $zipArchive */
+
+                        $zip_error_files = [];
+
+                        for ($i = 0; $i < $zip->numFiles; ++$i) {
+                            $iZipFileName = $zip->getNameIndex($i);
+                            $i_ext = mb_strtolower(pathinfo($iZipFileName, PATHINFO_EXTENSION));
+
+                            if (
+                                (!in_array('*', $configuration['allowed_extensions'])) &&
+                                (!in_array($i_ext, $configuration['allowed_extensions']))
+                            ) {
+                                if (1 < count($errors)) {
+                                    $errors[] = ' ... ';
+                                    break;
+                                }
+
+                                $zip_error_files[] = $iZipFileName;
+                            }
+                        }
+
+                        if (3 < count($zip_error_files)) {
+                            $amount_files = count($zip_error_files);
+                            $zip_error_files = array_chunk($zip_error_files, 3)[0];
+                            $zip_error_files[] = ' ... ['.($amount_files - count($zip_error_files)).'] ';
+                        }
+
+                        if (0 < count($zip_error_files)) {
+                            $temp_msg = $configuration['messages']['zip-type_error'] ?? 'extension-zip-type-error: {0}';
+                            $errors[] = str_replace('{0}', implode(', ', $zip_error_files), $temp_msg);
+                        }
+                    }
+                }
+            } else {
+                $errors[] = $configuration['messages']['type_zip_error'] ?? 'zip-type-error';
+            }
+        }
+
+        return $errors;
     }
 
     public static function getSearchField($params)
