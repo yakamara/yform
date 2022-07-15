@@ -57,6 +57,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $configuration['messages'] = [];
         }
 
+        if (!isset($configuration['callback'])) {
+            $configuration['callback'] = [];
+        }
+
         // deprecated
         $messages = [];
         if (!is_array($this->getElement('messages'))) {
@@ -178,6 +182,16 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 if (0 < count($error_extensions)) {
                     $errors = $errors + $error_extensions;
                     unset($FILE);
+                }
+            }
+
+            if (isset($FILE['name'])) {
+                foreach ($configuration['callback'] as $callback) {
+                    $error_callback = call_user_func($callback, ['file' => $FILE, 'configuration' => $configuration]);
+                    if (0 < count($error_callback)) {
+                        $errors = $errors + $error_callback;
+                        unset($FILE);
+                    }
                 }
             }
 
