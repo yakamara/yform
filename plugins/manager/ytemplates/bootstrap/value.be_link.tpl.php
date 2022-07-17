@@ -10,7 +10,7 @@ $counter = $counter ?? 1;
 $buttonId = 'yf_'.uniqid().'_'.$counter;
 $categoryId = 0;
 $name = $this->getFieldName();
-$value = htmlspecialchars($this->getValue());
+$value = htmlspecialchars($this->getValue() ?? '');
 
 if (1 == $this->getElement('multiple')) {
     $widget = rex_var_linklist::getWidget($buttonId, $name, $value, []);
