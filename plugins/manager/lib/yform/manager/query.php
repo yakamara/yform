@@ -583,6 +583,22 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         return $this->where($this->getTableAlias().'.id', $ids)->find();
     }
+    
+    /**
+     * @return null|T
+     */
+    public function first(): ?rex_yform_manager_dataset
+    {
+        return $this->resetOrderBy()->orderBy('id')->findOne();
+    }
+
+    /**
+     * @return null|T
+     */
+    public function last(): ?rex_yform_manager_dataset
+    {
+        return $this->resetOrderBy()->orderBy('id', 'DESC')->findOne();
+    }
 
     /**
      * @return null|T
