@@ -31,3 +31,6 @@ requires:
 system_plugins:
     - manager
     - email
+
+installer_ignore:
+    - .tools
