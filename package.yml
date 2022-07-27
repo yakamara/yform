@@ -33,4 +33,4 @@ system_plugins:
     - email
 
 installer_ignore:
-    - .tools/vendor
+    - .tools
