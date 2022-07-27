@@ -408,7 +408,7 @@ Mit dem Wert `1` können die Fehlermeldung die über eine Validierung ausgegeben
 ```php
 <?php
 $yform->setObjectparams('getdata',1);
-$yform->setObjectparams('main_where','id=1');
+$yform->setObjectparams('main_where','id='.(int)$id);
 $yform->setObjectparams('main_table','rex_table');
 ```
 
@@ -1591,7 +1591,7 @@ $yform->setValueField('text', array("plz","PLZ"));
 $yform->setValueField('text', array("ort","Ort"));
 
 $yform->setObjectparams('getdata', TRUE);
-$yform->setObjectparams('main_where', 'id=1');
+$yform->setObjectparams('main_where', 'id='.(int) $id);
 $yform->setObjectparams('main_table', 'rex_warenkorb');
 
 $yform->setActionField('db', array("rex_warenkorb", "main_where"));
