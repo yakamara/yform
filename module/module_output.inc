@@ -17,7 +17,8 @@ if ('REX_VALUE[7]' == 1) {
 }
 $form_data = 'REX_VALUE[id=3 output=html]';
 $form_data = trim(rex_yform::unhtmlentities($form_data));
-$yform->setObjectparams('form_action', rex_getUrl(REX_ARTICLE_ID, REX_CLANG_ID));
+$yform->setObjectparams('form_action', rex_getUrl(rex_article::getCurrentId(), REX_CLANG_ID)); 
+
 $yform->setFormData($form_data);
 
 // action - showtext
