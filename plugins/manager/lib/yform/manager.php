@@ -462,6 +462,10 @@ class rex_yform_manager
                         $sql_db->rollBack();
                         $transactionErrorMessage = $e->getMessage();
                         if ($transactionErrorMessage) {
+                            if (rex::getUser()->isAdmin()) {
+                                $transactionErrorMessage .= "\n". $e->getTraceAsString();
+                            }
+                            
                             $mainMessages[] = [
                                 'type' => 'error',
                                 'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage),
