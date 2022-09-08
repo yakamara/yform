@@ -295,3 +295,5 @@ yform_manager_table_nopermission = Keine Berechtigung auf diese Tabelle
 
 yform_manager_tables_edit = Tabellen mit Bearbeitungsrechten
 yform_manager_tables_view = Tabellen mit Recht zur Ansicht
+
+yform_structure_article_could_not_be_deleted = Der Artikel konnte nicht gelöscht werden, da er von folgenden Datensätzen verwendet wird:
