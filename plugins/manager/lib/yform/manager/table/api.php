@@ -200,11 +200,6 @@ class rex_yform_manager_table_api
             $field_insert->insert();
         } else {
             // Update
-            $currentField = $currentFields[0]->toArray();
-            foreach ($table_field as $field_name => $field_value) {
-                $currentField[$field_name] = $field_value;
-            }
-
             $field_update = rex_sql::factory();
             $field_update->setDebug(self::$debug);
             $field_update->setTable(rex_yform_manager_field::table());
@@ -280,10 +275,7 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param string $table_name
-     * @param array $column
      * @throws rex_sql_exception
-     * @return array
      */
     public static function migrateField(string $table_name, array $column): array
     {
@@ -524,7 +516,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param array $field
      * @throws rex_sql_exception
      */
     public static function createMissingFieldColumns(array $field): void
@@ -552,7 +543,6 @@ class rex_yform_manager_table_api
     }
 
     /**
-     * @param bool $delete_old
      * @throws rex_sql_exception
      */
     public static function generateTableAndFields(rex_yform_manager_table $table, bool $delete_old = false): void
