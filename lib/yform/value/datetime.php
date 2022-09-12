@@ -130,7 +130,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     {
         $format = (in_array($format, self::VALUE_DATETIME_FORMATS, true)) ? $format : self::VALUE_DATETIME_DEFAULT_FORMAT;
         $DTdate = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-        return (!$date || $date != $DTdate->format('Y-m-d H:i:s')) ? '['.$date.']' : $DTdate->format($format);
+        return (!$date || !$DTdate || $date != $DTdate->format('Y-m-d H:i:s')) ? '['.$date.']' : $DTdate->format($format);
     }
 
     public function getDescription(): string
