@@ -127,6 +127,9 @@ yform_manager_table_hidden = Sichtbarkeit
 yform_hidden = versteckt
 yform_visible = sichtbar
 
+yform_manager_actions_all = Alle Aktionen
+yform_manager_users_all = Alle Benutzer
+yform_manager_history_date_notice = Alle Einträge vor und gleich diesen Datums werden angezeigt
 
 # edit.inc.php
 yform_thankyouforupdate = Datensatz wurde aktualisiert.
