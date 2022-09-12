@@ -279,7 +279,7 @@ class rex_yform_rest_route
 
                 break;
 
-            // ----- /END GET
+                // ----- /END GET
 
             case 'post':
                 $instance = $table->createDataset();
@@ -457,33 +457,24 @@ class rex_yform_rest_route
      * @param $fields
      * @param $get
      */
-    public function getFilterQuery($query, $fields, $get): rex_yform_manager_query
+    public function getFilterQuery(rex_yform_manager_query $query, array $fields, array $get): rex_yform_manager_query
     {
-        /** @var rex_yform_manager_query $query */
-        $tableAlias = $query->getTableAlias();
-
         if (isset($get['filter']) && is_array($get['filter'])) {
             foreach ($get['filter'] as $filterKey => $filterValue) {
                 foreach ($fields as $fieldName => $field) {
                     /* @var rex_yform_manager_field $field */
-
                     if ($fieldName == $filterKey) {
                         if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                             try {
-                                $rawQuery = $field->getObject()->getSearchFilter([
+                                $query = $field->getObject()->getSearchFilter([
                                     'value' => $filterValue,
                                     'field' => $field,
+                                    'query' => $query,
                                 ]);
-
-                                if ('' != $tableAlias) {
-                                    // TODO: fieser hack bisher, da bekannt wie die SearchFilter funktionieren.
-                                    $rawQuery = str_replace('`'.$field.'`', '`'.$tableAlias.'`.`'.$field.'`', $rawQuery);
-                                }
                             } catch (Error $e) {
-                                rex_yform_rest::sendError('400', 'field-class-not-found', ['field' => $fieldName]);
+                                rex_yform_rest::sendError('400', 'field-static-method-call-failed', ['class' => 'rex_yform_value_' . $field->getTypeName(), 'field' => $fieldName]);
                                 exit;
                             }
-                            $query->whereRaw('(' . $rawQuery . ')');
                         } else {
                             $query->where($filterKey, $filterValue);
                         }
