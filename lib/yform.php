@@ -65,7 +65,7 @@ class rex_yform
 
         $this->objparams['getdata'] = false;
         $this->objparams['fixdata'] = [];
-        $this->objparams['data'] = false;
+        $this->objparams['data'] = [];
         $this->objparams['get_field_type'] = 'request';
 
         $this->objparams['send'] = 0;
