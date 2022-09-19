@@ -12,7 +12,7 @@ $_csrf_key = $_csrf_key ?? '';
 
 $historySearchId = rex_request('historySearchId', 'int', null);
 $historySearchDate = rex_request('historySearchDate', 'string', null);
-$historySearchUser = rex_request('historySearchUserId', 'int', null);
+$historySearchUser = rex_request('historySearchUser', 'string', null);
 $historySearchAction = rex_request('historySearchAction', 'string', null);
 
 $dataset = null;
