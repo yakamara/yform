@@ -44,7 +44,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         }
 
         $this->params['form_output'][$this->getId()] = '';
-        if ($this->needsOutput() && $this->isViewable()) {
+        if ($this->needsOutput() && $this->isViewable() && !rex::isFrontend()) {
             if ($this->isEditable()) {
                 $notice = '';
                 if ($this->value_datestamp_currentValue != $this->getValue()) {
