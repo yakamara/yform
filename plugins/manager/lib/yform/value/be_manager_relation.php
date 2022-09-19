@@ -89,7 +89,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $values[] = $v;
                     $valueName = $listValues[$v] . ' [id=' . $v . ']';
                     $options[] = ['id' => $v, 'name' => $valueName];
-                    $viewOptions[$v] = $valueName;
+                    $viewOptions[ (string) $v] = $valueName;
                 }
             }
             $this->setValue($values);
