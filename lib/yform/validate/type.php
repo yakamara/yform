@@ -45,12 +45,12 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             case 'string':
                 break;
             case 'email':
-                if (!preg_match("/^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
+                if (!preg_match("/^[a-zä-üA-ZÄ-Ü0-9ß.!#$%&'*+\/=?^_`{|}~-]+@[a-zä-üA-ZÄ-Ü0-9ß](?:[a-zä-üA-ZÄ-Ü0-9ß-]{0,61}[a-zä-üA-ZÄ-Ü0-9ß])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
                     $w = true;
                 }
                 break;
             case 'url':
-                $xsRegEx_url = '/^(?:http[s]?:\/\/)[a-zA-Z0-9][a-zA-Z0-9._-]*\.(?:[a-zA-Z0-9][a-zA-Z0-9._-]*\.)*[a-zA-Z]{2,20}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/';
+                $xsRegEx_url = '/^(?:http[s]?:\/\/)[a-zä-üA-ZÄ-Ü0-9ß][a-zä-üA-ZÄ-Ü0-9ß._-]*\.(?:[a-zä-üA-ZÄ-Ü0-9ß][a-zä-üA-ZÄ-Ü0-9ß._-]*\.)*[a-zA-Z]{2,20}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/';
                 if (0 == preg_match($xsRegEx_url, $Object->getValue())) {
                     $w = true;
                 }
