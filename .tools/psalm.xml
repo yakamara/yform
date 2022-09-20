@@ -10,7 +10,7 @@
     <projectFiles>
         <directory name="../"/>
         <ignoreFiles>
-            <directory name="vendor" />
+            <directory name="*/vendor/*" />
         </ignoreFiles>
     </projectFiles>
     <forbiddenFunctions>

@@ -18,7 +18,7 @@ class rex_yform_rest_route
     private $additionalHeaders = [];
 
     /**
-     * rex_yform_rest_route constructor.
+     * @return $this
      */
     public function __construct(array $config)
     {
@@ -29,7 +29,6 @@ class rex_yform_rest_route
         $this->query = $this->config['query'];
         $this->instance = $this->table->createDataset();
         $this->path = ('/' == mb_substr($this->config['path'], -1)) ? mb_substr($this->config['path'], 0, -1) : $this->config['path'];
-        return $this;
     }
 
     /**
@@ -109,6 +108,9 @@ class rex_yform_rest_route
                 $attribute = null;
                 $baseInstances = false;
                 $itemsAll = 0;
+                $currentPage = 1;
+                $order = [];
+                $per_page = 10;
 
                 if (0 == count($paths)) {
                     $baseInstances = true;
@@ -125,7 +127,6 @@ class rex_yform_rest_route
 
                     $query->limit(($currentPage - 1) * $per_page, $per_page);
 
-                    $order = [];
                     if (isset($get['order']) && is_array($get['order'])) {
                         foreach ($get['order'] as $orderName => $orderValue) {
                             if (array_key_exists($orderName, $fields)) {

@@ -44,7 +44,8 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                 <?php foreach ($columns as $i => $column): ?>
                     <?php
                     $rowData = array_values($row);
-                    /** @var $field rex_yform_value_abstract $field */
+                    
+                    /** @var rex_yform_value_abstract $field */
                     $field = $column['field'];
                     $field->params['form_output'] = [];
                     $field->params['this']->setObjectparams('form_name', $this->getName() . '.' . $i);
@@ -62,9 +63,8 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     $field->setValue($rowData[$i] ?? '');
                     $field->setId($data_index);
                     $field->enterObject();
-
-                    /** @var array $field->params['form_output'] */
                     $field_output = trim($field->params['form_output'][$field->getId()]);
+
                     ?>
                     <td class="be-value-input type-<?= $column['field']->getElement(0) ?>" data-title="<?= rex_escape($column['label'], 'html_attr') ?>"><?= $field_output ?></td>
                 <?php endforeach ?>

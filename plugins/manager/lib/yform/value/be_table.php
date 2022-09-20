@@ -116,6 +116,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         $data = (array) json_decode($this->getValue(), true);
         $objs = [];
         $columnIndex = [];
+        $columns = [];
 
         $this->fieldData = $data;
 

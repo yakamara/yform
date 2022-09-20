@@ -39,7 +39,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /** @var string|null */
     private $limit;
 
-    public function __construct(string $table)
+    final public function __construct(string $table)
     {
         $this->table = $table;
     }

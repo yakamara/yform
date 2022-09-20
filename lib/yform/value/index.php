@@ -151,7 +151,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 return $nextIndex;
             };
 
-            $addFieldsAndJoins = static function (array $columns, rex_yform_manager_field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, &$joins, &$maxIndex, $sql) {
+            $addFieldsAndJoins = static function (array $columns, rex_yform_manager_field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, $sql) {
                 $table = rex_yform_manager_table::get($relation->getElement('table'));
 
                 $fieldFormat = 't%d.%s';
@@ -201,6 +201,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             $fromTable = $relation->getElement('table');
             $type = $relation->getElement('type');
 
+            $columns = [];
             if ($relation->getElement('relation_table')) {
                 try {
                     $columns = $table->getRelationTableColumns($name);

@@ -109,7 +109,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        $value = $params['subject'];
+        $value = (string) $params['subject'];
         $length = mb_strlen($value);
         $title = $value;
         if ($length > 40) {

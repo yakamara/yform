@@ -53,6 +53,3 @@ echo '
         <div>' . $value . '</div>
         ' . $notice . '
     </div>';
-
-?>
-

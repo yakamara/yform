@@ -22,7 +22,7 @@ class rex_yform_manager_collection extends \SplFixedArray
     /**
      * @param T[] $data
      */
-    public function __construct(string $table, array $data = [])
+    final public function __construct(string $table, array $data = [])
     {
         parent::__construct(count($data));
 

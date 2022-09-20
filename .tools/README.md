@@ -1,14 +1,12 @@
 
 ## phpunit
 
-Aufruf von PHPUnit nur im redaxo Kontext mit 
+Aufruf von PHPUnit nur im REDAXO Kontext mit 
 
 `phpunit  -c redaxo/src/addons/yform/.tools/phpunit.xml.dist`
 
 ## psalm
 
-wird direkt mit 
+Aufruf psalm im REDAXO Kontext mit
 
-`./vendor/vimeo/psalm/psalm` 
-
-im YForm/.tools Ordner aufgerufen
+`psalm -c redaxo/src/addons/yform/.tools/psalm.xml --no-cache`

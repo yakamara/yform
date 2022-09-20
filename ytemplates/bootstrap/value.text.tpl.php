@@ -63,6 +63,3 @@ echo '<div class="'.implode(' ', $class_group).'" id="'.$this->getHTMLId().'">
         <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
         ' . $input_group_start . $prepend_view . '<input '.implode(' ', $attributes).' />' . $append_view . $input_group_end . $notice .'
         </div>';
-
-?>
-

@@ -83,9 +83,6 @@ class rex_yform_list implements rex_url_provider_interface
      * @param int         $rowsPerPage Anzahl der Elemente pro Zeile
      * @param string|null $listName    Name der Liste
      * @param bool        $debug
-     * @param int         $db
-     *
-     * @psalm-param positive-int $db
      */
     protected function __construct(rex_yform_manager_query $query, int $rowsPerPage = 30, $listName = null, $debug = false)
     {

@@ -40,14 +40,14 @@ $fieldkey = 'y'.sha1($fieldkey.'-'.rex_escape($relationKey)); // no number first
 echo '
 
     <div class="'.$class_group.'" id="'.$fieldkey.'" data-yform-be-relation-form="'.rex_escape($prototypeForm).'" data-yform-be-relation-key="'.rex_escape($relationKey).'" data-yform-be-relation-index="'.count($forms).'">
-        <label class="control-label" for="'.$this->getFieldId().'">'.$this->getLabelStyle($this->relation['label']).' </label>
+        <label class="control-label" for="'.$this->getFieldId().'">'.$this->getLabel().' </label>
         <div data-yform-be-relation-item="'.$fieldkey.'" '.$sortable.' class="yform-be-relation-wrapper">';
 
-        $counter = 1;
-        foreach ($forms as $form) {
-            echo $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-'.$counter, 'form' => $form, 'prioFieldName' => $prioFieldName]);
-            ++$counter;
-        }
+$counter = 1;
+foreach ($forms as $form) {
+    echo $this->parse('value.be_manager_inline_relation_form.tpl.php', ['counterfieldkey' => $fieldkey.'-'.$counter, 'form' => $form, 'prioFieldName' => $prioFieldName]);
+    ++$counter;
+}
 
 echo '
         </div>

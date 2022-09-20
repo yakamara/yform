@@ -482,8 +482,6 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 $zip = new ZipArchive();
                 if (isset($FILE) && 'zip' == $ext) {
                     if ($zip->open($FILE['tmp_name'])) {
-                        /** @var zipArchive $zipArchive */
-
                         $zip_error_files = [];
 
                         for ($i = 0; $i < $zip->numFiles; ++$i) {

@@ -44,7 +44,7 @@ class rex_yform_manager_dataset
     /** @var string[] */
     private $messages = [];
 
-    private function __construct(string $table, ?int $id = null)
+    final private function __construct(string $table, ?int $id = null)
     {
         $this->table = $table;
         $this->id = $id;

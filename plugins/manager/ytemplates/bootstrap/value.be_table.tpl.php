@@ -45,6 +45,8 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                 <?php foreach ($columns as $i => $column): ?>
                     <?php
                     $rowData = array_values($row);
+
+                    /** @var rex_yform_value_abstract $field */
                     $field = $column['field'];
                     $field->params['form_output'] = [];
                     $field->params['this']->setObjectparams('form_name', $this->getName() . '.' . $i);
@@ -61,8 +63,8 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     $field->setValue($rowData[$i] ?? '');
                     $field->setId($data_index);
                     $field->enterObject();
-                    /** @var array $field->params['form_output'] */
                     $field_output = trim($field->params['form_output'][$field->getId()]);
+
                     ?>
                     <td class="be-value-input type-<?= $column['field']->getElement(0) ?>" data-title="<?= rex_escape($column['label'], 'html_attr') ?>"><?= $field_output ?></td>
                 <?php endforeach ?>
@@ -125,12 +127,11 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                             $field->setValue(null);
                             $field->setId('{{FIELD_ID}}');
                             $field->enterObject();
-                            /** @var array $field->params['form_output'] */
                             $field_output = trim(strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]));
 
                             echo '<td class="be-value-input type-'. $column['field']->getElement(0) .'" data-title="'. $column['label'] .'">'. $field_output .'</td>';
                         }
-                        ?>\
+?>\
                     <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
                 ';
 
@@ -140,7 +141,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                 row_html = row_html.replace(new RegExp('--FIELD_ID--', 'g'), be_table_cnt);
 
                 for (var i in regexp) {
-                    row_html = row_html.replace(regexp[i], '$1' + be_table_cnt + '<?= $i ?>');
+                    row_html = row_html.replace(regexp[i], '$1' + be_table_cnt + '<?= $i ?? 0 ?>');
                 }
                 tr.html(row_html);
 

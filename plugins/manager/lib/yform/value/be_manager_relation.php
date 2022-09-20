@@ -89,7 +89,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $values[] = $v;
                     $valueName = $listValues[$v] . ' [id=' . $v . ']';
                     $options[] = ['id' => $v, 'name' => $valueName];
-                    $viewOptions[ (string) $v] = $valueName;
+                    $viewOptions[(string) $v] = $valueName;
                 }
             }
             $this->setValue($values);
@@ -698,7 +698,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $value[0] = $getValueForKey($value[0]);
                         if ($value[0] && $relation) {
                             $relationSql = rex_sql::factory();
-                            //$relationSql->debugsql = true;
+                            // $relationSql->debugsql = true;
                             $tables = '' . $relationSql->escapeIdentifier($relation['table']) . ' t0';
                             for ($i = 1; $i < count($value) - 1; ++$i) {
                                 $relation = rex_yform_manager_table::get($relation['table'])->getRelation($value[$i]);
@@ -771,6 +771,21 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         return $values;
     }
 
+    public function getRelationType(): int
+    {
+        return (int) $this->relation['relation_type'];
+    }
+
+    public function getRelationSize(): int
+    {
+        return (int) $this->relation['size'];
+    }
+
+    public function getRelationSourceTableName(): string
+    {
+        return $this->relation['source_table'];
+    }
+
     public static function getSearchField($params)
     {
         if (4 == $params['field']->getElement('type') || 5 == $params['field']->getElement('type')) {
@@ -831,12 +846,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $exists = [];
             foreach ($values as $value) {
                 $exists[] = '('.sprintf(
-                        'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
-                        $sql->escapeIdentifier($field->getElement('relation_table')),
-                        $sql->escapeIdentifier($relationTableFields['source']),
-                        $sql->escapeIdentifier($relationTableFields['target']),
-                        (int) $value
-                    ).')';
+                    'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
+                    $sql->escapeIdentifier($field->getElement('relation_table')),
+                    $sql->escapeIdentifier($relationTableFields['source']),
+                    $sql->escapeIdentifier($relationTableFields['target']),
+                    (int) $value
+                ).')';
             }
 
             $query->whereRaw('('.implode(' OR ', $exists).')');

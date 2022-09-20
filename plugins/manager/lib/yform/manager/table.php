@@ -70,7 +70,7 @@ class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @param int $tableId
+     * @param int $tableID
      *
      * @return rex_yform_manager_table|null
      */
