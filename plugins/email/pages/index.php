@@ -111,7 +111,8 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
             } else {
                 $content = rex_view::success(rex_i18n::msg('yform_email_info_template_updated'));
             }
-        } elseif ('add' == $func) {
+        } else {
+            // -> add
             if (2 == $submit_type) {
                 $title = rex_i18n::msg('yform_email_update');
                 $template_id = $yform->objparams['main_id'];

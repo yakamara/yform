@@ -17,7 +17,8 @@ if ('' != $download_link) {
         $value = '-';
     } elseif (1 == count($value)) {
         $value = (isset($options[current($value)]) ? rex_escape($options[current($value)]) : 'error - no option found for '. rex_escape(current($value)));
-    } elseif (1 < count($value)) {
+    } else {
+        // -> 1 < count($value))
         foreach ($value as $k => $v) {
             $v = (isset($options[$v]) ? rex_escape($options[$v]) : 'error - no option found for '. rex_escape($v));
             $value[$k] = '<li>'.rex_escape($v).'</li>';

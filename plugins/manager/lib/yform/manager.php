@@ -1098,27 +1098,31 @@ class rex_yform_manager
             $yform->setActionField('showtext', ['', '<p>' . rex_i18n::msg('yform_thankyouforentry') . '</p>']);
             $yform->setObjectparams('main_table', rex_yform_manager_field::table());
 
-            if ('edit' == $func) {
-                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_update'));
-                $yform->setHiddenField('field_id', $field_id);
-                $yform->setActionField('manage_db', [rex_yform_manager_field::table(), "id=$field_id"]);
-                $yform->setObjectparams('main_id', $field_id);
-                $yform->setObjectparams('main_where', "id=$field_id");
-                $sql = rex_sql::factory();
-                $sql->setQuery('SELECT * FROM ' . rex_yform_manager_field::table() . " WHERE id=$field_id");
-                foreach ($selectFields as $alias => $s_field) {
-                    if ($alias != $s_field) {
-                        if ((!$sql->hasValue($s_field) || null === $sql->getValue($s_field) || '' === $sql->getValue($s_field)) && $sql->hasValue($alias)) {
-                            $sql->setValue($s_field, $sql->getValue($alias));
+            switch ($func) {
+                case 'edit':
+                    $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_update'));
+                    $yform->setHiddenField('field_id', $field_id);
+                    $yform->setActionField('manage_db', [rex_yform_manager_field::table(), "id=$field_id"]);
+                    $yform->setObjectparams('main_id', $field_id);
+                    $yform->setObjectparams('main_where', "id=$field_id");
+                    $sql = rex_sql::factory();
+                    $sql->setQuery('SELECT * FROM ' . rex_yform_manager_field::table() . " WHERE id=$field_id");
+                    foreach ($selectFields as $alias => $s_field) {
+                        if ($alias != $s_field) {
+                            if ((!$sql->hasValue($s_field) || null === $sql->getValue($s_field) || '' === $sql->getValue($s_field)) && $sql->hasValue($alias)) {
+                                $sql->setValue($s_field, $sql->getValue($alias));
+                            }
+                            $yform->setValueField('hidden', [$alias, '']);
                         }
-                        $yform->setValueField('hidden', [$alias, '']);
                     }
-                }
-                $yform->setObjectparams('sql_object', $sql);
-                $yform->setObjectparams('getdata', true);
-            } elseif ('add' == $func) {
-                $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_add'));
-                $yform->setActionField('manage_db', [rex_yform_manager_field::table()]);
+                    $yform->setObjectparams('sql_object', $sql);
+                    $yform->setObjectparams('getdata', true);
+                    break;
+                case 'add':
+                default:
+                    $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_field_add'));
+                    $yform->setActionField('manage_db', [rex_yform_manager_field::table()]);
+                    break;
             }
 
             if ('value' == $type_id) {
@@ -1162,12 +1166,16 @@ class rex_yform_manager
 
                 $func = '';
             } else {
-                if ('edit' == $func) {
-                    rex_yform_manager_table_api::generateTableAndFields($table);
-                    echo rex_view::success(rex_i18n::msg('yform_thankyouforupdate'));
-                } elseif ('add' == $func) {
-                    rex_yform_manager_table_api::generateTableAndFields($table);
-                    echo rex_view::success(rex_i18n::msg('yform_thankyouforentry'));
+                switch ($func) {
+                    case 'edit':
+                        rex_yform_manager_table_api::generateTableAndFields($table);
+                        echo rex_view::success(rex_i18n::msg('yform_thankyouforupdate'));
+                        break;
+                    case 'add':
+                    default:
+                        rex_yform_manager_table_api::generateTableAndFields($table);
+                        echo rex_view::success(rex_i18n::msg('yform_thankyouforentry'));
+                        break;
                 }
                 $func = 'list';
             }

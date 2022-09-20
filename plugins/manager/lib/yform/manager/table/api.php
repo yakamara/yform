@@ -209,10 +209,8 @@ class rex_yform_manager_table_api
                 $add_where[] = '`' . $field . '`= ' . $field_update->escape($value) . ' ';
             }
 
-            $where = 'table_name=' . $field_update->escape($table_name) . '';
-            if (0 < count($add_where)) {
-                $where .= ' and (' . implode(' and ', $add_where) . ') ';
-            }
+            $where = 'table_name=' . $field_update->escape($table_name);
+            $where .= ' and (' . implode(' and ', $add_where) . ') ';
 
             $field_update->setWhere($where);
 
@@ -605,7 +603,7 @@ class rex_yform_manager_table_api
                         }
                     }
 
-                    if (!$existingColumn || ($existingColumn && $table->overwriteSchema())) {
+                    if (!$existingColumn || $table->overwriteSchema()) {
                         $EnsureTable
                         ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull(), $default));
                     }

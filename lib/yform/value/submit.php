@@ -18,7 +18,7 @@ class rex_yform_value_submit extends rex_yform_value_abstract
     {
         $labels = $this->getElement('labels');
         if ('' == $labels) {
-            $labels = [$labels];
+            $labels = [];
         } else {
             $labels = explode(',', $labels);
         }

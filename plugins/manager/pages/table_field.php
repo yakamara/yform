@@ -23,7 +23,5 @@ if ($table) {
         echo rex_view::warning($message);
     }
 } else {
-    if (!$table) {
-        echo rex_view::warning(rex_i18n::msg('yform_table_not_found'));
-    }
+    echo rex_view::warning(rex_i18n::msg('yform_table_not_found'));
 }

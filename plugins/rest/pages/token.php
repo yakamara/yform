@@ -88,46 +88,50 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $content = $yform->executeActions();
 
     if ($yform->objparams['actions_executed']) {
-        if ('edit' == $func) {
-            if (2 == $submit_type) {
-                $fragment = new rex_fragment();
-                $fragment->setVar('class', 'edit', false);
-                $fragment->setVar('title', $title);
-                $fragment->setVar('body', $content, false);
-                $content = $fragment->parse('core/page/section.php');
+        switch ($func) {
+            case 'edit':
+                if (2 == $submit_type) {
+                    $fragment = new rex_fragment();
+                    $fragment->setVar('class', 'edit', false);
+                    $fragment->setVar('title', $title);
+                    $fragment->setVar('body', $content, false);
+                    $content = $fragment->parse('core/page/section.php');
 
-                $show_list = false;
-            } else {
-                $content = rex_view::success(rex_i18n::msg('yform_rest_token_updated'));
-            }
-        } elseif ('add' == $func) {
-            if (2 == $submit_type) {
-                $title = rex_i18n::msg('yform_email_update');
-                $data_id = $yform->objparams['main_id'];
-                $func = 'edit';
+                    $show_list = false;
+                } else {
+                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_updated'));
+                }
+                break;
+            case 'add':
+            default:
+                if (2 == $submit_type) {
+                    $title = rex_i18n::msg('yform_email_update');
+                    $data_id = $yform->objparams['main_id'];
+                    $func = 'edit';
 
-                $yform = $yform_clone;
-                $yform->setHiddenField('func', $func);
-                $yform->setHiddenField('data_id', $data_id);
-                $yform->setActionField('db', [$table, "id=$data_id"]);
-                $yform->setObjectparams('main_id', $data_id);
-                $yform->setObjectparams('main_where', "id=$data_id");
-                $yform->setObjectparams('main_table', $table);
-                $yform->setObjectparams('getdata', true);
-                $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
-                $yform->executeFields();
+                    $yform = $yform_clone;
+                    $yform->setHiddenField('func', $func);
+                    $yform->setHiddenField('data_id', $data_id);
+                    $yform->setActionField('db', [$table, "id=$data_id"]);
+                    $yform->setObjectparams('main_id', $data_id);
+                    $yform->setObjectparams('main_where', "id=$data_id");
+                    $yform->setObjectparams('main_table', $table);
+                    $yform->setObjectparams('getdata', true);
+                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+                    $yform->executeFields();
 
-                $content = $yform->executeActions();
-                $fragment = new rex_fragment();
-                $fragment->setVar('class', 'edit', false);
-                $fragment->setVar('title', $title);
-                $fragment->setVar('body', $content, false);
-                $content = rex_view::success(rex_i18n::msg('yform_rest_token_added')).$fragment->parse('core/page/section.php');
+                    $content = $yform->executeActions();
+                    $fragment = new rex_fragment();
+                    $fragment->setVar('class', 'edit', false);
+                    $fragment->setVar('title', $title);
+                    $fragment->setVar('body', $content, false);
+                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_added')).$fragment->parse('core/page/section.php');
 
-                $show_list = false;
-            } else {
-                $content = rex_view::success(rex_i18n::msg('yform_rest_token_added'));
-            }
+                    $show_list = false;
+                } else {
+                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_added'));
+                }
+                break;
         }
     } else {
         $fragment = new rex_fragment();

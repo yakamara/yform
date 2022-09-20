@@ -92,26 +92,30 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $yform->setValueField('checkbox', ['status', rex_i18n::msg('yform_tbl_active')]);
     $yform->setValueField('prio', ['prio', rex_i18n::msg('yform_manager_table_prio'), 'name']);
 
-    if ('edit' == $func) {
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_update_table'));
-        $yform->setValueField('showvalue', ['table_name', rex_i18n::msg('yform_manager_table_name')]);
-        $yform->setHiddenField('table_id', $table->getId());
-        $yform->setActionField('db', [rex_yform_manager_table::table(), 'id='.$table->getId()]);
-        $yform->setObjectparams('main_id', $table->getId());
-        $yform->setObjectparams('main_where', 'id='.$table->getId());
-        $yform->setObjectparams('getdata', true);
-    } elseif ('add' == $func) {
-        $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add_table'));
-        $yform->setValueField('text', ['table_name', rex_i18n::msg('yform_manager_table_name'), rex::getTablePrefix()]);
-        $yform->setValidateField('empty', ['table_name', rex_i18n::msg('yform_manager_table_enter_name')]);
-        $yform->setValidateField('customfunction', ['table_name', static function ($label = '', $table = '', $params = '') {
-            preg_match('/([a-z])+([0-9a-z\\_])*/', $table, $matches);
-            return !count($matches) || current($matches) != $table;
-        }, '', rex_i18n::msg('yform_manager_table_enter_specialchars')]);
-        $yform->setValidateField('customfunction', ['table_name', static function ($label = '', $table = '', $params = '') {
-            return (bool) rex_yform_manager_table::get($table);
-        }, '', rex_i18n::msg('yform_manager_table_exists')]);
-        $yform->setActionField('db', [rex_yform_manager_table::table()]);
+    switch ($func) {
+        case 'edit':
+            $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_update_table'));
+            $yform->setValueField('showvalue', ['table_name', rex_i18n::msg('yform_manager_table_name')]);
+            $yform->setHiddenField('table_id', $table->getId());
+            $yform->setActionField('db', [rex_yform_manager_table::table(), 'id='.$table->getId()]);
+            $yform->setObjectparams('main_id', $table->getId());
+            $yform->setObjectparams('main_where', 'id='.$table->getId());
+            $yform->setObjectparams('getdata', true);
+            break;
+        case 'add':
+        default:
+            $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_add_table'));
+            $yform->setValueField('text', ['table_name', rex_i18n::msg('yform_manager_table_name'), rex::getTablePrefix()]);
+            $yform->setValidateField('empty', ['table_name', rex_i18n::msg('yform_manager_table_enter_name')]);
+            $yform->setValidateField('customfunction', ['table_name', static function ($label = '', $table = '', $params = '') {
+                preg_match('/([a-z])+([0-9a-z\\_])*/', $table, $matches);
+                return !count($matches) || current($matches) != $table;
+            }, '', rex_i18n::msg('yform_manager_table_enter_specialchars')]);
+            $yform->setValidateField('customfunction', ['table_name', static function ($label = '', $table = '', $params = '') {
+                return (bool) rex_yform_manager_table::get($table);
+            }, '', rex_i18n::msg('yform_manager_table_exists')]);
+            $yform->setActionField('db', [rex_yform_manager_table::table()]);
+            break;
     }
 
     $yform->setValueField('text', ['name', rex_i18n::msg('yform_manager_name')]);
@@ -209,26 +213,29 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
         $form = $fragment->parse('core/page/section.php');
 
         echo $form;
-
         echo rex_view::info('<a href="index.php?page=' . $page . '"><b>&laquo; ' . rex_i18n::msg('yform_back_to_overview') . '</b></a>');
 
         $show_list = false;
     } else {
-        if ('edit' == $func) {
-            $table_name = $yform->objparams['value_pool']['email']['table_name'];
-            $table = rex_yform_manager_table::get($table_name);
-            if ($table) {
-                rex_yform_manager_table_api::generateTableAndFields($table);
-            }
-            echo rex_view::info(rex_i18n::msg('yform_manager_table_updated'));
-        } elseif ('add' == $func) {
-            rex_yform_manager_table::deleteCache();
-            $table_name = $yform->objparams['value_pool']['sql']['table_name'];
-            $table = rex_yform_manager_table::get($table_name);
-            if ($table) {
-                rex_yform_manager_table_api::generateTableAndFields($table);
-                echo rex_view::success(rex_i18n::msg('yform_manager_table_added'));
-            }
+        switch ($func) {
+            case 'edit':
+                $table_name = $yform->objparams['value_pool']['email']['table_name'];
+                $table = rex_yform_manager_table::get($table_name);
+                if ($table) {
+                    rex_yform_manager_table_api::generateTableAndFields($table);
+                }
+                echo rex_view::info(rex_i18n::msg('yform_manager_table_updated'));
+                break;
+            case 'add':
+            default:
+                rex_yform_manager_table::deleteCache();
+                $table_name = $yform->objparams['value_pool']['sql']['table_name'];
+                $table = rex_yform_manager_table::get($table_name);
+                if ($table) {
+                    rex_yform_manager_table_api::generateTableAndFields($table);
+                    echo rex_view::success(rex_i18n::msg('yform_manager_table_added'));
+                }
+                break;
         }
     }
 }

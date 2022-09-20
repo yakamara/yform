@@ -7,7 +7,7 @@
 
 echo rex_view::title($this->i18n('yform'));
 
-if (rex::getUser()->isAdmin() && rex_addon::get('structure') && rex_addon::get('structure')->isAvailable()) {
+if (rex::getUser()->isAdmin() && rex_addon::get('structure')->isAvailable()) {
     $content = '';
     $searchtext = 'module:yform_basic_output';
 

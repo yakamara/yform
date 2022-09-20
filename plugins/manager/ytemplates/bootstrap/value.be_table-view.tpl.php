@@ -44,7 +44,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                 <?php foreach ($columns as $i => $column): ?>
                     <?php
                     $rowData = array_values($row);
-                    
+
                     /** @var rex_yform_value_abstract $field */
                     $field = $column['field'];
                     $field->params['form_output'] = [];
