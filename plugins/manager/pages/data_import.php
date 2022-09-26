@@ -9,8 +9,6 @@
  * @var rex_yform_manager $this
  */
 
-ini_set('auto_detect_line_endings', "true");
-
 $_csrf_key = $_csrf_key ?? '';
 
 $show_importform = true;
@@ -18,7 +16,7 @@ $show_list = false;
 
 $fields = [];
 foreach ($this->table->getFields() as $field) {
-    $fields[$field->getName()] = $field;
+    $fields[strtolower($field->getName())] = $field;
 }
 
 $divider = rex_request('divider', 'string', ';');
@@ -64,16 +62,16 @@ if (1 == rex_request('send', 'int', 0)) {
 
         $import_start = true;
         $import_start = rex_extension::registerPoint(new rex_extension_point(
-                'YFORM_DATASET_IMPORT',
-                $import_start,
-                [
-                    'divider' => $div,
-                    'table' => $this->table,
-                    'filename' => $filename,
-                    'missing_columns' => $missing_columns,
-                    'debug' => $debug,
-                ]
-            ));
+            'YFORM_DATASET_IMPORT',
+            $import_start,
+            [
+                'divider' => $div,
+                'table' => $this->table,
+                'filename' => $filename,
+                'missing_columns' => $missing_columns,
+                'debug' => $debug,
+            ]
+        ));
 
         if ($import_start) {
             $sql_db = rex_sql::factory();
@@ -84,11 +82,10 @@ if (1 == rex_request('send', 'int', 0)) {
             try {
                 $fp = fopen($filename, 'r');
                 $firstbytes = fread($fp, 3);
-                $bom = pack('CCC', 0xef, 0xbb, 0xbf);
+                $bom = pack('CCC', 0xEF, 0xBB, 0xBF);
                 if ($bom != $firstbytes) {
                     rewind($fp);
                 }
-
 
                 $idColumn = null;
                 while (false !== ($line_array = fgetcsv($fp, 30384, $div))) {
@@ -130,8 +127,8 @@ if (1 == rex_request('send', 'int', 0)) {
                                 break;
                             }
                             if (2 == $missing_columns) {
-                                $error = false;
                                 $i = rex_sql::factory();
+
                                 foreach ($mc as $mcc) {
                                     rex_sql::factory()
                                         ->setTable(rex_yform_manager_field::table())
@@ -150,15 +147,9 @@ if (1 == rex_request('send', 'int', 0)) {
 
                                 rex_yform_manager_table_api::generateTablesAndFields();
 
-                                if ($error) {
-                                    echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_stopped'));
-                                    $show_importform = true;
-                                    break;
-                                }
-
                                 $fields = [];
-                                foreach (rex_yform_manager_table::get($this->table->getTableName()) as $field) {
-                                    $fields[$field->getName()] = $field;
+                                foreach (rex_yform_manager_table::get($this->table->getTableName())->getFields() as $field) {
+                                    $fields[strtolower($field->getName())] = $field;
                                 }
                             } else {
                                 if (count($fieldarray) == count($mc)) {
@@ -243,14 +234,15 @@ if (1 == rex_request('send', 'int', 0)) {
                 ));
                 $sql_db->commit();
             } catch (\Throwable $e) {
-                $sql_db->rollBack();
+                // $sql_db->rollBack();
+                dump($e);
                 $error_message = $e->getMessage();
             }
 
             if ($error_message) {
                 echo rex_view::error(rex_i18n::msg('yform_manager_import_error_import_abort', $error_message));
             } else {
-                echo rex_view::info(rex_i18n::msg('yform_manager_import_error_import', ($icounter + $rcounter), $icounter, $rcounter));
+                echo rex_view::info(rex_i18n::msg('yform_manager_import_error_import', $icounter + $rcounter, $icounter, $rcounter));
             }
         } else {
             echo rex_view::info(rex_i18n::msg('yform_manager_import_error_not_started'));

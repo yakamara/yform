@@ -232,23 +232,20 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if ($ok) {
             $year_from = $match['y'] ?: '';
             if (2 == mb_strlen($year_from)) {
-                $year_from = '20' . $year_from;
+                $year_from = substr(date('Y'), 0, 2) . $year_from;
             }
             $year_to = $match['y2'] ?: '';
             if (2 == mb_strlen($year_to)) {
-                $year_to = '20' . $year_to;
+                $year_to = substr(date('Y'), 0, 2) . $year_to;
             }
-            $month_from = $match['m'] ?: '00';
-            $month_to = $match['m2'] ?: '99';
-            $day_from = $match['d'] ?: '00';
-            $day_to = $match['d2'] ?: '99';
 
-            if ('YYYY' == $format) {
+            $month_from = $match['m'] ?? '00';
+            $month_to = $match['m2'] ?? '99';
+            $day_from = $match['d'] ?? '00';
+            $day_to = $match['d2'] ?? '99';
+
+            if (4 == mb_strlen($value)) {
                 return $query->whereRaw('( YEAR('.$field.') >= '.$year_from.' AND YEAR('.$field.') <= '.$year_to.' )');
-            }
-
-            if ('MM' == $format) {
-                return $query->whereRaw('( MONTH('.$field.') >= '.$month_from.' AND MONTH('.$field.') <= '.$month_to.' )');
             }
 
             $from = self::date_createDbDateComparison($field, '>=', $year_from, $month_from, $day_from);

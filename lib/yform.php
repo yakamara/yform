@@ -263,7 +263,7 @@ class rex_yform
         if (!$this->fieldsInitialized) {
             $this->initializeFields();
         }
-        
+
         rex_extension::registerPoint(new rex_extension_point('YFORM_EXECUTE_FIELDS', $this));
 
         // ---- setValues
@@ -316,8 +316,8 @@ class rex_yform
         }
 
         // 4. setValue direct via fixdata
-        $fixdata = $this->getObjectparams('fixdata');
-        if ($fixdata && is_array($fixdata) && 0 < count($fixdata)) {
+        $fixdata = $this->getObjectparams('fixdata') ?: [];
+        if (0 < count($fixdata)) {
             foreach ($this->objparams['values'] as $valueObject) {
                 if (isset($fixdata[$valueObject->getName()])) {
                     $valueObject->setValue($fixdata[$valueObject->getName()]);

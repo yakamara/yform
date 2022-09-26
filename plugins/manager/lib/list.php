@@ -18,6 +18,7 @@ class rex_yform_list implements rex_url_provider_interface
     /** @var rex_yform_manager_dataset */
     private $currentItem;
     /** @var bool */
+    /* @phpstan-ignore-next-line */
     private $debug;
     /** @var string */
     private $noRowsMessage;

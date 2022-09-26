@@ -186,12 +186,16 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             }
 
             if (isset($FILE['name'])) {
+                $errors_callbacks = [];
                 foreach ($configuration['callback'] as $callback) {
-                    $error_callback = call_user_func($callback, ['file' => $FILE, 'configuration' => $configuration]);
-                    if (0 < count($error_callback)) {
-                        $errors = $errors + $error_callback;
-                        unset($FILE);
+                    $errors_callback = call_user_func($callback, ['file' => $FILE, 'configuration' => $configuration]);
+                    if (0 < count($errors_callback)) {
+                        $errors_callbacks = $errors_callbacks + $errors_callback;
                     }
+                }
+                if (0 < count($errors_callbacks)) {
+                    $errors = $errors + $errors_callbacks;
+                    unset($FILE);
                 }
             }
 
@@ -480,7 +484,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $zip = new ZipArchive();
             if ($zip->open($FILE['tmp_name'])) {
                 $zip = new ZipArchive();
-                if (isset($FILE) && 'zip' == $ext) {
+                if ('zip' == $ext) {
                     if ($zip->open($FILE['tmp_name'])) {
                         $zip_error_files = [];
 

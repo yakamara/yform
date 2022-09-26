@@ -451,7 +451,8 @@ class rex_yform_manager
                                     'type' => 'info',
                                     'message' => rex_i18n::msg('yform_thankyouforupdate'),
                                 ];
-                            } elseif ('add' == $func) {
+                            } else {
+                                // -> add
                                 $mainMessages[] = [
                                     'type' => 'info',
                                     'message' => rex_i18n::msg('yform_thankyouforentry'),

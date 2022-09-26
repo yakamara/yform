@@ -32,9 +32,6 @@ class rex_yform_manager_dataset
     /** @var array<string, mixed> */
     private $data;
 
-    /** @var array<string, mixed> */
-    private $newData = [];
-
     /** @var bool */
     private $dataLoaded = false;
 
@@ -281,7 +278,6 @@ class rex_yform_manager_dataset
         }
 
         $this->data[$key] = $value;
-        $this->newData[$key] = $value;
         unset($this->relatedCollections[$key]);
 
         return $this;
@@ -333,7 +329,6 @@ class rex_yform_manager_dataset
     {
         $this->dataLoaded = false;
         $this->data = [];
-        $this->newData = [];
         $this->exists = false;
         $this->relatedCollections = [];
     }
