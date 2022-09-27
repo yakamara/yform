@@ -1,6 +1,36 @@
 Changelog
 =========
 
+Version 4.0.3 - 09.03.2022
+--------------------------
+
+### Korrekturen/Ergänzungen
+* be_relation
+  * be_relation_view ytemplate eingeführt
+  * be_manager suche verbessert 
+* EMail Attachments werden an die E-Mail beim Versand nun angehängt (Danke Marco Hanke)
+* History
+  * In der Viewansicht wurden falsche Choice-Werte angezeigt.
+  * Suche eingebaut nach ID, User, Datum und Aktion
+* date/datetime Picker angepasst
+* form hidden Feld Ausgabe flexibler
+* EP `YFORM_EXECUTE_FIELDS` ergänzt
+* Datenexport angepasst. Filter wurden nicht verarbeitet
+* Type-Fixes, Textkorrekturen, generate_key: "no_db" ( Danke Norbert Micheel)
+* google_geocode Texte verbesser (Danke Alex Walther und Thoomas Blum)
+* PHP8.1 Anpassungen (Danke Christoph Boecker)
+* Composer Korrekturen
+* Query::findId um Alias ergänzt (Danke Christoph Boecker)
+* Upload Feld erweitert um json Config und callback (für z.B. Virenscanner)
+* Doku ergänzt (Danke Alex Walther und Netzproductions)
+* Korrektur Formversand/Article ID (Danke Thomas Skerbis)
+* Verbessertes Tracking (Danke Markus Staab)
+* REST API Filter wieder zum laufen gebracht
+* Codestyle und PHP 8.1 Optimierungen. Danke an Markus Staab für REXSTAN
+* Datestamp wird nun im Frontend im Formular ausgeblendet
+* E-Mail Validierung verbessert (Danke Wolfgang Bund)
+
+
 Version 4.0.2 - 09.03.2022
 --------------------------
 
