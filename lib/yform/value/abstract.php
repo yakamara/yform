@@ -12,12 +12,12 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
     public $element_values = [];
 
     public $value;
-    public $name;
-    public $label;
-    public $type;
+    public string $name;
+    public string $label;
+    public string $type;
     public $keys = [];
-    public $editable = true;
-    public $viewable = true;
+    public bool $editable = true;
+    public bool $viewable = true;
 
     public function setValue($value)
     {
@@ -168,7 +168,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         }
 
         foreach ($direct_attributes as $attribute) {
-            if (($element = $this->getElement($attribute))) {
+            if ($element = $this->getElement($attribute)) {
                 $attributes[$attribute] = $element;
             }
         }
