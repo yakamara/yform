@@ -680,69 +680,75 @@ class rex_yform_manager
 
         $panel_options = [];
 
-        if (!$popup && $this->table->isGranted('EDIT', rex::getUser())) {
+        if (!$popup) {
             $dataset_links = [];
-            if ($this->table->isMassEditAllowed()) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_edit');
-                $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'collection_edit'], $rex_link_vars));
-                $item['attributes']['class'][] = 'btn-default';
-                $item['attributes']['data-confirm'][] = rex_i18n::msg('yform_dataset_edit_confirm');
-                $dataset_links[] = $item;
-            }
 
-            if (1 == $this->table->isExportable() && $this->hasDataPageFunction('export')) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_export');
-                $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'dataset_export'], $rex_link_vars));
-                $item['attributes']['class'][] = 'btn-default';
-                $dataset_links[] = $item;
-            }
+            if ($this->table->isGranted('EDIT', rex::getUser())) {
+                if ($this->table->isMassEditAllowed()) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_edit');
+                    $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'collection_edit'], $rex_link_vars));
+                    $item['attributes']['class'][] = 'btn-default';
+                    $item['attributes']['data-confirm'][] = rex_i18n::msg('yform_dataset_edit_confirm');
+                    $dataset_links[] = $item;
+                }
 
-            if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_delete');
-                $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'dataset_delete'], $rex_link_vars));
-                $item['attributes']['class'][] = 'btn-delete';
-                $item['attributes']['id'] = 'dataset-delete';
-                $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_dataset_delete_confirm') . '\');';
-                $dataset_links[] = $item;
+                if (1 == $this->table->isExportable() && $this->hasDataPageFunction('export')) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_export');
+                    $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'dataset_export'], $rex_link_vars));
+                    $item['attributes']['class'][] = 'btn-default';
+                    $dataset_links[] = $item;
+                }
+
+                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_delete');
+                    $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'dataset_delete'], $rex_link_vars));
+                    $item['attributes']['class'][] = 'btn-delete';
+                    $item['attributes']['id'] = 'dataset-delete';
+                    $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_dataset_delete_confirm') . '\');';
+                    $dataset_links[] = $item;
+                }
             }
 
             $table_links = [];
-            if ($this->table->isImportable() && $this->hasDataPageFunction('import')) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_import');
-                $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'import'], $rex_link_vars));
-                $item['attributes']['class'][] = 'btn-default';
-                $table_links[] = $item;
-            }
-            if (rex::getUser()->isAdmin()) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_edit');
-                $item['url'] = 'index.php?page=yform/manager&table_id=' . $this->table->getId() . '&func=edit';
-                $item['attributes']['class'][] = 'btn-default';
-                $table_links[] = $item;
-            }
-            if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_truncate_table');
-                $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'truncate_table'], $rex_link_vars));
-                $item['attributes']['class'][] = 'btn-delete';
-                $item['attributes']['id'] = 'truncate-table';
-                $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_truncate_table_confirm') . '\');';
-                $table_links[] = $item;
-            }
-            if ($this->table->hasHistory()) {
-                $item = [];
-                $item['label'] = rex_i18n::msg('yform_history');
-                $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'history'], $rex_link_vars));
-                $item['attributes']['class'][] = 'btn-default';
-                $table_links[] = $item;
+
+            if ($this->table->isGranted('EDIT', rex::getUser())) {
+                if ($this->table->isImportable() && $this->hasDataPageFunction('import')) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_import');
+                    $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'import'], $rex_link_vars));
+                    $item['attributes']['class'][] = 'btn-default';
+                    $table_links[] = $item;
+                }
+                if (rex::getUser()->isAdmin()) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_edit');
+                    $item['url'] = 'index.php?page=yform/manager&table_id=' . $this->table->getId() . '&func=edit';
+                    $item['attributes']['class'][] = 'btn-default';
+                    $table_links[] = $item;
+                }
+                if ($this->table->isMassDeletionAllowed() && $this->hasDataPageFunction('truncate_table')) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_truncate_table');
+                    $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'truncate_table'], $rex_link_vars));
+                    $item['attributes']['class'][] = 'btn-delete';
+                    $item['attributes']['id'] = 'truncate-table';
+                    $item['attributes']['onclick'][] = 'return confirm(\'' . rex_i18n::msg('yform_truncate_table_confirm') . '\');';
+                    $table_links[] = $item;
+                }
+                if ($this->table->hasHistory()) {
+                    $item = [];
+                    $item['label'] = rex_i18n::msg('yform_history');
+                    $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'history'], $rex_link_vars));
+                    $item['attributes']['class'][] = 'btn-default';
+                    $table_links[] = $item;
+                }
             }
 
             $field_links = [];
-            if (rex::getUser()->isAdmin()) {
+            if ($this->table->isGranted('EDIT', rex::getUser()) && rex::getUser()->isAdmin()) {
                 $item = [];
                 $item['label'] = rex_i18n::msg('yform_edit');
                 $item['url'] = 'index.php?page=yform/manager/table_field&table_name=' . $this->table->getTableName();
