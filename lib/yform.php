@@ -155,7 +155,7 @@ class rex_yform
     public function setData($data)
     {
         $this->setObjectparams('data', $data);
-        $data['id'] = isset($data['id']) ? intval($data['id']) : 0;
+        $data['id'] = isset($data['id']) ? (int) $data['id'] : 0;
         if (0 < $data['id']) {
             $this->setObjectparams('main_where', 'id='.$data['id']);
         }
