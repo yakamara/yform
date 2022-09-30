@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 4.0.3 - 09.03.2022
+Version 4.0.3 - 30.09.2022
 --------------------------
 
 ### Korrekturen/Ergänzungen
@@ -29,6 +29,8 @@ Version 4.0.3 - 09.03.2022
 * Codestyle und PHP 8.1 Optimierungen. Danke an Markus Staab für REXSTAN
 * Datestamp wird nun im Frontend im Formular ausgeblendet
 * E-Mail Validierung verbessert (Danke Wolfgang Bund)
+* EP YFORM_DATA_LIST_LINKS wird nun auch bei table edit UND view ausgeführt#1262
+* Choice Group in Table View Ansicht hatte Fehler geworfen
 
 
 Version 4.0.2 - 09.03.2022
