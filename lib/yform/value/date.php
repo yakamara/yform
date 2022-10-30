@@ -27,9 +27,18 @@ class rex_yform_value_date extends rex_yform_value_abstract
     public function preValidateAction(): void
     {
         $value = $this->getValue();
-        if (1 == $this->getElement('current_date') && '' == $this->getValue() && $this->params['main_id'] < 1) {
-            $value = date('Y-m-d');
+        if ('' == $this->getValue() && $this->params['main_id'] < 1) {
+            if (1 == $this->getElement('current_date')) {
+                $value = date('Y-m-d');
+            }
+            if ('' != $this->getElement('modify_default')) {
+                $dt = new DateTime();
+                if (false !== @$dt->modify($this->getElement('modify_default'))) {
+                    $value = $dt->format('Y-m-d');
+                }
+            }
         }
+
         if (is_array($value)) {
             $year = (int) ($value['year'] ?? 0);
             $month = (int) ($value['month'] ?? 0);
@@ -144,6 +153,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text', 'input:date' => 'input:date'], 'default' => 'select'],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
+                'modify_default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_date_modify_default'), 'notice' => rex_i18n::msg('yform_values_date_modify_default_notics')],
             ],
             'description' => rex_i18n::msg('yform_values_date_description'),
             'db_type' => ['date'],
