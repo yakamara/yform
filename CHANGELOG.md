@@ -5,7 +5,7 @@ Version 4.0.4 - 07.10.2022
 --------------------------
 
 ### Korrekturen/Ergänzungen
-* PHP Versionabfrage war falsch. package angepasst.
+* PHP Versionsabfrage war falsch. package angepasst.
 * PHP >= 7.4
 
 
