@@ -146,7 +146,9 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $sortFields = ['id'];
     if ('edit' === $func) {
         $sortFieldsSql = rex_sql::factory();
-        $sortFieldsSql->setQuery('SELECT f.name FROM `' . rex_yform_manager_field::table() . '` f LEFT JOIN `' . rex_yform_manager_table::table() . '` t ON f.table_name = t.table_name WHERE t.id = ' . (int) $table_id . ' ORDER BY f.prio');
+        $sortFieldsSql->setQuery('SELECT f.name FROM `' . rex_yform_manager_field::table() . '` f LEFT JOIN `' . rex_yform_manager_table::table() . '` t ON f.table_name = t.table_name WHERE t.id = :id ORDER BY f.prio', [
+            'id' => (int) $table_id,
+        ]);
         while ($sortFieldsSql->hasNext()) {
             $sortFields[] = $sortFieldsSql->getValue('name');
             $sortFieldsSql->next();
