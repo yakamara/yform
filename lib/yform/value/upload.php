@@ -266,7 +266,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             ) &&
                 '' != $filename &&
                 '' != $filepath
-            ) {
+        ) {
             $this->upload_checkdownloadFile($filename, $filepath);
         }
 
@@ -275,7 +275,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 '' != $this->getValue() &&
                 is_string($this->getValue()) &&
                 !$this->getSessionVar('file', 'array', null)
-                ) {
+        ) {
             $filename = $this->getValue();
         }
 
@@ -539,16 +539,18 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     {
         $value = $params['subject'];
         $length = mb_strlen($value);
+        /** @var rex_list $list */
+        $list = $params['list'];
         $title = $value;
         if ($length > 30) {
             $value = mb_substr($value, 0, 15).' ... '.mb_substr($value, -15);
         }
 
         $return = $value;
-        if (rex::isBackend()) {
+        if (rex::isBackend() && $list) {
             $field = new rex_yform_manager_field($params['params']['field']);
             if ('' != $value) {
-                $return = '<a href="' . self::upload_getDownloadLink($field->getElement('table_name'), $field->getElement('name'), $params['list']->getValue('id')) . '" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
+                $return = '<a href="' . self::upload_getDownloadLink($field->getElement('table_name'), $field->getElement('name'), $list->getValue('id')) . '" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
             }
         }
 
