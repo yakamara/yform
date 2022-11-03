@@ -160,8 +160,8 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 }
                 $sql->setQuery(sprintf(
                     'SELECT `%s` FROM `%s` WHERE id = %d',
-                    ($column),
-                    ($this->params['main_table']),
+                    $column,
+                    $this->params['main_table'],
                     $this->params['main_id']
                 ));
                 $value = $sql->getValue($column);
@@ -171,7 +171,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             }
 
             $value = $sql->escape($value);
-            $where[] = sprintf('`%s` = %s', ($column), ($value));
+            $where[] = sprintf('`%s` = %s', $column, $value);
         }
         return ' WHERE ' . implode(' AND ', $where);
     }
