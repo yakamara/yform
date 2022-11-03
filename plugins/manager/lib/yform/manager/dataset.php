@@ -604,6 +604,7 @@ class rex_yform_manager_dataset
             $value = @$sql->getValue($fieldName);
             if ('rex_yform_value_be_manager_relation' == get_class($fieldObject) && !$value) {
                 $collection = $this->getRelatedCollection($fieldName);
+                $values = [];
                 foreach ($collection as $item) {
                     $values[] = $item->getId();
                 }
