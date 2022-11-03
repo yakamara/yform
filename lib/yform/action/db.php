@@ -87,6 +87,10 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 dump($this->params['warning_messages']);
             }
         } else {
+            foreach ($this->getParam('this')->getPostSaveFunctions() as $function) {
+                call_user_func($function);
+            }
+
             rex_extension::registerPoint(new rex_extension_point(
                 'YFORM_SAVED',
                 $sql,

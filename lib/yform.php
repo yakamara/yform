@@ -17,6 +17,7 @@ class rex_yform
     private $fieldsInitialized = false;
     private $editable = true;
     private $viewable = true;
+    private $postSaveFunctions = [];
 
     public function __construct(array $params = [])
     {
@@ -150,6 +151,16 @@ class rex_yform
     {
         $this->objparams['debug'] = $s;
         return $this;
+    }
+
+    public function addPostSaveFunction($callback)
+    {
+        $this->postSaveFunctions[] = $callback;
+    }
+
+    public function getPostSaveFunctions()
+    {
+        return $this->postSaveFunctions;
     }
 
     public function setData($data)

@@ -112,6 +112,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
         }
 
+        $this_relation = $this;
+        $this->getParam('this')->addPostSaveFunction(static function () use (&$this_relation) {
+            $this_relation->postSave();
+        });
+
         if (!$this->needsOutput() && $this->isViewable()) {
             return;
         }
@@ -339,7 +344,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     // -------------------------------------------------------------------------
 
-    public function postAction(): void
+    public function postSave(): void
     {
         if ($this->needsOutput()) {
             if (5 == $this->relation['relation_type'] && $this->params['main_id'] > 0) {
@@ -427,7 +432,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         if ($source_id < 1 && isset($this->params['main_id']) && $this->params['main_id'] > 0) {
             $source_id = (int) $this->params['main_id'];
         }
-
         if ($source_id < 1 || '' == $this->params['main_table']) {
             return;
         }

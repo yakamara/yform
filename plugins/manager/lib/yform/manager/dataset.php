@@ -8,38 +8,34 @@ class rex_yform_manager_dataset
     public const ACTION_UPDATE = 'update';
     public const ACTION_DELETE = 'delete';
 
-    /** @var bool */
-    private static $debug = false;
+    private static bool $debug = false;
 
     /** @var array<string, class-string<self>> */
-    private static $tableToModel = [];
+    private static array $tableToModel = [];
 
     /** @var array<class-string<self>, string> */
-    private static $modelToTable = [];
+    private static array $modelToTable = [];
 
     /** @var array<string, rex_yform> */
-    private static $internalForms = [];
+    private static array $internalForms = [];
 
-    /** @var string */
-    private $table;
+    private string $table;
 
     /** @var int|null */
     private $id;
 
-    /** @var bool */
-    private $exists = false;
+    private bool $exists = false;
 
     /** @var array<string, mixed> */
-    private $data;
+    private array $data;
 
-    /** @var bool */
-    private $dataLoaded = false;
+    private bool $dataLoaded = false;
 
     /** @var array<string, rex_yform_manager_collection> */
-    private $relatedCollections = [];
+    private array $relatedCollections = [];
 
     /** @var string[] */
-    private $messages = [];
+    private array $messages = [];
 
     final private function __construct(string $table, ?int $id = null)
     {
@@ -227,7 +223,7 @@ class rex_yform_manager_dataset
      */
     public static function getModelClass(string $table): ?string
     {
-        return isset(self::$tableToModel[$table]) ? self::$tableToModel[$table] : null;
+        return self::$tableToModel[$table] ?? null;
     }
 
     public function getTableName(): string
@@ -299,9 +295,6 @@ class rex_yform_manager_dataset
         return $this->data[$key];
     }
 
-    /**
-     * @return array
-     */
     public function getData(): array
     {
         if (!$this->dataLoaded) {
@@ -376,9 +369,6 @@ class rex_yform_manager_dataset
         return $this;
     }
 
-    /**
-     * @return rex_yform_manager_query
-     */
     public function getRelatedQuery(string $key): rex_yform_manager_query
     {
         $relation = $this->getTable()->getRelation($key);
@@ -603,17 +593,31 @@ class rex_yform_manager_dataset
             ->select();
 
         $inserts = [];
-        foreach ($sql->getFieldnames() as $field) {
-            if ('id' === $field) {
+        foreach ($this->getFields() as $field) {
+            $fieldName = $field->getName();
+            $fieldObject = $field->getObject();
+
+            if ('id' === $fieldName) {
                 continue;
             }
 
-            $inserts[] = sprintf(
-                '(%d, %s, %s)',
-                $historyId,
-                $sql->escape($field),
-                $sql->escape((string) $sql->getValue($field))
-            );
+            $value = @$sql->getValue($fieldName);
+            if ('rex_yform_value_be_manager_relation' == get_class($fieldObject) && !$value) {
+                $collection = $this->getRelatedCollection($fieldName);
+                foreach ($collection as $item) {
+                    $values[] = $item->getId();
+                }
+                $value = implode(',', $values);
+            }
+
+            if ('value' == $field->getType() && $value) {
+                $inserts[] = sprintf(
+                    '(%d, %s, %s)',
+                    $historyId,
+                    $sql->escape($fieldName),
+                    $sql->escape((string) $value)
+                );
+            }
         }
 
         $sql->setQuery('INSERT INTO '.rex::getTable('yform_history_field').' (`history_id`, `field`, `value`) VALUES '.implode(', ', $inserts));
@@ -623,13 +627,15 @@ class rex_yform_manager_dataset
     {
         $sql = rex_sql::factory();
         $sql->setDebug(self::$debug);
-        $sql->setQuery(sprintf('SELECT * FROM %s WHERE history_id = %d', rex::getTable('yform_history_field'), $snapshotId));
+        $values = [];
+        foreach ($sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = %d', rex::getTable('yform_history_field'), $snapshotId)) as $value) {
+            $values[$value['field']] = $value['value'];
+        }
 
-        $columns = $this->getTable()->getColumns();
-        foreach ($sql as $row) {
-            $key = (string) $sql->getValue('field');
-            if (isset($columns[$key])) {
-                $this->setValue($key, $sql->getValue('value'));
+        foreach ($this->getFields() as $field) {
+            $fieldName = $field->getName();
+            if ('value' == $field->getType() && isset($values[$fieldName])) {
+                $this->setValue($fieldName, $values[$fieldName]);
             }
         }
 
