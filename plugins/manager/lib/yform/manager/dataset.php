@@ -37,6 +37,9 @@ class rex_yform_manager_dataset
     /** @var string[] */
     private array $messages = [];
 
+    /** @var bool */
+    private $historyEnabled = true;
+
     final private function __construct(string $table, ?int $id = null)
     {
         $this->table = $table;
@@ -641,6 +644,16 @@ class rex_yform_manager_dataset
         }
 
         return $this->save();
+    }
+
+    public function isHistoryEnabled(): bool
+    {
+        return $this->historyEnabled;
+    }
+
+    public function setHistoryEnabled(bool $historyEnabled): void
+    {
+        $this->historyEnabled = $historyEnabled;
     }
 
     public function __isset(string $key): bool

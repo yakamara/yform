@@ -100,7 +100,7 @@ rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep)
     }
     $dataset->invalidateData();
 
-    if ($table->hasHistory()) {
+    if ($table->hasHistory() && $dataset->isHistoryEnabled()) {
         $action = 'insert' === $ep->getParam('action') ? rex_yform_manager_dataset::ACTION_CREATE : rex_yform_manager_dataset::ACTION_UPDATE;
         $dataset->makeSnapshot($action);
     }
