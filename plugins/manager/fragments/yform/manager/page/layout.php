@@ -13,19 +13,20 @@ $table = $this->getVar('table');
 $detailForm = $this->getVar('detailForm');
 $historyPage = $this->getVar('historyPage');
 $importPage = $this->getVar('importPage');
+$searchForm = $this->getVar('searchForm');
 
-$searchForm = '';
-if ($table->isSearchable() && $manager->hasDataPageFunction('search')) {
-    $searchForm = $this->getVar('searchForm');
+/** @var rex_fragment $searchList */
+$searchListFragment = $this->getVar('searchList');
+$searchList = $searchListFragment->parse('yform/manager/page/list.php');
+// $searchList = $searchListFragment->parse('ymedia/page/grid.php');
+
+/** @var array $messages */
+$filterMessages = $this->getVar('filterMessages') ?? [];
+if (0 < count($filterMessages)) {
+    echo rex_view::info(implode('<br>', $filterMessages), 'rex-yform-filter');
 }
 
-$fragment = new rex_fragment();
-$fragment->setVar('title', $this->getVar('overview_title'));
-$fragment->setVar('options', implode('', $this->getVar('overview_options')), false);
-$fragment->setVar('content', $this->getVar('overview_list')->get(), false);
-$fragment->setVar('search', $this->getVar('list_search'), false);
-$searchList = $fragment->parse('core/page/section.php');
-
+/** @var array $messages */
 $messages = $this->getVar('messages') ?? [];
 
 foreach ($messages as $message) {

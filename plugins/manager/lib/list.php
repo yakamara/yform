@@ -1040,6 +1040,11 @@ class rex_yform_list implements rex_url_provider_interface
         return $this->customColumns[$column] ?? @$this->currentItem->getValue($column);
     }
 
+    public function getCurrentItem()
+    {
+        return $this->currentItem;
+    }
+
     public function getArrayValue($column)
     {
         return json_decode($this->getValue($column), true);
