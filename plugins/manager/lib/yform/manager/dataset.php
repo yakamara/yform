@@ -16,9 +16,6 @@ class rex_yform_manager_dataset
     /** @var array<class-string<self>, string> */
     private static array $modelToTable = [];
 
-    /** @var array<string, rex_yform> */
-    private static array $internalForms = [];
-
     private string $table;
 
     /** @var int|null */
@@ -400,7 +397,7 @@ class rex_yform_manager_dataset
 
     public function isValid(): bool
     {
-        $yform = clone $this->getInternalForm();
+        $yform = $this->getInternalForm();
         $this->setFormMainId($yform);
         $yform->initializeFields();
 
@@ -425,7 +422,7 @@ class rex_yform_manager_dataset
 
     public function save(): bool
     {
-        $yform = clone $this->getInternalForm();
+        $yform = $this->getInternalForm();
         $this->setFormMainId($yform);
         $yform->initializeFields();
 
@@ -679,10 +676,6 @@ class rex_yform_manager_dataset
 
     private function getInternalForm(): rex_yform
     {
-        if (isset(self::$internalForms[$this->table])) {
-            return self::$internalForms[$this->table];
-        }
-
         $dummy = new static($this->table, 0);
 
         $yform = $dummy->createForm();
@@ -691,7 +684,7 @@ class rex_yform_manager_dataset
         $yform->setObjectparams('csrf_protection', false);
         $yform->setObjectparams('get_field_type', '');
 
-        return self::$internalForms[$this->table] = $yform;
+        return $yform;
     }
 
     private function createForm(): rex_yform
