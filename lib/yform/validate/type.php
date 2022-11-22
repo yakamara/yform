@@ -160,8 +160,8 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             'type' => 'validate',
             'name' => 'type',
             'values' => [
-                'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_type_name')],
                 'type' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_validate_type_type'), 'choices' => 'int,float,numeric,string,email,url,time,date,datetime,hex,iban,json'],
+                'name' => ['type' => 'select_name', 'label' => rex_i18n::msg('yform_validate_type_name')],
                 'message' => ['type' => 'text',    'label' => rex_i18n::msg('yform_validate_type_message')],
                 'not_required' => ['type' => 'boolean',    'label' => rex_i18n::msg('yform_validate_type_not_required'), 'default' => 0],
             ],
