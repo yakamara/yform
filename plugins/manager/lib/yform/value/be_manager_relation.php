@@ -205,6 +205,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
             $relations = $relations->find();
 
+            dump($relations);
+
             $relationIDs = [];
             foreach ($relations as $relation) {
                 $relationIDs[] = $relation->getId();
@@ -244,6 +246,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $value = [];
 
+            dump($send);
             if (!$send) {
                 foreach ($relations as $counter => $relation) {
                     $yform = $relation->getForm();
@@ -271,9 +274,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     }
                     $yform->objparams['form_elements'] = $form_elements;
 
-                    $hiddenId = '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relation->getId() . '" />';
+                    $form = $yform->getForm();
+                    $form .= '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relation->getId() . '" />';
 
-                    $forms[] = $hiddenId . $yform->getForm();
+                    $forms[] = $form;
                 }
             }
 
@@ -314,7 +318,12 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         }
                         $yform->objparams['form_elements'] = $form_elements;
 
-                        $forms[] = $yform->getForm();
+                        $form = $yform->getForm();
+                        if (isset($relatedVarData['id'])) {
+                            $form .= '<input type="hidden" name="' . $yform->getFieldName('id') . '" value="' . $relatedVarData['id'] . '" />';
+                        }
+
+                        $forms[] = $form;
                         $value[] = $yform->getObjectparams('value_pool')['email'];
 
                         if (count($yform->objparams['warning']) > 0) {
