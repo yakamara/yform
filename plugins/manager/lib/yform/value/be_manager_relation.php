@@ -205,8 +205,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             }
             $relations = $relations->find();
 
-            dump($relations);
-
             $relationIDs = [];
             foreach ($relations as $relation) {
                 $relationIDs[] = $relation->getId();
@@ -246,7 +244,6 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $value = [];
 
-            dump($send);
             if (!$send) {
                 foreach ($relations as $counter => $relation) {
                     $yform = $relation->getForm();
