@@ -239,7 +239,7 @@ Der CSRF-Schutz sollte daher immer aktiviert bleiben, außer, wenn der direkte A
 $yform->setObjectparams('form_ytemplate','classic');
 ```
 
-YForm verfügt über `Templates`, in denen das HTML-Markup definiert ist, das die Felder umgibt. Im Ordner `ytemplates` gibt es Unterordner für jedes Theme, in denen dann die Templates für die einzelnen Felder zu finden sind. Auf diese Weise kann man schnell eigene Themes definieren, die auf dem Basis-Theme aufbauen: wenn es für einen Feldtyp ein eigenes Template gibt, wird dieses verwendet, anonsten das des Basis-Themes.
+YForm verfügt über `Templates`, in denen das HTML-Markup definiert ist, das die Felder umgibt. Im Ordner `ytemplates` gibt es Unterordner für jedes Theme, in denen dann die Templates für die einzelnen Felder zu finden sind. Auf diese Weise kann man schnell eigene Themes definieren, die auf dem Basis-Theme aufbauen: wenn es für einen Feldtyp ein eigenes Template gibt, wird dieses verwendet, ansonsten das des Basis-Themes.
 Der Defaultwert lautet `bootstrap`, d.h. als Basis-Theme ist das HTML-Schema des CSS-Frameworks "Bootstrap" hinterlegt.
 
 #### Submit-Button benennen
