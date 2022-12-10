@@ -9,7 +9,7 @@
 
 class rex_yform_value_fieldset extends rex_yform_value_abstract
 {
-    public static $fieldset_options = ['onlyclose', 'onlycloseall', 'onlyopen', 'closeandopen'];
+    public static $fieldset_options = ['onlyclose' => 'onlyclose', 'onlycloseall' => 'onlycloseall', 'onlyopen' => 'onlyopen', 'closeandopen' => 'closeandopen'];
 
     public function enterObject()
     {
