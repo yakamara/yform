@@ -241,7 +241,7 @@ yform_values_status_output_values_notice = 2 värden separerade med komma-tecken
 
 yform_values_message_is_missing = [Varningsmeddelande för fältet `{1}` saknas]
 
-yform_validate_object_is_missing = Objektet `{1}` för validering `{1}` saknas
+yform_validate_object_is_missing = Objektet `{1}` för validering `{0}` saknas
 
 yform_values_deprecated_checkbox_sql = Deprecated; Använd Choice value
 yform_values_deprecated_radio = Deprecated; Använd Choice value
