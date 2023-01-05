@@ -23,6 +23,20 @@ class rex_yform_email_template
         return false;
     }
 
+    /**
+     * @throws rex_sql_exception
+     * @return false|mixed
+     */
+    public static function getTemplateById(int $template_id)
+    {
+        $template = rex_sql::factory();
+        $tpls = $template->getArray('select * from ' . rex::getTablePrefix() . 'yform_email_template where id=:template_id', [':template_id' => $template_id]);
+        if (1 == count($tpls)) {
+            return $tpls[0];
+        }
+        return false;
+    }
+
     public static function replaceVars(array $template, $er = [])
     {
         $r = rex_extension::registerPoint(new rex_extension_point(

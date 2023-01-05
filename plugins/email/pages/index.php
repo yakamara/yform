@@ -17,19 +17,31 @@ $csuchfelder = ['name', 'mail_from', 'mail_subject', 'body'];
 
 $func = rex_request('func', 'string', '');
 $page = rex_request('page', 'string', '');
-$template_id = rex_request('template_id', 'int');
+$template_id = rex_request('template_id', 'int', null);
+$template_key = rex_request('template_key', 'string', null);
+$template = null;
+
+if ($template_key) {
+    $template = rex_yform_email_template::getTemplate($template_key);
+} elseif ($template_id) {
+    $template = rex_yform_email_template::getTemplateById($template_id);
+}
+
+$template_id = null;
+if ($template) {
+    $template_id = $template['id'];
+}
+
+
 $content = '';
 $show_list = true;
 
 if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
-} elseif ('delete' == $func) {
-    $query = "delete from $table where id='" . $template_id . "' ";
-    $delsql = rex_sql::factory();
-    $delsql->setQuery($query);
-
+} elseif ('delete' == $func && $template_id) {
+    rex_sql::factory()->setQuery('delete from '.$table.' where id=:template_id', ['tempplate_id' => $template_id]);
     $content = rex_view::success(rex_i18n::msg('yform_email_info_template_deleted'));
-} elseif ('edit' == $func || 'add' == $func) {
+} elseif (('edit' == $func && $template_id) || 'add' == $func) {
     echo rex_view::info(rex_i18n::rawMsg('yform_email_info_text'));
     $form_data = [];
 
@@ -170,13 +182,13 @@ if ($show_list) {
     $thIcon = '<a class="rex-link-expanded" href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey(rex_i18n::msg('create_template'), 'add') . ' title="' . rex_i18n::msg('create_template') . '"><i class="rex-icon rex-icon-add-template"></i></a>';
     $list->addColumn($thIcon, $tdIcon, 0, [
         '<th class="rex-table-icon">###VALUE###</th>',
-        '<td class="rex-table-icon">###VALUE###</td>'
+        '<td class="rex-table-icon">###VALUE###</td>',
     ]);
 
     $list->setColumnLabel('id', 'ID');
     $list->setColumnLayout('id', [
         '<th class="rex-small">###VALUE###</th>',
-        '<td class="rex-small">###VALUE###</td>'
+        '<td class="rex-small">###VALUE###</td>',
     ]);
 
     $list->setColumnLabel('name', rex_i18n::msg('yform_email_header_template_description'));
@@ -184,13 +196,13 @@ if ($show_list) {
 
     $list->setColumnLabel('mail_from', rex_i18n::msg('yform_email_header_template_mail_from'));
 
-    $list->setColumnFormat('mail_from', "custom", function ($a) {
-        return "###mail_from###<br />###mail_from_name###";
+    $list->setColumnFormat('mail_from', 'custom', static function ($a) {
+        return '###mail_from###<br />###mail_from_name###';
     });
 
     $list->setColumnLabel('mail_reply_to', rex_i18n::msg('yform_email_header_template_mail_reply_to'));
-    $list->setColumnFormat('mail_reply_to', "custom", function ($a) {
-        return "###mail_reply_to###<br />###mail_reply_to_name###";
+    $list->setColumnFormat('mail_reply_to', 'custom', static function ($a) {
+        return '###mail_reply_to###<br />###mail_reply_to_name###';
     });
 
     $list->setColumnLabel('subject', rex_i18n::msg('yform_email_header_template_subject'));
