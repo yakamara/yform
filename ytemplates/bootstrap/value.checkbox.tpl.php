@@ -36,12 +36,6 @@ $attributes = $this->getAttributeElements($attributes, ['required', 'disabled', 
 
 ?>
 <div class="<?= $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label>
-        <input <?= implode(' ', $attributes) ?> />
-        <i class="form-helper"></i>
-        <?php echo $this->getLabel() ?>
-    </label>
-    <?php echo $notice; ?>
+<label><input <?= implode(' ', $attributes) ?> /><i class="form-helper"></i><?php echo $this->getLabel() ?></label>
+<?php echo $notice; ?>
 </div>
-
-
