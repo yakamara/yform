@@ -53,6 +53,7 @@ class rex_yform_value_hashvalue extends rex_yform_value_abstract
             'description' => rex_i18n::msg('yform_values_hashvalue_description'),
             'db_type' => ['text', 'varchar(191)'],
             'multi_edit' => false,
+            'deprecated' => rex_i18n::msg('yform_values_hashvalue_deprecated'),
         ];
     }
 

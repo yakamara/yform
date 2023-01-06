@@ -47,6 +47,8 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 }
             }
 
+            $value .= $this->getElement('salt');
+
             $fnc = trim($this->getElement('function'));
             if ('' != $fnc) {
                 if (1 == $this->getElement('add_this_param')) {
@@ -82,6 +84,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'function' => ['type' => 'text',  'label' => rex_i18n::msg('yform_values_index_function'), 'notice' => rex_i18n::msg('yform_values_index_function_notice')],
                 'add_this_param' => ['type' => 'checkbox',   'label' => rex_i18n::msg('yform_values_index_add_this_param'),  'default' => 0],
+                'salt' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_hashvalue_salt')],
             ],
             'description' => rex_i18n::msg('yform_values_index_description'),
             'db_type' => ['mediumtext', 'text', 'varchar(191)'], // text (65kb) mediumtext (16Mb)
