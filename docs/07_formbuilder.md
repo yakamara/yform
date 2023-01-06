@@ -906,7 +906,7 @@ $yform->setValueField('hidden', array("name", "Max Muster"));
 
 $ycom_user = rex_ycom_auth::getUser();
 if($ycom_user) {
-	$yform->setValueField('hidden', array("user", $ycom_user()->getId()));
+	$yform->setValueField('hidden', array("user", $ycom_user->getId()));
 }
 ```
 
