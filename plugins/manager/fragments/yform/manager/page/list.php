@@ -132,8 +132,6 @@ if (isset($rex_yform_manager_opener['id'])) {
         ]
     );
 } else {
-    $actionButtons = [];
-
     $actionButtonParams = array_merge(
         $list->getParams(),
         $rex_yform_list,
@@ -141,41 +139,15 @@ if (isset($rex_yform_manager_opener['id'])) {
         ['rex_yform_manager_popup' => $rex_yform_manager_popup]
     );
 
-    if ($this->table->isGranted('EDIT', rex::getUser())) {
-        $actionButtons['edit'] = '<a href="'.$list->getUrl(
-            array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'edit']),
-            false
-        ).'"><i class="rex-icon rex-icon-editmode"></i> ' . rex_i18n::msg('yform_edit').'</a>';
-        if ($hasDataPageFunctions('delete')) {
-            $actionButtons['delete'] = '<a onclick="return confirm(\' id=___id___ ' . rex_i18n::msg('yform_delete') . ' ?\')" href="'.$list->getUrl(
-                array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'delete']),
-                false
-            ).'"><i class="rex-icon rex-icon-delete"></i> '.rex_i18n::msg('yform_delete').'</a>';
-        }
-        if (!$popup && $this->table->hasHistory()) {
-            $actionButtons['history'] = '<a href="'.$list->getUrl(
-                array_merge($actionButtonParams, ['dataset_id' => '___id___', 'func' => 'history', 'filter_dataset' => 1]),
-                false
-            ).'"><i class="rex-icon fa-history"></i> '.rex_i18n::msg('yform_history').'</a>';
-        }
-    } else {
-        $actionButtons['view'] = '<a href="'.$list->getUrl(
-            array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => 'edit']),
-            false
-        ).'"><i class="rex-icon rex-icon-view"></i> ' . rex_i18n::msg('yform_view').'</a>';
-    }
+    $actionButtons = [];
+    $actionButtonsLoaded = $this->getVar('actionButtons') ?? [];
 
-    $actionButtons = rex_extension::registerPoint(
-        new rex_extension_point(
-            'YFORM_DATA_LIST_ACTION_BUTTONS',
-            $actionButtons,
-            [
-                'table' => $this->table,
-                'this' => $this,
-                'link_vars' => $rex_link_vars,
-            ]
-        )
-    );
+    foreach ($actionButtonsLoaded as $actionButtonKey => $actionButton) {
+        $actionButtons[$actionButtonKey] = '<a href="'.$list->getUrl(
+            array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => $actionButtonKey], $actionButton['params']),
+            false
+        ).'">'.$actionButton['content'].'</a>';
+    }
 
     $fragment = new rex_fragment();
     $fragment->setVar('buttons', $actionButtons, false);
