@@ -101,6 +101,7 @@ yform_values_datetime_year_end = Year end
 yform_values_datetime_minutes = Minutes format
 yform_values_datetime_format = Display format
 yform_values_datetime_current_date = Preset current date/time
+yform_values_format_show_notice = This setting will only effect the output in the list-overview and an non editable view
 yform_values_email_default = Default status
 yform_values_email_classname = Class name
 yform_values_float_scale = Decimal place

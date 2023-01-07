@@ -91,7 +91,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'choices' => rex_yform_value_datetime::VALUE_DATETIME_FORMATS, 'default' => rex_yform_value_datetime::VALUE_DATETIME_DEFAULT_FORMAT],
+                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_datetime_format'), 'choices' => rex_yform_value_datetime::VALUE_DATETIME_FORMATS, 'default' => rex_yform_value_datetime::VALUE_DATETIME_DEFAULT_FORMAT, 'notice' => rex_i18n::msg('yform_values_format_show_notice')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'only_empty' => ['type' => 'choice',  'label' => rex_i18n::msg('yform_values_datestamp_only_empty'), 'default' => '0', 'choices' => 'translate:yform_always=0,translate:yform_onlyifempty=1,translate:yform_never=2'],
                 'modify_default' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_date_modify_default'), 'notice' => rex_i18n::msg('yform_values_date_modify_default_notics')],

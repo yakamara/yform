@@ -147,7 +147,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 'label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'year_start' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_date_year_start')],
                 'year_end' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_date_year_end')],
-                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_date_format'), 'choices' => self::VALUE_DATE_FORMATS, 'default' => self::VALUE_DATE_DEFAULT_FORMAT],
+                'format' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_date_format'), 'choices' => self::VALUE_DATE_FORMATS, 'default' => self::VALUE_DATE_DEFAULT_FORMAT, 'notice' => rex_i18n::msg('yform_values_format_show_notice')],
                 'current_date' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_date_current_date')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table')],
                 'widget' => ['type' => 'choice', 'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text', 'input:date' => 'input:date'], 'default' => 'select'],

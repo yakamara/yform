@@ -92,7 +92,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             'values' => [
                 'name' => ['type' => 'name',   'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',   'label' => rex_i18n::msg('yform_values_defaults_label')],
-                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => self::VALUE_TIME_FORMATS],
+                'format' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_time_format'), 'choices' => self::VALUE_TIME_FORMATS, 'notice' => rex_i18n::msg('yform_values_format_show_notice')],
                 'current_time' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_time_current_time')],
                 'no_db' => ['type' => 'no_db',   'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
                 'widget' => ['type' => 'choice',    'label' => rex_i18n::msg('yform_values_defaults_widgets'), 'choices' => ['select' => 'select', 'input:text' => 'input:text'], 'default' => 'select'],
