@@ -168,8 +168,7 @@ class rex_yform_manager
         $mainMessages = [];
 
         if ($this->table->isGranted('EDIT', rex::getUser())) {
-            $func = !in_array($func, ['delete', 'dataset_delete', 'truncate_table', 'add',
-                'edit', 'import', 'history', 'dataset_export', 'collection_edit', ]) ? '' : $func;
+            $func = !in_array($func, ['delete', 'dataset_delete', 'truncate_table', 'add', 'edit', 'clone', 'import', 'history', 'dataset_export', 'collection_edit']) ? '' : $func;
         } else {
             $func = ('edit' != $func) ? '' : 'edit';
         }
@@ -256,10 +255,11 @@ class rex_yform_manager
                 break;
             case 'add':
             case 'edit':
+            case 'clone':
             case 'collection_edit':
                 if (
                     ('add' == $func && $this->hasDataPageFunction('add')) ||
-                    ('edit' == $func && $data_id) ||
+                    (('edit' == $func || 'clone' == $func) && $data_id) ||
                     ('collection_edit' == $func && $this->table->isMassEditAllowed())
                 ) {
                     if ('collection_edit' === $func) {
@@ -329,6 +329,7 @@ class rex_yform_manager
 
                     $buttonLabels = '';
                     switch ($func) {
+                        case 'clone':
                         case 'edit':
                             $yform->setHiddenField('data_id', $data_id);
                             $yform->setObjectparams('getdata', true);
@@ -368,7 +369,7 @@ class rex_yform_manager
                     $transactionErrorMessage = null;
 
                     try {
-                        $form = $data->executeForm($yform, static function (rex_yform $yform) {
+                        $afterFieldsExecuted = static function (rex_yform $yform) {
                             /** @var rex_yform_value_abstract $valueObject */
                             foreach ($yform->objparams['values'] as $valueObject) {
                                 if ('submit' == $valueObject->getName()) {
@@ -378,12 +379,47 @@ class rex_yform_manager
                                     }
                                 }
                             }
-                        });
+                        };
+
+                        if ('clone' == $func) {
+                            $afterFieldsExecuted = static function (rex_yform $yform) use ($afterFieldsExecuted) {
+                                $yform->objparams['form_hiddenfields']['func'] = 'add';
+                                unset($yform->objparams['form_hiddenfields']['data_id']);
+
+                                // In den Feldern Anpassungen vornehmen
+                                foreach ($yform->objparams['values'] as $k => $v) {
+                                    // Submit-Buttons von "Edit" auf "Add" zurückstellen
+                                    if ($v instanceof rex_yform_value_submit) {
+                                        $yform->objparams['form_output'][$k] = str_replace(
+                                            [rex_i18n::msg('yform_save').'</button', rex_i18n::msg('yform_save_apply').'</button'],
+                                            [rex_i18n::msg('yform_add').'</button', rex_i18n::msg('yform_add_apply').'</button'],
+                                            $yform->objparams['form_output'][$k]
+                                        );
+                                        continue;
+                                    }
+
+                                    // im Feldtyp be_manager_relation / Typ 5 (inline) ebenfalls die Datensatz-ID der
+                                    // verbundenen Sätze entfernen. Nur "inline" ist problematisch
+                                    if ($v instanceof rex_yform_value_be_manager_relation && 5 == $v->getElement('type')) {
+                                        $fieldName = preg_quote($v->getFieldName());
+                                        $pattern = '/<input type="hidden" name="'.$fieldName.'(\[\d+\])*\[id\]" value="\d+" \/>/';
+                                        $yform->objparams['form_output'][$k] = preg_replace($pattern, '', $yform->objparams['form_output'][$k]);
+                                    }
+                                }
+
+                                if (is_callable($afterFieldsExecuted)) {
+                                    $afterFieldsExecuted($yform);
+                                }
+                            };
+                        }
+
+                        $form = $data->executeForm($yform, $afterFieldsExecuted);
 
                         $sql_db->commit();
                         if ($yform->objparams['actions_executed']) {
                             switch ($func) {
                                 case 'add':
+                                case 'clone':
                                 case 'edit':
                                     $submit_type = 1; // normal, 2=apply
                                     foreach ($yform->objparams['values'] as $valueObject) {
@@ -418,6 +454,8 @@ class rex_yform_manager
                                 $title = rex_i18n::msg('yform_editdata_collection', $data->count());
                             } elseif ('add' == $func) {
                                 $title = rex_i18n::msg('yform_adddata');
+                            } elseif ('clone' == $func) {
+                                $title = rex_i18n::msg('yform_clonedata', $data_id);
                             } else {
                                 $title = rex_i18n::rawMsg('yform_editdata', $data_id);
                             }
@@ -602,6 +640,11 @@ class rex_yform_manager
             $actionButtons['edit'] = [
                 'params' => array_merge($actionButtonParams, ['func' => 'edit']),
                 'content' => '<i class="rex-icon rex-icon-editmode"></i> ' . rex_i18n::msg('yform_edit'),
+            ];
+
+            $actionButtons['clone'] = [
+                'params' => array_merge($actionButtonParams, ['func' => 'clone']),
+                'content' => '<i class="rex-icon rex-icon-add"></i> ' . rex_i18n::msg('yform_clone'),
             ];
 
             if ($this->hasDataPageFunction('delete')) {
