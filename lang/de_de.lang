@@ -109,6 +109,7 @@ yform_values_datetime_year_end = Endjahr
 yform_values_datetime_minutes = Minutenformate
 yform_values_datetime_format = Anzeigeformat
 yform_values_datetime_current_date = Aktuelles Datum voreingestellt
+yform_values_format_show_notice = Diese Einstellung wird nur für die Ausgabe in der Listen-Übersicht und in der View-Ansicht verwendet
 yform_values_email_default = Defaultstatus
 yform_values_email_classname = Klassenname
 yform_values_float_scale = Nachkommastellen
