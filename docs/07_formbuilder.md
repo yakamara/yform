@@ -1289,23 +1289,6 @@ Damit können eigene Überprüfungen via Funktion oder Klasse/Methode durchgefü
 	// Definition
 	validate|customfunction|label|[!]function/class::method|weitere_parameter|warning_message
 	
-#### email - deprecated, bitte künftig [type](#type) verwenden
-
-Überprüft, ob die Feldeingabe eine E-Mail-Adresse ist. Ein leere Eingabe würde dabei als korrekt bewertet werden! Es empfiehlt sich also eine zusätzliche Validiierung mit `empty`.
-
-	// Definition
-	validate|email|emaillabel|warning_message
-	
-	// Im YForm-Formbuilder
-	text|email|E-Mail|
-	validate|email|email|Das Feld enthält keine korrekte E-Mail-Adresse!
-
-```php
-<?php
-$yform->setValueField('text', array("email","E-Mail"));
-$yform->setValidateField('email', array("email", "Das Feld enthält keine korrekte E-Mail-Adresse!"));
-```
-
 #### empty
 
 Überprüft, ob im Feld ein Wert eingetragen wurde und gibt ein Meldung aus.
