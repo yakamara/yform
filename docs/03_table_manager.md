@@ -724,9 +724,18 @@ Diese Funktion z. B. im `project`-Addon in der boot.php hinterlegen:
 
 ```php
 <?php
-function yform_validate_custom($label, $value, $param)
+/**
+* @param $label_s string|string[]
+* @param $ObjectValue_s array[]
+* @param $param false|mixed
+* @param $that rex_yform_validate_customfunction
+* @param $Objects array[]
+* @return bool
+ */
+function yform_validate_custom($label_s, $ObjectValue_s, $param, $that, $Objects)
 {
-	if($value > $param) { // eigene Validierung. Hier: Prüft, ob der Formular-Eingabewert größer ist als der Parameter
+    // $id = $that->params['main_id'];
+	if($ObjectValue_s > $param) { // eigene Validierung. Hier: Prüft, ob der Formular-Eingabewert größer ist als der Parameter
         return false; // Achtung: false = gültig
     } else {
     	return true; // Achtung: true = Fehlermeldung ausgeben
