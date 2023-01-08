@@ -81,7 +81,7 @@ $yform->setObjectparams('real_field_names', true);
 
 $yform->setValueField('text', array("name","Name"));
 $yform->setValueField('text', array("email","E-Mail-Adresse"));
-$yform->setValidateField('email', array("email","Bitte geben Sie eine gültige Emailadresse an."));
+$yform->setValidateField('type', array('email', "email","Bitte geben Sie eine gültige Emailadresse an."));
 $yform->setValueField('textarea', array("message","Nachricht"));
 $yform->setObjectparams('form_action',rex_article::getCurrent()->getUrl());
 
