@@ -9,6 +9,16 @@
 
 class rex_yform_value_hidden extends rex_yform_value_abstract
 {
+    
+    public function loadParams(&$params, $elements = [])
+    {
+        $value = $elements[2] ?? null;
+        $elements[2] = '';
+        parent::loadParams($params, $elements);
+​
+        $this->setValue($value);
+    }
+    
     public function setValue($value)
     {
         if ('GET' == $this->getElement(3) && isset($_GET[$this->getElement(2)])) {
