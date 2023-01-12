@@ -13,8 +13,6 @@ $prioFieldName = $prioFieldName ?? '';
 
 $class_group = trim('form-group ' . $this->getHTMLClass()); // . ' ' . $this->getWarningClass()
 
-$id = sprintf('%u', crc32($this->params['form_name'])) . random_int(0, 10000) . $this->getId();
-
 $notice = [];
 if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
