@@ -217,6 +217,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $yform->setObjectparams('form_name', $form_name);
             $yform->setObjectparams('form_array', array_merge($form_array, [$relationKey])); // $relationKey]);
+            $yform->setObjectparams('form_wrap_id',sprintf('%s-%s',$yform->getObjectparams('form_wrap_id'),$relationKey));
 
             $yform->setObjectparams('form_action', '');
             $yform->setObjectparams('form_showformafterupdate', 1);
@@ -249,6 +250,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform = $relation->getForm();
                     $yform->setObjectparams('form_name', $form_name);
                     $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
+                    $yform->setObjectparams('form_wrap_id',sprintf('%s-%d',$yform->getObjectparams('form_wrap_id'),$counter));
                     $yform->setObjectparams('form_action', '');
                     $yform->setObjectparams('form_showformafterupdate', 1);
                     $yform->setObjectparams('getdata', true);
@@ -290,6 +292,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform = $data->getForm();
                         $yform->setObjectparams('form_name', $form_name);
                         $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
+                        $yform->setObjectparams('form_wrap_id',sprintf('%s-%d',$yform->getObjectparams('form_wrap_id'),$counter));
                         $yform->setObjectparams('form_action', '');
                         $yform->setObjectparams('form_showformafterupdate', 1);
                         $yform->setData($relatedVarData);
