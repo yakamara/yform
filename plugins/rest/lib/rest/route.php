@@ -200,7 +200,7 @@ class rex_yform_rest_route
                             echo $attribute;
                             $instances = $instance->getRelatedCollection($attribute);
                             if (count($instances) > 0) {
-                                $instance = $instances->current();
+                                $instance = $instances->first();
                             }
                             $fields = $this->getFields('get', $instance);
                             $instance = null;
