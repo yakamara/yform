@@ -7,8 +7,6 @@
  *
  * @method rex_yform_manager_dataset offsetGet($offset)
  * @psalm-method T  offsetGet($offset)
- * @method rex_yform_manager_dataset current()
- * @psalm-method T current()
  * @method list<T> toArray()
  */
 class rex_yform_manager_collection extends \SplFixedArray
