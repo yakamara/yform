@@ -143,10 +143,24 @@ if (isset($rex_yform_manager_opener['id'])) {
     $actionButtonsLoaded = $this->getVar('actionButtons') ?? [];
 
     foreach ($actionButtonsLoaded as $actionButtonKey => $actionButton) {
-        $actionButtons[$actionButtonKey] = '<a href="'.$list->getUrl(
-            array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => $actionButtonKey], $actionButton['params']),
-            false
-        ).'">'.$actionButton['content'].'</a>';
+        $url = null;
+        if (isset($actionButton['url']) && is_string($actionButton['url'])) {
+            $url = $actionButton['url'];
+        }
+        if (!$url) {
+            $url = $list->getUrl(
+                array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => $actionButtonKey], $actionButton['params']),
+                false
+            );
+        }
+
+        $attributes = [];
+        if (isset($actionButton['attributes'])) {
+            $attributes = $actionButton['attributes'];
+        }
+        $attributes['href'] = $url;
+
+        $actionButtons[$actionButtonKey] = '<a '.rex_string::buildAttributes($attributes).'>'.$actionButton['content'].'</a>';
     }
 
     $fragment = new rex_fragment();
