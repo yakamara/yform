@@ -1,6 +1,36 @@
 Changelog
 =========
 
+Version 4.1.0 - x.02.2023
+--------------------------
+### Neu
+
+* PHP >= 8.1 und REDAXO mindestens 5.15
+* Date/Datetime-Feld Default-Modifikationen eingebaut
+* Tools-Plugin angepasst und Dateauswahl um Today.. erweitert
+* Felder: postSave Functions, damit sich Felder direkt an die Speicherung dranhängen können
+* BE Ansicht: Umbau auf Fragment und Tablelayoutoption. Man kann man die Ausgaben/Layouts der BE Tabellen/Formulare anpassen
+* dataset save - add history enable/disable feature ergänzt
+* BE Tabellen: Klonen von Datensätzen nun möglich
+* Dokumentation, Tippfehler
+* index-Feld mit salt ergänzt, hashvalue nun dadurch deprecated und ersetzbar
+* neue Methode um eine Url zum Datensatz zu erhalten
+* Felder: date/datetime/time/datestamp Anzeigeformat um Notice ergänzt
+
+
+### Korrekturen
+
+* Upload in HistoryView war fehlerhaft
+* checkbox: Ausgabewerte wurden im Table Manager in der Listenansicht nicht berücksichtigt
+* Relations-Felder wurden nicht immer richtig übernommen.
+* fieldset-Feld: Keys der Optionen fehlten
+* In Whooops Pfad zum E-Mail-Template klickbar gemacht
+* YTemplate Checkbox angepasst - Leerzeichen entfernt
+* rex_yform_manager_collection: Methode current existiert in PHP 8 nicht mehr
+
+Danke Thomas Blum, Gregor Harlan, Christoph Boecker, Alexander Walther, Daniel Weitenauer, Michael Rainer
+
+
 Version 4.0.4 - 07.10.2022
 --------------------------
 
