@@ -7,7 +7,7 @@
  */
 
 // module:yform_basic_input
-// v1.1
+// v1.2
 // --------------------------------------------------------------------------------
 
 // DEBUG SELECT
@@ -188,7 +188,7 @@ $mail_display = ($sel=='' || $sel==0) ?' style="display:none"':'';
 
 <p id="yform-formbuilder-info"><?=  rex_addon::get('yform')->getName() . ' ' . rex_addon::get('yform')->getVersion() ?></p>
 
-<script type="text/javascript">
+<script type="text/javascript" nonce="<?php echo rex_response::getNonce(); ?>">
   <!--
   (function($){
 

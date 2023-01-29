@@ -22,13 +22,13 @@ foreach ($this->params['values'] as $address_value) {
 }
 
 if ('' != $googleapikey) {
-    echo '<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key='.$googleapikey.'&sensor=false"></script>';
+    echo '<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key='.$googleapikey.'&sensor=false" nonce="' . rex_response::getNonce() . '"></script>';
 } else {
-    echo '<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true"></script>';
+    echo '<script type="text/javascript" src="//maps.google.com/maps/api/js?sensor=true" nonce="' . rex_response::getNonce() . '"></script>';
 }
 
 ?>
-<script type="text/javascript">
+<script type="text/javascript" nonce="<?php echo rex_response::getNonce(); ?>">
 
     var rex_geo_coder = function() {
 

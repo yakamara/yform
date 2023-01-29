@@ -75,7 +75,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
     </table>
     <a class="btn btn-primary btn-xs add-mobile-btn" id="<?= $this->getHTMLId() ?>-add-mobile-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a>
 
-    <script type="text/javascript">
+    <script type="text/javascript" nonce="<?php echo rex_response::getNonce(); ?>">
         (function () {
             var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
                 be_table_cnt = <?= (int) $data_index ?>;
