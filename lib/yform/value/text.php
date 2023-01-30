@@ -17,24 +17,25 @@ class rex_yform_value_text extends rex_yform_value_abstract
             $this->setValue($this->getElement('default'));
         }
 
-        if ($this->needsOutput() && $this->isViewable()) {
-            $templateParams = [];
-            $templateParams['prepend'] = $this->getElement('prepend');
-            $templateParams['append'] = $this->getElement('append');
-            if (!$this->isEditable()) {
-                $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
-                $attributes['readonly'] = 'readonly';
-                $this->setElement('attributes', json_encode($attributes));
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.text-view.tpl.php', 'value.view.tpl.php', 'value.text.tpl.php'], $templateParams);
-            } else {
-                $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php', $templateParams);
-            }
-        }
-
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
+        }
+
+        if (!$this->needsOutput() || !$this->isViewable()) {
+        }
+
+        $templateParams = [];
+        $templateParams['prepend'] = $this->getElement('prepend');
+        $templateParams['append'] = $this->getElement('append');
+        if (!$this->isEditable()) {
+            $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
+            $attributes['readonly'] = 'readonly';
+            $this->setElement('attributes', json_encode($attributes));
+            $this->params['form_output'][$this->getId()] = $this->parse(['value.text-view.tpl.php', 'value.view.tpl.php', 'value.text.tpl.php'], $templateParams);
+        } else {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php', $templateParams);
         }
     }
 

@@ -29,7 +29,7 @@ class rex_yform_manager_field implements ArrayAccess
         if (isset($this->definitions['values'])) {
             $i = 'validate' === $values['type_id'] ? 2 : 1;
             foreach ($this->definitions['values'] as $key => $value) {
-                if (isset($values['f' . $i]) && (!isset($values[$key]) || null === $values[$key] || '' === $values[$key])) {
+                if (isset($values['f' . $i]) && (!isset($values[$key]) || '' === $values[$key])) {
                     $values[$key] = $values['f' . $i];
                 }
                 ++$i;

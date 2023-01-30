@@ -22,6 +22,7 @@ if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
     $warning_messages = [];
     foreach ($this->objparams['warning_messages'] as $k => $v) {
         $message = rex_i18n::translate("$v", false);
+        /** @phpstan-ignore-next-line */
         if ('' == $message && isset($this->objparams['values'][$k])) {
             $message = rex_addon::get('yform')->i18n('yform_values_message_is_missing', $this->objparams['values'][$k]->getLabel(), $this->objparams['values'][$k]->getName());
         }
