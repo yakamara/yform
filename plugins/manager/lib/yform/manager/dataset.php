@@ -611,7 +611,7 @@ class rex_yform_manager_dataset
                 $value = implode(',', $values);
             }
 
-            if ('value' == $field->getType() && $value) {
+            if ('value' == $field->getType() && null !== $value) {
                 $inserts[] = sprintf(
                     '(%d, %s, %s)',
                     $historyId,
