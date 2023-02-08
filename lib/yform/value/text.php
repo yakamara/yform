@@ -9,6 +9,9 @@
 
 class rex_yform_value_text extends rex_yform_value_abstract
 {
+    public static int $clip_limit_min = 10;
+    public static int $clip_limit = 40;
+
     public function enterObject()
     {
         $this->setValue((string) $this->getValue());
@@ -17,25 +20,24 @@ class rex_yform_value_text extends rex_yform_value_abstract
             $this->setValue($this->getElement('default'));
         }
 
+        if ($this->needsOutput() && $this->isViewable()) {
+            $templateParams = [];
+            $templateParams['prepend'] = $this->getElement('prepend');
+            $templateParams['append'] = $this->getElement('append');
+            if (!$this->isEditable()) {
+                $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
+                $attributes['readonly'] = 'readonly';
+                $this->setElement('attributes', json_encode($attributes));
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.text-view.tpl.php', 'value.view.tpl.php', 'value.text.tpl.php'], $templateParams);
+            } else {
+                $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php', $templateParams);
+            }
+        }
+
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
 
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
-        }
-
-        if (!$this->needsOutput() || !$this->isViewable()) {
-        }
-
-        $templateParams = [];
-        $templateParams['prepend'] = $this->getElement('prepend');
-        $templateParams['append'] = $this->getElement('append');
-        if (!$this->isEditable()) {
-            $attributes = empty($this->getElement('attributes')) ? [] : json_decode($this->getElement('attributes'), true);
-            $attributes['readonly'] = 'readonly';
-            $this->setElement('attributes', json_encode($attributes));
-            $this->params['form_output'][$this->getId()] = $this->parse(['value.text-view.tpl.php', 'value.view.tpl.php', 'value.text.tpl.php'], $templateParams);
-        } else {
-            $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php', $templateParams);
         }
     }
 
@@ -58,6 +60,10 @@ class rex_yform_value_text extends rex_yform_value_abstract
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
                 'prepend' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_prepend')],
                 'append' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_append')],
+                'limit' => ['type' => 'integer',    'label' => rex_i18n::msg('yform_values_text_limit'), 'default' => self::$clip_limit, 'min' => self::$clip_limit_min, 'notice'=>rex_i18n::msg('yform_values_text_limit_notice',self::$clip_limit)],
+            ],
+            'validates' => [
+                ['intfromto' => ['name' => 'limit', 'from' => self::$clip_limit_min, 'to' => PHP_INT_MAX, 'message' => rex_i18n::msg('yform_values_text_limit_messages',self::$clip_limit_min)]],
             ],
             'description' => rex_i18n::msg('yform_values_text_description'),
             'db_type' => ['varchar(191)', 'text'],
@@ -112,9 +118,11 @@ class rex_yform_value_text extends rex_yform_value_abstract
     {
         $value = (string) $params['subject'];
         $length = mb_strlen($value);
+        $clipSize = $params['params']['field']['limit'] ?? self::$clip_limit;
         $title = $value;
-        if ($length > 40) {
-            $value = mb_substr($value, 0, 20).' ... '.mb_substr($value, -20);
+        if ($length > $clipSize) {
+            $part1 = (int) ceil($clipSize/2);
+            $value = mb_substr($value, 0, $part1).' ... '.mb_substr($value, $part1-$clipSize);
         }
         return '<span title="'.rex_escape($title).'">'.rex_escape($value).'</span>';
     }
