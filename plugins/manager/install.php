@@ -255,6 +255,21 @@ if ($this->isInstalled()) {
             }
         }
     }
+    // for value-fields "text" add additional parameter "limit" preset to "40"
+    // PR #1372
+    $sql = rex_sql::factory();
+    $sql->setTable(rex::getTable('yform_field'));
+    $sql->setWhere('type_id=:type_id && type_name=:type_name', [':type_id' => 'value', ':type_name' => 'text']);
+    $sql->select();
+    if (0 < $sql->getRows()) {
+        rex_sql_table::get(rex::getTable('yform_field'))
+            ->ensureColumn(new rex_sql_column('limit', 'int(11)'), 'append')
+            ->ensure();
+        $sql->setTable(rex::getTable('yform_field'));
+        $sql->setWhere('type_id=:type_id && type_name=:type_name', [':type_id' => 'value', ':type_name' => 'text']);
+        $sql->setValue('limit', 40);
+        $sql->update();
+    }
 }
 
 if (class_exists('rex_yform_manager_table')) {
