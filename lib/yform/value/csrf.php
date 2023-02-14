@@ -9,7 +9,7 @@
 
 class rex_yform_value_csrf extends rex_yform_value_abstract
 {
-    public function enterObject()
+    public function preValidateAction(): void
     {
         if ($this->params['csrf_protection']) {
             $tokenid = 'yform_' . $this->params['form_name'];
