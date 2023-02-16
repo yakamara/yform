@@ -170,7 +170,7 @@ if (1 == rex_request('send', 'int', 0)) {
                             break;
                         }
 
-                        if (null !== $idColumn && isset($line_array[$idColumn])) {
+                        if (null !== $idColumn && isset($line_array[$idColumn]) && $line_array[$idColumn] > 0) {
                             $id = $line_array[$idColumn];
                             $dataset = $this->table->getRawDataset((int) $id);
                         } else {
