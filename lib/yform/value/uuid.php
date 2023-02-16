@@ -9,15 +9,25 @@
 
 class rex_yform_value_uuid extends rex_yform_value_abstract
 {
+    public function preValidateAction(): void
+    {
+        if ('' != $this->getValue()) {
+            // wenn Wert vorhanden ist direkt zurück
+        } elseif (isset($this->params['sql_object']) && '' != $this->params['sql_object']->getValue($this->getName())) {
+            // sql object vorhanden und Wert gesetzt ?
+        } else {
+            $this->setValue(self::guidv4());
+        }
+    }
+
     public function enterObject()
     {
-        if(!$this->getValue()) {
-            $this->setValue(self::guidv4());
+        if ($this->needsOutput() && 1 == $this->getElement('show_value')) {
+            $this->params['form_output'][$this->getId()] = $this->parse('value.showvalue.tpl.php');
         }
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-
-        if ($this->saveInDb()) {
+        if ($this->getValue() && $this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
     }
@@ -37,7 +47,7 @@ class rex_yform_value_uuid extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return 'uuid|name|[no_db]';
+        return 'uuid|name|[no_db]|[show_value]';
     }
 
     public function getDefinitions(): array
@@ -49,6 +59,7 @@ class rex_yform_value_uuid extends rex_yform_value_abstract
                 'name' => ['type' => 'name',        'label' => rex_i18n::msg('yform_values_defaults_name')],
                 'label' => ['type' => 'text',       'label' => rex_i18n::msg('yform_values_defaults_label')],
                 'no_db' => ['type' => 'no_db',      'label' => rex_i18n::msg('yform_values_defaults_table'),  'default' => 0],
+                'show_value' => ['type' => 'checkbox',  'label' => rex_i18n::msg('yform_values_defaults_showvalue'), 'default' => '0', 'options' => '0,1'],
             ],
             'description' => rex_i18n::msg('yform_values_uuid_description'),
             'db_type' => ['varchar(36)'],
