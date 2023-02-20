@@ -238,9 +238,18 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         if ('' != $this->getSessionVar('value', 'string', '')) {
             $filename = (string) $this->getSessionVar('value', 'string', '');
             $filepath = $this->upload_getFolder() . '/' . $this->getParam('main_id') . '_' . $filename;
+            $filepathTmp = $this->upload_getFolder() . '/' . $this->getSessionKey() . '_' . $filename;
             if (file_exists($filepath)) {
                 $real_filepath = $filepath;
-            } else {
+            }
+            else if (file_exists($filepathTmp)) {
+                $real_filepath = $filepathTmp;
+                if ($FILE = $this->getSessionVar('file', 'array', null)) {
+                    $FILE['tmp_yform_name'] = $filepathTmp;
+                    $this->setSessionVar('file', $FILE);
+                }
+            }
+            else {
                 $this->unsetSessionVar('value');
                 $filename = '';
                 $filepath = '';

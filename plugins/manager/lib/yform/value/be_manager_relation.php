@@ -217,6 +217,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $yform->setObjectparams('form_name', $form_name);
             $yform->setObjectparams('form_array', array_merge($form_array, [$relationKey])); // $relationKey]);
+            $yform->setObjectparams('form_ytemplate', $this->getParam('form_ytemplate'));
 
             $yform->setObjectparams('form_action', '');
             $yform->setObjectparams('form_showformafterupdate', 1);
@@ -254,6 +255,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform->setObjectparams('getdata', true);
                     $yform->setObjectparams('submit_btn_show', false);
                     $yform->setObjectparams('csrf_protection', false);
+                    $yform->setObjectparams('form_ytemplate', $this->getParam('form_ytemplate'));
+
+                    if ($relation->exists()) {
+                        $yform->setObjectparams('main_id', $relation->getId());
+                    }
 
                     $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
                     $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
@@ -295,6 +301,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform->setData($relatedVarData);
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
+                        $yform->setObjectparams('form_ytemplate', $this->getParam('form_ytemplate'));
+
+                        if (array_key_exists('id', $relatedVarData)) {
+                            $yform->setObjectparams('main_id', $relatedVarData['id']);
+                        }
 
                         $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
                         $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
@@ -383,6 +394,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
                 $yform->setObjectparams('form_name', $form_name);
                 $yform->setObjectparams('form_array', array_merge($form_array));
+                $yform->setObjectparams('form_ytemplate', $this->getParam('form_ytemplate'));
 
                 $relationVars = $yform->getFieldValue();
 
@@ -401,6 +413,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform = $data->getForm();
                         $yform->setObjectparams('form_name', $form_name);
                         $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
+                        $yform->setObjectparams('form_ytemplate', $this->getParam('form_ytemplate'));
 
                         if (isset($form['id'])) {
                             $form['id'] = (int) $form['id'];
