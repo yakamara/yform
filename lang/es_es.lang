@@ -237,7 +237,7 @@ yform_values_status_output_values_notice = 2 valores separados por comas. p.ej. 
 
 yform_values_message_is_missing = [Falta un mensaje de advertencia para el campo `{1}`]
 
-yform_validate_object_is_missing = El objeto `{1}` para la validación `{1}` falta
+yform_validate_object_is_missing = El objeto `{1}` para la validación `{0}` falta
 
 yform_values_deprecated_checkbox_sql = Obsoleta; Usa el valor de elección
 yform_values_deprecated_radio = Obsoleta; Usa el valor de elección

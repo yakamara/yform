@@ -254,7 +254,7 @@ yform_values_status_output_values_notice = 2 Werte kommasepariert. z.B. offline,
 
 yform_values_message_is_missing = [Warnmeldung für Feld `{1}` fehlt]
 
-yform_validate_object_is_missing = Object `{1}` zur Validierung `{1}` fehlt
+yform_validate_object_is_missing = Object `{1}` zur Validierung `{0}` fehlt
 
 yform_values_deprecated_checkbox_sql = Deprecated! Verwende stattdessen das Choice-Feld
 yform_values_deprecated_radio = Deprecated! Verwende stattdessen das Choice-Feld
