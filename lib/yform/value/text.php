@@ -99,13 +99,20 @@ class rex_yform_value_text extends rex_yform_value_abstract
             }, 'OR');
         }
 
+        $invertWhere = false;
+        if ('!' === substr($value, 0, 1)) {
+            $invertWhere = true;
+            $value = substr($value, 1);
+        }
+
         $pos = strpos($value, '*');
         if (false !== $pos) {
             $value = str_replace('%', '\%', $value);
             $value = str_replace('*', '%', $value);
-            return $query->where($field, $value, 'LIKE');
+            return $query->where($field, $value, $invertWhere ? 'NOT LIKE' : 'LIKE');
         }
-        return $query->where($field, $value);
+
+        return $query->where($field, $value, $invertWhere ? '<>' : '=');
     }
 
     public static function getListValue($params)
