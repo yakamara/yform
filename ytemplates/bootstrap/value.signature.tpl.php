@@ -5,13 +5,11 @@
  * @psalm-scope-this rex_yform_value_signature
  */
 
-if(!isset($value)) {
-    $value = $this->getValue();
-}
+$value = $value ?? $this->getValue();
 
 $notice = [];
 
-if ($this->getElement('notice') != '') {
+if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
@@ -41,78 +39,54 @@ $attributes = [
 $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
 
 ?>
-<div class="<?= $class_group; ?>" id="<?= $this->getHTMLId(); ?>">
+<div class="canvas-signature <?= $class_group; ?>" id="<?= $this->getHTMLId(); ?>">
     <label class="<?= implode(' ', $class_label); ?>"><?= $this->getLabel(); ?></label>
-    <div style="position: relative; display: flex; flex-direction: row; align-items: center; align-content: flex-start;">
-        <div class="canvas-wrapper" style="position: relative; width: 300px; height: 80px; background-color: #FFF;">
-            <canvas id="canvas-<?= $this->getName(); ?>" style="width: 100%; height: 100%; background-color: transparent; position: relative; z-index: 1;"></canvas>
-            <?php if(isset($value) && $value != ""): ?>
-            <img style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; user-select: none; border: none; opacity: 0.1;" src="<?= $value; ?>">
+    <div class="canvas">
+        <div class="canvas-wrapper">
+            <canvas id="canvas-<?= $this->getName(); ?>"></canvas>
+            <?php if (isset($value) && '' != $value): ?>
+                <img src="<?= $value; ?>">
             <?php endif; ?>
         </div>
         <input <?= implode(' ', $attributes); ?>>
         &nbsp; <button type="button" class="btn btn-primary" id="clear-<?= $this->getName(); ?>" onclick="eraseSignature_<?= $this->getName(); ?>()" title="Zeichenfläche leeren"><i class="rex-icon fa fa-eraser"></i></button>
     </div>
+    <?php echo $notice; ?>
 </div>
+<style nonce="<?php echo rex_response::getNonce(); ?>">
+    .canvas-signature div.canvas{
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        align-content: flex-start;
+    }
+    .canvas-signature .canvas-wrapper {
+        position: relative;
+        width: 300px;
+        height: 80px;
+        background-color: #FFF;
+    }
+    .canvas-signature .canvas-wrapper canvas {
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        position: relative;
+        z-index: 1;
+    }
+    .canvas-signature .canvas-wrapper img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        border: none;
+        opacity: 0.1;
+    }
+</style>
 
-<?php
-
-/**
- * @var rex_yform_value_signature $this
- * @psalm-scope-this rex_yform_value_signature
- */
-
-if(!isset($value)) {
-    $value = $this->getValue();
-}
-
-$notice = [];
-
-if ($this->getElement('notice') != '') {
-    $notice[] = rex_i18n::translate($this->getElement('notice'), false);
-}
-if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notice[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()]) . '</span>'; //    var_dump();
-}
-if (count($notice) > 0) {
-    $notice = '<p class="help-block small">' . implode('<br />', $notice) . '</p>';
-} else {
-    $notice = '';
-}
-
-$class_group = trim('form-group yform-element ' . $this->getWarningClass());
-$class_label[] = 'control-label';
-
-$field_before = '';
-$field_after = '';
-$specialAttributes = $this->getAttributeArray([]);
-
-$attributes = [
-    'class' => 'form-control signature',
-    'name' => $this->getFieldName(),
-    'type' => 'hidden',
-    'id' => 'canvas-target-'. $this->getName(),
-    'value' => $value,
-];
-
-$attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
-
-?>
-<div class="<?= $class_group; ?>" id="<?= $this->getHTMLId(); ?>">
-    <label class="<?= implode(' ', $class_label); ?>"><?= $this->getLabel(); ?></label>
-    <div style="position: relative; display: flex; flex-direction: row; align-items: center; align-content: flex-start;">
-        <div class="canvas-wrapper" style="position: relative; width: 300px; height: 80px; background-color: #FFF;">
-            <canvas id="canvas-<?= $this->getName(); ?>" style="width: 100%; height: 100%; background-color: transparent; position: relative; z-index: 1;"></canvas>
-            <?php if(isset($value) && $value != ""): ?>
-            <img style="position: absolute; left: 0px; top: 0px; width: 100%; height: 100%; user-select: none; border: none; opacity: 0.1;" src="<?= $value; ?>">
-            <?php endif; ?>
-        </div>
-        <input <?= implode(' ', $attributes); ?>>
-        &nbsp; <button type="button" class="btn btn-primary" id="clear-<?= $this->getName(); ?>" onclick="eraseSignature_<?= $this->getName(); ?>()" title="Zeichenfläche leeren"><i class="rex-icon fa fa-eraser"></i></button>
-    </div>
-</div>
-
-<script type="text/javascript">
+<script nonce="<?php echo rex_response::getNonce(); ?>">
     if (typeof rex !== 'undefined' && rex.backend) {
         $(document).on("rex:ready", function(){
             initSignature_<?= $this->getName(); ?>();
@@ -133,9 +107,8 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
             prevX = 0,
             currX = 0,
             prevY = 0,
-            currY = 0;
-
-        let x = "black",
+            currY = 0,
+            x = "black",
             y = 2;
 
         ctx = canvas.getContext("2d");
@@ -204,7 +177,6 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
             let offset = $(canvas).offset();
             let scrollTop = $("html").scrollTop();
             let scrollLeft = $("html").scrollLeft();
-
             ctx.beginPath();
             ctx.moveTo(prevX - offset.left + scrollLeft, prevY - offset.top + scrollTop);
             ctx.lineTo(currX - offset.left + scrollLeft, currY - offset.top + scrollTop);
@@ -212,7 +184,6 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
             ctx.lineWidth = y;
             ctx.stroke();
             ctx.closePath();
-
             // push result to input hidden
             target.val(canvas.toDataURL());
         }
@@ -220,17 +191,8 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
 
     function eraseSignature_<?= $this->getName(); ?>() {
         let m = confirm("Zeichenfläche wirklich löschen?");
-
         if (m) {
-           
-
             $("#canvas-<?= $this->getName(); ?>")[0].getContext("2d").clearRect(0, 0, w, h);
         }
     }
 </script>
-
-
-
-
-
-
