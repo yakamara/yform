@@ -62,7 +62,7 @@ class rex_yform
         $this->objparams['Error-Code-InsertQueryError'] = 'ErrorCode - InsertQueryError';
 
         $this->objparams['csrf_protection'] = true;
-        $this->objparams['csrf_protection_error_message'] = '{{ csrf.error }}';
+        $this->objparams['csrf_protection_error_message'] = rex::isFrontend() ? '{{ csrf.error }}' : rex_i18n::msg('csrf_token_invalid');
 
         $this->objparams['getdata'] = false;
         $this->objparams['fixdata'] = [];
