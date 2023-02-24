@@ -1202,9 +1202,9 @@ class rex_yform_manager
                 foreach ($definitions['values'] as $key => $_) {
                     $key = $this->getFieldName($key, $field['type_id']);
                     if (isset($field[$key])) {
-                        $values[] = htmlspecialchars($field[$key]);
+                        $values[] = rex_escape($field[$key]);
                     } elseif (isset($field['f' . $i])) {
-                        $values[] = htmlspecialchars($field['f' . $i]);
+                        $values[] = rex_escape($field['f' . $i]);
                     } else {
                         $values[] = '';
                     }

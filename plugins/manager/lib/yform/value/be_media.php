@@ -88,7 +88,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 if (mb_strlen($file) > 16) {
                     $filename = mb_substr($file, 0, 6) . ' ... ' . mb_substr($file, -6) . '</span>';
                 }
-                $return[] = '<span style="white-space:nowrap;" title="' . htmlspecialchars($file) . '">' . $filename . '</span>';
+                $return[] = '<span style="white-space:nowrap;" title="' . rex_escape($file) . '">' . $filename . '</span>';
             }
         }
 

@@ -47,7 +47,7 @@ echo '
     <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
     <select '.implode(' ', $attributes).'>';
     foreach ($options as $key => $value):
-        echo '<option value="'.htmlspecialchars($key).'" ';
+        echo '<option value="'.rex_escape($key).'" ';
         if (in_array((string) $key, $this->getValue(), true)) {
             echo ' selected="selected"';
         }

@@ -34,7 +34,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th class="type-<?= $column['field']->getElement(0) ?>"><?php echo htmlspecialchars($column['label']) ?></th>
+                <th class="type-<?= $column['field']->getElement(0) ?>"><?php echo rex_escape($column['label']) ?></th>
             <?php endforeach ?>
             <th class="rex-table-action"><a class="btn btn-xs btn-primary" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>

@@ -9,7 +9,7 @@ $counter = $counter ?? 1;
 
 $buttonId = $counter;
 $name = $this->getFieldName();
-$value = htmlspecialchars($this->getValue());
+$value = rex_escape($this->getValue());
 $types = $types ?? $this->getElement('types');
 
 $widget_params = [];

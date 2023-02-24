@@ -16,7 +16,7 @@ class rex_yform_action_showtext extends rex_yform_action_abstract
         $text = rex_i18n::translate($text, false);
 
         if ('0' == $this->getElement(5)) {
-            $text = nl2br(htmlspecialchars($text));
+            $text = nl2br(rex_escape($text));
         }
 
         $text = $this->getElement(3) . $text . $this->getElement(4);

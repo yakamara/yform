@@ -49,7 +49,7 @@ if (rex::getUser()->isAdmin() && rex_addon::get('structure')->isAvailable()) {
     $content .= '<p>'.$this->i18n('install_modul_description').'</p>';
 
     if ($module_id > 0) {
-        $content .= '<p><a class="btn btn-primary" href="index.php?page=yform/setup&amp;install=1&amp;module_id=' . $module_id . '" class="rex-button">' . $this->i18n('install_update_module', htmlspecialchars((string) $module_name)) . '</a></p>';
+        $content .= '<p><a class="btn btn-primary" href="index.php?page=yform/setup&amp;install=1&amp;module_id=' . $module_id . '" class="rex-button">' . $this->i18n('install_update_module', rex_escape((string) $module_name)) . '</a></p>';
     } else {
         $content .= '<p><a class="btn btn-primary" href="index.php?page=yform/setup&amp;install=1" class="rex-button">' . $this->i18n('install_yform_modul', $yform_module_name) . '</a></p>';
     }

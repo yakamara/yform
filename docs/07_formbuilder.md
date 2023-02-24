@@ -206,7 +206,7 @@ Default-Ausgabe:
 $yform->setObjectparams('form_label_type','html');
 ```
 
-Wenn man den Wert hier auf `plain` setzt, werden die Feld-Label nicht als HTML interpretiert, sondern mit `htmlspecialchars` und `nl2br` maskiert.  
+Wenn man den Wert hier auf `plain` setzt, werden die Feld-Label nicht als HTML interpretiert, sondern mit `rex_escape` und `nl2br` maskiert.  
 Default ist `html`.
 
 #### CSRF-Schutz

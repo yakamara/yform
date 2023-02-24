@@ -142,7 +142,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         $attributes = self::getAttributeArray($attributes, $direct_attributes);
         $return = [];
         foreach ($attributes as $attribute => $value) {
-            $return[] = $attribute.'="'.htmlspecialchars($value).'"';
+            $return[] = $attribute.'="'.rex_escape($value).'"';
         }
 
         return $return;
@@ -228,7 +228,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
 
         if ('html' == $this->params['form_label_type']) {
         } else {
-            $label = nl2br(htmlspecialchars($label));
+            $label = nl2br(rex_escape($label));
         }
         return $label;
     }

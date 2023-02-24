@@ -36,7 +36,7 @@ foreach ($options as $key => $value) {
     echo '">';
 
     $attributes = [
-        'id' => $this->getFieldId() . '-' . htmlspecialchars($key),
+        'id' => $this->getFieldId() . '-' . rex_escape($key),
         'name' => $this->getFieldName(),
         'value' => $key,
         'type' => 'radio',

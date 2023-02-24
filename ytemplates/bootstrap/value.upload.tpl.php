@@ -41,7 +41,7 @@ $class_control = trim('form-control');
 
 <?php
     if ('' != $filename) {
-        $label = htmlspecialchars($filename);
+        $label = rex_escape($filename);
 
         if (rex::isBackend() && '' != $download_link) {
             $label = '<a href="' . $download_link . '">' . $label . '</a>';

@@ -75,7 +75,7 @@ $e = [];
         $fragment->setVar('elements', [$e], false);
         echo $fragment->parse('core/form/widget.php');
     } elseif (2 == $this->getRelationType()) {
-        $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  htmlspecialchars($valueName) . '" id="YFORM_DATASET_SELECT_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $this->getFieldName() . '" id="YFORM_DATASET_FIELD_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
+        $e['field'] = '<input class="form-control" type="text" name="YFORM_DATASET_NAME[' . $id . ']" value="' .  rex_escape($valueName) . '" id="YFORM_DATASET_SELECT_' . $id . '" readonly="readonly" /><input type="hidden" name="' .  $this->getFieldName() . '" id="YFORM_DATASET_FIELD_' . $id . '" value="' . implode(',', $this->getValue()) . '" />';
         $e['functionButtons'] = '
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="openYFormDataset(' . $id . ', \'' . $this->getRelationSourceTableName() . '.' . $this->getName() . '\', \'' . $link . '\',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a href="javascript:void(0);" class="btn btn-popup" onclick="deleteYFormDataset(' . $id . ',\'0\');return false;" title="' .  rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>';

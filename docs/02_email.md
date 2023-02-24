@@ -122,7 +122,7 @@ if($form) { // Wenn das Formular nicht abgesendet wurde
 	        return true;
 	    }
 	} else {
-	    if ($debug) {echo '<p>YForm E-Mail-Template "'.htmlspecialchars($yform_email_template_key).'" wurde nicht gefunden.'; }
+	    if ($debug) {echo '<p>YForm E-Mail-Template "'.rex_escape($yform_email_template_key).'" wurde nicht gefunden.'; }
 	}
 }
 ?>
@@ -170,7 +170,7 @@ if ($yform_email_template = rex_yform_email_template::getTemplate($yform_email_t
         return true;
     }
 } else {
-    if ($debug) {echo '<p>YForm E-Mail-Template "'.htmlspecialchars($yform_email_template_key).'" wurde nicht gefunden.'; }
+    if ($debug) {echo '<p>YForm E-Mail-Template "'.rex_escape($yform_email_template_key).'" wurde nicht gefunden.'; }
 }
 ?>
 ```

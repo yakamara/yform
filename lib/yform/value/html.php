@@ -28,7 +28,7 @@ class rex_yform_value_html extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return htmlspecialchars('html|name|label|<div class="block"></div>');
+        return rex_escape('html|name|label|<div class="block"></div>');
     }
 
     public function getDefinitions(): array

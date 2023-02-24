@@ -76,7 +76,7 @@ if ('view' === $subfunc && $dataset && $historyId) {
                 ],
             ]);
         } else {
-            $value = htmlspecialchars($value);
+            $value = rex_escape($value);
         }
 
         $rows .= '

@@ -81,7 +81,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
             return;
         }
         if ($this->params['debug']) {
-            dump('Template: "' . htmlspecialchars($template_name) . '" not found');
+            dump('Template: "' . rex_escape($template_name) . '" not found');
         }
 
         return;

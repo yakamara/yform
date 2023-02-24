@@ -34,7 +34,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th class="type-<?= $column['field']->getElement(0) ?>"><?php echo htmlspecialchars($column['label']) ?></th>
+                <th class="type-<?= $column['field']->getElement(0) ?>"><?php echo rex_escape($column['label']) ?></th>
             <?php endforeach ?>
         </tr>
         </thead>

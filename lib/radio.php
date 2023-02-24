@@ -99,7 +99,7 @@ class rex_radio
 
     public function setSelected($selected)
     {
-        $this->option_selected = htmlspecialchars($selected);
+        $this->option_selected = rex_escape($selected);
     }
 
     public function resetSelected()
