@@ -109,12 +109,13 @@ class rex_yform_manager
         ]));
 
         $searchObject = new rex_yform_manager_search($this->table);
-        $searchObject->setSearchLinkVars($this->getLinkVars());
-        $searchObject->setSearchLinkVars($rex_yform_list);
-        $searchObject->setSearchLinkVars(['rex_yform_filter' => $rex_yform_filter]);
-        $searchObject->setSearchLinkVars(['rex_yform_set' => $rex_yform_set]);
-        $searchObject->setSearchLinkVars(['rex_yform_manager_opener' => $rex_yform_manager_opener]);
-        $searchObject->setSearchLinkVars(['rex_yform_manager_popup' => $rex_yform_manager_popup]);
+        $searchObject
+            ->setSearchLinkVars($this->getLinkVars())
+            ->setSearchLinkVars($rex_yform_list)
+            ->setSearchLinkVars(['rex_yform_filter' => $rex_yform_filter])
+            ->setSearchLinkVars(['rex_yform_set' => $rex_yform_set])
+            ->setSearchLinkVars(['rex_yform_manager_opener' => $rex_yform_manager_opener])
+            ->setSearchLinkVars(['rex_yform_manager_popup' => $rex_yform_manager_popup]);
 
         $searchForm = '';
         if ($this->table->isSearchable() && $this->hasDataPageFunction('search')) {

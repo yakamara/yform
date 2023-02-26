@@ -2,12 +2,12 @@
 
 class rex_yform_manager_search
 {
-    private $linkVars = [];
-    private $scriptPath = '';
+    private array $linkVars = [];
+    private string $scriptPath = '';
 
     /** @var rex_yform_manager_table */
     protected $table;
-    protected $fields;
+    protected array $fields;
 
     public function __construct(rex_yform_manager_table $table)
     {
@@ -28,22 +28,25 @@ class rex_yform_manager_search
         $this->setScriptPath($_SERVER['PHP_SELF']);
     }
 
-    public function setLinkVar($k, $v)
+    public function setLinkVar(string $k, mixed $v): self
     {
         $this->linkVars[$k] = $v;
+        return $this;
     }
 
-    public function setSearchLinkVars(array $vars)
+    public function setSearchLinkVars(array $vars): self
     {
         $this->linkVars = array_merge($this->linkVars, $vars);
+        return $this;
     }
 
-    public function setScriptPath($scriptpath)
+    public function setScriptPath(string $scriptpath): self
     {
         $this->scriptPath = $scriptpath;
+        return $this;
     }
 
-    public function getYForm()
+    public function getYForm(): rex_yform
     {
         $yform = new rex_yform();
         $yform->setObjectparams('form_name', 'rex_yform_searchvars-'.$this->table->getTableName());

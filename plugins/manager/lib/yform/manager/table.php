@@ -10,7 +10,6 @@
 class rex_yform_manager_table implements ArrayAccess
 {
     protected $values = [];
-
     protected $columns = [];
 
     /** @var rex_yform_manager_field[] */
@@ -19,11 +18,11 @@ class rex_yform_manager_table implements ArrayAccess
     /** @var rex_yform_manager_field[] */
     protected $relations;
 
-    protected static $debug = false;
+    protected static bool $debug = false;
 
     /** @var self[] */
     protected static $tables = [];
-    protected static $loadedAllTables = false;
+    protected static bool $loadedAllTables = false;
 
     private static $cache;
     protected $relatedTableNames = [];
@@ -168,17 +167,17 @@ class rex_yform_manager_table implements ArrayAccess
 
     // -------------------------------------------------------------------------
 
-    public function getTableName()
+    public function getTableName(): string
     {
         return $this->values['table_name'];
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->values['name'];
     }
 
-    public function getNameLocalized()
+    public function getNameLocalized(): string
     {
         $table_name = $this->getTableName();
         $name = $this->getName();
@@ -197,7 +196,7 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->values['id'];
     }
 
-    public function hasId()
+    public function hasId(): bool
     {
         $columns = rex_sql::showColumns($this->getTableName());
         foreach ($columns as $column) {
@@ -208,52 +207,52 @@ class rex_yform_manager_table implements ArrayAccess
         return false;
     }
 
-    public function isActive()
+    public function isActive(): bool
     {
         return 1 == $this->values['status'];
     }
 
-    public function isHidden()
+    public function isHidden(): bool
     {
         return 1 == $this->values['hidden'];
     }
 
-    public function isSearchable()
+    public function isSearchable(): bool
     {
         return 1 == $this->values['search'];
     }
 
-    public function isImportable()
+    public function isImportable(): bool
     {
         return 1 == $this->values['import'];
     }
 
-    public function isExportable()
+    public function isExportable(): bool
     {
         return 1 == $this->values['export'];
     }
 
-    public function isMassDeletionAllowed()
+    public function isMassDeletionAllowed(): bool
     {
         return 1 == $this->values['mass_deletion'];
     }
 
-    public function isMassEditAllowed()
+    public function isMassEditAllowed(): bool
     {
         return 1 == $this->values['mass_edit'];
     }
 
-    public function overwriteSchema()
+    public function overwriteSchema(): bool
     {
         return (1 == $this->values['schema_overwrite']) ? true : false;
     }
 
-    public function hasHistory()
+    public function hasHistory(): bool
     {
         return 1 == $this->values['history'];
     }
 
-    public function parseLayout(rex_fragment $fragment)
+    public function parseLayout(rex_fragment $fragment): string
     {
         return $fragment->parse('yform/manager/page/layout.php');
     }
@@ -528,15 +527,16 @@ class rex_yform_manager_table implements ArrayAccess
         return $this->getTableName();
     }
 
-    public static function deleteCache()
+    public static function deleteCache(): void
     {
         rex_file::delete(self::cachePath());
         self::$cache = null;
         self::$tables = [];
         self::$loadedAllTables = false;
+        dump('table cache deleted');
     }
 
-    private static function getCache()
+    private static function getCache(): mixed
     {
         if (null !== self::$cache) {
             return self::$cache;
@@ -592,17 +592,17 @@ class rex_yform_manager_table implements ArrayAccess
         return self::$cache;
     }
 
-    private static function cachePath()
+    private static function cachePath(): string
     {
         return rex_path::pluginCache('yform', 'manager', 'tables.cache');
     }
 
-    public function isGranted($type, rex_user $user)
+    public function isGranted(string $type, rex_user $user): bool
     {
         return rex_yform_manager_table_authorization::onAttribute($type, $this, $user);
     }
 
-    public function getCSRFKey()
+    public function getCSRFKey(): string
     {
         return 'table_field-'.$this->getTableName();
     }
