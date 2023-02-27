@@ -234,8 +234,7 @@ if (1 == rex_request('send', 'int', 0)) {
                 ));
                 $sql_db->commit();
             } catch (\Throwable $e) {
-                // $sql_db->rollBack();
-                dump($e);
+                $sql_db->rollBack();
                 $error_message = $e->getMessage();
             }
 
