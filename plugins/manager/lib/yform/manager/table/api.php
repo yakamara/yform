@@ -129,7 +129,7 @@ class rex_yform_manager_table_api
     /**
      * @throws rex_sql_exception
      */
-    public static function removeTable(string $table_name)
+    public static function removeTable(string $table_name): void
     {
         $table = rex_yform_manager_table::get($table_name);
 
@@ -226,7 +226,7 @@ class rex_yform_manager_table_api
     /**
      * @throws rex_sql_exception
      */
-    public static function removeTablefield(string $table_name, string $field_name)
+    public static function removeTablefield(string $table_name, string $field_name): void
     {
         $f = rex_sql::factory();
         $f->setDebug(self::$debug);
@@ -238,7 +238,7 @@ class rex_yform_manager_table_api
     /**
      * @throws rex_sql_exception
      */
-    public static function migrateTable(string $table_name, bool $schema_overwrite = false)
+    public static function migrateTable(string $table_name, bool $schema_overwrite = false): void
     {
         $columns = rex_sql::showColumns($table_name);
 

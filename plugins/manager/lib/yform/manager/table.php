@@ -160,7 +160,7 @@ class rex_yform_manager_table implements ArrayAccess
         return self::$tables;
     }
 
-    public static function table()
+    public static function table(): string
     {
         return rex::getTablePrefix() . 'yform_table';
     }
@@ -533,7 +533,6 @@ class rex_yform_manager_table implements ArrayAccess
         self::$cache = null;
         self::$tables = [];
         self::$loadedAllTables = false;
-        dump('table cache deleted');
     }
 
     private static function getCache(): mixed
