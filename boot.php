@@ -29,6 +29,10 @@ if (rex::isBackend() && rex::getUser()) {
     rex_extension::register('PAGE_CHECKED', static function (rex_extension_point $ep) {
         $page = rex_be_controller::getPageObject('yform');
 
+        if (!$page) {
+            return;
+        }
+
         $subpages = $page->getSubpages();
         if (isset($subpages['manager']) && rex::getUser()->isAdmin()) {
             $manager = $subpages['manager'];
