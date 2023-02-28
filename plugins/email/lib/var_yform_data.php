@@ -16,8 +16,8 @@ class rex_var_yform_data extends rex_var
         if (!in_array($this->getContext(), ['yform_email_template'])) { // || !is_numeric($id) || $id < 1 || $id > 20
             return false;
         }
-
-        if (!$value = $this->getContextData()[$field]) {
+        $value = $this->getContextData()[$field] ?? null;
+        if (null === $value) {
             $value = '';
         }
 
