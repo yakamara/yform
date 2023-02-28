@@ -9,6 +9,9 @@ $unique = $unique ?? '';
 $filename = $filename ?? '';
 $download_link = $download_link ?? '';
 $error_messages = $error_messages ?? [];
+$configuration = $configuration ?? [];
+$allowed_extensions = $configuration['allowed_extensions'] ?? ['*'];
+$allowed_extensions = '*' == $allowed_extensions[0] ? '*' : '.'.implode(',.', $configuration['allowed_extensions']);
 
 $notice = [];
 if ('' != $this->getElement('notice')) {
@@ -28,11 +31,20 @@ $class = $this->getElement('required') ? 'form-is-required ' : '';
 $class_group = trim('form-group  ' . $class . $this->getWarningClass());
 $class_control = trim('form-control');
 
+$inputAttributes = [
+    'class' => $class_control,
+    'id' => $this->getFieldId(),
+    'type' => 'file',
+    'name' => $unique,
+    'accept' => $allowed_extensions,
+];
+$inputAttributes = $this->getAttributeElements($inputAttributes, ['required', 'disabled', 'readonly']);
+
 ?>
 <div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
     <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
     <div class="input-group">
-        <input class="<?php echo $class_control ?>" id="<?php echo $this->getFieldId() ?>" type="file" accept="<?php echo $this->getElement('types') ?>" name="<?php echo $unique ?>" />
+        <input <?php echo implode(' ', $inputAttributes) ?> />
         <span class="input-group-btn"><button class="btn btn-default" type="button" onclick="const file = document.getElementById('<?= $this->getFieldId() ?>'); file.value = '';">&times;</button></span>
     </div>
     <?php echo $notice ?>
