@@ -164,7 +164,7 @@ if ($this->isInstalled()) {
                         [
                             'id' => $field['id'],
                             'choices' => $field['options'],
-                            'choice_attributes' => $field['attributes'],
+                            'choice_attributes' => $field['attributes'] ?? '',
                         ]
                     );
                     break;
@@ -183,7 +183,7 @@ if ($this->isInstalled()) {
                         [
                             'id' => $field['id'],
                             'choices' => $field['options'],
-                            'choice_attributes' => $field['attributes'],
+                            'choice_attributes' => $field['attributes'] ?? '',
                         ]
                     );
                     break;
@@ -200,7 +200,7 @@ if ($this->isInstalled()) {
                         where id = :id',
                         [
                             'id' => $field['id'],
-                            'choices' => $field['query'],
+                            'choices' => $field['query'] ?? '',
                         ]
                     );
                     break;
@@ -218,8 +218,8 @@ if ($this->isInstalled()) {
                         where id = :id',
                         [
                             'id' => $field['id'],
-                            'choices' => $field['query'],
-                            'choice_attributes' => $field['attributes'],
+                            'choices' => $field['query'] ?? '',
+                            'choice_attributes' => $field['attributes'] ?? '',
                         ]
                     );
                     break;
@@ -236,8 +236,8 @@ if ($this->isInstalled()) {
                         where id = :id',
                         [
                             'id' => $field['id'],
-                            'choices' => $field['query'],
-                            'choice_attributes' => $field['attributes'],
+                            'choices' => $field['query'] ?? '',
+                            'choice_attributes' => $field['attributes'] ?? '',
                         ]
                     );
                     break;

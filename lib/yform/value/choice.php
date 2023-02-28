@@ -186,7 +186,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 self::$yform_list_values[$fieldName][$value] = $label;
             }
         }
-        return self::$yform_list_values[$fieldName];
+        return self::$yform_list_values[$fieldName] ?? '';
     }
 
     public function getAttributes($element, array $attributes = [], array $directAttributes = [])
