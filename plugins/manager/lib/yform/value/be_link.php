@@ -130,4 +130,42 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             }
         }
     }
+    
+   public static function getSearchField($params)
+    {
+        $params['searchForm']->setValueField('text', ['name' => $params['field']->getName(), 'label' => $params['field']->getLabel(), 'notice' => rex_i18n::msg('yform_search_defaults_be_link_notice')]);
+    }
+	
+    public static function getSearchFilter($params)
+    {
+        $value = trim($params['value']);
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
+
+        if ('(empty)' == $value) {
+            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
+                $query
+                    ->where($field, '')
+                    ->where($field, null)
+                ;
+            }, 'OR');
+        }
+        if ('!(empty)' == $value) {
+            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
+                $query
+                    ->where($field, '', '<>')
+                    ->where($field, null, '<>')
+                ;
+            }, 'OR');
+        }
+
+        $pos = strpos($value, '*');
+        if (false !== $pos) {
+            $value = str_replace('%', '\%', $value);
+            $value = str_replace('*', '%', $value);
+            return $query->where($field, $value, 'LIKE');
+        }
+        return $query->where($field, $value);
+    }
 }
