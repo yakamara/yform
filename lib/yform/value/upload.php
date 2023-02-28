@@ -9,6 +9,8 @@
 
 class rex_yform_value_upload extends rex_yform_value_abstract
 {
+    public string $_upload_sessionKey = '';
+
     public function enterObject()
     {
         // TODO: Alte Dateien mit selben key löschen ?
@@ -230,8 +232,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $real_filepath = '';
 
         // Datei war bereits vorhanden - vorbereitung für den Download und setzen des Values
-        if ('' != $this->upload_getSessionVar('value', 'string', '')) {
-            $filename = (string) $this->upload_getSessionVar('value', 'string', '');
+        if ('' != $this->upload_getSessionVar('value')) {
+            $filename = (string) $this->upload_getSessionVar('value');
             $filepath = $this->upload_getFolder() . '/' . $this->getParam('main_id') . '_' . $filename;
             if (file_exists($filepath)) {
                 $real_filepath = $filepath;
@@ -381,7 +383,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         parent::postAction();
     }
 
-    public function upload_getFolder()
+    public function upload_getFolder(): string
     {
         $folders = [];
 
@@ -399,7 +401,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         return rex_path::pluginData('yform', 'manager', 'upload/'.implode('/', $folders));
     }
 
-    public static function upload_checkdownloadFile($filename, $filepath)
+    public static function upload_checkdownloadFile(string $filename, string $filepath): void
     {
         if (file_exists($filepath)) {
             ob_end_clean();
@@ -441,7 +443,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         ];
     }
 
-    public static function upload_getDownloadLink(string $table_name, string $field_name, $data_id): string
+    public static function upload_getDownloadLink(string $table_name, string $field_name, int $data_id): string
     {
         if ('' != $table_name && '' != $field_name && 0 < $data_id) {
             return '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$table_name.'&data_id='.$data_id.'&func=edit&rex_upload_downloadfile='.urlencode($field_name);
@@ -556,13 +558,17 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
     public function upload_getSessionKey(): string
     {
-        // key wurde aus dem Formular übertragen ?
-        $_upload_sessionKey = (string) $this->params['this']->getFieldValue($this->getName(), [$this->getId(), 'unique']);
-        if ('' == $_upload_sessionKey) {
-            $_upload_sessionKey = bin2hex(openssl_random_pseudo_bytes(32, $cstrong));
+        if ('' != $this->_upload_sessionKey) {
+            return $this->_upload_sessionKey;
         }
 
-        return $_upload_sessionKey;
+        // key wurde aus dem Formular übertragen ?
+        $this->_upload_sessionKey = (string) $this->params['this']->getFieldValue($this->getName(), [$this->getId(), 'unique']);
+        if ('' == $this->_upload_sessionKey) {
+            $this->_upload_sessionKey = bin2hex(openssl_random_pseudo_bytes(32, $cstrong));
+        }
+
+        return $this->_upload_sessionKey;
     }
 
     public function upload_setSessionVar(string $key, mixed $value): void
