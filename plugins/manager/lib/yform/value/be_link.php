@@ -15,8 +15,8 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
         ++$counter;
 
         if ($this->needsOutput() && $this->isViewable()) {
-            if (!$this->isEditable()){
-                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_link-view.tpl.php','value.view.tpl.php'], compact('counter'));
+            if (!$this->isEditable()) {
+                $this->params['form_output'][$this->getId()] = $this->parse(['value.be_link-view.tpl.php', 'value.view.tpl.php'], compact('counter'));
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.be_link.tpl.php', compact('counter'));
             }
@@ -70,7 +70,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
         return implode('<br />', $names);
     }
 
-    public static function isArticleInUse(\rex_extension_point $ep)
+    public static function isArticleInUse(rex_extension_point $ep)
     {
         $rexApiCall = rex_request(\rex_api_function::REQ_CALL_PARAM, 'string', '');
         if ('category_delete' == $rexApiCall || 'article_delete' == $rexApiCall) {
@@ -119,7 +119,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                     if ('' != $messages) {
                         $_REQUEST[\rex_api_function::REQ_CALL_PARAM] = '';
 
-                        \rex_extension::register('PAGE_TITLE_SHOWN', static function (\rex_extension_point $ep) use ($article, $messages) {
+                        \rex_extension::register('PAGE_TITLE_SHOWN', static function (rex_extension_point $ep) use ($article, $messages) {
                             $warning = $article->isStartArticle() ? \rex_i18n::msg('yform_structure_category_could_not_be_deleted') : \rex_i18n::msg('yform_structure_article_could_not_be_deleted');
                             $warning .= '<br /><ul>'.$messages.'</ul>';
                             $subject = $ep->getSubject();
@@ -129,5 +129,25 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                 }
             }
         }
+    }
+
+    public static function getSearchField($params)
+    {
+        $params['searchForm']->setValueField(
+            'be_link',
+            [
+                'name' => $params['field']->getName(),
+                'label' => $params['field']->getLabel(),
+            ]
+        );
+    }
+
+    public static function getSearchFilter($params)
+    {
+        $value = trim($params['value']);
+        /** @var rex_yform_manager_query $query */
+        $query = $params['query'];
+        $field = $query->getTableAlias() . '.' . $params['field']->getName();
+        return '' == $value ? $query : $query->whereListContains($field, $value);
     }
 }
