@@ -173,7 +173,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
             $choiceList = self::createChoiceList([
                 'choice_attributes' => (isset($field['choice_attributes'])) ? $field['choice_attributes'] : '',
                 'choice_label' => (isset($field['choice_label'])) ? $field['choice_label'] : '',
-                'choices' => (isset($field['choices'])) ? $field['choices'] : [],
+                'choices' => (isset($field['choices'])) ? rex_i18n::translate($field['choices']) : [],
                 'expanded' => (isset($field['expanded'])) ? $field['expanded'] : '',
                 'group_by' => (isset($field['group_by'])) ? $field['group_by'] : '',
                 'multiple' => (isset($field['multiple'])) ? $field['multiple'] : false,
@@ -219,7 +219,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $choiceList = self::createChoiceList([
             'choice_attributes' => (isset($params['field']['choice_attributes'])) ? $params['field']['choice_attributes'] : '',
             'choice_label' => (isset($params['field']['choice_label'])) ? $params['field']['choice_label'] : '',
-            'choices' => (isset($params['field']['choices'])) ? $params['field']['choices'] : [],
+            'choices' => (isset($params['field']['choices'])) ? rex_i18n::translate($params['field']['choices']) : [],
             'expanded' => (isset($params['field']['expanded'])) ? $params['field']['expanded'] : '',
             'group_by' => (isset($params['field']['group_by'])) ? $params['field']['group_by'] : '',
             'multiple' => (isset($params['field']['multiple'])) ? $params['field']['multiple'] : false,
