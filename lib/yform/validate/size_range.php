@@ -33,7 +33,7 @@ class rex_yform_validate_size_range extends rex_yform_validate_abstract
             $maxsize = (int) $this->getElement('max');
         }
 
-        $size = mb_strlen($Object->getValue());
+        $size = mb_strlen(strval($Object->getValue()));
 
         if ($minsize > -1 && $minsize > $size) {
             $w = true;
