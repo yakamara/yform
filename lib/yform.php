@@ -142,20 +142,21 @@ class rex_yform
         return $this->viewable;
     }
 
-    public static function addTemplatePath($path)
+    public static function addTemplatePath(string $path): void
     {
         self::$TemplatePaths[] = $path;
     }
 
-    public function setDebug($s = true): self
+    public function setDebug(bool $s = true): self
     {
         $this->objparams['debug'] = $s;
         return $this;
     }
 
-    public function addPostSaveFunction($callback)
+    public function addPostSaveFunction($callback): self
     {
         $this->postSaveFunctions[] = $callback;
+        return $this;
     }
 
     public function getPostSaveFunctions()
@@ -163,7 +164,7 @@ class rex_yform
         return $this->postSaveFunctions;
     }
 
-    public function setData($data)
+    public function setData($data): self
     {
         $this->setObjectparams('data', $data);
         $data['id'] = isset($data['id']) ? (int) $data['id'] : 0;
@@ -173,7 +174,7 @@ class rex_yform
         return $this;
     }
 
-    public function setFormData(string $pipelineNotification, $refresh = true): self
+    public function setFormData(string $pipelineNotification, bool $refresh = true): self
     {
         $this->setObjectparams('form_data', $pipelineNotification, $refresh);
 
@@ -196,21 +197,21 @@ class rex_yform
         return $this;
     }
 
-    public function setValueField($type = '', $values = []): self
+    public function setValueField(string $type = '', array $values = []): self
     {
         $values = array_merge([$type], $values);
         $this->objparams['form_elements'][] = $values;
         return $this;
     }
 
-    public function setValidateField($type = '', $values = []): self
+    public function setValidateField(string $type = '', array $values = []): self
     {
         $values = array_merge(['validate', $type], $values);
         $this->objparams['form_elements'][] = $values;
         return $this;
     }
 
-    public function setActionField($type = '', $values = []): self
+    public function setActionField(string $type = '', array $values = []): self
     {
         $values = array_merge(['action', $type], $values);
         $this->objparams['form_elements'][] = $values;
@@ -230,7 +231,7 @@ class rex_yform
         return $this;
     }
 
-    public function setHiddenField($key, $value): self
+    public function setHiddenField(string $key, mixed $value): self
     {
         $this->objparams['form_hiddenfields'][$key] = $value;
         return $this;
@@ -244,7 +245,7 @@ class rex_yform
         return $this;
     }
 
-    public function setObjectparams($k, $v, $refresh = true)
+    public function setObjectparams(string $k, $v, bool $refresh = true)
     {
         if (!$refresh && isset($this->objparams[$k])) {
             $this->objparams[$k] .= $v;
@@ -254,7 +255,7 @@ class rex_yform
         return $this->objparams[$k];
     }
 
-    public function getObjectparams($key)
+    public function getObjectparams(string $key)
     {
         if (!isset($this->objparams[$key])) {
             return false;
