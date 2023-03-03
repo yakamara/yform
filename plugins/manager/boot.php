@@ -27,6 +27,7 @@ if (rex::isBackend() && rex::getUser()) {
     });
 
     rex_view::addJsFile($this->getAssetsUrl('manager.js'));
+    rex_view::addJsFile($this->getAssetsUrl('relations.js'));
     rex_view::addCssFile($this->getAssetsUrl('manager.css'));
     rex_view::addJsFile($this->getAssetsUrl('widget.js'));
 

@@ -50,7 +50,7 @@ foreach ($forms as $form) {
 echo '
         </div>
         <div class="btn-group btn-group-xs">
-            <button type="button" class="btn btn-default addme" title="add" data-yform-be-relation-add="'.$fieldkey.'-'.$counter.'"><i class="rex-icon rex-icon-add-module"></i></button>
+            <button type="button" class="btn btn-default addme" title="add" data-yform-be-relation-add="'.$fieldkey.'-'.$counter.'"><i class="rex-icon rex-icon-add-module"></i><span class="rex-hidden">+</span></button>
         </div>
         '.$notice.'
     </div>';
