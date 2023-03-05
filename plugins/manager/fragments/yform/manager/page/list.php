@@ -72,6 +72,7 @@ foreach ($this->table->getFields() as $field) {
                 ['field' => $field->toArray(), 'fields' => $this->table->getFields()]
             );
         }
+        $list->setColumnLayout($field->getName(), ['<th>###VALUE###</th>', '<td class="yform-table-field-value-'.rex_escape($field->getTypeName()).' yform-table-field-name-'.rex_escape($field->getName()).'" data-title="###LABEL###">###VALUE###</td>']);
     }
 
     if ('value' == $field->getType()) {
