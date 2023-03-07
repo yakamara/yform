@@ -693,7 +693,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $identifier = explode('.', $identifier, 2);
         foreach ($identifier as &$part) {
             if ('*' !== $part) {
-                $part = '`'.$part.'`';
+                $part = '`'.str_replace('`', '``', $part).'`';
             }
         }
 
