@@ -125,7 +125,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         }
 
         if ($alias) {
-            $expression .= ' AS '.$alias;
+            $expression .= ' AS '.$this->quoteIdentifier($alias);
         }
         $this->select[] = $expression;
 
@@ -237,7 +237,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         $join = sprintf('%s JOIN `%s`', mb_strtoupper($type), $table);
         if ($alias) {
-            $join .= ' AS '.$alias;
+            $join .= ' AS '.$this->quoteIdentifier($alias);
         }
         if ($condition) {
             $join .= ' ON '.$condition;
@@ -508,7 +508,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $query = sprintf('SELECT %s FROM `%s`', implode(', ', $select), $this->table);
 
         if ($this->alias) {
-            $query .= ' AS '.$this->alias;
+            $query .= ' AS '.$this->quoteIdentifier($this->alias);
         }
 
         if ($this->joins) {
