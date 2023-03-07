@@ -9,31 +9,31 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /** @var string */
     private $table;
 
-    /** @var string */
+    /** @var string|null */
     private $alias;
     /** @var bool */
     private $selectResetted = false;
-    /** @var string[] */
+    /** @var list<string> */
     private $select = [];
 
-    /** @var string[] */
+    /** @var list<string> */
     private $joins = [];
 
     /** @var 'AND'|'OR' */
     private $whereOperator = 'AND';
-    /** @var string[] */
+    /** @var list<string> */
     private $where = [];
     /** @var array<string, int|string> */
     private $params = [];
     /** @var int */
     private $paramCounter = 1;
 
-    /** @var string[] */
+    /** @var list<string> */
     private $orderBy = [];
     /** @var bool */
     private $orderByResetted = false;
 
-    /** @var string[] */
+    /** @var list<string> */
     private $groupBy = [];
 
     /** @var string|null */
@@ -94,7 +94,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param string|string[] $column
+     * @param string|list<string> $column
      * @return $this
      */
     public function select($column, ?string $alias = null): self
@@ -112,7 +112,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param string|string[] $expression
+     * @param string|list<string> $expression
      * @return $this
      */
     public function selectRaw($expression, ?string $alias = null): self
@@ -373,6 +373,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
+     * @param array<string, int|string> $params
      * @return $this
      */
     public function whereRaw(string $where, array $params = []): self
@@ -384,7 +385,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param array|callable $nested
+     * @param array<string, mixed>|callable(self<T>):void $nested
      * @param 'AND'|'OR' $operator
      * @return $this
      */
@@ -575,7 +576,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param int[] $ids
+     * @param list<int> $ids
      *
      * @return rex_yform_manager_collection<T>
      */
@@ -604,7 +605,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @return mixed
+     * @return scalar|null
      */
     public function findValue(string $column)
     {
@@ -612,7 +613,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @return mixed
+     * @return scalar|null
      */
     public function findValueRaw(string $expression)
     {
@@ -628,11 +629,19 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return $sql->getRows() ? $sql->getValue('value') : null;
     }
 
+    /**
+     * @return array<string|int, scalar|null>
+     * @phpstan-return ($keyColumn is null ? list<scalar|null> : array<string|int, scalar|null>)
+     */
     public function findValues(string $column, ?string $keyColumn = null): array
     {
         return $this->findValuesRaw($this->quoteIdentifier($column), $keyColumn);
     }
 
+    /**
+     * @return array<string|int, scalar|null>
+     * @phpstan-return ($keyColumn is null ? list<scalar|null> : array<string|int, scalar|null>)
+     */
     public function findValuesRaw(string $expression, ?string $keyColumn = null): array
     {
         $query = clone $this;
@@ -728,9 +737,10 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
+     * @param array<string, mixed> $where
      * @param 'AND'|'OR' $operator
      */
-    private function buildNestedWhere(array $where, $operator = 'AND'): string
+    private function buildNestedWhere(array $where, string $operator = 'AND'): string
     {
         $nextOperator = 'AND' === $operator ? 'OR' : 'AND';
 
