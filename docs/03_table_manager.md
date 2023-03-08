@@ -1200,3 +1200,29 @@ Rückwärtskompatible Lösung um den csrf_key auch schon in YForm-Versionen < 4 
 u.a. hier realisiert: 
 
 [Quick-Naviagtion](https://github.com/FriendsOfREDAXO/quick_navigation/blob/1168253ce47e0b2528856ba0a315565be51b6a91/lib/QuickNavigation.php#L481-L482)
+
+## YForm Listen beeinflussen und z.B. Textfelder komplett oder eingeschränkt ausgeben
+
+Der beste Weg ist es, sich in der boot.php des Projekt-AddOn an die Listenausgabe über einen Extensionpoint (EP) anzudocken.
+
+```php
+rex_extension::register('YFORM_DATA_LIST', static function ($ep) {
+    /** @var rex_yform_list $list */
+    $list = $ep->getSubject();
+    $params = $ep->getParams();
+    $textFields = ['text', 'textarea', 'textarea', 'hashvalue', 'ip', 'showvalue'];
+    foreach ($params['table']->getFields() as $field) {
+        if ('value' == $field->getType() && in_array($field->getTypeName(), $textFields, true)) {
+            $list->setColumnFormat(
+                $field->getName(),
+                'custom',
+                static function ($params) {
+                    $value = rex_escape($params['value']);
+                    // Hier die Veränderungen einbauen
+                    return rex_escape($value);
+                }
+            );
+        }
+    }
+});
+```
