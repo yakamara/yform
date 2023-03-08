@@ -144,15 +144,27 @@ if (isset($rex_yform_manager_opener['id'])) {
     $actionButtonsLoaded = $this->getVar('actionButtons') ?? [];
 
     foreach ($actionButtonsLoaded as $actionButtonKey => $actionButton) {
+        if (!is_array($actionButton)) {
+            continue;
+        }
+
         $url = null;
         if (isset($actionButton['url']) && is_string($actionButton['url'])) {
             $url = $actionButton['url'];
         }
         if (!$url) {
-            $url = $list->getUrl(
-                array_merge($actionButtonParams, ['data_id' => '___id___', 'func' => $actionButtonKey], $actionButton['params']),
-                false
-            );
+            try {
+                $url = $list->getUrl(
+                    array_merge(
+                        $actionButtonParams,
+                        ['data_id' => '___id___', 'func' => $actionButtonKey],
+                        $actionButton['params']
+                    ),
+                    false
+                );
+            } catch (throwable $e) {
+                $url = '';
+            }
         }
 
         $attributes = [];
