@@ -11,30 +11,67 @@ class rex_yform_action_create_table extends rex_yform_action_abstract
 {
     public function executeAction(): void
     {
-        $table_name = $this->getElement(2);
-        $table_name = str_replace('%TABLE_PREFIX%', rex::getTablePrefix(), $table_name);
-        $table_exists = false;
-        $cols = [];
+        $tableName = $this->getElement(2);
+        $tableExists = true;
 
-        $tables = rex_sql::factory()->getArray('show tables');
-        foreach ($tables as $table) {
-            if (current($table) == $table_name) {
-                $table_exists = true;
-                break;
+        $table = rex_yform_manager_table::get($tableName);
+        if (null === $table) {
+            $tableExists = false;
+        }
+
+        if (!$tableExists) {
+            $yform = new rex_yform();
+            $yform->setObjectparams('send', '1');
+            $yform->setObjectparams('csrf_protection', '0');
+            $yform->setObjectparams('main_table', rex_yform_manager_table::table());
+            $yform->setValueField('hidden', ['table_name', $tableName]);
+            $yform->setValueField('hidden', ['name', $tableName]);
+            $yform->setValueField('hidden', ['status', '1']);
+            $yform->setActionField('db', [rex_yform_manager_table::table()]);
+            $form = $yform->getForm();
+
+            rex_yform_manager_table::deleteCache();
+            $table = rex_yform_manager_table::get($tableName);
+            if ($table) {
+                rex_yform_manager_table_api::generateTableAndFields($table);
             }
         }
 
-        if (!$table_exists) {
-            rex_sql::factory()->setQuery('CREATE TABLE `' . $table_name . '` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
-        }
+        rex_yform_manager_table::deleteCache();
+        $table = rex_yform_manager_table::get($tableName);
 
-        foreach (rex_sql::factory()->getArray('show columns from ' . $table_name) as $k => $v) {
-            $cols[] = $v['Field'];
-        }
+        if ($table) {
+            $migrateTable = false;
+            $columns = $table->getColumns();
+            foreach ($this->getObjects() as $object) {
+                if ('' === $object->getName() || 'objparams' === $object->type) {
+                    continue;
+                }
+                if (!isset($columns[$object->getName()])) {
+                    $dbType = 'TEXT';
 
-        foreach ($this->params['value_pool']['sql'] as $key => $value) {
-            if (!in_array($key, $cols)) {
-                rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` ADD `' . $key . '` TEXT NOT NULL;');
+                    $class = 'rex_yform_value_'.$object->type;
+                    /** @var rex_yform_base_abstract $cl */
+                    $cl = new $class();
+                    $definitions = $cl->getDefinitions();
+
+                    if (!isset($definitions['type']) || 'value' !== $definitions['type']) {
+                        continue;
+                    }
+
+                    if (isset($definitions['db_type']) && isset($definitions['db_type'][0])) {
+                        $dbType = $definitions['db_type'][0];
+                    }
+
+                    if ('none' !== $dbType) {
+                        $migrateTable = true;
+                        $sql = rex_sql::factory();
+                        $sql->setQuery('ALTER TABLE `'.$tableName.'` ADD `'.$object->getName().'` '.$dbType.' NOT NULL;');
+                    }
+                }
+            }
+            if ($migrateTable) {
+                rex_yform_manager_table_api::migrateTable($tableName);
             }
         }
     }
