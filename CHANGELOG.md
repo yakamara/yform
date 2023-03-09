@@ -1,13 +1,13 @@
 Changelog
 =========
 
-Version 4.1.0 - x.02.2023
+Version 4.1.0 - x.03.2023
 --------------------------
 ### Neu
 
 * PHP >= 8.1 und REDAXO mindestens 5.15
 * Date/Datetime-Feld Default-Modifikationen eingebaut
-* Tools-Plugin angepasst und Dateauswahl um Today.. erweitert
+* Tools-Plugin angepasst und Dateiauswahl um Today.. erweitert
 * Felder: postSave Functions, damit sich Felder direkt an die Speicherung dranhängen können
 * BE Ansicht: Umbau auf Fragment und Tablelayoutoption. Man kann man die Ausgaben/Layouts der BE Tabellen/Formulare anpassen
 * dataset save - add history enable/disable feature ergänzt
@@ -16,7 +16,14 @@ Version 4.1.0 - x.02.2023
 * index-Feld mit salt ergänzt, hashvalue nun dadurch deprecated und ersetzbar
 * neue Methode um eine Url zum Datensatz zu erhalten
 * Felder: date/datetime/time/datestamp Anzeigeformat um Notice ergänzt
-
+* CodeStyle verbessert
+* Manager: in den Backendliste sind nun mehr CSS Classen verfügbar um die Darstellung gezielter beeinflussen zu können
+* Relationsfelder sind nun optimiert, sodass eine Frontend verwendung einfacher wird.
+* Performance verbessert. Besonders beim Import und bei der Generierung von Tabellen
+* be_link search added in backend
+* manager: search in backend bei texten um ! (nicht) Suchen ergänzt
+* NONCE Felder ergänzt, da REDAXO 5.15 nun NONCE Felder unterstützt
+* manager: Liste der Datensätz: AktionsButton umgebaut. Waren nicht sinnvoll erweiterbar
 
 ### Korrekturen
 
@@ -27,8 +34,21 @@ Version 4.1.0 - x.02.2023
 * In Whooops Pfad zum E-Mail-Template klickbar gemacht
 * YTemplate Checkbox angepasst - Leerzeichen entfernt
 * rex_yform_manager_collection: Methode current existiert in PHP 8 nicht mehr
+* REST API mit REDAXO im Unterordner korrigiert
+* REST API mit ähnlichen Endpointbezeichnungen gehen wieder.
+* Textähnliche Felder werden in der Ausgabe nun auf 100 begrenzt. Doku wurde ergänzt mit Beschreibung wie man das individuell anpassen kann
+* Nicht vorhandene REX_YFORM_DATA Felder erzeugen nun keine Notices mehr
+* Uploadfeld war fehlerhaft. Konfiguration verbessert.
+* Fehler bei Errormeldungen wenn Objekte nicht vorhanden sind behoben
+* Signiature Feld funktionierte bei Touch devices nicht richtig
+* historie: Speichern von 0 Werten korrigiert
 
-Danke Thomas Blum, Gregor Harlan, Christoph Boecker, Alexander Walther, Daniel Weitenauer, Michael Rainer
+
+### Sicherheit
+
+* YORM. Das Escapen von Identifieren ist nun eingebaut. Wurde vorher nicht darauf geachtet, wären SQL Injections möglich gewesen.
+
+Danke Thomas Blum, Gregor Harlan, Christoph Boecker, Alexander Walther, Daniel Weitenauer, Michael Rainer, jganthaler, Jelle Schutter, Gerald Urbas, Robert Rupf, cukabeka, Daniel Bagel, Norbert Micheel
 
 
 Version 4.0.4 - 07.10.2022
