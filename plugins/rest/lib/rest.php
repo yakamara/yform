@@ -44,7 +44,12 @@ class rex_yform_rest
     public static function getCurrentPath()
     {
         $url = parse_url($_SERVER['REQUEST_URI']);
-        return $url['path'] ?? '';
+        if (isset($url['path']) && class_exists('\rex_yrewrite')) {
+            $currentPath = str_replace(rex_yrewrite::getCurrentDomain()->getPath(), '/', $url['path']);
+        } else {
+            $currentPath = '';
+        }
+        return rtrim($currentPath, '/') . '/';
     }
 
     /**
@@ -60,6 +65,7 @@ class rex_yform_rest
 
         foreach (self::$routes as $route) {
             $routePath = self::$preRoute . $route->getPath();
+            $routePath = rtrim($routePath, '/') . '/';
 
             if (mb_substr(self::getCurrentPath(), 0, mb_strlen($routePath)) != $routePath) {
                 continue;
