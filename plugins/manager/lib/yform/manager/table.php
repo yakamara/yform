@@ -9,6 +9,9 @@
 
 class rex_yform_manager_table implements ArrayAccess
 {
+    public static array $tableLayouts = [];
+    public static string $defaultTableLayout = 'yform/manager/page/layout.php';
+
     protected $values = [];
     protected $columns = [];
 
@@ -25,14 +28,8 @@ class rex_yform_manager_table implements ArrayAccess
     protected static bool $loadedAllTables = false;
 
     private static $cache;
-    protected $relatedTableNames = [];
-    protected $fieldValues = [];
-
-    /** @var array<string, class-string<self>> */
-    private static array $tableToModel = [];
-
-    /** @var array<class-string<self>, string> */
-    private static array $modelToTable = [];
+    protected array $relatedTableNames = [];
+    protected array $fieldValues = [];
 
     private function __construct(array $data)
     {
@@ -42,44 +39,18 @@ class rex_yform_manager_table implements ArrayAccess
         $this->fieldValues = $data['fields'];
     }
 
-    /**
-     * @param class-string<self> $modelClass
-     */
-    public static function setModelClass(string $tableName, string $modelClass): void
+    public static function setTableLayout(string $tableName, string $path): void
     {
-        self::$tableToModel[$tableName] = $modelClass;
-        self::$modelToTable[$modelClass] = $tableName;
+        self::$tableLayouts[$tableName] = $path;
     }
 
-    /**
-     * @return null|class-string<self>
-     */
-    public static function getModelClass(string $tableName): ?string
+    public function getTableLayout(): string
     {
-        return self::$tableToModel[$tableName] ?? null;
-    }
-
-    /**
-     * @return class-string<self>
-     */
-    private static function tableToModel(string $tableName): string
-    {
-        return self::getModelClass($tableName) ?: __CLASS__;
-    }
-
-    private static function modelToTable(): string
-    {
-        $class = static::class;
-
-        if (isset(self::$modelToTable[$class])) {
-            return self::$modelToTable[$class];
+        $tableLayout = self::$defaultTableLayout;
+        if (isset(self::$tableLayouts[$this->getTableName()])) {
+            $tableLayout = self::$tableLayouts[$this->getTableName()];
         }
-
-        if (__CLASS__ === $class) {
-            throw new RuntimeException('Missing $table argument');
-        }
-
-        throw new RuntimeException(sprintf('Missing $table declaration for model class "%s"', $class));
+        return $tableLayout;
     }
 
     /**
@@ -89,19 +60,9 @@ class rex_yform_manager_table implements ArrayAccess
      */
     public static function get($tableName)
     {
-        $tableName = $tableName ?: static::modelToTable();
-
-        $class = self::getModelClass($tableName);
-
-        if ($class && __CLASS__ === static::class) {
-            /* @noinspection PhpUndefinedMethodInspection */
-            return $class::get($tableName);
+        if (isset(self::$tables[$tableName])) {
+            return self::$tables[$tableName];
         }
-
-        // if (isset(self::$tables[$tableName])) {
-        //     dump(self::$tables[$tableName]);
-        //     return self::$tables[$tableName];
-        // }
 
         $cache = self::getCache();
 
@@ -254,7 +215,7 @@ class rex_yform_manager_table implements ArrayAccess
 
     public function parseLayout(rex_fragment $fragment): string
     {
-        return $fragment->parse('yform/manager/page/layout.php');
+        return $fragment->parse($this->getTableLayout());
     }
 
     public function getSortFieldName()
