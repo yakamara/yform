@@ -9,7 +9,7 @@
 
 class rex_yform_value_datestamp extends rex_yform_value_abstract
 {
-    private $value_datestamp_currentValue = '';
+    private string $value_datestamp_currentValue = '';
 
     public function preValidateAction(): void
     {
@@ -23,17 +23,22 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
         $value = $this->getValue();
         $this->value_datestamp_currentValue = $value;
-        if (2 == $this->getElement('only_empty')) {
-            // wird nicht gesetzt
-        } elseif (1 != $this->getElement('only_empty')) { // -> == 0
-            // wird immer neu gesetzt
-            $value = $default_value;
-        } elseif ('' != $this->getValue() && '0000-00-00 00:00:00' != $this->getValue()) {
-            // wenn Wert vorhanden ist direkt zurück
-        } elseif (isset($this->params['sql_object']) && '' != $this->params['sql_object']->getValue($this->getName()) && '0000-00-00 00:00:00' != $this->params['sql_object']->getValue($this->getName())) {
-            // sql object vorhanden und Wert gesetzt ?
-        } else {
-            $value = $default_value;
+
+        switch ($this->getElement('only_empty')) {
+            case 2:
+                // wird nicht gesetzt
+                break;
+            case 1:
+                // nur wenn leer, oder neu
+                if ('0000-00-00 00:00:00' == $value || '' == $value || $this->params['main_id'] < 1) {
+                    $value = $default_value;
+                    $this->value_datestamp_currentValue = '';
+                }
+                break;
+            case 0:
+            default:
+                // wird immer neu gesetzt
+                $value = $default_value;
         }
         $this->setValue($value);
     }
