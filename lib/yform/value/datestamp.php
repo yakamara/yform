@@ -21,7 +21,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
             }
         }
 
-        $value = $this->getValue();
+        $value = $this->getValue() ?? '';
         $this->value_datestamp_currentValue = $value;
 
         switch ($this->getElement('only_empty')) {
