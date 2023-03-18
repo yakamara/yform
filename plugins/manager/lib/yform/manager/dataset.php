@@ -361,6 +361,8 @@ class rex_yform_manager_dataset
 
     /**
      * @return $this
+     *
+     * @internal
      */
     public function setRelatedCollection(string $key, rex_yform_manager_collection $collection): self
     {
