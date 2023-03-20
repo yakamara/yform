@@ -190,6 +190,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $forms = [];
 
+            $form_ytemplate = $this->params['this']->getObjectparams('form_ytemplate');
             $form_name = $this->params['this']->getObjectparams('form_name');
             $form_array = array_merge($this->params['this']->getObjectparams('form_array'), [$this->getId()]);
 
@@ -215,6 +216,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $data = $table->createDataset();
             $yform = $data->getForm();
 
+            $yform->setObjectparams('form_ytemplate', $form_ytemplate);
             $yform->setObjectparams('form_name', $form_name);
             $yform->setObjectparams('form_array', array_merge($form_array, [$relationKey])); // $relationKey]);
 
@@ -247,6 +249,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             if (!$send) {
                 foreach ($relations as $counter => $relation) {
                     $yform = $relation->getForm();
+                    $yform->setObjectparams('form_ytemplate', $form_ytemplate);
                     $yform->setObjectparams('form_name', $form_name);
                     $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
                     $yform->setObjectparams('form_action', '');
@@ -288,6 +291,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     foreach ($relationVars as $counter => $relatedVarData) {
                         $data = $table->createDataset();
                         $yform = $data->getForm();
+                        $yform->setObjectparams('form_ytemplate', $form_ytemplate);
                         $yform->setObjectparams('form_name', $form_name);
                         $yform->setObjectparams('form_array', array_merge($form_array, [$counter]));
                         $yform->setObjectparams('form_action', '');
