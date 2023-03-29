@@ -28,6 +28,15 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /** @var int */
     private $paramCounter = 1;
 
+    /** @var 'AND'|'OR' */
+    private $havingOperator = 'AND';
+    /** @var list<string> */
+    private $having = [];
+    /** @var array<string, int|string> */
+    private $havingParams = [];
+    /** @var int */
+    private $havingParamCounter = 1;
+
     /** @var list<string> */
     private $orderBy = [];
     /** @var bool */
@@ -418,6 +427,143 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /**
      * @return $this
      */
+    public function resetHaving(): self
+    {
+        $this->having = [];
+        $this->havingParams = [];
+        $this->havingParamCounter = 1;
+
+        return $this;
+    }
+
+    /**
+     * @param 'AND'|'OR' $operator
+     * @return $this
+     */
+    public function sethavingOperator(string $operator): self
+    {
+        $this->havingOperator = $operator;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     * @return $this
+     */
+    public function having(string $column, $value, ?string $operator = null): self
+    {
+        if (is_array($value)) {
+            $param = [];
+            foreach ($value as $v) {
+                $param[] = $this->addHavingParam($v);
+            }
+            $param = '('.implode(', ', $param).')';
+
+            $operator = $operator ?: 'IN';
+        } else {
+            $param = $this->addHavingParam($value);
+
+            $operator = $operator ?: '=';
+        }
+
+        $this->having[] = sprintf('%s %s %s', $this->quoteIdentifier($column), $operator, $param);
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function havingNot(string $column, $value): self
+    {
+        $operator = is_array($value) ? 'NOT IN' : '!=';
+
+        return $this->having($column, $value, $operator);
+    }
+
+    /**
+     * @return $this
+     */
+    public function havingNull(string $column): self
+    {
+        $this->having[] = $this->quoteIdentifier($column).' IS NULL';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function havingNotNull(string $column): self
+    {
+        $this->having[] = $this->quoteIdentifier($column).' IS NOT NULL';
+
+        return $this;
+    }
+
+    /**
+     * @param mixed  $from
+     * @param mixed  $to
+     * @return $this
+     */
+    public function havingBetween(string $column, $from, $to): self
+    {
+        $this->having[] = sprintf('%s BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addHavingParam($from), $this->addHavingParam($to));
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $from
+     * @param mixed $to
+     * @return $this
+     */
+    public function havingNotBetween(string $column, $from, $to): self
+    {
+        $this->having[] = sprintf('%s NOT BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addHavingParam($from), $this->addHavingParam($to));
+
+        return $this;
+    }
+
+    /**
+     * Where the comma separated list column contains the given value or any of the given values.
+     *
+     * @param string           $column Column with comma separated list
+     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @return $this
+     */
+    public function havingListContains(string $column, $value): self
+    {
+        if (!is_array($value)) {
+            $this->having[] = sprintf('FIND_IN_SET(%s, %s)', $this->addHavingParam($value), $this->quoteIdentifier($column));
+
+            return $this;
+        }
+
+        $regex = '(^|,)('.implode('|', array_map('intval', $value)).')(,|$)';
+        $this->having[] = sprintf('%s REGEXP %s', $this->quoteIdentifier($column), $this->addHavingParam($regex));
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, int|string> $params
+     * @return $this
+     */
+    public function havingRaw(string $having, array $params = []): self
+    {
+        $this->having[] = $having;
+        $this->havingParams = array_merge($this->havingParams, $params);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function resetGroupBy()
     {
         $this->groupBy = [];
@@ -523,6 +669,10 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             $query .= ' GROUP BY '.implode(', ', $this->groupBy);
         }
 
+        if ($this->having) {
+            $query .= ' HAVING '.implode(' '.$this->havingOperator.' ', $this->having);
+        }
+
         if (!$this->orderBy && !$this->orderByResetted) {
             $table = $this->getTable();
             $this->orderBy($this->getTableAlias().'.'.$table->getSortFieldName(), $table->getSortOrderName());
@@ -544,7 +694,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function getParams(): array
     {
-        return $this->params;
+        return array_merge($this->params, $this->havingParams);
     }
 
     /**
@@ -732,6 +882,17 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         $param = 'p'.$this->paramCounter++;
         $this->params[$param] = $this->normalizeValue($value);
+
+        return ':'.$param;
+    }
+
+    /**
+     * @param mixed $value
+     */
+    private function addHavingParam($value): string
+    {
+        $param = 'h'.$this->havingParamCounter++;
+        $this->havingParams[$param] = $this->normalizeValue($value);
 
         return ':'.$param;
     }
