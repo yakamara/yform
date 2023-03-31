@@ -366,7 +366,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereRaw(string $where, array $params = []): self
     {
-        $this->where[] = $where;
+        $this->where[] = '('.$where.')';
         $this->params[self::PARAM_WHERE] = array_merge($this->params[self::PARAM_WHERE] ?? [], $params);
 
         return $this;
@@ -383,7 +383,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $operator = strtoupper(trim($operator));
 
         if (is_array($nested)) {
-            $this->where[] = $this->buildNestedWhere($nested, $operator);
+            $this->where[] = '('.$this->buildNestedWhere($nested, $operator).')';
 
             return $this;
         }
