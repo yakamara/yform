@@ -513,7 +513,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function havingRaw(string $having, array $params = []): self
     {
-        $this->having[] = $having;
+        $this->having[] = '('.$having.')';
         $this->params[self::PARAM_HAVING] = array_merge($this->params[self::PARAM_HAVING] ?? [], $params);
 
         return $this;
