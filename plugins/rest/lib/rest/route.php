@@ -116,32 +116,36 @@ class rex_yform_rest_route
                     $baseInstances = true;
 
                     // Base Instances with filter and order
-                    $query = $this->getFilterQuery($query, $fields, $get);
-                    $itemsAll = $query->count();
+                    try {
+                        $query = $this->getFilterQuery($query, $fields, $get);
+                        $itemsAll = $query->count();
 
-                    $per_page = (isset($get['per_page'])) ? (int) $get['per_page'] : (int) $table->getListAmount();
-                    $per_page = ($per_page < 0) ? $per_page = $table->getListAmount() : $per_page;
+                        $per_page = (isset($get['per_page'])) ? (int) $get['per_page'] : (int) $table->getListAmount();
+                        $per_page = ($per_page < 0) ? $per_page = $table->getListAmount() : $per_page;
 
-                    $currentPage = (isset($get['page'])) ? (int) $get['page'] : 1;
-                    $currentPage = ($currentPage < 0) ? 1 : $currentPage;
+                        $currentPage = (isset($get['page'])) ? (int) $get['page'] : 1;
+                        $currentPage = ($currentPage < 0) ? 1 : $currentPage;
 
-                    $query->limit(($currentPage - 1) * $per_page, $per_page);
+                        $query->limit(($currentPage - 1) * $per_page, $per_page);
 
-                    if (isset($get['order']) && is_array($get['order'])) {
-                        foreach ($get['order'] as $orderName => $orderValue) {
-                            if (array_key_exists($orderName, $fields)) {
-                                $orderValue = ('desc' != $orderValue) ? 'asc' : 'desc';
-                                $order[$orderName] = $orderValue;
-                                $query->orderBy($orderName, $orderValue);
+                        if (isset($get['order']) && is_array($get['order'])) {
+                            foreach ($get['order'] as $orderName => $orderValue) {
+                                if (array_key_exists($orderName, $fields)) {
+                                    $orderValue = ('desc' != $orderValue) ? 'asc' : 'desc';
+                                    $order[$orderName] = $orderValue;
+                                    $query->orderBy($orderName, $orderValue);
+                                }
                             }
+                            if (0 == count($order)) {
+                                $order[$table->getSortFieldName()] = $table->getSortOrderName();
+                            }
+                            $query->orderBy($table->getSortFieldName(), $table->getSortOrderName());
                         }
-                        if (0 == count($order)) {
-                            $order[$table->getSortFieldName()] = $table->getSortOrderName();
-                        }
-                        $query->orderBy($table->getSortFieldName(), $table->getSortOrderName());
-                    }
 
-                    $instances = $query->find();
+                        $instances = $query->find();
+                    } catch (rex_sql_exception $e) {
+                        rex_yform_rest::sendError('400', 'query-error', []);
+                    }
                 }
 
                 /*
@@ -280,7 +284,7 @@ class rex_yform_rest_route
 
                 break;
 
-                // ----- /END GET
+            // ----- /END GET
 
             case 'post':
                 $instance = $table->createDataset();
@@ -505,13 +509,13 @@ class rex_yform_rest_route
                 ];
         }
         return
-                [
-                    'id' => $instance->getId(),
-                    'type' => $this->getTypeFromInstance($instance),
-                    'attributes' => $this->getInstanceAttributes($instance, $parents),
-                    'relationships' => $this->getInstanceRelationships($instance, $parents),
-                    'links' => $links,
-                ];
+            [
+                'id' => $instance->getId(),
+                'type' => $this->getTypeFromInstance($instance),
+                'attributes' => $this->getInstanceAttributes($instance, $parents),
+                'relationships' => $this->getInstanceRelationships($instance, $parents),
+                'links' => $links,
+            ];
     }
 
     /**
