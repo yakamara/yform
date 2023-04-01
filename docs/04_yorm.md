@@ -482,11 +482,25 @@ echo $post->executeForm($yform)
   - resetWhere
   - setWhereOperator
   - where
+  - whereNot
+  - whereNull
+  - whereNotNull
+  - whereBetween
+  - whereNotBetween
   - whereNested
   - whereRaw
   - whereListContains
-
-Beispiel für whereListContains
+- Having
+  - resetHaving
+  - setHavingOperator
+  - having
+  - havingNot
+  - havingNull
+  - havingNotNull
+  - havingBetween
+  - havingNotBetween
+  - havingRaw
+  - havingListContainsBeispiel für whereListContains
 
 ```php
 // Entweder kann nach einem einzelnen Wert gesucht werden
