@@ -500,7 +500,9 @@ echo $post->executeForm($yform)
   - havingBetween
   - havingNotBetween
   - havingRaw
-  - havingListContainsBeispiel für whereListContains
+  - havingListContains
+  
+Beispiel für whereListContains
 
 ```php
 // Entweder kann nach einem einzelnen Wert gesucht werden
