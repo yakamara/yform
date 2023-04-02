@@ -6,6 +6,9 @@
  */
 class rex_yform_manager_query implements IteratorAggregate, Countable
 {
+    private const PARAM_WHERE = 'where';
+    private const PARAM_HAVING = 'having';
+
     /** @var string */
     private $table;
 
@@ -23,10 +26,16 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     private $whereOperator = 'AND';
     /** @var list<string> */
     private $where = [];
-    /** @var array<string, int|string> */
+
+    /** @var 'AND'|'OR' */
+    private $havingOperator = 'AND';
+    /** @var list<string> */
+    private $having = [];
+
+    /** @var array<self::PARAM_*, array<string, int|string>> */
     private $params = [];
-    /** @var int */
-    private $paramCounter = 1;
+    /** @var array<self::PARAM_*, int> */
+    private $paramCounter = [];
 
     /** @var list<string> */
     private $orderBy = [];
@@ -253,8 +262,8 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     public function resetWhere(): self
     {
         $this->where = [];
-        $this->params = [];
-        $this->paramCounter = 1;
+        unset($this->params[self::PARAM_WHERE]);
+        unset($this->paramCounter[self::PARAM_WHERE]);
 
         return $this;
     }
@@ -276,21 +285,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function where(string $column, $value, ?string $operator = null): self
     {
-        if (is_array($value)) {
-            $param = [];
-            foreach ($value as $v) {
-                $param[] = $this->addParam($v);
-            }
-            $param = '('.implode(', ', $param).')';
-
-            $operator = $operator ?: 'IN';
-        } else {
-            $param = $this->addParam($value);
-
-            $operator = $operator ?: '=';
-        }
-
-        $this->where[] = sprintf('%s %s %s', $this->quoteIdentifier($column), $operator, $param);
+        $this->where[] = $this->buildCondition(self::PARAM_WHERE, $column, $value, $operator);
 
         return $this;
     }
@@ -334,7 +329,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereBetween(string $column, $from, $to): self
     {
-        $this->where[] = sprintf('%s BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam($from), $this->addParam($to));
+        $this->where[] = sprintf('%s BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam(self::PARAM_WHERE, $from), $this->addParam(self::PARAM_WHERE, $to));
 
         return $this;
     }
@@ -346,7 +341,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereNotBetween(string $column, $from, $to): self
     {
-        $this->where[] = sprintf('%s NOT BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam($from), $this->addParam($to));
+        $this->where[] = sprintf('%s NOT BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam(self::PARAM_WHERE, $from), $this->addParam(self::PARAM_WHERE, $to));
 
         return $this;
     }
@@ -360,14 +355,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereListContains(string $column, $value): self
     {
-        if (!is_array($value)) {
-            $this->where[] = sprintf('FIND_IN_SET(%s, %s)', $this->addParam($value), $this->quoteIdentifier($column));
-
-            return $this;
-        }
-
-        $regex = '(^|,)('.implode('|', array_map('intval', $value)).')(,|$)';
-        $this->where[] = sprintf('%s REGEXP %s', $this->quoteIdentifier($column), $this->addParam($regex));
+        $this->where[] = $this->buildListContains(self::PARAM_WHERE, $column, $value);
 
         return $this;
     }
@@ -379,7 +367,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     public function whereRaw(string $where, array $params = []): self
     {
         $this->where[] = '('.$where.')';
-        $this->params = array_merge($this->params, $params);
+        $this->params[self::PARAM_WHERE] = array_merge($this->params[self::PARAM_WHERE] ?? [], $params);
 
         return $this;
     }
@@ -408,9 +396,125 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
 
         if ($query->where) {
             $this->where[] = '('.implode(' '.$operator.' ', $query->where).')';
-            $this->params = array_merge($this->params, $query->params);
+            $this->params[self::PARAM_WHERE] = array_merge($this->params[self::PARAM_WHERE] ?? [], $query->params[self::PARAM_WHERE] ?? []);
             $this->paramCounter = $query->paramCounter;
         }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function resetHaving(): self
+    {
+        $this->having = [];
+        unset($this->params[self::PARAM_HAVING]);
+        unset($this->paramCounter[self::PARAM_HAVING]);
+
+        return $this;
+    }
+
+    /**
+     * @param 'AND'|'OR' $operator
+     * @return $this
+     */
+    public function setHavingOperator(string $operator): self
+    {
+        $this->havingOperator = $operator;
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     * @return $this
+     */
+    public function having(string $column, $value, ?string $operator = null): self
+    {
+        $this->having[] = $this->buildCondition(self::PARAM_HAVING, $column, $value, $operator);
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return $this
+     */
+    public function havingNot(string $column, $value): self
+    {
+        $operator = is_array($value) ? 'NOT IN' : '!=';
+
+        return $this->having($column, $value, $operator);
+    }
+
+    /**
+     * @return $this
+     */
+    public function havingNull(string $column): self
+    {
+        $this->having[] = $this->quoteIdentifier($column).' IS NULL';
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function havingNotNull(string $column): self
+    {
+        $this->having[] = $this->quoteIdentifier($column).' IS NOT NULL';
+
+        return $this;
+    }
+
+    /**
+     * @param mixed  $from
+     * @param mixed  $to
+     * @return $this
+     */
+    public function havingBetween(string $column, $from, $to): self
+    {
+        $this->having[] = sprintf('%s BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam(self::PARAM_HAVING, $from), $this->addParam(self::PARAM_HAVING, $to));
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $from
+     * @param mixed $to
+     * @return $this
+     */
+    public function havingNotBetween(string $column, $from, $to): self
+    {
+        $this->having[] = sprintf('%s NOT BETWEEN %s AND %s', $this->quoteIdentifier($column), $this->addParam(self::PARAM_HAVING, $from), $this->addParam(self::PARAM_HAVING, $to));
+
+        return $this;
+    }
+
+    /**
+     * Where the comma separated list column contains the given value or any of the given values.
+     *
+     * @param string           $column Column with comma separated list
+     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @return $this
+     */
+    public function havingListContains(string $column, $value): self
+    {
+        $this->having[] = $this->buildListContains(self::PARAM_HAVING, $column, $value);
+
+        return $this;
+    }
+
+    /**
+     * @param array<string, int|string> $params
+     * @return $this
+     */
+    public function havingRaw(string $having, array $params = []): self
+    {
+        $this->having[] = '('.$having.')';
+        $this->params[self::PARAM_HAVING] = array_merge($this->params[self::PARAM_HAVING] ?? [], $params);
 
         return $this;
     }
@@ -523,6 +627,10 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             $query .= ' GROUP BY '.implode(', ', $this->groupBy);
         }
 
+        if ($this->having) {
+            $query .= ' HAVING '.implode(' '.$this->havingOperator.' ', $this->having);
+        }
+
         if (!$this->orderBy && !$this->orderByResetted) {
             $table = $this->getTable();
             $this->orderBy($this->getTableAlias().'.'.$table->getSortFieldName(), $table->getSortOrderName());
@@ -544,7 +652,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function getParams(): array
     {
-        return $this->params;
+        return array_merge(...array_values($this->params));
     }
 
     /**
@@ -726,14 +834,55 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
+     * @param self::PARAM_* $type
      * @param mixed $value
      */
-    private function addParam($value): string
+    private function addParam(string $type, $value): string
     {
-        $param = 'p'.$this->paramCounter++;
-        $this->params[$param] = $this->normalizeValue($value);
+        $this->paramCounter[$type] = ($this->paramCounter[$type] ?? 0) + 1;
+
+        $param = $type.$this->paramCounter[$type];
+        $this->params[$type][$param] = $this->normalizeValue($value);
 
         return ':'.$param;
+    }
+
+    /**
+     * @param self::PARAM_* $type
+     */
+    private function buildCondition(string $type, string $column, mixed $value, ?string $operator = null): string
+    {
+        if (is_array($value)) {
+            $param = [];
+            foreach ($value as $v) {
+                $param[] = $this->addParam($type, $v);
+            }
+            $param = '('.implode(', ', $param).')';
+
+            $operator = $operator ?: 'IN';
+        } else {
+            $param = $this->addParam($type, $value);
+
+            $operator = $operator ?: '=';
+        }
+
+        return sprintf('%s %s %s', $this->quoteIdentifier($column), $operator, $param);
+    }
+
+    /**
+     * @param self::PARAM_*    $type
+     * @param string           $column Column with comma separated list
+     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     */
+    private function buildListContains(string $type, string $column, $value): string
+    {
+        if (!is_array($value)) {
+            return sprintf('FIND_IN_SET(%s, %s)', $this->addParam($type, $value), $this->quoteIdentifier($column));
+        }
+
+        $regex = '(^|,)('.implode('|', array_map('intval', $value)).')(,|$)';
+
+        return sprintf('%s REGEXP %s', $this->quoteIdentifier($column), $this->addParam($type, $regex));
     }
 
     /**
@@ -750,7 +899,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
                 continue;
             }
 
-            $value = sprintf('%s = %s', $this->quoteIdentifier($key), $this->addParam($value));
+            $value = sprintf('%s = %s', $this->quoteIdentifier($key), $this->addParam(self::PARAM_WHERE, $value));
         }
 
         return implode(' '.$operator.' ', $where);
