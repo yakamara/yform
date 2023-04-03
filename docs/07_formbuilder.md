@@ -44,6 +44,12 @@ Die vollständigen Optionen für jedes Feld kann man direkt im YForm-Modul erseh
 - **no_db:** Speichert eine Aktion die Felddaten in die Datenbank. So gibt es hin und wieder Felder, die man nicht gespeichert haben will, z. B. den Wert eines Submit-Buttons. Dieser Wert ist optional, symbolisiert durch die eckigen Klammern.
 - **cssclassname:** Damit kann man dem Feld eine individuelle CSS-Klasse zuweisen.
 
+Es ist auch möglich, alle oder einzelne parameter nach der letzten pipe via `#attributes:{"key":"value"}` direkt zu adressieren:
+
+	text|phone|Telefon|#attributes:{"class":"phone-class"}
+	choice|is_approved|Neu|ja,nein|1|1|#group_attributes:{"class": "custom-control custom-switch"}
+	
+
 ### PHP-Schreibweise
 
 Um ein Formular mit YForm-Methoden zu generieren, muss nicht das Formbuilder-Modul genutzt werden. Man kann alles auch direkt in PHP schreiben:
@@ -725,6 +731,9 @@ $yform->setValueField('date', array("date","Datum","2016","+5","DD/MM/YYYY","1",
 ###### Beispiel Pipe
 	date|date|Datum|2016|+5|DD/MM/YYYY|1||select|
 	validate|type|Datum|date|Bitte geben Sie das Datum ein.|[1 = Feld darf auch leer sein]
+	
+	#Beispiel für nativen Datepicker mit voreingestelltem Datum
+	date|geburtsdatum|Geburtsdatum|1900|+1|YYYY-MM-DD|0|0|input:text|{"required":"required","type":"date","value":"2022-02-02"}|
 
 ###### Beispiel E-Mail
 	REX_YFORM_DATA[field="date"]

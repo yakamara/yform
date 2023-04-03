@@ -191,7 +191,7 @@ class rex_yform_manager_table_api
         self::createMissingFieldColumns($table_field);
 
         if (count($currentFields) > 1) {
-            throw new Exception('more than one field found for table: ' . $table_name . ' with Fieldidentifier: ' . implode(', ', $fieldIdentifier) . '');
+            throw new Exception('More than one field found for table: ' . $table_name . ' with field identifier: ' . implode(', ', $fieldIdentifier) . '. Remove duplicate field definitions for  ' . implode(', ', $fieldIdentifier) . ' from table rex_yform_field');
         }
         if (0 == count($currentFields)) {
             // Insert
