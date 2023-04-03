@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 4.1.1 - 03.04.2023
+--------------------------
+
+### Korrekturen
+
+* Fehler beim Import von Tabellen im Manager behoben.
+
+
 Version 4.1.0 - 16.03.2023
 --------------------------
 ### Neu
