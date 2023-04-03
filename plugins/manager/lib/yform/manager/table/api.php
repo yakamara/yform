@@ -528,19 +528,25 @@ class rex_yform_manager_table_api
     public static function createMissingFieldColumns(array $field): void
     {
         $table_name = rex_yform_manager_field::table();
-        if (null === self::$cacheColumnsByTable[$table_name]) {
+
+        if (!isset(self::$cacheColumnsByTable[$table_name])) {
             foreach (rex_sql::showColumns($table_name) as $column) {
                 self::$cacheColumnsByTable[$table_name][$column['name']] = $column;
             }
         }
 
         foreach ($field as $fieldKey => $fieldValue) {
-            if (null === self::$cacheColumnsByTable[$table_name][$fieldKey]) {
+            if (!isset(self::$cacheColumnsByTable[$table_name][$fieldKey])) {
                 $alter = rex_sql::factory();
                 $alter->setDebug(self::$debug);
                 $alter->setQuery('ALTER TABLE `' .  rex_yform_manager_field::table() . '` ADD `' . $fieldKey . '` TEXT NOT NULL');
-                unset(self::$cacheColumnsByTable[$table_name]);
-                rex_yform_manager_table::deleteCache();
+                self::$cacheColumnsByTable[$table_name][$fieldKey] = [
+                    'name' => $fieldKey,
+                    'type' => 'text',
+                    'null' => 'NO',
+                    'default' => '',
+                    'extra' => '',
+                ];
             }
         }
     }
@@ -610,7 +616,7 @@ class rex_yform_manager_table_api
 
                     if (!$existingColumn || $table->overwriteSchema()) {
                         $EnsureTable
-                        ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull(), $default));
+                            ->ensureColumn(new rex_sql_column($field->getName(), $db_type, $field->getDatabaseFieldNull(), $default));
                     }
                 }
             }
