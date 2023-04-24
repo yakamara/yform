@@ -39,7 +39,7 @@ $show_list = true;
 if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
 } elseif ('delete' == $func && $template_id) {
-    rex_sql::factory()->setQuery('delete from '.$table.' where id=:template_id', ['tempplate_id' => $template_id]);
+    rex_sql::factory()->setQuery('delete from '.$table.' where id=:template_id', ['template_id' => $template_id]);
     $content = rex_view::success(rex_i18n::msg('yform_email_info_template_deleted'));
 } elseif (('edit' == $func && $template_id) || 'add' == $func) {
     echo rex_view::info(rex_i18n::rawMsg('yform_email_info_text'));
