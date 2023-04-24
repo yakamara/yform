@@ -146,7 +146,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 'choice_label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_label'), 'notice' => rex_i18n::msg('yform_values_choice_choice_label_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_choice_description'),
-            'db_type' => ['text', 'int', 'tinyint(1)', 'varchar(191)'],
+            'db_type' => ['text', 'int', 'int(10) unsigned', 'tinyint(1)', 'varchar(191)'],
             'famous' => true,
         ];
     }
