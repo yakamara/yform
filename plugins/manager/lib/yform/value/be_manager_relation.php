@@ -193,7 +193,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $form_name = $this->params['this']->getObjectparams('form_name');
             $form_array = array_merge($this->params['this']->getObjectparams('form_array'), [$this->getId()]);
 
-            $fieldkey = $this->relation['source_table'] . '-' . $this->relation['target_table'] . '-' . $this->relation['target_field'];
+            $fieldkey = $this->relation['source_table'] . '-' . $this->relation['target_table'] . '-' . $this->relation['target_field'] . '-' . uniqid();
             $relationKey = '__' . sha1($fieldkey) . '__';
 
             // ----- Existing Relations
