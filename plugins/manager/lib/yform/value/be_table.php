@@ -10,44 +10,6 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 {
     protected $fieldData = [];
 
-    public function preValidateAction(): void
-    {
-        // bc service for Version < 1.1
-        if ('' != $this->getValue() && '' == json_decode($this->getValue())) {
-            $rows = explode(';', $this->getValue());
-            foreach ($rows as $row_id => $row) {
-                $rows[$row_id] = explode(',', $row);
-            }
-            $this->setValue(json_encode($rows));
-        }
-
-        if ($this->getParam('send') && isset($_POST['FORM'])) {
-            // Cleanup Array
-            $table_array = [];
-
-            $id = $this->getName();
-
-            $columns = preg_split("/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/", $this->getElement('columns'));
-            if (0 == count($columns)) {
-                return;
-            }
-
-            $form_data = rex_post('FORM', 'array');
-
-            if (isset($form_data[$id . '.0'])) {
-                $rowKeys = array_keys((array) $form_data[$id . '.0']);
-
-                // Spalten durchgehen
-                for ($c = 0; $c < count($columns); ++$c) {
-                    foreach ($rowKeys as $r) {
-                        $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
-                    }
-                }
-            }
-            $this->setValue(json_encode(array_values($table_array)));
-        }
-    }
-
     public static function getColumnsByName($definition)
     {
         $valueFields = [];
@@ -94,6 +56,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        if(is_array($this->getValue())){
+            $this->setValue(json_encode(array_values($this->getValue())));
+        }
         if (!$this->getValue()) {
             $this->setValue(json_encode([]));
         }
@@ -132,7 +97,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
             if ('value' == $col['field']) {
                 $field->loadParams($yfparams, $col['values']);
-                $field->setName($this->getName());
+                $field->setName($this->getFieldName().']['.$this->getId().']');
                 $field->init();
                 $field->setLabel('');
 

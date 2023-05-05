@@ -48,7 +48,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     /** @var rex_yform_value_abstract $field */
                     $field = $column['field'];
                     $field->params['form_output'] = [];
-                    $field->params['this']->setObjectparams('form_name', $this->getName() . '.' . $i);
+                    $field->params['this']->setObjectparams('form_name',$this->getParam('form_name').']['.$this->getId() . '][' . $i);
                     $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
                     $field->params['this']->setObjectparams('main_id', $main_id);
                     $field->params['this']->canEdit(false);
