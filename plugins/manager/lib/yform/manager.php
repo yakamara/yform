@@ -503,17 +503,20 @@ class rex_yform_manager
                             }
                         }
                     } catch (\Throwable $e) {
-                        $sql_db->rollBack();
-                        $transactionErrorMessage = $e->getMessage();
-                        if ($transactionErrorMessage) {
-                            if (rex::getUser()->isAdmin()) {
-                                dump($e);
-                            }
-                            $mainMessages[] = [
-                                'type' => 'error',
-                                'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage),
-                            ];
-                        }
+                       if ($sql_db->inTransaction()) {
+                           $sql_db->rollBack();
+                       }
+                        
+                       $transactionErrorMessage = $e->getMessage(); 
+                       if ($transactionErrorMessage) {
+                           if (rex::getUser()->isAdmin()) {
+                               // dump($e);
+                           }
+                           $mainMessages[] = [
+                               'type' => 'error',
+                               'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage),
+                           ];
+                       }
                     }
                 }
                 break;
