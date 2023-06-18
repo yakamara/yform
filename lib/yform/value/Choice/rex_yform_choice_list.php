@@ -53,7 +53,7 @@ class rex_yform_choice_list
             $label = rex_i18n::translate((string) $label, false);
 
             // Im Template werden im `select` optgroup erstellt
-            if ($this->options['group_by'] && isset($choice[$this->options['group_by']])) {
+            if (isset($this->options['group_by']) && $this->options['group_by'] && isset($choice[$this->options['group_by']])) {
                 $this->choices[$choice[$this->options['group_by']]][trim($label)] = trim($value);
                 $this->choicesByValues[trim($value)] = trim($label);
                 continue;
