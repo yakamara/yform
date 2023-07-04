@@ -20,18 +20,18 @@ class rex_yform_value_index extends rex_yform_value_abstract
         if ('' != $this->getElement('names')) {
             $index_labels = explode(',', $this->getElement('names'));
 
-            $value = '';
+            $values = [];
             $relations = [];
 
             foreach ($index_labels as $name) {
                 $name = trim($name);
 
                 if ('id' == $name && $this->params['main_id'] > 0) {
-                    $value .= $this->params['main_id'];
+                    $values[] = $this->params['main_id'];
                 }
 
                 if (isset($this->params['value_pool']['sql'][$name])) {
-                    $value .= ' '.$this->params['value_pool']['sql'][$name];
+                    $values[] = $this->params['value_pool']['sql'][$name];
                     continue;
                 }
 
@@ -43,11 +43,11 @@ class rex_yform_value_index extends rex_yform_value_abstract
 
             if ($relations) {
                 foreach ($this->getRelationValues($relations) as $v) {
-                    $value .= ' '.$v;
+                    $values[] = $v;
                 }
             }
-
-            $value .= $this->getElement('salt');
+            $value = implode(" ", $values);
+            $value = $this->getElement('salt');
 
             $fnc = trim($this->getElement('function'));
             if ('' != $fnc) {
