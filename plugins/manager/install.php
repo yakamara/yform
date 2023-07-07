@@ -21,6 +21,7 @@ $table
     ->ensurePrimaryIdColumn()
     ->ensureColumn(new rex_sql_column('status', 'tinyint(1)'))
     ->ensureColumn(new rex_sql_column('table_name', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('db_id', 'tinyint unsigned', false, 1))
     ->ensureColumn(new rex_sql_column('name', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('description', 'text'))
     ->ensureColumn(new rex_sql_column('list_amount', 'int(11)', false, '50'))
