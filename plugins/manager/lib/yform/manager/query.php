@@ -20,7 +20,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     private $select = [];
 
     /** @var list<string> */
-    private $joins = [];
+    protected $joins = [];
 
     /** @var 'AND'|'OR' */
     private $whereOperator = 'AND';
@@ -36,6 +36,8 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     private $params = [];
     /** @var array<self::PARAM_*, int> */
     private $paramCounter = [];
+    /** @var string $paramSuffix Additional infix between $type prefix and {@see $paramCounter} */
+    private $paramSuffix = '';
 
     /** @var list<string> */
     private $orderBy = [];
@@ -781,6 +783,22 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return (int) $sql->getValue('count');
     }
 
+    /**
+     * Add a suffix to all bound parameters in this query. A suffix is needed if multiple queries are combined in a
+     * single execute.
+     *
+     * @param string $paramSuffix
+     *
+     * @return static
+     * @see addParam()
+     */
+    protected function setParamSuffix(string $paramSuffix): static
+    {
+        $this->paramSuffix = $paramSuffix;
+
+        return $this;
+    }
+
     public function exists(): bool
     {
         $query = clone $this;
@@ -841,7 +859,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         $this->paramCounter[$type] = ($this->paramCounter[$type] ?? 0) + 1;
 
-        $param = $type.$this->paramCounter[$type];
+        $param = $type.$this->paramCounter[$type].$this->paramSuffix;
         $this->params[$type][$param] = $this->normalizeValue($value);
 
         return ':'.$param;
