@@ -54,6 +54,16 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
+     * Returns the ID of the database where this table is saved. Database ID must be configured in `config.yml`.
+     *
+     * @return int
+     */
+    public function getDatabaseId(): int
+    {
+        return $this->values['db_id'] ?? 1;
+    }
+
+    /**
      * @param string $tableName
      *
      * @return rex_yform_manager_table|null
@@ -159,7 +169,7 @@ final class rex_yform_manager_table implements ArrayAccess
 
     public function hasId(): bool
     {
-        $columns = rex_sql::showColumns($this->getTableName());
+        $columns = rex_sql::showColumns($this->getTableName(), $this->getDatabaseId());
         foreach ($columns as $column) {
             if ('id' == $column['name'] && 'auto_increment' == $column['extra']) {
                 return true;
@@ -380,7 +390,7 @@ final class rex_yform_manager_table implements ArrayAccess
 
     public function removeRelationTableRelicts()
     {
-        $deleteSql = rex_sql::factory();
+        $deleteSql = rex_sql::factory($this->getDatabaseId());
         foreach ($this->getValueFields(['type_name' => 'be_manager_relation']) as $field) {
             if ($field->getElement('relation_table')) {
                 $table = self::get($field->getElement('relation_table'));
@@ -398,7 +408,7 @@ final class rex_yform_manager_table implements ArrayAccess
 
     public static function getMaximumTablePrio()
     {
-        $sql = 'select max(prio) as prio from ' . self::table() . '';
+        $sql = 'select max(prio) as prio from ' . self::table();
         $gf = rex_sql::factory();
         if (self::$debug) {
             $gf->setDebug();
@@ -519,7 +529,8 @@ final class rex_yform_manager_table implements ArrayAccess
             self::$cache[$tableName]['table'] = $table;
             self::$cache[$tableName]['columns'] = [];
             try {
-                foreach (rex_sql::showColumns($tableName) as $column) {
+                $tableDbId = static::get($tableName)->getDatabaseId();
+                foreach (rex_sql::showColumns($tableName, $tableDbId) as $column) {
                     if ('id' !== $column['name']) {
                         self::$cache[$tableName]['columns'][$column['name']] = $column;
                     }
