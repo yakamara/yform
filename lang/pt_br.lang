@@ -170,3 +170,5 @@ yform_values_options_boolvalues	= 	Valores  Values (0,1 = não selecionado, sele
 
 yform_geo_get_position = Obter a localização
 yform_geo_clear_position = Criar localização
+
+yform_docs_multiple_db_usage = Utilização de várias bancos de dados

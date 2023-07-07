@@ -280,5 +280,4 @@ yform_docs_yorm = YOrm
 yform_docs_email = E-Mail Templates
 yform_docs_rest = REST-API
 yform_docs_tools = Tools
-
-
+yform_docs_multiple_db_usage = Nutzung mehrerer Datenbanken
