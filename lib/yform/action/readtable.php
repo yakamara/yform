@@ -11,12 +11,13 @@ class rex_yform_action_readtable extends rex_yform_action_abstract
 {
     public function executeAction(): void
     {
+        $db_id = $this->params['db_id'] ?? 1;
         if (!isset($this->params['value_pool']['email'][$this->getElement(4)])) {
             return;
         }
         $value = $this->params['value_pool']['email'][$this->getElement(4)];
 
-        $gd = rex_sql::factory();
+        $gd = rex_sql::factory($db_id);
         if ($this->params['debug']) {
             $gd->setDebug();
         }

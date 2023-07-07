@@ -11,6 +11,7 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
 {
     public function executeAction(): void
     {
+        $db_id = $this->params['db_id'] ?? 1;
         $query = trim($this->getElement(2));
         $labels = explode(',', $this->getElement(3));
 
@@ -22,7 +23,7 @@ class rex_yform_action_db_query extends rex_yform_action_abstract
         }
 
         try {
-            $sql = rex_sql::factory();
+            $sql = rex_sql::factory($db_id);
             $sql->setDebug($this->params['debug']);
 
             $params = [];

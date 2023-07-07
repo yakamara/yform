@@ -23,6 +23,7 @@ class rex_yform_yorm_test extends TestCase
         $table = rex_yform_manager_table_api::setTable(
             [
                 'table_name' => $tableName,
+                'db_id' => 1,
                 'name' => 'Name of Table - ' . $tableName,
                 'description' => 'Description of Table - ' . $tableName,
                 'status' => 1,

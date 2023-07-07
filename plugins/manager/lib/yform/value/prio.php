@@ -21,7 +21,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             $options[''] = rex_i18n::msg('yform_prio_bottom');
         } else {
             $this->preEditScopeWhere = $scopeWhere;
-            $sql = rex_sql::factory();
+            $sql = rex_sql::factory($this->params['db_id']);
             if ($this->debug) {
                 $sql->setDebug();
             }
@@ -113,7 +113,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
 
     public function postAction(): void
     {
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($this->params['db_id']);
         if ($this->debug) {
             $sql->setDebug();
         }
@@ -139,7 +139,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
 
     protected function getScopeWhere()
     {
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($this->params['db_id']);
         $scope = $this->getElement('scope');
         if (!is_array($scope) && $scope) {
             $scope = array_filter(explode(',', $scope));
@@ -154,7 +154,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             } elseif (isset($this->params['sql_object']) && $this->params['sql_object']->hasValue($column)) {
                 $value = $this->params['sql_object']->getValue($column);
             } elseif ($this->params['main_id'] > 0) {
-                $sql = rex_sql::factory();
+                $sql = rex_sql::factory($this->params['db_id']);
                 if ($this->debug) {
                     $sql->setDebug();
                 }

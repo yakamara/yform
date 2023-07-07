@@ -141,7 +141,9 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
 
         $messages = '';
         foreach ($tables as $tableName => $conditions) {
-            $items = $sql->getArray('SELECT `id` FROM ' . $tableName . ' WHERE ' . implode(' OR ', $conditions));
+            $databaseId = rex_yform_manager_table::get($tableName)->getDatabaseId();
+            $mediaSql = rex_sql::factory($databaseId);
+            $items = $mediaSql->getArray('SELECT `id` FROM ' . $tableName . ' WHERE ' . implode(' OR ', $conditions));
             if (count($items)) {
                 foreach ($items as $item) {
                     $sqlData = \rex_sql::factory();

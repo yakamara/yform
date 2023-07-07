@@ -1426,7 +1426,8 @@ class rex_yform_manager
     public function createTable($mifix, $data_table, $params = [], $debug = false)
     {
         // Tabelle erstellen wenn noch nicht vorhanden
-        $c = rex_sql::factory();
+        $db_id = rex_yform_manager_table::get($data_table)->getDatabaseId();
+        $c = rex_sql::factory($db_id);
         $c->setDebug($debug);
         $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $data_table . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 
