@@ -35,8 +35,8 @@ final class rex_yform_manager_table implements ArrayAccess
     {
         $this->values = $data['table'];
         $this->columns = $data['columns'];
-        $this->relatedTableNames = $data['related_tables'];
-        $this->fieldValues = $data['fields'];
+        $this->relatedTableNames = $data['related_tables'] ?? [];
+        $this->fieldValues = $data['fields'] ?? [];
     }
 
     public static function setTableLayout(string $tableName, string $path): void
