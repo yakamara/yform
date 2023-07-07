@@ -52,6 +52,7 @@ yform_manager_table_enter_name = Por favor, insira um nome para a tabela
 yform_manager_table_enter_specialchars = Por favor, insira somente letras e números no nome da tabela. O primeiro caractere deve ser uma letra.
 yform_manager_table_exists = Esse noem já existe.
 
+yform_manager_database_selection = Bankco de dados
 yform_manager_table_prio = Prioridade
 yform_manager_table_prio_short = Prio
 yform_manager_table_name = Nome

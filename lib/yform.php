@@ -831,4 +831,21 @@ class rex_yform
         $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
         return $hasWarnings || $hasWarningMessages;
     }
+
+    /**
+     * Return the database configurations from `config.yml`.
+     *
+     * @return array<int, array{
+     *              host: string, login: string, password: string, name: string,
+     *              persistent: bool, ssl_key: ?string, ssl_cert: ?string, ssl_ca: ?string
+     *         }>
+     */
+    public static function getDatabaseConfigurations()
+    {
+        // Only return entries from the db section, that actually contain real data, not empty stubs.
+        return array_filter(
+            rex::getProperty('db'),
+            fn($dbConfig) => !empty($dbConfig['host']) && !empty($dbConfig['login'])
+        );
+    }
 }
