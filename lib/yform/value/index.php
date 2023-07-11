@@ -59,7 +59,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
             }
         }
 
-        $this->setValue($value);
+        $this->setValue(trim($value));
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
         if ($this->saveInDb()) {
