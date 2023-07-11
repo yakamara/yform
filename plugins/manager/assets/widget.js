@@ -17,7 +17,6 @@ $(document).on('rex:ready',function() {
             // widget pool -
             if (this.classList.contains('yform-dataset-widget-pool')) {
                 this.onclick = function () {
-                    alert(1);
                     return newPoolWindow( link);
                 };
             }
