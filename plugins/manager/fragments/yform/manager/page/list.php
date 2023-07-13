@@ -14,7 +14,7 @@ $popup = $this->getVar('popup');
 $hasDataPageFunctions = $this->getVar('hasDataPageFunctions');
 
 /** @var rex_yform_list $list */
-$list = rex_yform_list::factory($query, $table->getListAmount());
+$list = rex_yform_list::factory($query, $table->getListAmount(), db: $table->getDatabaseId());
 
 $list->addTableAttribute('class', 'table-striped table-hover yform-table-' . rex_string::normalize($this->table->getTableName()));
 

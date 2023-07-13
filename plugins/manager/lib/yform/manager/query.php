@@ -731,7 +731,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             ->selectRaw($expression, 'value')
             ->limit(1);
 
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($query->getTable()->getDatabaseId());
         $sql->setQuery($query->getQuery(), $query->getParams());
 
         return $sql->getRows() ? $sql->getValue('value') : null;
@@ -761,7 +761,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             $query->select($keyColumn);
         }
 
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($query->getTable()->getDatabaseId());
         $array = $sql->getArray($query->getQuery(), $query->getParams());
 
         return array_column($array, 'value', $keyColumn);
@@ -775,7 +775,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             ->selectRaw('COUNT(*)', 'count')
             ->resetOrderBy();
 
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($query->getTable()->getDatabaseId());
         $sql->setQuery($query->getQuery(), $query->getParams());
 
         return (int) $sql->getValue('count');
@@ -790,7 +790,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             ->resetOrderBy()
             ->limit(1);
 
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($query->getTable()->getDatabaseId());
         $sql->setQuery($query->getQuery(), $query->getParams());
 
         return $sql->getRows() > 0;

@@ -80,6 +80,7 @@ class rex_yform
         $this->objparams['main_where'] = ''; // like "id=12" for db
         $this->objparams['main_id'] = -1; // unique Dataset ID
         $this->objparams['main_table'] = ''; // for db and unique
+        $this->objparams['db_id'] = 1; // select alternative database
         $this->objparams['sql_object'] = null; // rex_sql
 
         $this->objparams['form_hiddenfields'] = [];
@@ -150,6 +151,20 @@ class rex_yform
     public function setDebug(bool $s = true): self
     {
         $this->objparams['debug'] = $s;
+        return $this;
+    }
+
+    /**
+     * Set an alternative database ID. The database with ID $databaseId must be configured and working in core Redaxo
+     * `config.yml`.
+     *
+     * @param int $databaseId
+     *
+     * @return $this
+     */
+    public function setDatabaseId(int $databaseId): static
+    {
+        $this->objparams['db_id'] = $databaseId;
         return $this;
     }
 
@@ -293,7 +308,7 @@ class rex_yform
         // 2. setValue defaults via sql_object
         if ($this->objparams['getdata']) {
             if (!$this->objparams['sql_object'] instanceof rex_sql) {
-                $this->objparams['sql_object'] = rex_sql::factory();
+                $this->objparams['sql_object'] = rex_sql::factory($this->objparams['db_id']);
                 $this->objparams['sql_object']->setDebug($this->objparams['debug']);
                 $this->objparams['sql_object']->setQuery('SELECT * from ' . $this->objparams['main_table'] . ' WHERE ' . $this->objparams['main_where']);
             }
@@ -814,5 +829,22 @@ class rex_yform
         $hasWarnings = 0 != count($this->objparams['warning']);
         $hasWarningMessages = 0 != count($this->objparams['warning_messages']);
         return $hasWarnings || $hasWarningMessages;
+    }
+
+    /**
+     * Return the database configurations from `config.yml`.
+     *
+     * @return array<int, array{
+     *              host: string, login: string, password: string, name: string,
+     *              persistent: bool, ssl_key: ?string, ssl_cert: ?string, ssl_ca: ?string
+     *         }>
+     */
+    public static function getDatabaseConfigurations()
+    {
+        // Only return entries from the db section, that actually contain real data, not empty stubs.
+        return array_filter(
+            rex::getProperty('db'),
+            fn($dbConfig) => !empty($dbConfig['host']) && !empty($dbConfig['login'])
+        );
     }
 }

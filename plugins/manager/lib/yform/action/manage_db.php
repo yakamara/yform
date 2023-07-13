@@ -25,8 +25,6 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
         // ********************************* TABLE A
 
         // $this->params["debug"]= TRUE;
-        $sql = rex_sql::factory();
-        $sql->setDebug($this->params['debug']);
 
         $main_table = '';
         if ('' != $this->getElement(2)) {
@@ -34,6 +32,10 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
         } else {
             $main_table = $this->params['main_table'];
         }
+        $db_id = $this->params['db_id'] ?? 1;
+        $sql = rex_sql::factory($db_id);
+        $sql->setDebug($this->params['debug']);
+
 
         if ('' == $main_table) {
             $this->params['form_show'] = true;

@@ -29,6 +29,7 @@ class rex_yform_manager_table_api
             $table_insert->setDebug(self::$debug);
             $table_insert->setTable(rex_yform_manager_table::table());
             $table_insert->setValue('table_name', $table_name);
+            $table_insert->setValue('db_id', $table['db_id'] ?? 1);
 
             if (!isset($table['name']) || '' == $table['name']) {
                 $table['name'] = $table['table_name'];
@@ -247,9 +248,9 @@ class rex_yform_manager_table_api
     /**
      * @throws rex_sql_exception
      */
-    public static function migrateTable(string $table_name, bool $schema_overwrite = false): void
+    public static function migrateTable(string $table_name, bool $schema_overwrite = false, int $db_id = 1): void
     {
-        $columns = rex_sql::showColumns($table_name);
+        $columns = rex_sql::showColumns($table_name, $db_id);
 
         if (0 == count($columns)) {
             throw new Exception('`' . $table_name . '` does not exists or no fields available');
@@ -259,6 +260,7 @@ class rex_yform_manager_table_api
             'table_name' => $table_name,
             'status' => 1,
             'schema_overwrite' => $schema_overwrite ? 1 : 0,
+            'db_id' => $db_id,
         ];
 
         $error = true;
@@ -395,7 +397,8 @@ class rex_yform_manager_table_api
 
             case 'tinyint':
                 if (1 == $column['length']) {
-                    $sql = rex_sql::factory();
+                    $db_id = rex_yform_manager_table::get($table_name)->getDatabaseId();
+                    $sql = rex_sql::factory($db_id);
                     $sql->setQuery('SELECT * FROM ' . $sql->escapeIdentifier($table_name) . ' WHERE ' . $sql->escapeIdentifier($column['name']) . ' NOT IN (0, 1) LIMIT 1');
                     if (!$sql->getRows()) {
                         $fields[] = [
@@ -564,7 +567,7 @@ class rex_yform_manager_table_api
             return;
         }
 
-        $c = rex_sql::factory();
+        $c = rex_sql::factory($table->getDatabaseId());
         $c->setDebug(self::$debug);
         $c->setQuery('CREATE TABLE IF NOT EXISTS `' . $table->getTableName() . '` ( `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
 
@@ -575,7 +578,7 @@ class rex_yform_manager_table_api
         // remember fields, create and in case delete
         $savedColumns = $table->getColumns();
 
-        $EnsureTable = rex_sql_table::get($table->getTableName());
+        $EnsureTable = rex_sql_table::get($table->getTableName(), $table->getDatabaseId());
 
         $EnsureTable
             ->ensurePrimaryIdColumn();

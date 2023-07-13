@@ -56,6 +56,7 @@ yform_manager_table_enter_name = Var god ange tabellnamnet
 yform_manager_table_enter_specialchars = Var god ange endast bokstäver och siffror vid tabellnamnet. Första tecknet måste vara en bokstav.
 yform_manager_table_exists = Tabellnamnet finns redan
 
+yform_manager_database_selection = Databas
 yform_manager_table_prio = Prioritet
 yform_manager_table_prio_short = Prio
 yform_manager_table_name = Namn

@@ -267,5 +267,4 @@ yform_docs_yorm = Yorm
 yform_docs_email = E-Mail mallar
 yform_docs_rest = REST-API
 yform_docs_tools = Verktyg
-
-
+yform_docs_multiple_db_usage = Använda flera databaser

@@ -58,6 +58,7 @@ yform_manager_table_enter_name = Bitte tragen Sie die Tabellenbezeichnung ein
 yform_manager_table_enter_specialchars = Bitte tragen Sie beim Tabellenname nur Kleinbuchstaben und Zahlen ein. Das erste Zeichen muss ein Buchstabe sein
 yform_manager_table_exists = Dieser Tabellenname ist bereits vorhanden
 
+yform_manager_database_selection = Datenbank
 yform_manager_table_prio = Priorität
 yform_manager_table_prio_short = Prio
 yform_manager_table_name = Name

@@ -1,7 +1,10 @@
 {
     "name": "yakamara/redaxo_yform",
+    "require": {
+        "php": "^8.1"
+    },
     "require-dev": {
-        "redaxo/source": "^5.13"
+        "redaxo/source": "^5.15"
     },
     "autoload": {
         "classmap": [
