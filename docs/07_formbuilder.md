@@ -1344,7 +1344,7 @@ $yform->setValidateField('intfromto', array("wert","2", "4", "Der Wert ist klein
 Überprüft mit einem Minimal- und Maximalwert, ob eine bestimmte Menge an Feldern ausgefüllt wurden.
 
 	// Definition
-	validate|labelexist|label,label2,label3|[minlabels]|[maximallabels]|Fehlermeldung
+	validate|in_names|label,label2,label3|[minlabels]|[maximallabels]|Fehlermeldung
 	
 	// Im YForm-Formbuilder
 	text|vorname|Vorname|
@@ -1352,7 +1352,7 @@ $yform->setValidateField('intfromto', array("wert","2", "4", "Der Wert ist klein
 	text|email|E-Mail|
 	text|tel|Telefon|
 	
-	validate|labelexist|vorname,name,tel|1|2|Fehlermeldung
+	validate|in_names|vorname,name,tel|1|2|Fehlermeldung
 
 ```php
 //In PHP
@@ -1361,7 +1361,7 @@ $yform->setValueField('text', array("name","Nachname"));
 $yform->setValueField('text', array("email","E-Mail"));
 $yform->setValueField('text', array("tel","Telefon"));
 
-$yform->setValidateField('labelexist', array("vorname, name, tel", "1", "2", "Fehlermeldung"));
+$yform->setValidateField('in_names', array("vorname, name, tel", "1", "2", "Fehlermeldung"));
 
 // Hier in diesem Beispiel müssen von den drei Feldern mindestens 1 und maximal 2 ausgefüllt werden
 ```
