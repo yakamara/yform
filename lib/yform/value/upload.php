@@ -446,7 +446,12 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     public static function upload_getDownloadLink(string $table_name, string $field_name, int $data_id): string
     {
         if ('' != $table_name && '' != $field_name && 0 < $data_id) {
-            return '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$table_name.'&data_id='.$data_id.'&func=edit&rex_upload_downloadfile='.urlencode($field_name);
+            return rex_url::backendPage('yform/manager/data_edit', [
+                'table_name' => $table_name,
+                'data_id' => $data_id,
+                'func' => 'edit',
+                'rex_upload_downloadfile' => urlencode($field_name),
+            ]);
         }
         return '';
     }
