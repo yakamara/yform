@@ -5,7 +5,6 @@
  * @extends SplFixedArray<T>
  *
  * @method rex_yform_manager_dataset offsetGet($offset)
- * @psalm-method T  offsetGet($offset)
  * @method list<T> toArray()
  */
 class rex_yform_manager_collection extends \SplFixedArray
@@ -44,9 +43,6 @@ class rex_yform_manager_collection extends \SplFixedArray
     public function setData(array $data): self
     {
         foreach ($data as $dataset) {
-            if (!$dataset instanceof rex_yform_manager_dataset) {
-                throw new InvalidArgumentException(sprintf('$data has to be an array of rex_yform_manager_dataset objects, found "%s" array element.', is_object($dataset) ? $dataset::class : gettype($dataset)));
-            }
             if ($dataset->getTableName() !== $this->table) {
                 throw new InvalidArgumentException(sprintf('$data has to be an array of rex_yform_manager_dataset objects of table "%s", found dataset of table "%s".', $this->table, $dataset->getTableName()));
             }
@@ -293,17 +289,12 @@ class rex_yform_manager_collection extends \SplFixedArray
         return !$this->isEmpty();
     }
 
-    /**
-     * @return mixed
-     */
     public function getUniqueValue(string $key)
     {
         return $this->isValueUnique($key) ? $this[0]->getValue($key) : null;
     }
 
     /**
-     * @param mixed  $value
-     *
      * @return $this
      */
     public function setValue(string $key, $value): self

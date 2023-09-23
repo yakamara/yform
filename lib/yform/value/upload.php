@@ -538,7 +538,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     {
         $value = $params['subject'];
         $length = mb_strlen($value);
-        /** @var rex_list $list */
+        /** @var rex_list|null $list */
         $list = $params['list'];
         $title = $value;
         if ($length > 30) {

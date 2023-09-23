@@ -2,11 +2,13 @@
 
 namespace yform\tests;
 
+use Exception;
 use PHPUnit\Framework\TestCase;
 use rex_sql;
 use rex_yform_manager_dataset;
 use rex_yform_manager_field;
 use rex_yform_manager_table;
+
 use rex_yform_manager_table_api;
 
 use function count;
@@ -55,6 +57,8 @@ class rex_yform_yorm_test extends TestCase
     {
         $prefix = 'unittest_yform_table_' . date('YmdHis') . '_';
         $tableName = $prefix . 'base';
+        $tableNameCategories = $prefix . 'category';
+        $tableNameRelation = $prefix . 'related';
 
         $table = self::setUpTable($tableName);
         static::assertEquals(
@@ -134,9 +138,6 @@ class rex_yform_yorm_test extends TestCase
                 // Tabelle erstellen
                 // Bezugstabelle
                 // Verknüpfungstabelle
-
-                $tableNameCategories = $prefix . 'category';
-                $tableNameRelation = $prefix . 'related';
 
                 $tableCategories = self::setUpTable($tableNameCategories);
                 $tableRelation = self::setUpTable($tableNameRelation);

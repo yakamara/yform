@@ -348,10 +348,6 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function setRowAttributes($attr): void
     {
-        if (!is_array($attr) && !is_callable($attr)) {
-            throw new InvalidArgumentException('$attr must be an array or a callable, but "' . get_debug_type($attr) . '" given');
-        }
-
         $this->rowAttributes = $attr;
     }
 
@@ -418,7 +414,7 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function getColumnLayout($columnName)
     {
-        if (isset($this->columnLayouts[$columnName]) && is_array($this->columnLayouts[$columnName])) {
+        if (isset($this->columnLayouts[$columnName])) {
             return $this->columnLayouts[$columnName];
         }
 
@@ -600,7 +596,7 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function getColumnParams($columnName)
     {
-        if (isset($this->columnParams[$columnName]) && is_array($this->columnParams[$columnName])) {
+        if (isset($this->columnParams[$columnName])) {
             return $this->columnParams[$columnName];
         }
         return [];
@@ -615,7 +611,7 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function hasColumnParams($columnName)
     {
-        return isset($this->columnParams[$columnName]) && is_array($this->columnParams[$columnName]) && count($this->columnParams[$columnName]) > 0;
+        return isset($this->columnParams[$columnName]) && count($this->columnParams[$columnName]) > 0;
     }
 
     /**
@@ -729,7 +725,7 @@ class rex_yform_list implements rex_url_provider_interface
         if (is_numeric($width)) {
             $width .= 'px';
         }
-        if ($width && '*' != $width) {
+        if ('*' !== $width) {
             $tableColumn['style'] = 'width:' . $width;
         }
         if ($span) {
