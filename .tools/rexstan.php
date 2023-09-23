@@ -16,15 +16,15 @@ require './redaxo/src/core/packages.php';
  * rexstan config
  */
 $extensions = [
-    '../../../../redaxo/src/addons/rexstan/config/rex-superglobals.neon',
-    '../../../../redaxo/src/addons/rexstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon',
-    '../../../../redaxo/src/addons/rexstan/vendor/phpstan/phpstan-strict-rules/rules.neon',
+    // '../../../../redaxo/src/addons/rexstan/config/rex-superglobals.neon',
+    // '../../../../redaxo/src/addons/rexstan/vendor/phpstan/phpstan/conf/bleedingEdge.neon',
+    // '../../../../redaxo/src/addons/rexstan/vendor/phpstan/phpstan-strict-rules/rules.neon',
     '../../../../redaxo/src/addons/rexstan/vendor/phpstan/phpstan-deprecation-rules/rules.neon',
     '../../../../redaxo/src/addons/rexstan/config/phpstan-phpunit.neon',
     // '../../../../redaxo/src/addons/rexstan/config/phpstan-dba.neon',
     // '../../../../redaxo/src/addons/rexstan/config/cognitive-complexity.neon',
     // '../../../../redaxo/src/addons/rexstan/config/code-complexity.neon',
-    '../../../../redaxo/src/addons/rexstan/config/dead-code.neon'
+    // '../../../../redaxo/src/addons/rexstan/config/dead-code.neon'
 ];
 
 // get addon key from environment variable
