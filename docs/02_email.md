@@ -20,9 +20,9 @@ Danach folgen die Eingaben für den E-Mail-Body, in Plain und HTML (optional).
 
 	text|vorname|Vorname|
 	text|name|Name|
-	text|email|E-Mail-Adresse|
+	text|emailadresse|E-Mail-Adresse|
 
-	validate|email|email|Das Feld enthält keine korrekte E-Mail-Adresse!
+	validate|type|emailadresse|email|Das Feld enthält keine korrekte E-Mail-Adresse!
 	validate|empty|email|Das Feld enthält keine korrekte E-Mail-Adresse!
 	
 	action|tpl2email|testtemplate|email
@@ -80,8 +80,8 @@ $yform->setObjectparams('form_showformafterupdate', 0); // Muss 0 sein, damit if
 $yform->setObjectparams('real_field_names', true);
 
 $yform->setValueField('text', array("name","Name"));
-$yform->setValueField('text', array("email","E-Mail-Adresse"));
-$yform->setValidateField('type', array('email', "email","Bitte geben Sie eine gültige Emailadresse an."));
+$yform->setValueField('text', array("emailadresse","E-Mail-Adresse"));
+$yform->setValidateField('type', array('emailadresse', "email","Bitte geben Sie eine gültige Emailadresse an."));
 $yform->setValueField('textarea', array("message","Nachricht"));
 $yform->setObjectparams('form_action',rex_article::getCurrent()->getUrl());
 
@@ -108,7 +108,7 @@ if($form) { // Wenn das Formular nicht abgesendet wurde
 	        echo '<hr /><pre>'; var_dump($yform_email_template); echo '</pre><hr />';
 	    }
 	    $yform_email_template = rex_yform_email_template::replaceVars($yform_email_template, $values);
-	    $yform_email_template['mail_to'] = $values['email'];
+	    $yform_email_template['mail_to'] = $values['emailadresse'];
 	    $yform_email_template['mail_to_name'] = $values['name'];
 
 	    if ($debug) {
@@ -132,7 +132,7 @@ Wenn die Validierung des Formulars erfolgreich ist, wird die E-Mail versendet un
 
 ```html
 REX_YFORM_DATA[field="name"]
-REX_YFORM_DATA[field="email"]
+REX_YFORM_DATA[field="emailadresse"]
 REX_YFORM_DATA[field="custom"]
 ```
 
@@ -148,7 +148,7 @@ $debug = 0;
 // Platzhalter, die im E-Mail-Template ersetzt werden. Dieses Array könnte bspw. auch von der Datenbank befüllt werden.
 $values['anrede'] = 'Herr'; 
 $values['name'] = 'Max Mustermann'; 
-$values['email'] = 'max@mustermann.de'; 
+$values['emailadresse'] = 'max@mustermann.de'; 
 
 if ($yform_email_template = rex_yform_email_template::getTemplate($yform_email_template_key)) {
 
@@ -156,7 +156,7 @@ if ($yform_email_template = rex_yform_email_template::getTemplate($yform_email_t
         echo '<hr /><pre>'; var_dump($yform_email_template); echo '</pre><hr />';
     }
     $yform_email_template = rex_yform_email_template::replaceVars($yform_email_template, $values);
-    $yform_email_template['mail_to'] = $values['email'];
+    $yform_email_template['mail_to'] = $values['emailadresse'];
     $yform_email_template['mail_to_name'] = $values['name'];
 
     if ($debug) {
@@ -180,5 +180,5 @@ Absender, Betreff usw. werden automatisch ausgefüllt, indem die üblichen Platz
 ```html
 REX_YFORM_DATA[field="name"]
 REX_YFORM_DATA[field="phone"]
-REX_YFORM_DATA[field="email"]
+REX_YFORM_DATA[field="emailadresse"]
 ```
