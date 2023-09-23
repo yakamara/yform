@@ -37,7 +37,7 @@ class rex_yform_manager_dataset
     /** @var bool */
     private $historyEnabled = true;
 
-    final private function __construct(string $table, int $id = null)
+    final private function __construct(string $table, ?int $id = null)
     {
         $this->table = $table;
         $this->id = $id;
@@ -46,7 +46,7 @@ class rex_yform_manager_dataset
     /**
      * @return static
      */
-    public static function create(string $table = null): self
+    public static function create(?string $table = null): self
     {
         $table = $table ?: static::modelToTable();
         /** @var class-string<static> $class */
@@ -59,7 +59,7 @@ class rex_yform_manager_dataset
         return $dataset;
     }
 
-    public static function get(int $id, string $table = null): ?self
+    public static function get(int $id, ?string $table = null): ?self
     {
         if ($id <= 0) {
             throw new InvalidArgumentException(sprintf('$id has to be an integer greater than 0, but "%s" given', $id));
@@ -82,7 +82,7 @@ class rex_yform_manager_dataset
     /**
      * @throws rex_exception if dataset does not exist
      */
-    public static function require(int $id, string $table = null): self
+    public static function require(int $id, ?string $table = null): self
     {
         $dataset = self::get($id, $table);
 
@@ -98,7 +98,7 @@ class rex_yform_manager_dataset
     /**
      * @return static|rex_yform_manager_dataset
      */
-    public static function getRaw(int $id, string $table = null): self
+    public static function getRaw(int $id, ?string $table = null): self
     {
         if ($id <= 0) {
             throw new InvalidArgumentException(sprintf('$id has to be an integer greater than 0, but "%s" given', $id));
@@ -122,7 +122,7 @@ class rex_yform_manager_dataset
     /**
      * @return rex_yform_manager_collection<static>
      */
-    public static function getAll(string $table = null): rex_yform_manager_collection
+    public static function getAll(?string $table = null): rex_yform_manager_collection
     {
         return static::query($table)->find();
     }
@@ -141,7 +141,7 @@ class rex_yform_manager_dataset
     /**
      * @return rex_yform_manager_query<static>
      */
-    public static function query(string $table = null): rex_yform_manager_query
+    public static function query(?string $table = null): rex_yform_manager_query
     {
         return rex_yform_manager_query::get($table ?: static::modelToTable());
     }
@@ -149,7 +149,7 @@ class rex_yform_manager_dataset
     /**
      * @return null|static|rex_yform_manager_dataset
      */
-    public static function queryOne(string $query, array $params = [], string $table = null): ?self
+    public static function queryOne(string $query, array $params = [], ?string $table = null): ?self
     {
         $table = $table ?: static::modelToTable();
 
@@ -179,7 +179,7 @@ class rex_yform_manager_dataset
     /**
      * @return rex_yform_manager_collection<static>|rex_yform_manager_collection<rex_yform_manager_dataset>
      */
-    public static function queryCollection(string $query, array $params = [], string $table = null): rex_yform_manager_collection
+    public static function queryCollection(string $query, array $params = [], ?string $table = null): rex_yform_manager_collection
     {
         $table = $table ?: static::modelToTable();
 
@@ -496,7 +496,7 @@ class rex_yform_manager_dataset
     /**
      * @param null|callable(rex_yform):void $afterFieldsExecuted
      */
-    public function executeForm(rex_yform $yform, callable $afterFieldsExecuted = null): string
+    public function executeForm(rex_yform $yform, ?callable $afterFieldsExecuted = null): string
     {
         $exists = $this->exists();
         $oldData = $this->getData();
