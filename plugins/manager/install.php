@@ -103,7 +103,7 @@ if ($this->isInstalled()) {
     }
 
     try {
-        rex_sql::factory()->setQuery('UPDATE ' . rex_yform_manager_field::table() . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"');
+        rex_sql::factory()->setQuery('UPDATE ' . rex::getTable('yform_field') . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"');
     } catch (rex_sql_exception $e) {
     }
 
