@@ -1,5 +1,5 @@
 {
-    "name": "yakamara/redaxo_yform",
+    "name": "yakamara/yform",
     "replace": {
         "psr/container": "*",
         "psr/http-message": "*",
