@@ -67,7 +67,7 @@ jobs:
       # see: https://www.redaxo.org/doku/main/basis-addons#console
       - name: Copy and install Addons
         run: |
-          rsync -av --exclude='./vendor' --exclude='.github' --exclude='.git' --exclude='redaxo_cms' './' 'redaxo_cms/redaxo/src/addons/${{ github.event.repository.name }}'
+          rsync -av --exclude='.github' --exclude='.git' --exclude='redaxo_cms' './' 'redaxo_cms/redaxo/src/addons/${{ github.event.repository.name }}'
           redaxo_cms/redaxo/bin/console install:download 'rexstan' '1.*'
           redaxo_cms/redaxo/bin/console package:install 'rexstan'
           redaxo_cms/redaxo/bin/console package:install 'cronjob'
