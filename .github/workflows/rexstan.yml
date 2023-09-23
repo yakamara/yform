@@ -67,12 +67,19 @@ jobs:
       # see: https://www.redaxo.org/doku/main/basis-addons#console
       - name: Copy and install Addons
         run: |
-          rsync -av --exclude='.github' --exclude='.git' --exclude='redaxo_cms' './' 'redaxo_cms/redaxo/src/addons/${{ github.event.repository.name }}'
+          rsync -av --exclude='./vendor' --exclude='.github' --exclude='.git' --exclude='redaxo_cms' './' 'redaxo_cms/redaxo/src/addons/${{ github.event.repository.name }}'
           redaxo_cms/redaxo/bin/console install:download 'rexstan' '1.*'
           redaxo_cms/redaxo/bin/console package:install 'rexstan'
           redaxo_cms/redaxo/bin/console package:install 'cronjob'
           redaxo_cms/redaxo/bin/console package:install 'phpmailer'
           redaxo_cms/redaxo/bin/console package:install '${{ github.event.repository.name }}'
+
+      # install dependencies from composer.json
+      - name: Install test dependencies
+        working-directory: redaxo_cms/redaxo/src/addons/${{ github.event.repository.name }}
+        env:
+            COMPOSER: composer.json
+        run: composer install --prefer-dist --no-progress
 
       # execute rexstan.php to create the needed user-config.neon
       - name: Execute .tools/rexstan.php
