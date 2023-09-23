@@ -119,12 +119,13 @@ if (isset($rex_yform_manager_opener['id'])) {
                     }
                 }
             }
-            return '<a href="javascript:setYFormDataset('.$params['params']['opener_id'].',###id###,\''.rex_escape(
-                $value,
-                'js'
-            ).' [id=###id###]\','.$params['params']['opener_multiple'].')">'.rex_i18n::msg(
-                'yform_data_select'
-            ).'</a>';
+            return '<span class="yform-dataset-widget"><a
+                class="btn btn-popup yform-dataset-widget-set"
+                data-id="###id###"
+                data-opener_id="'.$params['params']['opener_id'].'"
+                data-opener_field="'.$params['params']['opener_field'].'"
+                data-value="'.rex_escape($value, 'html').' [id=###id###]"
+                data-multiple="'.$params['params']['opener_multiple'].'">'.rex_i18n::msg('yform_data_select').'</a></span>';
         },
         [
             'opener_id' => $rex_yform_manager_opener['id'],
