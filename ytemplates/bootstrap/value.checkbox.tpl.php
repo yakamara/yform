@@ -5,7 +5,7 @@
  * @psalm-scope-this rex_yform_value_checkbox
  */
 
-$value = $value ?? $this->getValue() ?? '';
+$value ??= $this->getValue() ?? '';
 
 $notices = [];
 if ('' != $this->getElement('notice')) {
@@ -35,7 +35,7 @@ if (1 == $value) {
 $attributes = $this->getAttributeElements($attributes, ['required', 'disabled', 'autofocus']);
 
 ?>
-<div class="<?= $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-<label><input <?= implode(' ', $attributes) ?> /><i class="form-helper"></i><?php echo $this->getLabel() ?></label>
-<?php echo $notice; ?>
+<div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+<label><input <?= implode(' ', $attributes) ?> /><i class="form-helper"></i><?= $this->getLabel() ?></label>
+<?= $notice ?>
 </div>

@@ -27,7 +27,7 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function enterObject()
     {
-        if ($this->needsOutput() && (in_array($this->getElement(3), ['POST', 'REQUEST']))) {
+        if ($this->needsOutput() && in_array($this->getElement(3), ['POST', 'REQUEST'])) {
             $this->params['form_output'][$this->getId()] = $this->parse('value.hidden.tpl.php', ['fieldName' => $this->getElement(1)]);
         }
 
@@ -39,6 +39,6 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return 'hidden|fieldname|value||[no_db]'."\n".'hidden|fieldname|key|REQUEST/GET/POST/SESSION|[no_db]';
+        return 'hidden|fieldname|value||[no_db]' . "\n" . 'hidden|fieldname|key|REQUEST/GET/POST/SESSION|[no_db]';
     }
 }

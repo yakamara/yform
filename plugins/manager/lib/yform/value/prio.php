@@ -41,7 +41,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 implode(', ', $selectFields),
                 $this->getElement('name'),
                 $this->params['main_table'],
-                $scopeWhere
+                $scopeWhere,
             ));
             $prio = 1;
             while ($sql->hasNext()) {
@@ -133,7 +133,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             $this->params['main_table'],
             $this->getElement('name'),
             $scopeWhere,
-            $this->params['main_id']
+            $this->params['main_id'],
         ));
     }
 
@@ -162,7 +162,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                     'SELECT `%s` FROM `%s` WHERE id = %d',
                     $column,
                     $this->params['main_table'],
-                    $this->params['main_id']
+                    $this->params['main_id'],
                 ));
                 $value = $sql->getValue($column);
             }

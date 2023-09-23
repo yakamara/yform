@@ -54,7 +54,7 @@ class rex_var_yform_table_data extends rex_var
                     foreach ($valueArray as $valueId) {
                         $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $valueId]);
                         if (isset($listValues[$valueId])) {
-                            $options[] = ['id' => $valueId, 'name' => rex_formatter::truncate($listValues[$valueId].' id=['.$valueId.']', ['length' => 50])];
+                            $options[] = ['id' => $valueId, 'name' => rex_formatter::truncate($listValues[$valueId] . ' id=[' . $valueId . ']', ['length' => 50])];
                             $values[] = $valueId;
                         }
                     }
@@ -73,7 +73,7 @@ class rex_var_yform_table_data extends rex_var
                 $value = self::getSingleWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
             }
         }
-        //else {
+        // else {
         //    if ($value && $this->hasArg('output') && $this->getArg('output') != 'id') {
         //        if ($tableName == '') {
         //            return self::quote('[table param not defined]');
@@ -90,7 +90,7 @@ class rex_var_yform_table_data extends rex_var
         //        //return 'rex_var::nothing(require rex_stream::factory(mb_substr(__FILE__, 6) . \'/REX_YFORM_DATASET/'.$id.'\', '.self::quote(json_encode($value)).'))';
         //        return self::quote(json_encode($value));
         //    }
-        //}
+        // }
         return self::quote($value);
     }
 
@@ -109,7 +109,7 @@ class rex_var_yform_table_data extends rex_var
         $select = new rex_select();
         $select->setAttributes($attributes);
         $select->setId($dataset_view_id);
-        $select->setName($dataset_view_id.'-name');
+        $select->setName($dataset_view_id . '-name');
         $select->setSize($size);
         foreach ($args['options'] as $option) {
             $select->addOption($option['name'], $option['id']);
@@ -130,9 +130,9 @@ class rex_var_yform_table_data extends rex_var
             ';
         $e['before'] = '<div class="yform-dataset-widget"
             data-widget_type="multiple"
-            data-id="'.$id.'"
-            data-link="'.$link.'"
-            data-field_name="'.urlencode($args['fieldName']).'">';
+            data-id="' . $id . '"
+            data-link="' . $link . '"
+            data-field_name="' . urlencode($args['fieldName']) . '">';
         $e['after'] = '</div>';
 
         $fragment = new rex_fragment();
@@ -151,18 +151,18 @@ class rex_var_yform_table_data extends rex_var
         $dataset_real_id = 'yform-dataset-real-' . $id . '';
 
         $e['field'] = '
-            <input class="form-control yform-dataset-view" type="text" value="' .  $valueName . '" id="' . $dataset_view_id . '" readonly="readonly" />
-            <input type="hidden" class="yform-dataset-real" name="' .  $name . '" id="' . $dataset_real_id . '" value="' . $value . '" />';
+            <input class="form-control yform-dataset-view" type="text" value="' . $valueName . '" id="' . $dataset_view_id . '" readonly="readonly" />
+            <input type="hidden" class="yform-dataset-real" name="' . $name . '" id="' . $dataset_real_id . '" value="' . $value . '" />';
         $e['functionButtons'] = '
-                <a class="btn btn-popup yform-dataset-widget-open" title="' .  rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
-                <a class="btn btn-popup yform-dataset-widget-delete" title="' .  rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>';
+                <a class="btn btn-popup yform-dataset-widget-open" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
+                <a class="btn btn-popup yform-dataset-widget-delete" title="' . rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>';
         $e['before'] = '<div class="yform-dataset-widget"
             data-widget_type="single"
-            data-id="'.$id.'"
-            data-value_name="'.$valueName.'"
-            data-value="'.$value.'"
-            data-link="'.$link.'"
-            data-field_name="'.urlencode($args['fieldName']).'">';
+            data-id="' . $id . '"
+            data-value_name="' . $valueName . '"
+            data-value="' . $value . '"
+            data-link="' . $link . '"
+            data-field_name="' . urlencode($args['fieldName']) . '">';
         $e['after'] = '</div>';
 
         $fragment = new rex_fragment();
@@ -175,7 +175,7 @@ class rex_var_yform_table_data extends rex_var
         $e['field'] = '<input type="hidden" name="' . $fieldName . '" id="YFORM_DATASET_' . $id . '" value="' . implode(',', $value) . '" />';
         $e['before'] = '<div class="yform-dataset-widget"
             data-widget_type="pool"
-            data-link="'.$link.'">';
+            data-link="' . $link . '">';
         $e['after'] = '';
         if ($main_id > 0) {
             $e['functionButtons'] = '<a class="btn btn-popup yform-dataset-widget-pool">' . rex_i18n::msg('yform_relation_edit_relations') . '</a>';

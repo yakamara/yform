@@ -22,9 +22,6 @@ class rex_yform_rest
     protected static $additionalHeaders = [];
     protected static $routes = [];
 
-    /**
-     * @param $route
-     */
     public static function addRoute(rex_yform_rest_route $route)
     {
         self::$routes[] = $route;
@@ -114,8 +111,6 @@ class rex_yform_rest
     }
 
     /**
-     * @param        $status
-     * @param        $content
      * @param string $contentType
      */
     public static function sendContent($status, $content, $contentType = 'application/json')
@@ -193,12 +188,11 @@ class rex_yform_rest
     }
 
     /**
-     * @param $instance
      * @return null|mixed
      */
     public static function getRouteByInstance($instance)
     {
-        $instanceType = get_class($instance);
+        $instanceType = $instance::class;
 
         foreach (self::$routes as $route) {
             if ($route->type == $instanceType) {

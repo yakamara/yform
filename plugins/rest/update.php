@@ -1,8 +1,8 @@
 <?php
 
 /**
-* @var rex_plugin $this
-* @psalm-scope-this rex_plugin
-*/
+ * @var rex_plugin $this
+ * @psalm-scope-this rex_plugin
+ */
 
-$this->includeFile(__DIR__.'/install.php');
+$this->includeFile(__DIR__ . '/install.php');

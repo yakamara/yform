@@ -78,32 +78,32 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             $article = \rex_article::get($id);
             if ($article) {
                 $sql = \rex_sql::factory();
-                $sql->setQuery('SELECT * FROM `'.\rex_yform_manager_field::table().'` LIMIT 0');
+                $sql->setQuery('SELECT * FROM `' . \rex_yform_manager_field::table() . '` LIMIT 0');
 
                 $columns = $sql->getFieldnames();
                 $select = in_array('multiple', $columns) ? ', `multiple`' : '';
 
-                $fields = $sql->getArray('SELECT `table_name`, `name`'.$select.' FROM `'.\rex_yform_manager_field::table().'` WHERE `type_id`="value" AND `type_name` IN("be_link")');
+                $fields = $sql->getArray('SELECT `table_name`, `name`' . $select . ' FROM `' . \rex_yform_manager_field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_link")');
                 $fields = \rex_extension::registerPoint(new \rex_extension_point('YFORM_ARTICLE_IS_IN_USE', $fields));
 
                 if (count($fields)) {
                     $tables = [];
                     foreach ($fields as $field) {
                         $tableName = $field['table_name'];
-                        $condition = $sql->escapeIdentifier((string) $field['name']).' = '.$article->getId();
+                        $condition = $sql->escapeIdentifier((string) $field['name']) . ' = ' . $article->getId();
 
                         if (isset($field['multiple']) && 1 == $field['multiple']) {
-                            $condition = 'FIND_IN_SET('.$article->getId().', '.$sql->escapeIdentifier((string) $field['name']).')';
+                            $condition = 'FIND_IN_SET(' . $article->getId() . ', ' . $sql->escapeIdentifier((string) $field['name']) . ')';
                         }
                         $tables[$tableName][] = $condition;
                     }
                     $messages = '';
                     foreach ($tables as $tableName => $conditions) {
-                        $items = $sql->getArray('SELECT `id` FROM '.$tableName.' WHERE '.implode(' OR ', $conditions));
+                        $items = $sql->getArray('SELECT `id` FROM ' . $tableName . ' WHERE ' . implode(' OR ', $conditions));
                         if (count($items)) {
                             foreach ($items as $item) {
                                 $sqlData = \rex_sql::factory();
-                                $sqlData->setQuery('SELECT `name` FROM `'.\rex_yform_manager_table::table().'` WHERE `table_name` = "'.$tableName.'"');
+                                $sqlData->setQuery('SELECT `name` FROM `' . \rex_yform_manager_table::table() . '` WHERE `table_name` = "' . $tableName . '"');
 
                                 $url = \rex_url::backendController([
                                     'page' => 'yform/manager/data_edit',
@@ -111,7 +111,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                                     'data_id' => $item['id'],
                                     'func' => 'edit',
                                 ]);
-                                $messages .= '<li><a href="'.$url.'">'.$sqlData->getValue('name').' [id='.$item['id'].']</a></li>';
+                                $messages .= '<li><a href="' . $url . '">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
                             }
                         }
                     }
@@ -121,9 +121,9 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
 
                         \rex_extension::register('PAGE_TITLE_SHOWN', static function (rex_extension_point $ep) use ($article, $messages) {
                             $warning = $article->isStartArticle() ? \rex_i18n::msg('yform_structure_category_could_not_be_deleted') : \rex_i18n::msg('yform_structure_article_could_not_be_deleted');
-                            $warning .= '<br /><ul>'.$messages.'</ul>';
+                            $warning .= '<br /><ul>' . $messages . '</ul>';
                             $subject = $ep->getSubject();
-                            $ep->setSubject(\rex_view::error($warning).$subject);
+                            $ep->setSubject(\rex_view::error($warning) . $subject);
                         });
                     }
                 }
@@ -138,7 +138,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             [
                 'name' => $params['field']->getName(),
                 'label' => $params['field']->getLabel(),
-            ]
+            ],
         );
     }
 

@@ -12,7 +12,7 @@ if (rex::getUser()->isAdmin() && rex_addon::get('structure')->isAvailable()) {
     $searchtext = 'module:yform_basic_output';
 
     $gm = rex_sql::factory();
-    $gm->setQuery('select * from '.rex::getTable('module').' where output LIKE "%' . $searchtext . '%"');
+    $gm->setQuery('select * from ' . rex::getTable('module') . ' where output LIKE "%' . $searchtext . '%"');
 
     $module_id = 0;
     $module_name = '';
@@ -46,7 +46,7 @@ if (rex::getUser()->isAdmin() && rex_addon::get('structure')->isAvailable()) {
         }
     }
 
-    $content .= '<p>'.$this->i18n('install_modul_description').'</p>';
+    $content .= '<p>' . $this->i18n('install_modul_description') . '</p>';
 
     if ($module_id > 0) {
         $content .= '<p><a class="btn btn-primary" href="index.php?page=yform/setup&amp;install=1&amp;module_id=' . $module_id . '" class="rex-button">' . $this->i18n('install_update_module', rex_escape((string) $module_name)) . '</a></p>';

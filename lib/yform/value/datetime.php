@@ -113,12 +113,12 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.datetime-view.tpl.php', 'value.date-view.tpl.php', 'value.view.tpl.php'],
-                ['type' => 'text', 'value' => self::datetime_getFormattedDatetime($this->getElement('format'), $this->getValue())]
+                ['type' => 'text', 'value' => self::datetime_getFormattedDatetime($this->getElement('format'), $this->getValue())],
             );
         } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'],
-                ['type' => 'text', 'value' => $this->getValue()]
+                ['type' => 'text', 'value' => $this->getValue()],
             );
         } else {
             $format = 'YYYY-MM-DD HH:ii:ss'; // Format of Select Order
@@ -130,7 +130,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $second = (int) mb_substr($this->getValue(), 17, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date.tpl.php', 'value.datetime.tpl.php'],
-                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day', 'hour', 'minute', 'second')
+                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day', 'hour', 'minute', 'second'),
             );
         }
     }
@@ -139,7 +139,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     {
         $format = (in_array($format, self::VALUE_DATETIME_FORMATS, true)) ? $format : self::VALUE_DATETIME_DEFAULT_FORMAT;
         $DTdate = DateTime::createFromFormat('Y-m-d H:i:s', $date);
-        return (!$date || !$DTdate || $date != $DTdate->format('Y-m-d H:i:s')) ? '['.$date.']' : $DTdate->format($format);
+        return (!$date || !$DTdate || $date != $DTdate->format('Y-m-d H:i:s')) ? '[' . $date . ']' : $DTdate->format($format);
     }
 
     public function getDescription(): string
@@ -172,7 +172,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
 
     public static function getListValue($params): string
     {
-        return '<nobr>'.self::datetime_getFormattedDatetime($params['params']['field']['format'], $params['subject']).'</nobr>';
+        return '<nobr>' . self::datetime_getFormattedDatetime($params['params']['field']['format'], $params['subject']) . '</nobr>';
     }
 
     public static function getSearchField($params)

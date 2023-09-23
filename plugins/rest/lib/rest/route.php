@@ -41,8 +41,6 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param        $status
-     * @param        $content
      * @param string $contentType
      */
     public function sendContent($status, $content, $contentType = 'application/json')
@@ -75,8 +73,6 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param $paths
-     * @param $get
      * @throws rex_api_exception
      */
     public function handleRequest(array $paths, array $get)
@@ -180,7 +176,7 @@ class rex_yform_rest_route
                         $id = $path;
                         $id_column = 'id';
                         if ('' != $query->getTableAlias()) {
-                            $id_column = $query->getTableAlias().'.id';
+                            $id_column = $query->getTableAlias() . '.id';
                         }
 
                         $query
@@ -217,7 +213,7 @@ class rex_yform_rest_route
                     foreach ($instances as $instance) {
                         $data[] = $this->getInstanceData(
                             $instance,
-                            array_merge($paths, [$instance->getId()])
+                            array_merge($paths, [$instance->getId()]),
                         );
                     }
 
@@ -248,18 +244,18 @@ class rex_yform_rest_route
                         $links['self'] = rex_yform_rest::getLinkByPath($this, $linkParams);
                         $links['first'] = rex_yform_rest::getLinkByPath($this, array_merge(
                             $linkParams,
-                            ['page' => 1]
+                            ['page' => 1],
                         ));
                         if (($currentPage - 1) > 0) {
                             $links['prev'] = rex_yform_rest::getLinkByPath($this, array_merge(
                                 $linkParams,
-                                ['page' => ($currentPage - 1)]
+                                ['page' => ($currentPage - 1)],
                             ));
                         }
                         if (($currentPage * $per_page) < $itemsAll) {
                             $links['next'] = rex_yform_rest::getLinkByPath($this, array_merge(
                                 $linkParams,
-                                ['page' => ($currentPage + 1)]
+                                ['page' => ($currentPage + 1)],
                             ));
                         }
 
@@ -275,7 +271,7 @@ class rex_yform_rest_route
                     } else {
                         $data = $this->getInstanceData(
                             $instance,
-                            array_merge($paths)
+                            array_merge($paths),
                         );
                     }
                 }
@@ -284,7 +280,7 @@ class rex_yform_rest_route
 
                 break;
 
-            // ----- /END GET
+                // ----- /END GET
 
             case 'post':
                 $instance = $table->createDataset();
@@ -417,7 +413,6 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param $instance
      * @throws rex_api_exception
      * @return rex_yform_manager_field[]
      */
@@ -457,11 +452,6 @@ class rex_yform_rest_route
         return $returnFields;
     }
 
-    /**
-     * @param $query
-     * @param $fields
-     * @param $get
-     */
     public function getFilterQuery(rex_yform_manager_query $query, array $fields, array $get): rex_yform_manager_query
     {
         if (isset($get['filter']) && is_array($get['filter'])) {
@@ -491,8 +481,6 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param       $instance
-     * @param       $paths
      * @param bool $onlyId
      */
     public function getInstanceData($instance, $paths, $onlyId = false, $parents = []): array
@@ -564,7 +552,7 @@ class rex_yform_rest_route
 
         $newFields = [];
         foreach ($fields as $key => $field) {
-            $compareKey = 0 == count($parents) ? $key : implode('.', $parents).'.'.$key;
+            $compareKey = 0 == count($parents) ? $key : implode('.', $parents) . '.' . $key;
             if (in_array($compareKey, $this->getIncludes(), true)) {
                 $newFields[$key] = $field;
             }
@@ -602,7 +590,7 @@ class rex_yform_rest_route
                         $relationInstance,
                         array_merge($paths, [$field->getName(), $relationInstance->getId()]),
                         $onlyId,
-                        $fieldParents
+                        $fieldParents,
                     );
                 }
                 $return[$field->getName()] = [
@@ -628,8 +616,6 @@ class rex_yform_rest_route
     }
 
     /**
-     * @param       $instance
-     * @param       $key
      * @param false $attributCall
      * @return mixed
      */
@@ -654,7 +640,7 @@ class rex_yform_rest_route
         if (!$instance) {
             $type = 'not-defined';
         } else {
-            $type = get_class($instance);
+            $type = $instance::class;
             if ('rex_yform_manager_dataset' == $type || 'rex_yform_rest_route' == $instance || !$type) {
                 $type = 'not-defined';
             }

@@ -135,7 +135,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $FILE['tmp_name'] = $_FILES[$this->upload_getSessionKey()]['tmp_name'];
             $FILE['tmp_yform_name'] = $temp_folder . '/' . $this->upload_getSessionKey() . '_' . $this->getId() . '_' . $FILE['name'];
             $FILE['upload_folder'] = $upload_folder;
-            $FILE['upload_name'] = $this->upload_getSessionKey().'_'.$FILE['name']; // default_name
+            $FILE['upload_name'] = $this->upload_getSessionKey() . '_' . $FILE['name']; // default_name
 
             unset($_FILES[$this->upload_getSessionKey()]);
 
@@ -177,7 +177,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             if (isset($FILE['name'])) {
                 $error_extensions = self::upload_checkExtensions($FILE, $configuration);
                 if (0 < count($error_extensions)) {
-                    $errors = $errors + $error_extensions;
+                    $errors += $error_extensions;
                     unset($FILE);
                 }
             }
@@ -187,11 +187,11 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 foreach ($configuration['callback'] as $callback) {
                     $errors_callback = call_user_func($callback, ['file' => $FILE, 'configuration' => $configuration]);
                     if (0 < count($errors_callback)) {
-                        $errors_callbacks = $errors_callbacks + $errors_callback;
+                        $errors_callbacks += $errors_callback;
                     }
                 }
                 if (0 < count($errors_callbacks)) {
-                    $errors = $errors + $errors_callbacks;
+                    $errors += $errors_callbacks;
                     unset($FILE);
                 }
             }
@@ -252,7 +252,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             } else {
                 $filepath = $FILE['tmp_yform_name'];
                 $filename = $FILE['name'];
-                $real_filepath = $FILE['upload_folder'].'/'.$FILE['upload_name'];
+                $real_filepath = $FILE['upload_folder'] . '/' . $FILE['upload_name'];
             }
         }
 
@@ -279,7 +279,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $this->setValue($filename);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
-        $this->params['value_pool']['email'][$this->getName().'_folder'] = $this->getValue();
+        $this->params['value_pool']['email'][$this->getName() . '_folder'] = $this->getValue();
         if ($this->saveInDb()) {
             $this->params['value_pool']['sql'][$this->getName()] = $this->getValue();
         }
@@ -333,12 +333,12 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             if (file_exists($FILE['tmp_yform_name'])) {
                 $main_id = $this->getParam('main_id');
                 if ('' != $main_id && -1 != $main_id) {
-                    $FILE['upload_name'] = $main_id.'_'.$FILE['name'];
+                    $FILE['upload_name'] = $main_id . '_' . $FILE['name'];
                 } else {
-                    $FILE['upload_name'] = $this->upload_getSessionKey().'_'.$FILE['name'];
+                    $FILE['upload_name'] = $this->upload_getSessionKey() . '_' . $FILE['name'];
                 }
 
-                $upload_filefolder = $FILE['upload_folder'].'/'.$FILE['upload_name'];
+                $upload_filefolder = $FILE['upload_folder'] . '/' . $FILE['upload_name'];
 
                 if (!move_uploaded_file($FILE['tmp_yform_name'], $upload_filefolder)) {
                     if (!copy($FILE['tmp_yform_name'], $upload_filefolder)) {
@@ -362,17 +362,17 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         // delete temp files from this formfield
         $temp_folder = rex_path::pluginData('yform', 'manager', 'upload/temp');
-        foreach (glob($temp_folder .'/'.$this->upload_getSessionKey().'*') as $f) {
+        foreach (glob($temp_folder . '/' . $this->upload_getSessionKey() . '*') as $f) {
             unlink($f);
         }
 
         // delete old files from cache
         $cu = date('U');
         $offset = (60 * 60 * 0.5); // 30 min
-        $dir = $temp_folder.'/';
+        $dir = $temp_folder . '/';
         if ($dh = opendir($dir)) {
             while (false !== ($file = readdir($dh))) {
-                $f = $dir.$file;
+                $f = $dir . $file;
                 $fu = date('U', filectime($f));
                 if (($cu - $fu) > $offset && '.' != $file && '..' != $file) {
                     unlink($f);
@@ -398,7 +398,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             $folders[] = 'frontend';
         }
 
-        return rex_path::pluginData('yform', 'manager', 'upload/'.implode('/', $folders));
+        return rex_path::pluginData('yform', 'manager', 'upload/' . implode('/', $folders));
     }
 
     public static function upload_checkdownloadFile(string $filename, string $filepath): void
@@ -407,7 +407,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             ob_end_clean();
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename='.$filename);
+            header('Content-Disposition: attachment; filename=' . $filename);
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
@@ -446,7 +446,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     public static function upload_getDownloadLink(string $table_name, string $field_name, int $data_id): string
     {
         if ('' != $table_name && '' != $field_name && 0 < $data_id) {
-            return '/redaxo/index.php?page=yform/manager/data_edit&table_name='.$table_name.'&data_id='.$data_id.'&func=edit&rex_upload_downloadfile='.urlencode($field_name);
+            return '/redaxo/index.php?page=yform/manager/data_edit&table_name=' . $table_name . '&data_id=' . $data_id . '&func=edit&rex_upload_downloadfile=' . urlencode($field_name);
         }
         return '';
     }
@@ -473,7 +473,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             in_array('multiple_extensions', $configuration['check']) &&
             0 < count(array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']))
         ) {
-            $errors[] = $configuration['messages']['type_multiple_error'] ?? 'multiple-extension-type-error: '.implode(', ', array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']));
+            $errors[] = $configuration['messages']['type_multiple_error'] ?? 'multiple-extension-type-error: ' . implode(', ', array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']));
         }
 
         if (
@@ -507,7 +507,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                         if (3 < count($zip_error_files)) {
                             $amount_files = count($zip_error_files);
                             $zip_error_files = array_chunk($zip_error_files, 3)[0];
-                            $zip_error_files[] = ' ... ['.($amount_files - count($zip_error_files)).'] ';
+                            $zip_error_files[] = ' ... [' . ($amount_files - count($zip_error_files)) . '] ';
                         }
 
                         if (0 < count($zip_error_files)) {
@@ -538,18 +538,18 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     {
         $value = $params['subject'];
         $length = mb_strlen($value);
-        /** @var rex_list $list */
+        /** @var rex_list|null $list */
         $list = $params['list'];
         $title = $value;
         if ($length > 30) {
-            $value = mb_substr($value, 0, 15).' ... '.mb_substr($value, -15);
+            $value = mb_substr($value, 0, 15) . ' ... ' . mb_substr($value, -15);
         }
 
         $return = $value;
         if (rex::isBackend() && $list) {
             $field = new rex_yform_manager_field($params['params']['field']);
             if ('' != $value) {
-                $return = '<a href="' . self::upload_getDownloadLink($field->getElement('table_name'), $field->getElement('name'), (int) $list->getValue('id')) . '" title="'.rex_escape($title).'">'.rex_escape($value).'</a>';
+                $return = '<a href="' . self::upload_getDownloadLink($field->getElement('table_name'), $field->getElement('name'), (int) $list->getValue('id')) . '" title="' . rex_escape($title) . '">' . rex_escape($value) . '</a>';
             }
         }
 
@@ -583,7 +583,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         $sessionVars = rex_session($this->upload_getSessionKey(), 'array', []);
 
         if (!is_scalar($varType)) {
-            throw new InvalidArgumentException('Scalar expected for $needle in arrayKeyCast(), got '. gettype($varType) .'!');
+            throw new InvalidArgumentException('Scalar expected for $needle in arrayKeyCast(), got ' . gettype($varType) . '!');
         }
 
         if (array_key_exists($key, $sessionVars)) {

@@ -20,7 +20,7 @@ abstract class rex_yform_base_abstract
         $this->params = &$params;
         $offset = 0;
         foreach ($elements as $key => $value) {
-            if (is_string($value) && !empty($value) && '#' == $value[0] && false !== strpos($value, ':')) {
+            if (is_string($value) && !empty($value) && '#' == $value[0] && str_contains($value, ':')) {
                 [$key, $value] = explode(':', mb_substr($value, 1), 2);
                 ++$offset;
             }
@@ -79,7 +79,7 @@ abstract class rex_yform_base_abstract
 
     public function getParam($param, $default = null)
     {
-        return isset($this->params[$param]) ? $this->params[$param] : $default;
+        return $this->params[$param] ?? $default;
     }
 
     public function setObjects(&$obj)

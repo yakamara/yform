@@ -61,7 +61,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        return (!empty($params['params']['field']['unit']) && '' != $params['subject']) ? $params['params']['field']['unit'].' '.$params['subject'] : $params['subject'];
+        return (!empty($params['params']['field']['unit']) && '' != $params['subject']) ? $params['params']['field']['unit'] . ' ' . $params['subject'] : $params['subject'];
     }
 
     public static function getSearchField($params)
@@ -77,18 +77,18 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         if ('(empty)' == $value) {
-            return $query->whereNested(function (rex_yform_manager_query $query) use ($field) {
+            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
                 $query
                     ->where($field, '')
-                    ->where($field, NULL)
+                    ->where($field, null)
                 ;
             }, 'OR');
         }
         if ('!(empty)' == $value) {
-            return $query->whereNested(function (rex_yform_manager_query $query) use ($field) {
+            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
                 $query
                     ->where($field, '', '<>')
-                    ->where($field, NULL, '<>')
+                    ->where($field, null, '<>')
                 ;
             }, 'OR');
         }

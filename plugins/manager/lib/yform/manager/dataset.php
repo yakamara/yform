@@ -59,9 +59,6 @@ class rex_yform_manager_dataset
         return $dataset;
     }
 
-    /**
-     * @return null|static
-     */
     public static function get(int $id, ?string $table = null): ?self
     {
         if ($id <= 0) {
@@ -76,6 +73,7 @@ class rex_yform_manager_dataset
             return $class::get($id, $table);
         }
 
+        /* @phpstan-ignore-next-line */
         return static::getInstance([$table, $id], static function ($table, $id) {
             return static::query($table)->findId($id);
         });
@@ -83,7 +81,6 @@ class rex_yform_manager_dataset
 
     /**
      * @throws rex_exception if dataset does not exist
-     * @return static
      */
     public static function require(int $id, ?string $table = null): self
     {
@@ -92,14 +89,14 @@ class rex_yform_manager_dataset
         if (!$dataset) {
             $table = $table ?: static::modelToTable();
 
-            throw new rex_exception('Dataset with ID "'.$id.'" does not exist in "'.$table.'"');
+            throw new rex_exception('Dataset with ID "' . $id . '" does not exist in "' . $table . '"');
         }
 
         return $dataset;
     }
 
     /**
-     * @return static
+     * @return static|rex_yform_manager_dataset
      */
     public static function getRaw(int $id, ?string $table = null): self
     {
@@ -115,15 +112,11 @@ class rex_yform_manager_dataset
             return $class::getRaw($id, $table);
         }
 
-        $callback = static function ($table, $id) {
+        /* @phpstan-ignore-next-line */
+        return static::getInstance([$table, $id], static function ($table, $id) {
             $class = self::tableToModel($table);
             return new $class($table, $id);
-        };
-        // needed for php 5
-        $callback = $callback->bindTo(null, __CLASS__);
-
-        /** @var static */
-        return static::getInstance([$table, $id], $callback);
+        });
     }
 
     /**
@@ -154,7 +147,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return null|static
+     * @return null|static|rex_yform_manager_dataset
      */
     public static function queryOne(string $query, array $params = [], ?string $table = null): ?self
     {
@@ -184,7 +177,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return rex_yform_manager_collection<static>
+     * @return rex_yform_manager_collection<static>|rex_yform_manager_collection<rex_yform_manager_dataset>
      */
     public static function queryCollection(string $query, array $params = [], ?string $table = null): rex_yform_manager_collection
     {
@@ -264,7 +257,6 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param mixed $value
      * @return $this
      */
     public function setValue(string $key, $value): self
@@ -279,9 +271,6 @@ class rex_yform_manager_dataset
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getValue(string $key)
     {
         if ('id' === $key) {
@@ -307,7 +296,7 @@ class rex_yform_manager_dataset
     public function loadData(): void
     {
         $sql = rex_sql::factory();
-        $rows = $sql->getArray('SELECT * FROM `'.$this->table.'` WHERE id = ? LIMIT 1', [$this->id]);
+        $rows = $sql->getArray('SELECT * FROM `' . $this->table . '` WHERE id = ? LIMIT 1', [$this->id]);
         $this->exists = isset($rows[0]);
         if ($this->exists) {
             $this->data = $rows[0];
@@ -390,8 +379,8 @@ class rex_yform_manager_dataset
         } else {
             $columns = $this->getTable()->getRelationTableColumns($key);
             $query
-                ->join($relation['relation_table'], null, $relation['relation_table'].'.'.$columns['target'], $relation['table'].'.id')
-                ->where($relation['relation_table'].'.'.$columns['source'], $this->getId());
+                ->join($relation['relation_table'], null, $relation['relation_table'] . '.' . $columns['target'], $relation['table'] . '.id')
+                ->where($relation['relation_table'] . '.' . $columns['source'], $this->getId());
         }
 
         return $query;
@@ -507,7 +496,7 @@ class rex_yform_manager_dataset
     /**
      * @param null|callable(rex_yform):void $afterFieldsExecuted
      */
-    public function executeForm(rex_yform $yform, callable $afterFieldsExecuted = null): string
+    public function executeForm(rex_yform $yform, ?callable $afterFieldsExecuted = null): string
     {
         $exists = $this->exists();
         $oldData = $this->getData();
@@ -604,7 +593,7 @@ class rex_yform_manager_dataset
             }
 
             $value = @$sql->getValue($fieldName);
-            if ('rex_yform_value_be_manager_relation' == get_class($fieldObject) && !$value) {
+            if ('rex_yform_value_be_manager_relation' == $fieldObject::class && !$value) {
                 $collection = $this->getRelatedCollection($fieldName);
                 $values = [];
                 foreach ($collection as $item) {
@@ -618,12 +607,12 @@ class rex_yform_manager_dataset
                     '(%d, %s, %s)',
                     $historyId,
                     $sql->escape($fieldName),
-                    $sql->escape((string) $value)
+                    $sql->escape((string) $value),
                 );
             }
         }
 
-        $sql->setQuery('INSERT INTO '.rex::getTable('yform_history_field').' (`history_id`, `field`, `value`) VALUES '.implode(', ', $inserts));
+        $sql->setQuery('INSERT INTO ' . rex::getTable('yform_history_field') . ' (`history_id`, `field`, `value`) VALUES ' . implode(', ', $inserts));
     }
 
     public function restoreSnapshot(int $snapshotId): bool
@@ -660,17 +649,11 @@ class rex_yform_manager_dataset
         return $this->hasValue($key);
     }
 
-    /**
-     * @return mixed
-     */
     public function __get(string $key)
     {
         return $this->getValue($key);
     }
 
-    /**
-     * @param mixed $value
-     */
     public function __set(string $key, $value): void
     {
         $this->setValue($key, $value);
@@ -697,7 +680,7 @@ class rex_yform_manager_dataset
 
         foreach ($fields as $field) {
             /** @var class-string<rex_yform_base_abstract> $class */
-            $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
+            $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
             /** @var rex_yform_base_abstract $cl */
             $cl = new $class();
@@ -744,7 +727,10 @@ class rex_yform_manager_dataset
         return self::getModelClass($table) ?: __CLASS__;
     }
 
-    private static function modelToTable(): string
+    /**
+     * @internal
+     */
+    final protected static function modelToTable(): string
     {
         $class = static::class;
 
@@ -762,7 +748,7 @@ class rex_yform_manager_dataset
     /**
      * @return static
      */
-    private static function fromSqlData(array $data, string $table): self
+    final protected static function fromSqlData(array $data, string $table): self
     {
         $id = (int) $data['id'];
         $class = self::tableToModel($table);

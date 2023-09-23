@@ -101,17 +101,17 @@ class rex_yform_value_date extends rex_yform_value_abstract
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date-view.tpl.php', 'value.datetime-view.tpl.php', 'value.view.tpl.php'],
-                ['type' => 'text', 'value' => self::date_getFormattedDate($this->getElement('format'), $this->getValue())]
+                ['type' => 'text', 'value' => self::date_getFormattedDate($this->getElement('format'), $this->getValue())],
             );
         } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'],
-                ['type' => 'text', 'value' => $this->getValue()]
+                ['type' => 'text', 'value' => $this->getValue()],
             );
         } elseif ('input:date' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'],
-                ['type' => 'date', 'value' => $this->getValue()]
+                ['type' => 'date', 'value' => $this->getValue()],
             );
         } else {
             $format = 'YYYY-MM-DD'; // Format of Select Order
@@ -120,7 +120,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $day = (int) mb_substr($this->getValue(), 8, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.date.tpl.php', 'value.datetime.tpl.php'],
-                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day')
+                compact('format', 'yearStart', 'yearEnd', 'year', 'month', 'day'),
             );
         }
     }
@@ -129,7 +129,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
     {
         $format = (in_array($format, self::VALUE_DATE_FORMATS, true)) ? $format : self::VALUE_DATE_DEFAULT_FORMAT;
         $DTdate = DateTime::createFromFormat('Y-m-d', $date);
-        return (!$DTdate || $date != $DTdate->format('Y-m-d')) ? '['.$date.']' : $DTdate->format($format);
+        return (!$DTdate || $date != $DTdate->format('Y-m-d')) ? '[' . $date . ']' : $DTdate->format($format);
     }
 
     public function getDescription(): string
@@ -163,7 +163,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        return '<nobr>'.self::date_getFormattedDate($params['params']['field']['format'], $params['subject']).'</nobr>';
+        return '<nobr>' . self::date_getFormattedDate($params['params']['field']['format'], $params['subject']) . '</nobr>';
     }
 
     public static function getSearchField($params)
@@ -206,7 +206,7 @@ class rex_yform_value_date extends rex_yform_value_abstract
                 if (null != $month) {
                     // Abfrage auf ein konkretes Datum YYYY-MM-DD, etc.
                     if (null != $day) {
-                        return $query->whereRaw('('.self::date_createDbDateComparison($field, $comparator, $year, $month, $day).')');
+                        return $query->whereRaw('(' . self::date_createDbDateComparison($field, $comparator, $year, $month, $day) . ')');
                     }
 
                     // Abfrage auf YYYY-MM (=)
@@ -223,21 +223,21 @@ class rex_yform_value_date extends rex_yform_value_abstract
                     // >=2020-02  -->  > 2020-02-00
                     // >2020-02   -->  > 2020-02-99
                     $day = ('<' == $comparator || '>=' == $comparator) ? '00' : '99';
-                    return $query->whereRaw('('.self::date_createDbDateComparison($field, $comparator, $year, $month).')');
+                    return $query->whereRaw('(' . self::date_createDbDateComparison($field, $comparator, $year, $month) . ')');
                 }
 
                 // Abfrage auf YYYY
-                return $query->whereRaw('( YEAR('.$field.') '.$comparator.' '.$year.' )');
+                return $query->whereRaw('( YEAR(' . $field . ') ' . $comparator . ' ' . $year . ' )');
             }
 
             if (null != $month) {
-                return $query->whereRaw('( MONTH('.$field.') '.$comparator.' '.$month.' )');
+                return $query->whereRaw('( MONTH(' . $field . ') ' . $comparator . ' ' . $month . ' )');
             }
         }
 
         // Range-Auswertung über Pattern: $value1 - $value2
         $pattern2 = str_replace(['<y>', '<m>', '<d>'], ['<y2>', '<m2>', '<d2>'], self::VALUE_SEARCH_PATTERN[$format]);
-        $pattern = '/^'.self::VALUE_SEARCH_PATTERN[$format].'\s* - \s*' . $pattern2 . '$/';
+        $pattern = '/^' . self::VALUE_SEARCH_PATTERN[$format] . '\s* - \s*' . $pattern2 . '$/';
         $ok = preg_match($pattern, $value, $match);
         if ($ok) {
             $year_from = $match['y'] ?: '';
@@ -255,12 +255,12 @@ class rex_yform_value_date extends rex_yform_value_abstract
             $day_to = $match['d2'] ?? '99';
 
             if (4 == mb_strlen($value)) {
-                return $query->whereRaw('( YEAR('.$field.') >= '.$year_from.' AND YEAR('.$field.') <= '.$year_to.' )');
+                return $query->whereRaw('( YEAR(' . $field . ') >= ' . $year_from . ' AND YEAR(' . $field . ') <= ' . $year_to . ' )');
             }
 
             $from = self::date_createDbDateComparison($field, '>=', $year_from, $month_from, $day_from);
             $to = self::date_createDbDateComparison($field, '<=', $year_to, $month_to, $day_to);
-            return $query->whereRaw('( '.$from.' AND '.$to.' )');
+            return $query->whereRaw('( ' . $from . ' AND ' . $to . ' )');
         }
 
         // ungültige bzw. nicht verwertbare Eingabe ( kein valides SQL möglich )

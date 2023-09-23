@@ -5,13 +5,13 @@
  * @psalm-scope-this rex_yform_value_upload
  */
 
-$unique = $unique ?? '';
-$filename = $filename ?? '';
-$download_link = $download_link ?? '';
-$error_messages = $error_messages ?? [];
-$configuration = $configuration ?? [];
+$unique ??= '';
+$filename ??= '';
+$download_link ??= '';
+$error_messages ??= [];
+$configuration ??= [];
 $allowed_extensions = $configuration['allowed_extensions'] ?? ['*'];
-$allowed_extensions = '*' == $allowed_extensions[0] ? '*' : '.'.implode(',.', $configuration['allowed_extensions']);
+$allowed_extensions = '*' == $allowed_extensions[0] ? '*' : '.' . implode(',.', $configuration['allowed_extensions']);
 
 $notice = [];
 if ('' != $this->getElement('notice')) {
@@ -41,14 +41,14 @@ $inputAttributes = [
 $inputAttributes = $this->getAttributeElements($inputAttributes, ['required', 'disabled', 'readonly']);
 
 ?>
-<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
+<div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+    <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
     <div class="input-group">
-        <input <?php echo implode(' ', $inputAttributes) ?> />
+        <input <?= implode(' ', $inputAttributes) ?> />
         <span class="input-group-btn"><button class="btn btn-default" type="button" onclick="const file = document.getElementById('<?= $this->getFieldId() ?>'); file.value = '';">&times;</button></span>
     </div>
-    <?php echo $notice ?>
-    <input type="hidden" name="<?php echo $this->getFieldName('unique'); ?>" value="<?php echo rex_escape($unique, 'html'); ?>" />
+    <?= $notice ?>
+    <input type="hidden" name="<?= $this->getFieldName('unique') ?>" value="<?= rex_escape($unique, 'html') ?>" />
 </div>
 
 <?php
@@ -62,7 +62,7 @@ $inputAttributes = $this->getAttributeElements($inputAttributes, ['required', 'd
         echo '
             <div class="checkbox" id="' . $this->getHTMLId('checkbox') . '">
                 <label>
-                    <input type="checkbox" id="' .  $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />
+                    <input type="checkbox" id="' . $this->getFieldId('delete') . '" name="' . $this->getFieldName('delete') . '" value="1" />
                     ' . ($error_messages['delete_file'] ?? 'delete-file-msg') . ' "' . $label . '"
                 </label>
             </div>';

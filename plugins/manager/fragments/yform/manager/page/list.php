@@ -54,7 +54,7 @@ $recArray = static function ($key, $paramsArray) use ($list, &$recArray) {
         $list->addParam($key, $paramsArray);
     } elseif (is_array($paramsArray)) {
         foreach ($paramsArray as $k => $v) {
-            $recArray($key.'['.$k.']', $v);
+            $recArray($key . '[' . $k . ']', $v);
         }
     }
 };
@@ -69,10 +69,10 @@ foreach ($this->table->getFields() as $field) {
                 $field->getName(),
                 'custom',
                 ['rex_yform_value_' . $field->getTypeName(), 'getListValue'],
-                ['field' => $field->toArray(), 'fields' => $this->table->getFields()]
+                ['field' => $field->toArray(), 'fields' => $this->table->getFields()],
             );
         }
-        $list->setColumnLayout($field->getName(), ['<th>###VALUE###</th>', '<td class="yform-table-field-value-'.rex_escape($field->getTypeName()).' yform-table-field-name-'.rex_escape($field->getName()).'" data-title="###LABEL###">###VALUE###</td>']);
+        $list->setColumnLayout($field->getName(), ['<th>###VALUE###</th>', '<td class="yform-table-field-value-' . rex_escape($field->getTypeName()) . ' yform-table-field-name-' . rex_escape($field->getName()) . '" data-title="###LABEL###">###VALUE###</td>']);
     }
 
     if ('value' == $field->getType()) {
@@ -113,7 +113,7 @@ if (isset($rex_yform_manager_opener['id'])) {
 
                         $values = rex_yform_value_be_manager_relation::getListValues(
                             $target_table,
-                            $target_field
+                            $target_field,
                         );
                         $value = $values[$params['list']->getValue('id')];
                     }
@@ -122,23 +122,23 @@ if (isset($rex_yform_manager_opener['id'])) {
             return '<span class="yform-dataset-widget"><a
                 class="btn btn-popup yform-dataset-widget-set"
                 data-id="###id###"
-                data-opener_id="'.$params['params']['opener_id'].'"
-                data-opener_field="'.$params['params']['opener_field'].'"
-                data-value="'.rex_escape($value, 'html').' [id=###id###]"
-                data-multiple="'.$params['params']['opener_multiple'].'">'.rex_i18n::msg('yform_data_select').'</a></span>';
+                data-opener_id="' . $params['params']['opener_id'] . '"
+                data-opener_field="' . $params['params']['opener_field'] . '"
+                data-value="' . rex_escape($value, 'html') . ' [id=###id###]"
+                data-multiple="' . $params['params']['opener_multiple'] . '">' . rex_i18n::msg('yform_data_select') . '</a></span>';
         },
         [
             'opener_id' => $rex_yform_manager_opener['id'],
             'opener_field' => $rex_yform_manager_opener['field'],
             'opener_multiple' => $rex_yform_manager_opener['multiple'],
-        ]
+        ],
     );
 } else {
     $actionButtonParams = array_merge(
         $list->getParams(),
         $rex_yform_list,
         ['rex_yform_manager_opener' => $rex_yform_manager_opener],
-        ['rex_yform_manager_popup' => $rex_yform_manager_popup]
+        ['rex_yform_manager_popup' => $rex_yform_manager_popup],
     );
 
     $actionButtons = [];
@@ -159,9 +159,9 @@ if (isset($rex_yform_manager_opener['id'])) {
                     array_merge(
                         $actionButtonParams,
                         ['data_id' => '___id___', 'func' => $actionButtonKey],
-                        $actionButton['params']
+                        $actionButton['params'],
                     ),
-                    false
+                    false,
                 );
             } catch (throwable $e) {
                 $url = '';
@@ -174,17 +174,17 @@ if (isset($rex_yform_manager_opener['id'])) {
         }
         $attributes['href'] = $url;
 
-        $actionButtons[$actionButtonKey] = '<a '.rex_string::buildAttributes($attributes).'>'.$actionButton['content'].'</a>';
+        $actionButtons[$actionButtonKey] = '<a ' . rex_string::buildAttributes($attributes) . '>' . $actionButton['content'] . '</a>';
     }
 
     $fragment = new rex_fragment();
     $fragment->setVar('buttons', $actionButtons, false);
     $buttons = $fragment->parse('yform/manager/action_buttons.php');
 
-    $list->addColumn(rex_i18n::msg('yform_function').' ', $buttons);
+    $list->addColumn(rex_i18n::msg('yform_function') . ' ', $buttons);
 }
 
-$list->setColumnLayout(rex_i18n::msg('yform_function').' ', ['<th class="rex-table-action" colspan="'.$colspan.'">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
+$list->setColumnLayout(rex_i18n::msg('yform_function') . ' ', ['<th class="rex-table-action" colspan="' . $colspan . '">###VALUE###</th>', '<td class="rex-table-action">###VALUE###</td>']);
 
 $list = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_LIST', $list, ['table' => $this->table]));
 

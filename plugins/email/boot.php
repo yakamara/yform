@@ -7,7 +7,7 @@ rex_extension::register('EDITOR_URL', static function (rex_extension_point $ep) 
             [
                 'func' => 'edit',
                 'template_key' => $match[1],
-            ]
+            ],
         );
     }
 });

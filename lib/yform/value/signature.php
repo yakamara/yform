@@ -13,7 +13,7 @@ class rex_yform_value_signature extends rex_yform_value_abstract
     {
         $this->setValue((string) $this->getValue());
 
-        if ($this->getValue() == '' && !$this->params['send']) {
+        if ('' == $this->getValue() && !$this->params['send']) {
             $this->setValue($this->getElement('default'));
         }
 
@@ -46,12 +46,12 @@ class rex_yform_value_signature extends rex_yform_value_abstract
             'description' => 'Fügt ein Zeichenfeld ein, in dem eine <b>Unterschrift</b> niedergeschrieben werden kann.',
             'db_type' => ['text'],
             'famous' => false,
-            'search' => false
+            'search' => false,
         ];
     }
 
     public static function getListValue($params)
     {
-        return ($params['subject'] == "" ? '<i>ungesetzt</i>' : '<img src="'.$params['subject'].'" style="width: auto; max-height: 30px; height: 100%;">');
+        return '' == $params['subject'] ? '<i>ungesetzt</i>' : '<img src="' . $params['subject'] . '" style="width: auto; max-height: 30px; height: 100%;">';
     }
 }

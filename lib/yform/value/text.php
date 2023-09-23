@@ -120,8 +120,8 @@ class rex_yform_value_text extends rex_yform_value_abstract
         $value = (string) $params['subject'];
         $length = mb_strlen($value);
         if ($length > 100) {
-            $value = mb_substr($value, 0, 50).' ... '.mb_substr($value, -50);
+            $value = mb_substr($value, 0, 50) . ' ... ' . mb_substr($value, -50);
         }
-        return '<span>'.rex_escape($value).'</span>';
+        return '<span>' . rex_escape($value) . '</span>';
     }
 }

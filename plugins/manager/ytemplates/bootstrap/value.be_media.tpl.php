@@ -5,17 +5,17 @@
  * @psalm-scope-this rex_yform_value_be_media
  */
 
-$counter = $counter ?? 1;
+$counter ??= 1;
 
 $buttonId = $counter;
 $name = $this->getFieldName();
 $value = rex_escape($this->getValue());
-$types = $types ?? $this->getElement('types');
+$types ??= $this->getElement('types');
 
 $widget_params = [];
 $widget_params['category'] = 0;
 if ('' != $this->getElement('category')) {
-    $widget_params['category'] = (int) ($this->getElement('category'));
+    $widget_params['category'] = (int) $this->getElement('category');
 }
 $widget_params['preview'] = $this->getElement('preview');
 if ('' != $types) {
@@ -44,8 +44,8 @@ if (count($notice) > 0) {
 }
 
 ?>
-<div data-be-media-wrapper="<?php echo $this->getFieldName(); ?>" class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $widget; ?>
-    <?php echo $notice ?>
+<div data-be-media-wrapper="<?= $this->getFieldName() ?>" class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+    <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
+    <?= $widget ?>
+    <?= $notice ?>
 </div>

@@ -7,7 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_manager_table implements ArrayAccess
+final class rex_yform_manager_table implements ArrayAccess
 {
     public static array $tableLayouts = [];
     public static string $defaultTableLayout = 'yform/manager/page/layout.php';
@@ -71,7 +71,7 @@ class rex_yform_manager_table implements ArrayAccess
             return null;
         }
 
-        return self::$tables[$tableName] = new static($cache[$tableName]);
+        return self::$tables[$tableName] = new self($cache[$tableName]);
     }
 
     public static function require(string $tableName): self
@@ -79,7 +79,7 @@ class rex_yform_manager_table implements ArrayAccess
         $table = self::get($tableName);
 
         if (!$table) {
-            throw new rex_exception('Table "'.$tableName.'" does not exist');
+            throw new rex_exception('Table "' . $tableName . '" does not exist');
         }
 
         return $table;
@@ -143,7 +143,7 @@ class rex_yform_manager_table implements ArrayAccess
         $table_name = $this->getTableName();
         $name = $this->getName();
         if ($name === $table_name) {
-            $name = 'translate:'.$name;
+            $name = 'translate:' . $name;
         }
         $name = rex_i18n::translate($name);
         if (preg_match('/^\[translate:(.*?)\]$/', $name, $match)) {
@@ -564,6 +564,6 @@ class rex_yform_manager_table implements ArrayAccess
 
     public function getCSRFKey(): string
     {
-        return 'table_field-'.$this->getTableName();
+        return 'table_field-' . $this->getTableName();
     }
 }

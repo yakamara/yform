@@ -6,7 +6,7 @@
  */
 
 $mdFiles = [];
-foreach (glob(rex_addon::get('yform')->getPath('docs').'/*.md') as $file) {
+foreach (glob(rex_addon::get('yform')->getPath('docs') . '/*.md') as $file) {
     $mdFiles[mb_substr(basename($file), 0, -3)] = $file;
 }
 
@@ -20,10 +20,10 @@ $page = \rex_be_controller::getPageObject('yform/docs');
 foreach ($mdFiles as $key => $mdFile) {
     $keyWithoudPrio = mb_substr($key, 3);
     $currenMDFileWithoudPrio = mb_substr($currenMDFile, 3);
-    $page->addSubpage((new rex_be_page($key, rex_i18n::msg('yform_docs_'.$keyWithoudPrio)))
+    $page->addSubpage((new rex_be_page($key, rex_i18n::msg('yform_docs_' . $keyWithoudPrio)))
         ->setSubPath($mdFile)
-        ->setHref('index.php?page=yform/docs&mdfile='.$key)
-        ->setIsActive($key == $currenMDFile)
+        ->setHref('index.php?page=yform/docs&mdfile=' . $key)
+        ->setIsActive($key == $currenMDFile),
     );
 }
 
@@ -43,4 +43,3 @@ $fragment = new rex_fragment();
 // $fragment->setVar('title', rex_i18n::msg('package_help') . ' ', false);
 $fragment->setVar('body', $content, false);
 echo $fragment->parse('core/page/section.php');
-

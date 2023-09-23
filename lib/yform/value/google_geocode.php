@@ -18,7 +18,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
             $valueLng = $this->google_geocode_floattostr(0);
         }
 
-        $value = $valueLat.','.$valueLng;
+        $value = $valueLat . ',' . $valueLng;
 
         $this->setValue($value);
 
@@ -46,7 +46,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.text.tpl.php');
                 $this->params['form_output'][$this->getId()] .= $this->parse(
-                    'value.google_geocode.tpl.php', compact('value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey')
+                    'value.google_geocode.tpl.php', compact('value', 'mapWidth', 'mapHeight', 'mapZoom', 'address', 'googleapikey'),
                 );
             }
         }
@@ -88,7 +88,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 
     public function google_geocode_floattostr($val)
     {
-        preg_match("#^([\+\-]|)([0-9]*)(\.([0-9]*?)|)(0*)$#", trim($val), $o);
+        preg_match('#^([\\+\\-]|)([0-9]*)(\\.([0-9]*?)|)(0*)$#', trim($val), $o);
         return @$o[1] . sprintf('%d', @$o[2]) . ('.' != @$o[3] ? @$o[3] : '');
     }
 }

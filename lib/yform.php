@@ -169,7 +169,7 @@ class rex_yform
         $this->setObjectparams('data', $data);
         $data['id'] = isset($data['id']) ? (int) $data['id'] : 0;
         if (0 < $data['id']) {
-            $this->setObjectparams('main_where', 'id='.$data['id']);
+            $this->setObjectparams('main_where', 'id=' . $data['id']);
         }
         return $this;
     }
@@ -572,7 +572,7 @@ class rex_yform
             if ('' != $label && count($params) > 1) {
                 // 1. FormID
                 // 2. SpecialKey
-                $label .= '['.$this->prepareLabel($params[1]).']';
+                $label .= '[' . $this->prepareLabel($params[1]) . ']';
             }
             return ($label) ?: current($params);
         }
@@ -581,14 +581,14 @@ class rex_yform
             $params = [$label];
         }
 
-        $fieldName = 'FORM['.$this->objparams['form_name'].']';
+        $fieldName = 'FORM[' . $this->objparams['form_name'] . ']';
 
         $params = array_merge($this->objparams['form_array'], $params);
 
         foreach ($params as $param) {
             $param = $this->prepareLabel($param);
             if ('' != $param) {
-                $fieldName .= '['.$this->prepareLabel($param).']';
+                $fieldName .= '[' . $this->prepareLabel($param) . ']';
             }
         }
 
@@ -746,7 +746,7 @@ class rex_yform
 
                         if (isset($definitions['formbuilder']) && !$definitions['formbuilder']) {
                         } elseif ($class->isDeprecated()) {
-                            $deprecatedInfo = isset($definitions['deprecated']) ? $definitions['deprecated'].'<br />' : '';
+                            $deprecatedInfo = isset($definitions['deprecated']) ? $definitions['deprecated'] . '<br />' : '';
                             $classesDeprecatedDescription[$arr_key] .= '<tr class="yform-classes-deprecated"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $deprecatedInfo . $desc . '</td></tr>';
                         } elseif (isset($definitions['famous']) && $definitions['famous']) {
                             $classesFamousDescription[$arr_key] .= '<tr class="yform-classes-famous"><th data-title="' . ucfirst($arr_key) . '"><span class="btn btn-default btn-block"><code>' . $name . '</code></span></th><td class="vertical-middle">' . $desc . '</td></tr>';

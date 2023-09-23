@@ -5,13 +5,13 @@
  * @psalm-scope-this rex_yform_value_be_manager_relation
  */
 
-$options = $options ?? [];
-$link = $link ?? '';
-$valueName = $valueName ?? '';
+$options ??= [];
+$link ??= '';
+$valueName ??= '';
 
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
-$id = sprintf('%u', crc32($this->params['form_name']. random_int(0, 100). $this->getId()));
+$id = sprintf('%u', crc32($this->params['form_name'] . random_int(0, 100) . $this->getId()));
 
 $notice = [];
 if ('' != $this->getElement('notice')) {
@@ -28,8 +28,8 @@ if (count($notice) > 0) {
 
 ?>
 <?php if ($this->getRelationType() < 2): ?>
-    <div data-be-relation-wrapper="<?php echo $this->getFieldName(); ?>" class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-        <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
+    <div data-be-relation-wrapper="<?= $this->getFieldName() ?>" class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+        <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
         <?php
 
         $attributes = [];
@@ -56,11 +56,11 @@ foreach ($options as $option) {
 $select->setSelected($this->getValue());
 echo $select->get();
 ?>
-        <?php echo $notice ?>
+        <?= $notice ?>
     </div>
 <?php else: ?>
-    <div data-be-relation-wrapper="<?php echo $this->getFieldName(); ?>" class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-        <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
+    <div data-be-relation-wrapper="<?= $this->getFieldName() ?>" class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+        <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
         <?php
 $e = [];
     if (4 == $this->getRelationType()) {
@@ -85,6 +85,6 @@ $e = [];
         echo \rex_var_yform_table_data::getMultipleWidget($id, $name, $value, $args);
     }
     ?>
-        <?php echo $notice ?>
+        <?= $notice ?>
     </div>
 <?php endif;

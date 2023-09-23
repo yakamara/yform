@@ -5,7 +5,7 @@
  * @psalm-scope-this rex_yform_value_signature
  */
 
-$value = $value ?? $this->getValue();
+$value ??= $this->getValue();
 
 $notice = [];
 
@@ -32,28 +32,28 @@ $attributes = [
     'class' => 'form-control signature',
     'name' => $this->getFieldName(),
     'type' => 'hidden',
-    'id' => 'canvas-target-'. $this->getName(),
+    'id' => 'canvas-target-' . $this->getName(),
     'value' => $value,
 ];
 
 $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomplete', 'pattern', 'required', 'disabled', 'readonly']);
 
 ?>
-<div class="canvas-signature <?= $class_group; ?>" id="<?= $this->getHTMLId(); ?>">
-    <label class="<?= implode(' ', $class_label); ?>"><?= $this->getLabel(); ?></label>
+<div class="canvas-signature <?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+    <label class="<?= implode(' ', $class_label) ?>"><?= $this->getLabel() ?></label>
     <div class="canvas">
         <div class="canvas-wrapper">
-            <canvas id="canvas-<?= $this->getName(); ?>"></canvas>
+            <canvas id="canvas-<?= $this->getName() ?>"></canvas>
             <?php if (isset($value) && '' != $value): ?>
-                <img src="<?= $value; ?>">
-            <?php endif; ?>
+                <img src="<?= $value ?>">
+            <?php endif ?>
         </div>
-        <input <?= implode(' ', $attributes); ?>>
-        &nbsp; <button type="button" class="btn btn-primary" id="clear-<?= $this->getName(); ?>" onclick="eraseSignature_<?= $this->getName(); ?>()" title="Zeichenfläche leeren"><i class="rex-icon fa fa-eraser"></i></button>
+        <input <?= implode(' ', $attributes) ?>>
+        &nbsp; <button type="button" class="btn btn-primary" id="clear-<?= $this->getName() ?>" onclick="eraseSignature_<?= $this->getName() ?>()" title="Zeichenfläche leeren"><i class="rex-icon fa fa-eraser"></i></button>
     </div>
-    <?php echo $notice; ?>
+    <?= $notice ?>
 </div>
-<style nonce="<?php echo rex_response::getNonce(); ?>">
+<style nonce="<?= rex_response::getNonce() ?>">
     .canvas-signature div.canvas{
         position: relative;
         display: flex;
@@ -86,19 +86,19 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
     }
 </style>
 
-<script nonce="<?php echo rex_response::getNonce(); ?>">
+<script nonce="<?= rex_response::getNonce() ?>">
     if (typeof rex !== 'undefined' && rex.backend) {
         $(document).on("rex:ready", function(){
-            initSignature_<?= $this->getName(); ?>();
+            initSignature_<?= $this->getName() ?>();
         });
     } else {
         $(document).ready(function(){
-            initSignature_<?= $this->getName(); ?>();
+            initSignature_<?= $this->getName() ?>();
         });
     }
 
-    function initSignature_<?= $this->getName(); ?>() {
-        let base_id = '<?= $this->getName(); ?>',
+    function initSignature_<?= $this->getName() ?>() {
+        let base_id = '<?= $this->getName() ?>',
             canvas = $("#canvas-"+ base_id)[0],
             target = $("#canvas-target-"+ base_id),
             ctx,
@@ -189,10 +189,10 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
         }
     }
 
-    function eraseSignature_<?= $this->getName(); ?>() {
+    function eraseSignature_<?= $this->getName() ?>() {
         let m = confirm("Zeichenfläche wirklich löschen?");
         if (m) {
-            $("#canvas-<?= $this->getName(); ?>")[0].getContext("2d").clearRect(0, 0, w, h);
+            $("#canvas-<?= $this->getName() ?>")[0].getContext("2d").clearRect(0, 0, w, h);
         }
     }
 </script>

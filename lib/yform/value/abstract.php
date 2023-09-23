@@ -142,7 +142,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         $attributes = self::getAttributeArray($attributes, $direct_attributes);
         $return = [];
         foreach ($attributes as $attribute => $value) {
-            $return[] = $attribute.'="'.rex_escape($value).'"';
+            $return[] = $attribute . '="' . rex_escape($value) . '"';
         }
 
         return $return;
