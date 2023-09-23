@@ -9,7 +9,7 @@ try {
     // transaction test.
     $testSQL = rex_sql::factory();
     $testSQL->transactional(static function (rex_sql $testSQL) {
-        $testSQL->setQuery('SELECT 1');
+        $testSQL->setQuery('SELECT * rex_user LIMIT 1');
     });
 } catch (Exception $e) {
     throw new rex_sql_exception('db does not support transactions', $e);
