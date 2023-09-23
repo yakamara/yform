@@ -6,7 +6,7 @@
  */
 
 ?>
-<div id="<?php echo $this->objparams['form_wrap_id'] ?>" class="<?php echo $this->objparams['form_wrap_class'] ?>">
+<div id="<?= $this->objparams['form_wrap_id'] ?>" class="<?= $this->objparams['form_wrap_class'] ?>">
 
     <?php
     if ('' != $this->objparams['form_action']) {
@@ -18,11 +18,11 @@
             parse_str(html_entity_decode($action_url_splitted[1]), $query_array);
         }
         if (0 < count($this->objparams['form_action_query_params'])) {
-            $query_array = $query_array + $this->objparams['form_action_query_params'];
+            $query_array += $this->objparams['form_action_query_params'];
             $action_url = $action_url_splitted[0] . '?' . http_build_query($query_array, '', '&amp;', PHP_QUERY_RFC3986);
         }
 
-        echo '<form action="'.$action_url.'" method="'.$this->objparams['form_method'].'" id="'.$this->objparams['form_name'].'" class="'.$this->objparams['form_class'].'" enctype="multipart/form-data">';
+        echo '<form action="' . $action_url . '" method="' . $this->objparams['form_method'] . '" id="' . $this->objparams['form_name'] . '" class="' . $this->objparams['form_class'] . '" enctype="multipart/form-data">';
     }
     ?>
 
@@ -46,10 +46,10 @@
 
         $recArray = static function ($key, $paramsArray) use (&$recArray) {
             if (!is_array($paramsArray)) {
-                echo "\n".'<input type="hidden" name="'.$key.'" value="'.rex_escape($paramsArray).'" />';
+                echo "\n" . '<input type="hidden" name="' . $key . '" value="' . rex_escape($paramsArray) . '" />';
             } elseif (is_array($paramsArray)) {
                 foreach ($paramsArray as $k => $v) {
-                    $recArray($key.'['.$k.']', $v);
+                    $recArray($key . '[' . $k . ']', $v);
                 }
             }
         };

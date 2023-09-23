@@ -92,7 +92,7 @@ class rex_yform_manager_dataset
         if (!$dataset) {
             $table = $table ?: static::modelToTable();
 
-            throw new rex_exception('Dataset with ID "'.$id.'" does not exist in "'.$table.'"');
+            throw new rex_exception('Dataset with ID "' . $id . '" does not exist in "' . $table . '"');
         }
 
         return $dataset;
@@ -307,7 +307,7 @@ class rex_yform_manager_dataset
     public function loadData(): void
     {
         $sql = rex_sql::factory();
-        $rows = $sql->getArray('SELECT * FROM `'.$this->table.'` WHERE id = ? LIMIT 1', [$this->id]);
+        $rows = $sql->getArray('SELECT * FROM `' . $this->table . '` WHERE id = ? LIMIT 1', [$this->id]);
         $this->exists = isset($rows[0]);
         if ($this->exists) {
             $this->data = $rows[0];
@@ -390,8 +390,8 @@ class rex_yform_manager_dataset
         } else {
             $columns = $this->getTable()->getRelationTableColumns($key);
             $query
-                ->join($relation['relation_table'], null, $relation['relation_table'].'.'.$columns['target'], $relation['table'].'.id')
-                ->where($relation['relation_table'].'.'.$columns['source'], $this->getId());
+                ->join($relation['relation_table'], null, $relation['relation_table'] . '.' . $columns['target'], $relation['table'] . '.id')
+                ->where($relation['relation_table'] . '.' . $columns['source'], $this->getId());
         }
 
         return $query;
@@ -507,7 +507,7 @@ class rex_yform_manager_dataset
     /**
      * @param null|callable(rex_yform):void $afterFieldsExecuted
      */
-    public function executeForm(rex_yform $yform, callable $afterFieldsExecuted = null): string
+    public function executeForm(rex_yform $yform, ?callable $afterFieldsExecuted = null): string
     {
         $exists = $this->exists();
         $oldData = $this->getData();
@@ -604,7 +604,7 @@ class rex_yform_manager_dataset
             }
 
             $value = @$sql->getValue($fieldName);
-            if ('rex_yform_value_be_manager_relation' == get_class($fieldObject) && !$value) {
+            if ('rex_yform_value_be_manager_relation' == $fieldObject::class && !$value) {
                 $collection = $this->getRelatedCollection($fieldName);
                 $values = [];
                 foreach ($collection as $item) {
@@ -618,12 +618,12 @@ class rex_yform_manager_dataset
                     '(%d, %s, %s)',
                     $historyId,
                     $sql->escape($fieldName),
-                    $sql->escape((string) $value)
+                    $sql->escape((string) $value),
                 );
             }
         }
 
-        $sql->setQuery('INSERT INTO '.rex::getTable('yform_history_field').' (`history_id`, `field`, `value`) VALUES '.implode(', ', $inserts));
+        $sql->setQuery('INSERT INTO ' . rex::getTable('yform_history_field') . ' (`history_id`, `field`, `value`) VALUES ' . implode(', ', $inserts));
     }
 
     public function restoreSnapshot(int $snapshotId): bool
@@ -697,7 +697,7 @@ class rex_yform_manager_dataset
 
         foreach ($fields as $field) {
             /** @var class-string<rex_yform_base_abstract> $class */
-            $class = 'rex_yform_'.$field->getType().'_'.$field->getTypeName();
+            $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
             /** @var rex_yform_base_abstract $cl */
             $cl = new $class();

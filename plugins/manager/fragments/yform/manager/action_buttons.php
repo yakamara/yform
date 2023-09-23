@@ -13,7 +13,7 @@
     <ul class="dropdown-menu dropdown-menu-right">
         <?php
         foreach ($this->buttons ?? [] as $button) {
-            echo '<li>'.$button.'</li>'; //  class="small"
+            echo '<li>' . $button . '</li>'; //  class="small"
         }
         ?>
     </ul>

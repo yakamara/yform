@@ -5,8 +5,8 @@
  * @psalm-scope-this rex_yform_value_be_table
  */
 
-$columns = $columns ?? [];
-$data = $data ?? [];
+$columns ??= [];
+$data ??= [];
 
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
@@ -29,12 +29,12 @@ $main_id = $this->params['this']->getObjectparams('main_id');
 
 ?>
 <div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
-    <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
+    <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th class="type-<?= $column['field']->getElement(0) ?>"><?php echo rex_escape($column['label']) ?></th>
+                <th class="type-<?= $column['field']->getElement(0) ?>"><?= rex_escape($column['label']) ?></th>
             <?php endforeach ?>
         </tr>
         </thead>
@@ -72,5 +72,5 @@ $main_id = $this->params['this']->getObjectparams('main_id');
         <?php endforeach ?>
         </tbody>
     </table>
-    <?php echo $notice ?>
+    <?= $notice ?>
 </div>

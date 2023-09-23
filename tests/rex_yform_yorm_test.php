@@ -1,6 +1,15 @@
 <?php
 
+namespace yform\tests;
+
 use PHPUnit\Framework\TestCase;
+use rex_sql;
+use rex_yform_manager_dataset;
+use rex_yform_manager_field;
+use rex_yform_manager_table;
+use rex_yform_manager_table_api;
+
+use function count;
 
 /**
  * @internal
@@ -12,8 +21,8 @@ class rex_yform_yorm_test extends TestCase
         $table = rex_yform_manager_table_api::setTable(
             [
                 'table_name' => $tableName,
-                'name' => 'Name of Table - '.$tableName,
-                'description' => 'Description of Table - '.$tableName,
+                'name' => 'Name of Table - ' . $tableName,
+                'description' => 'Description of Table - ' . $tableName,
                 'status' => 1,
                 'list_amount' => 10,
                 'list_sortfield' => 'id',
@@ -23,18 +32,18 @@ class rex_yform_yorm_test extends TestCase
                 'export' => 1,
                 'import' => 1,
                 'schema_overwrite' => 1,
-            ]
+            ],
         );
         return $table;
     }
 
     public static function setUpTableField(rex_yform_manager_table $table, $field)
     {
-        $field['type_id'] = $field['type_id'] ?? 'value';
-        $field['type_name'] = $field['type_name'] ?? 'text';
-        $field['name'] = $field['name'] ?? 'default';
-        $field['label'] = $field['label'] ?? 'Titel:';
-        $field['list_hidden'] = $field['list_hidden'] ?? 0;
+        $field['type_id'] ??= 'value';
+        $field['type_name'] ??= 'text';
+        $field['name'] ??= 'default';
+        $field['label'] ??= 'Titel:';
+        $field['list_hidden'] ??= 0;
         $field['search'] = $field['list_hidden'] ?? 0;
         $field['prio'] = $field['list_hidden'] ?? 99999;
 
@@ -44,11 +53,15 @@ class rex_yform_yorm_test extends TestCase
 
     public function testTableAPI()
     {
-        $prefix = 'unittest_yform_table_'.date('YmdHis').'_';
-        $tableName = $prefix.'base';
+        $prefix = 'unittest_yform_table_' . date('YmdHis') . '_';
+        $tableName = $prefix . 'base';
 
         $table = self::setUpTable($tableName);
-        static::assertEquals(get_class($table), 'rex_yform_manager_table', 'table creation failed. (rex_yform_manager_table_api::setTable)');
+        static::assertEquals(
+            $table::class,
+            'rex_yform_manager_table',
+            'table creation failed. (rex_yform_manager_table_api::setTable)',
+        );
 
         if ($table) {
             $fieldName = 'field_title';
@@ -62,7 +75,11 @@ class rex_yform_yorm_test extends TestCase
             // prüfen ob es angelegt ist.
 
             $fields = rex_yform_manager_table::get($tableName)->getFields();
-            static::assertEquals(count($fields), 1, 'field creation failed (rex_yform_manager_table_api::setTableField)');
+            static::assertEquals(
+                count($fields),
+                1,
+                'field creation failed (rex_yform_manager_table_api::setTableField)',
+            );
 
             if (1 == count($fields)) {
                 static::assertEquals($fields[0]->getName(), $fieldName, 'fieldname validation failed');
@@ -75,11 +92,15 @@ class rex_yform_yorm_test extends TestCase
             $dataset->setValue($fieldName, $fieldValue);
 
             static::assertTrue($dataset->save(), 'dataset creation failed (rex_yform_manager_dataset::create)');
-            static::assertEquals(count($dataset->getMessages()), 0, 'dataset creation failed with Messages: '.implode(',', $dataset->getMessages()));
+            static::assertEquals(
+                count($dataset->getMessages()),
+                0,
+                'dataset creation failed with Messages: ' . implode(',', $dataset->getMessages()),
+            );
 
             if (0 == count($dataset->getMessages())) {
                 $SQLDatasets = rex_sql::factory()->getArray(
-                    'select * from ' . $tableName
+                    'select * from ' . $tableName,
                 );
                 static::assertEquals(count($SQLDatasets), 1, 'dataset not found - creation failed (SQL Test)');
 
@@ -89,12 +110,16 @@ class rex_yform_yorm_test extends TestCase
                 static::assertNotNull($dataset, 'dataset not found - get via ID failed');
 
                 // YORM - Datensatz bearbeiten
-                $fieldValueEdit = $fieldValue.' overwrite';
+                $fieldValueEdit = $fieldValue . ' overwrite';
                 $dataset
                     ->setValue($fieldName, $fieldValueEdit)
                     ->save();
                 $dataset = rex_yform_manager_dataset::get($datasetId, $tableName);
-                static::assertEquals($dataset->getValue($fieldName), $fieldValueEdit, 'dataset update failes - YOrm update failed');
+                static::assertEquals(
+                    $dataset->getValue($fieldName),
+                    $fieldValueEdit,
+                    'dataset update failes - YOrm update failed',
+                );
 
                 // YORM - Datensatz löschen
                 if ($dataset) {
@@ -110,8 +135,8 @@ class rex_yform_yorm_test extends TestCase
                 // Bezugstabelle
                 // Verknüpfungstabelle
 
-                $tableNameCategories = $prefix.'category';
-                $tableNameRelation = $prefix.'related';
+                $tableNameCategories = $prefix . 'category';
+                $tableNameRelation = $prefix . 'related';
 
                 $tableCategories = self::setUpTable($tableNameCategories);
                 $tableRelation = self::setUpTable($tableNameRelation);
@@ -196,25 +221,25 @@ class rex_yform_yorm_test extends TestCase
         // Cleanup
         try {
             rex_sql::factory()->setQuery(
-                'DROP Table ' . $tableName
+                'DROP Table ' . $tableName,
             );
             rex_sql::factory()->setQuery(
-                'DROP Table ' . $tableNameCategories
+                'DROP Table ' . $tableNameCategories,
             );
             rex_sql::factory()->setQuery(
-                'DROP Table ' . $tableNameRelation
+                'DROP Table ' . $tableNameRelation,
             );
             rex_sql::factory()->setQuery(
                 'delete from ' . rex_yform_manager_table::table() . ' where table_name LIKE :table_name ',
                 [
-                    ':table_name' => $prefix.'%',
-                ]
+                    ':table_name' => $prefix . '%',
+                ],
             );
             rex_sql::factory()->setQuery(
                 'delete from ' . rex_yform_manager_field::table() . ' where table_name LIKE :table_name ',
                 [
-                    ':table_name' => $prefix.'%',
-                ]
+                    ':table_name' => $prefix . '%',
+                ],
             );
 
             rex_yform_manager_table::deleteCache();

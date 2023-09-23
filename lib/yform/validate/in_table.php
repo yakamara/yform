@@ -46,7 +46,7 @@ class rex_yform_validate_in_table extends rex_yform_validate_abstract
         $sql = 'select * from ' . $table . ' WHERE (' . implode(' AND ', $qfields) . ')';
         $extras = trim($this->getElement(6));
         if ('' != $extras) {
-            $sql .= ' and ('.$extras.')';
+            $sql .= ' and (' . $extras . ')';
         }
         $sql .= ' LIMIT 2';
 

@@ -12,18 +12,18 @@ if ($this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
 }
 if (isset($this->params['warning_messages'][$this->getId()]) && !$this->params['hide_field_warning_messages']) {
-    $notices[] = '<span class="text-warning">'.rex_i18n::translate($this->params['warning_messages'][$this->getId()], false).'</span>';
+    $notices[] = '<span class="text-warning">' . rex_i18n::translate($this->params['warning_messages'][$this->getId()], false) . '</span>';
 }
 
 if (!isset($groupAttributes)) {
     $groupAttributes = [];
 }
 
-$groupClass = trim('form-group '.$this->getWarningClass());
+$groupClass = trim('form-group ' . $this->getWarningClass());
 if (isset($groupAttributes['class']) && is_array($groupAttributes['class'])) {
     $groupAttributes['class'][] = $groupClass;
 } elseif (isset($groupAttributes['class'])) {
-    $groupAttributes['class'] .= ' '.$groupClass;
+    $groupAttributes['class'] .= ' ' . $groupClass;
 } else {
     $groupAttributes['class'] = $groupClass;
 }
@@ -40,7 +40,7 @@ if (isset($this->params['fixdata'][$this->getName()]) && !isset($elementAttribut
 if (isset($elementAttributes['class']) && is_array($elementAttributes['class'])) {
     $elementAttributes['class'][] = $elementClass;
 } elseif (isset($elementAttributes['class'])) {
-    $elementAttributes['class'] .= ' '.$elementClass;
+    $elementAttributes['class'] .= ' ' . $elementClass;
 } else {
     $elementAttributes['class'] = $elementClass;
 }
@@ -81,7 +81,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
         $useRexSelectStyle = false;
     }
     // RexSelectStyle nicht nutzen, wenn das Selectfeld mehrzeilig ist
-    if (isset($elementAttributes['size']) && (int)$elementAttributes['size'] > 1) {
+    if (isset($elementAttributes['size']) && (int) $elementAttributes['size'] > 1) {
         $useRexSelectStyle = false;
     }
  ?>

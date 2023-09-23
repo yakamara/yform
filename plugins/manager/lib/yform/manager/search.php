@@ -49,7 +49,7 @@ class rex_yform_manager_search
     public function getYForm(): rex_yform
     {
         $yform = new rex_yform();
-        $yform->setObjectparams('form_name', 'rex_yform_searchvars-'.$this->table->getTableName());
+        $yform->setObjectparams('form_name', 'rex_yform_searchvars-' . $this->table->getTableName());
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setObjectparams('csrf_protection', false);
         $yform->setObjectparams('form_action', $this->scriptPath);
@@ -101,7 +101,7 @@ class rex_yform_manager_search
         return $return;
     }
 
-    function getQueryFilter($query)
+    public function getQueryFilter($query)
     {
         if (!$this->table->isSearchable()) {
             return $query;
@@ -130,9 +130,9 @@ class rex_yform_manager_search
                             'fields' => $this->fields,
                             'value' => $vars[$field->getName()],
                             'query' => $query,
-                        ]
+                        ],
                     );
-                    if ('rex_yform_manager_query' != get_class($query)) {
+                    if ('rex_yform_manager_query' != $query::class) {
                         throw new Exception('getSearchFilter in rex_yform_value_' . $field->getTypeName() . ' does not return a rex_yform_manager_query');
                     }
                 }

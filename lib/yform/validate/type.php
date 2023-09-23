@@ -32,7 +32,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 }
                 break;
             case 'float':
-                $xsRegEx_float = "/^([0-9]+|([0-9]+\.[0-9]+))$/i";
+                $xsRegEx_float = '/^([0-9]+|([0-9]+\\.[0-9]+))$/i';
                 if (0 == preg_match($xsRegEx_float, $Object->getValue())) {
                     $w = true;
                 }
@@ -45,32 +45,32 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
             case 'string':
                 break;
             case 'email':
-                if (!preg_match("/^[a-zä-üA-ZÄ-Ü0-9ß.!#$%&'*+\/=?^_`{|}~-]+@[a-zä-üA-ZÄ-Ü0-9ß](?:[a-zä-üA-ZÄ-Ü0-9ß-]{0,61}[a-zä-üA-ZÄ-Ü0-9ß])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
+                if (!preg_match("/^[a-zä-üA-ZÄ-Ü0-9ß.!#$%&'*+\\/=?^_`{|}~-]+@[a-zä-üA-ZÄ-Ü0-9ß](?:[a-zä-üA-ZÄ-Ü0-9ß-]{0,61}[a-zä-üA-ZÄ-Ü0-9ß])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/", $Object->getValue())) {
                     $w = true;
                 }
                 break;
             case 'url':
-                $xsRegEx_url = '/^(?:http[s]?:\/\/)[a-zä-üA-ZÄ-Ü0-9ß][a-zä-üA-ZÄ-Ü0-9ß._-]*\.(?:[a-zä-üA-ZÄ-Ü0-9ß][a-zä-üA-ZÄ-Ü0-9ß._-]*\.)*[a-zA-Z]{2,20}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$' . '/';
+                $xsRegEx_url = '/^(?:http[s]?:\/\/)[a-zä-üA-ZÄ-Ü0-9ß][a-zä-üA-ZÄ-Ü0-9ß._-]*\.(?:[a-zä-üA-ZÄ-Ü0-9ß][a-zä-üA-ZÄ-Ü0-9ß._-]*\.)*[a-zA-Z]{2,20}(?:\/[^\\/\:\*\?\"<>\|]*)*(?:\/[a-zA-Z0-9_%,\.\=\?\-#&]*)*$/';
                 if (0 == preg_match($xsRegEx_url, $Object->getValue())) {
                     $w = true;
                 }
                 break;
             case 'time':
-                $timeObject = DateTime::createFromFormat('Y-m-d H:i:s', '2010-10-10 ' .  $Object->getValue());
+                $timeObject = DateTime::createFromFormat('Y-m-d H:i:s', '2010-10-10 ' . $Object->getValue());
                 $w = !($timeObject && $timeObject->format('H:i:s') == $Object->getValue());
                 break;
             case 'date':
                 $w = true;
-                if (preg_match("/^(\d{4})-(\d{2})-(\d{2})$/", $Object->getValue(), $matches)) {
-                    if (checkdate((int) $matches[2],(int) $matches[3],(int) $matches[1])) {
+                if (preg_match('/^(\\d{4})-(\\d{2})-(\\d{2})$/', $Object->getValue(), $matches)) {
+                    if (checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1])) {
                         $w = false;
                     }
                 }
                 break;
             case 'datetime':
                 $w = true;
-                if (preg_match("/^(\d{4})-(\d{2})-(\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $Object->getValue(), $matches)) {
-                    if (checkdate((int) $matches[2],(int) $matches[3],(int) $matches[1])) {
+                if (preg_match('/^(\\d{4})-(\\d{2})-(\\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/', $Object->getValue(), $matches)) {
+                    if (checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1])) {
                         $w = false;
                     }
                 }
@@ -99,7 +99,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                 if (!isset($countries[mb_substr($iban, 0, 2)]) || mb_strlen($iban) != $countries[mb_substr($iban, 0, 2)]) {
                     $w = true;
                 } else {
-                    $movedChar = mb_substr($iban, 4).mb_substr($iban, 0, 4);
+                    $movedChar = mb_substr($iban, 4) . mb_substr($iban, 0, 4);
                     $movedCharArray = mb_str_split($movedChar);
                     $newString = '';
 
@@ -119,7 +119,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         $mod = '';
 
                         do {
-                            $a = (int) $mod.mb_substr($x, 0, $take);
+                            $a = (int) $mod . mb_substr($x, 0, $take);
                             $x = mb_substr($x, $take);
                             $mod = $a % $y;
                         } while (mb_strlen($x));
@@ -151,7 +151,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
 
     public function getDescription(): string
     {
-        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/iban/json|warning_message|[1='.rex_i18n::msg('yform_validate_type_not_required').']';
+        return 'validate|type|name|int/float/numeric/string/email/url/date/datetime/hex/iban/json|warning_message|[1=' . rex_i18n::msg('yform_validate_type_not_required') . ']';
     }
 
     public function getDefinitions(): array

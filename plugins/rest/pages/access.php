@@ -30,7 +30,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 } elseif ('edit' == $func || 'add' == $func) {
     $form_data = [];
 
-    $form_data[] = 'choice|token_id|translate:yform_rest_token|select id, name from '.rex::getTablePrefix() . 'yform_rest_token'.'|';
+    $form_data[] = 'choice|token_id|translate:yform_rest_token|select id, name from ' . rex::getTablePrefix() . 'yform_rest_token|';
     $form_data[] = 'datetime|datetime_created|translate:yform_rest_token_access_datetime_created';
     $form_data[] = 'text|url|translate:yform_rest_token_url';
 
@@ -44,7 +44,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     if ('edit' == $func) {
         $title = rex_i18n::msg('yform_rest_token_access_update');
-        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save') . ',' . rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
         $yform->setHiddenField('data_id', $data_id);
         $yform->setHiddenField('func', $func);
         $yform->setActionField('db', [$table, "id=$data_id"]);
@@ -56,7 +56,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     } else {
         $yform->setHiddenField('func', $func);
         $title = rex_i18n::msg('yform_rest_token_create');
-        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add') . ',' . rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
         $yform->setActionField('db', [$table]);
         $yform->setActionField('showtext', [rex_view::success(rex_i18n::msg('yform_rest_token_info_added')), '', '', 1]);
     }
@@ -104,7 +104,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
                     $yform->setObjectparams('main_where', "id=$data_id");
                     $yform->setObjectparams('main_table', $table);
                     $yform->setObjectparams('getdata', true);
-                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save') . ',' . rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                     $yform->executeFields();
 
                     $content = $yform->executeActions();
@@ -112,7 +112,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
                     $fragment->setVar('class', 'edit', false);
                     $fragment->setVar('title', $title);
                     $fragment->setVar('body', $content, false);
-                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_access_added')).$fragment->parse('core/page/section.php');
+                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_access_added')) . $fragment->parse('core/page/section.php');
 
                     $show_list = false;
                 } else {
@@ -158,7 +158,7 @@ if ($show_list) {
     $list->setColumnFormat('token_id', 'custom', static function ($params) {
         $token = rex_yform_rest_auth_token::get($params['subject']);
         if ($token) {
-            return '<a href="index.php?page=yform/rest/token&func=edit&data_id='.$params['subject'].'">'.$token['name'].'</a>';
+            return '<a href="index.php?page=yform/rest/token&func=edit&data_id=' . $params['subject'] . '">' . $token['name'] . '</a>';
         }
         return '-'; // rex_i18n::translate($params['value']).' [###table_name###]<p><a href="index.php?page=yform/manager/data_edit&table_name=###table_name###"><i class="rex-icon rex-icon-edit"></i> '.rex_i18n::msg('yform_edit_datatable').'</a></p>';
     });

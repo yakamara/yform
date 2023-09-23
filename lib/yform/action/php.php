@@ -10,7 +10,7 @@ class rex_yform_action_php extends rex_yform_action_abstract
             return;
         }
 
-        eval('?>'.$php.'<?php ');
+        eval('?>' . $php . '<?php ');
     }
 
     public function getDescription(): string

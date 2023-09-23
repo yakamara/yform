@@ -5,8 +5,8 @@
  * @psalm-scope-this rex_yform_value_be_table
  */
 
-$columns = $columns ?? [];
-$data = $data ?? [];
+$columns ??= [];
+$data ??= [];
 
 $class_group = trim('form-group ' . $this->getHTMLClass() . ' ' . $this->getWarningClass());
 
@@ -29,14 +29,14 @@ $main_id = $this->params['this']->getObjectparams('main_id');
 
 ?>
 <div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
-    <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
+    <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
             <?php foreach ($columns as $column): ?>
-                <th class="type-<?= $column['field']->getElement(0) ?>"><?php echo rex_escape($column['label']) ?></th>
+                <th class="type-<?= $column['field']->getElement(0) ?>"><?= rex_escape($column['label']) ?></th>
             <?php endforeach ?>
-            <th class="rex-table-action"><a class="btn btn-xs btn-primary" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a></th>
+            <th class="rex-table-action"><a class="btn btn-xs btn-primary" id="<?= $this->getHTMLId() ?>-add-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?= rex_i18n::msg('yform_add_row') ?></a></th>
         </tr>
         </thead>
         <tbody>
@@ -68,16 +68,16 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     ?>
                     <td class="be-value-input type-<?= $column['field']->getElement(0) ?>" data-title="<?= rex_escape($column['label'], 'html_attr') ?>"><?= $field_output ?></td>
                 <?php endforeach ?>
-                <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>
+                <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?= rex_i18n::msg('yform_delete') ?></a></td>
             </tr>
         <?php endforeach ?>
         </tbody>
     </table>
-    <a class="btn btn-primary btn-xs add-mobile-btn" id="<?= $this->getHTMLId() ?>-add-mobile-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?php echo rex_i18n::msg('yform_add_row') ?></a>
+    <a class="btn btn-primary btn-xs add-mobile-btn" id="<?= $this->getHTMLId() ?>-add-mobile-row" href="javascript:void(0);"><i class="rex-icon rex-icon-add"></i> <?= rex_i18n::msg('yform_add_row') ?></a>
 
-    <script type="text/javascript" nonce="<?php echo rex_response::getNonce(); ?>">
+    <script type="text/javascript" nonce="<?= rex_response::getNonce() ?>">
         (function () {
-            var wrapper = jQuery('#<?php echo $this->getHTMLId() ?>'),
+            var wrapper = jQuery('#<?= $this->getHTMLId() ?>'),
                 be_table_cnt = <?= (int) $data_index ?>;
 
             wrapper.find('#<?= $this->getHTMLId() ?>-add-row, #<?= $this->getHTMLId() ?>-add-mobile-row').click(function () {
@@ -127,12 +127,12 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                             $field->setValue(null);
                             $field->setId('{{FIELD_ID}}');
                             $field->enterObject();
-                            $field_output = trim(strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\'"]));
+                            $field_output = trim(strtr($field->params['form_output'][$field->getId()], ["\n" => '', "\r" => '', "'" => "\\'"]));
 
-                            echo '<td class="be-value-input type-'. $column['field']->getElement(0) .'" data-title="'. $column['label'] .'">'. $field_output .'</td>';
+                            echo '<td class="be-value-input type-' . $column['field']->getElement(0) . '" data-title="' . $column['label'] . '">' . $field_output . '</td>';
                         }
 ?>\
-                    <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?php echo rex_i18n::msg('yform_delete') ?></a></td>\
+                    <td class="delete-row"><a class="btn btn-xs btn-delete" href="javascript:void(0)"><i class="rex-icon rex-icon-delete"></i> <?= rex_i18n::msg('yform_delete') ?></a></td>\
                 ';
 
                 be_table_cnt++;
@@ -170,5 +170,5 @@ $main_id = $this->params['this']->getObjectparams('main_id');
             });
         })();
     </script>
-    <?php echo $notice ?>
+    <?= $notice ?>
 </div>

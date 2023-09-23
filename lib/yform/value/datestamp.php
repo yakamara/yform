@@ -67,7 +67,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                         'type' => 'text',
                         'value' => ('' != $this->value_datestamp_currentValue) ? rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue) : '',
                         'notice' => $notice,
-                    ]
+                    ],
                 );
             } elseif ('' != $this->value_datestamp_currentValue) {
                 $this->params['form_output'][$this->getId()] .= $this->parse(
@@ -75,7 +75,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
                     [
                         'type' => 'text',
                         'value' => rex_yform_value_datetime::datetime_getFormattedDatetime($this->getElement('format'), $this->value_datestamp_currentValue),
-                    ]
+                    ],
                 );
             }
         }
@@ -85,7 +85,7 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return 'datestamp|name|label|[YmdHis/U/dmy/mysql]|[no_db]|[0-always,1-only if empty,2-never]';
+        return 'datestamp|name|label|[Y-m-d H:i:s/U/dmy]|[no_db]|[0-always,1-only if empty,2-never]';
     }
 
     public function getDefinitions(): array

@@ -5,12 +5,10 @@ class rex_yform_manager_table_authorization
     public const VIEW = 'VIEW';
     public const EDIT = 'EDIT';
 
-    /**
-     * @var null|array<string, mixed>
-     */
+    /** @var null|array<string, mixed> */
     public static ?array $tableAuthorizations = null;
 
-    public static function onAttribute(string $attribute, rex_yform_manager_table $userTable, rex_user $user = null): bool
+    public static function onAttribute(string $attribute, rex_yform_manager_table $userTable, ?rex_user $user = null): bool
     {
         if (null !== self::$tableAuthorizations) {
             if (array_key_exists($attribute, self::$tableAuthorizations[$userTable->getTableName()] ?? [])) {
@@ -39,7 +37,7 @@ class rex_yform_manager_table_authorization
         return self::onAttribute($attribute, $userTable, $user);
     }
 
-    private static function canView(rex_yform_manager_table $table, rex_user $user = null): bool
+    private static function canView(rex_yform_manager_table $table, ?rex_user $user = null): bool
     {
         if (!$user) {
             return false;
@@ -55,7 +53,7 @@ class rex_yform_manager_table_authorization
         return null !== $complexPerm && $complexPerm->hasPerm($table->getTableName());
     }
 
-    private static function canEdit(rex_yform_manager_table $table, rex_user $user = null): bool
+    private static function canEdit(rex_yform_manager_table $table, ?rex_user $user = null): bool
     {
         if (!$user) {
             return false;

@@ -5,4 +5,4 @@
  * @psalm-scope-this rex_yform_value_abstract
  */
 
-?><input type="hidden" name="<?php echo $fieldName ?? $this->getFieldName(); ?>" id="<?php echo $this->getHTMLId() ?>" value="<?php echo rex_escape($this->getValue()) ?>" />
+?><input type="hidden" name="<?= $fieldName ?? $this->getFieldName() ?>" id="<?= $this->getHTMLId() ?>" value="<?= rex_escape($this->getValue()) ?>" />

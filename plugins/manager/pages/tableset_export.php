@@ -15,7 +15,7 @@ $page = rex_request('page', 'string', '');
 $yform_tables = [];
 foreach (rex_yform_manager_table::getAll() as $g_table) {
     $table_name = $g_table->getTableName();
-    $yform_tables[$table_name] = rex_i18n::translate($g_table->getNameLocalized()).' ['.$table_name.']';
+    $yform_tables[$table_name] = rex_i18n::translate($g_table->getNameLocalized()) . ' [' . $table_name . ']';
 }
 
 $yform = new rex_yform();
@@ -33,10 +33,10 @@ if ($yform->objparams['actions_executed']) {
 
         $tablenames = implode('_', $table_names);
         if (mb_strlen($tablenames) > 100) {
-            $tables = mb_substr($tablenames, 0, 100).'_etc_';
+            $tables = mb_substr($tablenames, 0, 100) . '_etc_';
         }
 
-        $fileName = 'yform_manager_tableset_export_tables_'.$tablenames.'_'.date('YmdHis').'.json';
+        $fileName = 'yform_manager_tableset_export_tables_' . $tablenames . '_' . date('YmdHis') . '.json';
         header('Content-Disposition: attachment; filename="' . $fileName . '"; charset=utf-8');
         rex_response::sendContent($fileContent, 'application/octetstream');
         exit;

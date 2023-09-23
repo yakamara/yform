@@ -5,9 +5,9 @@
  * @psalm-scope-this rex_yform_value_be_link
  */
 
-$counter = $counter ?? 1;
+$counter ??= 1;
 
-$buttonId = 'yf_'.uniqid().'_'.$counter;
+$buttonId = 'yf_' . uniqid() . '_' . $counter;
 $categoryId = 0;
 $name = $this->getFieldName();
 $value = rex_escape($this->getValue() ?? '');
@@ -34,8 +34,8 @@ if (count($notice) > 0) {
 }
 
 ?>
-<div class="<?php echo $class_group ?>" id="<?php echo $this->getHTMLId() ?>">
-    <label class="control-label" for="<?php echo $this->getFieldId() ?>"><?php echo $this->getLabel() ?></label>
-    <?php echo $widget; ?>
-    <?php echo $notice ?>
+<div class="<?= $class_group ?>" id="<?= $this->getHTMLId() ?>">
+    <label class="control-label" for="<?= $this->getFieldId() ?>"><?= $this->getLabel() ?></label>
+    <?= $widget ?>
+    <?= $notice ?>
 </div>

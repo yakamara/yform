@@ -46,7 +46,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
             foreach ($this->params['value_pool']['sql'] as $key => $value) {
                 $sql->setValue($key, $value);
                 if ('' != $where) {
-                    $where = str_replace('###'.$key.'###', addslashes((string) $value), $where);
+                    $where = str_replace('###' . $key . '###', addslashes((string) $value), $where);
                 }
             }
 
@@ -101,7 +101,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
                     'action' => $action,
                     'id' => $this->params['main_id'],
                     'yform' => true,
-                ]
+                ],
             ));
 
             /**
@@ -117,7 +117,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
                     'action' => $action,
                     'id' => $this->params['main_id'],
                     'yform' => true,
-                ]
+                ],
             ));
         }
     }

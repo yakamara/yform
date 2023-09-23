@@ -40,11 +40,11 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'checkbox|status|translate:yform_rest_token_status';
     $form_data[] = 'text|name|translate:yform_rest_token_name';
     $form_data[] = 'validate|empty|name|translate:yform_rest_token_name_validate';
-    $form_data[] = 'text|token|translate:yform_rest_token_token|#notice:'.rex_i18n::msg('yform_rest_token_token_notice', $dummyToken);
+    $form_data[] = 'text|token|translate:yform_rest_token_token|#notice:' . rex_i18n::msg('yform_rest_token_token_notice', $dummyToken);
     $form_data[] = 'validate|empty|token|translate:yform_rest_token_token_validate';
     $form_data[] = 'choice|interval|translate:yform_rest_token_interval|translate:yform_rest_token_none=none,translate:yform_rest_token_overall=overall,translate:yform_rest_token_per_hour=hour,translate:yform_rest_token_per_day=day,translate:yform_rest_token_per_month=month|#attributes:{"class": "form-control yform-rest-token-interval-select"}';
     $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
-    $form_data[] = 'choice|paths|translate:yform_rest_token_token_paths|'.implode(',', $routes).'||1';
+    $form_data[] = 'choice|paths|translate:yform_rest_token_token_paths|' . implode(',', $routes) . '||1';
 
     $yform = rex_yform::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest/token');
@@ -57,7 +57,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     if ('edit' == $func) {
         $title = rex_i18n::msg('yform_rest_token_update');
-        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save') . ',' . rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
         $yform->setHiddenField('data_id', $data_id);
         $yform->setHiddenField('func', $func);
         $yform->setActionField('db', [$table, "id=$data_id"]);
@@ -69,7 +69,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     } else {
         $yform->setHiddenField('func', $func);
         $title = rex_i18n::msg('yform_rest_token_create');
-        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add').','.rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+        $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_add') . ',' . rex_i18n::msg('yform_add_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
         $yform->setActionField('db', [$table]);
         $yform->setActionField('showtext', [rex_view::success(rex_i18n::msg('yform_rest_token_info_added')), '', '', 1]);
     }
@@ -117,7 +117,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
                     $yform->setObjectparams('main_where', "id=$data_id");
                     $yform->setObjectparams('main_table', $table);
                     $yform->setObjectparams('getdata', true);
-                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save').','.rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
+                    $yform->setValueField('submit', ['name' => 'submit', 'labels' => rex_i18n::msg('yform_save') . ',' . rex_i18n::msg('yform_save_apply'), 'values' => '1,2', 'no_db' => true, 'css_classes' => 'btn-save,btn-apply']);
                     $yform->executeFields();
 
                     $content = $yform->executeActions();
@@ -125,7 +125,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
                     $fragment->setVar('class', 'edit', false);
                     $fragment->setVar('title', $title);
                     $fragment->setVar('body', $content, false);
-                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_added')).$fragment->parse('core/page/section.php');
+                    $content = rex_view::success(rex_i18n::msg('yform_rest_token_added')) . $fragment->parse('core/page/section.php');
 
                     $show_list = false;
                 } else {

@@ -31,7 +31,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 }
 
                 if (isset($this->params['value_pool']['sql'][$name])) {
-                    $value .= ' '.$this->params['value_pool']['sql'][$name];
+                    $value .= ' ' . $this->params['value_pool']['sql'][$name];
                     continue;
                 }
 
@@ -43,7 +43,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
 
             if ($relations) {
                 foreach ($this->getRelationValues($relations) as $v) {
-                    $value .= ' '.$v;
+                    $value .= ' ' . $v;
                 }
             }
 
@@ -148,7 +148,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                     $sql->escapeIdentifier($table),
                     $nextIndex,
                     $index,
-                    $sql->escapeIdentifier($name)
+                    $sql->escapeIdentifier($name),
                 );
 
                 return $nextIndex;
@@ -159,7 +159,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
 
                 $fieldFormat = 't%d.%s';
                 if ($relation->getElement('relation_table') || in_array($relation->getElement('type'), [1, 3, 4, 5])) {
-                    $fieldFormat = 'GROUP_CONCAT('.$fieldFormat.' SEPARATOR " ")';
+                    $fieldFormat = 'GROUP_CONCAT(' . $fieldFormat . ' SEPARATOR " ")';
                 }
 
                 foreach ($columns as $name => $sub) {
@@ -231,7 +231,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 'SELECT %s FROM %s t0 %s WHERE ',
                 implode(', ', $fields),
                 $sql->escapeIdentifier($fromTable),
-                implode(' ', $joins)
+                implode(' ', $joins),
             );
 
             switch ($type) {
@@ -254,7 +254,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                     throw new LogicException(sprintf('Unknown relation type "%s"', $type));
             }
 
-            $data = $sql->getArray($query.' LIMIT 1');
+            $data = $sql->getArray($query . ' LIMIT 1');
 
             if (!isset($data[0])) {
                 continue;

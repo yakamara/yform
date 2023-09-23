@@ -9,7 +9,7 @@
  * @var rex_yform_manager $this
  */
 
-$_csrf_key = $_csrf_key ?? '';
+$_csrf_key ??= '';
 
 $show_importform = true;
 $show_list = false;
@@ -70,7 +70,7 @@ if (1 == rex_request('send', 'int', 0)) {
                 'filename' => $filename,
                 'missing_columns' => $missing_columns,
                 'debug' => $debug,
-            ]
+            ],
         ));
 
         if ($import_start) {
@@ -137,7 +137,7 @@ if (1 == rex_request('send', 'int', 0)) {
                                         ->setValue('type_id', 'value')
                                         ->setValue('type_name', 'text')
                                         ->setValue('name', $mcc)
-                                        ->setValue('label', 'TEXT `'.$mcc.'`')
+                                        ->setValue('label', 'TEXT `' . $mcc . '`')
                                         ->setValue('list_hidden', 0)
                                         ->setValue('db_type', 'text')
                                         ->insert();
@@ -203,8 +203,8 @@ if (1 == rex_request('send', 'int', 0)) {
                                 $messages[$key] = $msg;
                             }
                             ++$dcounter;
-                            $dataId = 'ID: '.$id;
-                            echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, '<br />* ' .implode('<br />* ', $messages)));
+                            $dataId = 'ID: ' . $id;
+                            echo rex_view::error(rex_i18n::msg('yform_manager_import_error_dataimport', $dataId, '<br />* ' . implode('<br />* ', $messages)));
                         } elseif ($exists) {
                             ++$rcounter;
                         } else {
@@ -230,7 +230,7 @@ if (1 == rex_request('send', 'int', 0)) {
                         'data_replaced' => $rcounter, // replace counter
                         'data_inserted' => $icounter, // insert counter
                         'data_errors' => $errorcounter,
-                    ]
+                    ],
                 ));
                 $sql_db->commit();
             } catch (\Throwable $e) {
@@ -312,7 +312,7 @@ if ($show_importform) {
     $n = [];
     $n['label'] = '<label>' . rex_i18n::msg('yform_manager_import_file') . '</label>';
     $n['field'] = '<input class="form-control" type="file" name="file_new" />'
-                .rex_csrf_token::factory($_csrf_key)->getHiddenField();
+                . rex_csrf_token::factory($_csrf_key)->getHiddenField();
     $formElements[] = $n;
 
     $fragment = new rex_fragment();
