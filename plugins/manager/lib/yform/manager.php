@@ -259,9 +259,9 @@ class rex_yform_manager
             case 'clone':
             case 'collection_edit':
                 if (
-                    ('add' == $func && $this->hasDataPageFunction('add')) ||
-                    (('edit' == $func || 'clone' == $func) && $data_id) ||
-                    ('collection_edit' == $func && $this->table->isMassEditAllowed())
+                    ('add' == $func && $this->hasDataPageFunction('add'))
+                    || (('edit' == $func || 'clone' == $func) && $data_id)
+                    || ('collection_edit' == $func && $this->table->isMassEditAllowed())
                 ) {
                     if ('collection_edit' === $func) {
                         $query = $this->table->query()->alias('t0');
@@ -364,59 +364,59 @@ class rex_yform_manager
                         }
                     }
 
-                    $sql_db = rex_sql::factory();
-                    $sql_db->beginTransaction();
-
-                    $transactionErrorMessage = null;
-
                     try {
-                        $afterFieldsExecuted = static function (rex_yform $yform) {
-                            /** @var rex_yform_value_abstract $valueObject */
-                            foreach ($yform->objparams['values'] as $valueObject) {
-                                if ('submit' == $valueObject->getName()) {
-                                    if (2 == $valueObject->getValue()) { // apply
-                                        $yform->setObjectparams('form_showformafterupdate', 1);
-                                        // $yform->executeFields();
+                        $sql_db = rex_sql::factory();
+                        $form = '';
+                        $sql_db->transactional(static function () use (&$form, &$yform, $data, $func) {
+
+                            $afterFieldsExecuted = static function (rex_yform $yform) {
+                                /** @var rex_yform_value_abstract $valueObject */
+                                foreach ($yform->objparams['values'] as $valueObject) {
+                                    if ('submit' == $valueObject->getName()) {
+                                        if (2 == $valueObject->getValue()) { // apply
+                                            $yform->setObjectparams('form_showformafterupdate', 1);
+                                            // $yform->executeFields();
+                                        }
                                     }
-                                }
-                            }
-                        };
-
-                        if ('clone' == $func) {
-                            $afterFieldsExecuted = static function (rex_yform $yform) use ($afterFieldsExecuted) {
-                                $yform->objparams['form_hiddenfields']['func'] = 'add';
-                                unset($yform->objparams['form_hiddenfields']['data_id']);
-
-                                // In den Feldern Anpassungen vornehmen
-                                foreach ($yform->objparams['values'] as $k => $v) {
-                                    // Submit-Buttons von "Edit" auf "Add" zurückstellen
-                                    if ($v instanceof rex_yform_value_submit) {
-                                        $yform->objparams['form_output'][$k] = str_replace(
-                                            [rex_i18n::msg('yform_save') . '</button', rex_i18n::msg('yform_save_apply') . '</button'],
-                                            [rex_i18n::msg('yform_add') . '</button', rex_i18n::msg('yform_add_apply') . '</button'],
-                                            $yform->objparams['form_output'][$k],
-                                        );
-                                        continue;
-                                    }
-
-                                    // im Feldtyp be_manager_relation / Typ 5 (inline) ebenfalls die Datensatz-ID der
-                                    // verbundenen Sätze entfernen. Nur "inline" ist problematisch
-                                    if ($v instanceof rex_yform_value_be_manager_relation && 5 == $v->getElement('type')) {
-                                        $fieldName = preg_quote($v->getFieldName());
-                                        $pattern = '/<input type="hidden" name="' . $fieldName . '(\[\d+\])*\[id\]" value="\d+" \/>/';
-                                        $yform->objparams['form_output'][$k] = preg_replace($pattern, '', $yform->objparams['form_output'][$k]);
-                                    }
-                                }
-
-                                if (is_callable($afterFieldsExecuted)) {
-                                    $afterFieldsExecuted($yform);
                                 }
                             };
-                        }
 
-                        $form = $data->executeForm($yform, $afterFieldsExecuted);
+                            if ('clone' == $func) {
+                                $afterFieldsExecuted = static function (rex_yform $yform) use ($afterFieldsExecuted) {
+                                    $yform->objparams['form_hiddenfields']['func'] = 'add';
+                                    unset($yform->objparams['form_hiddenfields']['data_id']);
 
-                        $sql_db->commit();
+                                    // In den Feldern Anpassungen vornehmen
+                                    foreach ($yform->objparams['values'] as $k => $v) {
+                                        // Submit-Buttons von "Edit" auf "Add" zurückstellen
+                                        if ($v instanceof rex_yform_value_submit) {
+                                            $yform->objparams['form_output'][$k] = str_replace(
+                                                [rex_i18n::msg('yform_save') . '</button', rex_i18n::msg('yform_save_apply') . '</button'],
+                                                [rex_i18n::msg('yform_add') . '</button', rex_i18n::msg('yform_add_apply') . '</button'],
+                                                $yform->objparams['form_output'][$k],
+                                            );
+                                            continue;
+                                        }
+
+                                        // im Feldtyp be_manager_relation / Typ 5 (inline) ebenfalls die Datensatz-ID der
+                                        // verbundenen Sätze entfernen. Nur "inline" ist problematisch
+                                        if ($v instanceof rex_yform_value_be_manager_relation && 5 == $v->getElement('type')) {
+                                            $fieldName = preg_quote($v->getFieldName());
+                                            $pattern = '/<input type="hidden" name="' . $fieldName . '(\[\d+\])*\[id\]" value="\d+" \/>/';
+                                            $yform->objparams['form_output'][$k] = preg_replace($pattern, '', $yform->objparams['form_output'][$k]);
+                                        }
+                                    }
+
+                                    if (is_callable($afterFieldsExecuted)) {
+                                        $afterFieldsExecuted($yform);
+                                    }
+                                };
+                            }
+
+                            $form = $data->executeForm($yform, $afterFieldsExecuted);
+
+                        });
+
                         if ($yform->objparams['actions_executed']) {
                             switch ($func) {
                                 case 'add':
@@ -502,22 +502,14 @@ class rex_yform_manager
                                 ];
                             }
                         }
-                    } catch (\Throwable $e) {
-                        if ($sql_db->inTransaction()) {
-                            $sql_db->rollBack();
-                        }
 
-                        $transactionErrorMessage = $e->getMessage();
-                        if ($transactionErrorMessage) {
-                            if (rex::getUser()->isAdmin()) {
-                                // dump($e);
-                            }
-                            $mainMessages[] = [
-                                'type' => 'error',
-                                'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $transactionErrorMessage),
-                            ];
-                        }
+                    } catch (\Throwable $e) {
+                        $mainMessages[] = [
+                            'type' => 'error',
+                            'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $e->getMessage()),
+                        ];
                     }
+
                 }
                 break;
         }
