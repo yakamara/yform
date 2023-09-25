@@ -16,7 +16,7 @@ Version 4.1.2-beta1 - 23.09.2023
 * Widget Debug JS Alert() entfernt
 * Workflows in github ergänzt
 
-Dank geht an Norber Michel, Markus Staab, Alexander Walther, Thomas Blum und Daniel Weingart
+Dank geht an Norbert Micheel, Markus Staab, Alexander Walther, Thomas Blum und Daniel Weingart
 
 Version 4.1.1 - 03.04.2023
 --------------------------
