@@ -197,10 +197,10 @@ class rex_yform_value_upload extends rex_yform_value_abstract
             }
 
             if (isset($FILE)) {
-                if ('' != $this->getElement('sizes') && $FILE['size'] > $configuration['sizes']['max']) {
+                if (null !== $this->getElement('sizes') && $FILE['size'] > $configuration['sizes']['max']) {
                     $errors[] = $configuration['messages']['max_error'];
                     unset($FILE);
-                } elseif ('' != $this->getElement('sizes') && $FILE['size'] < $configuration['sizes']['min']) {
+                } elseif (null !== $this->getElement('sizes') && $FILE['size'] < $configuration['sizes']['min']) {
                     $errors[] = $configuration['messages']['min_error'];
                     unset($FILE);
                 }
