@@ -514,6 +514,18 @@ $query->whereListContains('my_column', 'my_value');
 $query->whereListContains('my_column', [3, 5, 9]);
 ```
 
+Beispiel für resetSelect()
+
+// resetSelect() ermöglicht es im Anschluss per select nur die Felder des Datensatzes zu erhalten, die man wirklich benötigt. 
+
+```php
+$dataset = rex_yform_manager_query::get('rex_yf_jobs_contactpersons')
+    ->resetSelect()
+    ->select('id')
+    ->select('title')
+    ->select('name')
+    ->findId($id);
+```
 
 <a name="dataset-methoden"></a>
 
