@@ -519,7 +519,7 @@ Beispiel für resetSelect()
 // resetSelect() ermöglicht es im Anschluss per select nur die Felder des Datensatzes zu erhalten, die man wirklich benötigt. 
 
 ```php
-$dataset = rex_yform_manager_query::get('rex_yf_jobs_contactpersons')
+$dataset = rex_yform_manager_query::get('rex_yf_example')
     ->resetSelect()
     ->select('id')
     ->select('title')
