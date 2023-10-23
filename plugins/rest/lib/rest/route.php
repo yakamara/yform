@@ -8,10 +8,16 @@ class rex_yform_rest_route
 
     /** @var rex_yform_manager_table */
     public $table;
+
+    /** @var rex_yform_manager_query */
     public $query;
     public $instance;
 
     private $includes;
+
+    private $preFunc;
+    private $postFunc;
+    private $getItemFunc;
 
     public static $requestMethods = ['get', 'post', 'delete'];
 
@@ -27,6 +33,9 @@ class rex_yform_rest_route
         $this->type = $config['type'];
         $this->table = $this->config['table'];
         $this->query = $this->config['query'];
+        $this->preFunc = $this->config['preFunc'] ?? null;
+        $this->postFunc = $this->config['postFunc'] ?? null;
+        $this->getItemFunc = $this->config['getItemFunc'] ?? null;
         $this->instance = $this->table->createDataset();
         $this->path = ('/' == mb_substr($this->config['path'], -1)) ? mb_substr($this->config['path'], 0, -1) : $this->config['path'];
     }
@@ -87,10 +96,12 @@ class rex_yform_rest_route
         }
 
         /** @var rex_yform_manager_table $table */
-        $table = $this->config['table'];
+        $table = $this->getTable();
+        $query = $this->getQuery();
 
-        /** @var rex_yform_manager_query $query */
-        $query = $this->config['query'];
+        if (is_callable($this->preFunc)) {
+            call_user_func($this->preFunc, $this);
+        }
 
         switch ($requestMethod) {
             case 'get':
@@ -123,7 +134,6 @@ class rex_yform_rest_route
                         $currentPage = ($currentPage < 0) ? 1 : $currentPage;
 
                         $query->limit(($currentPage - 1) * $per_page, $per_page);
-
                         if (isset($get['order']) && is_array($get['order'])) {
                             foreach ($get['order'] as $orderName => $orderValue) {
                                 if (array_key_exists($orderName, $fields)) {
@@ -176,7 +186,7 @@ class rex_yform_rest_route
                         $id = $path;
                         $id_column = 'id';
                         if ('' != $query->getTableAlias()) {
-                            $id_column = $query->getTableAlias() . '.id';
+                            $id_column = $query->getTableAlias().'.id';
                         }
 
                         $query
@@ -213,10 +223,9 @@ class rex_yform_rest_route
                     foreach ($instances as $instance) {
                         $data[] = $this->getInstanceData(
                             $instance,
-                            array_merge($paths, [$instance->getId()]),
+                            array_merge($paths, [$instance->getId()])
                         );
                     }
-
                     if ($baseInstances) {
                         $links = [];
                         $meta = [];
@@ -244,18 +253,18 @@ class rex_yform_rest_route
                         $links['self'] = rex_yform_rest::getLinkByPath($this, $linkParams);
                         $links['first'] = rex_yform_rest::getLinkByPath($this, array_merge(
                             $linkParams,
-                            ['page' => 1],
+                            ['page' => 1]
                         ));
                         if (($currentPage - 1) > 0) {
                             $links['prev'] = rex_yform_rest::getLinkByPath($this, array_merge(
                                 $linkParams,
-                                ['page' => ($currentPage - 1)],
+                                ['page' => ($currentPage - 1)]
                             ));
                         }
                         if (($currentPage * $per_page) < $itemsAll) {
                             $links['next'] = rex_yform_rest::getLinkByPath($this, array_merge(
                                 $linkParams,
-                                ['page' => ($currentPage + 1)],
+                                ['page' => ($currentPage + 1)]
                             ));
                         }
 
@@ -271,9 +280,16 @@ class rex_yform_rest_route
                     } else {
                         $data = $this->getInstanceData(
                             $instance,
-                            array_merge($paths),
+                            array_merge($paths)
                         );
+                        if (is_callable($this->getItemFunc)) {
+                            $data = call_user_func($this->getItemFunc, $this, $data);
+                        }
                     }
+                }
+
+                if (is_callable($this->postFunc)) {
+                    $data = call_user_func($this->postFunc, $this, $data);
                 }
 
                 $this->sendContent('200', $data);
@@ -552,7 +568,7 @@ class rex_yform_rest_route
 
         $newFields = [];
         foreach ($fields as $key => $field) {
-            $compareKey = 0 == count($parents) ? $key : implode('.', $parents) . '.' . $key;
+            $compareKey = 0 == count($parents) ? $key : implode('.', $parents).'.'.$key;
             if (in_array($compareKey, $this->getIncludes(), true)) {
                 $newFields[$key] = $field;
             }
@@ -590,7 +606,7 @@ class rex_yform_rest_route
                         $relationInstance,
                         array_merge($paths, [$field->getName(), $relationInstance->getId()]),
                         $onlyId,
-                        $fieldParents,
+                        $fieldParents
                     );
                 }
                 $return[$field->getName()] = [
@@ -617,7 +633,6 @@ class rex_yform_rest_route
 
     /**
      * @param false $attributCall
-     * @return mixed
      */
     public function getInstanceValue($instance, $key, $attributCall = false)
     {
@@ -632,9 +647,6 @@ class rex_yform_rest_route
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
-    /**
-     * @param mixed $instance
-     */
     public function getTypeFromInstance($instance = null): string
     {
         if (!$instance) {
@@ -646,5 +658,27 @@ class rex_yform_rest_route
             }
         }
         return $type;
+    }
+
+    public function setQuery(rex_yform_manager_query $query): self
+    {
+        $this->query = $query;
+        return $this;
+    }
+
+    public function getQuery(): rex_yform_manager_query
+    {
+        return $this->query;
+    }
+
+    public function setTable(rex_yform_manager_table $table): self
+    {
+        $this->table = $table;
+        return $this;
+    }
+
+    public function getTable(): rex_yform_manager_table
+    {
+        return $this->table;
     }
 }
