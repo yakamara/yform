@@ -221,10 +221,15 @@ class rex_yform_rest_route
                 $data = [];
                 if ($instances) {
                     foreach ($instances as $instance) {
-                        $data[] = $this->getInstanceData(
+                        $instance_data = $this->getInstanceData(
                             $instance,
                             array_merge($paths, [$instance->getId()])
                         );
+                        if (is_callable($this->getItemFunc)) {
+                            $instance_data = call_user_func($this->getItemFunc, $this, $instance_data);
+                        }
+
+                        $data[] = $instance_data;
                     }
                     if ($baseInstances) {
                         $links = [];
