@@ -463,8 +463,9 @@ class rex_yform_rest_route
 
         foreach ($availableFields as $key => $availableField) {
             if ('none' != $availableField->getDatabaseFieldType()) {
-                // ALLE Felder erlaubt wenn kein Feld gesetzt ? count($this->config[$type]['fields'][$class]) == 0 ||
                 if (isset($this->config[$type]['fields'][$class]) && in_array($key, @$this->config[$type]['fields'][$class], true)) {
+                    $returnFields[$key] = $availableField;
+                } elseif (1 == count($this->config[$type]['fields'][$class]) && '*' == $this->config[$type]['fields'][$class][0]) {
                     $returnFields[$key] = $availableField;
                 }
             }
