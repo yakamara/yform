@@ -401,107 +401,113 @@ echo $post->executeForm($yform)
 
 <a name="collection-methoden"></a>
 
-### collection-Methoden
+Die Klasse `rex_yform_manager_collection` stellt eine Reihe von Methoden zur Verfügung, um mit Sammlungen von Datensätzen zu arbeiten. Hier sind einige der wichtigsten Methoden:
 
-- delete
-- executeForm
-- filter
-- first
-- getForm
-- getIds
-- getTable
-- getTableName
-- getUniqueValue
-- getValues
-- groupBy
-- isEmpty
-- isValid
-- isValueUnique
-- last
-- map
-- populateRelation
-- save
-- setData
-- setValue
-- shuffle
-- slice
-- sort
-- split
-- toKeyIndex
-- toKeyValue
+- `chunk()`: Teilt die Sammlung in Chunks einer bestimmten Größe.
+- `delete()`: Löscht alle Datensätze in der Sammlung.
+- `executeForm()`: Führt ein Formular für alle Datensätze in der Sammlung aus.
+- `filter()`: Filtert die Sammlung nach einer bestimmten Bedingung.
+- `first()`: Gibt den ersten Datensatz in der Sammlung zurück.
+- `getForm()`: Gibt ein Formular für die Sammlung zurück.
+- `getIds()`: Gibt die IDs aller Datensätze in der Sammlung zurück.
+- `getTable()`: Gibt die Tabelle zurück, zu der die Sammlung gehört.
+- `getTableName()`: Gibt den Namen der Tabelle zurück, zu der die Sammlung gehört.
+- `getUniqueValue()`: Gibt einen eindeutigen Wert für die Sammlung zurück.
+- `getValues()`: Gibt die Werte aller Datensätze in der Sammlung zurück.
+- `groupBy()`: Gruppiert die Sammlung nach einem bestimmten Feld.
+- `implode()`: Fügt die Werte aller Datensätze in der Sammlung zu einem String zusammen.
+- `isEmpty()`: Überprüft, ob die Sammlung leer ist.
+- `isValid()`: Überprüft, ob alle Datensätze in der Sammlung gültig sind.
+- `isValueUnique()`: Überprüft, ob ein bestimmter Wert in der Sammlung eindeutig ist.
+- `last()`: Gibt den letzten Datensatz in der Sammlung zurück.
+- `map()`: Wendet eine Funktion auf alle Datensätze in der Sammlung an.
+- `populateRelation()`: Füllt ein Relationsfeld für alle Datensätze in der Sammlung.
+- `save()`: Speichert alle Datensätze in der Sammlung.
+- `setData()`: Lädt Daten in alle Datensätze in der Sammlung.
+- `setValue()`: Setzt einen Wert für alle Datensätze in der Sammlung.
+- `shuffle()`: Mischelt die Datensätze in der Sammlung.
+- `slice()`: Gibt einen Teil der Datensätze in der Sammlung zurück.
+- `sort()`: Sortiert die Datensätze in der Sammlung.
+- `split()`: Teilt die Sammlung in zwei Teile
+- `toKeyIndex()`: Gibt die Datensätze in der Sammlung als Array zurück, wobei die IDs der Datensätze als Schlüssel verwendet werden.
+- `toKeyValue()`: Gibt die Datensätze in der Sammlung als Array zurück, wobei die Werte eines bestimmten Feldes als Schlüssel und die Werte eines anderen Feldes als Werte verwendet werden.
 
 <a name="query-methoden"></a>
 
 ### query-Methoden
 
+Die Klasse `rex_yform_manager_query` stellt eine Reihe von Methoden zur Verfügung, um Abfragen zu erstellen. Hier sind einige der wichtigsten Methoden:
+
 - Alias
-  - alias
-  - getTableAlias
-- count
-- exists (liefert true oder false zurück. Optimal für große Abfragen.)
+  - `alias()`: Setzt den Alias für die Tabelle, auf die sich die Abfrage bezieht.
+  - `getTableAlias()`: Gibt den Alias für die Tabelle, auf die sich die Abfrage bezieht, zurück. Wenn kein Alias gesetzt ist, wird der Tabellenname zurückgegeben.
+- `count()`: Gibt die Anzahl der Datensätze zurück, die von der Abfrage zurückgegeben werden.
+- `exists()`: Überprüft, ob die Abfrage mindestens einen Datensatz zurückgibt. (Optimal für große Abfragen.)
 - Find
-  - find
-  - findId
-  - findIds
-  - findOne (liefert einen Datensatz als Objekt zurück.)
+  - `find()`: Gibt eine Sammlung (Collection) von Datensätzen zurück, die von der Abfrage zurückgegeben werden.
+  - `findId()`: Gibt die ID des ersten Datensatzes zurück, der von der Abfrage zurückgegeben wird.
+  - `findIds()`: Gibt die IDs aller Datensätze zurück, die von der Abfrage zurückgegeben werden.
+  - `findOne()`: Gibt den ersten Datensatz als Dataset zurück, der von der Abfrage zurückgegeben wird.
 - Get
-  - get
-  - getAll
-- Group By
-  - groupBy
-  - groupByRaw
-  - resetGroupBy
-- Join
-  - joinRaw
-  - joinRelation
-  - joinType
-  - joinTypeRelation
-  - leftJoin
-  - leftJoinRelation
-  - resetJoins
-- Limit
-  - limit
-  - resetLimit
-- Order By
-  - orderBy
-  - orderByRaw
-  - resetOrderBy
-- paginate ([Beispiel](#beispiel-paginate))
+  - `get()`: Gibt eine Sammlung (Collection) von Datensätzen zurück, die von der Abfrage zurückgegeben werden.
+  - `getAll()`: Gibt alle Datensätze zurück, die von der Abfrage zurückgegeben werden.
+- Group By (Entspricht `GROUP BY` in SQL.)
+  - `groupBy()`: Gruppiert die Abfrage nach einem bestimmten Feld.
+  - `groupByRaw()`: Gruppiert die Abfrage nach einem bestimmten Feld, wobei die Feldnamen nicht zitiert werden.
+  - `resetGroupBy()`: Setzt die Gruppierung der Abfrage zurück.
+- Join (Entspricht `JOIN` in SQL)
+  - `join()`: Fügt der Abfrage einen Join hinzu.
+  - `joinRaw()`: Fügt der Abfrage einen Join hinzu, wobei die Feldnamen nicht zitiert werden.
+  - `joinRelation()`: Fügt der Abfrage einen Join hinzu, der auf einem Relationsfeld basiert.
+  - `joinType()`: Setzt den Join-Typ für die Abfrage.
+  - `joinTypeRelation()`: Setzt den Join-Typ für die Abfrage, der auf einem Relationsfeld basiert.
+  - `leftJoin()`: Fügt der Abfrage einen Left Join hinzu.
+  - `leftJoinRelation()`: Fügt der Abfrage einen Left Join hinzu, der auf einem Relationsfeld basiert.
+  - `resetJoins()`: Setzt alle Joins der Abfrage zurück.
+- Limit (Entspricht `LIMIT` in SQL.)
+  - `limit()`: Setzt das Limit für die Abfrage.
+  - `resetLimit()`: Setzt das Limit der Abfrage zurück.
+- Order By (Entspricht `ORDER BY` in SQL.)
+  - `orderBy()`: Setzt die Sortierreihenfolge für die Abfrage.
+  - `orderByRaw()`: Setzt die Sortierreihenfolge für die Abfrage, wobei die Feldnamen nicht zitiert werden.
+  - `resetOrderBy()`: Setzt die Sortierreihenfolge der Abfrage zurück.
+- Paginate ([Beispiel](#beispiel-paginate))
 - Query
-  - query
-  - queryOne
-- save
-- Select
-  - resetSelect
-  - select
-  - selectRaw (lässt individuelle Argumente zu, wie z. B. `CONCAT, SUM`)
+  - `query()`: Führt die Abfrage aus und gibt ein `rex_yform_manager_query` Objekt zurück.
+  - `queryOne()`: Führt die Abfrage aus und gibt ein `rex_yform_manager_query` Objekt für den ersten Datensatz zurück.
+- Save (Entspricht `INSERT` oder `UPDATE` in SQL.)
+  - `save()`: Speichert die Daten, die der Abfrage hinzugefügt wurden.
+- Select (Entspricht `SELECT` in SQL.)
+  - `resetSelect()`: Setzt die Felder zurück, die von der Abfrage zurückgegeben werden.
+  - `select()`: Setzt die Felder, die von der Abfrage zurückgegeben werden.
+  - `selectRaw()`: Setzt die Felder, die von der Abfrage zurückgegeben werden, wobei die Feldnamen nicht zitiert werden. (lässt individuelle Argumente zu, wie z. B. `CONCAT, SUM`)
 - Table
-  - getTable
-  - getTableName
-- Where
-  - resetWhere
-  - setWhereOperator
-  - where
-  - whereNot
-  - whereNull
-  - whereNotNull
-  - whereBetween
-  - whereNotBetween
-  - whereNested
-  - whereRaw
-  - whereListContains
+  - `getTable()`: Gibt ein `rex_yform_manager_table` Objekt für die Tabelle zurück, auf die sich die Abfrage bezieht.
+  - `getTableName()`: Gibt den Namen der Tabelle zurück, auf die sich die Abfrage bezieht.
+- Where (Entspricht `WHERE` in SQL.)
+  - `resetWhere()`: Setzt die WHERE-Bedingung der Abfrage zurück.
+  - `setWhereOperator()`: Setzt den Operator für die WHERE-Bedingung der Abfrage.
+  - `where()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu.
+  - `whereBetween()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf einem Bereich von Werten basiert.
+  - `whereListContains()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf einer Liste von Werten basiert.
+  - `whereNested()`: Fügt der WHERE-Bedingung der Abfrage eine verschachtelte Bedingung hinzu.
+  - `whereNot()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf dem Gegenteil eines Wertes basiert.
+  - `whereNotBetween()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf dem Gegenteil eines Bereichs von Werten basiert.
+  - `whereNull()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf einem NULL-Wert basiert.
+  - `whereNotNull()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf einem nicht NULL-Wert basiert.
+  - `whereRaw()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, wobei die Feldnamen nicht zitiert werden.
+  - `whereListContains()`: Fügt der WHERE-Bedingung der Abfrage eine Bedingung hinzu, die auf einer Liste von Werten basiert.
 - Having
-  - resetHaving
-  - setHavingOperator
-  - having
-  - havingNot
-  - havingNull
-  - havingNotNull
-  - havingBetween
-  - havingNotBetween
-  - havingRaw
-  - havingListContains
-  
+  - `resetHaving()`: Setzt die HAVING-Bedingung der Abfrage zurück.
+  - `setHavingOperator()`: Setzt den Operator für die HAVING-Bedingung der Abfrage.
+  - `having()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu.
+  - `havingBetween()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu, die auf einem Bereich von Werten basiert.
+  - `havingNotBetween()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu, die auf dem Gegenteil eines Bereichs von Werten basiert.
+  - `havingNull()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu, die auf einem NULL-Wert basiert.
+  - `havingNotNull()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu, die auf einem nicht NULL-Wert basiert.
+  - `havingRaw()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu, wobei die Feldnamen nicht zitiert werden.
+  - `havingListContains()`: Fügt der HAVING-Bedingung der Abfrage eine Bedingung hinzu, die auf einer Liste von Werten basiert.
+
 Beispiel für whereListContains
 
 ```php
@@ -514,39 +520,31 @@ $query->whereListContains('my_column', 'my_value');
 $query->whereListContains('my_column', [3, 5, 9]);
 ```
 
-Beispiel für resetSelect()
-
-// resetSelect() ermöglicht es im Anschluss per select nur die Felder des Datensatzes zu erhalten, die man wirklich benötigt. 
-
-```php
-$dataset = rex_yform_manager_query::get('rex_yf_example')
-    ->resetSelect()
-    ->select('id')
-    ->select('title')
-    ->select('name')
-    ->findId($id);
-```
-
 <a name="dataset-methoden"></a>
 
 ### dataset-Methoden
 
-- create
-- get
-- getAll
-- getData (liefert Felder als Array zurück)
-- getForm (liefert Formular zurück - EXPERIMENTELL!)
-- getId
-- getMessages
-- getRaw
-- getRelatedCollection
-- getRelatedDataset
-- getTable
-- getTableName
-- getValue
-- hasValue
-- isValid
-- loadData
+Die Klasse `rex_yform_manager_dataset` stellt eine Reihe von Methoden zur Verfügung, um mit Datensätzen zu arbeiten. Hier sind einige der wichtigsten Methoden:
+
+- `create($table, array $data = [])`: Erstellt einen neuen Datensatz in der angegebenen Tabelle und gibt ein `rex_yform_manager_dataset` Objekt für diesen Datensatz zurück.
+- `get($table, $id)`: Gibt ein `rex_yform_manager_dataset` Objekt für den Datensatz mit der angegebenen ID in der angegebenen Tabelle zurück.
+- `getAll($table, $where = null, array $orderBy = [])`: Gibt alle Datensätze in der angegebenen Tabelle als Array von `rex_yform_manager_dataset` Objekten zurück. Optional kann eine WHERE-Bedingung und eine Sortierreihenfolge angegeben werden.
+- `getData()`: Gibt die Daten des aktuellen Datensatzes als assoziatives Array zurück.
+- `getForm()`: Gibt ein YForm-Formular für den aktuellen Datensatz zurück. (EXPERIMENTELL)
+- `getId()`: Gibt die ID des aktuellen Datensatzes zurück.
+- `getMessages()`: Gibt eine Liste der Fehlermeldungen zurück, die beim letzten Speichern des aktuellen Datensatzes aufgetreten sind.
+- `getRaw()`: Gibt die Rohdaten des aktuellen Datensatzes als assoziatives Array zurück.
+- `getRelatedCollection($field)`: Gibt eine `rex_yform_manager_collection` aller Datensätze zurück, die mit dem aktuellen Datensatz über das angegebene Relationsfeld verknüpft sind.
+- `getRelatedDataset($field)`: Gibt ein `rex_yform_manager_dataset` Objekt für den Datensatz zurück, der mit dem aktuellen Datensatz über das angegebene Relationsfeld verknüpft ist.
+- `getTable()`: Gibt ein `rex_yform_manager_table` Objekt für die Tabelle zurück, zu der der aktuelle Datensatz gehört.
+- `getTableName()`: Gibt den Namen der Tabelle zurück, zu der der aktuelle Datensatz gehört.
+- `getValue($field)`: Gibt den Wert eines Feldes im aktuellen Datensatz zurück.
+- `hasValue($field)`: Überprüft, ob ein Feld im aktuellen Datensatz einen Wert hat.
+- `setValue($field, $value)`: Setzt den Wert eines Feldes im aktuellen Datensatz.
+- `isValid()`: Überprüft, ob der aktuelle Datensatz gültig ist.
+- `loadData($data)`: Lädt Daten in den aktuellen Datensatz.
+- `delete()`: Löscht den aktuellen Datensatz.
+- `save()`: Speichert Änderungen am aktuellen Datensatz.
 
 <a name="debugging"></a>
 
@@ -584,7 +582,6 @@ Datei `/redaxo/src/addons/yform/plugins/manager/lib/yform/manager/dataset.php` u
 ## Tricks
 
 <a name="dataset-yform"></a>
-
 
 ### Dataset als YForm-Formular editieren / absenden
 
