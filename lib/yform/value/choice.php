@@ -167,9 +167,10 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     public static function getListValues($params)
     {
         $fieldName = $params['field'];
-        if (!isset(self::$yform_list_values[$fieldName])) {
-            $field = $params['params']['field'];
+        $field = $params['params']['field'];
+        $tableName = $field['table_name'];
 
+        if (!isset(self::$yform_list_values[$tableName][$fieldName])) {
             $choiceList = self::createChoiceList([
                 'choice_attributes' => (isset($field['choice_attributes'])) ? $field['choice_attributes'] : '',
                 'choice_label' => (isset($field['choice_label'])) ? $field['choice_label'] : '',
@@ -183,10 +184,10 @@ class rex_yform_value_choice extends rex_yform_value_abstract
 
             $choices = $choiceList->getChoicesByValues();
             foreach ($choices as $value => $label) {
-                self::$yform_list_values[$fieldName][$value] = $label;
+                self::$yform_list_values[$tableName][$fieldName][$value] = $label;
             }
         }
-        return self::$yform_list_values[$fieldName] ?? '';
+        return self::$yform_list_values[$tableName][$fieldName] ?? '';
     }
 
     public function getAttributes($element, array $attributes = [], array $directAttributes = [])
