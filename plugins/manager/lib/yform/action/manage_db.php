@@ -81,10 +81,11 @@ class rex_yform_action_manage_db extends rex_yform_action_abstract
             $sql->insert();
             $flag = 'insert';
             $id = $sql->getLastId();
-
+            /** @deprecated use 'id' instead of 'ID' */
             $this->params['value_pool']['email']['ID'] = $id;
+            $this->params['value_pool']['email']['id'] = $id;
             $this->params['main_id'] = $id;
-            // $this->params["value_pool"]["sql"]["ID"] = $id;
+            $this->params["value_pool"]["sql"]["id"] = $id;
             if (0 == $id) {
                 $this->params['form_show'] = true;
                 $this->params['hasWarnings'] = true;

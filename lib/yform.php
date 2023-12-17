@@ -452,6 +452,7 @@ class rex_yform
                 /** @deprecated use 'id' instead of 'ID' */
                 $this->objparams['value_pool']['email']['ID'] = $this->objparams['main_id'];
                 $this->objparams['value_pool']['email']['id'] = $this->objparams['main_id'];
+                $this->objparams['value_pool']['sql']['id'] = $this->objparams['main_id'];
             }
 
             $hasWarnings = 0 != count($this->objparams['warning']);
