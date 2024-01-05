@@ -422,6 +422,7 @@ class rex_yform_manager_dataset
         $columns = $table->getColumns();
         foreach ($this->data as $key => $value) {
             if ('id' === $key) {
+                $yform->objparams['value_pool']['sql'][$key] = $value;
                 continue;
             }
             if (isset($fields[$key])) {
