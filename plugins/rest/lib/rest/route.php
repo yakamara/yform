@@ -33,9 +33,9 @@ class rex_yform_rest_route
         $this->type = $config['type'];
         $this->table = $this->config['table'];
         $this->query = $this->config['query'];
-        $this->preFunc = $this->config['preFunc'] ?? null;
-        $this->postFunc = $this->config['postFunc'] ?? null;
-        $this->getItemFunc = $this->config['getItemFunc'] ?? null;
+        $this->preFunc = $config['preFunc'] ?? null;
+        $this->postFunc = $config['postFunc'] ?? null;
+        $this->getItemFunc = $config['getItemFunc'] ?? null;
         $this->instance = $this->table->createDataset();
         $this->path = ('/' == mb_substr($this->config['path'], -1)) ? mb_substr($this->config['path'], 0, -1) : $this->config['path'];
     }
@@ -221,6 +221,7 @@ class rex_yform_rest_route
                 $data = [];
                 if ($instances) {
                     foreach ($instances as $instance) {
+
                         $instance_data = $this->getInstanceData(
                             $instance,
                             array_merge($paths, [$instance->getId()])
@@ -301,7 +302,7 @@ class rex_yform_rest_route
 
                 break;
 
-                // ----- /END GET
+            // ----- /END GET
 
             case 'post':
                 $instance = $table->createDataset();
