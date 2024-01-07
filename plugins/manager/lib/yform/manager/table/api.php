@@ -130,7 +130,7 @@ class rex_yform_manager_table_api
             ];
         }
 
-        return json_encode($export);
+        return json_encode($export, JSON_PRETTY_PRINT);
     }
 
     /**
