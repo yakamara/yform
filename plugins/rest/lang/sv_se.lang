@@ -1,8 +1,8 @@
 yform_rest = REST-API
 
-yform_rest_token = Tokens
+yform_rest_token = Token
 
-yform_rest_token_header = REST: Tokens
+yform_rest_token_header = REST: Token
 
 yform_rest_token_name = Namn
 yform_rest_token_token = Token
@@ -22,8 +22,8 @@ yform_rest_token_added = Token skapades
 yform_rest_token_header_summary
 
 yform_rest_token_header_description
-yform_rest_token_not_found = Kunde inte hitta några tokens
-yform_rest_token_caption = List av alla tokens
+yform_rest_token_not_found = Kunde inte hitta några token
+yform_rest_token_caption = List av alla token
 
 yform_rest_token_name_validate = Vänligen ange en beteckning/ett namn
 yform_rest_token_token_validate = Vänligen skapa en token
