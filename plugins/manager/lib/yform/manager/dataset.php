@@ -59,6 +59,7 @@ class rex_yform_manager_dataset
         return $dataset;
     }
 
+    /** @return null|static */
     public static function get(int $id, ?string $table = null): ?self
     {
         if ($id <= 0) {
@@ -81,6 +82,7 @@ class rex_yform_manager_dataset
 
     /**
      * @throws rex_exception if dataset does not exist
+     * @return static
      */
     public static function require(int $id, ?string $table = null): self
     {
@@ -96,7 +98,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return static|rex_yform_manager_dataset
+     * @return static
      */
     public static function getRaw(int $id, ?string $table = null): self
     {
@@ -147,7 +149,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return null|static|rex_yform_manager_dataset
+     * @return null|static
      */
     public static function queryOne(string $query, array $params = [], ?string $table = null): ?self
     {
@@ -177,7 +179,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return rex_yform_manager_collection<static>|rex_yform_manager_collection<rex_yform_manager_dataset>
+     * @return rex_yform_manager_collection<static>
      */
     public static function queryCollection(string $query, array $params = [], ?string $table = null): rex_yform_manager_collection
     {
@@ -212,11 +214,11 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return null|class-string<self>
+     * @return null|class-string<static>
      */
     public static function getModelClass(string $table): ?string
     {
-        return self::$tableToModel[$table] ?? null;
+        return self::$tableToModel[$table] ?? null; // @phpstan-ignore-line
     }
 
     public function getTableName(): string
@@ -257,6 +259,7 @@ class rex_yform_manager_dataset
     }
 
     /**
+     * @param mixed $value
      * @return $this
      */
     public function setValue(string $key, $value): self
@@ -271,6 +274,9 @@ class rex_yform_manager_dataset
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getValue(string $key)
     {
         if ('id' === $key) {
@@ -650,11 +656,17 @@ class rex_yform_manager_dataset
         return $this->hasValue($key);
     }
 
+    /**
+     * @return mixed
+     */
     public function __get(string $key)
     {
         return $this->getValue($key);
     }
 
+    /**
+     * @param mixed $value
+     */
     public function __set(string $key, $value): void
     {
         $this->setValue($key, $value);
