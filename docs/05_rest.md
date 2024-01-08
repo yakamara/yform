@@ -41,13 +41,13 @@ $route = new \rex_yform_rest_route(
         'query' => \rex_ycom_user::query(),
         'get' => [
             'fields' => [
-                'rex_ycom_user' => [
+                'rex_ycom_user' => [ /* Name der Model-Klasse, nicht der Tabelle */
                     'id',
                     'login',
                     'email',
                     'name'
                  ],
-                 'rex_ycom_group' => [
+                 'rex_ycom_group' => [ /* Name der Model-Klasse, nicht der Tabelle */
                     'id',
                     'name'
                  ]
@@ -55,7 +55,7 @@ $route = new \rex_yform_rest_route(
         ],
         'post' => [
             'fields' => [
-                'rex_ycom_user' => [
+                'rex_ycom_user' => [ /* Name der Model-Klasse, nicht der Tabelle */
                     'login',
                     'email',
                     'ycom_groups'
@@ -64,7 +64,7 @@ $route = new \rex_yform_rest_route(
         ],
         'delete' => [
             'fields' => [
-                'rex_ycom_user' => [
+                'rex_ycom_user' => [ /* Name der Model-Klasse, nicht der Tabelle */
                     'id',
                     'login'
                 ]
