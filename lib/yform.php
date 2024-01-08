@@ -85,6 +85,7 @@ class rex_yform
         $this->objparams['form_hiddenfields'] = [];
 
         $this->objparams['warning'] = [];
+        $this->objparams['warning_intro'] = '';
         $this->objparams['warning_messages'] = [];
 
         $this->objparams['hide_top_warning_messages'] = false;
