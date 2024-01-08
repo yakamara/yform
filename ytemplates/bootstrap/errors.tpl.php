@@ -9,7 +9,7 @@
 
 <?php
 if ($this->objparams['warning_messages'] || $this->objparams['unique_error']):
-    if ($this->objparams['Error-occured']): 
+    if ($this->objparams['Error-occured']):
         if($this->objparams['warning_intro']) { ?>
             <p><?= $this->objparams['warning_intro'] ?></p>
         <?php } ?>
