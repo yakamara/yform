@@ -435,7 +435,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                 'required' => ['type' => 'boolean', 'label' => rex_i18n::msg('yform_values_upload_required')],
                 'messages' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_messages'), 'notice' => rex_i18n::msg('yform_values_upload_messages_notice')],
                 'notice' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_notice')],
-                'config' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_upload_config'), 'notice' => rex_i18n::msg('yform_values_upload_config_notice')],
+                'config' => ['type' => 'textarea', 'attributes' => ['class' => 'form-control codemirror', 'data-codemirror-mode' => 'application/json'], 'label' => rex_i18n::msg('yform_values_upload_config'), 'notice' => rex_i18n::msg('yform_values_upload_config_notice')],
             ],
             'description' => rex_i18n::msg('yform_values_upload_description'),
             'db_type' => ['text'],
