@@ -50,11 +50,6 @@ if ($importPage) {
     echo $importPage;
 } elseif ($historyPage) {
     echo $historyPage;
-} elseif ($detailForm && $searchForm) {
-    echo '<div class="row">';
-    echo '<div class="col-sm-3 col-md-3 col-lg-2">' . $searchForm . '</div>';
-    echo '<div class="col-sm-9 col-md-9 col-lg-10">' . $detailForm . '</div>';
-    echo '</div>';
 } elseif ($detailForm) {
     echo $detailForm;
 } elseif ($searchForm) {
