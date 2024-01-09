@@ -338,11 +338,7 @@ abstract class rex_yform_value_abstract extends rex_yform_base_abstract
         return true;
     }
 
-    public function enterObject()
-    {
-    }
+    public function enterObject() {}
 
-    public function init()
-    {
-    }
+    public function init() {}
 }

@@ -102,40 +102,24 @@ abstract class rex_yform_base_abstract
         return [];
     }
 
-    public function preValidateAction(): void
-    {
-    }
+    public function preValidateAction(): void {}
 
-    public function postValidateAction(): void
-    {
-    }
+    public function postValidateAction(): void {}
 
-    public function postValueAction(): void
-    {
-    }
+    public function postValueAction(): void {}
 
-    public function postFormAction(): void
-    {
-    }
+    public function postFormAction(): void {}
 
-    public function preAction(): void
-    {
-    }
+    public function preAction(): void {}
 
-    public function executeAction(): void
-    {
-    }
+    public function executeAction(): void {}
 
-    public function postAction(): void
-    {
-    }
+    public function postAction(): void {}
 
     public function isDeprecated(): bool
     {
         return false;
     }
 
-    public function init()
-    {
-    }
+    public function init() {}
 }

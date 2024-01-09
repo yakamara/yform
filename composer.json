@@ -7,7 +7,7 @@
     },
     "require-dev": {
         "redaxo/php-cs-fixer-config": "^2.0",
-        "friendsofphp/php-cs-fixer": "^3.14",
+        "friendsofphp/php-cs-fixer": "v3.37.1",
         "phpunit/phpunit": "^9.5"
     },
     "scripts": {
