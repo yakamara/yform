@@ -257,21 +257,21 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }
 
         // Download starten - wenn Dateinamen übereinstimmen
-        if (rex::isBackend() &&
-            (
+        if (rex::isBackend()
+            && (
                 rex_request('rex_upload_downloadfile', 'string') == $this->getName()
-            ) &&
-                '' != $filename &&
-                '' != $filepath
+            )
+                && '' != $filename
+                && '' != $filepath
         ) {
             $this->upload_checkdownloadFile($filename, $filepath);
         }
 
-        if (!$delete &&
-                $this->params['send'] &&
-                '' != $this->getValue() &&
-                is_string($this->getValue()) &&
-                !$this->upload_getSessionVar('file', 'array', null)
+        if (!$delete
+                && $this->params['send']
+                && '' != $this->getValue()
+                && is_string($this->getValue())
+                && !$this->upload_getSessionVar('file', 'array', null)
         ) {
             $filename = $this->getValue();
         }
@@ -446,7 +446,12 @@ class rex_yform_value_upload extends rex_yform_value_abstract
     public static function upload_getDownloadLink(string $table_name, string $field_name, int $data_id): string
     {
         if ('' != $table_name && '' != $field_name && 0 < $data_id) {
-            return '/redaxo/index.php?page=yform/manager/data_edit&table_name=' . $table_name . '&data_id=' . $data_id . '&func=edit&rex_upload_downloadfile=' . urlencode($field_name);
+            return rex_url::backendPage('yform/manager/data_edit', [
+                'table_name' => $table_name,
+                'data_id' => $data_id,
+                'func' => 'edit',
+                'rex_upload_downloadfile' => urlencode($field_name),
+            ]);
         }
         return '';
     }
@@ -462,23 +467,23 @@ class rex_yform_value_upload extends rex_yform_value_abstract
         }, $configuration['allowed_extensions']);
 
         if (
-            (!in_array('*', $configuration['allowed_extensions'])) &&
-            (!in_array($ext, $configuration['allowed_extensions']))
+            (!in_array('*', $configuration['allowed_extensions']))
+            && (!in_array($ext, $configuration['allowed_extensions']))
         ) {
             $errors[] = $configuration['messages']['type_error'] ?? 'extension-type-error';
         }
 
         if (
-            isset($configuration['check']) &&
-            in_array('multiple_extensions', $configuration['check']) &&
-            0 < count(array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']))
+            isset($configuration['check'])
+            && in_array('multiple_extensions', $configuration['check'])
+            && 0 < count(array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']))
         ) {
             $errors[] = $configuration['messages']['type_multiple_error'] ?? 'multiple-extension-type-error: ' . implode(', ', array_intersect(explode('.', $Filename), $configuration['disallowed_extensions']));
         }
 
         if (
-            isset($configuration['check']) &&
-            in_array('zip_archive', $configuration['check'])
+            isset($configuration['check'])
+            && in_array('zip_archive', $configuration['check'])
         ) {
             $zip = new ZipArchive();
             if ($zip->open($FILE['tmp_name'])) {
@@ -492,8 +497,8 @@ class rex_yform_value_upload extends rex_yform_value_abstract
                             $i_ext = mb_strtolower(pathinfo($iZipFileName, PATHINFO_EXTENSION));
 
                             if (
-                                (!in_array('*', $configuration['allowed_extensions'])) &&
-                                (!in_array($i_ext, $configuration['allowed_extensions']))
+                                (!in_array('*', $configuration['allowed_extensions']))
+                                && (!in_array($i_ext, $configuration['allowed_extensions']))
                             ) {
                                 if (1 < count($errors)) {
                                     $errors[] = ' ... ';
