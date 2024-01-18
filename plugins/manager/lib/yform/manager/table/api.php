@@ -130,7 +130,17 @@ class rex_yform_manager_table_api
             ];
         }
 
-        return json_encode($export, JSON_PRETTY_PRINT);
+        return json_encode(self::recursive_ksort($export), JSON_PRETTY_PRINT);
+    }
+    /**
+     * @param array $array
+     * @return array
+     */
+    public static function recursive_ksort(&$array) {
+        foreach ($array as &$value) {
+            if (is_array($value)) recursive_ksort($value);
+        }
+        return ksort($array);
     }
 
     /**
