@@ -15,6 +15,7 @@ class rex_yform_list_tools
         switch ($p['list']->getValue('type_id')) {
             case 'validate':
                 $styleClass = 'yform-manager-type-validate';
+                $p['value'] = str_replace(',', ', ', $p['value']);
                 break;
             case 'action':
                 $styleClass = 'yform-manager-type-action';

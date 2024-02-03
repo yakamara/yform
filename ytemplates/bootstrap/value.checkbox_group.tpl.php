@@ -5,7 +5,7 @@
  * @psalm-scope-this rex_yform_value_checkbox
  */
 
-$options = $options ?? [];
+$options ??= [];
 
 $notices = [];
 if ('' != $this->getElement('notice')) {
@@ -24,9 +24,9 @@ if (count($notices) > 0) {
 
 <?php if ('' != trim($this->getLabel())): ?>
 <div class="checkbox-group form-group">
-    <label class="control-label"><?php echo $this->getLabel() ?></label>
+    <label class="control-label"><?= $this->getLabel() ?></label>
 
-<?php endif; ?>
+<?php endif ?>
 
 <?php foreach ($options as $k => $v): ?>
     <?php
@@ -39,8 +39,8 @@ if (count($notices) > 0) {
         </label>
     </div>
 <?php endforeach ?>
-<?php echo $notice; ?>
+<?= $notice ?>
 
 <?php if ('' != trim($this->getLabel())): ?>
 </div>
-<?php endif; ?>
+<?php endif ?>

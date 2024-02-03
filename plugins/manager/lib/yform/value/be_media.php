@@ -38,7 +38,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             if (!$this->isEditable()) {
                 $this->params['form_output'][$this->getId()] = $this->parse(
                     ['value.view.tpl.php', 'value.be_media-view.tpl.php'],
-                    ['counter' => $counter, 'value' => explode(',', $this->getValue()), 'types' => $types]
+                    ['counter' => $counter, 'value' => explode(',', $this->getValue()), 'types' => $types],
                 );
             } else {
                 $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter', 'types'));
@@ -115,12 +115,12 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         $warning = $ep->getSubject();
 
         $sql = \rex_sql::factory();
-        $sql->setQuery('SELECT * FROM `'.\rex_yform_manager_field::table().'` LIMIT 0');
+        $sql->setQuery('SELECT * FROM `' . \rex_yform_manager_field::table() . '` LIMIT 0');
 
         $columns = $sql->getFieldnames();
         $select = in_array('multiple', $columns) ? ', `multiple`' : '';
 
-        $fields = $sql->getArray('SELECT `table_name`, `name`'.$select.' FROM `'.\rex_yform_manager_field::table().'` WHERE `type_id`="value" AND `type_name` IN("be_media")');
+        $fields = $sql->getArray('SELECT `table_name`, `name`' . $select . ' FROM `' . \rex_yform_manager_field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_media")');
         $fields = \rex_extension::registerPoint(new \rex_extension_point('YFORM_MEDIA_IS_IN_USE', $fields));
 
         if (!count($fields)) {
@@ -131,29 +131,29 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         $escapedFilename = $sql->escape($params['filename']);
         foreach ($fields as $field) {
             $tableName = $field['table_name'];
-            $condition = $sql->escapeIdentifier((string) $field['name']).' = '.$escapedFilename;
+            $condition = $sql->escapeIdentifier((string) $field['name']) . ' = ' . $escapedFilename;
 
             if (isset($field['multiple']) && 1 == $field['multiple']) {
-                $condition = 'FIND_IN_SET('.$escapedFilename.', '.$sql->escapeIdentifier((string) $field['name']).')';
+                $condition = 'FIND_IN_SET(' . $escapedFilename . ', ' . $sql->escapeIdentifier((string) $field['name']) . ')';
             }
             $tables[$tableName][] = $condition;
         }
 
         $messages = '';
         foreach ($tables as $tableName => $conditions) {
-            $items = $sql->getArray('SELECT `id` FROM '.$tableName.' WHERE '.implode(' OR ', $conditions));
+            $items = $sql->getArray('SELECT `id` FROM ' . $tableName . ' WHERE ' . implode(' OR ', $conditions));
             if (count($items)) {
                 foreach ($items as $item) {
                     $sqlData = \rex_sql::factory();
-                    $sqlData->setQuery('SELECT `name` FROM `'.\rex_yform_manager_table::table().'` WHERE `table_name` = "'.$tableName.'"');
+                    $sqlData->setQuery('SELECT `name` FROM `' . \rex_yform_manager_table::table() . '` WHERE `table_name` = "' . $tableName . '"');
 
-                    $messages .= '<li><a href="javascript:openPage(\'index.php?page=yform/manager/data_edit&amp;table_name='.$tableName.'&amp;data_id='.$item['id'].'&amp;func=edit\')">'.$sqlData->getValue('name').' [id='.$item['id'].']</a></li>';
+                    $messages .= '<li><a href="javascript:openPage(\'index.php?page=yform/manager/data_edit&amp;table_name=' . $tableName . '&amp;data_id=' . $item['id'] . '&amp;func=edit\')">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
                 }
             }
         }
 
         if ('' != $messages) {
-            $warning[] = 'Tabelle<br /><ul>'.$messages.'</ul>';
+            $warning[] = 'Tabelle<br /><ul>' . $messages . '</ul>';
         }
 
         return $warning;

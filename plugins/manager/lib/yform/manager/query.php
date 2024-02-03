@@ -134,7 +134,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         }
 
         if ($alias) {
-            $expression .= ' AS '.$this->quoteIdentifier($alias);
+            $expression .= ' AS ' . $this->quoteIdentifier($alias);
         }
         $this->select[] = $expression;
 
@@ -182,13 +182,13 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $relatedTable = $alias ?: $relation['table'];
 
         if (4 == $relation['type'] || 5 == $relation['type']) {
-            return $this->joinType($type, $relation['table'], $alias, $this->getTableAlias().'.id', $relatedTable.'.'.$relation['field']);
+            return $this->joinType($type, $relation['table'], $alias, $this->getTableAlias() . '.id', $relatedTable . '.' . $relation['field']);
         }
 
-        $relatedField = $relatedTable.'.id';
+        $relatedField = $relatedTable . '.id';
 
         if (empty($relation['relation_table'])) {
-            $column = $this->getTableAlias().'.'.$column;
+            $column = $this->getTableAlias() . '.' . $column;
             $operator = in_array($relation['type'], [1, 3]) ? 'FIND_IN_SET' : '=';
 
             return $this->joinType($type, $relation['table'], $alias, $relatedField, $column, $operator);
@@ -197,8 +197,8 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $relationColumns = $this->getTable()->getRelationTableColumns($column);
 
         return $this
-            ->joinType($type, $relation['relation_table'], null, $this->getTableAlias().'.id', $relation['relation_table'].'.'.$relationColumns['source'])
-            ->joinType($type, $relation['table'], $alias, $relation['relation_table'].'.'.$relationColumns['target'], $relatedField);
+            ->joinType($type, $relation['relation_table'], null, $this->getTableAlias() . '.id', $relation['relation_table'] . '.' . $relationColumns['source'])
+            ->joinType($type, $relation['table'], $alias, $relation['relation_table'] . '.' . $relationColumns['target'], $relatedField);
     }
 
     /**
@@ -246,10 +246,10 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         $join = sprintf('%s JOIN `%s`', mb_strtoupper($type), $table);
         if ($alias) {
-            $join .= ' AS '.$this->quoteIdentifier($alias);
+            $join .= ' AS ' . $this->quoteIdentifier($alias);
         }
         if ($condition) {
-            $join .= ' ON '.$condition;
+            $join .= ' ON ' . $condition;
         }
         $this->joins[] = $join;
 
@@ -307,7 +307,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereNull(string $column): self
     {
-        $this->where[] = $this->quoteIdentifier($column).' IS NULL';
+        $this->where[] = $this->quoteIdentifier($column) . ' IS NULL';
 
         return $this;
     }
@@ -317,7 +317,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereNotNull(string $column): self
     {
-        $this->where[] = $this->quoteIdentifier($column).' IS NOT NULL';
+        $this->where[] = $this->quoteIdentifier($column) . ' IS NOT NULL';
 
         return $this;
     }
@@ -366,7 +366,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function whereRaw(string $where, array $params = []): self
     {
-        $this->where[] = '('.$where.')';
+        $this->where[] = '(' . $where . ')';
         $this->params[self::PARAM_WHERE] = array_merge($this->params[self::PARAM_WHERE] ?? [], $params);
 
         return $this;
@@ -383,7 +383,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $operator = strtoupper(trim($operator));
 
         if (is_array($nested)) {
-            $this->where[] = '('.$this->buildNestedWhere($nested, $operator).')';
+            $this->where[] = '(' . $this->buildNestedWhere($nested, $operator) . ')';
 
             return $this;
         }
@@ -395,7 +395,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         call_user_func($nested, $query);
 
         if ($query->where) {
-            $this->where[] = '('.implode(' '.$operator.' ', $query->where).')';
+            $this->where[] = '(' . implode(' ' . $operator . ' ', $query->where) . ')';
             $this->params[self::PARAM_WHERE] = array_merge($this->params[self::PARAM_WHERE] ?? [], $query->params[self::PARAM_WHERE] ?? []);
             $this->paramCounter = $query->paramCounter;
         }
@@ -454,7 +454,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function havingNull(string $column): self
     {
-        $this->having[] = $this->quoteIdentifier($column).' IS NULL';
+        $this->having[] = $this->quoteIdentifier($column) . ' IS NULL';
 
         return $this;
     }
@@ -464,7 +464,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function havingNotNull(string $column): self
     {
-        $this->having[] = $this->quoteIdentifier($column).' IS NOT NULL';
+        $this->having[] = $this->quoteIdentifier($column) . ' IS NOT NULL';
 
         return $this;
     }
@@ -513,7 +513,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function havingRaw(string $having, array $params = []): self
     {
-        $this->having[] = '('.$having.')';
+        $this->having[] = '(' . $having . ')';
         $this->params[self::PARAM_HAVING] = array_merge($this->params[self::PARAM_HAVING] ?? [], $params);
 
         return $this;
@@ -566,7 +566,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function orderBy(string $column, string $direction = 'ASC'): self
     {
-        $this->orderBy[] = $this->quoteIdentifier($column).' '.$direction;
+        $this->orderBy[] = $this->quoteIdentifier($column) . ' ' . $direction;
 
         return $this;
     }
@@ -577,7 +577,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function orderByRaw(string $expression, string $direction = 'ASC'): self
     {
-        $this->orderBy[] = $expression.' '.$direction;
+        $this->orderBy[] = $expression . ' ' . $direction;
 
         return $this;
     }
@@ -597,7 +597,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function limit(int $offsetOrRowCount, ?int $rowCount = null): self
     {
-        $this->limit = $rowCount ? $offsetOrRowCount.', '.$rowCount : (string) $offsetOrRowCount;
+        $this->limit = $rowCount ? $offsetOrRowCount . ', ' . $rowCount : (string) $offsetOrRowCount;
 
         return $this;
     }
@@ -612,36 +612,36 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $query = sprintf('SELECT %s FROM `%s`', implode(', ', $select), $this->table);
 
         if ($this->alias) {
-            $query .= ' AS '.$this->quoteIdentifier($this->alias);
+            $query .= ' AS ' . $this->quoteIdentifier($this->alias);
         }
 
         if ($this->joins) {
-            $query .= ' '.implode(' ', $this->joins);
+            $query .= ' ' . implode(' ', $this->joins);
         }
 
         if ($this->where) {
-            $query .= ' WHERE '.implode(' '.$this->whereOperator.' ', $this->where);
+            $query .= ' WHERE ' . implode(' ' . $this->whereOperator . ' ', $this->where);
         }
 
         if ($this->groupBy) {
-            $query .= ' GROUP BY '.implode(', ', $this->groupBy);
+            $query .= ' GROUP BY ' . implode(', ', $this->groupBy);
         }
 
         if ($this->having) {
-            $query .= ' HAVING '.implode(' '.$this->havingOperator.' ', $this->having);
+            $query .= ' HAVING ' . implode(' ' . $this->havingOperator . ' ', $this->having);
         }
 
         if (!$this->orderBy && !$this->orderByResetted) {
             $table = $this->getTable();
-            $this->orderBy($this->getTableAlias().'.'.$table->getSortFieldName(), $table->getSortOrderName());
+            $this->orderBy($this->getTableAlias() . '.' . $table->getSortFieldName(), $table->getSortOrderName());
         }
 
         if ($this->orderBy) {
-            $query .= ' ORDER BY '.implode(', ', $this->orderBy);
+            $query .= ' ORDER BY ' . implode(', ', $this->orderBy);
         }
 
         if ($this->limit) {
-            $query .= ' LIMIT '.$this->limit;
+            $query .= ' LIMIT ' . $this->limit;
         }
 
         return $query;
@@ -690,7 +690,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function findIds(array $ids): rex_yform_manager_collection
     {
-        return $this->where($this->getTableAlias().'.id', $ids)->find();
+        return $this->where($this->getTableAlias() . '.id', $ids)->find();
     }
 
     /**
@@ -709,7 +709,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      */
     public function findId(int $id): ?rex_yform_manager_dataset
     {
-        return $this->where($this->getTableAlias().'.id', $id)->resetOrderBy()->findOne();
+        return $this->where($this->getTableAlias() . '.id', $id)->resetOrderBy()->findOne();
     }
 
     /**
@@ -801,7 +801,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         $identifier = explode('.', $identifier, 2);
         foreach ($identifier as &$part) {
             if ('*' !== $part) {
-                $part = '`'.str_replace('`', '``', $part).'`';
+                $part = '`' . str_replace('`', '``', $part) . '`';
             }
         }
 
@@ -841,10 +841,10 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     {
         $this->paramCounter[$type] = ($this->paramCounter[$type] ?? 0) + 1;
 
-        $param = $type.$this->paramCounter[$type];
+        $param = $type . $this->paramCounter[$type];
         $this->params[$type][$param] = $this->normalizeValue($value);
 
-        return ':'.$param;
+        return ':' . $param;
     }
 
     /**
@@ -857,7 +857,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             foreach ($value as $v) {
                 $param[] = $this->addParam($type, $v);
             }
-            $param = '('.implode(', ', $param).')';
+            $param = '(' . implode(', ', $param) . ')';
 
             $operator = $operator ?: 'IN';
         } else {
@@ -880,7 +880,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             return sprintf('FIND_IN_SET(%s, %s)', $this->addParam($type, $value), $this->quoteIdentifier($column));
         }
 
-        $regex = '(^|,)('.implode('|', array_map('intval', $value)).')(,|$)';
+        $regex = '(^|,)(' . implode('|', array_map('intval', $value)) . ')(,|$)';
 
         return sprintf('%s REGEXP %s', $this->quoteIdentifier($column), $this->addParam($type, $regex));
     }
@@ -902,6 +902,6 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
             $value = sprintf('%s = %s', $this->quoteIdentifier($key), $this->addParam(self::PARAM_WHERE, $value));
         }
 
-        return implode(' '.$operator.' ', $where);
+        return implode(' ' . $operator . ' ', $where);
     }
 }

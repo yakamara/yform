@@ -193,7 +193,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             $form_name = $this->params['this']->getObjectparams('form_name');
             $form_array = array_merge($this->params['this']->getObjectparams('form_array'), [$this->getId()]);
 
-            $fieldkey = $this->relation['source_table'] . '-' . $this->relation['target_table'] . '-' . $this->relation['target_field'];
+            $fieldkey = $this->relation['source_table'] . '-' . $this->relation['target_table'] . '-' . $this->relation['target_field'] . '-' . uniqid();
             $relationKey = '__' . sha1($fieldkey) . '__';
 
             // ----- Existing Relations
@@ -558,7 +558,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                                 '
                             SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                             FROM ' . $sql->escapeIdentifier($field['relation_table']) . '
-                            WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id')
+                            WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $params['list']->getValue('id'),
                             );
                             while ($sql->hasNext()) {
                                 $id = $sql->getValue('id');
@@ -688,7 +688,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $rawFilter = preg_split('/\v+/', $rawFilter);
         $filter = [];
         $setValue = static function ($key, $value) use (&$filter) {
-            if (false !== strpos($key, '.')) {
+            if (str_contains($key, '.')) {
                 [$key1, $key2] = explode('.', $key, 2);
                 $filter[$key1][$key2] = $value;
             } else {
@@ -702,7 +702,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 $value = trim($f[1]);
                 if (preg_match('/^###(.+)###$/', $value, $matches)) {
                     $value = $matches[1];
-                    if (false !== strpos($value, '.')) {
+                    if (str_contains($value, '.')) {
                         $value = explode('.', $value);
                         $relation = rex_yform_manager_table::get($table)->getRelation($value[0]);
                         $value[0] = $getValueForKey($value[0]);
@@ -770,7 +770,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 '
                 SELECT ' . $sql->escapeIdentifier($relationTableFields['target']) . ' as id
                 FROM ' . $sql->escapeIdentifier($this->getElement('relation_table')) . '
-                WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $this->params['main_id']
+                WHERE ' . $sql->escapeIdentifier($relationTableFields['source']) . ' = ' . (int) $this->params['main_id'],
             );
             while ($sql->hasNext()) {
                 $id = $sql->getValue('id');
@@ -841,7 +841,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         $sql = rex_sql::factory();
 
         if (!$field->getElement('relation_table')) {
-            return $query->whereListContains($query->getTableAlias().'.'.$field->getName(), $values);
+            return $query->whereListContains($query->getTableAlias() . '.' . $field->getName(), $values);
         }
 
         $relationTableFields = self::getRelationTableFieldsForTables($field->getElement('table_name'), $field->getElement('relation_table'), $field->getElement('table'));
@@ -855,16 +855,16 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             $exists = [];
             foreach ($values as $value) {
-                $exists[] = '('.sprintf(
+                $exists[] = '(' . sprintf(
                     'EXISTS (SELECT * FROM %s WHERE %1$s.%s = t0.id AND %1$s.%s = %d)',
                     $sql->escapeIdentifier($field->getElement('relation_table')),
                     $sql->escapeIdentifier($relationTableFields['source']),
                     $sql->escapeIdentifier($relationTableFields['target']),
-                    (int) $value
-                ).')';
+                    (int) $value,
+                ) . ')';
             }
 
-            $query->whereRaw('('.implode(' OR ', $exists).')');
+            $query->whereRaw('(' . implode(' OR ', $exists) . ')');
         }
         return $query;
     }

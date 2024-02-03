@@ -1,14 +1,14 @@
 
 #rex-yform .rex-widget-field {
-    padding-top: 0px;
-    margin-top: 0px;
+    padding-top: 0;
+    margin-top: 0;
 }
 
 #rex-yform div.rex-widget {
     clear:none;
     float:left;
     display:block;
-    margin:0px;
+    margin:0;
     width:390px;
     /*margin-left:245px;*/
     }
@@ -69,8 +69,7 @@ body#rex-page-yform .yform-manager-searchfield{
     font-weight: bold;
 }
 .rex-navi-piped > * {
-    background-image: url(../../../redaxo/media/pipe_c2.gif);
-    background-position: 0px 2px;
+    background-position: 0 2px;
 }
 .rex-navi-piped > *:first-child {
     background: none;

@@ -8,8 +8,8 @@ class rex_yform_manager_field implements ArrayAccess
     protected static $types = ['value', 'validate', 'action'];
     protected static $protected_fields = ['id', 'table_name', 'prio', 'type_id', 'type_name', 'db_type', 'list_hidden', 'search', 'name', 'label', 'not_required'];
 
-    /** @var rex_yform_value_abstract|rex_yform_validate_abstract $object */
-    protected $object = null;
+    /** @var rex_yform_value_abstract|rex_yform_validate_abstract */
+    protected $object;
 
     /**
      * rex_yform_manager_field constructor.
@@ -65,7 +65,7 @@ class rex_yform_manager_field implements ArrayAccess
     }
 
     /**
-     * example: rex_yform_select
+     * example: rex_yform_select.
      * @return mixed|string
      */
     public function getTypeName()
@@ -192,8 +192,8 @@ class rex_yform_manager_field implements ArrayAccess
         $keys = array_unique(
             array_merge(
                 self::$protected_fields,
-                array_keys($this->definitions['values'] ?? [])
-            )
+                array_keys($this->definitions['values'] ?? []),
+            ),
         );
 
         return array_intersect_key($this->values, array_flip($keys));

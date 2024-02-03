@@ -10,18 +10,56 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 {
     protected $fieldData = [];
 
+    public function preValidateAction(): void
+    {
+        // bc service for Version < 1.1
+        if ('' != $this->getValue() && '' == json_decode($this->getValue())) {
+            $rows = explode(';', $this->getValue());
+            foreach ($rows as $row_id => $row) {
+                $rows[$row_id] = explode(',', $row);
+            }
+            $this->setValue(json_encode($rows));
+        }
+
+        if ($this->getParam('send') && isset($_POST['FORM'])) {
+            // Cleanup Array
+            $table_array = [];
+
+            $id = $this->getName();
+
+            $columns = preg_split('/(?<=[^\\w"]),|,(?=\\{)|(?<=[A-Za-z]),(?=[^ ][\\w,])|(?<=,\\w),/', $this->getElement('columns'));
+            if (0 == count($columns)) {
+                return;
+            }
+
+            $form_data = rex_post('FORM', 'array');
+
+            if (isset($form_data[$id . '.0'])) {
+                $rowKeys = array_keys((array) $form_data[$id . '.0']);
+
+                // Spalten durchgehen
+                for ($c = 0; $c < count($columns); ++$c) {
+                    foreach ($rowKeys as $r) {
+                        $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
+                    }
+                }
+            }
+            $this->setValue(json_encode(array_values($table_array)));
+        }
+    }
+
     public static function getColumnsByName($definition)
     {
         $valueFields = [];
         $validateFields = [];
-        $_columns = preg_split("/(?<=[^\w\"]),|,(?=\{)|(?<=[A-Za-z]),(?=[^ ][\w,])|(?<=,\w),/", $definition);
+        $_columns = preg_split('/(?<=[^\\w"]),|,(?=\\{)|(?<=[A-Za-z]),(?=[^ ][\\w,])|(?<=,\\w),/', $definition);
 
         if (count($_columns)) {
             foreach ($_columns as $index => $col) {
                 // Use ;; for separating choice columns instead of ,
                 $values = explode('|', trim(trim(str_replace(';;', ',', rex_yform::unhtmlentities($col))), '|'));
                 if (1 == count($values)) {
-                    $values = ['text', 'text_'. $index, $values[0]];
+                    $values = ['text', 'text_' . $index, $values[0]];
                 }
 
                 $class = 'rex_yform_value_' . trim($values[0]);

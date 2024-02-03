@@ -48,7 +48,7 @@ class rex_yform_choice_view
         $this->attributes = array_merge($this->attributes, $requiredAttributes);
 
         if (isset($this->attributes['id'])) {
-            $this->attributes['id'] .= '-'.rex_string::normalize($this->value, '-');
+            $this->attributes['id'] .= '-' . rex_string::normalize($this->value, '-');
         }
     }
 

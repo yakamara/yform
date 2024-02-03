@@ -5,4 +5,4 @@
  * @psalm-scope-this rex_plugin
  */
 
-$this->includeFile(__DIR__.'/install.php');
+$this->includeFile(__DIR__ . '/install.php');

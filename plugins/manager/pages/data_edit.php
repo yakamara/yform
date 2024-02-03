@@ -19,7 +19,7 @@ if ($table && $table->isGranted('VIEW', rex::getUser())) {
         $page->setLinkVars(['page' => rex_be_controller::getCurrentPage(), 'table_name' => $table->getTableName()]);
         echo $page->getDataPage();
     } catch (Exception $e) {
-        echo rex_view::warning(nl2br($e->getMessage()."\n".$e->getTraceAsString()));
+        echo rex_view::warning(nl2br($e->getMessage() . "\n" . $e->getTraceAsString()));
     }
 } else {
     if (!$table) {

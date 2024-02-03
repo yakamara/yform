@@ -20,7 +20,7 @@ abstract class rex_yform_base_abstract
         $this->params = &$params;
         $offset = 0;
         foreach ($elements as $key => $value) {
-            if (is_string($value) && !empty($value) && '#' == $value[0] && false !== strpos($value, ':')) {
+            if (is_string($value) && !empty($value) && '#' == $value[0] && str_contains($value, ':')) {
                 [$key, $value] = explode(':', mb_substr($value, 1), 2);
                 ++$offset;
             }
@@ -79,7 +79,7 @@ abstract class rex_yform_base_abstract
 
     public function getParam($param, $default = null)
     {
-        return isset($this->params[$param]) ? $this->params[$param] : $default;
+        return $this->params[$param] ?? $default;
     }
 
     public function setObjects(&$obj)
@@ -102,40 +102,24 @@ abstract class rex_yform_base_abstract
         return [];
     }
 
-    public function preValidateAction(): void
-    {
-    }
+    public function preValidateAction(): void {}
 
-    public function postValidateAction(): void
-    {
-    }
+    public function postValidateAction(): void {}
 
-    public function postValueAction(): void
-    {
-    }
+    public function postValueAction(): void {}
 
-    public function postFormAction(): void
-    {
-    }
+    public function postFormAction(): void {}
 
-    public function preAction(): void
-    {
-    }
+    public function preAction(): void {}
 
-    public function executeAction(): void
-    {
-    }
+    public function executeAction(): void {}
 
-    public function postAction(): void
-    {
-    }
+    public function postAction(): void {}
 
     public function isDeprecated(): bool
     {
         return false;
     }
 
-    public function init()
-    {
-    }
+    public function init() {}
 }

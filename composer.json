@@ -1,12 +1,18 @@
 {
-    "name": "yakamara/redaxo_yform",
-    "require-dev": {
-        "redaxo/source": "^5.13"
+    "name": "yakamara/yform",
+    "replace": {
+        "psr/container": "*",
+        "psr/http-message": "*",
+        "psr/log": "*"
     },
-    "autoload": {
-        "classmap": [
-            "lib/",
-            "plugins/"
-        ]
+    "require-dev": {
+        "redaxo/php-cs-fixer-config": "^2.0",
+        "friendsofphp/php-cs-fixer": "v3.37.1",
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "cs-dry": "php-cs-fixer fix -v --ansi --dry-run --config=.php-cs-fixer.dist.php",
+        "cs-fix": "php-cs-fixer fix -v --ansi --config=.php-cs-fixer.dist.php",
+        "test": "phpunit --testdox"
     }
 }

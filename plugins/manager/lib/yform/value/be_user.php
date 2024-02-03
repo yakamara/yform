@@ -26,15 +26,15 @@ class rex_yform_value_be_user extends rex_yform_value_abstract
                 // always change. update
                 $value = $user_login;
                 if ('' != $showValue) {
-                    $showValue = rex_i18n::msg('yform_is').': '.$showValue."\n";
+                    $showValue = rex_i18n::msg('yform_is') . ': ' . $showValue . "\n";
                 }
-                $showValue .= rex_i18n::msg('yform_will_set_to').': '.$value;
+                $showValue .= rex_i18n::msg('yform_will_set_to') . ': ' . $value;
                 break;
             case '1':
                 // if empty / bei create
                 if ('' == $showValue) {
                     $value = $user_login;
-                    $showValue = rex_i18n::msg('yform_will_set_to').': '.$value;
+                    $showValue = rex_i18n::msg('yform_will_set_to') . ': ' . $value;
                 }
                 break;
             default:

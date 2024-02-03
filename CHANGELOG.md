@@ -1,6 +1,23 @@
 Changelog
 =========
 
+Version 4.1.2-beta1 - 23.09.2023
+--------------------------
+
+### Korrekturen
+
+* Feld: be_manager_relation um table type 'int(10) unsigned' ergänzt
+* Feld: choice um table type 'int(10) unsigned' ergänzt
+* Fehler beim E-Mail-Template löschen korrigiert
+* Unique ID der shadow Formulare für inline Darstellungen verbessert.
+* Textkorrekturen
+* Manager: Javascriptumbau um besser mit strickten CSP Headern umgehen zu können
+* Feld: index wird nun getrimt
+* Widget Debug JS Alert() entfernt
+* Workflows in github ergänzt
+
+Dank geht an Norbert Micheel, Markus Staab, Alexander Walther, Thomas Blum und Daniel Weingart
+
 Version 4.1.1 - 03.04.2023
 --------------------------
 

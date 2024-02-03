@@ -96,14 +96,14 @@ $c->setQuery('ALTER TABLE `' . rex::getTable('yform_history_field') . '` CONVERT
 // from 4.0 on, but on every reinstall
 if ($this->isInstalled()) {
     foreach (rex_sql::factory()->getArray('SELECT id, perms FROM ' . rex::getTablePrefix() . 'user_role') as $role) {
-        if (false === strpos((string) $role['perms'], '"yform_manager_table_edit":')) {
+        if (!str_contains((string) $role['perms'], '"yform_manager_table_edit":')) {
             $perms = str_replace('"yform_manager_table":', '"yform_manager_table_edit":', (string) $role['perms']);
             rex_sql::factory()->setQuery('UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?', [$perms, $role['id']]);
         }
     }
 
     try {
-        rex_sql::factory()->setQuery('UPDATE ' . rex_yform_manager_field::table() . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"');
+        rex_sql::factory()->setQuery('UPDATE ' . rex::getTable('yform_field') . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"');
     } catch (rex_sql_exception $e) {
     }
 
@@ -165,7 +165,7 @@ if ($this->isInstalled()) {
                             'id' => $field['id'],
                             'choices' => $field['options'],
                             'choice_attributes' => $field['attributes'] ?? '',
-                        ]
+                        ],
                     );
                     break;
 
@@ -184,7 +184,7 @@ if ($this->isInstalled()) {
                             'id' => $field['id'],
                             'choices' => $field['options'],
                             'choice_attributes' => $field['attributes'] ?? '',
-                        ]
+                        ],
                     );
                     break;
 
@@ -201,7 +201,7 @@ if ($this->isInstalled()) {
                         [
                             'id' => $field['id'],
                             'choices' => $field['query'] ?? '',
-                        ]
+                        ],
                     );
                     break;
 
@@ -220,7 +220,7 @@ if ($this->isInstalled()) {
                             'id' => $field['id'],
                             'choices' => $field['query'] ?? '',
                             'choice_attributes' => $field['attributes'] ?? '',
-                        ]
+                        ],
                     );
                     break;
 
@@ -238,7 +238,7 @@ if ($this->isInstalled()) {
                             'id' => $field['id'],
                             'choices' => $field['query'] ?? '',
                             'choice_attributes' => $field['attributes'] ?? '',
-                        ]
+                        ],
                     );
                     break;
                 case 'password':
@@ -249,7 +249,7 @@ if ($this->isInstalled()) {
                         where id = :id',
                         [
                             'id' => $field['id'],
-                        ]
+                        ],
                     );
                     break;
             }

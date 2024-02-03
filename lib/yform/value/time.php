@@ -23,12 +23,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $minute = (int) ($value['minute'] ?? 0);
             $second = (int) ($value['second'] ?? 0);
         } else {
-            $value = explode(":", (string) $value);
+            $value = explode(':', (string) $value);
             $hour = (int) ($value[0] ?? 0);
             $minute = (int) ($value[1] ?? 0);
             $second = (int) ($value[2] ?? 0);
         }
-        $value = sprintf("%02d:%02d:%02d", $hour, $minute, $second);
+        $value = sprintf('%02d:%02d:%02d', $hour, $minute, $second);
         $this->setValue($value);
     }
 
@@ -40,12 +40,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $minute = (int) ($value['minute'] ?? 0);
             $second = (int) ($value['second'] ?? 0);
         } else {
-            $value = explode(":", (string) $value);
+            $value = explode(':', (string) $value);
             $hour = (int) ($value[0] ?? 0);
             $minute = (int) ($value[1] ?? 0);
             $second = (int) ($value[2] ?? 0);
         }
-        $value = sprintf("%02d:%02d:%02d", $hour, $minute, $second);
+        $value = sprintf('%02d:%02d:%02d', $hour, $minute, $second);
         $this->setValue($value);
 
         $this->params['value_pool']['email'][$this->getName()] = $this->getValue();
@@ -60,12 +60,12 @@ class rex_yform_value_time extends rex_yform_value_abstract
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.time-view.tpl.php', 'value.view.tpl.php'],
-                ['type' => 'text', 'value' => self::time_getFormattedTime($this->getElement('format'), $this->getValue())]
+                ['type' => 'text', 'value' => self::time_getFormattedTime($this->getElement('format'), $this->getValue())],
             );
         } elseif ('input:text' == $this->getElement('widget')) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.text.tpl.php'],
-                ['type' => 'text', 'value' => $this->getValue()]
+                ['type' => 'text', 'value' => $this->getValue()],
             );
         } else {
             $format = 'HH:ii:ss'; // Format of Select Order
@@ -74,7 +74,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
             $second = (int) mb_substr($this->getValue(), 6, 2);
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.time.tpl.php', 'value.datetime.tpl.php'],
-                compact('format', 'hour', 'minute', 'second')
+                compact('format', 'hour', 'minute', 'second'),
             );
         }
     }
@@ -115,7 +115,7 @@ class rex_yform_value_time extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        return '<nobr>'.self::time_getFormattedTime($params['params']['field']['format'], $params['subject']).'</nobr>';
+        return '<nobr>' . self::time_getFormattedTime($params['params']['field']['format'], $params['subject']) . '</nobr>';
     }
 
     public static function getSearchField($params)

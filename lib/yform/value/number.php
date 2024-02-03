@@ -33,7 +33,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
         if (!$this->isEditable()) {
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.number-view.tpl.php', 'value.integer-view.tpl.php', 'value.view.tpl.php'],
-                ['prepend' => $this->getElement('unit')]
+                ['prepend' => $this->getElement('unit')],
             );
         } else {
             $type = 'text';
@@ -42,7 +42,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
             }
             $this->params['form_output'][$this->getId()] = $this->parse(
                 ['value.number.tpl.php', 'value.integer.tpl.php', 'value.text.tpl.php'],
-                ['prepend' => $this->getElement('unit'), 'type' => $type]
+                ['prepend' => $this->getElement('unit'), 'type' => $type],
             );
         }
     }

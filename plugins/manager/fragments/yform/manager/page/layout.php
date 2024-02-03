@@ -5,10 +5,10 @@
  * @psalm-scope-this rex_fragment
  */
 
-/* @var $manager rex_yform_manager */
+/** @var rex_yform_manager $manager */
 $manager = $this->getVar('this');
 
-/* @var $table rex_yform_manager_table */
+/** @var rex_yform_manager_table $table */
 $table = $this->getVar('table');
 $detailForm = $this->getVar('detailForm');
 $historyPage = $this->getVar('historyPage');
@@ -31,7 +31,7 @@ $messages = $this->getVar('messages') ?? [];
 
 foreach ($messages as $message) {
     if (!empty($message['link'])) {
-        $message['message'] = '<a href="'.$message['link'].'">'.$message['message'].'</a>';
+        $message['message'] = '<a href="' . $message['link'] . '">' . $message['message'] . '</a>';
     }
 
     switch ($message['type']) {

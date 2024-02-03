@@ -5,15 +5,15 @@
  * @psalm-scope-this rex_yform_value_abstract
  */
 
-$second = $second ?? 0;
-$minute = $minute ?? 0;
-$hour = $hour ?? 0;
-$day = $day ?? 0;
-$month = $month ?? 0;
-$year = $year ?? 0;
-$format = $format ?? 'YYYY-MM-DD HH:ii:ss';
-$yearStart = $yearStart ?? '1800';
-$yearEnd = $yearEnd ?? '2100';
+$second ??= 0;
+$minute ??= 0;
+$hour ??= 0;
+$day ??= 0;
+$month ??= 0;
+$year ??= 0;
+$format ??= 'YYYY-MM-DD HH:ii:ss';
+$yearStart ??= '1800';
+$yearEnd ??= '2100';
 
 $notices = [];
 if ('' != $this->getElement('notice')) {
@@ -48,7 +48,7 @@ if (false !== $pos) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = $yearStart; $i <= $yearEnd; ++$i):
         $selected = (@$year == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 4, '0', STR_PAD_LEFT) . '</option>';
+        $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad($i, 4, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['YYYY'] = $replace_i;
@@ -67,7 +67,7 @@ if (false !== $pos) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 13; ++$i):
         $selected = (@$month == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
+        $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['MM'] = $replace_i;
@@ -86,7 +86,7 @@ if (false !== $pos) {
     $replace_i .= '<option value="00">--</option>';
     for ($i = 1; $i < 32; ++$i):
         $selected = (@$day == $i) ? ' selected="selected"' : '';
-    $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
+        $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     endfor;
     $replace_i .= '</select>';
     $replace['DD'] = $replace_i;
@@ -104,7 +104,7 @@ if (false !== $pos) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     for ($i = 0; $i < 24; ++$i) {
         $selected = (@$hour == $i) ? ' selected="selected"' : '';
-        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad((string) $i, 2, '0', STR_PAD_LEFT).'</option>';
+        $replace_i .= '<option value="' . $i . '" ' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     }
     $replace_i .= '</select>';
     $replace['HH'] = $replace_i;
@@ -122,7 +122,7 @@ if (false !== $pos) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     for ($i = 0; $i < 60; ++$i) {
         $selected = (@$minute == $i) ? ' selected="selected"' : '';
-        $replace_i .= '<option value="'.$i.'" '.$selected.'>'.str_pad((string) $i, 2, '0', STR_PAD_LEFT).'</option>';
+        $replace_i .= '<option value="' . $i . '" ' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     }
     $replace_i .= '</select>';
     $replace['ii'] = $replace_i;
@@ -140,7 +140,7 @@ if (false !== $pos) {
     $replace_i = '<select ' . implode(' ', $attributes) . '>';
     for ($i = 0; $i < 60; ++$i) {
         $selected = (@$second == $i) ? ' selected="selected"' : '';
-        $replace_i .= '<option value="'.$i.'"'.$selected.'>'.str_pad((string) $i, 2, '0', STR_PAD_LEFT).'</option>';
+        $replace_i .= '<option value="' . $i . '"' . $selected . '>' . str_pad((string) $i, 2, '0', STR_PAD_LEFT) . '</option>';
     }
     $replace_i .= '</select>';
     $replace['ss'] = $replace_i;

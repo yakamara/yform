@@ -1,8 +1,8 @@
 <?php
 
-$prioFieldName = $prioFieldName ?? '';
-$counterfieldkey = $counterfieldkey ?? '';
-$form = $form ?? '';
+$prioFieldName ??= '';
+$counterfieldkey ??= '';
+$form ??= '';
 
 $sortable = false;
 $sortButtons = '';
@@ -21,7 +21,7 @@ echo '<div class="row" id="' . $counterfieldkey . '" data-yform-be-relation-item
         ' . $sorthandle . '
         <span class="removeadded">
             <div class="btn-group btn-group-xs">
-             <button type="button" class="btn btn-default addme" title="add" data-yform-be-relation-add="' . $counterfieldkey . '" data-yform-be-relation-add-position="'.$counterfieldkey.'"><i class="rex-icon rex-icon-add-module"></i><span class="rex-hidden">+</span></button>
+             <button type="button" class="btn btn-default addme" title="add" data-yform-be-relation-add="' . $counterfieldkey . '" data-yform-be-relation-add-position="' . $counterfieldkey . '"><i class="rex-icon rex-icon-add-module"></i><span class="rex-hidden">+</span></button>
              <button type="button" class="btn btn-delete removeme" title="delete" data-yform-be-relation-delete="' . $counterfieldkey . '"><i class="rex-icon rex-icon-delete"></i><span class="rex-hidden">-<span</button>
             </div>
             ' . $sortButtons . '

@@ -2,9 +2,7 @@
 
 class rex_yform_manager_table_api
 {
-    /**
-     * @var array<int, string>
-     */
+    /** @var array<int, string> */
     public static array $table_fields = ['status', 'name', 'description', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import', 'schema_overwrite'];
     public static bool $debug = false;
     public static array $cacheColumnsByTable = [];
@@ -132,7 +130,7 @@ class rex_yform_manager_table_api
             ];
         }
 
-        return json_encode($export);
+        return json_encode($export, JSON_PRETTY_PRINT);
     }
 
     /**
@@ -539,7 +537,7 @@ class rex_yform_manager_table_api
             if (!isset(self::$cacheColumnsByTable[$table_name][$fieldKey])) {
                 $alter = rex_sql::factory();
                 $alter->setDebug(self::$debug);
-                $alter->setQuery('ALTER TABLE `' .  rex_yform_manager_field::table() . '` ADD `' . $fieldKey . '` TEXT NOT NULL');
+                $alter->setQuery('ALTER TABLE `' . rex_yform_manager_field::table() . '` ADD `' . $fieldKey . '` TEXT NOT NULL');
                 self::$cacheColumnsByTable[$table_name][$fieldKey] = [
                     'name' => $fieldKey,
                     'type' => 'text',

@@ -1,14 +1,12 @@
 <?php
 
-/**
- * @var rex_yform_manager $this
- */
+/** @var rex_yform_manager $this */
 
 $subfunc = rex_request('subfunc', 'string');
 $datasetId = rex_request('data_id', 'int', null);
 $filterDataset = rex_request('filter_dataset', 'bool');
 $historyId = rex_request('history_id', 'int');
-$_csrf_key = $_csrf_key ?? '';
+$_csrf_key ??= '';
 
 $historySearchId = rex_request('historySearchId', 'int', null);
 $historySearchDate = rex_request('historySearchDate', 'string', null);
@@ -24,8 +22,8 @@ if ($datasetId) {
 
 $filterWhere = '';
 if ($filterDataset) {
-    echo rex_view::info('<b>' . rex_i18n::msg('yform_history_dataset_id') .':</b> ' . $datasetId);
-    $filterWhere = ' AND dataset_id = '.$datasetId;
+    echo rex_view::info('<b>' . rex_i18n::msg('yform_history_dataset_id') . ':</b> ' . $datasetId);
+    $filterWhere = ' AND dataset_id = ' . $datasetId;
 }
 
 if ($historySearchId) {
@@ -64,7 +62,7 @@ if ('view' === $subfunc && $dataset && $historyId) {
         }
 
         $value = $data[$field->getName()];
-        $class = 'rex_yform_value_'.$field->getTypeName();
+        $class = 'rex_yform_value_' . $field->getTypeName();
         if (method_exists($class, 'getListValue')) {
             $value = $class::getListValue([
                 'value' => $value,
@@ -81,8 +79,8 @@ if ('view' === $subfunc && $dataset && $historyId) {
 
         $rows .= '
             <tr>
-                <th class="rex-table-width-5">'.$field->getLabel().'</th>
-                <td>'.$value.'</td>
+                <th class="rex-table-width-5">' . $field->getLabel() . '</th>
+                <td>' . $value . '</td>
             </tr>';
     }
 
@@ -90,19 +88,19 @@ if ('view' === $subfunc && $dataset && $historyId) {
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
              <h4 class="modal-title">
-                '.rex_i18n::msg('yform_history_dataset').' '.$datasetId.'
-                <small>['.date('d.m.Y H:i:s', strtotime($timestamp)).']</small>
+                ' . rex_i18n::msg('yform_history_dataset') . ' ' . $datasetId . '
+                <small>[' . date('d.m.Y H:i:s', strtotime($timestamp)) . ']</small>
             </h4>
         </div>
         <div class="modal-body">
             <table class="table">
                 <tbody>
-                    '.$rows.'
+                    ' . $rows . '
                 </tbody>
             </table>
         </div>
         <div class="modal-footer">
-            <a href="index.php?page=yform/manager/data_edit&amp;table_name='.$this->table->getTableName().'&amp;func=history&amp;subfunc=restore&amp;filter_dataset='.((int) $filterDataset).'&amp;data_id='.$datasetId.'&amp;history_id='.$historyId.'&amp;'.http_build_query(rex_csrf_token::factory($_csrf_key)->getUrlParams()).'" class="btn btn-warning">'.rex_i18n::msg('yform_history_restore_this').'</a>
+            <a href="index.php?page=yform/manager/data_edit&amp;table_name=' . $this->table->getTableName() . '&amp;func=history&amp;subfunc=restore&amp;filter_dataset=' . ((int) $filterDataset) . '&amp;data_id=' . $datasetId . '&amp;history_id=' . $historyId . '&amp;' . http_build_query(rex_csrf_token::factory($_csrf_key)->getUrlParams()) . '" class="btn btn-warning">' . rex_i18n::msg('yform_history_restore_this') . '</a>
             <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">&times;</button>
         </div>
     ';
@@ -117,11 +115,11 @@ if ('restore' === $subfunc && $dataset && $historyId) {
     } else {
         $error = '<ul>';
         foreach ($dataset->getMessages() as $msg) {
-            $error .= '<li>'.rex_i18n::translate($msg).'</li>';
+            $error .= '<li>' . rex_i18n::translate($msg) . '</li>';
         }
         $error .= '</ul>';
 
-        echo rex_view::error(rex_i18n::msg('yform_history_restore_error').'<br/>'.$error);
+        echo rex_view::error(rex_i18n::msg('yform_history_restore_error') . '<br/>' . $error);
     }
 }
 
@@ -139,7 +137,7 @@ if (rex::getUser()->isAdmin() && in_array($subfunc, ['delete_old', 'delete_all']
             LEFT JOIN %s hf ON hf.history_id = h.id
             WHERE h.table_name = ? %s
         ', rex::getTable('yform_history'), rex::getTable('yform_history_field'), $where),
-        [$this->table->getTableName()]
+        [$this->table->getTableName()],
     );
 
     echo rex_view::success(rex_i18n::msg('yform_history_delete_success'));
@@ -151,18 +149,18 @@ $listQuery = 'SELECT
         h.id, dataset_id,
         id as title,
         `action`, `user`, `timestamp`
-    FROM '.rex::getTable('yform_history').' h
+    FROM ' . rex::getTable('yform_history') . ' h
     WHERE
-        `table_name` = '.$sql->escape($this->table->getTableName()).
-    $filterWhere.'
+        `table_name` = ' . $sql->escape($this->table->getTableName()) .
+    $filterWhere . '
     GROUP BY h.id
     ORDER BY `timestamp` DESC';
 
 $userQuery = 'SELECT
         distinct `user`
-    FROM '.rex::getTable('yform_history').' h
+    FROM ' . rex::getTable('yform_history') . ' h
     WHERE
-        `table_name` = '.$sql->escape($this->table->getTableName());
+        `table_name` = ' . $sql->escape($this->table->getTableName());
 
 $list = rex_list::factory($listQuery);
 
@@ -199,14 +197,14 @@ $list->removeColumn('id');
 $list->setColumnLabel('dataset_id', rex_i18n::msg('yform_history_dataset_id'));
 $list->setColumnLabel('title', rex_i18n::msg('yform_history_dataset'));
 $list->setColumnFormat('title', 'custom', static function (array $params) {
-    $result = rex_sql::factory()->getArray('select * from '.rex::getTable('yform_history_field').' where history_id=:history_id and field IN ("title", "titel", "name", "last_name") LIMIT 1', [
+    $result = rex_sql::factory()->getArray('select * from ' . rex::getTable('yform_history_field') . ' where history_id=:history_id and field IN ("title", "titel", "name", "last_name") LIMIT 1', [
         'history_id' => $params['value'],
     ]);
     $title = '[no title found]';
     if (isset($result[0])) {
         $title = $result[0]['value'];
         if (mb_strlen($title) > 50) {
-            $title = substr($title, 0, 50). '…';
+            $title = substr($title, 0, 50) . '…';
         }
     }
     return rex_escape($title);
@@ -220,7 +218,7 @@ $list->setColumnFormat('action', 'custom', static function (array $params) {
         rex_yform_manager_dataset::ACTION_DELETE => 'danger',
     ];
     $class = $classes[$params['subject']] ?? 'default';
-    return sprintf('<span class="label label-%s">%s</span>', $class, rex_i18n::msg('yform_history_action_'.$params['subject']));
+    return sprintf('<span class="label label-%s">%s</span>', $class, rex_i18n::msg('yform_history_action_' . $params['subject']));
 });
 
 $list->setColumnLabel('user', rex_i18n::msg('yform_history_user'));
@@ -230,12 +228,12 @@ $list->setColumnFormat('timestamp', 'custom', static function (array $params) {
     return (new DateTime($params['subject']))->format('d.m.Y H:i:s');
 });
 
-$list->addColumn('view', '<i class="rex-icon fa-eye"></i> '.rex_i18n::msg('yform_history_view'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
+$list->addColumn('view', '<i class="rex-icon fa-eye"></i> ' . rex_i18n::msg('yform_history_view'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
 $list->setColumnParams('view', ['subfunc' => 'view', 'data_id' => '###dataset_id###', 'history_id' => '###id###']);
 $list->addLinkAttribute('view', 'data-toggle', 'modal');
 $list->addLinkAttribute('view', 'data-target', '#rex-yform-history-modal');
 
-$list->addColumn('restore', '<i class="rex-icon fa-undo"></i> '.rex_i18n::msg('yform_history_restore'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
+$list->addColumn('restore', '<i class="rex-icon fa-undo"></i> ' . rex_i18n::msg('yform_history_restore'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
 $list->setColumnParams('restore', ['subfunc' => 'restore', 'data_id' => '###dataset_id###', 'history_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
 
 $content = $list->get();
@@ -292,9 +290,9 @@ $historySearchForm->setValueField('choice', [
     'label' => 'Action',
     'choices' => [
         '' => rex_i18n::msg('yform_manager_actions_all'),
-        rex_yform_manager_dataset::ACTION_CREATE => rex_i18n::msg('yform_history_action_'.rex_yform_manager_dataset::ACTION_CREATE),
-        rex_yform_manager_dataset::ACTION_UPDATE => rex_i18n::msg('yform_history_action_'.rex_yform_manager_dataset::ACTION_UPDATE),
-        rex_yform_manager_dataset::ACTION_DELETE => rex_i18n::msg('yform_history_action_'.rex_yform_manager_dataset::ACTION_DELETE),
+        rex_yform_manager_dataset::ACTION_CREATE => rex_i18n::msg('yform_history_action_' . rex_yform_manager_dataset::ACTION_CREATE),
+        rex_yform_manager_dataset::ACTION_UPDATE => rex_i18n::msg('yform_history_action_' . rex_yform_manager_dataset::ACTION_UPDATE),
+        rex_yform_manager_dataset::ACTION_DELETE => rex_i18n::msg('yform_history_action_' . rex_yform_manager_dataset::ACTION_DELETE),
     ],
 ]);
 
@@ -303,7 +301,7 @@ $historySearchForm->setValueField('choice', [
     'label' => 'User',
     'choices' => array_merge(
         ['' => rex_i18n::msg('yform_manager_users_all')],
-        $users
+        $users,
     ),
 ]);
 

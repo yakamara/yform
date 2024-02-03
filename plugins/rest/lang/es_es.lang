@@ -1,8 +1,8 @@
 yform_rest = REST-API
 
-yform_rest_token = Tokens
+yform_rest_token = Token
 
-yform_rest_token_header = REST: Tokens
+yform_rest_token_header = REST: Token
 
 yform_rest_token_name = Nombre
 yform_rest_token_token = Token

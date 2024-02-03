@@ -1,8 +1,8 @@
 yform_rest = REST-API
 
-yform_rest_token = Tokens
+yform_rest_token = Token
 
-yform_rest_token_header = REST: Tokens
+yform_rest_token_header = REST: Token
 
 yform_rest_token_name = Name
 yform_rest_token_token = Token
@@ -22,8 +22,8 @@ yform_rest_token_added = Token added
 yform_rest_token_header_summary
 
 yform_rest_token_header_description
-yform_rest_token_not_found = No tokens found
-yform_rest_token_caption = List of tokens
+yform_rest_token_not_found = No token found
+yform_rest_token_caption = List of token
 
 yform_rest_token_name_validate = Please enter a description/name
 yform_rest_token_token_validate = Please create a token

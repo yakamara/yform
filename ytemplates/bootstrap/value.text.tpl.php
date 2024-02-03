@@ -5,7 +5,7 @@
  * @psalm-scope-this rex_yform_value_text
  */
 
-$type = $type ?? 'text';
+$type ??= 'text';
 $class = 'text' == $type ? '' : 'form-' . $type . ' ';
 if (!isset($value)) {
     $value = $this->getValue();
@@ -47,19 +47,19 @@ $input_group_end = '';
 
 $prepend_view = '';
 if (!empty($prepend)) {
-    $prepend_view = '<span class="input-group-addon">'.$prepend.'</span>';
+    $prepend_view = '<span class="input-group-addon">' . $prepend . '</span>';
     $input_group_start = '<div class="input-group">';
     $input_group_end = '</div>';
 }
 
 $append_view = '';
 if (!empty($append)) {
-    $append_view = '<span class="input-group-addon">'.$append.'</span>';
+    $append_view = '<span class="input-group-addon">' . $append . '</span>';
     $input_group_start = '<div class="input-group">';
     $input_group_end = '</div>';
 }
 
-echo '<div class="'.implode(' ', $class_group).'" id="'.$this->getHTMLId().'">
-        <label class="'.implode(' ', $class_label).'" for="'.$this->getFieldId().'">'.$this->getLabel().'</label>
-        ' . $input_group_start . $prepend_view . '<input '.implode(' ', $attributes).' />' . $append_view . $input_group_end . $notice .'
+echo '<div class="' . implode(' ', $class_group) . '" id="' . $this->getHTMLId() . '">
+        <label class="' . implode(' ', $class_label) . '" for="' . $this->getFieldId() . '">' . $this->getLabel() . '</label>
+        ' . $input_group_start . $prepend_view . '<input ' . implode(' ', $attributes) . ' />' . $append_view . $input_group_end . $notice . '
         </div>';
