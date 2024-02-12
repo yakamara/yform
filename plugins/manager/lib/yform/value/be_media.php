@@ -146,8 +146,8 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
                 foreach ($items as $item) {
                     $sqlData = \rex_sql::factory();
                     $sqlData->setQuery('SELECT `name` FROM `' . \rex_yform_manager_table::table() . '` WHERE `table_name` = "' . $tableName . '"');
-
-                    $messages .= '<li><a href="javascript:openPage(\'index.php?page=yform/manager/data_edit&amp;table_name=' . $tableName . '&amp;data_id=' . $item['id'] . '&amp;func=edit\')">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
+                    $editUrl = rex_yform_manager::url($tableName, $item['id']);
+                    $messages .= '<li><a href="javascript:openPage(\'' . $editUrl . '\')">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
                 }
             }
         }
