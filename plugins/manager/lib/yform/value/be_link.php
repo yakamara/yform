@@ -104,13 +104,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                             foreach ($items as $item) {
                                 $sqlData = \rex_sql::factory();
                                 $sqlData->setQuery('SELECT `name` FROM `' . \rex_yform_manager_table::table() . '` WHERE `table_name` = "' . $tableName . '"');
-
-                                $url = \rex_url::backendController([
-                                    'page' => 'yform/manager/data_edit',
-                                    'table_name' => $tableName,
-                                    'data_id' => $item['id'],
-                                    'func' => 'edit',
-                                ]);
+                                $url = rex_yform_manager::url($tableName, $item['id']);
                                 $messages .= '<li><a href="' . $url . '">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
                             }
                         }
