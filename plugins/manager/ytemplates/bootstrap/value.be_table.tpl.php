@@ -49,7 +49,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     /** @var rex_yform_value_abstract $field */
                     $field = $column['field'];
                     $field->params['form_output'] = [];
-                    $field->params['this']->setObjectparams('form_name',$this->getParam('form_name').']['.$this->getId() . '][' . $data_index);
+                    $field->params['this']->setObjectparams('form_name', $this->getParam('form_name') . '][' . $this->getId() . '][' . $data_index);
                     $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
                     $field->params['this']->setObjectparams('main_id', $main_id);
                     $field->params['form_name'] = $field->getName();
@@ -113,7 +113,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                         foreach ($columns as $i => $column) {
                             $field = $columns[$i]['field'];
                             $field->params['form_output'] = [];
-                            $field->params['this']->setObjectparams('form_name',$this->getParam('form_name').']['.$this->getId() . '][{{FIELD_ID}}');
+                            $field->params['this']->setObjectparams('form_name', $this->getParam('form_name') . '][' . $this->getId() . '][{{FIELD_ID}}');
                             $field->params['this']->setObjectparams('form_ytemplate', $ytemplates);
                             $field->params['this']->setObjectparams('main_id', $main_id);
                             $field->params['form_name'] = $field->getName();
