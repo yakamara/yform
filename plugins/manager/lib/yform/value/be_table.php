@@ -94,6 +94,9 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
     public function enterObject()
     {
+        if(is_array($this->getValue())){
+            $this->setValue(json_encode(array_values($this->getValue())));
+        }
         if (!$this->getValue()) {
             $this->setValue(json_encode([]));
         }
@@ -132,7 +135,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
             if ('value' == $col['field']) {
                 $field->loadParams($yfparams, $col['values']);
-                $field->setName($this->getName());
+                $field->setName($this->getFieldName().']['.$this->getId().']');
                 $field->init();
                 $field->setLabel('');
 
