@@ -9,6 +9,12 @@
 
 class rex_yform_action_callback extends rex_yform_action_abstract
 {
+    public static $callback_actions = [
+        'pre',
+        'post',
+        'normal',
+    ];
+
     public function executeAction(): void
     {
         $this->action_callback();
@@ -29,7 +35,14 @@ class rex_yform_action_callback extends rex_yform_action_abstract
         if (!$this->getElement(2)) {
             return;
         }
-        if ($currentFunction == $this->getElement(3)) {
+
+        $userFunction = $this->getElement(3);
+
+        if (!in_array($userFunction, self::$callback_actions, true)) {
+            $userFunction = 'normal';
+        }
+
+        if ($currentFunction === $userFunction) {
             call_user_func($this->getElement(2), $this);
         }
     }
