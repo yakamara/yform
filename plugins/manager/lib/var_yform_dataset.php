@@ -133,7 +133,7 @@ class rex_var_yform_table_data extends rex_var
                 <a class="btn btn-popup yform-dataset-widget-open" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-view-list"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-add" title="' . rex_i18n::msg('yform_relation_add_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-delete" title="' . rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>
-            '.$viewButton;
+            ' . $viewButton;
         $e['before'] = '<div class="yform-dataset-widget"
             data-widget_type="multiple"
             data-id="' . $id . '"
@@ -169,7 +169,7 @@ class rex_var_yform_table_data extends rex_var
                 <a class="btn btn-popup yform-dataset-widget-open" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-view-list"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-add" title="' . rex_i18n::msg('yform_relation_add_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-delete" title="' . rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>
-                '.$viewButton;
+                ' . $viewButton;
         $e['before'] = '<div class="yform-dataset-widget"
             data-widget_type="single"
             data-id="' . $id . '"
