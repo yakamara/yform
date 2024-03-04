@@ -127,12 +127,12 @@ class rex_yform_manager
             $this->setLinkVars($searchObject->getSearchVars());
         }
 
-        $description = $popup || ('' == $this->table->getDescription()) ? '' : '<br />' . $this->table->getDescription();
+        $description = $popup || ('' == $this->table->getDescription()) ? '' : '<p>' . nl2br(rex_escape($this->table->getDescription())) . '</p>';
 
         echo rex_extension::registerPoint(
             new rex_extension_point(
                 'YFORM_MANAGER_DATA_PAGE_HEADER',
-                rex_view::title(rex_i18n::msg('yform_table') . ': ' . $this->table->getNameLocalized() . ' <small>[' . $this->table->getTablename() . ']' . $description . '</small>', ''),
+                rex_view::title(rex_i18n::msg('yform_table') . ': ' . rex_escape($this->table->getNameLocalized()) . ' <small>[' . rex_escape($this->table->getTablename()) . ']</small>', '') . $description,
                 [
                     'yform' => $this,
                 ],
@@ -368,7 +368,6 @@ class rex_yform_manager
                         $sql_db = rex_sql::factory();
                         $form = '';
                         $sql_db->transactional(static function () use (&$form, &$yform, $data, $func) {
-
                             $afterFieldsExecuted = static function (rex_yform $yform) {
                                 /** @var rex_yform_value_abstract $valueObject */
                                 foreach ($yform->objparams['values'] as $valueObject) {
@@ -414,7 +413,6 @@ class rex_yform_manager
                             }
 
                             $form = $data->executeForm($yform, $afterFieldsExecuted);
-
                         });
 
                         if ($yform->objparams['actions_executed']) {
@@ -502,14 +500,12 @@ class rex_yform_manager
                                 ];
                             }
                         }
-
-                    } catch (\Throwable $e) {
+                    } catch (Throwable $e) {
                         $mainMessages[] = [
                             'type' => 'error',
                             'message' => rex_i18n::msg('yform_editdata_collection_error_abort', $e->getMessage()),
                         ];
                     }
-
                 }
                 break;
         }
@@ -785,7 +781,7 @@ class rex_yform_manager
 
         $table = $this->table;
 
-        $table_info = '<b>' . $table->getNameLocalized() . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id=' . $table->getId() . '&func=edit">' . $table->getTableName() . '</a>]</b> ';
+        $table_info = '<b>' . rex_escape($table->getNameLocalized()) . ' [<a href="index.php?page=yform/manager/table_edit&start=0&table_id=' . $table->getId() . '&func=edit">' . $table->getTableName() . '</a>]</b> ';
         echo rex_view::info($table_info);
 
         $_csrf_key = $this->table->getCSRFKey();

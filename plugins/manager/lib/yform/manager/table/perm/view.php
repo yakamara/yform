@@ -14,7 +14,7 @@ class rex_yform_manager_table_perm_view extends rex_complex_perm
     {
         $arrayOptions = [];
         foreach (rex_yform_manager_table::getAll() as $table) {
-            $arrayOptions[$table->getTableName()] = rex_i18n::translate($table->getName()) . ' [' . $table->getTableName() . ']';
+            $arrayOptions[$table->getTableName()] = $table->getNameLocalized() . ' [' . $table->getTableName() . ']';
         }
 
         return [

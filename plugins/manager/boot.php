@@ -47,7 +47,7 @@ if (rex::isBackend() && rex::getUser()) {
     $prio = 1;
     foreach ($tables as $table) {
         if ($table->isActive() && $table->isGranted('VIEW', rex::getUser())) {
-            $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), $table->getNameLocalized());
+            $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), rex_escape($table->getNameLocalized()));
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName());
             $be_page->setIcon('rex-icon rex-icon-module');
             $be_page->setPrio($prio);
@@ -82,8 +82,8 @@ if (rex::isBackend() && rex::getUser()) {
     $this->setProperty('pages', $pages);
 }
 
-\rex_extension::register('MEDIA_IS_IN_USE', 'rex_yform_value_be_media::isMediaInUse');
-\rex_extension::register('PACKAGES_INCLUDED', 'rex_yform_value_be_link::isArticleInUse');
+rex_extension::register('MEDIA_IS_IN_USE', 'rex_yform_value_be_media::isMediaInUse');
+rex_extension::register('PACKAGES_INCLUDED', 'rex_yform_value_be_link::isArticleInUse');
 
 rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep) {
     if ($ep->getSubject() instanceof Exception) {

@@ -15,15 +15,15 @@ final class rex_yform_manager_table implements ArrayAccess
     protected $values = [];
     protected $columns = [];
 
-    /** @var rex_yform_manager_field[] */
+    /** @var array<rex_yform_manager_field> */
     protected $fields = [];
 
-    /** @var rex_yform_manager_field[] */
+    /** @var array<rex_yform_manager_field> */
     protected $relations;
 
     protected static bool $debug = false;
 
-    /** @var self[] */
+    /** @var array<self> */
     protected static $tables = [];
     protected static bool $loadedAllTables = false;
 
@@ -56,7 +56,7 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * @param string $tableName
      *
-     * @return null|rex_yform_manager_table
+     * @return rex_yform_manager_table|null
      */
     public static function get($tableName)
     {
@@ -102,7 +102,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return rex_yform_manager_table[]
+     * @return array<rex_yform_manager_table>
      */
     public static function getAll()
     {
@@ -145,11 +145,11 @@ final class rex_yform_manager_table implements ArrayAccess
         if ($name === $table_name) {
             $name = 'translate:' . $name;
         }
-        $name = rex_i18n::translate($name);
+        $name = rex_i18n::translate($name, false);
         if (preg_match('/^\[translate:(.*?)\]$/', $name, $match)) {
             $name = $match[1];
         }
-        return \rex_i18n::translate($name);
+        return rex_i18n::translate($name, false);
     }
 
     public function getId()
@@ -244,7 +244,7 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * Fields of yform Definitions.
      *
-     * @return rex_yform_manager_field[]
+     * @return array<rex_yform_manager_field>
      */
     public function getFields(array $filter = [])
     {
@@ -274,7 +274,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return rex_yform_manager_field[]
+     * @return array<rex_yform_manager_field>
      */
     public function getValueFields(array $filter = [])
     {
@@ -300,7 +300,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return rex_yform_manager_field[]
+     * @return array<rex_yform_manager_field>
      */
     public function getRelations()
     {
@@ -314,7 +314,7 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * @param string $table
      *
-     * @return rex_yform_manager_field[]
+     * @return array<rex_yform_manager_field>
      */
     public function getRelationsTo($table)
     {
@@ -429,7 +429,7 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * @param int $id
      *
-     * @return null|rex_yform_manager_dataset
+     * @return rex_yform_manager_dataset|null
      */
     public function getDataset($id)
     {
