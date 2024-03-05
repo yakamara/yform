@@ -147,9 +147,15 @@ $(document).on('rex:ready',function() {
                     let multiple = this.dataset.multiple;
                     let value = this.dataset.value;
 
-                    var event = opener.jQuery.Event('rex:YForm_selectData')
-                    opener.jQuery(window).trigger(event, [id, value, multiple])
-                    if (!event.isDefaultPrevented()) {
+                    var event = new CustomEvent('rex:YForm_selectData', {
+                      detail: {
+                        id: id,
+                        value: value,
+                        multiple: multiple
+                      }
+                    })
+                    opener.dispatchEvent(event)
+                    if (!event?.defaultPrevented) {
                       self.close()
                     }
                     
