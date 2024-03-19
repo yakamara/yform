@@ -1323,10 +1323,10 @@ class rex_yform_manager
                 ], false);
                 $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_table') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
 
-                $sql = 'select id, prio, type_id, type_name, name, label from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '" order by prio';
-                $list = rex_list::factory($sql, 200);
-                // $list->debug = 1;
-                // $list->setColumnFormat('id', 'Id');
+                $sql = 'select id, prio, type_id, type_name, name, label from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '"';
+                $list = rex_list::factory($sql, defaultSort: [
+                    'prio' => 'asc',
+                ]);
 
                 $list->addTableAttribute('class', 'table-hover');
 

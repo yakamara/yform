@@ -160,12 +160,10 @@ $(document).ready(function() {
 </script><?php
 
 if ($show_list) {
-    $add_sql = ' ORDER BY name';
     $link = '';
-
-    $sql = "select * from $table " . $add_sql;
-
-    $list = rex_list::factory($sql);
+    $list = rex_list::factory('select * from ' . $table, defaultSort: [
+        'name' => 'asc',
+    ]);
     $list->addTableAttribute('summary', rex_i18n::msg('yform_rest_token_header_summary'));
     $list->addTableAttribute('class', 'table-striped');
     $list->addTableColumnGroup([40, 40, '*', 153, 153]);
@@ -191,7 +189,7 @@ if ($show_list) {
         $return = $maxHits;
 
         if ('none' != $list->getValue('interval')) {
-            $currentHits = \rex_yform_rest_auth_token::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
+            $currentHits = rex_yform_rest_auth_token::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
             $return = $currentHits . ' / ' . $maxHits . ' / ' . $list->getValue('interval') . '';
         }
 

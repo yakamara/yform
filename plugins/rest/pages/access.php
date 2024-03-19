@@ -133,12 +133,10 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 echo $content;
 
 if ($show_list) {
-    $add_sql = ' ORDER BY id desc';
     $link = '';
-
-    $sql = "select * from $table " . $add_sql;
-
-    $list = rex_list::factory($sql);
+    $list = rex_list::factory('select * from ' . $table, defaultSort: [
+        'id' => 'desc'
+    ]);
     $list->addTableAttribute('summary', rex_i18n::msg('yform_rest_token_header_summary'));
     $list->addTableAttribute('class', 'table-striped table-hover');
     $list->addTableColumnGroup([40, 40, '*', 153, 153]);

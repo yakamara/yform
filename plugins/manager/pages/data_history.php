@@ -146,15 +146,13 @@ if (rex::getUser()->isAdmin() && in_array($subfunc, ['delete_old', 'delete_all']
 $sql = rex_sql::factory();
 
 $listQuery = 'SELECT
-        h.id, dataset_id,
+        h.id as hid, dataset_id,
         id as title,
         `action`, `user`, `timestamp`
     FROM ' . rex::getTable('yform_history') . ' h
     WHERE
         `table_name` = ' . $sql->escape($this->table->getTableName()) .
-    $filterWhere . '
-    GROUP BY h.id
-    ORDER BY `timestamp` DESC';
+    $filterWhere;
 
 $userQuery = 'SELECT
         distinct `user`
@@ -162,7 +160,10 @@ $userQuery = 'SELECT
     WHERE
         `table_name` = ' . $sql->escape($this->table->getTableName());
 
-$list = rex_list::factory($listQuery);
+$list = rex_list::factory($listQuery, defaultSort: [
+    'hid' => 'asc',
+    'timestamp' => 'desc',
+]);
 
 $users = $sql->getArray($userQuery);
 $users = array_combine(array_column($users, 'user'), array_column($users, 'user'));

@@ -309,9 +309,12 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $fragment->setVar('size', 'xs', false);
     $panel_options = $fragment->parse('core/buttons/button_group.php');
 
-    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, mass_edit, history  from `' . rex_yform_manager_table::table() . '` order by prio,table_name';
+    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, mass_edit, history  from `' . rex_yform_manager_table::table().'`';
 
-    $list = rex_list::factory($sql, 200);
+    $list = rex_list::factory($sql, 200, defaultSort: [
+        'prio' => 'asc',
+        'table_name' => 'asc'
+    ]);
 
     $list->addTableAttribute('class', 'table-hover');
     $list->addParam('start', rex_request('start', 'int'));

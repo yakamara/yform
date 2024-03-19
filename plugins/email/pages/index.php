@@ -166,12 +166,10 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 echo $content;
 
 if ($show_list) {
-    $add_sql = ' ORDER BY name';
     $link = '';
-
-    $sql = "select * from $table " . $add_sql;
-
-    $list = rex_list::factory($sql);
+    $list = rex_list::factory('select * from ' . $table, defaultSort: [
+        'name' => 'asc',
+    ]);
     // $list->setCaption(rex_i18n::msg('yform_email_header_template_caption'));
     $list->addTableAttribute('summary', rex_i18n::msg('yform_email_header_template_summary'));
     $list->addTableAttribute('class', 'table-striped');
