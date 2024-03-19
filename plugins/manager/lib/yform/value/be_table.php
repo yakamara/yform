@@ -1,52 +1,8 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
 class rex_yform_value_be_table extends rex_yform_value_abstract
 {
     protected $fieldData = [];
-
-    public function preValidateAction(): void
-    {
-        // bc service for Version < 1.1
-        if ('' != $this->getValue() && '' == json_decode($this->getValue())) {
-            $rows = explode(';', $this->getValue());
-            foreach ($rows as $row_id => $row) {
-                $rows[$row_id] = explode(',', $row);
-            }
-            $this->setValue(json_encode($rows));
-        }
-
-        if ($this->getParam('send') && isset($_POST['FORM'])) {
-            // Cleanup Array
-            $table_array = [];
-
-            $id = $this->getName();
-
-            $columns = preg_split('/(?<=[^\\w"]),|,(?=\\{)|(?<=[A-Za-z]),(?=[^ ][\\w,])|(?<=,\\w),/', $this->getElement('columns'));
-            if (0 == count($columns)) {
-                return;
-            }
-
-            $form_data = rex_post('FORM', 'array');
-
-            if (isset($form_data[$id . '.0'])) {
-                $rowKeys = array_keys((array) $form_data[$id . '.0']);
-
-                // Spalten durchgehen
-                for ($c = 0; $c < count($columns); ++$c) {
-                    foreach ($rowKeys as $r) {
-                        $table_array[$r][$c] = (isset($form_data[$id . '.' . $c][$r])) ? $form_data[$id . '.' . $c][$r] : '';
-                    }
-                }
-            }
-            $this->setValue(json_encode(array_values($table_array)));
-        }
-    }
 
     public static function getColumnsByName($definition)
     {
@@ -123,8 +79,8 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
         $this->fieldData = $data;
 
-        $yfparams = \rex_yform::factory()->objparams;
-        $yfparams['this'] = \rex_yform::factory();
+        $yfparams = rex_yform::factory()->objparams;
+        $yfparams['this'] = rex_yform::factory();
 
         /* TODO
          * error class von validierung ans Eingabefeld übergeben
