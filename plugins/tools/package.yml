@@ -1,4 +1,5 @@
 package: yform/tools
-version: '4.2.0'
+version: '4.2.1'
+license: MIT
 author: 'Jan Kristinus'
 supportpage: 'https://github.com/yakamara/yform/issues'
