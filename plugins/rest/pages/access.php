@@ -135,7 +135,7 @@ echo $content;
 if ($show_list) {
     $link = '';
     $list = rex_list::factory('select * from ' . $table, defaultSort: [
-        'id' => 'desc'
+        'id' => 'desc',
     ]);
     $list->addTableAttribute('summary', rex_i18n::msg('yform_rest_token_header_summary'));
     $list->addTableAttribute('class', 'table-striped table-hover');
