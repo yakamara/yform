@@ -6,6 +6,8 @@ $(document).on('rex:ready',function() {
         let link = this.dataset.link;
         let widget_type = this.dataset.widget_type;
         let field_name = this.dataset.field_name;
+        let _csrf_token = this.dataset.csrf_token;
+        let value = this.dataset.value;
 
         $(this).find("a").each(function () {
 
@@ -18,6 +20,34 @@ $(document).on('rex:ready',function() {
             if (this.classList.contains('yform-dataset-widget-pool')) {
                 this.onclick = function () {
                     return newPoolWindow( link);
+                };
+            }
+
+            // add
+            if (this.classList.contains('yform-dataset-widget-add')) {
+                this.onclick = function () {
+                    let newWindowLink = link + '&_csrf_token='+ _csrf_token +'&func=add&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field_name+'&rex_yform_manager_opener[multiple]='+multiple;
+                    return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
+                };
+            }
+
+            // view
+            if (value !== '' && this.classList.contains('yform-dataset-widget-view')) {
+                this.onclick = function () {
+                    let dataId = value;
+                    if (multiple === 1) {
+                        let viewObject = document.querySelector('#yform-dataset-view-'+id);
+                        for (let position = 0; position < viewObject.options.length; position++) {
+                            if (viewObject.options[position].selected) {
+                                dataId = viewObject.options[position].value;
+                                break;
+                            }
+                        }
+
+                    }
+
+                    let newWindowLink = link + '&_csrf_token='+ _csrf_token +'&func=edit&data_id=' + dataId + '&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field_name+'&rex_yform_manager_opener[multiple]='+multiple;
+                    return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
                 };
             }
 

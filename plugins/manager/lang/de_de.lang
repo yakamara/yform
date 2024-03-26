@@ -20,8 +20,11 @@ yform_relation_move_first_data = Ausgewählten Datensatz an den Anfang verschieb
 yform_relation_move_up_data = Ausgewählten Datensatz nach oben verschieben
 yform_relation_move_down_data = Ausgewählten Datensatz nach unten verschieben
 yform_relation_move_last_data = Ausgewählten Datensatz an das Ende verschieben
+yform_relation_add_entry = Datensatz hinzufügen
 yform_relation_choose_entry = Datensatz auswählen
 yform_relation_delete_entry = Ausgewählten Datensatz löschen
+yform_relation_no_entry = Kein Datensatz zugewiesen
+yform_relation_view_entry = Datensatz ansehen
 yform_relation_first_create_data = Bitte zunächst diesen Datensatz erstellen
 yform_relation_edit_relations = Verknüpfungen verwalten
 
