@@ -743,7 +743,7 @@ class rex_yform_manager_dataset
     /**
      * @internal
      */
-    final protected static function modelToTable(): string
+    protected static function modelToTable(): string
     {
         $class = static::class;
 
