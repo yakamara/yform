@@ -230,12 +230,12 @@ $list->setColumnFormat('timestamp', 'custom', static function (array $params) {
 });
 
 $list->addColumn('view', '<i class="rex-icon fa-eye"></i> ' . rex_i18n::msg('yform_history_view'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
-$list->setColumnParams('view', ['subfunc' => 'view', 'data_id' => '###dataset_id###', 'history_id' => '###id###']);
+$list->setColumnParams('view', ['subfunc' => 'view', 'data_id' => '###dataset_id###', 'history_id' => '###hid###']);
 $list->addLinkAttribute('view', 'data-toggle', 'modal');
 $list->addLinkAttribute('view', 'data-target', '#rex-yform-history-modal');
 
 $list->addColumn('restore', '<i class="rex-icon fa-undo"></i> ' . rex_i18n::msg('yform_history_restore'), -1, ['<th></th>', '<td class="rex-table-action">###VALUE###</td>']);
-$list->setColumnParams('restore', ['subfunc' => 'restore', 'data_id' => '###dataset_id###', 'history_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
+$list->setColumnParams('restore', ['subfunc' => 'restore', 'data_id' => '###dataset_id###', 'history_id' => '###hid###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
 
 $content = $list->get();
 
