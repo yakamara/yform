@@ -6,6 +6,7 @@ supportpage: 'https://github.com/yakamara/yform/issues'
 
 page:
     title: 'translate:yform_email_templates'
+    perm: admin[]
     pjax: true
     subpages:
         index: { title: 'translate:yform_email_templates', hidden: true }
