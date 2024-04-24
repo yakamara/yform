@@ -1,6 +1,6 @@
 <?php
 /**
- * Helper class for yform/manager plugin history context
+ * Helper class for yform/manager plugin history context.
  *
  * @category helper
  * @author Peter Schulze | p.schulze[at]bitshifters.de
@@ -9,7 +9,10 @@
  */
 class rex_yform_history_helper
 {
-    const FIELD_TYPE_ICONS = [
+    /**
+     * @var array<string> field type icons
+     */
+    public const FIELD_TYPE_ICONS = [
         'question' => 'question',
 
         'checkbox' => 'square-check',
@@ -37,23 +40,26 @@ class rex_yform_history_helper
         'time' => 'clock',
         'upload' => 'upload',
         'uuid' => 'key',
-        'email' => 'at'
+        'email' => 'at',
     ];
 
-    const FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
+    /**
+     * @var string field type icons font width class
+     */
+    public const FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
 
     /**
      * detect diffs in 2 strings
      * @param $old
      * @param $new
-     * @return array|array[]
+     * @return array<string|array<string>>
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 17.04.2024
      * @copyright https://github.com/paulgb/simplediff | Paul Butler (paulgb)
      */
     public static function diffStrings($old, $new): array
     {
-        $matrix = array();
+        $matrix = [];
         $maxlen = $omax = $nmax = 0;
 
         foreach ($old as $oindex => $ovalue) {
@@ -74,14 +80,14 @@ class rex_yform_history_helper
             }
         }
 
-        if ($maxlen === 0) {
-            return array(array('d' => $old, 'i' => $new));
+        if (0 === $maxlen) {
+            return [['d' => $old, 'i' => $new]];
         }
 
         return array_merge(
-            rex_yform_history_helper::diffStrings(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
+            self::diffStrings(array_slice($old, 0, $omax), array_slice($new, 0, $nmax)),
             array_slice($new, $nmax, $maxlen),
-            rex_yform_history_helper::diffStrings(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen))
+            self::diffStrings(array_slice($old, $omax + $maxlen), array_slice($new, $nmax + $maxlen)),
         );
     }
 
@@ -102,15 +108,15 @@ class rex_yform_history_helper
         foreach ($diff as $k) {
             if (is_array($k)) {
                 $ret .=
-                    (isset($k['d']) && count($k['d']) > 0 ? "<del>" . implode(' ', $k['d']) . "</del> " : '').
-                    (isset($k['i']) && count($k['i']) > 0 ? "<ins>" . implode(' ', $k['i']) . "</ins> " : '')
+                    (isset($k['d']) && count($k['d']) > 0 ? '<del>' . implode(' ', $k['d']) . '</del> ' : '') .
+                    (isset($k['i']) && count($k['i']) > 0 ? '<ins>' . implode(' ', $k['i']) . '</ins> ' : '')
                 ;
             } else {
                 $ret .= $k . ' ';
             }
         }
 
-        return $ret;
+        return trim($ret);
     }
 
     /**
@@ -124,20 +130,20 @@ class rex_yform_history_helper
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 22.04.2024
      */
-    public static function getFieldTypeIcon(rex_yform_manager_field $field, bool $addPrefix = true, bool $outputHtml = true, bool $addTooltip = true, string $tooltipPlacement = 'top'):string
+    public static function getFieldTypeIcon(rex_yform_manager_field $field, bool $addPrefix = true, bool $outputHtml = true, bool $addTooltip = true, string $tooltipPlacement = 'top'): string
     {
-        $icon = rex_yform_history_helper::FIELD_TYPE_ICONS[$field->getTypeName()] ?? 'default';
-        $tag = isset(rex_yform_history_helper::FIELD_TYPE_ICONS[$field->getTypeName()]) ? 'i' : 'span';
+        $icon = self::FIELD_TYPE_ICONS[$field->getTypeName()] ?? 'default';
+        $tag = isset(self::FIELD_TYPE_ICONS[$field->getTypeName()]) ? 'i' : 'span';
 
-        switch($field->getTypeName()) {
+        switch ($field->getTypeName()) {
             case 'choice':
-                $expanded = (bool)(int)$field->getElement('expanded');
-                $multiple = (bool)(int)$field->getElement('multiple');
+                $expanded = (bool) (int) $field->getElement('expanded');
+                $multiple = (bool) (int) $field->getElement('multiple');
 
-                if($expanded && $multiple) {
-                    $icon = rex_yform_history_helper::FIELD_TYPE_ICONS['choice_checkbox'];
-                } elseif($expanded) {
-                    $icon = rex_yform_history_helper::FIELD_TYPE_ICONS['choice_radio'];
+                if ($expanded && $multiple) {
+                    $icon = self::FIELD_TYPE_ICONS['choice_checkbox'];
+                } elseif ($expanded) {
+                    $icon = self::FIELD_TYPE_ICONS['choice_radio'];
                 }
                 break;
         }
@@ -146,8 +152,8 @@ class rex_yform_history_helper
                     $tag .
                     ($addTooltip ? ' data-toggle="tooltip" data-placement="' . $tooltipPlacement . '" title="' . rex_i18n::msg('yform_manager_type_name') . ': ' . $field->getTypeName() . '"' : '') .
                     ' class="' : ''
-               ).
-               ($icon !== 'default' ? rex_yform_history_helper::FIELD_TYPE_ICON_WEIGHT_CLASS . ' ' : '').($addPrefix ? 'rex-icon ' : '') . 'fa-' . $icon .
+        ) .
+               ('default' !== $icon ? self::FIELD_TYPE_ICON_WEIGHT_CLASS . ' ' : '') . ($addPrefix ? 'rex-icon ' : '') . 'fa-' . $icon .
                ($outputHtml ? '"></' . $tag . '>' : '');
     }
 
@@ -160,22 +166,24 @@ class rex_yform_history_helper
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 22.04.2024
      */
-    public static function getFieldValue(rex_yform_manager_field $field, rex_yform_manager_dataset $dataset, rex_yform_manager_table $table): string {
+    public static function getFieldValue(rex_yform_manager_field $field, rex_yform_manager_dataset $dataset, rex_yform_manager_table $table): string
+    {
         $class = 'rex_yform_value_' . $field->getTypeName();
         $currentValue = ($dataset->hasValue($field->getName()) ? $dataset->getValue($field->getName()) : '-');
 
-        if (is_callable([$class, 'getListValue']) && !in_array($field->getTypeName(), ['text','textarea'], true)) {
-            /** @var rex_yform_value_abstract $class */
-
+        if (
+            is_callable([$class, 'getListValue']) &&
+            !in_array($field->getTypeName(), ['text','textarea'], true)
+        ) {
             // get (formatted) value for current entry
-            if($dataset->hasValue($field->getName())) {
+            if ($dataset->hasValue($field->getName())) {
                 $currentValue = $class::getListValue([
                     'value' => $currentValue,
                     'subject' => $currentValue,
                     'field' => $field->getName(),
                     'params' => [
                         'field' => $field->toArray(),
-                        'fields' => $table->getFields()
+                        'fields' => $table->getFields(),
                     ],
                 ]);
             } else {
