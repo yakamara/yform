@@ -9,7 +9,7 @@
  */
 class rex_yform_history_helper
 {
-    const array FIELD_TYPE_ICONS = [
+    const FIELD_TYPE_ICONS = [
         'question' => 'question',
 
         'checkbox' => 'square-check',
@@ -40,7 +40,7 @@ class rex_yform_history_helper
         'email' => 'at'
     ];
 
-    const string FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
+    const FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
 
     /**
      * detect diffs in 2 strings
@@ -100,10 +100,14 @@ class rex_yform_history_helper
         $diff = rex_yform_history_helper::diffStrings(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
 
         foreach ($diff as $k) {
-            $ret .=
-                (isset($k['d']) ? "<del>" . implode(' ', $k['d']) . "</del> " : '').
-                (isset($k['i']) ? "<ins>" . implode(' ', $k['i']) . "</ins> " : '')
-            ;
+            if (is_array($k)) {
+                $ret .=
+                    (isset($k['d']) && count($k['d']) > 0 ? "<del>" . implode(' ', $k['d']) . "</del> " : '').
+                    (isset($k['i']) && count($k['i']) > 0 ? "<ins>" . implode(' ', $k['i']) . "</ins> " : '')
+                ;
+            } else {
+                $ret .= $k . ' ';
+            }
         }
 
         return $ret;
