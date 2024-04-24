@@ -341,7 +341,7 @@ $sql = rex_sql::factory();
 $list->setColumnFormat(
     $changesPrev,
     'custom',
-    static function($a) use (&$dataset, $table, $sql, &$historyDatasets) {
+    static function($a) use (&$historyDatasets) {
         $rev = rex::getProperty('YFORM_HISTORY_REVISION', 0) - 1;
 
         $changes = 0;
