@@ -1,5 +1,3 @@
-yform_function_button = Aktion
-
 yform_manager = Table Manager
 
 navigation_manager = Tabellen
@@ -14,7 +12,7 @@ yform_errors_occurred = Es sind Fehler aufgetreten
 yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
 yform_help_multipleselect = Mehrfachauswahl mit gedrückter CTRL/CMD Taste
 yform_updatetable_with_delete = mit Feldlöschung
-yform_updatetable_with_delete_confirm = Wirklich aktualisieren mit Feldlöschung ?
+yform_updatetable_with_delete_confirm = Wirklich aktualisieren mit Feldlöschung?
 
 yform_relation_move_first_data = Ausgewählten Datensatz an den Anfang verschieben
 yform_relation_move_up_data = Ausgewählten Datensatz nach oben verschieben
@@ -93,6 +91,7 @@ yform_manager_table_features = Aktivierte Optionen
 
 yform_manager_type_id = Typ
 yform_manager_type_name = Typname
+yform_manager_type_unknown = unbekannt
 
 yform_manager_tableset = Tableset
 yform_manager_table = Tabelle
@@ -234,8 +233,10 @@ yform_manager_import_error_duplicatefielddefinition = Es gibt Felder, welche ide
 
 # history
 yform_history = Historie
+yform_history_title = Historie für
 yform_history_dataset_id = Datensatz-ID
 yform_history_dataset = Datensatz
+yform_history_dataset_current = Aktuelle Version
 yform_history_action = Aktion
 yform_history_action_create = erstellt
 yform_history_action_update = bearbeitet
@@ -244,6 +245,7 @@ yform_history_user = Benutzer
 yform_history_timestamp = Zeitstempel
 yform_history_view = ansehen
 yform_history_restore = zurücksetzen
+yform_history_restore_confirm = Wirklich auf diese Version zurücksetzen?
 yform_history_restore_this = Datensatz auf diese Version zurücksetzen
 yform_history_restore_success = Datensatz wurde zurückgesetzt.
 yform_history_restore_error = Datensatz konnte nicht zurückgesetzt werden.
@@ -252,6 +254,18 @@ yform_history_delete_all = komplett
 yform_history_delete_older_3_months = älter als 3 Monate
 yform_history_delete_confirm = Historie wirklich löschen?
 yform_history_delete_success = Die Historien-Datensätze wurden gelöscht.
+yform_history_revision = Revision/Änderung
+yform_history_diff_headline_changed = Geänderte Werte
+yform_history_diff_headline_unchanged = Unveränderte Werte
+yform_history_diff_headline_added = Hinzugefügte Felder
+yform_history_diff_headline_removed = Entfernte Felder
+yform_history_diff_headline_prev_changed = Änderungen gegenüber vorheriger Version
+yform_history_diff_to_current = Änderungen (zu aktuell)
+yform_history_diff_to_previous = Änderungen (zu vorherig)
+yform_history_diff_added = neu
+yform_history_diff_removed = entfernt
+yform_history_diff_not_yet_existing = noch nicht vorhanden
+yform_history_diff_no_longer_existing = nicht mehr vorhanden
 
 yform_manager_show_form_notation = Formular-Code
 
