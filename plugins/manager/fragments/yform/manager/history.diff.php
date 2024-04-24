@@ -13,9 +13,9 @@ $currentDataset = $this->getVar('current_dataset', null);
 $table = $this->getVar('table', null);
 
 $sql = rex_sql::factory();
-$timestamp = (string) $sql->setQuery(sprintf('SELECT `timestamp` FROM %s WHERE id = %d', rex::getTable('yform_history'), $historyId))->getValue('timestamp');
+$timestamp = $sql->setQuery(sprintf('SELECT `timestamp` FROM %s WHERE id = :id', rex::getTable('yform_history')), [':id' => $historyId])->getValue('timestamp');
 
-$data = $sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = %d', rex::getTable('yform_history_field'), $historyId));
+$data = $sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = :history_id', rex::getTable('yform_history_field')), [':history_id' => $historyId]);
 $data = array_column($data, 'value', 'field');
 
 
@@ -60,17 +60,15 @@ foreach ($table->getValueFields() as $field) {
     // count diffs
     if(!$currentDataset->hasValue($field->getName())) {
         $change = 'deleted';
-    } elseif("" . $historyValue != "" . $currentValue) {
+    } elseif("" . $historyValue !== "" . $currentValue) {
         $change = 'changed';
     }
 
     $diffs[$change]['count']++;
 
-    if (is_callable($class, 'getListValue') && !in_array($field->getTypeName(), ['text', 'textarea'])) {
-        /** @var $class rex_yform_value_abstract */
-
+    if (is_callable([$class, 'getListValue']) && !in_array($field->getTypeName(), ['text', 'textarea'], true)) {
         // to ensure correct replacement with list value, ensure datatype by current dataset
-        if(gettype($currentValue) != gettype($historyValue)) {
+        if(gettype($currentValue) !== gettype($historyValue)) {
             settype($historyValue, gettype($currentValue));
         }
 
@@ -105,7 +103,7 @@ foreach ($table->getValueFields() as $field) {
     }
 
     // diff values for specific fields
-    if($change == 'changed') {
+    if($change === 'changed') {
         switch($field->getTypeName()) {
             case 'text':
             case 'textarea':
@@ -114,7 +112,7 @@ foreach ($table->getValueFields() as $field) {
                 break;
 
             default:
-                if($historyValue != $currentValue) {
+                if($historyValue !== $currentValue) {
                     $historyValue = '<span class="diff">' . $historyValue . '</span>';
                 }
                 break;
@@ -165,14 +163,14 @@ $content = '
 
 foreach ($diffs as $change => $diff) {
     $content .= '
-        <header class="panel-heading" ' . ($diff['rows'] != '' ? 'data-toggle="collapse" data-target="#collapse-history-table-' . $change . '"' : '') . '>
+        <header class="panel-heading" ' . ($diff['rows'] !== '' ? 'data-toggle="collapse" data-target="#collapse-history-table-' . $change . '"' : '') . '>
             <div class="panel-title"><i class="rex-icon ' . $diff['icon'] . '"></i> ' . rex_i18n::msg('yform_history_diff_headline_' . $change) .
                 ' [' . ($diff['count'] > 0 ? '<b>' : '') . $diff['count'] . ($diff['count'] > 0 ? '</b>' : '') . ']' . '
             </div>
         </header>
-        <div id="collapse-history-table-' . $change . '" ' . ($diff['rows'] != '' ? 'class="panel-collapse collapse ' . ($change == 'changed' ? 'in' : '') . '"' : '') . '>';
+        <div id="collapse-history-table-' . $change . '" ' . ($diff['rows'] !== '' ? 'class="panel-collapse collapse ' . ($change === 'changed' ? 'in' : '') . '"' : '') . '>';
 
-    if($diff['rows'] != '') {
+    if($diff['rows'] !== '') {
         $content .= '       
             <table class="table history-diff-table" data-change-mode="' . $change . '">
                 <thead>

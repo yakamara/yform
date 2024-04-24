@@ -214,7 +214,7 @@ rex::setProperty('YFORM_HISTORY_REVISION', 0);
 $list->setColumnFormat(
     $revision,
     'custom',
-    static function($a) use (&$rev, &$historyDatasets, &$table, &$sql, &$dataset) {
+    static function($a) use (&$rev, &$historyDatasets, &$table, &$sql) {
         // early column ... store all values for current revision
         $rev = rex::getProperty('YFORM_HISTORY_REVISION', 0);
 
@@ -287,7 +287,7 @@ $viewColumnLayout = $list->getColumnLayout('view');
 $list->setColumnFormat(
     $changesCurrent,
     'custom',
-    static function($a) use (&$dataset, $table, $sql, &$historyDatasets, $actionsCell, $normalCell, $changesCurrent) {
+    static function($a) use (&$dataset, $table, &$historyDatasets, $actionsCell, $normalCell, $changesCurrent) {
         $rev = rex::getProperty('YFORM_HISTORY_REVISION', 0) - 1;
 
         $changes = 0;
