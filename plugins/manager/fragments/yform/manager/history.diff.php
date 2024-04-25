@@ -9,7 +9,7 @@ $historyId = $this->getVar('history_id', null);
 $datasetId = $this->getVar('dataset_id', null);
 $currentDataset = $this->getVar('current_dataset', null);
 
-/** @var rex_yform_manager_table $table */
+/** @var rex_yform_manager_table|null $table */
 $table = $this->getVar('table', null);
 
 $sql = rex_sql::factory();

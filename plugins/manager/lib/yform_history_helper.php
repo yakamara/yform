@@ -10,7 +10,7 @@
 class rex_yform_history_helper
 {
     /** @var array<string> field type icons */
-    public const FIELD_TYPE_ICONS = [
+    private const FIELD_TYPE_ICONS = [
         'question' => 'question',
 
         'checkbox' => 'square-check',
@@ -42,7 +42,7 @@ class rex_yform_history_helper
     ];
 
     /** @var string field type icons font width class */
-    public const FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
+    private const FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
 
     /**
      * detect diffs in 2 strings.
@@ -50,6 +50,7 @@ class rex_yform_history_helper
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 17.04.2024
      * @copyright https://github.com/paulgb/simplediff | Paul Butler (paulgb)
+     * @api
      */
     public static function diffStrings($old, $new): array
     {
@@ -90,6 +91,7 @@ class rex_yform_history_helper
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 17.04.2024
      * @copyright https://github.com/paulgb/simplediff | Paul Butler (paulgb)
+     * @api
      */
     public static function diffStringsToHtml($old, $new): string
     {
@@ -99,8 +101,8 @@ class rex_yform_history_helper
         foreach ($diff as $k) {
             if (is_array($k)) {
                 $ret .=
-                    (isset($k['d']) && count($k['d']) > 0 ? '<del>' . implode(' ', $k['d']) . '</del> ' : '') .
-                    (isset($k['i']) && count($k['i']) > 0 ? '<ins>' . implode(' ', $k['i']) . '</ins> ' : '')
+                    (isset($k['d']) && is_array($k['d']) && count($k['d']) > 0 ? '<del>' . implode(' ', $k['d']) . '</del> ' : '') .
+                    (isset($k['i']) && is_array($k['i']) && count($k['i']) > 0 ? '<ins>' . implode(' ', $k['i']) . '</ins> ' : '')
                 ;
             } else {
                 $ret .= $k . ' ';
