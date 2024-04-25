@@ -9,9 +9,7 @@
  */
 class rex_yform_history_helper
 {
-    /**
-     * @var array<string> field type icons
-     */
+    /** @var array<string> field type icons */
     public const FIELD_TYPE_ICONS = [
         'question' => 'question',
 
@@ -43,15 +41,11 @@ class rex_yform_history_helper
         'email' => 'at',
     ];
 
-    /**
-     * @var string field type icons font width class
-     */
+    /** @var string field type icons font width class */
     public const FIELD_TYPE_ICON_WEIGHT_CLASS = 'far';
 
     /**
-     * detect diffs in 2 strings
-     * @param $old
-     * @param $new
+     * detect diffs in 2 strings.
      * @return array<string|array<string>>
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 17.04.2024
@@ -92,10 +86,7 @@ class rex_yform_history_helper
     }
 
     /**
-     * detect diffs in 2 strings and return as html
-     * @param $old
-     * @param $new
-     * @return string
+     * detect diffs in 2 strings and return as html.
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 17.04.2024
      * @copyright https://github.com/paulgb/simplediff | Paul Butler (paulgb)
@@ -103,7 +94,7 @@ class rex_yform_history_helper
     public static function diffStringsToHtml($old, $new): string
     {
         $ret = '';
-        $diff = rex_yform_history_helper::diffStrings(preg_split("/[\s]+/", $old), preg_split("/[\s]+/", $new));
+        $diff = self::diffStrings(preg_split('/[\\s]+/', $old), preg_split('/[\\s]+/', $new));
 
         foreach ($diff as $k) {
             if (is_array($k)) {
@@ -120,13 +111,8 @@ class rex_yform_history_helper
     }
 
     /**
-     * get icon for yform field type
-     * @param rex_yform_manager_field $field
-     * @param bool $addPrefix
+     * get icon for yform field type.
      * @param bool $outputHtml print <i></i>
-     * @param bool $addTooltip
-     * @param string $tooltipPlacement
-     * @return string
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 22.04.2024
      */
@@ -158,11 +144,7 @@ class rex_yform_history_helper
     }
 
     /**
-     * get field value
-     * @param rex_yform_manager_field $field
-     * @param rex_yform_manager_dataset $dataset
-     * @param rex_yform_manager_table $table
-     * @return string
+     * get field value.
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 22.04.2024
      */
@@ -173,7 +155,7 @@ class rex_yform_history_helper
 
         if (
             is_callable([$class, 'getListValue']) &&
-            !in_array($field->getTypeName(), ['text','textarea'], true)
+            !in_array($field->getTypeName(), ['text', 'textarea'], true)
         ) {
             // get (formatted) value for current entry
             if ($dataset->hasValue($field->getName())) {
