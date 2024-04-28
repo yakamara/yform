@@ -255,6 +255,7 @@ yform_history_delete_older_3_months = äldre än 3 månader
 yform_history_delete_confirm = Vill du verkligen radera historiken?
 yform_history_delete_success = Poster från historiken raderades.
 yform_history_revision = Revision/Förändring
+yform_history_dataset_missing = Inget (giltigt) datapost-ID har överförts! En jämförelse med en vald post i historiken är därför inte möjlig.
 yform_history_diff_headline_changed = Ändrade Värden
 yform_history_diff_headline_unchanged = Oförändrade Värden
 yform_history_diff_headline_added = Tillagda Fält

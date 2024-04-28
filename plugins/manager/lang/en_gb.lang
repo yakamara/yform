@@ -255,6 +255,7 @@ yform_history_delete_older_3_months = older than 3 months
 yform_history_delete_confirm = Delete History?
 yform_history_delete_success = History records deleted.
 yform_history_revision = revision/change
+yform_history_dataset_missing = No (valid) data record ID was transferred! A comparison with a selected entry in the history is therefore not possible.
 yform_history_diff_headline_changed = changed values
 yform_history_diff_headline_unchanged = unchanged values
 yform_history_diff_headline_added = added fields

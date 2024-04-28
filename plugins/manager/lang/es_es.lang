@@ -255,6 +255,7 @@ yform_history_delete_older_3_months = Más de 3 meses
 yform_history_delete_confirm = ¿Realmente borras la historia?
 yform_history_delete_success = Los registros de historial han sido eliminados.
 yform_history_revision = Revisión/modificación
+yform_history_dataset_missing = No se ha transferido ningún ID de registro de datos (válido). Por lo tanto, no es posible realizar una comparación con una entrada seleccionada en el historial.
 yform_history_diff_headline_changed = Valores modificados
 yform_history_diff_headline_unchanged = Valores sin cambios
 yform_history_diff_headline_added = Campos añadidos

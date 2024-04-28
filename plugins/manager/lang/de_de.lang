@@ -255,6 +255,7 @@ yform_history_delete_older_3_months = älter als 3 Monate
 yform_history_delete_confirm = Historie wirklich löschen?
 yform_history_delete_success = Die Historien-Datensätze wurden gelöscht.
 yform_history_revision = Revision/Änderung
+yform_history_dataset_missing = Es wurde keine (gültige) Datensatz-ID übergeben! Der Vergleich mit einem ausgewählten Eintrag der Historie ist daher nicht möglich.
 yform_history_diff_headline_changed = Geänderte Werte
 yform_history_diff_headline_unchanged = Unveränderte Werte
 yform_history_diff_headline_added = Hinzugefügte Felder

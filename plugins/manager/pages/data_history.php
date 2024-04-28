@@ -16,23 +16,24 @@ $historySearchAction = rex_request('historySearchAction', 'string', null);
 $table = $this->table;
 
 $dataset = null;
-if ($datasetId) {
+$filterWhere = '';
+
+if (null !== $datasetId && $datasetId > 0) {
     $dataset = rex_yform_manager_dataset::getRaw($datasetId, $table->getTableName());
+
+    if ($filterDataset) {
+        // echo rex_view::info('<b>' . rex_i18n::msg('yform_history_dataset_id') . ':</b> ' . $datasetId);
+        $filterWhere = ' AND dataset_id = ' . $datasetId;
+    }
 } else {
     $filterDataset = false;
 }
 
-$filterWhere = '';
-if ($filterDataset) {
-    // echo rex_view::info('<b>' . rex_i18n::msg('yform_history_dataset_id') . ':</b> ' . $datasetId);
-    $filterWhere = ' AND dataset_id = ' . $datasetId;
-}
-
-if ($historySearchId) {
+if (null !== $historySearchId) {
     $filterWhere .= ' AND dataset_id = ' . $historySearchId;
 }
 
-if ($historySearchDate) {
+if (null !== $historySearchDate) {
     $historyDateObject = DateTime::createFromFormat('Y-m-d', $historySearchDate);
     if (!$historyDateObject) {
         $historyDateObject = new DateTime();
@@ -41,15 +42,15 @@ if ($historySearchDate) {
     $filterWhere .= ' AND timestamp <= ' . rex_sql::factory()->escape($historyDateObject->format('Y-m-d'));
 }
 
-if ($historySearchUser) {
+if (null !== $historySearchUser) {
     $filterWhere .= ' AND user =' . rex_sql::factory()->escape($historySearchUser);
 }
 
-if ($historySearchAction) {
+if (null !== $historySearchAction) {
     $filterWhere .= ' AND action =' . rex_sql::factory()->escape($historySearchAction);
 }
 
-if ('view' === $subfunc && $dataset && $historyId) {
+if ('view' === $subfunc && null !== $dataset && $historyId > 0) {
     $historyDiff = new rex_fragment();
     $historyDiff->setVar('history_id', $historyId);
     $historyDiff->setVar('dataset_id', $datasetId);
@@ -61,7 +62,7 @@ if ('view' === $subfunc && $dataset && $historyId) {
     exit;
 }
 
-if ('restore' === $subfunc && $dataset && $historyId) {
+if ('restore' === $subfunc && null !== $dataset && $historyId > 0) {
     if ($dataset->restoreSnapshot($historyId)) {
         echo rex_view::success(rex_i18n::msg('yform_history_restore_success'));
     } else {
@@ -128,22 +129,25 @@ $list->addParam('_csrf_token', rex_csrf_token::factory($_csrf_key)->getValue());
 
 if ($filterDataset) {
     $list->addParam('filter_dataset', 1);
-    $list->addParam('data_id', $datasetId);
+
+    if (null !== $datasetId && $datasetId > 0) {
+        $list->addParam('data_id', $datasetId);
+    }
 }
 
-if ($historySearchId) {
+if (null !== $historySearchId) {
     $list->addParam('historySearchId', $historySearchId);
 }
 
-if ($historySearchDate) {
+if (null !== $historySearchDate) {
     $list->addParam('historySearchDate', $historySearchDate);
 }
 
-if ($historySearchUser) {
+if (null !== $historySearchUser) {
     $list->addParam('historySearchUser', $historySearchUser);
 }
 
-if ($historySearchAction) {
+if (null !== $historySearchAction) {
     $list->addParam('historySearchAction', $historySearchAction);
 }
 
@@ -189,7 +193,10 @@ $restoreColumnBody = '<i class="rex-icon fa-undo"></i> ' . rex_i18n::msg('yform_
 $actionsCell = '<td class="rex-table-action">###VALUE###</td>';
 $normalCell = '<td>###VALUE###</td>';
 
-$list->addColumn('view', $viewColumnBody, -1, ['<th></th>', $actionsCell]);
+if (null !== $dataset) {
+    $list->addColumn('view', $viewColumnBody, -1, ['<th></th>', $actionsCell]);
+}
+
 $list->setColumnParams('view', ['subfunc' => 'view', 'data_id' => '###dataset_id###', 'history_id' => '###hid###']);
 $list->addLinkAttribute('view', 'data-toggle', 'modal');
 $list->addLinkAttribute('view', 'data-target', '#rex-yform-history-modal');
@@ -225,7 +232,7 @@ $list->setColumnFormat(
             'removed_current' => [],
         ];
 
-        $data = $sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = %d', rex::getTable('yform_history_field'), $a['list']->getValue('hid')));
+        $data = $sql->getArray(sprintf('SELECT * FROM %s WHERE history_id = :id', rex::getTable('yform_history_field')), [':id' => $a['list']->getValue('hid')]);
         $data = array_column($data, 'value', 'field');
 
         foreach ($table->getValueFields() as $field) {
@@ -275,58 +282,60 @@ $list->setColumnFormat(
 );
 
 // changes compared to current dataset
-$changesCurrent = 'changes_to_current';
-$list->addColumn($changesCurrent, '', 3, [
-    '<th>' . rex_i18n::msg('yform_history_diff_to_current') . '</th>',
-    '<td>###VALUE###</td>',
-]);
+if (null !== $dataset) {
+    $changesCurrent = 'changes_to_current';
+    $list->addColumn($changesCurrent, '', 3, [
+        '<th>' . rex_i18n::msg('yform_history_diff_to_current') . '</th>',
+        '<td>###VALUE###</td>',
+    ]);
 
-$viewColumnLayout = $list->getColumnLayout('view');
+    $viewColumnLayout = $list->getColumnLayout('view');
 
-$list->setColumnFormat(
-    $changesCurrent,
-    'custom',
-    static function ($a) use (&$dataset, $table, &$historyDatasets, $actionsCell, $normalCell, $changesCurrent) {
-        $rev = rex::getProperty('YFORM_HISTORY_REVISION', 0) - 1;
+    $list->setColumnFormat(
+        $changesCurrent,
+        'custom',
+        static function ($a) use (&$dataset, $table, &$historyDatasets, $actionsCell, $normalCell, $changesCurrent) {
+            $rev = rex::getProperty('YFORM_HISTORY_REVISION', 0) - 1;
 
-        $changes = 0;
-        $added = count($historyDatasets[$rev]['added_current']);
-        $removed = count($historyDatasets[$rev]['removed_current']);
+            $changes = 0;
+            $added = count($historyDatasets[$rev]['added_current']);
+            $removed = count($historyDatasets[$rev]['removed_current']);
 
-        $historyDataset = &$historyDatasets[$rev]['values'];
+            $historyDataset = &$historyDatasets[$rev]['values'];
 
-        foreach ($table->getValueFields() as $field) {
-            if (!array_key_exists($field->getName(), $historyDataset)) {
-                continue;
+            foreach ($table->getValueFields() as $field) {
+                if (!array_key_exists($field->getName(), $historyDataset)) {
+                    continue;
+                }
+
+                $historyValue = $historyDataset[$field->getName()];
+                $currentValue = ($dataset->hasValue($field->getName()) ? $dataset->getValue($field->getName()) : '-');
+
+                if ('' . $historyValue !== '' . $currentValue) {
+                    ++$changes;
+                }
             }
 
-            $historyValue = $historyDataset[$field->getName()];
-            $currentValue = ($dataset->hasValue($field->getName()) ? $dataset->getValue($field->getName()) : '-');
-
-            if ('' . $historyValue != '' . $currentValue) {
-                ++$changes;
+            // handle actions column
+            if (0 === $changes) {
+                $a['list']->setColumnLayout($changesCurrent, ['<th></th>', '<td class="current-dataset-row">###VALUE###</td>']);
+                $a['list']->setColumnLayout('view', ['<th></th>', '<td></td>']);
+                $a['list']->setColumnLayout('restore', ['<th></th>', '<td></td>']);
+            } else {
+                $a['list']->setColumnLayout($changesCurrent, ['<th></th>', $normalCell]);
+                $a['list']->setColumnLayout('view', ['<th></th>', $actionsCell]);
+                $a['list']->setColumnLayout('restore', ['<th></th>', $actionsCell]);
             }
-        }
 
-        // handle actions column
-        if (0 == $changes) {
-            $a['list']->setColumnLayout($changesCurrent, ['<th></th>', '<td class="current-dataset-row">###VALUE###</td>']);
-            $a['list']->setColumnLayout('view', ['<th></th>', '<td></td>']);
-            $a['list']->setColumnLayout('restore', ['<th></th>', '<td></td>']);
-        } else {
-            $a['list']->setColumnLayout($changesCurrent, ['<th></th>', $normalCell]);
-            $a['list']->setColumnLayout('view', ['<th></th>', $actionsCell]);
-            $a['list']->setColumnLayout('restore', ['<th></th>', $actionsCell]);
-        }
-
-        return $changes .
-                    ($added > 0 || $removed > 0 ?
-                        ' (' . ($added > 0 ? '+' . $added . ' ' . rex_i18n::msg('yform_history_diff_added') : '') .
-                             ($removed > 0 ? ($added > 0 ? ', ' : '') . '+' . $removed . ' ' . rex_i18n::msg('yform_history_diff_removed') : '')
-                        . ')' : ''
-                    );
-    },
-);
+            return $changes .
+                ($added > 0 || $removed > 0 ?
+                    ' (' . ($added > 0 ? '+' . $added . ' ' . rex_i18n::msg('yform_history_diff_added') : '') .
+                    ($removed > 0 ? ($added > 0 ? ', ' : '') . '+' . $removed . ' ' . rex_i18n::msg('yform_history_diff_removed') : '')
+                    . ')' : ''
+                );
+        },
+    );
+}
 
 // changes compared to previous dataset
 $changesPrev = 'changes_to_prev';
@@ -353,7 +362,7 @@ $list->setColumnFormat(
             $prevHistoryDataset = $historyDatasets[$rev - 1]['values'];
 
             foreach ($historyDataset as $field => $value) {
-                if ('' . $historyDataset[$field] != '' . $prevHistoryDataset[$field]) {
+                if ('' . $historyDataset[$field] !== '' . $prevHistoryDataset[$field]) {
                     ++$changes;
                     // dump($rev.": ".$historyDataset[$field]." - ".$prevHistoryDataset[$field]." - ".$changes);
                 }
@@ -361,11 +370,11 @@ $list->setColumnFormat(
         }
 
         return $changes .
-                    ($added > 0 || $removed > 0 ?
-                        ' (' . ($added > 0 ? '+' . $added . ' ' . rex_i18n::msg('yform_history_diff_added') : '') .
-                             ($removed > 0 ? ($added > 0 ? ', ' : '') . '+' . $removed . ' ' . rex_i18n::msg('yform_history_diff_removed') : '')
-                        . ')' : ''
-                    );
+            ($added > 0 || $removed > 0 ?
+                ' (' . ($added > 0 ? '+' . $added . ' ' . rex_i18n::msg('yform_history_diff_added') : '') .
+                ($removed > 0 ? ($added > 0 ? ', ' : '') . '+' . $removed . ' ' . rex_i18n::msg('yform_history_diff_removed') : '')
+                . ')' : ''
+            );
     },
 );
 
@@ -403,7 +412,7 @@ $historySearchForm->setObjectparams('real_field_names', true);
 $historySearchForm->setObjectparams('csrf_protection', false);
 $historySearchForm->setHiddenField('_csrf_token', rex_csrf_token::factory($_csrf_key)->getValue());
 
-if (!$datasetId) {
+if (null !== $datasetId && $datasetId > 0) {
     $historySearchForm->setValueField('text', [
         'name' => 'historySearchId',
         'label' => 'id',
@@ -438,6 +447,10 @@ $historySearchForm->setValueField('choice', [
     ),
 ]);
 
+if (null !== $dataset) {
+    $noDatasetWarning = \rex_view::warning(rex_i18n::msg('yform_history_dataset_missing'));
+}
+
 $fragment = new rex_fragment();
 $fragment->setVar('class', 'edit', false);
 $fragment->setVar('title', rex_i18n::msg('yform_manager_search'));
@@ -449,6 +462,10 @@ $fragment->setVar('title', rex_i18n::msg('yform_history_title') . ' <b>' . rex_i
 $fragment->setVar('options', $options, false);
 $fragment->setVar('content', $content, false);
 $searchList = $fragment->parse('core/page/section.php');
+
+if (null === $dataset) {
+    echo rex_view::warning(rex_i18n::msg('yform_history_dataset_missing'));
+}
 
 echo '<div class="row">';
 echo '<div class="col-sm-3 col-md-3 col-lg-2">' . $searchForm . '</div>';
