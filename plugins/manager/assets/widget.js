@@ -152,21 +152,26 @@ $(document).on('rex:ready',function() {
                             id: id,
                             value: value,
                             multiple: multiple
-                          }
+                        }
                     })
                     opener.dispatchEvent(event)
                     if (!event?.defaultPrevented) {
-                        self.close()
+                        if (multiple !== "1") {
+                            self.close()
+                        }
                     }
 
                     /** deprecated jQuery implementation – use native implementation above */
                     var event = opener.jQuery.Event('rex:YForm_selectData')
                     opener.jQuery(window).trigger(event, [id, value, multiple])
+
                     if (!event.isDefaultPrevented()) {
-                        self.close()
+                        if (multiple !== "1") {
+                            self.close()
+                        }
                     }
-                    
-                    if(multiple == "1") {
+
+                    if(multiple === "1") {
                         let viewObject = opener.document.getElementById('yform-dataset-view-'+opener_id);
                         let option = opener.document.createElement("OPTION");
                         option.text = value;
