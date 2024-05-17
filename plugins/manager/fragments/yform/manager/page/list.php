@@ -128,9 +128,9 @@ if (isset($rex_yform_manager_opener['id'])) {
                 data-multiple="' . $params['params']['opener_multiple'] . '">' . rex_i18n::msg('yform_data_select') . '</a></span>';
         },
         [
-            'opener_id' => $rex_yform_manager_opener['id'],
-            'opener_field' => $rex_yform_manager_opener['field'],
-            'opener_multiple' => $rex_yform_manager_opener['multiple'],
+            'opener_id' => $rex_yform_manager_opener['id'] ?? '0',
+            'opener_field' => $rex_yform_manager_opener['field'] ?? '',
+            'opener_multiple' => $rex_yform_manager_opener['multiple'] ?? '0',
         ],
     );
 } else {
