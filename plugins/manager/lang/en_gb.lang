@@ -18,8 +18,11 @@ yform_relation_move_first_data = Move selected entry to the top
 yform_relation_move_up_data = Move selected entry up
 yform_relation_move_down_data = Move selected entry down
 yform_relation_move_last_data = Move selected entry to the bottom
+yform_relation_add_entry = Add record
 yform_relation_choose_entry = Select record
 yform_relation_delete_entry = Delete selected record
+yform_relation_no_entry = No record selected
+yform_relation_view_entry = View record
 yform_relation_first_create_data = Please first create this record
 yform_relation_edit_relations = Edit relations
 
