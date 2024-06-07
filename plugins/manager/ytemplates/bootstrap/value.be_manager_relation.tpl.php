@@ -71,6 +71,8 @@ $e = [];
         $args['link'] = $link;
         $args['fieldName'] = $this->getRelationSourceTableName() . '.' . $this->getName();
         $args['valueName'] = $valueName;
+        $_csrf_key = rex_yform_manager_table::get($this->relation['target_table'])->getCSRFKey();
+        $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
         $value = implode(',', $this->getValue());
         echo \rex_var_yform_table_data::getSingleWidget($id, $name, $value, $args);
     } else {
@@ -81,6 +83,8 @@ $e = [];
         $args['fieldName'] = $this->getRelationSourceTableName() . '.' . $this->getName();
         $args['size'] = $this->getRelationSize();
         $args['attributes'] = $this->getAttributeArray([], ['required', 'readonly']);
+        $_csrf_key = rex_yform_manager_table::get($this->relation['target_table'])->getCSRFKey();
+        $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
         $value = implode(',', $this->getValue());
         echo \rex_var_yform_table_data::getMultipleWidget($id, $name, $value, $args);
     }

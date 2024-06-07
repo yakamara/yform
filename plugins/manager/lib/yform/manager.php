@@ -129,6 +129,15 @@ class rex_yform_manager
 
         $description = $popup || ('' == $this->table->getDescription()) ? '' : '<p>' . nl2br(rex_escape(rex_i18n::translate($this->table->getDescription()))) . '</p>';
 
+        if ($popup) {
+            // https://github.com/redaxo/redaxo/issues/760
+            ?>
+            <script type="text/javascript" nonce="<?= rex_response::getNonce() ?>">
+                rex_retain_popup_event_handlers("rex:YForm_selectData");
+            </script>
+            <?php
+        }
+
         echo rex_extension::registerPoint(
             new rex_extension_point(
                 'YFORM_MANAGER_DATA_PAGE_HEADER',
@@ -1318,7 +1327,7 @@ class rex_yform_manager
                             'onclick' => [
                                 'return confirm(\'' . rex_i18n::msg('yform_updatetable_with_delete_confirm') . '\')',
                             ],
-                        ],
+                        ], 0,
                     ],
                 ], false);
                 $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_table') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
