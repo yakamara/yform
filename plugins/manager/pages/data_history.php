@@ -330,7 +330,7 @@ if ($isDatasetHistory) {
             // handle actions column
             if (0 === $changes) {
                 $a['list']->setColumnLayout($changesCurrent, ['<th></th>', '<td class="current-dataset-row">###VALUE###</td>']);
-                $a['list']->setColumnLayout('view', ['<th></th>', '<td colspan="2" class="current-dataset-cell"><span class="current-dataset-hint">'.rex_i18n::msg('yform_history_is_current_dataset').'</span></td>']);
+                $a['list']->setColumnLayout('view', ['<th></th>', '<td colspan="2" class="current-dataset-cell"><span class="current-dataset-hint">' . rex_i18n::msg('yform_history_is_current_dataset') . '</span></td>']);
                 $a['list']->setColumnLayout('restore', ['<th></th>', '']);
             } else {
                 $a['list']->setColumnLayout($changesCurrent, ['<th></th>', $normalCell]);
