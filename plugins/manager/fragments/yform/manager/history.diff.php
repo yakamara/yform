@@ -57,7 +57,7 @@ if(null !== $historyId && null !== $table):
 
         // count diffs
         if(!$currentDataset->hasValue($field->getName())) {
-            $change = 'deleted';
+            $change = 'removed';
         } elseif('' . $historyValue !== '' . $currentValue) {
             $change = 'changed';
         }
@@ -188,17 +188,11 @@ foreach ($diffs as $change => $diff) {
 $content .= '
     </div>
     <div class="modal-footer">
-        <a href="index.php?page=yform/manager/data_edit?' . $restoreUrl . '" class="btn btn-warning" onclick="return confirm(\'' . rex_i18n::msg('yform_history_restore_confirm') . '\')">' .
+        <a href="index.php?page=yform/manager/data_edit?' . $restoreUrl . '" class="btn btn-warning" id="yform-manager-history-restore" data-confirm-text="' . rex_i18n::msg('yform_history_restore_confirm') . '">' .
             rex_i18n::msg('yform_history_restore_this') .
         '</a>
         <button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true">&times;</button>
     </div>
-    <script>
-        // init bootstrap tooltips
-        $(".modal#rex-yform-history-modal [data-toggle=\"tooltip\"]").tooltip({
-            html: true
-        })
-    </script>
 ';
 
 echo $content;

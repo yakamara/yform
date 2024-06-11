@@ -30,6 +30,7 @@ if (rex::isBackend() && rex::getUser()) {
     rex_view::addJsFile($this->getAssetsUrl('relations.js'));
     rex_view::addCssFile($this->getAssetsUrl('manager.css'));
     rex_view::addJsFile($this->getAssetsUrl('widget.js'));
+    rex_view::addJsFile($this->getAssetsUrl('history.js'));
 
     if (!rex::getUser()->isAdmin()) {
         $page = $this->getProperty('page');

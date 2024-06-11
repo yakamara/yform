@@ -267,6 +267,7 @@ yform_history_diff_added = Tillagd
 yform_history_diff_removed = Borttagen
 yform_history_diff_not_yet_existing = Ännu Inte Existerande
 yform_history_diff_no_longer_existing = Inte Längre Existerande
+yform_history_is_current_dataset = aktuella versionen av datasatsen
 
 yform_manager_show_form_notation = Formularkod
 

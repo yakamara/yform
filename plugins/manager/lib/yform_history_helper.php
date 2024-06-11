@@ -46,7 +46,7 @@ class rex_yform_history_helper
 
     /**
      * detect diffs in 2 strings.
-     * @return array<string|array<string>>
+     * @return array<string|array>
      * @author Peter Schulze | p.schulze[at]bitshifters.de
      * @created 17.04.2024
      * @copyright https://github.com/paulgb/simplediff | Paul Butler (paulgb)

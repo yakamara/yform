@@ -287,3 +287,124 @@ body.rex-theme-dark .yform-be-relation-wrapper > div {
         background: #1a3332
     }
 }
+
+#rex-yform-history-modal.in {
+    display: flex !important;
+}
+
+#rex-yform-history-modal header.panel-heading:not(:first-of-type) {
+    margin-top: 3px;
+}
+
+#rex-yform-history-modal header.panel-heading .panel-title i {
+    display: inline-block;
+    width: 25px;
+}
+
+#rex-yform-history-modal header + .panel-collapse {
+    padding-top: 5px;
+}
+
+.history-list tr.current-dataset-row {
+    background-color: #a0e4c1;
+}
+
+.history-list .current-dataset-cell {
+    text-align: center;
+}
+
+.history-list .current-dataset-hint {
+    color: #5bb585;
+    font-style: italic;
+}
+
+.history-diff-table tbody td {
+    line-height: 1.5
+}
+
+.history-diff-table ins,
+.history-diff-table .diff {
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+.history-diff-table del {
+    color: #d68787;
+}
+
+.history-diff-table ins {
+    background-color: #a6e1a6;
+    text-decoration: none;
+}
+
+.history-diff-table .diff {
+    background-color: #c6daff;
+}
+
+.history-diff-table thead th:first-child {
+    padding-left: 10px;
+}
+
+.history-diff-table tbody th:first-child {
+    padding-left: 45px;
+    position: relative;
+}
+
+.history-diff-table tbody th:first-child > i,
+.history-diff-table tbody th:first-child > span {
+    display: flex;
+    background-color: #F5F5F5;
+    width: 35px;
+    text-align: left;
+    position: absolute;
+    left: 0;
+    top: 1px;
+    bottom: 1px;
+    justify-content: center;
+    padding-top: 12px;
+    color: #000;
+}
+
+/* special for numbers */
+.history-diff-table tbody th:first-child > i.rex-icon.fa-1:before {
+    content: '123';
+}
+
+.history-diff-table tbody th:first-child > span:before {
+    content: '';
+    display: block;
+    width: 23px;
+    height: 14px;
+    border: 1px solid #000;
+    border-radius: 3px;
+}
+
+.history-diff-table tbody th:first-child > span:after {
+    content: 'abc';
+    font-size: 8px;
+    position: absolute;
+    top: 15px;
+    left: 9px;
+    font-weight: bold;
+}
+
+#collapse-history-table-added .history-diff-table tbody th:first-child {
+    color: #088808;
+}
+
+#collapse-history-table-removed .history-diff-table tbody th:first-child {
+    color: #e30d0d;
+}
+
+#collapse-history-table-added .history-diff-table tbody td em,
+#collapse-history-table-removed .history-diff-table tbody td em {
+    color: #AAA;
+}
+
+@media (min-width: 768px) {
+    #rex-yform-history-modal.in .modal-dialog {
+        max-width: calc(100% - 40px);
+        width: auto;
+        display: inline-block;
+    }
+}

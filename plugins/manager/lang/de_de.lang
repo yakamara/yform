@@ -270,6 +270,7 @@ yform_history_diff_added = neu
 yform_history_diff_removed = entfernt
 yform_history_diff_not_yet_existing = noch nicht vorhanden
 yform_history_diff_no_longer_existing = nicht mehr vorhanden
+yform_history_is_current_dataset = aktuelle Version des Datensatzes
 
 yform_manager_show_form_notation = Formular-Code
 
