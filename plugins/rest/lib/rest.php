@@ -41,7 +41,7 @@ class rex_yform_rest
     public static function getCurrentPath()
     {
         $url = parse_url($_SERVER['REQUEST_URI']);
-        if (isset($url['path']) && class_exists('\rex_yrewrite')) {
+        if (isset($url['path']) && class_exists('\rex_yrewrite') && rex_yrewrite::getCurrentDomain()) {
             $currentPath = str_replace(rex_yrewrite::getCurrentDomain()->getPath(), '/', $url['path']);
         } else {
             $currentPath = '';
