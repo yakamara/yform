@@ -123,7 +123,7 @@ $userQuery = '
         `table_name` = ' . $sql->escape($table->getTableName());
 
 $list = rex_list::factory($listQuery, defaultSort: [
-    'timestamp' => 'asc',
+    'timestamp' => 'desc',
     'hid' => 'asc',
 ]);
 $list->addFormAttribute('class', 'history-list');
