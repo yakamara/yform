@@ -5,7 +5,7 @@
  * @psalm-scope-this rex_yform_value_be_media
  */
 
-$counter ??= 1;
+$counter ??= 1000;
 
 $buttonId = $counter;
 $name = $this->getFieldName();

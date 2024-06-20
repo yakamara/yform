@@ -25,9 +25,6 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             $this->setValue(implode(',', $medias));
         }
 
-        static $counter = 0;
-        ++$counter;
-
         $types = $this->getElement('types') ?? '';
         // to be in line with upload field
         if ('*' == $types) {
@@ -38,10 +35,10 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             if (!$this->isEditable()) {
                 $this->params['form_output'][$this->getId()] = $this->parse(
                     ['value.view.tpl.php', 'value.be_media-view.tpl.php'],
-                    ['counter' => $counter, 'value' => explode(',', $this->getValue()), 'types' => $types],
+                    ['value' => explode(',', $this->getValue()), 'types' => $types],
                 );
             } else {
-                $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('counter', 'types'));
+                $this->params['form_output'][$this->getId()] = $this->parse('value.be_media.tpl.php', compact('types'));
             }
         }
 
