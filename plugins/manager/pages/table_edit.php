@@ -7,6 +7,46 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
+/**
+ * Add a database selection choice to $form if $fieldEnabled is true, show the configured database from $table by
+ * adding a hidden and a show value field to $form if $fieldEnabled is false.
+ *
+ * @param rex_yform                    $form         Form to add the select field to.
+ * @param array<int, array{
+ *           host: string, login: string, password: string, name: string,
+ *           persistent: bool, ssl_key: ?string, ssl_cert: ?string, ssl_ca: ?string
+ *        }                            $dbConfigs    Array with DB configurations from rex_config
+ * @param bool                         $fieldEnabled [optional] Defaults to true. Set false to disable the select
+ *                                                   field.
+ * @param rex_yform_manager_table|null $table        [optional] Defaults to null. Pass the table object, when
+ *                                                   $fieldEnabled is set to false
+ *
+ * @return void
+ */
+function databaseSelectionChoiceOrShow(rex_yform $form, array $dbConfigs, bool $fieldEnabled = true, ?rex_yform_manager_table $table = null): void
+{
+    $databaseChoices = [];
+    foreach ($dbConfigs as $dbId => $dbConfig) {
+        $databaseChoices[$dbId] = "DB {$dbId}: Host »{$dbConfig['host']}«";
+    }
+
+    if (true !== $fieldEnabled) {
+        $form->setHiddenField('db_id', $table->getDatabaseId());
+        $form->setValueField('showvalue', [
+            'db_id',
+            rex_i18n::msg('yform_manager_database_selection'),
+            1,
+            $databaseChoices[$table->getDatabaseId()],
+        ]);
+    } else {
+        $form->setValueField('choice', [
+            'name'    => 'db_id',
+            'label'   => rex_i18n::msg('yform_manager_database_selection'),
+            'choices' => $databaseChoices,
+        ]);
+    }
+}
+
 echo rex_view::title(rex_i18n::msg('yform'));
 $_csrf_key = 'yform_table_edit';
 
@@ -66,6 +106,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     }
 } elseif (('add' == $func || 'edit' == $func) && rex::getUser()->isAdmin()) {
     $table = null;
+    $dbConfigs = rex_yform::getDatabaseConfigurations();
     if ('edit' == $func) {
         $table = rex_yform_manager_table::getById($table_id);
         if (!$table) {
@@ -90,6 +131,9 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $yform->setValueField('html', ['html' => '<div class="row"><div class="col-md-6">']);
     $yform->setValueField('html', ['html' => '<label>' . rex_i18n::msg('yform_manager_table_basic_info') . '</label>']);
     $yform->setValueField('checkbox', ['status', rex_i18n::msg('yform_tbl_active')]);
+    if (count($dbConfigs) > 1) {
+        databaseSelectionChoiceOrShow($yform, $dbConfigs, 'add' === $func, $table);
+    }
     $yform->setValueField('prio', ['prio', rex_i18n::msg('yform_manager_table_prio'), 'name']);
 
     switch ($func) {

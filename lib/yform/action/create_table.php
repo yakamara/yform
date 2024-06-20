@@ -12,11 +12,12 @@ class rex_yform_action_create_table extends rex_yform_action_abstract
     public function executeAction(): void
     {
         $table_name = $this->getElement(2);
+        $db_id = $this->params['db_id'] ?? 1;
         $table_name = str_replace('%TABLE_PREFIX%', rex::getTablePrefix(), $table_name);
         $table_exists = false;
         $cols = [];
 
-        $tables = rex_sql::factory()->getArray('show tables');
+        $tables = rex_sql::factory($db_id)->getArray('show tables');
         foreach ($tables as $table) {
             if (current($table) == $table_name) {
                 $table_exists = true;
@@ -25,16 +26,16 @@ class rex_yform_action_create_table extends rex_yform_action_abstract
         }
 
         if (!$table_exists) {
-            rex_sql::factory()->setQuery('CREATE TABLE `' . $table_name . '` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
+            rex_sql::factory($db_id)->setQuery('CREATE TABLE `' . $table_name . '` (`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;');
         }
 
-        foreach (rex_sql::factory()->getArray('show columns from ' . $table_name) as $k => $v) {
+        foreach (rex_sql::factory($db_id)->getArray('show columns from ' . $table_name) as $k => $v) {
             $cols[] = $v['Field'];
         }
 
         foreach ($this->params['value_pool']['sql'] as $key => $value) {
             if (!in_array($key, $cols)) {
-                rex_sql::factory()->setQuery('ALTER TABLE `' . $table_name . '` ADD `' . $key . '` TEXT NOT NULL;');
+                rex_sql::factory($db_id)->setQuery('ALTER TABLE `' . $table_name . '` ADD `' . $key . '` TEXT NOT NULL;');
             }
         }
     }

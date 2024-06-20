@@ -5,6 +5,9 @@
         "psr/http-message": "*",
         "psr/log": "*"
     },
+    "require": {
+        "php": "^8.1"
+    },
     "require-dev": {
         "redaxo/php-cs-fixer-config": "^2.0",
         "friendsofphp/php-cs-fixer": "v3.37.1",

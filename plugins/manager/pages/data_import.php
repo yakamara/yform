@@ -127,9 +127,7 @@ if (1 == rex_request('send', 'int', 0)) {
                                     break;
                                 }
                                 if (2 == $missing_columns) {
-                                    $i = rex_sql::factory();
-
-                                    foreach ($mc as $mcc) {
+                                      foreach ($mc as $mcc) {
                                         rex_sql::factory()
                                             ->setTable(rex_yform_manager_field::table())
                                             ->setValue('table_name', $this->table->getTablename())

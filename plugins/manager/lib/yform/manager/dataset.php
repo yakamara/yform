@@ -161,7 +161,8 @@ class rex_yform_manager_dataset
             return $class::queryOne($query, $params, $table);
         }
 
-        $sql = rex_sql::factory();
+        $db_id = rex_yform_manager_table::get($table)->getDatabaseId();
+        $sql = rex_sql::factory($db_id);
         $sql
             ->setDebug(self::$debug)
             ->setQuery($query, $params);
@@ -191,7 +192,8 @@ class rex_yform_manager_dataset
             return $class::queryCollection($query, $params, $table);
         }
 
-        $sql = rex_sql::factory();
+        $db_id = rex_yform_manager_table::get($table)->getDatabaseId();
+        $sql = rex_sql::factory($db_id);
         $sql->setDebug(self::$debug);
 
         $data = $sql->getArray($query, $params);
@@ -301,7 +303,7 @@ class rex_yform_manager_dataset
 
     public function loadData(): void
     {
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($this->getTable()->getDatabaseId());
         $rows = $sql->getArray('SELECT * FROM `' . $this->table . '` WHERE id = ? LIMIT 1', [$this->id]);
         $this->exists = isset($rows[0]);
         if ($this->exists) {
@@ -463,7 +465,7 @@ class rex_yform_manager_dataset
             $this->makeSnapshot(self::ACTION_DELETE);
         }
 
-        $sql = rex_sql::factory();
+        $sql = rex_sql::factory($this->getTable()->getDatabaseId());
         $sql
             ->setDebug(self::$debug)
             ->setTable($this->table)
@@ -572,19 +574,20 @@ class rex_yform_manager_dataset
         // ep to overwrite user
         $user = rex_extension::registerPoint(new rex_extension_point('YCOM_HISTORY_USER', $user));
 
-        $sql = rex_sql::factory();
-        $sql->setDebug(self::$debug);
-        $sql
+        $historySql = rex_sql::factory();
+        $historySql->setDebug(self::$debug);
+        $historySql
             ->setTable(rex::getTable('yform_history'))
             ->setValue('table_name', $this->table)
             ->setValue('dataset_id', $this->id)
             ->setValue('action', $action)
             ->setValue('user', $user)
-            ->setValue('timestamp', $sql::datetime())
+            ->setValue('timestamp', $historySql::datetime())
             ->insert();
 
-        $historyId = $sql->getLastId();
+        $historyId = $historySql->getLastId();
 
+        $sql = rex_sql::factory($this->getTable()->getDatabaseId());
         $sql
             ->setTable($this->table)
             ->setWhere(['id' => $this->id])
@@ -619,7 +622,7 @@ class rex_yform_manager_dataset
             }
         }
 
-        $sql->setQuery('INSERT INTO ' . rex::getTable('yform_history_field') . ' (`history_id`, `field`, `value`) VALUES ' . implode(', ', $inserts));
+        $historySql->setQuery('INSERT INTO ' . rex::getTable('yform_history_field') . ' (`history_id`, `field`, `value`) VALUES ' . implode(', ', $inserts));
     }
 
     public function restoreSnapshot(int $snapshotId): bool
@@ -681,6 +684,7 @@ class rex_yform_manager_dataset
         $yform->setObjectparams('form_needs_output', false);
         $yform->setObjectparams('csrf_protection', false);
         $yform->setObjectparams('get_field_type', '');
+        $yform->setObjectparams('db_id', $this->getTable()->getDatabaseId());
 
         return $yform;
     }
@@ -716,6 +720,7 @@ class rex_yform_manager_dataset
         }
 
         $yform->setObjectparams('main_table', $this->table);
+        $yform->setObjectparams('db_id', $this->getTable()->getDatabaseId());
         $yform->setActionField('db', [$this->table, 'main_where']);
 
         return $yform;

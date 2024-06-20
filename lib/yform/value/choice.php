@@ -285,6 +285,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     private static function createChoiceList($elements)
     {
         $self = new self();
+        $db_id = $self->params['db_id'] ?? 1;
 
         $options = [
             'choices' => [],
@@ -324,7 +325,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $choiceList = new rex_yform_choice_list($options);
 
         if (is_string($choicesElement) && 'SELECT' == rex_sql::getQueryType($choicesElement)) {
-            $sql = rex_sql::factory();
+            $sql = rex_sql::factory($db_id);
             $sql->setDebug($self->getParam('debug'));
             $choiceList->createListFromSqlArray(
                 $sql->getArray($choicesElement),
