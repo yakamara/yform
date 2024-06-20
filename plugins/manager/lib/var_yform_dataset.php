@@ -94,7 +94,7 @@ class rex_var_yform_table_data extends rex_var
         return self::quote($value);
     }
 
-    public static function getMultipleWidget($id, $name, $value, array $args = [])
+    public static function getMultipleWidget($id, $name, $value, array $args = []): string
     {
         $link = $args['link'];
         $size = $args['size'] ?? 10;
@@ -103,13 +103,9 @@ class rex_var_yform_table_data extends rex_var
         $attributes['class'] = 'form-control yform-dataset-view';
         $attributes = array_merge($attributes, $args['attributes'] ?? []);
 
-        $dataset_view_id = 'yform-dataset-view-' . $id . '';
-        $dataset_real_id = 'yform-dataset-real-' . $id . '';
-
         $select = new rex_select();
         $select->setAttributes($attributes);
-        $select->setId($dataset_view_id);
-        $select->setName($dataset_view_id . '-name');
+        $select->setName($name . '-name');
         $select->setSize($size);
         foreach ($args['options'] as $option) {
             $select->addOption($option['name'], $option['id']);
@@ -122,7 +118,7 @@ class rex_var_yform_table_data extends rex_var
 
         $e = [];
         $e['field'] = $select->get() . '
-                <input type="hidden" class="yform-dataset-real" name="' . $name . '" id="' . $dataset_real_id . '" value="' . rex_escape($value) . '" />';
+                <input type="hidden" class="yform-dataset-real" name="' . $name . '" value="' . rex_escape($value) . '" />';
 
         $e['moveButtons'] = '
                 <a class="btn btn-popup yform-dataset-widget-move yform-dataset-widget-move-top" title="' . rex_i18n::msg('yform_relation_move_first_data') . '"><i class="rex-icon rex-icon-top"></i></a>
@@ -154,8 +150,6 @@ class rex_var_yform_table_data extends rex_var
         if ('' != $value) {
             $valueName = rex_escape(trim(sprintf('%s [%s]', $args['valueName'], $value)));
         }
-        $dataset_view_id = 'yform-dataset-view-' . $id . '';
-        $dataset_real_id = 'yform-dataset-real-' . $id . '';
 
         $viewButton = '<a class="btn btn-popup yform-dataset-widget-view" title="' . rex_i18n::msg('yform_relation_view_entry') . '"><i class="rex-icon rex-icon-view"></i></a>';
         if ('' === $value) {
@@ -163,8 +157,8 @@ class rex_var_yform_table_data extends rex_var
         }
 
         $e['field'] = '
-            <input class="form-control yform-dataset-view" type="text" value="' . $valueName . '" id="' . $dataset_view_id . '" readonly="readonly" />
-            <input type="hidden" class="yform-dataset-real" name="' . $name . '" id="' . $dataset_real_id . '" value="' . $value . '" />';
+            <input class="form-control yform-dataset-view" type="text" value="' . $valueName . '" readonly="readonly" />
+            <input type="hidden" class="yform-dataset-real" name="' . $name . '" value="' . $value . '" />';
         $e['functionButtons'] = '
                 <a class="btn btn-popup yform-dataset-widget-open" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-view-list"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-add" title="' . rex_i18n::msg('yform_relation_add_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
