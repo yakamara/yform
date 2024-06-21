@@ -117,6 +117,13 @@ class rex_yform_manager_table_api
      */
     public static function exportTablesets(array $table_names)
     {
+        $recursiveKsort = function(&$array) use (&$recursiveKsort) {
+            foreach ($array as &$value) {
+                if (is_array($value)) $recursiveKsort($value);
+            }
+            ksort($array);
+        };
+
         $export = [];
         foreach ($table_names as $table_name) {
             $export_table = rex_yform_manager_table::get($table_name);
@@ -130,17 +137,8 @@ class rex_yform_manager_table_api
             ];
         }
 
-        return json_encode(self::recursive_ksort($export), JSON_PRETTY_PRINT);
-    }
-    /**
-     * @param array $array
-     * @return array
-     */
-    public static function recursive_ksort(&$array) {
-        foreach ($array as &$value) {
-            if (is_array($value)) recursive_ksort($value);
-        }
-        return ksort($array);
+        $recursiveKsort($export);
+        return json_encode($export, JSON_PRETTY_PRINT);
     }
 
     /**
