@@ -61,7 +61,10 @@ class rex_yform_action_db extends rex_yform_action_abstract
                     $sql_id->setWhere($where);
                     $sql_id->select('id');
                     $this->params['main_id'] = $sql_id->getValue('id');
+                    /** @deprecated use 'id' instead of 'ID' */
                     $this->params['value_pool']['email']['ID'] = $this->params['main_id'];
+                    $this->params['value_pool']['email']['id'] = $this->params['main_id'];
+                    $this->params['value_pool']['sql']['id'] = $this->params['main_id'];
                 }
             } else {
                 $sql->insert();
@@ -71,6 +74,7 @@ class rex_yform_action_db extends rex_yform_action_abstract
                 /** @deprecated since 3.4.1 use id (lowercase) instead */
                 $this->params['value_pool']['email']['ID'] = $id;
                 $this->params['value_pool']['email']['id'] = $id;
+                $this->params['value_pool']['sql']['id'] = $id;
             }
         } catch (Exception $e) {
             $this->params['form_show'] = true;
