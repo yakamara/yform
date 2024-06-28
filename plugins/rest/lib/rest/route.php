@@ -227,7 +227,7 @@ class rex_yform_rest_route
                             array_merge($paths, [$instance->getId()]),
                         );
                         if (is_callable($this->getItemFunc)) {
-                            $instance_data = call_user_func($this->getItemFunc, $this, $instance_data);
+                            $instance_data = call_user_func($this->getItemFunc, $this, $instance_data, $instance);
                         }
 
                         $data[] = $instance_data;
