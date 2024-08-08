@@ -94,6 +94,7 @@ yform_manager_table_features = Activated options
 
 yform_manager_type_id = Type
 yform_manager_type_name = Type name
+yform_manager_type_unknown = unknown
 
 yform_manager_tableset = Table set
 yform_manager_table = Table
@@ -128,6 +129,9 @@ yform_manager_table_hidden = Visibility
 yform_hidden = hidden
 yform_visible = visible
 
+yform_manager_actions_all = all actions
+yform_manager_users_all = all users
+yform_manager_history_date_notice = all entries before and equal to this date are displayed
 
 # edit.inc.php
 yform_thankyouforupdate = Record updated.
@@ -166,9 +170,11 @@ yform_dataset_delete = Delete result reset
 yform_dataset_deleted = Result set deleted
 yform_dataset_delete_confirm = Delete result set?
 
-yform_data = Record
-yform_datas = Records
-yform_manager_search = Search
+yform_dataset_edit_confirm = Should all selected data records really be edited?
+
+yform_data = data record
+yform_datas = data records
+yform_manager_search = search
 
 yform_data_view = show
 
@@ -230,8 +236,10 @@ yform_manager_import_error_duplicatefielddefinition = There are identical fields
 
 # history
 yform_history = History
+yform_history_title = Historie for
 yform_history_dataset_id = Record ID
 yform_history_dataset = Record
+yform_history_dataset_current = current version
 yform_history_action = Action
 yform_history_action_create = created
 yform_history_action_update = updated
@@ -240,6 +248,7 @@ yform_history_user = User
 yform_history_timestamp = Timestamp
 yform_history_view = view
 yform_history_restore = revert
+yform_history_restore_confirm = Really revert to this version?
 yform_history_restore_this = Revert record to this version
 yform_history_restore_success = Record reverted
 yform_history_restore_error = Record could not be reverted.
@@ -248,6 +257,20 @@ yform_history_delete_all = completely
 yform_history_delete_older_3_months = older than 3 months
 yform_history_delete_confirm = Delete History?
 yform_history_delete_success = History records deleted.
+yform_history_revision = revision/change
+yform_history_dataset_missing = No (valid) data record ID was transferred! A comparison with a selected entry in the history is therefore not possible.
+yform_history_diff_headline_changed = changed values
+yform_history_diff_headline_unchanged = unchanged values
+yform_history_diff_headline_added = added fields
+yform_history_diff_headline_removed = removed fields
+yform_history_diff_headline_prev_changed = changes compared to previous version
+yform_history_diff_to_current = changes (to current)
+yform_history_diff_to_previous = changes (to previous)
+yform_history_diff_added = added
+yform_history_diff_removed = removed
+yform_history_diff_not_yet_existing = not yet existing
+yform_history_diff_no_longer_existing = no longer existing
+yform_history_is_current_dataset = current version of the record
 
 yform_manager_show_form_notation = Form code
 
@@ -288,3 +311,13 @@ yform_will_set_to = will be
 yform_field_add = Add field
 yform_field_update = Update field
 yform_field_db_type = Database field type
+
+yform_manager_table_data_view_roles = Data view limited to
+yform_manager_table_data_edit_roles = Data editing limited to
+
+yform_manager_table_nopermission = No permission for this table
+
+yform_manager_tables_edit = Tables with editing permission
+yform_manager_tables_view = Tables with view permission
+
+yform_structure_article_could_not_be_deleted = The article could not be deleted because it is used by the following data records:
