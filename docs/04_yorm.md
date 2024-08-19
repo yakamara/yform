@@ -526,7 +526,7 @@ $query->whereListContains('my_column', [3, 5, 9]);
 
 Die Klasse `rex_yform_manager_dataset` stellt eine Reihe von Methoden zur Verfügung, um mit Datensätzen zu arbeiten. Hier sind einige der wichtigsten Methoden:
 
-- `create($table, array $data = [])`: Erstellt einen neuen Datensatz in der angegebenen Tabelle und gibt ein `rex_yform_manager_dataset` Objekt für diesen Datensatz zurück.
+- `create($table)`: Erstellt einen neuen Datensatz und gibt ein `rex_yform_manager_dataset` Objekt für diesen Datensatz zurück. Zum Speichern `save()` aufrufen.
 - `get($table, $id)`: Gibt ein `rex_yform_manager_dataset` Objekt für den Datensatz mit der angegebenen ID in der angegebenen Tabelle zurück.
 - `getAll($table, $where = null, array $orderBy = [])`: Gibt alle Datensätze in der angegebenen Tabelle als Array von `rex_yform_manager_dataset` Objekten zurück. Optional kann eine WHERE-Bedingung und eine Sortierreihenfolge angegeben werden.
 - `getData()`: Gibt die Daten des aktuellen Datensatzes als assoziatives Array zurück.
