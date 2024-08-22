@@ -49,8 +49,8 @@ if (rex::isBackend() && rex::getUser()) {
         if ($table->isActive() && $table->isGranted('VIEW', rex::getUser())) {
             $be_page = new rex_be_page_main('yform_tables', $table->getTableName(), rex_escape($table->getNameLocalized()));
             $be_page->setHref('index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName());
-            $icon = rex_escape($table->getCustomIcon() ?: 'rex-icon rex-icon-module');
-            $be_page->setIcon($icon);
+            $icon = rex_escape($table->getCustomIcon() ?: 'rex-icon-module');
+            $be_page->setIcon('rex-icon ' . $icon);
             $be_page->setPrio($prio);
 
             if ($table->isHidden()) {
