@@ -121,7 +121,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $yform->setValueField('text', ['name', rex_i18n::msg('yform_manager_name')]);
     $yform->setValidateField('empty', ['name', rex_i18n::msg('yform_manager_table_enter_name')]);
     $yform->setValueField('textarea', ['description', '<br />' . rex_i18n::msg('yform_manager_table_description'), 'attributes' => '{"class":"form-control yform-textarea-short"}']);
-    $yform->setValueField('text', ['table_icon', rex_i18n::msg('yform_manager_custom_icon')]);
+    $yform->setValueField('text', ['table_icon', rex_i18n::msg('yform_manager_custom_icon'), 'attributes' => '{"class":"form-control yform-table-icon"}']);
 
     $yform->setValueField('html', ['html' => '</div><div class="col-md-6">']);
 
