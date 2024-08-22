@@ -240,7 +240,7 @@ final class rex_yform_manager_table implements ArrayAccess
     {
         return $this->values['description'];
     }
-    
+
     public function getCustomIcon(): string
     {
         return $this->values['table_icon'];
