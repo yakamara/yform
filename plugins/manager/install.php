@@ -23,6 +23,7 @@ $table
     ->ensureColumn(new rex_sql_column('table_name', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('name', 'varchar(191)'))
     ->ensureColumn(new rex_sql_column('description', 'text'))
+    ->ensureColumn(new rex_sql_column('table_icon', 'text'))
     ->ensureColumn(new rex_sql_column('list_amount', 'int(11)', false, '50'))
     ->ensureColumn(new rex_sql_column('list_sortfield', 'varchar(191)', false, 'id'))
     ->ensureColumn(new rex_sql_column('list_sortorder', 'enum(\'ASC\',\'DESC\')', false, 'ASC'))
