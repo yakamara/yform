@@ -131,13 +131,12 @@ class rex_yform_manager_table_api
             foreach ($export_table->getFields() as $field) {
                 $export_fields[] = array_diff_key($field->toArray(), ['id' => 0]);
             }
-            $export[$export_table['table_name']] = [
+            $export[$export_table['table_name']] = $recursiveKsort([
                 'table' => array_diff_key($export_table->toArray(), ['id' => 0, 'prio' => 0]),
                 'fields' => $export_fields,
-            ];
+            ](;
         }
 
-        $recursiveKsort($export);
         return json_encode($export, JSON_PRETTY_PRINT);
     }
 
