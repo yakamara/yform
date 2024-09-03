@@ -231,7 +231,7 @@ final class rex_yform_manager_table implements ArrayAccess
     public function getListAmount()
     {
         if (!isset($this->values['list_amount']) || $this->values['list_amount'] < 1) {
-            $this->values['list_amount'] = 30;
+            $this->values['list_amount'] = 100;
         }
         return $this->values['list_amount'];
     }
