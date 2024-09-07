@@ -1,11 +1,10 @@
 <?php
 
-/**
- * Hilfsmethoden für rex_yfom_list.
- *
- * @package redaxo\yform\manager
- */
-class rex_yform_list_tools
+namespace Yakamara\YForm\List;
+
+use rex_i18n;
+
+class Tools
 {
     public static function listFormat($p, $value = '')
     {

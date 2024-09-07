@@ -1,17 +1,36 @@
 <?php
 
-// Nötige Konstanten
-define('REX_LIST_OPT_SORT', 0);
-define('REX_LIST_OPT_SORT_DIRECTION', 1);
+namespace Yakamara\YForm\List;
 
-/**
- * Klasse zum erstellen von Listen.
- *
- * @package redaxo\yform\manager
- */
-class rex_yform_list implements rex_url_provider_interface
+use InvalidArgumentException;
+use rex;
+use rex_be_controller;
+use rex_extension;
+use rex_extension_point;
+use rex_factory_trait;
+use rex_formatter;
+use rex_fragment;
+use rex_i18n;
+use rex_pager;
+use rex_string;
+use rex_url;
+use rex_url_provider_interface;
+use rex_view;
+use rex_yform_manager_dataset;
+use rex_yform_manager_query;
+
+use function count;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_string;
+
+class YList implements rex_url_provider_interface
 {
     use rex_factory_trait;
+
+    public const LIST_OPT_SORT_DIRECTION = 1;
+    public const LIST_OPT_SORT = 0;
 
     /** @var rex_yform_manager_query */
     private $query;
@@ -36,7 +55,7 @@ class rex_yform_list implements rex_url_provider_interface
     private $formAttributes;
 
     //  --------- Row Attributes
-    /** @psalm-var array<string, string|int>|callable(self):string  */
+    /** @psalm-var array<string, (string | int)>|callable(\Yakamara\YForm\List\YList):string  */
     private $rowAttributes;
 
     // --------- Column Attributes
@@ -339,11 +358,10 @@ class rex_yform_list implements rex_url_provider_interface
     }
 
     // row attribute setter/getter
-
     /**
      * Methode, um der Zeile (<tr>) Attribute hinzuzufügen.
      *
-     * @param array<string, string|int>|callable(self):string $attr Entweder ein array: [attributname => attribut, ...]
+     * @param array<string, (string|int)>|callable(\Yakamara\YForm\List\YList):string $attr Entweder ein array: [attributname => attribut, ...]
      *                                                              oder eine Callback-Funktion
      */
     public function setRowAttributes($attr): void
@@ -354,7 +372,7 @@ class rex_yform_list implements rex_url_provider_interface
     /**
      * Methode, um die Zeilen-Attribute (<tr>) abzufragen.
      *
-     * @return array<string, string|int>|callable(self):string Entweder ein array: [attributname => attribut, ...]
+     * @return array<string, (string|int)>|callable(\Yakamara\YForm\List\YList):string Entweder ein array: [attributname => attribut, ...]
      *                                                         oder eine Callback-Funktion
      */
     public function getRowAttributes()
@@ -529,8 +547,8 @@ class rex_yform_list implements rex_url_provider_interface
      */
     public function setColumnSortable($columnName, $direction = 'asc')
     {
-        $this->setColumnOption($columnName, REX_LIST_OPT_SORT, true);
-        $this->setColumnOption($columnName, REX_LIST_OPT_SORT_DIRECTION, strtolower($direction));
+        $this->setColumnOption($columnName, self::LIST_OPT_SORT, true);
+        $this->setColumnOption($columnName, self::LIST_OPT_SORT_DIRECTION, strtolower($direction));
     }
 
     /**
@@ -980,7 +998,7 @@ class rex_yform_list implements rex_url_provider_interface
      * Formatiert einen übergebenen String anhand der rexFormatter Klasse.
      *
      * @param string     $value  Zu formatierender String
-     * @param null|array $format mit den Formatierungsinformationen
+     * @param array|null $format mit den Formatierungsinformationen
      * @param bool       $escape Flag, Ob escapen von $value erlaubt ist
      * @param string     $field
      *
@@ -1122,11 +1140,11 @@ class rex_yform_list implements rex_url_provider_interface
         $s .= '            <tr>' . "\n";
         foreach ($columnNames as $columnName) {
             $columnHead = $this->getColumnLabel($columnName);
-            if ($this->hasColumnOption($columnName, REX_LIST_OPT_SORT)) {
+            if ($this->hasColumnOption($columnName, self::LIST_OPT_SORT)) {
                 if ($columnName == $sortColumn) {
                     $columnSortType = 'desc' == $sortType ? 'asc' : 'desc';
                 } else {
-                    $columnSortType = $this->getColumnOption($columnName, REX_LIST_OPT_SORT_DIRECTION, 'asc');
+                    $columnSortType = $this->getColumnOption($columnName, self::LIST_OPT_SORT_DIRECTION, 'asc');
                 }
                 $columnHead = '<a class="rex-link-expanded" href="' . $this->getUrl([$this->pager->getCursorName() => $this->pager->getCursor(), 'sort' => $columnName, 'sorttype' => $columnSortType]) . '">' . $columnHead . '</a>';
             }
