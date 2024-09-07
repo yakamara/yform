@@ -1,11 +1,9 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+use Yakamara\YForm\Manager\Field;
+use Yakamara\YForm\Manager\Table\Api;
+use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\YForm;
 
 echo rex_view::title(rex_i18n::msg('yform'));
 $_csrf_key = 'yform_table_edit';
@@ -19,7 +17,7 @@ $table_id = rex_request('table_id', 'int');
 $show_list = true;
 
 if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
-    $yform = new \Yakamara\YForm\YForm();
+    $yform = new YForm();
     $yform->setDebug(true);
     $yform->setHiddenField('page', $page);
     $yform->setHiddenField('func', $func);
@@ -58,7 +56,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     } else {
         try {
             $content = file_get_contents($yform->objparams['value_pool']['email']['importfile']);
-            \Yakamara\YForm\Manager\Table\Api::importTablesets($content);
+            Api::importTablesets($content);
             echo rex_view::info(rex_i18n::msg('yform_manager_table_import_success'));
         } catch (Exception $e) {
             echo rex_view::warning(rex_i18n::msg('yform_manager_table_import_failed', '', $e->getMessage()));
@@ -67,13 +65,13 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
 } elseif (('add' == $func || 'edit' == $func) && rex::getUser()->isAdmin()) {
     $table = null;
     if ('edit' == $func) {
-        $table = \Yakamara\YForm\Manager\Table\Table::getById($table_id);
+        $table = Table::getById($table_id);
         if (!$table) {
             $func = 'add';
         }
     }
 
-    $yform = new \Yakamara\YForm\YForm();
+    $yform = new YForm();
     // $yform->setDebug(TRUE);
     $yform->setObjectparams('form_name', $_csrf_key);
     $yform->setHiddenField('page', $page);
@@ -85,7 +83,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $yform->setHiddenField('start', rex_request('start', 'string'));
 
     $yform->setActionField('showtext', ['', rex_i18n::msg('yform_manager_table_entry_saved')]);
-    $yform->setObjectparams('main_table', \Yakamara\YForm\Manager\Table\Table::table());
+    $yform->setObjectparams('main_table', Table::table());
 
     $yform->setValueField('html', ['html' => '<div class="row"><div class="col-md-6">']);
     $yform->setValueField('html', ['html' => '<label>' . rex_i18n::msg('yform_manager_table_basic_info') . '</label>']);
@@ -97,7 +95,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
             $yform->setObjectparams('submit_btn_label', rex_i18n::msg('yform_update_table'));
             $yform->setValueField('showvalue', ['table_name', rex_i18n::msg('yform_manager_table_name')]);
             $yform->setHiddenField('table_id', $table->getId());
-            $yform->setActionField('db', [\Yakamara\YForm\Manager\Table\Table::table(), 'id=' . $table->getId()]);
+            $yform->setActionField('db', [Table::table(), 'id=' . $table->getId()]);
             $yform->setObjectparams('main_id', $table->getId());
             $yform->setObjectparams('main_where', 'id=' . $table->getId());
             $yform->setObjectparams('getdata', true);
@@ -112,9 +110,9 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
                 return !count($matches) || current($matches) != $table;
             }, '', rex_i18n::msg('yform_manager_table_enter_specialchars')]);
             $yform->setValidateField('customfunction', ['table_name', static function ($label = '', $table = '', $params = '') {
-                return (bool) \Yakamara\YForm\Manager\Table\Table::get($table);
+                return (bool) Table::get($table);
             }, '', rex_i18n::msg('yform_manager_table_exists')]);
-            $yform->setActionField('db', [\Yakamara\YForm\Manager\Table\Table::table()]);
+            $yform->setActionField('db', [Table::table()]);
             break;
     }
 
@@ -147,7 +145,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
     $sortFields = ['id'];
     if ('edit' === $func) {
         $sortFieldsSql = rex_sql::factory();
-        $sortFieldsSql->setQuery('SELECT f.name FROM `' . \Yakamara\YForm\Manager\Field::table() . '` f LEFT JOIN `' . \Yakamara\YForm\Manager\Table\Table::table() . '` t ON f.table_name = t.table_name WHERE t.id = :id ORDER BY f.prio', [
+        $sortFieldsSql->setQuery('SELECT f.name FROM `' . Field::table() . '` f LEFT JOIN `' . Table::table() . '` t ON f.table_name = t.table_name WHERE t.id = :id ORDER BY f.prio', [
             'id' => (int) $table_id,
         ]);
         while ($sortFieldsSql->hasNext()) {
@@ -223,19 +221,19 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
         switch ($func) {
             case 'edit':
                 $table_name = $yform->objparams['value_pool']['email']['table_name'];
-                $table = \Yakamara\YForm\Manager\Table\Table::get($table_name);
+                $table = Table::get($table_name);
                 if ($table) {
-                    \Yakamara\YForm\Manager\Table\Api::generateTableAndFields($table);
+                    Api::generateTableAndFields($table);
                 }
                 echo rex_view::info(rex_i18n::msg('yform_manager_table_updated'));
                 break;
             case 'add':
             default:
-                \Yakamara\YForm\Manager\Table\Table::deleteCache();
+                Table::deleteCache();
                 $table_name = $yform->objparams['value_pool']['sql']['table_name'];
-                $table = \Yakamara\YForm\Manager\Table\Table::get($table_name);
+                $table = Table::get($table_name);
                 if ($table) {
-                    \Yakamara\YForm\Manager\Table\Api::generateTableAndFields($table);
+                    Api::generateTableAndFields($table);
                     echo rex_view::success(rex_i18n::msg('yform_manager_table_added'));
                 }
                 break;
@@ -248,7 +246,7 @@ if ('delete' == $func && rex::getUser()->isAdmin()) {
         echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
     } else {
         $table_name = rex_request('table_name', 'string');
-        \Yakamara\YForm\Manager\Table\Api::removeTable($table_name);
+        Api::removeTable($table_name);
 
         $func = '';
         echo rex_view::success(rex_i18n::msg('yform_manager_table_deleted'));
@@ -310,7 +308,7 @@ if ($show_list && rex::getUser()->isAdmin()) {
     $fragment->setVar('size', 'xs', false);
     $panel_options = $fragment->parse('core/buttons/button_group.php');
 
-    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, mass_edit, history  from `' . \Yakamara\YForm\Manager\Table\Table::table() . '`';
+    $sql = 'select id, prio, name, table_name, status, hidden, import, export, search, mass_deletion, mass_edit, history  from `' . Table::table() . '`';
 
     $list = rex_list::factory($sql, 200, defaultSort: [
         'prio' => 'asc',
