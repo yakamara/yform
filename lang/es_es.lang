@@ -295,3 +295,54 @@ yform_email_caption = Lista de plantillas
 
 yform_email_info_text = <p>Los campos utilizados en los formularios se pueden ver y procesar en las plantillas. <mark>Básicamente, PHP también está permitido</mark>, por lo que puede responder individualmente a casos individuales. La salida normal de un campo es la siguiente:<br/><br/>REX_YFORM_DATA[field="name"]<br/>REX_YFORM_DATA[field="email" instead="El email se completó"]<br/>REX_YFORM_DATA[field="name" instead="Valor predeterminado"]<br/>REX_YFORM_DATA[field="name" prefix="Mein name:" suffix=""]</p>
 
+// REST
+
+yform_rest = REST-API
+
+yform_rest_token = Token
+
+yform_rest_token_header = REST: Token
+
+yform_rest_token_name = Nombre
+yform_rest_token_token = Token
+yform_rest_token_token_notice = ¿Se necesita una nueva ficha? [{0}]
+yform_rest_token_status = Activo
+
+yform_rest_token_deleted = El token ha sido eliminado
+yform_rest_token_info_text =
+yform_rest_token_update = Actualizar datos de token
+yform_rest_token_info_updated
+yform_rest_token_create = Crear token
+yform_rest_token_info_added
+
+yform_rest_token_updated = Datos de token se han actualizado.
+yform_rest_token_added = Token fue agregado
+
+yform_rest_token_header_summary
+
+yform_rest_token_header_description
+yform_rest_token_not_found = No se encontraron fichas
+yform_rest_token_caption = Lista de fichas
+
+yform_rest_token_name_validate = Por favor ingrese una descripción/nombre
+yform_rest_token_token_validate = Por favor ingrese un token
+
+yform_rest_token_amount = Número permitido de acceso
+
+yform_rest_token_interval = Intervalo
+yform_rest_token_none = Sin limitación
+yform_rest_token_per_hour = Máximas vistas por hora.
+yform_rest_token_per_day = Máximas vistas por día.
+yform_rest_token_per_month = Máximas vistas al mes.
+yform_rest_token_overall = Tráfico máximo
+
+yform_rest_token_access = Token de acceso
+yform_rest_token_access_header = REST:peticiones
+yform_rest_token_access_caption = Listado de accesos
+yform_rest_token_access_update = Editar entrada
+yform_rest_token_access_deleted = Se ha eliminado la entrada.
+yform_rest_token_access_updated = La entrada ha sido actualizada.
+yform_rest_token_access_datetime_created = Acceso en
+yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Endpoints permitidos

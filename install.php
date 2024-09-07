@@ -53,3 +53,22 @@ rex_sql_table::get(rex::getTable('yform_email_template'))
 
 $c = rex_sql::factory();
 $c->setQuery('ALTER TABLE `' . rex::getTable('yform_email_template') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;');
+
+// REST
+
+rex_sql_table::get(rex::getTable('yform_rest_token'))
+    ->ensurePrimaryIdColumn()
+    ->ensureColumn(new rex_sql_column('name', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('token', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('status', 'tinyint(1)', false, '1'))
+    ->ensureColumn(new rex_sql_column('amount', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('interval', 'varchar(191)'))
+    ->ensureColumn(new rex_sql_column('paths', 'text'))
+    ->ensure();
+
+rex_sql_table::get(rex::getTable('yform_rest_token_access'))
+    ->ensurePrimaryIdColumn()
+    ->ensureColumn(new rex_sql_column('token_id', 'int(11)'))
+    ->ensureColumn(new rex_sql_column('datetime_created', 'datetime'))
+    ->ensureColumn(new rex_sql_column('url', 'text'))
+    ->ensure();

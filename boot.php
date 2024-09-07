@@ -59,3 +59,11 @@ rex_extension::register('EDITOR_URL', static function (rex_extension_point $ep) 
         );
     }
 });
+
+// REST
+
+rex_extension::register('PACKAGES_INCLUDED', static function () {
+    if (!rex::isBackend()) {
+        rex_yform_rest::handleRoutes();
+    }
+});

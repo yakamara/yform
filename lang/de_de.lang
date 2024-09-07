@@ -315,4 +315,55 @@ yform_email_caption = Liste der Templates
 
 yform_email_info_text = <p>Felder, die in Formularen verwendet werden, können in den Templates angezeigt und verarbeitet werden. <mark>Grundsätzlich ist auch PHP erlaubt</mark>, sodass man ganz individuell auf einzelne Fälle eingehen kann. Die normale Ausgabe eines Feldes geschieht folgendermaßen:<br /><br />REX_YFORM_DATA[field="name" output="plain"] für Text E-Mail<br />REX_YFORM_DATA[field="name" output="html"] für HTML-Emails<br />REX_YFORM_DATA[field="email" instead="E-Mail wurde ausgefüllt"]<br />REX_YFORM_DATA[field="name" instead="defaultwert"]<br />REX_YFORM_DATA[field="name" prefix="Mein Name: " suffix=""]</p>
 
+// REST
+
+yform_rest = REST-API
+
+yform_rest_token = Token
+
+yform_rest_token_header = REST: Token
+
+yform_rest_token_name = Name
+yform_rest_token_token = Token
+yform_rest_token_token_notice = Neuer Token gewünscht ? [{0}]
+yform_rest_token_status = Aktiv
+
+yform_rest_token_deleted = Token wurde gelöscht
+yform_rest_token_info_text =
+yform_rest_token_update = Tokendaten aktualisieren
+yform_rest_token_info_updated
+yform_rest_token_create = Token anlegen
+yform_rest_token_info_added
+
+yform_rest_token_updated = Tokendaten wurden aktualisiert
+yform_rest_token_added = Token wurde hinzugefügt
+
+yform_rest_token_header_summary
+
+yform_rest_token_header_description
+yform_rest_token_not_found = Keine Token gefunden
+yform_rest_token_caption = Liste der Token
+
+yform_rest_token_name_validate = Bitte eine Bezeichnung/Name eingeben
+yform_rest_token_token_validate = Bitte einen Token eintragen
+
+yform_rest_token_amount = Erlaubte Anzahl der Zugriff
+
+yform_rest_token_interval = Interval
+yform_rest_token_none = Ohne Einschränkung
+yform_rest_token_per_hour = Maximale Aufrufe pro Stunde
+yform_rest_token_per_day = Maximale Aufrufe pro Tag
+yform_rest_token_per_month = Maximale Aufrufe pro Monat
+yform_rest_token_overall = Maximale Zugriffe
+
+yform_rest_token_access = Zugriffe
+yform_rest_token_access_header = REST: Zugriffe
+yform_rest_token_access_caption = Liste der Zugriffe
+yform_rest_token_access_update = Eintrag bearbeiten
+yform_rest_token_access_deleted = Eintrag wurde gelöscht
+yform_rest_token_access_updated = Eintrag wurde aktualisiert
+yform_rest_token_access_datetime_created = Zugriff am
+yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Erlaubte Endpoints
 

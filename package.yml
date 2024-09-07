@@ -23,6 +23,13 @@ page:
             title: 'translate:yform_email_templates'
             perm: admin[]
             pjax: true
+        rest:
+            title: 'translate:yform_rest'
+            pjax: true
+            perm: admin
+            subpages:
+                token: {title: translate:yform_rest_token}
+                access: {title: translate:yform_rest_token_access}
 
 stylesheets:
     - yform.css
