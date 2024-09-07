@@ -67,6 +67,7 @@ yform_manager_table_name = Name
 yform_manager_table_status = Status
 yform_manager_name = Bezeichnung
 yform_manager_table_description = Beschreibung
+yform_manager_custom_icon = Individuelles Icon
 yform_manager_entries_per_page = Datensätze pro Seite
 yform_manager_sortfield = Standardsortierung: Feld
 yform_manager_sortorder = Richtung

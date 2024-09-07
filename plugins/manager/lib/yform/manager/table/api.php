@@ -3,7 +3,7 @@
 class rex_yform_manager_table_api
 {
     /** @var array<int, string> */
-    public static array $table_fields = ['status', 'name', 'description', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import', 'schema_overwrite'];
+    public static array $table_fields = ['status', 'name', 'description', 'table_icon', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import', 'schema_overwrite'];
     public static bool $debug = false;
     public static array $cacheColumnsByTable = [];
 
