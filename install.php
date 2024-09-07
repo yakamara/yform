@@ -58,18 +58,6 @@ rex_sql_table::get(rex::getTable('yform_rest_token_access'))
 
 // Manager
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
-
-/**
- * @var rex_plugin $this
- * @psalm-scope-this rex_plugin
- */
-
 $table = rex_sql_table::get(rex::getTable('yform_table'));
 $hasMassDeletion = $table->hasColumn('mass_deletion');
 $hasMassEdit = $table->hasColumn('mass_edit');
@@ -148,18 +136,18 @@ if (!$hasMassEdit) {
 
 $c = rex_sql::factory();
 $c->setQuery(
-    'ALTER TABLE `' . rex::getTable('yform_table') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+    'ALTER TABLE `' . rex::getTable('yform_table') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;',
 );
 $c->setQuery(
-    'ALTER TABLE `' . rex::getTable('yform_field') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+    'ALTER TABLE `' . rex::getTable('yform_field') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;',
 );
 $c->setQuery(
-    'ALTER TABLE `' . rex::getTable('yform_history') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+    'ALTER TABLE `' . rex::getTable('yform_history') . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;',
 );
 $c->setQuery(
     'ALTER TABLE `' . rex::getTable(
-        'yform_history_field'
-    ) . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'
+        'yform_history_field',
+    ) . '` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;',
 );
 
 // from 4.0 on, but on every reinstall
@@ -169,7 +157,7 @@ if ($this->isInstalled()) {
             $perms = str_replace('"yform_manager_table":', '"yform_manager_table_edit":', (string) $role['perms']);
             rex_sql::factory()->setQuery(
                 'UPDATE ' . rex::getTablePrefix() . 'user_role SET perms=? where id=?',
-                [$perms, $role['id']]
+                [$perms, $role['id']],
             );
         }
     }
@@ -177,8 +165,8 @@ if ($this->isInstalled()) {
     try {
         rex_sql::factory()->setQuery(
             'UPDATE ' . rex::getTable(
-                'yform_field'
-            ) . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"'
+                'yform_field',
+            ) . ' SET `format` = "" WHERE type_name = "datestamp" AND `format` = "mysql"',
         );
     } catch (rex_sql_exception $e) {
     }
@@ -197,7 +185,7 @@ if ($this->isInstalled()) {
                     // remove these fields
                     rex_sql::factory()->setQuery(
                         'delete from `' . rex::getTable('yform_field') . '` where id = :id',
-                        ['id' => $field['id']]
+                        ['id' => $field['id']],
                     );
                     break;
 
@@ -208,13 +196,13 @@ if ($this->isInstalled()) {
                     try {
                         rex_sql::factory()->setQuery(
                             'update ' . rex::getTable(
-                                'yform_field'
+                                'yform_field',
                             ) . ' set type_name = ? where type_id="value" and type_name = ?',
-                            [$field_new_name, $field_old_name]
+                            [$field_new_name, $field_old_name],
                         );
                         rex_sql::factory()->setQuery(
                             'update ' . rex::getTable('yform_history_field') . ' set field = ? where field = ?',
-                            [$field_new_name, $field_old_name]
+                            [$field_new_name, $field_old_name],
                         );
                     } catch (rex_sql_exception $e) {
                     }
@@ -227,13 +215,13 @@ if ($this->isInstalled()) {
                     try {
                         rex_sql::factory()->setQuery(
                             'update ' . rex::getTable(
-                                'yform_field'
+                                'yform_field',
                             ) . ' set type_name = ? where type_id="value" and type_name = ?',
-                            [$field_new_name, $field_old_name]
+                            [$field_new_name, $field_old_name],
                         );
                         rex_sql::factory()->setQuery(
                             'update ' . rex::getTable('yform_history_field') . ' set field = ? where field = ?',
-                            [$field_new_name, $field_old_name]
+                            [$field_new_name, $field_old_name],
                         );
                     } catch (rex_sql_exception $e) {
                     }
@@ -245,7 +233,7 @@ if ($this->isInstalled()) {
                         'update `' . rex::getTable('yform_field') . '` set
                         type_name = "number", db_type = "", `default` = ""
                         where id = :id',
-                        ['id' => $field['id']]
+                        ['id' => $field['id']],
                     );
                     break;
 
