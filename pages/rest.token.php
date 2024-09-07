@@ -1,11 +1,8 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+use Yakamara\YForm\Rest\AuthToken;
+use Yakamara\YForm\Rest\Rest;
+use Yakamara\YForm\YForm;
 
 $_csrf_key = 'yform_rest_token';
 
@@ -21,7 +18,7 @@ $content = '';
 $show_list = true;
 
 $routes = [];
-foreach (\Yakamara\YForm\Rest\Rest::getRoutes() as $route) {
+foreach (Rest::getRoutes() as $route) {
     $routes[] = $route->getPath();
 }
 
@@ -46,7 +43,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
     $form_data[] = 'choice|paths|translate:yform_rest_token_token_paths|' . implode(',', $routes) . '||1';
 
-    $yform = \Yakamara\YForm\YForm::factory();
+    $yform = YForm::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest/token');
     $yform->setObjectparams('form_name', 'yform-rest-token-form');
 
@@ -189,7 +186,7 @@ if ($show_list) {
         $return = $maxHits;
 
         if ('none' != $list->getValue('interval')) {
-            $currentHits = \Yakamara\YForm\Rest\AuthToken::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
+            $currentHits = AuthToken::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
             $return = $currentHits . ' / ' . $maxHits . ' / ' . $list->getValue('interval') . '';
         }
 

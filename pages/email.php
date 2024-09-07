@@ -3,13 +3,6 @@
 use Yakamara\YForm\Email\Template;
 use Yakamara\YForm\YForm;
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
-
 $_csrf_key = 'yform_email';
 
 echo rex_view::title(rex_i18n::msg('yform_email_templates'));

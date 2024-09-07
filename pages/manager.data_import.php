@@ -1,13 +1,11 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- *
- * @var rex_yform_manager $this
- */
+use Yakamara\YForm\Manager\Field;
+use Yakamara\YForm\Manager\Manager;
+use Yakamara\YForm\Manager\Table\Api;
+use Yakamara\YForm\Manager\Table\Table;
+
+/** @var Manager $this */
 
 $_csrf_key ??= '';
 
@@ -79,7 +77,6 @@ if (1 == rex_request('send', 'int', 0)) {
 
             try {
                 $sql_db->transactional(function () use ($filename, $show_importform, $div, $fieldarray, $missing_columns, $debug, &$counter, &$dcounter, &$ecounter, &$rcounter, &$icounter, &$errorcounter, $fields) {
-
                     $fp = fopen($filename, 'r');
                     $firstbytes = fread($fp, 3);
                     $bom = pack('CCC', 0xEF, 0xBB, 0xBF);
@@ -131,7 +128,7 @@ if (1 == rex_request('send', 'int', 0)) {
 
                                     foreach ($mc as $mcc) {
                                         rex_sql::factory()
-                                            ->setTable(\Yakamara\YForm\Manager\Field::table())
+                                            ->setTable(Field::table())
                                             ->setValue('table_name', $this->table->getTablename())
                                             ->setValue('prio', 999)
                                             ->setValue('type_id', 'value')
@@ -145,10 +142,10 @@ if (1 == rex_request('send', 'int', 0)) {
                                         echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
                                     }
 
-                                    \Yakamara\YForm\Manager\Table\Api::generateTablesAndFields();
+                                    Api::generateTablesAndFields();
 
                                     $fields = [];
-                                    foreach (\Yakamara\YForm\Manager\Table\Table::get($this->table->getTableName())->getFields() as $field) {
+                                    foreach (Table::get($this->table->getTableName())->getFields() as $field) {
                                         $fields[strtolower($field->getName())] = $field;
                                     }
                                 } else {
@@ -232,10 +229,8 @@ if (1 == rex_request('send', 'int', 0)) {
                             'data_errors' => $errorcounter,
                         ],
                     ));
-
                 });
-
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $error_message = $e->getMessage();
             }
 
@@ -252,7 +247,7 @@ if (1 == rex_request('send', 'int', 0)) {
             echo rex_view::error(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
         }
 
-        \Yakamara\YForm\Manager\Table\Table::deleteCache();
+        Table::deleteCache();
     }
 }
 

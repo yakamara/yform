@@ -1,11 +1,8 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+use Yakamara\YForm\Manager\Table\Api;
+use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\YForm;
 
 echo rex_view::title(rex_i18n::msg('yform'));
 $_csrf_key = 'table_migrate';
@@ -17,7 +14,7 @@ $available_tables = rex_sql::factory()->getTablesAndViews();
 $yform_tables = [];
 $missing_tables = [];
 
-foreach (\Yakamara\YForm\Manager\Table\Table::getAll() as $g_table) {
+foreach (Table::getAll() as $g_table) {
     $yform_tables[] = $g_table->getTableName();
 }
 
@@ -27,7 +24,7 @@ foreach ($available_tables as $a_table) {
     }
 }
 
-$yform = new \Yakamara\YForm\YForm();
+$yform = new YForm();
 $yform->setObjectparams('form_showformafterupdate', 1);
 $yform->setObjectparams('form_name', $_csrf_key);
 $yform->setHiddenField('page', $page);
@@ -40,12 +37,12 @@ if ($yform->objparams['actions_executed']) {
     $schema_overwrite = (int) $yform->objparams['value_pool']['sql']['schema_overwrite'];
 
     try {
-        \Yakamara\YForm\Manager\Table\Api::migrateTable($table_name, (0 == $schema_overwrite) ? false : true); // with convert id / auto_increment finder
+        Api::migrateTable($table_name, (0 == $schema_overwrite) ? false : true); // with convert id / auto_increment finder
         echo rex_view::success(rex_i18n::msg('yform_manager_table_migrated_success'));
 
         unset($missing_tables[$table_name]);
 
-        $yform = new \Yakamara\YForm\YForm();
+        $yform = new YForm();
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setHiddenField('page', $page);
         $yform->setValueField('choice', ['name' => 'table_name', 'label' => rex_i18n::msg('yform_table'), 'choices' => $missing_tables]);

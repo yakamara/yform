@@ -1,20 +1,16 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+use Yakamara\YForm\Manager\Manager;
+use Yakamara\YForm\Manager\Table\Table;
 
 echo rex_view::title(rex_i18n::msg('yform'));
 
 $table_name = rex_request('table_name', 'string');
-$table = \Yakamara\YForm\Manager\Table\Table::get($table_name);
+$table = Table::get($table_name);
 
 if ($table) {
     try {
-        $page = new rex_yform_manager();
+        $page = new Manager();
         $page->setTable($table);
         $page->setLinkVars(['page' => 'yform/manager/table_field']);
         echo $page->getFieldPage();
