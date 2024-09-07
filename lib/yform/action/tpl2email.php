@@ -12,7 +12,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
     public function executeAction(): void
     {
         $template_name = $this->getElement(2);
-        if ($etpl = rex_yform_email_template::getTemplate($template_name)) {
+        if ($etpl = \Yakamara\YForm\Email\Template::getTemplate($template_name)) {
             $email_to = rex::getErrorEmail();
 
             if (filter_var($this->getElement(3), FILTER_VALIDATE_EMAIL)) {
@@ -41,7 +41,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 dump($etpl);
             }
 
-            $etpl = rex_yform_email_template::replaceVars($etpl, $this->params['value_pool']['email']);
+            $etpl = \Yakamara\YForm\Email\Template::replaceVars($etpl, $this->params['value_pool']['email']);
 
             $etpl['mail_to'] = $email_to;
             $etpl['mail_to_name'] = $email_to_name;
@@ -66,7 +66,7 @@ class rex_yform_action_tpl2email extends rex_yform_action_abstract
                 dump($etpl);
             }
 
-            if (!rex_yform_email_template::sendMail($etpl, $template_name)) {
+            if (!\Yakamara\YForm\Email\Template::sendMail($etpl, $template_name)) {
                 if ($this->params['debug']) {
                     dump('email could not be sent');
                 }

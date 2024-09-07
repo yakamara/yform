@@ -1,5 +1,8 @@
 <?php
 
+use Yakamara\YForm\Email\Template;
+use Yakamara\YForm\YForm;
+
 /**
  * yform.
  *
@@ -22,9 +25,9 @@ $template_key = rex_request('template_key', 'string', null);
 $template = null;
 
 if ($template_key) {
-    $template = rex_yform_email_template::getTemplate($template_key);
+    $template = Template::getTemplate($template_key);
 } elseif ($template_id) {
-    $template = rex_yform_email_template::getTemplateById($template_id);
+    $template = Template::getTemplateById($template_id);
 }
 
 $template_id = null;
@@ -68,7 +71,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $form_data[] = 'datestamp|updatedate||||0';
 
-    $yform = \Yakamara\YForm\YForm::factory();
+    $yform = YForm::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/email');
     $yform->setObjectparams('form_name', 'yform-email-template');
 

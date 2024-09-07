@@ -19,5 +19,6 @@ return RectorConfig::configure()
             'rex_yform_list_tools' => 'Yakamara\YForm\List\Tools',
             'rex_var_yform_data' => 'Yakamara\YForm\RexVar\Data',
             'rex_var_yform_table_data' => 'Yakamara\YForm\RexVar\TableData',
+            'rex_yform_email_template' => 'Yakamara\YForm\Email\Template',
         ],
     );
