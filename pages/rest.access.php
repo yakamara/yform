@@ -154,7 +154,7 @@ if ($show_list) {
     $list->setColumnParams('token_id', ['page' => 'yform/rest/token', 'func' => 'edit', 'data_id' => '###rest_id###']);
 
     $list->setColumnFormat('token_id', 'custom', static function ($params) {
-        $token = rex_yform_rest_auth_token::get($params['subject']);
+        $token = \Yakamara\YForm\Rest\AuthToken::get($params['subject']);
         if ($token) {
             return '<a href="index.php?page=yform/rest/token&func=edit&data_id=' . $params['subject'] . '">' . $token['name'] . '</a>';
         }

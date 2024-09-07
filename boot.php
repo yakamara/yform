@@ -1,13 +1,19 @@
 <?php
 
+use Yakamara\YForm\Rest\Rest;
+use Yakamara\YForm\YForm;
+
 /**
  * @var rex_addon $this
  * @psalm-scope-this rex_addon
  */
 
 class_alias('Yakamara\YForm\YForm', 'rex_yform');
+class_alias('Yakamara\YForm\Rest\Rest', 'rex_yform_rest');
+class_alias('Yakamara\YForm\Rest\Route', 'rex_yform_rest_route');
+class_alias('Yakamara\YForm\Rest\AuthToken', 'rex_yform_rest_auth_token');
 
-\Yakamara\YForm\YForm::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
+YForm::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {
     /* @var $this rex_addon */
@@ -66,7 +72,7 @@ rex_extension::register('EDITOR_URL', static function (rex_extension_point $ep) 
 
 rex_extension::register('PACKAGES_INCLUDED', static function () {
     if (!rex::isBackend()) {
-        rex_yform_rest::handleRoutes();
+        Rest::handleRoutes();
     }
 });
 

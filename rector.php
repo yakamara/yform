@@ -12,5 +12,8 @@ return RectorConfig::configure()
         RenameClassRector::class,
         [
             'rex_yform' => 'Yakamara\YForm\YForm',
+            'rex_yform_rest' => 'Yakamara\YForm\Rest\Rest',
+            'rex_yform_rest_route' => 'Yakamara\YForm\Rest\Route',
+            'rex_yform_rest_auth_token' => 'Yakamara\YForm\Rest\AuthToken',
         ],
     );

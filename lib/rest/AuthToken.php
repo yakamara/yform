@@ -1,6 +1,14 @@
 <?php
 
-class rex_yform_rest_auth_token
+namespace Yakamara\YForm\Rest;
+
+use rex;
+use rex_sql;
+use rex_sql_exception;
+
+use function count;
+
+class AuthToken
 {
     public static $interval = [
         'none',
@@ -14,9 +22,9 @@ class rex_yform_rest_auth_token
     /**
      * @throws rex_sql_exception
      */
-    public static function checkToken(rex_yform_rest_route $route): bool
+    public static function checkToken(Route $route): bool
     {
-        $myToken = rex_yform_rest::getHeader('token');
+        $myToken = Rest::getHeader('token');
 
         $TokenAuths = rex_sql::factory()->getArray('select * from ' . rex::getTable('yform_rest_token') . ' where status=1 and token=? and FIND_IN_SET(?, paths)', [$myToken, $route->getPath()]);
 
@@ -57,13 +65,13 @@ class rex_yform_rest_auth_token
             ->setTable(rex::getTable('yform_rest_token_access'))
             ->setValue('token_id', $TokenAuth['id'])
             ->setValue('datetime_created', date(rex_sql::FORMAT_DATETIME))
-            ->setValue('url', rex_yform_rest::getCurrentUrl())
+            ->setValue('url', Rest::getCurrentUrl())
             ->insert();
     }
 
     /**
      * @throws rex_sql_exception
-     * @return null|mixed
+     * @return mixed|null
      */
     public static function get(int $id)
     {
@@ -81,7 +89,7 @@ class rex_yform_rest_auth_token
 
     /**
      * @throws rex_sql_exception
-     * @return null|mixed
+     * @return mixed|null
      */
     public static function getCurrentIntervalAmount(string $interval, $token_id)
     {
