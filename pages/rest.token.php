@@ -21,7 +21,7 @@ $content = '';
 $show_list = true;
 
 $routes = [];
-foreach (rex_yform_rest::getRoutes() as $route) {
+foreach (\Yakamara\YForm\Rest\Rest::getRoutes() as $route) {
     $routes[] = $route->getPath();
 }
 
@@ -189,7 +189,7 @@ if ($show_list) {
         $return = $maxHits;
 
         if ('none' != $list->getValue('interval')) {
-            $currentHits = rex_yform_rest_auth_token::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
+            $currentHits = \Yakamara\YForm\Rest\AuthToken::getCurrentIntervalAmount($list->getValue('interval'), $list->getValue('id'));
             $return = $currentHits . ' / ' . $maxHits . ' / ' . $list->getValue('interval') . '';
         }
 
