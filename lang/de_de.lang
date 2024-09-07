@@ -281,4 +281,399 @@ yform_docs_email = E-Mail Templates
 yform_docs_rest = REST-API
 yform_docs_tools = Tools
 
+yform_email_templates = E-Mail Templates
 
+yform_email_key = Key - bitte nicht verändern
+yform_email_from = Absender-E-Mail [z.B.info@redaxo.de]
+yform_email_from_name = Absender-Name [z.B. REDAXO Server]
+yform_email_reply_to = Reply-To-E-Mail [z.B. yform@redaxo.de]
+yform_email_reply_to_name = Reply-To-Name [z.B. YForm Server]
+yform_email_header_template_mail_reply_to = Antwort an
+yform_email_subject = Betreff
+yform_email_body = Body
+yform_email_body_html = Body (Html)
+yform_email_create = E-Mail Template hinzufügen
+yform_email_update = E-Mail Template aktualisieren
+yform_email_header_template_description = Key
+yform_email_header_template_mail_from = von
+yform_email_header_template_mail_from_name = Name
+yform_email_header_template_subject = Betreff
+yform_email_create_template = Template erstellen
+yform_email_header_template_functions = Funktionen
+yform_email_templates_not_found = Keine Templates gefunden
+yform_email_delete_template = Löschen
+
+yform_email_info_template_added = Template wurde hinzugefügt
+yform_email_info_template_updated = Template wurde aktualisiert
+yform_email_info_template_deleted = Template wurde gelöscht
+
+yform_email_attachments = Anhänge
+
+yform_delete_template = Template löschen
+
+yform_email_caption = Liste der Templates
+
+yform_email_info_text = <p>Felder, die in Formularen verwendet werden, können in den Templates angezeigt und verarbeitet werden. <mark>Grundsätzlich ist auch PHP erlaubt</mark>, sodass man ganz individuell auf einzelne Fälle eingehen kann. Die normale Ausgabe eines Feldes geschieht folgendermaßen:<br /><br />REX_YFORM_DATA[field="name" output="plain"] für Text E-Mail<br />REX_YFORM_DATA[field="name" output="html"] für HTML-Emails<br />REX_YFORM_DATA[field="email" instead="E-Mail wurde ausgefüllt"]<br />REX_YFORM_DATA[field="name" instead="defaultwert"]<br />REX_YFORM_DATA[field="name" prefix="Mein Name: " suffix=""]</p>
+
+// REST
+
+yform_rest = REST-API
+
+yform_rest_token = Token
+
+yform_rest_token_header = REST: Token
+
+yform_rest_token_name = Name
+yform_rest_token_token = Token
+yform_rest_token_token_notice = Neuer Token gewünscht ? [{0}]
+yform_rest_token_status = Aktiv
+
+yform_rest_token_deleted = Token wurde gelöscht
+yform_rest_token_info_text =
+yform_rest_token_update = Tokendaten aktualisieren
+yform_rest_token_info_updated
+yform_rest_token_create = Token anlegen
+yform_rest_token_info_added
+
+yform_rest_token_updated = Tokendaten wurden aktualisiert
+yform_rest_token_added = Token wurde hinzugefügt
+
+yform_rest_token_header_summary
+
+yform_rest_token_header_description
+yform_rest_token_not_found = Keine Token gefunden
+yform_rest_token_caption = Liste der Token
+
+yform_rest_token_name_validate = Bitte eine Bezeichnung/Name eingeben
+yform_rest_token_token_validate = Bitte einen Token eintragen
+
+yform_rest_token_amount = Erlaubte Anzahl der Zugriff
+
+yform_rest_token_interval = Interval
+yform_rest_token_none = Ohne Einschränkung
+yform_rest_token_per_hour = Maximale Aufrufe pro Stunde
+yform_rest_token_per_day = Maximale Aufrufe pro Tag
+yform_rest_token_per_month = Maximale Aufrufe pro Monat
+yform_rest_token_overall = Maximale Zugriffe
+
+yform_rest_token_access = Zugriffe
+yform_rest_token_access_header = REST: Zugriffe
+yform_rest_token_access_caption = Liste der Zugriffe
+yform_rest_token_access_update = Eintrag bearbeiten
+yform_rest_token_access_deleted = Eintrag wurde gelöscht
+yform_rest_token_access_updated = Eintrag wurde aktualisiert
+yform_rest_token_access_datetime_created = Zugriff am
+yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Erlaubte Endpoints
+
+// Manager
+
+yform_function_button = Aktion
+
+yform_manager = Table Manager
+
+navigation_manager = Tabellen
+yform_manager_fields = Felder
+
+# yform manager
+yform_alltables = Alle Tabellen
+yform_back_to_overview = Zurück zur Übersicht
+yform_updatetable = aktualisieren
+yform_tablesupdated = Tabelle/n wurde/n aktualisiert
+yform_errors_occurred = Es sind Fehler aufgetreten
+yform_help_empty = Leereinträge können mit <br />"(empty)" gesucht werden
+yform_help_multipleselect = Mehrfachauswahl mit gedrückter CTRL/CMD Taste
+yform_updatetable_with_delete = mit Feldlöschung
+yform_updatetable_with_delete_confirm = Wirklich aktualisieren mit Feldlöschung ?
+
+yform_relation_move_first_data = Ausgewählten Datensatz an den Anfang verschieben
+yform_relation_move_up_data = Ausgewählten Datensatz nach oben verschieben
+yform_relation_move_down_data = Ausgewählten Datensatz nach unten verschieben
+yform_relation_move_last_data = Ausgewählten Datensatz an das Ende verschieben
+yform_relation_add_entry = Datensatz hinzufügen
+yform_relation_choose_entry = Datensatz auswählen
+yform_relation_delete_entry = Ausgewählten Datensatz löschen
+yform_relation_no_entry = Kein Datensatz zugewiesen
+yform_relation_view_entry = Datensatz ansehen
+yform_relation_first_create_data = Bitte zunächst diesen Datensatz erstellen
+yform_relation_edit_relations = Verknüpfungen verwalten
+
+yform_prio_top = Am Anfang
+yform_prio_after = Nach "{0}"
+yform_prio_bottom = Am Ende
+
+yform_truncate_table = leeren
+yform_table_truncated = Die Datensätze dieser Tabelle wurden gelöscht.
+yform_table_not_found = Die Tabelle wurde nicht gefunden
+yform_truncate_table_confirm = Alle Datensätze dieser Tabelle werden gelöscht. Fortfahren?
+yform_table_overview = Tabellenübersicht
+
+yform_manager_edit_table = Tabelle editieren
+yform_manager_add_table = Tabelle hinzufügen
+
+yform_update_table = Tabelle aktualisieren
+yform_add_table = Tabelle hinzufügen
+yform_add_row = Reihe hinzufügen
+
+yform_edit_datatable = Daten verwalten
+
+# tables.inc.php
+yform_importcsv = CSV Importieren
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_manager_table_updated = Tabelle und Felder wurden erstellt und/oder aktualisiert
+yform_manager_table_entry_saved = Vielen Dank fuer die Eintragung
+yform_manager_table_enter_name = Bitte tragen Sie die Tabellenbezeichnung ein
+yform_manager_table_enter_specialchars = Bitte tragen Sie beim Tabellenname nur Kleinbuchstaben und Zahlen ein. Das erste Zeichen muss ein Buchstabe sein
+yform_manager_table_exists = Dieser Tabellenname ist bereits vorhanden
+
+yform_manager_table_prio = Priorität
+yform_manager_table_prio_short = Prio
+yform_manager_table_name = Name
+yform_manager_table_status = Status
+yform_manager_name = Bezeichnung
+yform_manager_table_description = Beschreibung
+yform_manager_custom_icon = Individuelles Icon
+yform_manager_entries_per_page = Datensätze pro Seite
+yform_manager_sortfield = Standardsortierung: Feld
+yform_manager_sortorder = Richtung
+yform_manager_sortorder_asc = aufsteigend
+yform_manager_sortorder_desc = absteigend
+yform_manager_search_active = Suche aktiv
+yform_manager_enter_number = Bitte geben Sie eine Zahl für die Datensätze pro Seite ein
+yform_manager_table_hide = In Navigation versteckt
+yform_manager_table_allow_export = Export der Daten erlauben
+yform_manager_table_allow_import = Import von Daten erlauben
+yform_manager_table_allow_mass_deletion = Massenlöschung erlauben
+yform_manager_table_allow_mass_edit = Massenbearbeitung erlauben
+yform_manager_table_history = Historie anlegen
+yform_manager_tablefield_overview = Feldübersicht
+yform_manager_table_schema_overwrite = Datenbankfelder werden entsprechend des erkannten Schemas angeglichen
+yform_manager_table_basic_info = Basisinfo
+yform_manager_table_func = Tabellenfunktionen
+yform_manager_table_user_func = Benutzer-Komfortfunktionen
+
+yform_manager_table_updated = Vielen Dank für die Aktualisierung.
+yform_manager_table_added = Vielen Dank für den Eintrag.
+yform_manager_table_deleted = Tabellendefinitionen wurden gelöscht [Tabelle wurde nicht gelöscht]
+yform_manager_table_add = Tabelle anlegen
+yform_manager_table_update = Tabellen und Felder updaten
+yform_manager_table_import = Tabelle importieren
+yform_manager_table_features = Aktivierte Optionen
+
+yform_manager_type_id = Typ
+yform_manager_type_name = Typname
+
+yform_manager_tableset = Tableset
+yform_manager_table = Tabelle
+yform_manager_tables = Tabellen
+
+yform_manager_import = importieren
+yform_manager_export = exportieren
+yform_manager_create = anlegen
+yform_manager_migrate = migrieren
+
+yform_manager_table_migrate = Tabelle migrieren
+yform_manager_table_migrated_failed = Migration für `{0}` ist fehlgeschlagen. Fehler: {1}
+yform_manager_table_migrate_info = Der Migrationsmanager erstellt aus einer vorhandenen Tabelle, eine, die über den Tablemanager verwaltet werden kann. Dazu ist in der Tabelle ein Autoinkrement-Feld mit dem Namen `id` nötig. Ohne dieses Feld funktioniert der Tablemanager nicht.<br /><br />Optional ist die Entscheidung ein vorhandenes Autoinkrementfeld umzuwandeln. Z.B. "event_id" zu "id".
+yform_manager_migrate_table_id_convert = `id`-Feld konvertieren falls nicht vorhanden
+yform_manager_table_migrated_success = Die Tabelle wurde erfolgreich migriert.
+
+yform_manager_tableset_import = Tableset importieren
+yform_manager_tableset_import_jsonimportfile = JSON Datei einspielen
+yform_manager_tableset_import_info = Info
+yform_manager_tableset_import_warning_selectfile = Es wurde keine .json Datei verwendet, oder die Datei war fehlerhaft.
+yform_manager_tableset_import_warning_type = Der Dateityp ist falsch. Es muss eine JSON Datei sein.
+yform_manager_tableset_import_success = Tabelle/n wurde/n erfolgreich importiert
+yform_manager_tableset_import_failed = Tableset Import ist fehlgeschlagen:<br />{0}
+
+yform_manager_table_edit = Tabellen bearbeiten
+
+yform_manager_tableset_export = Tableset exportieren
+yform_manager_tableset_export_info = Info
+yform_manager_export_error_empty = Bitte mindestens eine Tabelle für den Export auswählen
+
+yform_manager_table_hidden = Sichtbarkeit
+yform_hidden = versteckt
+yform_visible = sichtbar
+
+yform_manager_actions_all = Alle Aktionen
+yform_manager_users_all = Alle Benutzer
+yform_manager_history_date_notice = Alle Einträge vor und gleich diesen Datums werden angezeigt
+
+# edit.inc.php
+yform_thankyouforupdate = Datensatz wurde aktualisiert.
+yform_thankyouforupdates = Datensätze wurde aktualisiert.
+yform_thankyouforentry = Datensatz wurde eingetragen.
+yform_editdata = Datensatz editieren [ID: {0}]
+yform_editdata_collection = {0} Datensätze editieren
+yform_editdata_collection_error_abort = Transaktion wurde wegen folgendem Fehler nicht ausgeführt: {0}
+yform_clonedata = Datensatz klonen [Original ID: {0}]
+yform_adddata = Datensatz anlegen
+yform_searchtext = Suchbegriff
+yform_searchfields = Tabellenfelder über die gesucht wird
+yform_id = Id
+yform_function = Funktion
+yform_function_button = Aktion
+yform_add = hinzufügen
+yform_add_apply = übernehmen
+yform_edit = editieren
+yform_clone = klonen
+yform_view = anzeigen
+yform_save = speichern
+yform_save_apply = übernehmen
+yform_delete = löschen
+yform_delete_definitions = Schema löschen
+yform_delete_definitions_info = Datenbanktabelle bleibt erhalten
+yform_search = suchen
+yform_export = exportieren
+yform_import = importieren
+yform_datadeleted = Datensatz wurde gelöscht
+yform_openerinfo = Opener-Info
+
+yform_table_info = Info
+yform_dataset = Datenergebnis
+
+yform_dataset_delete = Datenergebnis löschen
+yform_dataset_deleted = Datenergebnis wurde geleert
+yform_dataset_delete_confirm = Wirklich das Datenergebnis leeren?
+
+yform_dataset_edit_confirm = Sollen wirklich alle gewählten Datensätze bearbeitet werden?
+
+yform_data = Datensatz
+yform_datas = Datensätze
+yform_manager_search = Suche
+
+yform_data_view = ansehen
+
+
+yform_data_select = übernehmen
+
+# field.inc.php
+yform_tablenotexists = Diese Tabelle existiert nicht!
+yform_tablefield = Tabellenfeld
+yform_values = Werte
+yform_validates = Validierung/Überprüfung
+yform_actions = Aktionen
+yform_validatenamenotempty = Bitte tragen Sie den Namen ein
+yform_validatenamepregmatch = Bitte tragen Sie beim Namen nur Buchstaben und "_" ein
+yform_validatenamecheck = Dieser Name ist bereits vorhanden
+yform_donotsaveindb = Nicht in Datenbank speichern
+yform_hideinlist = In Liste verstecken
+yform_useassearchfieldalidatenamenotempty = Als Suchfeld aufnehmen
+yform_tablefielddeleted = Tabellenfeld wurde gelöscht
+yform_tablefieldnotfound = Tabllenfeld wurde nicht gefunden
+yform_addtablefield = Tabellenfeld anlegen
+yform_table = Tabelle
+yform_editfield = Feld editieren
+yform_choosenadd = Felder auswählen
+yform_choosenadd_description = Bitte wählen Sie das Feld aus, welches Sie bei Ihrer Verwaltung verwenden wollen. Dabei gibt es Value-Felder, mit denen normalerweise Eingaben getätigt werden, wie auch Validate-Felder, mit denen die Value-Felder nach diversen Kriterien überprüft werden können.
+yform_addfield = Feld hinzufügen
+yform_editfields = Felder editieren
+
+yform_id_is_missing = ID fehlt
+yform_id_missing_info = Die Tabelle hat leider kein ID Feld mit autoincrement. Somit kann yform nicht damit arbeiten. Bitte aktualisieren Sie die Tabelle und legen notfalls die ID manuell an.
+
+# import
+yform_manager_import_error_missingfile = Bitte laden Sie eine Importdatei hoch
+yform_manager_import_error_missingfields = Es fehlen folgende Felder: {0}
+yform_manager_import_error_min_missingfields = Es fehlt mindestens ein Feld: {0}
+yform_manager_import_error_field = Feld "{0}" konnte nicht angelegt werden: "{1}"
+yform_manager_import_field_added = Feld "{0}" wurde angelegt
+yform_manager_import_error_import_abort = Import wurde wegen folgendem Fehler nicht ausgeführt: {0}
+yform_manager_import_error_import_stopped = Import wurde abgebrochen, da Fehler aufgetaucht sind.
+yform_manager_import_error_dataimport = Datensatz ({0}) konnte nicht importiert werden: {1}
+yform_manager_import_error_import = Es wurden {0} Datensätze importiert. Davon waren {1} neue Datensätze und {2} Datensätze wurden ersetzt.
+yform_manager_import_info_data_imported = Es wurde/n {0} Datensätze nicht importiert.
+yform_manager_import_error_not_started = Import wurde nicht gestartet.
+yform_manager_import_csv = CSV Datei importieren
+yform_manager_import_csv_info = Hiermit kann man Daten in diese Tabelle importieren. BItte beachten Sie, dass Sie nur Textdateien importieren können und in der <b>ersten Zeile die Felddefinitionen</b> vorhanden sein müssen. Weiter sollte das <b>Encoding der Importdatei UTF-8</b> sein. D.h. es kann sein, dass man diese vorher konvertieren muss.
+yform_manager_import_if_no_column = Wenn Spalte in der Datenbank nicht vorhanden ist,
+yform_manager_import_if_no_column_ignore = dann Spalte ignorieren.
+yform_manager_import_if_no_column_addtext = dann Spalte als TEXT in der Datenbank anlegen (Zur Verwaltung müssen später diese Felder noch bestimmt werden).
+yform_manager_import_if_no_column_break = dann Import abbrechen.
+yform_manager_import_divider = Trennzeichen
+yform_manager_import_divider_semicolon = Semikolon
+yform_manager_import_divider_comma = Komma
+yform_manager_import_divider_tab = Tabulator
+yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
+yform_manager_import_start = Hinzufügen
+yform_manager_import_file = Datei
+yform_manager_import_error_missingfielddefinition = Es gibt Felder, welche leer sind und daher nicht zugewiesen werden können. Bitte die erste Zeile des Importes prüfen.
+yform_manager_import_error_duplicatefielddefinition = Es gibt Felder, welche identisch sind. Bitte die erste Zeile des Importes prüfen.
+
+# history
+yform_history = Historie
+yform_history_dataset_id = Datensatz-ID
+yform_history_dataset = Datensatz
+yform_history_action = Aktion
+yform_history_action_create = erstellt
+yform_history_action_update = bearbeitet
+yform_history_action_delete = gelöscht
+yform_history_user = Benutzer
+yform_history_timestamp = Zeitstempel
+yform_history_view = ansehen
+yform_history_restore = zurücksetzen
+yform_history_restore_this = Datensatz auf diese Version zurücksetzen
+yform_history_restore_success = Datensatz wurde zurückgesetzt.
+yform_history_restore_error = Datensatz konnte nicht zurückgesetzt werden.
+yform_history_delete = Historie löschen
+yform_history_delete_all = komplett
+yform_history_delete_older_3_months = älter als 3 Monate
+yform_history_delete_confirm = Historie wirklich löschen?
+yform_history_delete_success = Die Historien-Datensätze wurden gelöscht.
+
+yform_manager_show_form_notation = Formular-Code
+
+navigation_yform_tables = Tabellen
+yform_tabledata_overview = Datentabelle
+
+yform_manager_multi_edit_field = Feld „{0}“ bearbeiten
+
+yform_values_be_link_description = 				Ein Redaxo-Feld, um einen <b>Redaxo-Artikel</b> auszuwählen.
+yform_values_be_manager_relation_description = 	Ein Auswahlfeld / Popup, um ein oder mehrere <b>Datensätze</b> mit denen einer fremden Tabelle zu <b>verknüpfen</b>.
+yform_values_be_media_description = 			Ein Redaxo-Feld, um eine einzelne oder mehrere <b>Medienpool-Datei/en</b> auszuwählen.
+yform_values_be_table_description = 			Eine Reihe von Eingabefeldern, um <b>tabellarische Daten</b> einzugeben.
+yform_values_prio_description =					Ein <b>Auswahlfeld</b>, um Datensätze in eine <b>bestimmte Reihenfolge</b> zu sortieren.
+
+yform_values_defaults_prio = Priorität
+yform_values_be_manager_relation_table = Ziel Tabelle
+yform_values_be_manager_relation_field = Ziel Tabellenfeld(er) zur Anzeige oder Feld, das die Relations-ID enthält.
+yform_values_be_manager_relation_type = Mehrfachauswahl
+yform_values_be_manager_relation_empty_option = Mit "Leer-Option"
+yform_values_be_manager_relation_empty_value = Fehlermeldung wenn "Leer-Option" nicht aktiviert ist.
+yform_values_be_manager_relation_size = Höhe der Auswahlbox
+yform_values_be_manager_relation_filter = Filter
+yform_values_be_manager_relation_relation_table = Relationstabelle
+yform_values_be_media_preview = Preview
+yform_values_be_media_category = Medienpool Kategorie
+yform_values_be_media_types = Erlaubte Dateien
+yform_values_be_media_types_notice = Format: jpg,gif,png ... (kommaseparierte Liste) oder * (für alle Dateien)
+yform_values_be_media_multiple = Mehrfachauswahl
+yform_values_be_table_columns = Bezeichnung der Spalten (Menge,Preis,Irgendwas)
+yform_values_be_link_multiple = Mehrfachauswahl
+yform_values_prio_fields = Anzeige
+yform_values_prio_scope = Beschränkung
+yform_values_prio_default = Am Anfang
+
+yform_is = ist
+yform_will_set_to = wird
+
+yform_field_add = Feld hinzufügen
+yform_field_update = Feld aktualisieren
+yform_field_db_type = Datenbank-Feldtyp
+
+yform_manager_table_data_view_roles = Datenansicht beschränkt auf
+yform_manager_table_data_edit_roles = Datenbearbeitung beschränkt auf
+
+yform_manager_table_nopermission = Keine Berechtigung auf diese Tabelle
+
+yform_manager_tables_edit = Tabellen mit Bearbeitungsrechten
+yform_manager_tables_view = Tabellen mit Recht zur Ansicht
+
+yform_structure_article_could_not_be_deleted = Der Artikel konnte nicht gelöscht werden, da er von folgenden Datensätzen verwendet wird:

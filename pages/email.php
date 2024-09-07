@@ -15,8 +15,8 @@ $table = rex::getTablePrefix() . 'yform_email_template';
 $bezeichner = rex_i18n::msg('yform_email_template');
 $csuchfelder = ['name', 'mail_from', 'mail_subject', 'body'];
 
-$func = rex_request('func', 'string', '');
-$page = rex_request('page', 'string', '');
+$func = rex_request('func', 'string');
+$page = rex_request('page', 'string');
 $template_id = rex_request('template_id', 'int', null);
 $template_key = rex_request('template_key', 'string', null);
 $template = null;
@@ -69,7 +69,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'datestamp|updatedate||||0';
 
     $yform = rex_yform::factory();
-    $yform->setObjectparams('form_action', 'index.php?page=yform/email/index');
+    $yform->setObjectparams('form_action', 'index.php?page=yform/email');
     $yform->setObjectparams('form_name', 'yform-email-template');
 
     $yform->setFormData(implode("\n", $form_data));
@@ -126,7 +126,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
             // -> add
             if (2 == $submit_type) {
                 $title = rex_i18n::msg('yform_email_update');
-                $template_id = $yform->objparams['main_id'];
+                $template_id = (int) $yform->objparams['main_id'];
                 $func = 'edit';
 
                 $yform = $yform_clone;

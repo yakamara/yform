@@ -11,7 +11,7 @@ class rex_yform_value_uuid extends rex_yform_value_abstract
 {
     public function preValidateAction(): void
     {
-        if(rex_get('func', 'string') == "clone") {
+        if ('clone' == rex_get('func', 'string')) {
             // Beim Klonen eine neue UUID generieren
             $this->setValue(self::guidv4());
         } elseif ('' != $this->getValue()) {

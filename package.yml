@@ -10,6 +10,17 @@ page:
     pjax: false
     icon: rex-icon rex-icon-module
     subpages:
+        manager:
+            title: 'translate:yform_manager'
+            pjax: false
+            subpages:
+                table_edit: {title: translate:yform_manager_table_edit, perm: admin}
+                table_migrate: {title: translate:yform_manager_table_migrate, perm: admin}
+                tableset_export: {title: translate:yform_manager_tableset_export, perm: admin}
+                tableset_import: {title: translate:yform_manager_tableset_import, perm: admin}
+                table_field: {title: '', hidden: true, perm: admin}
+                data_edit: {title: '', hidden: true}
+                data_import: {title: '', hidden: true}
         setup:
             title: 'translate:setup'
             perm: admin
@@ -19,6 +30,17 @@ page:
             pjax: false
             itemClass: pull-right
             icon: rex-icon fa-info-circle
+        email:
+            title: 'translate:yform_email_templates'
+            perm: admin[]
+            pjax: true
+        rest:
+            title: 'translate:yform_rest'
+            pjax: true
+            perm: admin
+            subpages:
+                token: {title: translate:yform_rest_token}
+                access: {title: translate:yform_rest_token_access}
 
 stylesheets:
     - yform.css
@@ -28,10 +50,6 @@ requires:
     redaxo: '^5.17.0'
     php:
         version: '^8.1'
-
-system_plugins:
-    - manager
-    - email
 
 installer_ignore:
     - .tools

@@ -1,7 +1,4 @@
-# E-Mail-Templates (PlugIn)
-
-> **Hinweis:**
-> Plugins erweitern YForm und können optional aktiviert werden.
+# E-Mail-Templates
 
 ## Zweck der E-Mail-Templates
 
@@ -138,7 +135,7 @@ REX_YFORM_DATA[field="custom"]
 
 ## Variante 2: E-Mail-Versand zur Verwendung in Cronjobs, Addons, etc.
 
-Dieser Code basiert auf [plugins/email/lib/yform_action_tpl2email.php](https://github.com/yakamara/redaxo_yform/blob/master/plugins/email/lib/yform_action_tpl2email.php).
+Dieser Code basiert auf [lib/yform/action/tpl2email.php](https://github.com/yakamara/redaxo_yform/blob/master/plugins/email/lib/yform_action_tpl2email.php).
 
 ```php
 <?php
