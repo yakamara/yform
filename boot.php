@@ -67,3 +67,13 @@ rex_extension::register('PACKAGES_INCLUDED', static function () {
         rex_yform_rest::handleRoutes();
     }
 });
+
+// Tools
+
+if (rex::isBackend() && rex::getUser()) {
+    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/moment.min.js'));
+    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/daterangepicker.js'));
+    rex_view::addCssFile($this->getAssetsUrl('daterangepicker/daterangepicker.css'));
+    rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/jquery.inputmask.min.js'));
+    rex_view::addJsFile($this->getAssetsUrl('tools.js'));
+}
