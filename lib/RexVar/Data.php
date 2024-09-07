@@ -5,7 +5,14 @@
  *
  * @package redaxo\structure\content
  */
-class rex_var_yform_data extends rex_var
+
+namespace Yakamara\YForm\RexVar;
+
+use rex_var;
+
+use function in_array;
+
+class Data extends rex_var
 {
     /**
      * @return false|string|bool
