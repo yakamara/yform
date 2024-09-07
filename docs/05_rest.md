@@ -1,4 +1,4 @@
-# REST-API (PlugIn)
+# REST-API
 
 > **Hinweis:**
 > Plugins erweitern YForm und können optional aktiviert werden.
