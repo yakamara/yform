@@ -7,7 +7,24 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform_email_template
+namespace Yakamara\YForm\Email;
+
+use PHPMailer\PHPMailer\Exception;
+use rex;
+use rex_article;
+use rex_extension;
+use rex_extension_point;
+use rex_file;
+use rex_mailer;
+use rex_sql;
+use rex_sql_exception;
+use rex_stream;
+use rex_var;
+
+use function count;
+use function is_array;
+
+class Template
 {
     /**
      * @throws rex_sql_exception
@@ -91,7 +108,7 @@ class rex_yform_email_template
     }
 
     /**
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws Exception
      * @return bool
      */
     public static function sendMail(array $template, string $template_name = '')

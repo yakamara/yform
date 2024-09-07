@@ -13,8 +13,8 @@ $rex_yform_manager_popup = $this->getVar('rex_yform_manager_popup');
 $popup = $this->getVar('popup');
 $hasDataPageFunctions = $this->getVar('hasDataPageFunctions');
 
-/** @var rex_yform_list $list */
-$list = rex_yform_list::factory($query, $table->getListAmount());
+/** @var \Yakamara\YForm\List\YList $list */
+$list = \Yakamara\YForm\List\YList::factory($query, $table->getListAmount());
 
 $list->addTableAttribute('class', 'table-striped table-hover yform-table-' . rex_string::normalize($this->table->getTableName()));
 

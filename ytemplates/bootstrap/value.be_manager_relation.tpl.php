@@ -64,7 +64,7 @@ echo $select->get();
         <?php
 $e = [];
     if (4 == $this->getRelationType()) {
-        echo \rex_var_yform_table_data::getRelationWidget($id, $this->getFieldName(), $this->getValue(), $link, $this->params['main_id']);
+        echo \Yakamara\YForm\RexVar\TableData::getRelationWidget($id, $this->getFieldName(), $this->getValue(), $link, $this->params['main_id']);
     } elseif (2 == $this->getRelationType()) {
         $name = $this->getFieldName();
         $args = [];
@@ -74,7 +74,7 @@ $e = [];
         $_csrf_key = rex_yform_manager_table::get($this->relation['target_table'])->getCSRFKey();
         $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
         $value = implode(',', $this->getValue());
-        echo \rex_var_yform_table_data::getSingleWidget($id, $name, $value, $args);
+        echo \Yakamara\YForm\RexVar\TableData::getSingleWidget($id, $name, $value, $args);
     } else {
         $name = $this->getFieldName();
         $args = [];
@@ -86,7 +86,7 @@ $e = [];
         $_csrf_key = rex_yform_manager_table::get($this->relation['target_table'])->getCSRFKey();
         $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
         $value = implode(',', $this->getValue());
-        echo \rex_var_yform_table_data::getMultipleWidget($id, $name, $value, $args);
+        echo \Yakamara\YForm\RexVar\TableData::getMultipleWidget($id, $name, $value, $args);
     }
     ?>
         <?= $notice ?>
