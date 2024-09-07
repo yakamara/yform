@@ -8,7 +8,20 @@
  *
  * @package redaxo\yform\manager
  */
-class rex_var_yform_table_data extends rex_var
+
+namespace Yakamara\YForm\RexVar;
+
+use rex_formatter;
+use rex_fragment;
+use rex_i18n;
+use rex_select;
+use rex_var;
+use rex_yform_manager_table;
+use rex_yform_value_be_manager_relation;
+
+use function in_array;
+
+class TableData extends rex_var
 {
     protected function getOutput()
     {
@@ -73,24 +86,6 @@ class rex_var_yform_table_data extends rex_var
                 $value = self::getSingleWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
             }
         }
-        // else {
-        //    if ($value && $this->hasArg('output') && $this->getArg('output') != 'id') {
-        //        if ($tableName == '') {
-        //            return self::quote('[table param not defined]');
-        //        }
-        //
-        //        $table = rex_yform_manager_table::get($tableName);
-        //        if (!$table) {
-        //            return self::quote('[table not in YForm?]');
-        //        }
-        //
-        //        $query = rex_yform_manager_dataset::query($table->getTableName());
-        //        $method = (strpos($value, ',') === false) ? 'findId' : 'findIDs';
-        //        $value = $query->{$method}($value);
-        //        //return 'rex_var::nothing(require rex_stream::factory(mb_substr(__FILE__, 6) . \'/REX_YFORM_DATASET/'.$id.'\', '.self::quote(json_encode($value)).'))';
-        //        return self::quote(json_encode($value));
-        //    }
-        // }
         return self::quote($value);
     }
 
