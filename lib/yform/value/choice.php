@@ -253,7 +253,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = $params['value'];
-        /** @var rex_yform_manager_query $query */
+        /** @var \Yakamara\YForm\Manager\Query $query */
         $query = $params['query'];
         $field = $query->getTableAlias() . '.' . $params['field']->getName();
 

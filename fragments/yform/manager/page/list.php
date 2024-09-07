@@ -104,7 +104,7 @@ if (isset($rex_yform_manager_opener['id'])) {
                 }
             } else {
                 [$table_name, $field_name] = explode('.', $params['params']['opener_field']);
-                $table = rex_yform_manager_table::get($table_name);
+                $table = \Yakamara\YForm\Manager\Table\Table::get($table_name);
                 if ($table) {
                     $fields = $table->getValueFields(['name' => $field_name]);
                     if (isset($fields[$field_name])) {

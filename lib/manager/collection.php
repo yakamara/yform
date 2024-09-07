@@ -1,13 +1,30 @@
 <?php
 
 /**
- * @template T of rex_yform_manager_dataset
+ * @template T of \Yakamara\YForm\Manager\Dataset
  * @extends SplFixedArray<T>
  *
- * @method rex_yform_manager_dataset offsetGet($offset)
+ * @method \Yakamara\YForm\Manager\Dataset offsetGet($offset)
  * @method list<T> toArray()
  */
-class rex_yform_manager_collection extends \SplFixedArray
+
+namespace Yakamara\YForm\Manager;
+
+use Closure;
+use InvalidArgumentException;
+use rex_i18n;
+use rex_yform_base_abstract;
+use rex_yform_value_abstract;
+use SplFixedArray;
+use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\YForm;
+
+use function array_slice;
+use function call_user_func;
+use function count;
+use function is_string;
+
+class Collection extends SplFixedArray
 {
     /** @var bool */
     private static $debug = false;
@@ -16,7 +33,7 @@ class rex_yform_manager_collection extends \SplFixedArray
     private $table;
 
     /**
-     * @param T[] $data
+     * @param array<T> $data
      */
     final public function __construct(string $table, array $data = [])
     {
@@ -31,13 +48,13 @@ class rex_yform_manager_collection extends \SplFixedArray
         return $this->table;
     }
 
-    public function getTable(): rex_yform_manager_table
+    public function getTable(): Table
     {
-        return rex_yform_manager_table::require($this->table);
+        return Table::require($this->table);
     }
 
     /**
-     * @param T[] $data
+     * @param array<T> $data
      * @return $this
      */
     public function setData(array $data): self
@@ -64,17 +81,17 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
-     * @return null|T
+     * @return T|null
      */
-    public function first(): ?rex_yform_manager_dataset
+    public function first(): ?Dataset
     {
         return $this->count() ? $this[0] : null;
     }
 
     /**
-     * @return null|T
+     * @return T|null
      */
-    public function last(): ?rex_yform_manager_dataset
+    public function last(): ?Dataset
     {
         return $this->count() ? $this[$this->count() - 1] : null;
     }
@@ -162,7 +179,7 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
-     * @return T[]
+     * @return array<T>
      */
     public function toKeyIndex(string $key = 'id'): array
     {
@@ -185,7 +202,7 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
-     * @param string|string[] $keys
+     * @param string|array<string> $keys
      */
     public function groupBy($keys, ?string $value = null): array
     {
@@ -195,7 +212,7 @@ class rex_yform_manager_collection extends \SplFixedArray
             $keys = array_reverse($keys);
         }
 
-        $setValue = static function (&$array, array $keys, rex_yform_manager_dataset $dataset) use (&$setValue, $value) {
+        $setValue = static function (&$array, array $keys, Dataset $dataset) use (&$setValue, $value) {
             if (!$keys) {
                 $array[] = $value ? $dataset->getValue($value) : $dataset;
                 return;
@@ -221,12 +238,12 @@ class rex_yform_manager_collection extends \SplFixedArray
     /**
      * @param string|Closure $value     Field name or callback
      * @param string         $separator Separator between elements
-     * @param null|string    $and       Optional separator between last two elements
+     * @param string|null    $and       Optional separator between last two elements
      */
     public function implode($value, string $separator, ?string $and = null): string
     {
         if (!$value instanceof Closure) {
-            $value = static function (rex_yform_manager_dataset $dataset) use ($value) {
+            $value = static function (Dataset $dataset) use ($value) {
                 return $dataset->getValue($value);
             };
         }
@@ -307,7 +324,7 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
-     * @return self A new collection containing all datasets related to this collection by $key relation
+     * @return Collection A new collection containing all datasets related to this collection by $key relation
      */
     public function populateRelation(string $key)
     {
@@ -321,7 +338,7 @@ class rex_yform_manager_collection extends \SplFixedArray
             return new self($relation['table']);
         }
 
-        $query = rex_yform_manager_dataset::query($relation['table']);
+        $query = Dataset::query($relation['table']);
 
         if (0 == $relation['type'] || 2 == $relation['type']) {
             $query->where('id', $this->getValues($key));
@@ -428,9 +445,9 @@ class rex_yform_manager_collection extends \SplFixedArray
         return $success;
     }
 
-    public function getForm(): \Yakamara\YForm\YForm
+    public function getForm(): YForm
     {
-        $yform = new \Yakamara\YForm\YForm();
+        $yform = new YForm();
         $yform->setDebug(self::$debug);
         $yform->objparams['form_name'] = 'yform-manager-multi-edit';
         $yform->objparams['form_class'] .= ' yform-manager-multi-edit';
@@ -529,9 +546,9 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
-     * @param null|callable(\Yakamara\YForm\YForm):void $afterFieldsExecuted
+     * @param callable(\Yakamara\YForm\YForm):void|null $afterFieldsExecuted
      */
-    public function executeForm(\Yakamara\YForm\YForm $yform, ?callable $afterFieldsExecuted = null): string
+    public function executeForm(YForm $yform, ?callable $afterFieldsExecuted = null): string
     {
         $yform->executeFields();
 

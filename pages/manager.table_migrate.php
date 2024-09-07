@@ -17,7 +17,7 @@ $available_tables = rex_sql::factory()->getTablesAndViews();
 $yform_tables = [];
 $missing_tables = [];
 
-foreach (rex_yform_manager_table::getAll() as $g_table) {
+foreach (\Yakamara\YForm\Manager\Table\Table::getAll() as $g_table) {
     $yform_tables[] = $g_table->getTableName();
 }
 
@@ -40,7 +40,7 @@ if ($yform->objparams['actions_executed']) {
     $schema_overwrite = (int) $yform->objparams['value_pool']['sql']['schema_overwrite'];
 
     try {
-        rex_yform_manager_table_api::migrateTable($table_name, (0 == $schema_overwrite) ? false : true); // with convert id / auto_increment finder
+        \Yakamara\YForm\Manager\Table\Api::migrateTable($table_name, (0 == $schema_overwrite) ? false : true); // with convert id / auto_increment finder
         echo rex_view::success(rex_i18n::msg('yform_manager_table_migrated_success'));
 
         unset($missing_tables[$table_name]);

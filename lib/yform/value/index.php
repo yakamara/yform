@@ -109,7 +109,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
 
     private function getRelationValues(array $relations)
     {
-        $table = rex_yform_manager_table::get($this->params['main_table']);
+        $table = \Yakamara\YForm\Manager\Table\Table::get($this->params['main_table']);
         $sql = rex_sql::factory();
         $sql->setDebug($this->params['debug']);
 
@@ -154,8 +154,8 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 return $nextIndex;
             };
 
-            $addFieldsAndJoins = static function (array $columns, rex_yform_manager_field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, $sql) {
-                $table = rex_yform_manager_table::get($relation->getElement('table'));
+            $addFieldsAndJoins = static function (array $columns, \Yakamara\YForm\Manager\Field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, $sql) {
+                $table = \Yakamara\YForm\Manager\Table\Table::get($relation->getElement('table'));
 
                 $fieldFormat = 't%d.%s';
                 if ($relation->getElement('relation_table') || in_array($relation->getElement('type'), [1, 3, 4, 5])) {
@@ -183,7 +183,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                             continue;
                         }
 
-                        $relationTable = rex_yform_manager_table::get($relation->getElement('relation_table'));
+                        $relationTable = \Yakamara\YForm\Manager\Table\Table::get($relation->getElement('relation_table'));
                         $name = $columns['target'];
                         $relation = $relationTable->getValueField($name);
                         $relation['relation_table'] = true;
@@ -213,7 +213,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 }
 
                 $fromTable = $relation->getElement('relation_table');
-                $relationTable = rex_yform_manager_table::get($fromTable);
+                $relationTable = \Yakamara\YForm\Manager\Table\Table::get($fromTable);
                 $relation = $relationTable->getValueField($columns['target']);
                 $relation['relation_table'] = true;
                 $type = 'relation_table';

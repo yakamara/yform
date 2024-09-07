@@ -16,8 +16,8 @@ use rex_string;
 use rex_url;
 use rex_url_provider_interface;
 use rex_view;
-use rex_yform_manager_dataset;
-use rex_yform_manager_query;
+use Yakamara\YForm\Manager\Dataset;
+use Yakamara\YForm\Manager\Query;
 
 use function count;
 use function in_array;
@@ -32,9 +32,9 @@ class YList implements rex_url_provider_interface
     public const LIST_OPT_SORT_DIRECTION = 1;
     public const LIST_OPT_SORT = 0;
 
-    /** @var rex_yform_manager_query */
+    /** @var Query */
     private $query;
-    /** @var rex_yform_manager_dataset */
+    /** @var Dataset */
     private $currentItem;
     /** @var bool */
     /** @phpstan-ignore-next-line */
@@ -99,12 +99,12 @@ class YList implements rex_url_provider_interface
     /**
      * Erstellt ein rex_list Objekt.
      *
-     * @param rex_yform_manager_query      $query       YForm Query Objekt
+     * @param Query $query YForm Query Objekt
      * @param int         $rowsPerPage Anzahl der Elemente pro Zeile
      * @param string|null $listName    Name der Liste
      * @param bool        $debug
      */
-    protected function __construct(rex_yform_manager_query $query, int $rowsPerPage = 30, $listName = null, $debug = false)
+    protected function __construct(Query $query, int $rowsPerPage = 30, $listName = null, $debug = false)
     {
         // --------- Validation
         if (!$listName) {
@@ -190,7 +190,7 @@ class YList implements rex_url_provider_interface
     }
 
     /**
-     * @param rex_yform_manager_query      $query
+     * @param Query $query
      * @param int         $rowsPerPage
      * @param string|null $listName
      * @param bool        $debug
@@ -212,9 +212,8 @@ class YList implements rex_url_provider_interface
     }
 
     // ---------------------- setters/getters
-
     /**
-     * @return rex_yform_manager_query
+     * @return Query
      */
     public function getQuery()
     {
@@ -222,9 +221,9 @@ class YList implements rex_url_provider_interface
     }
 
     /**
-     * @return rex_yform_manager_query
+     * @return Query
      */
-    public function setQuery(rex_yform_manager_query $query)
+    public function setQuery(Query $query)
     {
         $this->query = $query;
         return $this->query;

@@ -170,7 +170,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
         // ------------------------------------ INLINE, 1-n
         if (5 == $this->relation['relation_type']) {
             $warning = false;
-            $table = rex_yform_manager_table::get($this->relation['target_table']);
+            $table = \Yakamara\YForm\Manager\Table\Table::get($this->relation['target_table']);
 
             // ----- Find PrioFieldname if exists
 
@@ -198,7 +198,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
             // ----- Existing Relations
 
-            $relations = rex_yform_manager_dataset::query($this->relation['target_table'])
+            $relations = \Yakamara\YForm\Manager\Dataset::query($this->relation['target_table'])
                 ->where($this->relation['target_field'], $this->params['main_id']);
             if ('' != $prioFieldName) {
                 $relations->orderBy($prioFieldName);
@@ -255,8 +255,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $yform->setObjectparams('submit_btn_show', false);
                     $yform->setObjectparams('csrf_protection', false);
 
-                    $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
-                    $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
+                    $yform->canEdit(\Yakamara\YForm\Manager\Table\Authorization::onAttribute('EDIT', $table, rex::getUser()));
+                    $yform->canView(\Yakamara\YForm\Manager\Table\Authorization::onAttribute('VIEW', $table, rex::getUser()));
 
                     $form_elements = [];
                     foreach ($yform->objparams['form_elements'] as $form_element) {
@@ -296,8 +296,8 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                         $yform->setObjectparams('submit_btn_show', false);
                         $yform->setObjectparams('csrf_protection', false);
 
-                        $yform->canEdit(rex_yform_manager_table_authorization::onAttribute('EDIT', $table, rex::getUser()));
-                        $yform->canView(rex_yform_manager_table_authorization::onAttribute('VIEW', $table, rex::getUser()));
+                        $yform->canEdit(\Yakamara\YForm\Manager\Table\Authorization::onAttribute('EDIT', $table, rex::getUser()));
+                        $yform->canView(\Yakamara\YForm\Manager\Table\Authorization::onAttribute('VIEW', $table, rex::getUser()));
 
                         $form_elements = [];
 
@@ -356,7 +356,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             if (5 == $this->relation['relation_type'] && $this->params['main_id'] > 0) {
                 self::$yform_list_values = []; // delete cache
 
-                $currentRelationsQuery = rex_yform_manager_dataset::query($this->relation['target_table'])
+                $currentRelationsQuery = \Yakamara\YForm\Manager\Dataset::query($this->relation['target_table'])
                     ->where($this->relation['target_field'], $this->params['main_id'])
                     ->find();
 
@@ -364,7 +364,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                 foreach ($currentRelationsQuery as $currentRelation) {
                     $currentRelations[$currentRelation->getId()] = $currentRelation;
                 }
-                $table = rex_yform_manager_table::get($this->relation['target_table']);
+                $table = \Yakamara\YForm\Manager\Table\Table::get($this->relation['target_table']);
 
                 $prioFieldName = '';
                 foreach ($table->getFields() as $field) {
@@ -508,11 +508,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             'db_type' => ['text', 'varchar(191)', 'int', 'int(10) unsigned'],
             'formbuilder' => false,
             'hooks' => [
-                'preCreate' => static function (rex_yform_manager_field $field) {
+                'preCreate' => static function (\Yakamara\YForm\Manager\Field $field) {
                     return !$field->getElement('relation_table') && ('4' != $field->getElement('type') && '5' != $field->getElement('type'));
                 },
             ],
-            'multi_edit' => static function (rex_yform_manager_field $field) {
+            'multi_edit' => static function (\Yakamara\YForm\Manager\Field $field) {
                 return ('4' != $field->getElement('type') && '5' != $field->getElement('type')) && !$field->getElement('relation_table');
             },
         ];
@@ -520,7 +520,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     public static function getListValue($params)
     {
-        /** @var rex_yform_manager_field $field */
+        /** @var \Yakamara\YForm\Manager\Field $field */
         $field = $params['params']['field'];
 
         switch ($field['type']) {
@@ -597,7 +597,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
     {
         $filterHash = sha1(json_encode($filter));
         if (!isset(self::$yform_list_values[$table][$field][$filterHash])) {
-            $tableObject = rex_yform_manager_table::get($table);
+            $tableObject = \Yakamara\YForm\Manager\Table\Table::get($table);
             self::$yform_list_values[$table][$field][$filterHash] = [];
             $db = rex_sql::factory();
             // $db->setDebug();
@@ -704,14 +704,14 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
                     $value = $matches[1];
                     if (str_contains($value, '.')) {
                         $value = explode('.', $value);
-                        $relation = rex_yform_manager_table::get($table)->getRelation($value[0]);
+                        $relation = \Yakamara\YForm\Manager\Table\Table::get($table)->getRelation($value[0]);
                         $value[0] = $getValueForKey($value[0]);
                         if ($value[0] && $relation) {
                             $relationSql = rex_sql::factory();
                             // $relationSql->debugsql = true;
                             $tables = '' . $relationSql->escapeIdentifier($relation['table']) . ' t0';
                             for ($i = 1; $i < count($value) - 1; ++$i) {
-                                $relation = rex_yform_manager_table::get($relation['table'])->getRelation($value[$i]);
+                                $relation = \Yakamara\YForm\Manager\Table\Table::get($relation['table'])->getRelation($value[$i]);
                                 $tables .= ' LEFT JOIN ' . $relationSql->escapeIdentifier($relation['table']) . ' t' . $i . ' ON t' . $i . '.id = t' . ($i - 1) . '.' . $relationSql->escapeIdentifier($value[$i]) . '';
                             }
                             $relationSql->setQuery('SELECT t' . ($i - 1) . '.' . $relationSql->escapeIdentifier($value[$i]) . ' FROM ' . $tables . ' WHERE t0.id = ' . (int) $value[0]);
@@ -815,7 +815,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = $params['value'];
-        /** @var rex_yform_manager_query $query */
+        /** @var \Yakamara\YForm\Manager\Query $query */
         $query = $params['query'];
 
         if (null !== $value && !is_scalar($value) && !(is_object($value) && method_exists($value, '__toString'))) {
@@ -836,7 +836,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         $value = null;
 
-        /** @var rex_yform_manager_field $field */
+        /** @var \Yakamara\YForm\Manager\Field $field */
         $field = $params['field'];
         $sql = rex_sql::factory();
 
@@ -871,7 +871,7 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
     private static function getRelationTableFieldsForTables($mainTable, $relationTable, $targetTable)
     {
-        $table = rex_yform_manager_table::get($relationTable);
+        $table = \Yakamara\YForm\Manager\Table\Table::get($relationTable);
         $source = $table->getRelationsTo($mainTable);
         $target = $table->getRelationsTo($targetTable);
 

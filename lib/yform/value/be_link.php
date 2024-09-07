@@ -78,12 +78,12 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             $article = \rex_article::get($id);
             if ($article) {
                 $sql = \rex_sql::factory();
-                $sql->setQuery('SELECT * FROM `' . \rex_yform_manager_field::table() . '` LIMIT 0');
+                $sql->setQuery('SELECT * FROM `' . \Yakamara\YForm\Manager\Field::table() . '` LIMIT 0');
 
                 $columns = $sql->getFieldnames();
                 $select = in_array('multiple', $columns) ? ', `multiple`' : '';
 
-                $fields = $sql->getArray('SELECT `table_name`, `name`' . $select . ' FROM `' . \rex_yform_manager_field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_link")');
+                $fields = $sql->getArray('SELECT `table_name`, `name`' . $select . ' FROM `' . \Yakamara\YForm\Manager\Field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_link")');
                 $fields = \rex_extension::registerPoint(new \rex_extension_point('YFORM_ARTICLE_IS_IN_USE', $fields));
 
                 if (count($fields)) {
@@ -103,7 +103,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
                         if (count($items)) {
                             foreach ($items as $item) {
                                 $sqlData = \rex_sql::factory();
-                                $sqlData->setQuery('SELECT `name` FROM `' . \rex_yform_manager_table::table() . '` WHERE `table_name` = "' . $tableName . '"');
+                                $sqlData->setQuery('SELECT `name` FROM `' . \Yakamara\YForm\Manager\Table\Table::table() . '` WHERE `table_name` = "' . $tableName . '"');
                                 $url = rex_yform_manager::url($tableName, $item['id']);
                                 $messages .= '<li><a href="' . $url . '">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
                             }
@@ -139,7 +139,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = trim($params['value']);
-        /** @var rex_yform_manager_query $query */
+        /** @var \Yakamara\YForm\Manager\Query $query */
         $query = $params['query'];
         $field = $query->getTableAlias() . '.' . $params['field']->getName();
         return '' == $value ? $query : $query->whereListContains($field, $value);
