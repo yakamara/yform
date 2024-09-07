@@ -265,3 +265,36 @@ yform_docs_demos = Demos
 yform_docs_yorm = Yorm
 yform_docs_plugins = Plugins
 
+yform_email_templates = E-mail Templates
+
+yform_email_key = Key - please do not change
+yform_email_from = Sender e-mail [ex.: info@redaxo.de]
+yform_email_from_name = Sender name [ex. REDAXO Server]
+yform_email_reply_to = Reply-To email address [ex. yform@redaxo.de]
+yform_email_reply_to_name = Reply-To name [ex. YForm Server]
+yform_email_subject = Subject
+yform_email_body = Body
+yform_email_body_html = Body (HTML)
+yform_email_create = Create e-mail template
+yform_email_update = Update e-mail template
+yform_email_header_template_description = Description
+yform_email_header_template_mail_from = From e-mail
+yform_email_header_template_mail_from_name = From name
+yform_email_header_template_subject = Subject
+yform_email_create_template = Create template
+yform_email_header_template_functions = Functions
+yform_email_templates_not_found = No templates found
+yform_email_delete_template = Delete
+
+yform_email_info_template_added = Template added
+yform_email_info_template_updated = Template updated
+yform_email_info_template_deleted = Template deleted
+
+yform_email_attachments = Attachements
+
+yform_delete_template = Delete template
+
+yform_email_caption = List of templates
+
+yform_email_info_text = <p>Fields which are being used in forms, can be displayed/processed in templates. <mark>PHP is allowed</mark> making it possible to handle/process very specific cases. Outputting normal fields is as simple as:<br /><br />REX_YFORM_DATA[field="name"]<br />REX_YFORM_DATA[field="email" instead="E-mail address was entered"]<br />REX_YFORM_DATA[field="name" instead="default value"]<br />REX_YFORM_DATA[field="name" prefix="My name is:" suffix=""]</p>
+

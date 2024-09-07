@@ -268,4 +268,38 @@ yform_docs_email = E-Mail mallar
 yform_docs_rest = REST-API
 yform_docs_tools = Verktyg
 
+yform_email_templates = E-post maller
+
+yform_email_key = Key - var god ändra inte
+yform_email_from = Avsändare e-post (t.ex. info@redaxo.de)
+yform_email_from_name = Avsändarens namn (t.ex. REDAXO server)
+yform_email_reply_to = Reply-To-E-Mail [t.ex. yform@redaxo.de]
+yform_email_reply_to_name = Reply-To-Name [t.ex. YForm Server]
+yform_email_header_template_mail_reply_to = Svar till
+yform_email_subject = Ämne
+yform_email_body = Body
+yform_email_body_html = Body (HTML)
+yform_email_create = Skapa e-post mall
+yform_email_update = Aktualisera e-post mallen
+yform_email_header_template_description = Description
+yform_email_header_template_mail_from = från
+yform_email_header_template_mail_from_name = Namn
+yform_email_header_template_subject = Ämne
+yform_email_create_template = Skapa mall
+yform_email_header_template_functions = Funktioner
+yform_email_templates_not_found = Ingenmall hittades
+yform_email_delete_template = Radera
+
+yform_email_info_template_added = Mallen tillfogades
+yform_email_info_template_updated = Mallen aktualiserades
+yform_email_info_template_deleted = Mallen raderades
+
+yform_email_attachments = Bilagor
+
+yform_delete_template = Radera mall
+
+yform_email_caption = Lista över alla mallar
+
+yform_email_info_text = <p> Fält som används i formulär kan visas och redigeras i mallarna. <mark> PHP är också principiellt tillåten </ marke>, så att man kan gå in individuellt på enskilda fall. Den normala visningen av ett fält sker enligt följande sätt: <br /> <br /> REX_YFORM_DATA [field = "name"] <br /> REX_YFORM_DATA [field = "email" instead = "E-post har fyllts in"] <br /> REX_YFORM_DATA [field = "name" instead = "standardvärde "] <br /> REX_YFORM_DATA [field = "name" prefix = "Mitt namn:" suffix = ""] </ p>
+
 

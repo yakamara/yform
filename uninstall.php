@@ -7,5 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
+// E-Mail
+
 rex_sql_table::get(rex::getTable('yform_email_template'))
     ->drop();

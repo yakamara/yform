@@ -19,6 +19,10 @@ page:
             pjax: false
             itemClass: pull-right
             icon: rex-icon fa-info-circle
+        email:
+            title: 'translate:yform_email_templates'
+            perm: admin[]
+            pjax: true
 
 stylesheets:
     - yform.css
