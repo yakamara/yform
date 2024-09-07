@@ -41,7 +41,7 @@ class rex_yform_value_be_link extends rex_yform_value_abstract
             ],
             'description' => rex_i18n::msg('yform_values_be_link_description'),
             'formbuilder' => false,
-            'db_type' => ['text', 'varchar(191)', 'int'],
+            'db_type' => ['text', 'varchar(191)', 'int', 'int(10) unsigned'],
         ];
     }
 
