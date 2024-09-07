@@ -135,7 +135,7 @@ class rex_yform_manager
             <script type="text/javascript" nonce="<?= rex_response::getNonce() ?>">
                 rex_retain_popup_event_handlers("rex:YForm_selectData");
             </script>
-            <?php
+<?php
         }
 
         echo rex_extension::registerPoint(
@@ -377,7 +377,7 @@ class rex_yform_manager
                         $sql_db = rex_sql::factory();
                         $form = '';
                         $sql_db->transactional(static function () use (&$form, &$yform, $data, $func) {
-                            $afterFieldsExecuted = static function (rex_yform $yform) {
+                            $afterFieldsExecuted = static function (\Yakamara\YForm\YForm $yform) {
                                 /** @var rex_yform_value_abstract $valueObject */
                                 foreach ($yform->objparams['values'] as $valueObject) {
                                     if ('submit' == $valueObject->getName()) {
@@ -390,7 +390,7 @@ class rex_yform_manager
                             };
 
                             if ('clone' == $func) {
-                                $afterFieldsExecuted = static function (rex_yform $yform) use ($afterFieldsExecuted) {
+                                $afterFieldsExecuted = static function (\Yakamara\YForm\YForm $yform) use ($afterFieldsExecuted) {
                                     $yform->objparams['form_hiddenfields']['func'] = 'add';
                                     unset($yform->objparams['form_hiddenfields']['data_id']);
 
@@ -824,7 +824,7 @@ class rex_yform_manager
             echo $fragment->parse('core/page/section.php');
         }
 
-        $types = rex_yform::getTypeArray();
+        $types = \Yakamara\YForm\YForm::getTypeArray();
         if ('choosenadd' == $func) {
             $link = 'index.php?' . $link_vars . '&table_name=' . $table->getTableName() . '&func=add&';
 
@@ -913,7 +913,7 @@ class rex_yform_manager
         if (('add' == $func || 'edit' == $func) && isset($types[$type_id][$type_name])) {
             $field = new rex_yform_manager_field(['type_id' => $type_id, 'type_name' => $type_name]);
 
-            $yform = new rex_yform();
+            $yform = new \Yakamara\YForm\YForm();
             $yform->setDebug(false);
 
             foreach ($this->getLinkVars() as $k => $v) {

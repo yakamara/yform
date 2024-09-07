@@ -19,7 +19,7 @@ $table_id = rex_request('table_id', 'int');
 $show_list = true;
 
 if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
-    $yform = new rex_yform();
+    $yform = new \Yakamara\YForm\YForm();
     $yform->setDebug(true);
     $yform->setHiddenField('page', $page);
     $yform->setHiddenField('func', $func);
@@ -73,7 +73,7 @@ if ('tableset_import' == $func && rex::getUser()->isAdmin()) {
         }
     }
 
-    $yform = new rex_yform();
+    $yform = new \Yakamara\YForm\YForm();
     // $yform->setDebug(TRUE);
     $yform->setObjectparams('form_name', $_csrf_key);
     $yform->setHiddenField('page', $page);

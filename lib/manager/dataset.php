@@ -492,7 +492,7 @@ class rex_yform_manager_dataset
         return $this->getTable()->getFields($filter);
     }
 
-    public function getForm(): rex_yform
+    public function getForm(): \Yakamara\YForm\YForm
     {
         $yform = $this->createForm();
         $this->setFormMainId($yform);
@@ -501,18 +501,18 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param null|callable(rex_yform):void $afterFieldsExecuted
+     * @param null|callable(\Yakamara\YForm\YForm):void $afterFieldsExecuted
      */
-    public function executeForm(rex_yform $yform, ?callable $afterFieldsExecuted = null): string
+    public function executeForm(\Yakamara\YForm\YForm $yform, ?callable $afterFieldsExecuted = null): string
     {
         $exists = $this->exists();
         $oldData = $this->getData();
 
         if ($exists) {
-            /** @var rex_yform $yform */
+            /** @var \Yakamara\YForm\YForm $yform */
             $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
         } else {
-            /** @var rex_yform $yform */
+            /** @var \Yakamara\YForm\YForm $yform */
             $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, ['table' => $this->getTable(), 'data' => $this]));
         }
 
@@ -672,7 +672,7 @@ class rex_yform_manager_dataset
         $this->setValue($key, $value);
     }
 
-    private function getInternalForm(): rex_yform
+    private function getInternalForm(): \Yakamara\YForm\YForm
     {
         $dummy = new static($this->table, 0);
 
@@ -685,9 +685,9 @@ class rex_yform_manager_dataset
         return $yform;
     }
 
-    private function createForm(): rex_yform
+    private function createForm(): \Yakamara\YForm\YForm
     {
-        $yform = new rex_yform();
+        $yform = new \Yakamara\YForm\YForm();
         $fields = $this->getFields();
         $yform->setDebug(self::$debug);
 
@@ -721,7 +721,7 @@ class rex_yform_manager_dataset
         return $yform;
     }
 
-    private function setFormMainId(rex_yform $yform): void
+    private function setFormMainId(\Yakamara\YForm\YForm $yform): void
     {
         if ($this->exists()) {
             $where = 'id = ' . (int) $this->id;

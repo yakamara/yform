@@ -12,7 +12,7 @@ $_csrf_key = 'tableset_import';
 
 $page = rex_request('page', 'string', '');
 
-$yform = new rex_yform();
+$yform = new \Yakamara\YForm\YForm();
 $yform->setHiddenField('page', $page);
 $yform->setObjectparams('real_field_names', true);
 $yform->setObjectparams('form_name', $_csrf_key);

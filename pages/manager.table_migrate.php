@@ -27,7 +27,7 @@ foreach ($available_tables as $a_table) {
     }
 }
 
-$yform = new rex_yform();
+$yform = new \Yakamara\YForm\YForm();
 $yform->setObjectparams('form_showformafterupdate', 1);
 $yform->setObjectparams('form_name', $_csrf_key);
 $yform->setHiddenField('page', $page);
@@ -45,7 +45,7 @@ if ($yform->objparams['actions_executed']) {
 
         unset($missing_tables[$table_name]);
 
-        $yform = new rex_yform();
+        $yform = new \Yakamara\YForm\YForm();
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setHiddenField('page', $page);
         $yform->setValueField('choice', ['name' => 'table_name', 'label' => rex_i18n::msg('yform_table'), 'choices' => $missing_tables]);

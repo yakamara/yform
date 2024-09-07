@@ -69,5 +69,5 @@ echo $fragment->parse('core/page/section.php');
 
 $fragment = new rex_fragment();
 $fragment->setVar('title', $this->i18n('description_type_heading'), false);
-$fragment->setVar('body', rex_yform::showHelp(), false);
+$fragment->setVar('body', \Yakamara\YForm\YForm::showHelp(), false);
 echo $fragment->parse('core/page/section.php');

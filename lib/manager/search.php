@@ -46,9 +46,9 @@ class rex_yform_manager_search
         return $this;
     }
 
-    public function getYForm(): rex_yform
+    public function getYForm(): \Yakamara\YForm\YForm
     {
-        $yform = new rex_yform();
+        $yform = new \Yakamara\YForm\YForm();
         $yform->setObjectparams('form_name', 'rex_yform_searchvars-' . $this->table->getTableName());
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setObjectparams('csrf_protection', false);

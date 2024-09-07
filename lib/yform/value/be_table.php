@@ -13,7 +13,7 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
         if (count($_columns)) {
             foreach ($_columns as $index => $col) {
                 // Use ;; for separating choice columns instead of ,
-                $values = explode('|', trim(trim(str_replace(';;', ',', rex_yform::unhtmlentities($col))), '|'));
+                $values = explode('|', trim(trim(str_replace(';;', ',', \Yakamara\YForm\YForm::unhtmlentities($col))), '|'));
                 if (1 == count($values)) {
                     $values = ['text', 'text_' . $index, $values[0]];
                 }
@@ -79,8 +79,8 @@ class rex_yform_value_be_table extends rex_yform_value_abstract
 
         $this->fieldData = $data;
 
-        $yfparams = rex_yform::factory()->objparams;
-        $yfparams['this'] = rex_yform::factory();
+        $yfparams = \Yakamara\YForm\YForm::factory()->objparams;
+        $yfparams['this'] = \Yakamara\YForm\YForm::factory();
 
         /* TODO
          * error class von validierung ans Eingabefeld übergeben
