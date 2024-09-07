@@ -16,8 +16,12 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
         $default_value = date(rex_sql::FORMAT_DATETIME);
         if ('' != $this->getElement('modify_default')) {
             $dt = new DateTime();
-            if (false !== @$dt->modify($this->getElement('modify_default'))) {
-                $default_value = $dt->format(rex_sql::FORMAT_DATETIME);
+            // Überprüfen, ob der Zeitstring ein gültiges Datum/Zeit-Format hat
+            $test_dt = DateTime::createFromFormat('Y-m-d H:i:s', $modify_default);
+            if ($test_dt && $test_dt->format('Y-m-d H:i:s') === $modify_default) {
+                if (false !== @$dt->modify($modify_default)) {
+                    $default_value = $dt->format(rex_sql::FORMAT_DATETIME);
+                }
             }
         }
 
