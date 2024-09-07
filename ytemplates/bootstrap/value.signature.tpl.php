@@ -92,15 +92,15 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
             initSignature_<?= $this->getName() ?>();
         });
     } else {
-        $(document).ready(function(){
+        document.addEventListener("DOMContentLoaded", function() {
             initSignature_<?= $this->getName() ?>();
         });
     }
 
     function initSignature_<?= $this->getName() ?>() {
         let base_id = '<?= $this->getName() ?>',
-            canvas = $("#canvas-"+ base_id)[0],
-            target = $("#canvas-target-"+ base_id),
+            canvas = document.getElementById("canvas-" + base_id),
+            target = document.getElementById("canvas-target-" + base_id),
             ctx,
             flag = false,
             dot_flag = false,
@@ -112,8 +112,8 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
             y = 2;
 
         ctx = canvas.getContext("2d");
-        w = canvas.width = $(canvas).width();
-        h = canvas.height = $(canvas).height();
+        w = canvas.width = canvas.offsetWidth;
+        h = canvas.height = canvas.offsetHeight;
 
         canvas.addEventListener("mousedown", handleStart, false);
         canvas.addEventListener("mousemove", handleMove, false);
@@ -174,25 +174,26 @@ $attributes = $this->getAttributeElements($attributes, ['placeholder', 'autocomp
         }
 
         function draw() {
-            let offset = $(canvas).offset();
-            let scrollTop = $("html").scrollTop();
-            let scrollLeft = $("html").scrollLeft();
+            let offset = canvas.getBoundingClientRect();
+
             ctx.beginPath();
-            ctx.moveTo(prevX - offset.left + scrollLeft, prevY - offset.top + scrollTop);
-            ctx.lineTo(currX - offset.left + scrollLeft, currY - offset.top + scrollTop);
+            ctx.moveTo(prevX - offset.left, prevY - offset.top);
+            ctx.lineTo(currX - offset.left, currY - offset.top);
             ctx.strokeStyle = x;
             ctx.lineWidth = y;
             ctx.stroke();
             ctx.closePath();
-            // push result to input hidden
-            target.val(canvas.toDataURL());
+            //console.log(prevX - offset.left, prevY - offset.top, currX - offset.left, currY - offset.top);
+
+            // Ergebnis in das versteckte Eingabefeld einfügen
+            target.value = canvas.toDataURL();
         }
     }
 
     function eraseSignature_<?= $this->getName() ?>() {
         let m = confirm("Zeichenfläche wirklich löschen?");
         if (m) {
-            $("#canvas-<?= $this->getName() ?>")[0].getContext("2d").clearRect(0, 0, w, h);
+            document.getElementById("canvas-<?= $this->getName() ?>").getContext("2d").clearRect(0, 0, w, h);
         }
     }
 </script>
