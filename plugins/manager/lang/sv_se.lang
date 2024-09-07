@@ -91,6 +91,7 @@ yform_manager_table_features = Aktiverade optioner
 
 yform_manager_type_id = Typ
 yform_manager_type_name = Typnamn
+yform_manager_type_unknown = okänd
 
 yform_manager_tableset = Tabellset
 yform_manager_table = Tabell
@@ -125,6 +126,9 @@ yform_manager_table_hidden = Synlighet
 yform_hidden = Dold
 yform_visible = Synligt
 
+yform_manager_actions_all = Alla åtgärder
+yform_manager_users_all = Alla användare
+yform_manager_history_date_notice = Alla poster före och lika med detta datum visas
 
 # edit.inc.php
 yform_thankyouforupdate = Datasatsen aktualiserades.
@@ -133,6 +137,7 @@ yform_thankyouforentry = Datasatsen tillfogades.
 yform_editdata = Redigera datasats
 yform_editdata_collection = Redigera {0} datasatser
 yform_editdata_collection_error_abort = Transaktionen misslyckades på grund av fel: {0}
+yform_clonedata = Klonad datapost [Ursprungligt ID: {0}]
 yform_adddata = Skapa datasats
 yform_searchtext = Sökbegrepp
 yform_searchfields = Fälten som ska sökas igenom
@@ -142,6 +147,7 @@ yform_function_button = Handling
 yform_add = tillfoga
 yform_add_apply = ta över
 yform_edit = redigera
+yform_clone = klon
 yform_view = visa
 yform_save = spara
 yform_save_apply = ta över
@@ -160,6 +166,8 @@ yform_dataset = Dataresultat
 yform_dataset_delete = Radera dataresultatet
 yform_dataset_deleted = Dataresultatet raderades
 yform_dataset_delete_confirm = Radera dataresultatet?
+
+yform_dataset_edit_confirm = Vill du verkligen redigera alla valda poster?
 
 yform_data = Datasats
 yform_datas = Dataset
@@ -225,8 +233,10 @@ yform_manager_import_error_duplicatefielddefinition = Det finns fält som är id
 
 # history
 yform_history = Historik
+yform_history_title = Historik för
 yform_history_dataset_id = Datasats-ID
 yform_history_dataset = Datasats
+yform_history_dataset_current = Aktuell version
 yform_history_action = Aktion
 yform_history_action_create = skapat
 yform_history_action_update = redigerat
@@ -235,6 +245,7 @@ yform_history_user = Användare
 yform_history_timestamp = Tidstämpel
 yform_history_view = visa
 yform_history_restore = återgå
+yform_history_restore_confirm = Vill du verkligen återställa till den här versionen?
 yform_history_restore_this = återställ datasatsen till den här versionen
 yform_history_restore_success = Data återställdes
 yform_history_restore_error = Data kunde inte återställas
@@ -243,6 +254,20 @@ yform_history_delete_all = totalt
 yform_history_delete_older_3_months = äldre än 3 månader
 yform_history_delete_confirm = Vill du verkligen radera historiken?
 yform_history_delete_success = Poster från historiken raderades.
+yform_history_revision = Revision/Förändring
+yform_history_dataset_missing = Inget (giltigt) datapost-ID har överförts! En jämförelse med en vald post i historiken är därför inte möjlig.
+yform_history_diff_headline_changed = Ändrade Värden
+yform_history_diff_headline_unchanged = Oförändrade Värden
+yform_history_diff_headline_added = Tillagda Fält
+yform_history_diff_headline_removed = Borttagna Fält
+yform_history_diff_headline_prev_changed = Ändringar Jämfört med Föregående Version
+yform_history_diff_to_current = Förändringar (till aktuell)
+yform_history_diff_to_previous = Förändringar (till föregående)
+yform_history_diff_added = Tillagd
+yform_history_diff_removed = Borttagen
+yform_history_diff_not_yet_existing = Ännu Inte Existerande
+yform_history_diff_no_longer_existing = Inte Längre Existerande
+yform_history_is_current_dataset = aktuella versionen av datasatsen
 
 yform_manager_show_form_notation = Formularkod
 
@@ -291,3 +316,5 @@ yform_manager_table_nopermission = Ingen behörighet till den här tabellen
 
 yform_manager_tables_edit = Tabeller med redigeringsrättigheter
 yform_manager_tables_view = Tabeller med påsiktsrättigheter
+
+yform_structure_article_could_not_be_deleted = Artikeln kunde inte raderas eftersom den används av följande poster:

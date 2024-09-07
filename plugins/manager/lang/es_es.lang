@@ -8,11 +8,11 @@ yform_alltables = Todas las tablas
 yform_back_to_overview = Volver al resumen
 yform_updatetable = Actualizar tabla (s)
 yform_tablesupdated = Table/n ha sido actualizado
-
+yform_errors_occurred = Se han producido errores
 yform_help_empty = Las entradas vacías se pueden buscar con <br/> "(vacío)"
 yform_help_multipleselect = Selección múltiple con tecla CTRL/CMD presionada
-yform_updatetable_with_delete = con eliminación de campo
-yform_updatetable_with_delete_confirm = Esta seguro de actualizar con eliminación de campo?
+yform_updatetable_with_delete = con eliminación de campos
+yform_updatetable_with_delete_confirm = ¿Actualización real con eliminación de campos?
 
 yform_relation_move_first_data = Mueva el registro seleccionado al principio
 yform_relation_move_up_data = Mover el registro seleccionado hacia arriba
@@ -91,6 +91,7 @@ yform_manager_table_features = Opciones activadas
 
 yform_manager_type_id = Tipo
 yform_manager_type_name = Nombre tipo
+yform_manager_type_unknown = desconocido
 
 yform_manager_tableset = Tableset
 yform_manager_table = Tabla
@@ -125,13 +126,18 @@ yform_manager_table_hidden = Visibilidad
 yform_hidden = Oculto
 yform_visible = Visible
 
+yform_manager_actions_all = Todas las acciones
+yform_manager_users_all = Todos los usuarios
+yform_manager_history_date_notice = Se muestran todas las entradas anteriores e iguales a esta fecha
 
 # edit.inc.php
 yform_thankyouforupdate = Record ha sido actualizado.
+yform_thankyouforupdates = Se han actualizado los registros de datos.
 yform_thankyouforentry = Registro fue ingresado
 yform_editdata = Editar registro [id: {0}]
 yform_editdata_collection = {0} editar registros
 yform_editdata_collection_error_abort = La transacción falló debido a un error: {0}
+yform_clonedata = Clonar registro de datos [ID original: {0}]
 yform_adddata = Crear registro de datos
 yform_searchtext = Palabra clave
 yform_searchfields = Campos de tabla para buscar
@@ -141,6 +147,8 @@ yform_function_button = Accion
 yform_add = Añadir
 yform_add_apply = Tomar el relevo
 yform_edit = Editar
+yform_clone = Clon
+yform_view = Mostrar
 yform_save = Guardar
 yform_save_apply = Tomar el relevo
 yform_delete = Borrar
@@ -158,6 +166,8 @@ yform_dataset = Resultado de datos
 yform_dataset_delete = Eliminar resultado de datos
 yform_dataset_deleted = El resultado de los datos fue vaciado
 yform_dataset_delete_confirm = ¿Realmente vaciar el resultado de los datos?
+
+yform_dataset_edit_confirm = ¿Deben procesarse realmente todos los registros de datos seleccionados?
 
 yform_data = Registro
 yform_datas = Archivos
@@ -223,8 +233,10 @@ yform_manager_import_error_duplicatefielddefinition = Hay campos que son idénti
 
 # history
 yform_history = historia
+yform_history_title = Historia para
 yform_history_dataset_id = Identificación del registro
 yform_history_dataset = registro
+yform_history_dataset_current = Versión actual
 yform_history_action = Acción
 yform_history_action_create = Creado
 yform_history_action_update = Editado
@@ -233,6 +245,7 @@ yform_history_user = Usuario
 yform_history_timestamp = Fecha y hora
 yform_history_view = Vista
 yform_history_restore = Regreso
+yform_history_restore_confirm = ¿Reiniciar realmente a esta versión?
 yform_history_restore_this = Restablecer registro a esta versión
 yform_history_restore_success = El registro ha sido reiniciado.
 yform_history_restore_error = El registro no se pudo restablecer.
@@ -241,6 +254,20 @@ yform_history_delete_all = Completo
 yform_history_delete_older_3_months = Más de 3 meses
 yform_history_delete_confirm = ¿Realmente borras la historia?
 yform_history_delete_success = Los registros de historial han sido eliminados.
+yform_history_revision = Revisión/modificación
+yform_history_dataset_missing = No se ha transferido ningún ID de registro de datos (válido). Por lo tanto, no es posible realizar una comparación con una entrada seleccionada en el historial.
+yform_history_diff_headline_changed = Valores modificados
+yform_history_diff_headline_unchanged = Valores sin cambios
+yform_history_diff_headline_added = Campos añadidos
+yform_history_diff_headline_removed = Campos eliminados
+yform_history_diff_headline_prev_changed = Cambios respecto a la versión anterior
+yform_history_diff_to_current = Cambios (al actual)
+yform_history_diff_to_previous = Cambios (al anterior)
+yform_history_diff_added = nuevo
+yform_history_diff_removed = eliminado
+yform_history_diff_not_yet_existing = aún no disponible
+yform_history_diff_no_longer_existing = ya no está disponible
+yform_history_is_current_dataset = versión actual del registro.
 
 yform_manager_show_form_notation = Código del formulario
 
@@ -281,3 +308,13 @@ yform_will_set_to = Deberá
 yform_field_add = Añadir campo
 yform_field_update = Campo de actualización
 yform_field_db_type = Tipo de campo de base de datos
+
+yform_manager_table_data_view_roles = Vista de datos limitada a
+yform_manager_table_data_edit_roles = Tratamiento de datos limitado a
+
+yform_manager_table_nopermission = No hay autorización para esta tabla
+
+yform_manager_tables_edit = Tablas con autorización de edición
+yform_manager_tables_view = Tablas con autorización de vista
+
+yform_structure_article_could_not_be_deleted = El artículo no se ha podido borrar porque lo utilizan los siguientes registros de datos:
