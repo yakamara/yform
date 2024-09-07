@@ -117,6 +117,15 @@ class rex_yform_manager_table_api
      */
     public static function exportTablesets(array $table_names)
     {
+        $recursiveKsort = static function (&$array) use (&$recursiveKsort) {
+            foreach ($array as &$value) {
+                if (is_array($value)) {
+                    $recursiveKsort($value);
+                }
+            }
+            ksort($array);
+        };
+
         $export = [];
         foreach ($table_names as $table_name) {
             $export_table = rex_yform_manager_table::get($table_name);
@@ -124,10 +133,12 @@ class rex_yform_manager_table_api
             foreach ($export_table->getFields() as $field) {
                 $export_fields[] = array_diff_key($field->toArray(), ['id' => 0]);
             }
-            $export[$export_table['table_name']] = [
+            $exportFields = [
                 'table' => array_diff_key($export_table->toArray(), ['id' => 0, 'prio' => 0]),
                 'fields' => $export_fields,
             ];
+            $recursiveKsort($exportFields);
+            $export[$export_table['table_name']] = $exportFields;
         }
 
         return json_encode($export, JSON_PRETTY_PRINT);
