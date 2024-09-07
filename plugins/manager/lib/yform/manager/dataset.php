@@ -283,11 +283,11 @@ class rex_yform_manager_dataset
             return $this->id;
         }
 
-        if (!$this->dataLoaded) {
-            $this->loadData();
+        if ($this->hasValue($key) {
+            return $this->data[$key];
         }
 
-        return $this->data[$key];
+        return null;
     }
 
     public function getData(): array
