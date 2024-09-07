@@ -15,5 +15,7 @@ return RectorConfig::configure()
             'rex_yform_rest' => 'Yakamara\YForm\Rest\Rest',
             'rex_yform_rest_route' => 'Yakamara\YForm\Rest\Route',
             'rex_yform_rest_auth_token' => 'Yakamara\YForm\Rest\AuthToken',
+            'rex_yform_list' => 'Yakamara\YForm\List\YList',
+            'rex_yform_list_tools' => 'Yakamara\YForm\List\Tools',
         ],
     );

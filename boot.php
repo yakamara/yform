@@ -12,6 +12,8 @@ class_alias('Yakamara\YForm\YForm', 'rex_yform');
 class_alias('Yakamara\YForm\Rest\Rest', 'rex_yform_rest');
 class_alias('Yakamara\YForm\Rest\Route', 'rex_yform_rest_route');
 class_alias('Yakamara\YForm\Rest\AuthToken', 'rex_yform_rest_auth_token');
+class_alias('Yakamara\YForm\List\YList', 'rex_yform_list');
+class_alias('Yakamara\YForm\List\Tools', 'rex_yform_list_tools');
 
 YForm::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 
