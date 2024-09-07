@@ -15,7 +15,7 @@ $historySearchAction = rex_request('historySearchAction', 'string', null);
 
 $dataset = null;
 if ($datasetId) {
-    $dataset = rex_yform_manager_dataset::getRaw($datasetId, $this->table->getTableName());
+    $dataset = \Yakamara\YForm\Manager\Dataset::getRaw($datasetId, $this->table->getTableName());
 } else {
     $filterDataset = false;
 }
@@ -214,9 +214,9 @@ $list->setColumnFormat('title', 'custom', static function (array $params) {
 $list->setColumnLabel('action', rex_i18n::msg('yform_history_action'));
 $list->setColumnFormat('action', 'custom', static function (array $params) {
     static $classes = [
-        rex_yform_manager_dataset::ACTION_CREATE => 'success',
-        rex_yform_manager_dataset::ACTION_UPDATE => 'primary',
-        rex_yform_manager_dataset::ACTION_DELETE => 'danger',
+        \Yakamara\YForm\Manager\Dataset::ACTION_CREATE => 'success',
+        \Yakamara\YForm\Manager\Dataset::ACTION_UPDATE => 'primary',
+        \Yakamara\YForm\Manager\Dataset::ACTION_DELETE => 'danger',
     ];
     $class = $classes[$params['subject']] ?? 'default';
     return sprintf('<span class="label label-%s">%s</span>', $class, rex_i18n::msg('yform_history_action_' . $params['subject']));
@@ -291,9 +291,9 @@ $historySearchForm->setValueField('choice', [
     'label' => 'Action',
     'choices' => [
         '' => rex_i18n::msg('yform_manager_actions_all'),
-        rex_yform_manager_dataset::ACTION_CREATE => rex_i18n::msg('yform_history_action_' . rex_yform_manager_dataset::ACTION_CREATE),
-        rex_yform_manager_dataset::ACTION_UPDATE => rex_i18n::msg('yform_history_action_' . rex_yform_manager_dataset::ACTION_UPDATE),
-        rex_yform_manager_dataset::ACTION_DELETE => rex_i18n::msg('yform_history_action_' . rex_yform_manager_dataset::ACTION_DELETE),
+        \Yakamara\YForm\Manager\Dataset::ACTION_CREATE => rex_i18n::msg('yform_history_action_' . \Yakamara\YForm\Manager\Dataset::ACTION_CREATE),
+        \Yakamara\YForm\Manager\Dataset::ACTION_UPDATE => rex_i18n::msg('yform_history_action_' . \Yakamara\YForm\Manager\Dataset::ACTION_UPDATE),
+        \Yakamara\YForm\Manager\Dataset::ACTION_DELETE => rex_i18n::msg('yform_history_action_' . \Yakamara\YForm\Manager\Dataset::ACTION_DELETE),
     ],
 ]);
 

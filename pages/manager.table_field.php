@@ -10,7 +10,7 @@
 echo rex_view::title(rex_i18n::msg('yform'));
 
 $table_name = rex_request('table_name', 'string');
-$table = rex_yform_manager_table::get($table_name);
+$table = \Yakamara\YForm\Manager\Table\Table::get($table_name);
 
 if ($table) {
     try {

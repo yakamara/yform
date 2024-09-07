@@ -20,7 +20,7 @@ class rex_yform_yorm_test extends TestCase
 {
     public static function setUpTable($tableName)
     {
-        $table = rex_yform_manager_table_api::setTable(
+        $table = \Yakamara\YForm\Manager\Table\Api::setTable(
             [
                 'table_name' => $tableName,
                 'name' => 'Name of Table - ' . $tableName,
@@ -39,7 +39,7 @@ class rex_yform_yorm_test extends TestCase
         return $table;
     }
 
-    public static function setUpTableField(rex_yform_manager_table $table, $field)
+    public static function setUpTableField(\Yakamara\YForm\Manager\Table\Table $table, $field)
     {
         $field['type_id'] ??= 'value';
         $field['type_name'] ??= 'text';
@@ -49,8 +49,8 @@ class rex_yform_yorm_test extends TestCase
         $field['search'] = $field['list_hidden'] ?? 0;
         $field['prio'] = $field['list_hidden'] ?? 99999;
 
-        rex_yform_manager_table_api::setTableField($table->getTableName(), $field);
-        rex_yform_manager_table_api::generateTableAndFields($table);
+        \Yakamara\YForm\Manager\Table\Api::setTableField($table->getTableName(), $field);
+        \Yakamara\YForm\Manager\Table\Api::generateTableAndFields($table);
     }
 
     public function testTableAPI()
@@ -78,7 +78,7 @@ class rex_yform_yorm_test extends TestCase
 
             // prüfen ob es angelegt ist.
 
-            $fields = rex_yform_manager_table::get($tableName)->getFields();
+            $fields = \Yakamara\YForm\Manager\Table\Table::get($tableName)->getFields();
             static::assertEquals(
                 count($fields),
                 1,
@@ -92,7 +92,7 @@ class rex_yform_yorm_test extends TestCase
             // TODO: prüfen ob field gelöscht werden kann
 
             // YORM - Datensatz anlegen
-            $dataset = rex_yform_manager_dataset::create($tableName);
+            $dataset = \Yakamara\YForm\Manager\Dataset::create($tableName);
             $dataset->setValue($fieldName, $fieldValue);
 
             static::assertTrue($dataset->save(), 'dataset creation failed (rex_yform_manager_dataset::create)');
@@ -110,7 +110,7 @@ class rex_yform_yorm_test extends TestCase
 
                 // YORM - Datensatz auslesen
                 $datasetId = $dataset->getId();
-                $dataset = rex_yform_manager_dataset::get($datasetId, $tableName);
+                $dataset = \Yakamara\YForm\Manager\Dataset::get($datasetId, $tableName);
                 static::assertNotNull($dataset, 'dataset not found - get via ID failed');
 
                 // YORM - Datensatz bearbeiten
@@ -118,7 +118,7 @@ class rex_yform_yorm_test extends TestCase
                 $dataset
                     ->setValue($fieldName, $fieldValueEdit)
                     ->save();
-                $dataset = rex_yform_manager_dataset::get($datasetId, $tableName);
+                $dataset = \Yakamara\YForm\Manager\Dataset::get($datasetId, $tableName);
                 static::assertEquals(
                     $dataset->getValue($fieldName),
                     $fieldValueEdit,
@@ -129,7 +129,7 @@ class rex_yform_yorm_test extends TestCase
                 if ($dataset) {
                     static::assertTrue($dataset->delete(), 'dataset delete failed (rex_yform_manager_dataset::delete)');
 
-                    $dataset = rex_yform_manager_dataset::get($datasetId, $tableName);
+                    $dataset = \Yakamara\YForm\Manager\Dataset::get($datasetId, $tableName);
                     static::assertFalse($dataset->exists(), 'dataset delete failed - YOrm delete failed');
                 }
 
@@ -187,23 +187,23 @@ class rex_yform_yorm_test extends TestCase
                     'size' => 10,
                 ]);
 
-                $cat1 = rex_yform_manager_dataset::create($tableNameCategories)
+                $cat1 = \Yakamara\YForm\Manager\Dataset::create($tableNameCategories)
                     ->setValue($fieldName, 'Category 1');
                 $cat1->save();
 
-                $cat2 = rex_yform_manager_dataset::create($tableNameCategories)
+                $cat2 = \Yakamara\YForm\Manager\Dataset::create($tableNameCategories)
                     ->setValue($fieldName, 'Category 2');
                 $cat2->save();
 
-                $cat3 = rex_yform_manager_dataset::create($tableNameCategories)
+                $cat3 = \Yakamara\YForm\Manager\Dataset::create($tableNameCategories)
                     ->setValue($fieldName, 'Category 3');
                 $cat3->save();
 
-                rex_yform_manager_dataset::create($tableName)
+                \Yakamara\YForm\Manager\Dataset::create($tableName)
                     ->setValue($fieldName, 'Mein Neuer Wert')
                     ->save();
 
-                rex_yform_manager_dataset::create($tableName)
+                \Yakamara\YForm\Manager\Dataset::create($tableName)
                     ->setValue($fieldName, 'Mein Neuer Wert mit 2 Kategorien')
                     ->setValue('categories', [
                         $cat1->getId(),
@@ -213,9 +213,9 @@ class rex_yform_yorm_test extends TestCase
             }
         }
 
-        rex_yform_manager_table_api::removeTable($tableName);
+        \Yakamara\YForm\Manager\Table\Api::removeTable($tableName);
 
-        $table = rex_yform_manager_table::get($tableName);
+        $table = \Yakamara\YForm\Manager\Table\Table::get($tableName);
 
         static::assertNull($table, 'table schema removing failed');
 
@@ -231,19 +231,19 @@ class rex_yform_yorm_test extends TestCase
                 'DROP Table ' . $tableNameRelation,
             );
             rex_sql::factory()->setQuery(
-                'delete from ' . rex_yform_manager_table::table() . ' where table_name LIKE :table_name ',
+                'delete from ' . \Yakamara\YForm\Manager\Table\Table::table() . ' where table_name LIKE :table_name ',
                 [
                     ':table_name' => $prefix . '%',
                 ],
             );
             rex_sql::factory()->setQuery(
-                'delete from ' . rex_yform_manager_field::table() . ' where table_name LIKE :table_name ',
+                'delete from ' . \Yakamara\YForm\Manager\Field::table() . ' where table_name LIKE :table_name ',
                 [
                     ':table_name' => $prefix . '%',
                 ],
             );
 
-            rex_yform_manager_table::deleteCache();
+            \Yakamara\YForm\Manager\Table\Table::deleteCache();
         } catch (Exception $e) {
         }
     }

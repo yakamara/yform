@@ -6,11 +6,11 @@ use Error;
 use rex_api_exception;
 use rex_i18n;
 use rex_sql_exception;
-use rex_yform_manager_collection;
-use rex_yform_manager_dataset;
-use rex_yform_manager_field;
-use rex_yform_manager_query;
-use rex_yform_manager_table;
+use Yakamara\YForm\Manager\Collection;
+use Yakamara\YForm\Manager\Dataset;
+use Yakamara\YForm\Manager\Field;
+use Yakamara\YForm\Manager\Query;
+use Yakamara\YForm\Manager\Table\Table;
 
 use function array_key_exists;
 use function call_user_func;
@@ -26,10 +26,10 @@ class Route
     public $path = '';
     public $type = '';
 
-    /** @var rex_yform_manager_table */
+    /** @var Table */
     public $table;
 
-    /** @var rex_yform_manager_query */
+    /** @var Query */
     public $query;
     public $instance;
 
@@ -115,7 +115,7 @@ class Route
             Rest::sendError('400', 'request-method-not-available');
         }
 
-        /** @var rex_yform_manager_table $table */
+        /** @var Table $table */
         $table = $this->getTable();
         $query = $this->getQuery();
 
@@ -128,9 +128,9 @@ class Route
                 $instance = $table->createDataset();
                 $fields = $this->getFields('get', $instance);
 
-                /** @var rex_yform_manager_dataset $instance */
+                /** @var Dataset $instance */
                 $instance = null;
-                /** @var rex_yform_manager_collection $instance */
+                /** @var Collection $instance */
                 $instances = null;
                 $attribute = null;
                 $baseInstances = false;
@@ -455,13 +455,13 @@ class Route
 
     /**
      * @throws rex_api_exception
-     * @return array<rex_yform_manager_field>
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getFields(string $type = 'get', $instance = null): array
     {
         $class = $this->getTypeFromInstance($instance);
 
-        $returnFields = ['id' => new rex_yform_manager_field([
+        $returnFields = ['id' => new Field([
             'name' => 'id',
             'type_id' => 'value',
             'type_name' => 'integer',
@@ -471,8 +471,8 @@ class Route
             return $returnFields;
         }
 
-        /** @var rex_yform_manager_table $table */
-        /** @var rex_yform_manager_dataset $class */
+        /** @var Table $table */
+        /** @var Dataset $class */
         $table = $class::table();
 
         if (!is_object($table)) {
@@ -494,12 +494,12 @@ class Route
         return $returnFields;
     }
 
-    public function getFilterQuery(rex_yform_manager_query $query, array $fields, array $get): rex_yform_manager_query
+    public function getFilterQuery(Query $query, array $fields, array $get): Query
     {
         if (isset($get['filter']) && is_array($get['filter'])) {
             foreach ($get['filter'] as $filterKey => $filterValue) {
                 foreach ($fields as $fieldName => $field) {
-                    /* @var rex_yform_manager_field $field */
+                    /* @var Field $field */
                     if ($fieldName == $filterKey) {
                         if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                             try {
@@ -551,7 +551,7 @@ class Route
     /**
      * @throws rex_api_exception
      */
-    public function getInstanceAttributes(rex_yform_manager_dataset $instance, $parents = []): array
+    public function getInstanceAttributes(Dataset $instance, $parents = []): array
     {
         $data = [];
 
@@ -606,7 +606,7 @@ class Route
     /**
      * @throws rex_api_exception
      */
-    public function getInstanceRelationships(rex_yform_manager_dataset $instance, $parents = []): array
+    public function getInstanceRelationships(Dataset $instance, $parents = []): array
     {
         $paths[] = $instance->getId();
 
@@ -686,24 +686,24 @@ class Route
         return $type;
     }
 
-    public function setQuery(rex_yform_manager_query $query): self
+    public function setQuery(Query $query): self
     {
         $this->query = $query;
         return $this;
     }
 
-    public function getQuery(): rex_yform_manager_query
+    public function getQuery(): Query
     {
         return $this->query;
     }
 
-    public function setTable(rex_yform_manager_table $table): self
+    public function setTable(Table $table): self
     {
         $this->table = $table;
         return $this;
     }
 
-    public function getTable(): rex_yform_manager_table
+    public function getTable(): Table
     {
         return $this->table;
     }

@@ -1,6 +1,19 @@
 <?php
 
-class rex_yform_manager_field implements ArrayAccess
+namespace Yakamara\YForm\Manager;
+
+use ArrayAccess;
+use Exception;
+use rex;
+use rex_i18n;
+use rex_yform_validate_abstract;
+use rex_yform_value_abstract;
+
+use function array_key_exists;
+use function count;
+use function in_array;
+
+class Field implements ArrayAccess
 {
     protected $values = [];
     protected $definitions = [];
@@ -57,7 +70,7 @@ class rex_yform_manager_field implements ArrayAccess
     }
 
     /**
-     * @return null|mixed|rex_yform_validate_abstract|rex_yform_value_abstract
+     * @return mixed|rex_yform_validate_abstract|rex_yform_value_abstract|null
      */
     public function getObject()
     {

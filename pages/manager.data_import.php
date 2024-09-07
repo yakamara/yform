@@ -131,7 +131,7 @@ if (1 == rex_request('send', 'int', 0)) {
 
                                     foreach ($mc as $mcc) {
                                         rex_sql::factory()
-                                            ->setTable(rex_yform_manager_field::table())
+                                            ->setTable(\Yakamara\YForm\Manager\Field::table())
                                             ->setValue('table_name', $this->table->getTablename())
                                             ->setValue('prio', 999)
                                             ->setValue('type_id', 'value')
@@ -145,10 +145,10 @@ if (1 == rex_request('send', 'int', 0)) {
                                         echo rex_view::info(rex_i18n::msg('yform_manager_import_field_added', $mcc));
                                     }
 
-                                    rex_yform_manager_table_api::generateTablesAndFields();
+                                    \Yakamara\YForm\Manager\Table\Api::generateTablesAndFields();
 
                                     $fields = [];
-                                    foreach (rex_yform_manager_table::get($this->table->getTableName())->getFields() as $field) {
+                                    foreach (\Yakamara\YForm\Manager\Table\Table::get($this->table->getTableName())->getFields() as $field) {
                                         $fields[strtolower($field->getName())] = $field;
                                     }
                                 } else {
@@ -252,7 +252,7 @@ if (1 == rex_request('send', 'int', 0)) {
             echo rex_view::error(rex_i18n::msg('yform_manager_import_info_data_imported', $dcounter));
         }
 
-        rex_yform_manager_table::deleteCache();
+        \Yakamara\YForm\Manager\Table\Table::deleteCache();
     }
 }
 

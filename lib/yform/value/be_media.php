@@ -112,12 +112,12 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
         $warning = $ep->getSubject();
 
         $sql = \rex_sql::factory();
-        $sql->setQuery('SELECT * FROM `' . \rex_yform_manager_field::table() . '` LIMIT 0');
+        $sql->setQuery('SELECT * FROM `' . \Yakamara\YForm\Manager\Field::table() . '` LIMIT 0');
 
         $columns = $sql->getFieldnames();
         $select = in_array('multiple', $columns) ? ', `multiple`' : '';
 
-        $fields = $sql->getArray('SELECT `table_name`, `name`' . $select . ' FROM `' . \rex_yform_manager_field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_media")');
+        $fields = $sql->getArray('SELECT `table_name`, `name`' . $select . ' FROM `' . \Yakamara\YForm\Manager\Field::table() . '` WHERE `type_id`="value" AND `type_name` IN("be_media")');
         $fields = \rex_extension::registerPoint(new \rex_extension_point('YFORM_MEDIA_IS_IN_USE', $fields));
 
         if (!count($fields)) {
@@ -142,7 +142,7 @@ class rex_yform_value_be_media extends rex_yform_value_abstract
             if (count($items)) {
                 foreach ($items as $item) {
                     $sqlData = \rex_sql::factory();
-                    $sqlData->setQuery('SELECT `name` FROM `' . \rex_yform_manager_table::table() . '` WHERE `table_name` = "' . $tableName . '"');
+                    $sqlData->setQuery('SELECT `name` FROM `' . \Yakamara\YForm\Manager\Table\Table::table() . '` WHERE `table_name` = "' . $tableName . '"');
                     $editUrl = rex_yform_manager::url($tableName, $item['id']);
                     $messages .= '<li><a href="javascript:openPage(\'' . $editUrl . '\')">' . $sqlData->getValue('name') . ' [id=' . $item['id'] . ']</a></li>';
                 }

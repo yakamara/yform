@@ -13,7 +13,7 @@ $_csrf_key = 'tableset_export';
 $page = rex_request('page', 'string', '');
 
 $yform_tables = [];
-foreach (rex_yform_manager_table::getAll() as $g_table) {
+foreach (\Yakamara\YForm\Manager\Table\Table::getAll() as $g_table) {
     $table_name = $g_table->getTableName();
     $yform_tables[$table_name] = $g_table->getNameLocalized() . ' [' . $table_name . ']';
 }
@@ -29,7 +29,7 @@ $form = $yform->getForm();
 if ($yform->objparams['actions_executed']) {
     try {
         $table_names = rex_request('table_names');
-        $fileContent = rex_yform_manager_table_api::exportTablesets($table_names);
+        $fileContent = \Yakamara\YForm\Manager\Table\Api::exportTablesets($table_names);
 
         $tablenames = implode('_', $table_names);
         if (mb_strlen($tablenames) > 100) {

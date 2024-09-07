@@ -1,13 +1,26 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+namespace Yakamara\YForm\Manager\Table;
 
-final class rex_yform_manager_table implements ArrayAccess
+use ArrayAccess;
+use Exception;
+use rex;
+use rex_exception;
+use rex_file;
+use rex_fragment;
+use rex_i18n;
+use rex_path;
+use rex_sql;
+use rex_user;
+use RuntimeException;
+use Yakamara\YForm\Manager\Dataset;
+use Yakamara\YForm\Manager\Field;
+use Yakamara\YForm\Manager\Query;
+
+use function array_key_exists;
+use function count;
+
+final class Table implements ArrayAccess
 {
     public static array $tableLayouts = [];
     public static string $defaultTableLayout = 'yform/manager/page/layout.php';
@@ -15,15 +28,15 @@ final class rex_yform_manager_table implements ArrayAccess
     protected $values = [];
     protected $columns = [];
 
-    /** @var array<rex_yform_manager_field> */
+    /** @var array<\Yakamara\YForm\Manager\Field> */
     protected $fields = [];
 
-    /** @var array<rex_yform_manager_field> */
+    /** @var array<\Yakamara\YForm\Manager\Field> */
     protected $relations;
 
     protected static bool $debug = false;
 
-    /** @var array<self> */
+    /** @var array<\Yakamara\YForm\Manager\Table\Table> */
     protected static $tables = [];
     protected static bool $loadedAllTables = false;
 
@@ -56,7 +69,7 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * @param string $tableName
      *
-     * @return rex_yform_manager_table|null
+     * @return Table|null
      */
     public static function get($tableName)
     {
@@ -86,7 +99,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return rex_yform_manager_table|null
+     * @return Table|null
      */
     public static function getById(int $tableID)
     {
@@ -102,7 +115,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return array<rex_yform_manager_table>
+     * @return array<\Yakamara\YForm\Manager\Table\Table>
      */
     public static function getAll()
     {
@@ -249,14 +262,14 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * Fields of yform Definitions.
      *
-     * @return array<rex_yform_manager_field>
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getFields(array $filter = [])
     {
         if (0 == count($this->fields)) {
             foreach ($this->fieldValues as $field) {
                 try {
-                    $this->fields[] = new rex_yform_manager_field($field);
+                    $this->fields[] = new Field($field);
                 } catch (Exception $e) {
                     // ignore missing fields
                 }
@@ -279,7 +292,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return array<rex_yform_manager_field>
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getValueFields(array $filter = [])
     {
@@ -305,7 +318,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return array<rex_yform_manager_field>
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getRelations()
     {
@@ -319,7 +332,7 @@ final class rex_yform_manager_table implements ArrayAccess
     /**
      * @param string $table
      *
-     * @return array<rex_yform_manager_field>
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getRelationsTo($table)
     {
@@ -327,7 +340,7 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return rex_yform_manager_field|null
+     * @return Field|null
      */
     public function getRelation(string $column)
     {
@@ -414,7 +427,7 @@ final class rex_yform_manager_table implements ArrayAccess
 
     public function getMaximumPrio()
     {
-        $sql = 'select max(prio) as prio from ' . rex_yform_manager_field::table() . ' where table_name="' . $this->getTableName() . '"';
+        $sql = 'select max(prio) as prio from ' . Field::table() . ' where table_name="' . $this->getTableName() . '"';
         $gf = rex_sql::factory();
         if (self::$debug) {
             $gf->setDebug();
@@ -424,39 +437,39 @@ final class rex_yform_manager_table implements ArrayAccess
     }
 
     /**
-     * @return rex_yform_manager_dataset
+     * @return Dataset
      */
     public function createDataset()
     {
-        return rex_yform_manager_dataset::create($this->getTableName());
+        return Dataset::create($this->getTableName());
     }
 
     /**
      * @param int $id
      *
-     * @return rex_yform_manager_dataset|null
+     * @return Dataset|null
      */
     public function getDataset($id)
     {
-        return rex_yform_manager_dataset::get($id, $this->getTableName());
+        return Dataset::get($id, $this->getTableName());
     }
 
     /**
      * @param int $id
      *
-     * @return rex_yform_manager_dataset
+     * @return Dataset
      */
     public function getRawDataset($id)
     {
-        return rex_yform_manager_dataset::getRaw($id, $this->getTableName());
+        return Dataset::getRaw($id, $this->getTableName());
     }
 
     /**
-     * @return rex_yform_manager_query
+     * @return Query
      */
     public function query()
     {
-        return new rex_yform_manager_query($this->getTableName());
+        return new Query($this->getTableName());
     }
 
     // ------------------------------------------- Array Access
@@ -535,7 +548,7 @@ final class rex_yform_manager_table implements ArrayAccess
             self::$cache[$tableName]['fields'] = [];
         }
 
-        $fields = $sql->getArray('select * from ' . rex_yform_manager_field::table() . ' order by prio');
+        $fields = $sql->getArray('select * from ' . Field::table() . ' order by prio');
         foreach ($fields as $field) {
             if (isset(self::$cache[(string) $field['table_name']])) {
                 self::$cache[(string) $field['table_name']]['fields'][] = $field;
@@ -559,12 +572,12 @@ final class rex_yform_manager_table implements ArrayAccess
 
     private static function cachePath(): string
     {
-        return rex_path::pluginCache('yform', 'manager', 'tables.cache');
+        return rex_path::addonCache('yform', 'manager', 'tables.cache');
     }
 
     public function isGranted(string $type, rex_user $user): bool
     {
-        return rex_yform_manager_table_authorization::onAttribute($type, $this, $user);
+        return Authorization::onAttribute($type, $this, $user);
     }
 
     public function getCSRFKey(): string

@@ -1,19 +1,29 @@
 <?php
 
-class rex_yform_manager_search
+namespace Yakamara\YForm\Manager;
+
+use Exception;
+use rex_i18n;
+use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\YForm;
+
+use function array_key_exists;
+use function call_user_func;
+
+class Search
 {
     private array $linkVars = [];
     private string $scriptPath = '';
 
-    /** @var rex_yform_manager_table */
+    /** @var Table */
     protected $table;
     protected array $fields;
 
-    public function __construct(rex_yform_manager_table $table)
+    public function __construct(Table $table)
     {
         $this->table = $table;
 
-        $id_field = [new rex_yform_manager_field([
+        $id_field = [new Field([
             'id' => 0,
             'table_name' => $this->table->getTableName(),
             'type_id' => 'value',
@@ -46,9 +56,9 @@ class rex_yform_manager_search
         return $this;
     }
 
-    public function getYForm(): \Yakamara\YForm\YForm
+    public function getYForm(): YForm
     {
-        $yform = new \Yakamara\YForm\YForm();
+        $yform = new YForm();
         $yform->setObjectparams('form_name', 'rex_yform_searchvars-' . $this->table->getTableName());
         $yform->setObjectparams('form_showformafterupdate', 1);
         $yform->setObjectparams('csrf_protection', false);
@@ -132,8 +142,8 @@ class rex_yform_manager_search
                             'query' => $query,
                         ],
                     );
-                    if ('rex_yform_manager_query' != $query::class) {
-                        throw new Exception('getSearchFilter in rex_yform_value_' . $field->getTypeName() . ' does not return a rex_yform_manager_query');
+                    if (Query::class != $query::class) {
+                        throw new Exception('getSearchFilter in rex_yform_value_' . $field->getTypeName() . ' does not return a Yakamara\YForm\Manager\Query');
                     }
                 }
             }

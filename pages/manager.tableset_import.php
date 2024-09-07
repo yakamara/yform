@@ -36,7 +36,7 @@ if ($yform->objparams['actions_executed']) {
     try {
         $filder = $yform->objparams['value_pool']['files']['importfile'][2];
         $content = file_get_contents($filder);
-        rex_yform_manager_table_api::importTablesets($content);
+        \Yakamara\YForm\Manager\Table\Api::importTablesets($content);
         echo rex_view::success(rex_i18n::msg('yform_manager_tableset_import_success'));
     } catch (Exception $e) {
         echo rex_view::warning(rex_i18n::msg('yform_manager_tableset_import_failed', $e->getMessage()));

@@ -48,7 +48,7 @@ class TableData extends rex_var
                 return self::quote('[table param not defined]');
             }
 
-            $table = rex_yform_manager_table::get($tableName);
+            $table = \Yakamara\YForm\Manager\Table\Table::get($tableName);
             if (!$table) {
                 return self::quote('[table not in YForm?]');
             }

@@ -1,5 +1,7 @@
 <?php
 
+use Yakamara\YForm\Manager\Dataset;
+use Yakamara\YForm\Manager\Table\Table;
 use Yakamara\YForm\Rest\Rest;
 use Yakamara\YForm\YForm;
 
@@ -17,6 +19,17 @@ class_alias('Yakamara\YForm\List\Tools', 'rex_yform_list_tools');
 class_alias('Yakamara\YForm\RexVar\Data', 'rex_var_yform_data');
 class_alias('Yakamara\YForm\RexVar\TableData', 'rex_var_yform_data');
 class_alias('Yakamara\YForm\Email\Template', 'rex_yform_email_template');
+class_alias('Yakamara\YForm\Manager\Table\Table', 'rex_yform_manager_table');
+class_alias('Yakamara\YForm\Manager\Table\Authorization', 'rex_yform_manager_table_authorization');
+class_alias('Yakamara\YForm\Manager\Table\Api', 'rex_yform_manager_table_api');
+class_alias('Yakamara\YForm\Manager\Table\Perm\Edit', 'rex_yform_manager_table_perm_edit');
+class_alias('Yakamara\YForm\Manager\Table\Perm\View', 'rex_yform_manager_table_perm_view');
+class_alias('Yakamara\YForm\Manager\Collection', 'rex_yform_manager_collection');
+class_alias('Yakamara\YForm\Manager\Dataset', 'rex_yform_manager_dataset');
+class_alias('Yakamara\YForm\Manager\Field', 'rex_yform_manager_field');
+class_alias('Yakamara\YForm\Manager\Manager', 'rex_yform_manager_manager');
+class_alias('Yakamara\YForm\Manager\Query', 'rex_yform_manager_query');
+class_alias('Yakamara\YForm\Manager\Search', 'rex_yform_manager_search');
 
 YForm::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 
@@ -93,8 +106,8 @@ if (rex::isBackend() && rex::getUser()) {
 
 // Manager
 
-rex_complex_perm::register('yform_manager_table_edit', 'rex_yform_manager_table_perm_edit');
-rex_complex_perm::register('yform_manager_table_view', 'rex_yform_manager_table_perm_view');
+rex_complex_perm::register('yform_manager_table_edit', 'Yakamara\YForm\Manager\Table\Perm\Edit');
+rex_complex_perm::register('yform_manager_table_view', 'Yakamara\YForm\Manager\Table\Perm\View');
 
 if (rex::isBackend() && rex::getUser()) {
     rex_extension::register('PACKAGES_INCLUDED', function () {
@@ -120,7 +133,7 @@ if (rex::isBackend() && rex::getUser()) {
     }
 
     try {
-        $tables = rex_yform_manager_table::getAll();
+        $tables = Table::getAll();
     } catch (Exception $e) {
         $tables = [];
     }
@@ -173,19 +186,19 @@ rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep)
         return;
     }
 
-    $table = rex_yform_manager_table::get($ep->getParam('table'));
+    $table = Table::get($ep->getParam('table'));
     if (!$table) {
         return;
     }
 
     $dataset = $ep->getParam('form')->getParam('manager_dataset');
     if (!$dataset) {
-        $dataset = rex_yform_manager_dataset::getRaw($ep->getParam('id'), $table->getTableName());
+        $dataset = Dataset::getRaw($ep->getParam('id'), $table->getTableName());
     }
     $dataset->invalidateData();
 
     if ($table->hasHistory() && $dataset->isHistoryEnabled()) {
-        $action = 'insert' === $ep->getParam('action') ? rex_yform_manager_dataset::ACTION_CREATE : rex_yform_manager_dataset::ACTION_UPDATE;
+        $action = 'insert' === $ep->getParam('action') ? Dataset::ACTION_CREATE : Dataset::ACTION_UPDATE;
         $dataset->makeSnapshot($action);
     }
 });

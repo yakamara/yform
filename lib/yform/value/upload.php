@@ -552,7 +552,7 @@ class rex_yform_value_upload extends rex_yform_value_abstract
 
         $return = $value;
         if (rex::isBackend() && $list) {
-            $field = new rex_yform_manager_field($params['params']['field']);
+            $field = new \Yakamara\YForm\Manager\Field($params['params']['field']);
             if ('' != $value) {
                 $return = '<a href="' . self::upload_getDownloadLink($field->getElement('table_name'), $field->getElement('name'), (int) $list->getValue('id')) . '" title="' . rex_escape($title) . '">' . rex_escape($value) . '</a>';
             }

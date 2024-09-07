@@ -72,12 +72,12 @@ class rex_yform_value_integer extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = $params['value'];
-        /** @var rex_yform_manager_query $query */
+        /** @var \Yakamara\YForm\Manager\Query $query */
         $query = $params['query'];
         $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         if ('(empty)' == $value) {
-            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
+            return $query->whereNested(static function (\Yakamara\YForm\Manager\Query $query) use ($field) {
                 $query
                     ->where($field, '')
                     ->where($field, null)
@@ -85,7 +85,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
             }, 'OR');
         }
         if ('!(empty)' == $value) {
-            return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
+            return $query->whereNested(static function (\Yakamara\YForm\Manager\Query $query) use ($field) {
                 $query
                     ->where($field, '', '<>')
                     ->where($field, null, '<>')
