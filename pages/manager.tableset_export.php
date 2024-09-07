@@ -18,7 +18,7 @@ foreach (rex_yform_manager_table::getAll() as $g_table) {
     $yform_tables[$table_name] = $g_table->getNameLocalized() . ' [' . $table_name . ']';
 }
 
-$yform = new rex_yform();
+$yform = new \Yakamara\YForm\YForm();
 $yform->setHiddenField('page', $page);
 $yform->setObjectparams('real_field_names', true);
 $yform->setObjectparams('form_name', $_csrf_key);

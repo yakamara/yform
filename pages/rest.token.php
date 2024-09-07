@@ -46,7 +46,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'integer|amount|translate:yform_rest_token_amount';
     $form_data[] = 'choice|paths|translate:yform_rest_token_token_paths|' . implode(',', $routes) . '||1';
 
-    $yform = rex_yform::factory();
+    $yform = \Yakamara\YForm\YForm::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest/token');
     $yform->setObjectparams('form_name', 'yform-rest-token-form');
 

@@ -34,7 +34,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'datetime|datetime_created|translate:yform_rest_token_access_datetime_created';
     $form_data[] = 'text|url|translate:yform_rest_token_url';
 
-    $yform = rex_yform::factory();
+    $yform = \Yakamara\YForm\YForm::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest/access');
 
     $yform->setFormData(implode("\n", $form_data));

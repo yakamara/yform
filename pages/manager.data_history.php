@@ -264,7 +264,7 @@ if (rex::getUser()->isAdmin()) {
     $options = '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_history_delete') . ':</small> ' . $fragment->parse('core/buttons/button_group.php');
 }
 
-$historySearchForm = new rex_yform();
+$historySearchForm = new \Yakamara\YForm\YForm();
 $historySearchForm->setObjectparams('form_action', $list->getUrl());
 $historySearchForm->setObjectparams('form_showformafterupdate', true);
 $historySearchForm->setObjectparams('real_field_names', true);

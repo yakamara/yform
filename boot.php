@@ -5,7 +5,9 @@
  * @psalm-scope-this rex_addon
  */
 
-rex_yform::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
+class_alias('Yakamara\YForm\YForm', 'rex_yform');
+
+\Yakamara\YForm\YForm::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {
     /* @var $this rex_addon */

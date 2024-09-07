@@ -428,9 +428,9 @@ class rex_yform_manager_collection extends \SplFixedArray
         return $success;
     }
 
-    public function getForm(): rex_yform
+    public function getForm(): \Yakamara\YForm\YForm
     {
-        $yform = new rex_yform();
+        $yform = new \Yakamara\YForm\YForm();
         $yform->setDebug(self::$debug);
         $yform->objparams['form_name'] = 'yform-manager-multi-edit';
         $yform->objparams['form_class'] .= ' yform-manager-multi-edit';
@@ -529,9 +529,9 @@ class rex_yform_manager_collection extends \SplFixedArray
     }
 
     /**
-     * @param null|callable(rex_yform):void $afterFieldsExecuted
+     * @param null|callable(\Yakamara\YForm\YForm):void $afterFieldsExecuted
      */
-    public function executeForm(rex_yform $yform, ?callable $afterFieldsExecuted = null): string
+    public function executeForm(\Yakamara\YForm\YForm $yform, ?callable $afterFieldsExecuted = null): string
     {
         $yform->executeFields();
 

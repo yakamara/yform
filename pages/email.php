@@ -68,7 +68,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
 
     $form_data[] = 'datestamp|updatedate||||0';
 
-    $yform = rex_yform::factory();
+    $yform = \Yakamara\YForm\YForm::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/email');
     $yform->setObjectparams('form_name', 'yform-email-template');
 

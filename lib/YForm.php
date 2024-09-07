@@ -7,7 +7,25 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-class rex_yform
+namespace Yakamara\YForm;
+
+use Exception;
+use rex;
+use rex_article;
+use rex_autoload;
+use rex_clang;
+use rex_extension;
+use rex_extension_point;
+use rex_factory_trait;
+use rex_fragment;
+use rex_i18n;
+use rex_response;
+use rex_sql;
+use rex_yform_base_abstract;
+use rex_yform_validate_abstract;
+use rex_yform_value_abstract;
+
+class YForm
 {
     use rex_factory_trait;
 
