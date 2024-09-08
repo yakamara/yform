@@ -1,6 +1,8 @@
 <?php
 
-class rex_yform_choice_list_view
+namespace Yakamara\YForm\Choice;
+
+class ListView
 {
     public $choices;
     public $preferredChoices;
@@ -8,8 +10,8 @@ class rex_yform_choice_list_view
     /**
      * Creates a new choice list view.
      *
-     * @param rex_yform_choice_group_view[]|rex_yform_choice_view[] $choices          The choice views
-     * @param rex_yform_choice_group_view[]|rex_yform_choice_view[] $preferredChoices the preferred choice views
+     * @param array<\Yakamara\YForm\Choice\GroupView>|array<\Yakamara\YForm\Choice\View> $choices The choice views
+     * @param array<\Yakamara\YForm\Choice\GroupView>|array<\Yakamara\YForm\Choice\View> $preferredChoices the preferred choice views
      */
     public function __construct(array $choices = [], array $preferredChoices = [])
     {
@@ -28,10 +30,10 @@ class rex_yform_choice_list_view
     {
         if ($this->preferredChoices) {
             $firstChoice = reset($this->preferredChoices);
-            return $firstChoice instanceof rex_yform_choice_view && '' === $firstChoice->value;
+            return $firstChoice instanceof View && '' === $firstChoice->value;
         }
         $firstChoice = reset($this->choices);
-        return $firstChoice instanceof rex_yform_choice_view && '' === $firstChoice->value;
+        return $firstChoice instanceof View && '' === $firstChoice->value;
     }
 
     public function getChoices()

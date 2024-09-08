@@ -5,10 +5,9 @@ use Yakamara\YForm\Manager\Table\Table;
 use Yakamara\YForm\Rest\Rest;
 use Yakamara\YForm\YForm;
 
-/**
- * @var rex_addon $this
- * @psalm-scope-this rex_addon
- */
+/** @var rex_addon $this */
+
+// Aliases are deprecated and will be removed in the next major version
 
 class_alias('Yakamara\YForm\YForm', 'rex_yform');
 class_alias('Yakamara\YForm\Rest\Rest', 'rex_yform_rest');
@@ -30,6 +29,10 @@ class_alias('Yakamara\YForm\Manager\Field', 'rex_yform_manager_field');
 class_alias('Yakamara\YForm\Manager\Manager', 'rex_yform_manager_manager');
 class_alias('Yakamara\YForm\Manager\Query', 'rex_yform_manager_query');
 class_alias('Yakamara\YForm\Manager\Search', 'rex_yform_manager_search');
+class_alias('Yakamara\YForm\Choice\GroupView', 'rex_yform_choice_group_view');
+class_alias('Yakamara\YForm\Choice\ChoiceList', 'rex_yform_choice_list');
+class_alias('Yakamara\YForm\Choice\ListView', 'rex_yform_choice_list_view');
+class_alias('Yakamara\YForm\Choice\View', 'rex_yform_choice_view');
 
 YForm::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 

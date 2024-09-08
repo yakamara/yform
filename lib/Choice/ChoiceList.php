@@ -1,11 +1,19 @@
 <?php
 
-class rex_yform_choice_list
+namespace Yakamara\YForm\Choice;
+
+use rex_i18n;
+
+use function call_user_func;
+use function count;
+use function in_array;
+use function is_array;
+use function is_callable;
+
+class ChoiceList
 {
     public $choices = [];
-
     private $options;
-
     private $choicesByValues = [];
 
     public function __construct($options)
@@ -89,7 +97,7 @@ class rex_yform_choice_list
                     } else {
                         $nestedLabel = rex_escape($nestedLabel);
                     }
-                    $view = new rex_yform_choice_view($nestedValue, $nestedLabel, $choiceAttributes, $requiredAttributes);
+                    $view = new View($nestedValue, $nestedLabel, $choiceAttributes, $requiredAttributes);
 
                     if ($preferredChoices && call_user_func($preferredChoices, $nestedValue, $nestedLabel)) {
                         $preferredGroupChoices[] = $view;
@@ -99,10 +107,10 @@ class rex_yform_choice_list
                 }
 
                 if (count($preferredGroupChoices)) {
-                    $preferredViews[] = new rex_yform_choice_group_view($label, $preferredGroupChoices);
+                    $preferredViews[] = new GroupView($label, $preferredGroupChoices);
                 }
                 if (count($otherGroupChoices)) {
-                    $otherViews[] = new rex_yform_choice_group_view($label, $otherGroupChoices);
+                    $otherViews[] = new GroupView($label, $otherGroupChoices);
                 }
 
                 continue;
@@ -114,7 +122,7 @@ class rex_yform_choice_list
                 $label = rex_escape($label);
             }
 
-            $view = new rex_yform_choice_view($value, $label, $choiceAttributes, $requiredAttributes);
+            $view = new View($value, $label, $choiceAttributes, $requiredAttributes);
 
             if ($preferredChoices && call_user_func($preferredChoices, $value, $label)) {
                 $preferredViews[] = $view;
@@ -124,17 +132,17 @@ class rex_yform_choice_list
         }
 
         foreach ($preferredViews as $index => $view) {
-            if ($view instanceof rex_yform_choice_group_view && 0 === count($view->getChoices())) {
+            if ($view instanceof GroupView && 0 === count($view->getChoices())) {
                 unset($preferredViews[$index]);
             }
         }
         foreach ($otherViews as $index => $view) {
-            if ($view instanceof rex_yform_choice_group_view && 0 === count($view->getChoices())) {
+            if ($view instanceof GroupView && 0 === count($view->getChoices())) {
                 unset($otherViews[$index]);
             }
         }
 
-        return new rex_yform_choice_list_view($otherViews, $preferredViews);
+        return new ListView($otherViews, $preferredViews);
     }
 
     public function getDefaultValues(array $defaultChoices = [])
