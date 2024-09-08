@@ -34,6 +34,10 @@ return RectorConfig::configure()
             'rex_yform_manager_manager' => 'Yakamara\YForm\Manager\Manager',
             'rex_yform_manager_query' => 'Yakamara\YForm\Manager\Query',
             'rex_yform_manager_search' => 'Yakamara\YForm\Manager\Search',
+            'rex_yform_choice_group_view' => 'Yakamara\YForm\Choice\GroupView',
+            'rex_yform_choice_list' => 'Yakamara\YForm\Choice\ChoiceList',
+            'rex_yform_choice_list_view' => 'Yakamara\YForm\Choice\ListView',
+            'rex_yform_choice_view' => 'Yakamara\YForm\Choice\View',
         ],
     )
     ->withConfiguredRule(FuncCallToStaticCallRector::class, [

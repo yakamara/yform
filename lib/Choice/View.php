@@ -1,6 +1,14 @@
 <?php
 
-class rex_yform_choice_view
+namespace Yakamara\YForm\Choice;
+
+use rex_string;
+
+use function call_user_func;
+use function is_array;
+use function is_callable;
+
+class View
 {
     public $label;
     public $value;
@@ -59,7 +67,7 @@ class rex_yform_choice_view
 
     public function getAttributesAsString()
     {
-        return \rex_string::buildAttributes($this->getAttributes());
+        return rex_string::buildAttributes($this->getAttributes());
     }
 
     public function getLabel()

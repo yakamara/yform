@@ -1,10 +1,8 @@
 <?php
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+
+use Yakamara\YForm\Choice\ChoiceList;
+use Yakamara\YForm\Choice\GroupView;
+use Yakamara\YForm\Manager\Query;
 
 class rex_yform_value_choice extends rex_yform_value_abstract
 {
@@ -88,7 +86,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 $getChoices = static function ($choices, $options) use (&$getChoices) {
                     foreach ($choices as $choice) {
                         if ('rex_yform_choice_group_view' == $choice::class) {
-                            /** @var rex_yform_choice_group_view $choice */
+                            /** @var GroupView $choice */
                             $options = $getChoices($choice->choices, $options);
                         } else {
                             /* @var rex_yform_choice_view $choice */
@@ -253,7 +251,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
     public static function getSearchFilter($params)
     {
         $value = $params['value'];
-        /** @var \Yakamara\YForm\Manager\Query $query */
+        /** @var Query $query */
         $query = $params['query'];
         $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
@@ -321,7 +319,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         }
         $choicesElement = $elements['choices'];
 
-        $choiceList = new rex_yform_choice_list($options);
+        $choiceList = new ChoiceList($options);
 
         if (is_string($choicesElement) && 'SELECT' == rex_sql::getQueryType($choicesElement)) {
             $sql = rex_sql::factory();

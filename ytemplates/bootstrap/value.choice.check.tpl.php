@@ -1,12 +1,16 @@
 <?php
 
+use Yakamara\YForm\Choice\ChoiceList;
+use Yakamara\YForm\Choice\GroupView;
+use Yakamara\YForm\Choice\ListView;
+use Yakamara\YForm\Choice\View;
+
 /**
  * @var rex_yform_value_abstract $this
  * @psalm-scope-this rex_yform_value_abstract
- * @var rex_yform_choice_list $choiceList
- * @var rex_yform_choice_list_view $choiceListView
+ * @var ChoiceList $choiceList
+ * @var ListView $choiceListView
  */
-
 $notices = [];
 if ($this->getElement('notice')) {
     $notices[] = rex_i18n::translate($this->getElement('notice'), false);
@@ -42,7 +46,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 
 ?>
 
-<?php $choiceOutput = function (rex_yform_choice_view $view) use ($elementAttributes) {
+<?php $choiceOutput = function (View $view) use ($elementAttributes) {
     ?>
     <div<?= rex_string::buildAttributes($elementAttributes) ?>>
         <label>
@@ -58,7 +62,7 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
 <?php
 } ?>
 
-<?php $choiceGroupOutput = static function (rex_yform_choice_group_view $view) use ($choiceOutput) {
+<?php $choiceGroupOutput = static function (GroupView $view) use ($choiceOutput) {
         ?>
     <div class="form-check-group">
         <label><?= rex_escape($view->getLabel()) ?></label>
@@ -83,11 +87,11 @@ if (isset($elementAttributes['class']) && is_array($elementAttributes['class']))
     <?php endif ?>
 
     <?php foreach ($choiceListView->getPreferredChoices() as $view): ?>
-        <?php $view instanceof rex_yform_choice_group_view ? $choiceGroupOutput($view) : $choiceOutput($view) ?>
+        <?php $view instanceof GroupView ? $choiceGroupOutput($view) : $choiceOutput($view) ?>
     <?php endforeach ?>
 
     <?php foreach ($choiceListView->getChoices() as $view): ?>
-        <?php $view instanceof rex_yform_choice_group_view ? $choiceGroupOutput($view) : $choiceOutput($view) ?>
+        <?php $view instanceof GroupView ? $choiceGroupOutput($view) : $choiceOutput($view) ?>
     <?php endforeach ?>
 
     <?php if ($notices): ?>
