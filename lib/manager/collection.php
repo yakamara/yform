@@ -13,10 +13,10 @@ namespace Yakamara\YForm\Manager;
 use Closure;
 use InvalidArgumentException;
 use rex_i18n;
-use rex_yform_base_abstract;
-use rex_yform_value_abstract;
 use SplFixedArray;
+use Yakamara\YForm\AbstractBase;
 use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\Value\AbstractValue;
 use Yakamara\YForm\YForm;
 
 use function array_slice;
@@ -462,10 +462,10 @@ class Collection extends SplFixedArray
                 continue;
             }
 
-            /** @var class-string<rex_yform_base_abstract> $class */
+            /** @var class-string<\Yakamara\YForm\AbstractBase> $class */
             $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
-            /** @var rex_yform_base_abstract $cl */
+            /** @var AbstractBase $cl */
             $cl = new $class();
             $definitions = $cl->getDefinitions();
 
@@ -558,7 +558,7 @@ class Collection extends SplFixedArray
 
         if (1 == $yform->objparams['send'] && !$yform->objparams['warning_messages']) {
             $ignoreFields = [];
-            /** @var rex_yform_value_abstract $field */
+            /** @var AbstractValue $field */
             foreach ($yform->objparams['values'] as $field) {
                 $key = $field->getElement('__multi_edit_checkbox');
                 if ($key && !$field->getValue()) {

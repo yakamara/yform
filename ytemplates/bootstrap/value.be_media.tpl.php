@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_be_media $this
- * @psalm-scope-this rex_yform_value_be_media
- */
+use Yakamara\YForm\Value\BackendMedia;
 
+/** @var BackendMedia $this */
 $counter ??= 1000;
 
 $buttonId = $counter;

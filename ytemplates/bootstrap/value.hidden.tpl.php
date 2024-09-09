@@ -1,8 +1,7 @@
 <?php
 
-/**
- * @var rex_yform_value_abstract $this
- * @psalm-scope-this rex_yform_value_abstract
- */
+use Yakamara\YForm\Value\AbstractValue;
+
+/** @var AbstractValue $this */
 
 ?><input type="hidden" name="<?= $fieldName ?? $this->getFieldName() ?>" id="<?= $this->getHTMLId() ?>" value="<?= rex_escape($this->getValue()) ?>" />

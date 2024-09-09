@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_abstract $this
- * @psalm-scope-this rex_yform_value_abstract
- */
+use Yakamara\YForm\Value\AbstractValue;
 
+/** @var AbstractValue $this */
 $options ??= [];
 
 $notices = [];

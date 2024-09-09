@@ -6,8 +6,8 @@ use ArrayAccess;
 use Exception;
 use rex;
 use rex_i18n;
-use rex_yform_validate_abstract;
-use rex_yform_value_abstract;
+use Yakamara\YForm\Validate\AbstractValidate;
+use Yakamara\YForm\Value\AbstractValue;
 
 use function array_key_exists;
 use function count;
@@ -21,7 +21,7 @@ class Field implements ArrayAccess
     protected static $types = ['value', 'validate', 'action'];
     protected static $protected_fields = ['id', 'table_name', 'prio', 'type_id', 'type_name', 'db_type', 'list_hidden', 'search', 'name', 'label', 'not_required'];
 
-    /** @var rex_yform_value_abstract|rex_yform_validate_abstract */
+    /** @var AbstractValue|AbstractValidate */
     protected $object;
 
     /**
@@ -70,7 +70,7 @@ class Field implements ArrayAccess
     }
 
     /**
-     * @return mixed|rex_yform_validate_abstract|rex_yform_value_abstract|null
+     * @return mixed|AbstractValidate|AbstractValue|null
      */
     public function getObject()
     {
