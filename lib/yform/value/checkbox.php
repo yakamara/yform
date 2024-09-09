@@ -59,7 +59,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
             'db_type' => ['tinyint(1)'],
             'famous' => true,
             'hooks' => [
-                'preDefault' => static function (\Yakamara\YForm\Manager\Field $field) {
+                'preDefault' => static function (Yakamara\YForm\Manager\Field $field) {
                     return (1 == $field->getElement('default')) ? '1' : '0';
                 },
             ],
@@ -82,7 +82,7 @@ class rex_yform_value_checkbox extends rex_yform_value_abstract
         ]);
     }
 
-    public static function getSearchFilter($params): \Yakamara\YForm\Manager\Query
+    public static function getSearchFilter($params): Yakamara\YForm\Manager\Query
     {
         $value = $params['value'];
         /** @var \Yakamara\YForm\Manager\Query $query */

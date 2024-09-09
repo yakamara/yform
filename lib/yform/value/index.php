@@ -154,7 +154,7 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 return $nextIndex;
             };
 
-            $addFieldsAndJoins = static function (array $columns, \Yakamara\YForm\Manager\Field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, $sql) {
+            $addFieldsAndJoins = static function (array $columns, Yakamara\YForm\Manager\Field $relation, $index) use (&$addFieldsAndJoins, $addJoin, &$fields, $sql) {
                 $table = \Yakamara\YForm\Manager\Table\Table::get($relation->getElement('table'));
 
                 $fieldFormat = 't%d.%s';

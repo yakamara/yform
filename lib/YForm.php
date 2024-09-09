@@ -25,6 +25,13 @@ use rex_yform_base_abstract;
 use rex_yform_validate_abstract;
 use rex_yform_value_abstract;
 
+use function array_key_exists;
+use function count;
+use function in_array;
+use function is_array;
+
+use const E_USER_WARNING;
+
 class YForm
 {
     use rex_factory_trait;

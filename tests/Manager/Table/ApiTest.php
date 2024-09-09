@@ -58,7 +58,7 @@ class ApiTest extends TestCase
         $tableNameRelation = $prefix . 'related';
 
         $table = self::setUpTable($tableName);
-        self::assertEquals(
+        static::assertEquals(
             $table::class,
             'Yakamara\YForm\Manager\Table\Table',
             'table creation failed. (\Yakamara\YForm\Manager\Table\Api::setTable)',
@@ -76,14 +76,14 @@ class ApiTest extends TestCase
             // prüfen ob es angelegt ist.
 
             $fields = Table::get($tableName)->getFields();
-            self::assertEquals(
+            static::assertEquals(
                 count($fields),
                 1,
                 'field creation failed (rex_yform_manager_table_api::setTableField)',
             );
 
             if (1 == count($fields)) {
-                self::assertEquals($fields[0]->getName(), $fieldName, 'fieldname validation failed');
+                static::assertEquals($fields[0]->getName(), $fieldName, 'fieldname validation failed');
             }
 
             // TODO: prüfen ob field gelöscht werden kann
@@ -92,8 +92,8 @@ class ApiTest extends TestCase
             $dataset = Dataset::create($tableName);
             $dataset->setValue($fieldName, $fieldValue);
 
-            self::assertTrue($dataset->save(), 'dataset creation failed (rex_yform_manager_dataset::create)');
-            self::assertEquals(
+            static::assertTrue($dataset->save(), 'dataset creation failed (rex_yform_manager_dataset::create)');
+            static::assertEquals(
                 count($dataset->getMessages()),
                 0,
                 'dataset creation failed with Messages: ' . implode(',', $dataset->getMessages()),
@@ -103,12 +103,12 @@ class ApiTest extends TestCase
                 $SQLDatasets = rex_sql::factory()->getArray(
                     'select * from ' . $tableName,
                 );
-                self::assertEquals(count($SQLDatasets), 1, 'dataset not found - creation failed (SQL Test)');
+                static::assertEquals(count($SQLDatasets), 1, 'dataset not found - creation failed (SQL Test)');
 
                 // YORM - Datensatz auslesen
                 $datasetId = $dataset->getId();
                 $dataset = Dataset::get($datasetId, $tableName);
-                self::assertNotNull($dataset, 'dataset not found - get via ID failed');
+                static::assertNotNull($dataset, 'dataset not found - get via ID failed');
 
                 // YORM - Datensatz bearbeiten
                 $fieldValueEdit = $fieldValue . ' overwrite';
@@ -116,7 +116,7 @@ class ApiTest extends TestCase
                     ->setValue($fieldName, $fieldValueEdit)
                     ->save();
                 $dataset = Dataset::get($datasetId, $tableName);
-                self::assertEquals(
+                static::assertEquals(
                     $dataset->getValue($fieldName),
                     $fieldValueEdit,
                     'dataset update failes - YOrm update failed',
@@ -124,10 +124,10 @@ class ApiTest extends TestCase
 
                 // YORM - Datensatz löschen
                 if ($dataset) {
-                    self::assertTrue($dataset->delete(), 'dataset delete failed (rex_yform_manager_dataset::delete)');
+                    static::assertTrue($dataset->delete(), 'dataset delete failed (rex_yform_manager_dataset::delete)');
 
                     $dataset = Dataset::get($datasetId, $tableName);
-                    self::assertFalse($dataset->exists(), 'dataset delete failed - YOrm delete failed');
+                    static::assertFalse($dataset->exists(), 'dataset delete failed - YOrm delete failed');
                 }
 
                 // TODO - YORM - Relationen mit Relationstabelle prüfen
@@ -214,7 +214,7 @@ class ApiTest extends TestCase
 
         $table = Table::get($tableName);
 
-        self::assertNull($table, 'table schema removing failed');
+        static::assertNull($table, 'table schema removing failed');
 
         // Cleanup
         try {

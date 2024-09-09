@@ -508,11 +508,11 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
             'db_type' => ['text', 'varchar(191)', 'int', 'int(10) unsigned'],
             'formbuilder' => false,
             'hooks' => [
-                'preCreate' => static function (\Yakamara\YForm\Manager\Field $field) {
+                'preCreate' => static function (Yakamara\YForm\Manager\Field $field) {
                     return !$field->getElement('relation_table') && ('4' != $field->getElement('type') && '5' != $field->getElement('type'));
                 },
             ],
-            'multi_edit' => static function (\Yakamara\YForm\Manager\Field $field) {
+            'multi_edit' => static function (Yakamara\YForm\Manager\Field $field) {
                 return ('4' != $field->getElement('type') && '5' != $field->getElement('type')) && !$field->getElement('relation_table');
             },
         ];
