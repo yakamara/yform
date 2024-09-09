@@ -4,10 +4,10 @@ use Yakamara\YForm\Choice\ChoiceList;
 use Yakamara\YForm\Choice\GroupView;
 use Yakamara\YForm\Choice\ListView;
 use Yakamara\YForm\Choice\View;
+use Yakamara\YForm\Value\AbstractValue;
 
 /**
- * @var rex_yform_value_abstract $this
- * @psalm-scope-this rex_yform_value_abstract
+ * @var AbstractValue $this
  * @var ChoiceList $choiceList
  * @var ListView $choiceListView
  */

@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_checkbox $this
- * @psalm-scope-this rex_yform_value_checkbox
- */
+use Yakamara\YForm\Value\Checkbox;
 
+/** @var Checkbox $this */
 $value ??= $this->getValue() ?? '';
 
 $notices = [];

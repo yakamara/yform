@@ -109,8 +109,8 @@ if (rex::isBackend() && rex::getUser()) {
 
 // Manager
 
-rex_complex_perm::register('yform_manager_table_edit', 'Yakamara\YForm\Manager\Table\Perm\Edit');
-rex_complex_perm::register('yform_manager_table_view', 'Yakamara\YForm\Manager\Table\Perm\View');
+rex_complex_perm::register('yform_manager_table_edit', '\Yakamara\YForm\Manager\Table\Perm\Edit');
+rex_complex_perm::register('yform_manager_table_view', '\Yakamara\YForm\Manager\Table\Perm\View');
 
 if (rex::isBackend() && rex::getUser()) {
     rex_extension::register('PACKAGES_INCLUDED', function () {
@@ -181,8 +181,8 @@ if (rex::isBackend() && rex::getUser()) {
     $this->setProperty('pages', $pages);
 }
 
-rex_extension::register('MEDIA_IS_IN_USE', 'rex_yform_value_be_media::isMediaInUse');
-rex_extension::register('PACKAGES_INCLUDED', 'rex_yform_value_be_link::isArticleInUse');
+rex_extension::register('MEDIA_IS_IN_USE', '\Yakamara\YForm\Value\BackendMedia::isMediaInUse');
+rex_extension::register('PACKAGES_INCLUDED', '\Yakamara\YForm\Value\BackendLink::isArticleInUse');
 
 rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep) {
     if ($ep->getSubject() instanceof Exception) {

@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_submit $this
- * @psalm-scope-this rex_yform_value_submit
- */
+use Yakamara\YForm\Value\Submit;
 
+/** @var Submit $this */
 $labels ??= [];
 
 $css_classes = [];

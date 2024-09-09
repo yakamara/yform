@@ -10,11 +10,11 @@ use rex_extension;
 use rex_extension_point;
 use rex_instance_pool_trait;
 use rex_sql;
-use rex_yform_action_db;
-use rex_yform_base_abstract;
-use rex_yform_value_be_manager_relation;
 use RuntimeException;
+use Yakamara\YForm\AbstractBase;
+use Yakamara\YForm\Action\Db;
 use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\Value\BackendManagerRelation;
 use Yakamara\YForm\YForm;
 
 use function array_key_exists;
@@ -31,10 +31,10 @@ class Dataset
 
     private static bool $debug = false;
 
-    /** @var array<string, class-string<\Yakamara\YForm\Manager\Dataset>> */
+    /** @var array<string, class-string<Dataset>> */
     private static array $tableToModel = [];
 
-    /** @var array<class-string<\Yakamara\YForm\Manager\Dataset>, string> */
+    /** @var array<class-string<Dataset>, string> */
     private static array $modelToTable = [];
 
     private string $table;
@@ -49,7 +49,7 @@ class Dataset
 
     private bool $dataLoaded = false;
 
-    /** @var array<string, \Yakamara\YForm\Manager\Collection> */
+    /** @var array<string, Collection> */
     private array $relatedCollections = [];
 
     /** @var array<string> */
@@ -142,9 +142,6 @@ class Dataset
         });
     }
 
-    /**
-     * @return \Yakamara\YForm\Manager\Collection<static>
-     */
     public static function getAll(?string $table = null): Collection
     {
         return static::query($table)->find();
@@ -550,7 +547,7 @@ class Dataset
                     return;
                 }
 
-                /** @var rex_yform_action_db $dbAction */
+                /** @var Db $dbAction */
                 $dbAction = $ep->getParam('form');
                 if ($dbAction->getParam('manager_dataset') !== $this) {
                     return;
@@ -559,7 +556,7 @@ class Dataset
                 $this->id = ((int) $dbAction->getParam('main_id')) ?: null;
                 if ($this->id) {
                     self::addInstance($this->id, $this);
-                    rex_yform_value_be_manager_relation::clearCache($this->table);
+                    BackendManagerRelation::clearCache($this->table);
                 }
             }, rex_extension::EARLY);
         }
@@ -713,10 +710,10 @@ class Dataset
         $yform->setDebug(self::$debug);
 
         foreach ($fields as $field) {
-            /** @var class-string<rex_yform_base_abstract> $class */
+            /** @var class-string<\Yakamara\YForm\AbstractBase> $class */
             $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
-            /** @var rex_yform_base_abstract $cl */
+            /** @var AbstractBase $cl */
             $cl = new $class();
             $definitions = $cl->getDefinitions();
 

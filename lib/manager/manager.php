@@ -23,14 +23,14 @@ use rex_response;
 use rex_sql;
 use rex_url;
 use rex_view;
-use rex_yform_base_abstract;
-use rex_yform_value_abstract;
-use rex_yform_value_be_manager_relation;
-use rex_yform_value_submit;
 use Throwable;
+use Yakamara\YForm\AbstractBase;
 use Yakamara\YForm\Manager\Table\Api;
 use Yakamara\YForm\Manager\Table\Authorization;
 use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\Value\AbstractValue;
+use Yakamara\YForm\Value\BackendManagerRelation;
+use Yakamara\YForm\Value\Submit;
 use Yakamara\YForm\YForm;
 
 class Manager
@@ -322,7 +322,7 @@ class Manager
                         foreach ($this->table->getFields() as $field) {
                             $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
-                            /** @var rex_yform_base_abstract $cl */
+                            /** @var AbstractBase $cl */
                             $cl = new $class();
                             $definitions = $cl->getDefinitions();
 
@@ -397,7 +397,7 @@ class Manager
                         $form = '';
                         $sql_db->transactional(static function () use (&$form, &$yform, $data, $func) {
                             $afterFieldsExecuted = static function (YForm $yform) {
-                                /** @var rex_yform_value_abstract $valueObject */
+                                /** @var AbstractValue $valueObject */
                                 foreach ($yform->objparams['values'] as $valueObject) {
                                     if ('submit' == $valueObject->getName()) {
                                         if (2 == $valueObject->getValue()) { // apply
@@ -416,7 +416,7 @@ class Manager
                                     // In den Feldern Anpassungen vornehmen
                                     foreach ($yform->objparams['values'] as $k => $v) {
                                         // Submit-Buttons von "Edit" auf "Add" zurückstellen
-                                        if ($v instanceof rex_yform_value_submit) {
+                                        if ($v instanceof Submit) {
                                             $yform->objparams['form_output'][$k] = str_replace(
                                                 [rex_i18n::msg('yform_save') . '</button', rex_i18n::msg('yform_save_apply') . '</button'],
                                                 [rex_i18n::msg('yform_add') . '</button', rex_i18n::msg('yform_add_apply') . '</button'],
@@ -427,7 +427,7 @@ class Manager
 
                                         // im Feldtyp be_manager_relation / Typ 5 (inline) ebenfalls die Datensatz-ID der
                                         // verbundenen Sätze entfernen. Nur "inline" ist problematisch
-                                        if ($v instanceof rex_yform_value_be_manager_relation && 5 == $v->getElement('type')) {
+                                        if ($v instanceof BackendManagerRelation && 5 == $v->getElement('type')) {
                                             $fieldName = preg_quote($v->getFieldName());
                                             $pattern = '/<input type="hidden" name="' . $fieldName . '(\[\d+\])*\[id\]" value="\d+" \/>/';
                                             $yform->objparams['form_output'][$k] = preg_replace($pattern, '', $yform->objparams['form_output'][$k]);
@@ -450,7 +450,7 @@ class Manager
                                 case 'edit':
                                     $submit_type = 1; // normal, 2=apply
                                     foreach ($yform->objparams['values'] as $valueObject) {
-                                        /** @var rex_yform_value_abstract $valueObject */
+                                        /** @var AbstractValue $valueObject */
                                         if ('submit' == $valueObject->getName()) {
                                             if (2 == $valueObject->getValue()) { // apply
                                                 $submit_type = 2;

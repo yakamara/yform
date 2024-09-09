@@ -16,8 +16,8 @@ use rex_fragment;
 use rex_i18n;
 use rex_select;
 use rex_var;
-use rex_yform_value_be_manager_relation;
 use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\Value\BackendManagerRelation;
 
 use function in_array;
 
@@ -65,7 +65,7 @@ class TableData extends rex_var
                 if ('' != $value) {
                     $valueArray = explode(',', $value);
                     foreach ($valueArray as $valueId) {
-                        $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $valueId]);
+                        $listValues = BackendManagerRelation::getListValues($table->getTableName(), $fieldName, ['id' => $valueId]);
                         if (isset($listValues[$valueId])) {
                             $options[] = ['id' => $valueId, 'name' => rex_formatter::truncate($listValues[$valueId] . ' id=[' . $valueId . ']', ['length' => 50])];
                             $values[] = $valueId;
@@ -78,7 +78,7 @@ class TableData extends rex_var
                 $value = self::getMultipleWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
             } else {
                 $valueName = '';
-                $listValues = rex_yform_value_be_manager_relation::getListValues($table->getTableName(), $fieldName, ['id' => $value]);
+                $listValues = BackendManagerRelation::getListValues($table->getTableName(), $fieldName, ['id' => $value]);
                 if (isset($listValues[$value])) {
                     $valueName = rex_formatter::truncate($listValues[$value], ['length' => 50]);
                 }

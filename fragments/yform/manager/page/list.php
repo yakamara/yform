@@ -99,7 +99,7 @@ if (isset($rex_yform_manager_opener['id'])) {
                 if (isset($params['list']->getParams()['table_name'])) {
                     $target_table = $params['list']->getParams()['table_name'];
                     $target_field = $tablefield[0];
-                    $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
+                    $values = \Yakamara\YForm\Value\BackendManagerRelation::getListValues($target_table, $target_field);
                     $value = $values[$params['list']->getValue('id')];
                 }
             } else {
@@ -111,7 +111,7 @@ if (isset($rex_yform_manager_opener['id'])) {
                         $target_table = $fields[$field_name]->getElement('table');
                         $target_field = $fields[$field_name]->getElement('field');
 
-                        $values = rex_yform_value_be_manager_relation::getListValues(
+                        $values = \Yakamara\YForm\Value\BackendManagerRelation::getListValues(
                             $target_table,
                             $target_field,
                         );

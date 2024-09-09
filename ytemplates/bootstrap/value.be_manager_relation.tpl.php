@@ -1,10 +1,10 @@
 <?php
 
-/**
- * @var rex_yform_value_be_manager_relation $this
- * @psalm-scope-this rex_yform_value_be_manager_relation
- */
+use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\RexVar\TableData;
+use Yakamara\YForm\Value\BackendManagerRelation;
 
+/** @var BackendManagerRelation $this */
 $options ??= [];
 $link ??= '';
 $valueName ??= '';
@@ -64,17 +64,17 @@ echo $select->get();
         <?php
 $e = [];
     if (4 == $this->getRelationType()) {
-        echo \Yakamara\YForm\RexVar\TableData::getRelationWidget($id, $this->getFieldName(), $this->getValue(), $link, $this->params['main_id']);
+        echo TableData::getRelationWidget($id, $this->getFieldName(), $this->getValue(), $link, $this->params['main_id']);
     } elseif (2 == $this->getRelationType()) {
         $name = $this->getFieldName();
         $args = [];
         $args['link'] = $link;
         $args['fieldName'] = $this->getRelationSourceTableName() . '.' . $this->getName();
         $args['valueName'] = $valueName;
-        $_csrf_key = \Yakamara\YForm\Manager\Table\Table::get($this->relation['target_table'])->getCSRFKey();
+        $_csrf_key = Table::get($this->relation['target_table'])->getCSRFKey();
         $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
         $value = implode(',', $this->getValue());
-        echo \Yakamara\YForm\RexVar\TableData::getSingleWidget($id, $name, $value, $args);
+        echo TableData::getSingleWidget($id, $name, $value, $args);
     } else {
         $name = $this->getFieldName();
         $args = [];
@@ -83,10 +83,10 @@ $e = [];
         $args['fieldName'] = $this->getRelationSourceTableName() . '.' . $this->getName();
         $args['size'] = $this->getRelationSize();
         $args['attributes'] = $this->getAttributeArray([], ['required', 'readonly']);
-        $_csrf_key = \Yakamara\YForm\Manager\Table\Table::get($this->relation['target_table'])->getCSRFKey();
+        $_csrf_key = Table::get($this->relation['target_table'])->getCSRFKey();
         $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
         $value = implode(',', $this->getValue());
-        echo \Yakamara\YForm\RexVar\TableData::getMultipleWidget($id, $name, $value, $args);
+        echo TableData::getMultipleWidget($id, $name, $value, $args);
     }
     ?>
         <?= $notice ?>

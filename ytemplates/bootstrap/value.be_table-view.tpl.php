@@ -1,10 +1,9 @@
 <?php
 
-/**
- * @var rex_yform_value_be_table $this
- * @psalm-scope-this rex_yform_value_be_table
- */
+use Yakamara\YForm\Value\AbstractValue;
+use Yakamara\YForm\Value\BackendTable;
 
+/** @var BackendTable $this */
 $columns ??= [];
 $data ??= [];
 
@@ -45,7 +44,7 @@ $main_id = $this->params['this']->getObjectparams('main_id');
                     <?php
                     $rowData = array_values($row);
 
-                    /** @var rex_yform_value_abstract $field */
+                    /** @var AbstractValue $field */
                     $field = $column['field'];
                     $field->params['form_output'] = [];
                     $field->params['this']->setObjectparams('form_name', $this->getParam('form_name') . '][' . $this->getId() . '][' . $i);

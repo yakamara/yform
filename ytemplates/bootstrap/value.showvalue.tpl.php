@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_showvalue $this
- * @psalm-scope-this rex_yform_value_showvalue
- */
+use Yakamara\YForm\Value\ShowValue;
 
+/** @var ShowValue $this */
 $notice = [];
 if ('' != $this->getElement('notice')) {
     $notice[] = rex_i18n::translate($this->getElement('notice'), false);

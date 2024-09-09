@@ -21,9 +21,8 @@ use rex_fragment;
 use rex_i18n;
 use rex_response;
 use rex_sql;
-use rex_yform_base_abstract;
-use rex_yform_validate_abstract;
-use rex_yform_value_abstract;
+use Yakamara\YForm\Validate\AbstractValidate;
+use Yakamara\YForm\Value\AbstractValue;
 
 use function array_key_exists;
 use function count;
@@ -308,7 +307,7 @@ class YForm
 
         // 1. setValue direct via REQUEST
         foreach ($this->objparams['values'] as $ValueObject) {
-            /* @var rex_yform_value_abstract $ValueObject */
+            /* @var AbstractValue $ValueObject */
             $ValueObject->setValue($this->getFieldValue($ValueObject->getName(), [$ValueObject->getId()]));
         }
 
@@ -333,7 +332,7 @@ class YForm
 
         if (1 != $this->objparams['send'] && '' != $this->objparams['main_where']) {
             foreach ($this->objparams['values'] as $i => $valueObject) {
-                /** @var rex_yform_value_abstract $valueObject */
+                /** @var AbstractValue $valueObject */
                 if ($valueObject->getName()) {
                     if (isset($this->objparams['sql_object'])) {
                         $this->setFieldValue($valueObject->getName(), [$i], @$this->objparams['sql_object']->getValue($valueObject->getName()));
@@ -346,7 +345,7 @@ class YForm
         // 3. setValue direct via data Object
         if (isset($this->objparams['data']) && is_array($this->objparams['data']) && count($this->objparams['data']) > 0) {
             foreach ($this->objparams['values'] as $valueObject) {
-                /** @var rex_yform_value_abstract $valueObject */
+                /** @var AbstractValue $valueObject */
                 if (isset($this->objparams['data'][$valueObject->getName()])) {
                     $valueObject->setValue($this->objparams['data'][$valueObject->getName()]);
                 }
@@ -365,9 +364,9 @@ class YForm
 
         // ----- validate form
 
-        /* @var rex_yform_base_abstract $Object */
-        /* @var rex_yform_validate_abstract $ValidateObject */
-        /* @var rex_yform_value_abstract $valueObject */
+        /* @var AbstractBase $Object */
+        /* @var AbstractValidate $ValidateObject */
+        /* @var AbstractValue $valueObject */
 
         foreach ($this->objparams['fields'] as $types) {
             foreach ($types as $Object) {
@@ -446,7 +445,7 @@ class YForm
             }
 
             if (class_exists($class)) {
-                /** @var rex_yform_base_abstract $Object */
+                /** @var AbstractBase $Object */
                 $Object = new $class();
                 $Object->loadParams($this->objparams, $element);
                 $Object->setId($i);
@@ -475,8 +474,6 @@ class YForm
     {
         if ($this->isEditable()) {
             if ($this->objparams['main_id'] > 0) {
-                /** @deprecated use 'id' instead of 'ID' */
-                $this->objparams['value_pool']['email']['ID'] = $this->objparams['main_id'];
                 $this->objparams['value_pool']['email']['id'] = $this->objparams['main_id'];
             }
 
@@ -758,7 +755,7 @@ class YForm
                 if (2 == count($exploded)) {
                     $name = $exploded[1];
                     if ('abstract' != $name) {
-                        /** @var rex_yform_base_abstract $class */
+                        /** @var AbstractBase $class */
                         $class = new $class();
                         $desc = trim($class->getDescription());
                         $definitions = $class->getDefinitions();
@@ -815,7 +812,7 @@ class YForm
                 if (2 == count($exploded)) {
                     $name = $exploded[1];
                     if ('abstract' != $name) {
-                        /** @var rex_yform_base_abstract $class */
+                        /** @var AbstractBase $class */
                         $class = new $class();
                         $d = $class->getDefinitions();
                         if (count($d) > 0) {

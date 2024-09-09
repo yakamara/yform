@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_signature $this
- * @psalm-scope-this rex_yform_value_signature
- */
+use Yakamara\YForm\Value\Signature;
 
+/** @var Signature $this */
 $value ??= $this->getValue();
 
 $notice = [];
