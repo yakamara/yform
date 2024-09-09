@@ -1,6 +1,22 @@
 <?php
 
-class rex_yform_manager_table_api
+namespace Yakamara\YForm\Manager\Table;
+
+use Exception;
+use rex_sql;
+use rex_sql_column;
+use rex_sql_exception;
+use rex_sql_table;
+use Yakamara\YForm\Manager\Field;
+
+use function call_user_func;
+use function count;
+use function is_array;
+use function is_string;
+
+use const JSON_PRETTY_PRINT;
+
+class Api
 {
     /** @var array<int, string> */
     public static array $table_fields = ['status', 'name', 'description', 'table_icon', 'list_amount', 'list_sortfield', 'list_sortorder', 'prio', 'search', 'hidden', 'export', 'import', 'schema_overwrite'];
@@ -12,20 +28,20 @@ class rex_yform_manager_table_api
      * @param array<string, mixed> $table_fields
      * @throws rex_sql_exception
      */
-    public static function setTable(array $table, array $table_fields = []): ?rex_yform_manager_table
+    public static function setTable(array $table, array $table_fields = []): ?Table
     {
         if (!isset($table['table_name'])) {
             throw new Exception('table[table_name] must be set');
         }
         $table_name = $table['table_name'];
 
-        $currentTable = rex_yform_manager_table::get($table_name);
+        $currentTable = Table::get($table_name);
 
         if (!$currentTable) {
             // Insert
             $table_insert = rex_sql::factory();
             $table_insert->setDebug(self::$debug);
-            $table_insert->setTable(rex_yform_manager_table::table());
+            $table_insert->setTable(Table::table());
             $table_insert->setValue('table_name', $table_name);
 
             if (!isset($table['name']) || '' == $table['name']) {
@@ -38,7 +54,7 @@ class rex_yform_manager_table_api
                 }
             }
             if (!isset($table['prio'])) {
-                $table_insert->setValue('prio', rex_yform_manager_table::getMaximumTablePrio() + 1);
+                $table_insert->setValue('prio', Table::getMaximumTablePrio() + 1);
             }
             $table_insert->insert();
         } else {
@@ -56,7 +72,7 @@ class rex_yform_manager_table_api
 
             $table_update = rex_sql::factory();
             $table_update->setDebug(self::$debug);
-            $table_update->setTable(rex_yform_manager_table::table());
+            $table_update->setTable(Table::table());
             $table_update->setWhere('table_name = :table_name', [':table_name' => $table_name]);
 
             foreach (self::$table_fields as $field) {
@@ -67,8 +83,8 @@ class rex_yform_manager_table_api
             $table_update->update();
         }
 
-        rex_yform_manager_table::deleteCache();
-        $table = rex_yform_manager_table::get($table_name);
+        Table::deleteCache();
+        $table = Table::get($table_name);
         self::generateTableAndFields($table);
 
         if (count($table_fields) > 0) {
@@ -76,9 +92,9 @@ class rex_yform_manager_table_api
                 self::setTableField($table_name, $field);
             }
         }
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
 
-        return rex_yform_manager_table::get($table_name);
+        return Table::get($table_name);
     }
 
     /**
@@ -105,7 +121,7 @@ class rex_yform_manager_table_api
             $fields = $table['fields'];
             $settable['schema_overwrite'] = 1;
             self::setTable($settable, $fields);
-            $table = rex_yform_manager_table::get($settable['table_name']);
+            $table = Table::get($settable['table_name']);
             self::generateTableAndFields($table);
         }
         return true;
@@ -128,7 +144,7 @@ class rex_yform_manager_table_api
 
         $export = [];
         foreach ($table_names as $table_name) {
-            $export_table = rex_yform_manager_table::get($table_name);
+            $export_table = Table::get($table_name);
             $export_fields = [];
             foreach ($export_table->getFields() as $field) {
                 $export_fields[] = array_diff_key($field->toArray(), ['id' => 0]);
@@ -149,11 +165,11 @@ class rex_yform_manager_table_api
      */
     public static function removeTable(string $table_name): void
     {
-        $table = rex_yform_manager_table::get($table_name);
+        $table = Table::get($table_name);
 
         $t = rex_sql::factory();
         $t->setDebug(self::$debug);
-        $t->setQuery('delete from ' . rex_yform_manager_table::table() . ' where table_name=:table_name ', [':table_name' => $table_name]);
+        $t->setQuery('delete from ' . Table::table() . ' where table_name=:table_name ', [':table_name' => $table_name]);
 
         if ($table) {
             foreach ($table->getFields() as $remove_field) {
@@ -161,7 +177,7 @@ class rex_yform_manager_table_api
             }
         }
 
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
     }
 
     /**
@@ -189,7 +205,7 @@ class rex_yform_manager_table_api
             $fieldIdentifier['type_name'] = $table_field['type_name'];
         }
 
-        $currentFields = rex_yform_manager_table::get($table_name)->getFields($fieldIdentifier);
+        $currentFields = Table::get($table_name)->getFields($fieldIdentifier);
 
         // validate specials
         if ('validate' == $table_field['type_id']) {
@@ -206,21 +222,21 @@ class rex_yform_manager_table_api
             // Insert
             $field_insert = rex_sql::factory();
             $field_insert->setDebug(self::$debug);
-            $field_insert->setTable(rex_yform_manager_field::table());
+            $field_insert->setTable(Field::table());
             $field_insert->setValue('table_name', $table_name);
 
             foreach ($table_field as $field_name => $field_value) {
                 $field_insert->setValue($field_name, $field_value);
             }
             if (!isset($table_field['prio'])) {
-                $field_insert->setValue('prio', rex_yform_manager_table::get($table_name)->getMaximumPrio() + 1);
+                $field_insert->setValue('prio', Table::get($table_name)->getMaximumPrio() + 1);
             }
             $field_insert->insert();
         } else {
             // Update
             $field_update = rex_sql::factory();
             $field_update->setDebug(self::$debug);
-            $field_update->setTable(rex_yform_manager_field::table());
+            $field_update->setTable(Field::table());
 
             $add_where = [];
             foreach ($fieldIdentifier as $field => $value) {
@@ -238,7 +254,7 @@ class rex_yform_manager_table_api
             $field_update->update();
         }
 
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
     }
 
     /**
@@ -248,9 +264,9 @@ class rex_yform_manager_table_api
     {
         $f = rex_sql::factory();
         $f->setDebug(self::$debug);
-        $f->setQuery('delete from ' . rex_yform_manager_field::table() . ' where table_name=:table_name and name=:name', [':table_name' => $table_name, ':name' => $field_name]);
+        $f->setQuery('delete from ' . Field::table() . ' where table_name=:table_name and name=:name', [':table_name' => $table_name, ':name' => $field_name]);
 
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
     }
 
     /**
@@ -536,7 +552,7 @@ class rex_yform_manager_table_api
      */
     public static function createMissingFieldColumns(array $field): void
     {
-        $table_name = rex_yform_manager_field::table();
+        $table_name = Field::table();
 
         if (!isset(self::$cacheColumnsByTable[$table_name])) {
             foreach (rex_sql::showColumns($table_name) as $column) {
@@ -548,7 +564,7 @@ class rex_yform_manager_table_api
             if (!isset(self::$cacheColumnsByTable[$table_name][$fieldKey])) {
                 $alter = rex_sql::factory();
                 $alter->setDebug(self::$debug);
-                $alter->setQuery('ALTER TABLE `' . rex_yform_manager_field::table() . '` ADD `' . $fieldKey . '` TEXT NOT NULL');
+                $alter->setQuery('ALTER TABLE `' . Field::table() . '` ADD `' . $fieldKey . '` TEXT NOT NULL');
                 self::$cacheColumnsByTable[$table_name][$fieldKey] = [
                     'name' => $fieldKey,
                     'type' => 'text',
@@ -563,12 +579,12 @@ class rex_yform_manager_table_api
     /**
      * @throws rex_sql_exception
      */
-    public static function generateTableAndFields(rex_yform_manager_table $table, bool $delete_old = false): void
+    public static function generateTableAndFields(Table $table, bool $delete_old = false): void
     {
         $tableName = $table->getTableName();
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
 
-        $table = rex_yform_manager_table::get($tableName);
+        $table = Table::get($tableName);
         if (!$table) {
             return;
         }
@@ -641,7 +657,7 @@ class rex_yform_manager_table_api
                 }
             }
         }
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
     }
 
     /**
@@ -650,10 +666,10 @@ class rex_yform_manager_table_api
      */
     public static function generateTablesAndFields(bool $delete_old = false): void
     {
-        rex_yform_manager_table::deleteCache();
-        foreach (rex_yform_manager_table::getAll() as $table) {
+        Table::deleteCache();
+        foreach (Table::getAll() as $table) {
             self::generateTableAndFields($table, $delete_old);
         }
-        rex_yform_manager_table::deleteCache();
+        Table::deleteCache();
     }
 }

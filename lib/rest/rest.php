@@ -1,6 +1,13 @@
 <?php
 
-class rex_yform_rest
+namespace Yakamara\YForm\Rest;
+
+use rex_response;
+use rex_yrewrite;
+
+use function array_key_exists;
+
+class Rest
 {
     protected $config = [];
     protected $route = '';
@@ -22,7 +29,7 @@ class rex_yform_rest
     protected static $additionalHeaders = [];
     protected static $routes = [];
 
-    public static function addRoute(rex_yform_rest_route $route)
+    public static function addRoute(Route $route)
     {
         self::$routes[] = $route;
     }
@@ -77,8 +84,7 @@ class rex_yform_rest
                 return false;
             });
 
-            /** @var \rex_yform_rest_route $route */
-
+            /** @var Route $route */
             if (!$route->hasAuth()) {
                 self::sendError('400', 'no-access');
             } else {
@@ -163,7 +169,7 @@ class rex_yform_rest
      * @param array $params
      * @param array $additionalPaths
      */
-    public static function getLinkByPath(rex_yform_rest_route $route, $params = [], $additionalPaths = []): string
+    public static function getLinkByPath(Route $route, $params = [], $additionalPaths = []): string
     {
         if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO']) {
             $url = 'https://';
@@ -188,7 +194,7 @@ class rex_yform_rest
     }
 
     /**
-     * @return null|mixed
+     * @return mixed|null
      */
     public static function getRouteByInstance($instance)
     {

@@ -1,15 +1,35 @@
 <?php
 
-class rex_yform_rest_route
+namespace Yakamara\YForm\Rest;
+
+use Error;
+use rex_api_exception;
+use rex_i18n;
+use rex_sql_exception;
+use Yakamara\YForm\Manager\Collection;
+use Yakamara\YForm\Manager\Dataset;
+use Yakamara\YForm\Manager\Field;
+use Yakamara\YForm\Manager\Query;
+use Yakamara\YForm\Manager\Table\Table;
+
+use function array_key_exists;
+use function call_user_func;
+use function count;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_object;
+
+class Route
 {
     public $config = [];
     public $path = '';
     public $type = '';
 
-    /** @var rex_yform_manager_table */
+    /** @var Table */
     public $table;
 
-    /** @var rex_yform_manager_query */
+    /** @var Query */
     public $query;
     public $instance;
 
@@ -55,10 +75,10 @@ class rex_yform_rest_route
     public function sendContent($status, $content, $contentType = 'application/json')
     {
         foreach ($this->additionalHeaders as $name => $value) {
-            rex_yform_rest::setHeader($name, $value);
+            Rest::setHeader($name, $value);
         }
 
-        rex_yform_rest::sendContent($status, $content, $contentType);
+        Rest::sendContent($status, $content, $contentType);
         exit;
     }
 
@@ -87,15 +107,15 @@ class rex_yform_rest_route
     public function handleRequest(array $paths, array $get)
     {
         if (!isset($this->config['table'])) {
-            rex_yform_rest::sendError('400', 'table-not-available');
+            Rest::sendError('400', 'table-not-available');
         }
 
         $requestMethod = $this->getRequestMethod();
         if (in_array($requestMethod, self::$requestMethods) && !isset($this->config[$requestMethod])) {
-            rex_yform_rest::sendError('400', 'request-method-not-available');
+            Rest::sendError('400', 'request-method-not-available');
         }
 
-        /** @var rex_yform_manager_table $table */
+        /** @var Table $table */
         $table = $this->getTable();
         $query = $this->getQuery();
 
@@ -108,9 +128,9 @@ class rex_yform_rest_route
                 $instance = $table->createDataset();
                 $fields = $this->getFields('get', $instance);
 
-                /** @var rex_yform_manager_dataset $instance */
+                /** @var Dataset $instance */
                 $instance = null;
-                /** @var rex_yform_manager_collection $instance */
+                /** @var Collection $instance */
                 $instances = null;
                 $attribute = null;
                 $baseInstances = false;
@@ -150,7 +170,7 @@ class rex_yform_rest_route
 
                         $instances = $query->find();
                     } catch (rex_sql_exception $e) {
-                        rex_yform_rest::sendError('400', 'query-error', []);
+                        Rest::sendError('400', 'query-error', []);
                     }
                 }
 
@@ -178,7 +198,7 @@ class rex_yform_rest_route
                         }
 
                         if (!$instance) {
-                            rex_yform_rest::sendError('400', 'dataset-not-found', ['paths' => $paths, 'table' => $instances->getTable()->getTableName()]);
+                            Rest::sendError('400', 'dataset-not-found', ['paths' => $paths, 'table' => $instances->getTable()->getTableName()]);
                         }
                         $attribute = null;
                         $instances = null;
@@ -194,7 +214,7 @@ class rex_yform_rest_route
                         $instance = $query->findOne();
 
                         if (!$instance) {
-                            rex_yform_rest::sendError('400', 'dataset-not-found', ['paths' => $paths, 'table' => $query->getTable()->getTableName()]);
+                            Rest::sendError('400', 'dataset-not-found', ['paths' => $paths, 'table' => $query->getTable()->getTableName()]);
                         }
 
                         $fields = $this->getFields('get', $instance);
@@ -203,7 +223,7 @@ class rex_yform_rest_route
                         $attribute = $path;
 
                         if (!array_key_exists($attribute, $fields)) {
-                            rex_yform_rest::sendError('400', 'attribute-not-found', ['paths' => $paths, 'table' => $table->getTableName()]);
+                            Rest::sendError('400', 'attribute-not-found', ['paths' => $paths, 'table' => $table->getTableName()]);
                         }
 
                         if ('be_manager_relation' == $fields[$attribute]->getTypeName()) {
@@ -221,7 +241,6 @@ class rex_yform_rest_route
                 $data = [];
                 if ($instances) {
                     foreach ($instances as $instance) {
-
                         $instance_data = $this->getInstanceData(
                             $instance,
                             array_merge($paths, [$instance->getId()]),
@@ -256,19 +275,19 @@ class rex_yform_rest_route
                         $meta['itemsPerPage'] = $per_page;
                         $meta['currentPage'] = $currentPage;
 
-                        $links['self'] = rex_yform_rest::getLinkByPath($this, $linkParams);
-                        $links['first'] = rex_yform_rest::getLinkByPath($this, array_merge(
+                        $links['self'] = Rest::getLinkByPath($this, $linkParams);
+                        $links['first'] = Rest::getLinkByPath($this, array_merge(
                             $linkParams,
                             ['page' => 1],
                         ));
                         if (($currentPage - 1) > 0) {
-                            $links['prev'] = rex_yform_rest::getLinkByPath($this, array_merge(
+                            $links['prev'] = Rest::getLinkByPath($this, array_merge(
                                 $linkParams,
                                 ['page' => ($currentPage - 1)],
                             ));
                         }
                         if (($currentPage * $per_page) < $itemsAll) {
-                            $links['next'] = rex_yform_rest::getLinkByPath($this, array_merge(
+                            $links['next'] = Rest::getLinkByPath($this, array_merge(
                                 $linkParams,
                                 ['page' => ($currentPage + 1)],
                             ));
@@ -317,11 +336,11 @@ class rex_yform_rest_route
                 $status = '400';
 
                 if (self::getTypeFromInstance($instance) != $type) {
-                    rex_yform_rest::sendError($status, 'post-data-type-different');
+                    Rest::sendError($status, 'post-data-type-different');
                 }
 
                 if (0 == count($data)) {
-                    rex_yform_rest::sendError($status, 'post-data-attributes-empty');
+                    Rest::sendError($status, 'post-data-attributes-empty');
                 } else {
                     $dataset = null;
                     if (isset($in['id'])) {
@@ -369,12 +388,12 @@ class rex_yform_rest_route
                     }
 
                     if ($dataset->save()) {
-                        rex_yform_rest::sendContent($status, ['id' => $dataset->getId()]);
+                        Rest::sendContent($status, ['id' => $dataset->getId()]);
                     } else {
                         foreach ($dataset->getMessages() as $message_key => $message) {
                             $errors[] = rex_i18n::translate($message);
                         }
-                        rex_yform_rest::sendError($status, 'errors-set', $errors);
+                        Rest::sendError($status, 'errors-set', $errors);
                     }
                 }
 
@@ -389,12 +408,12 @@ class rex_yform_rest_route
                 $query = $this->getFilterQuery($query, $fields, $get);
 
                 if ($queryClone === $query && isset($get['filter'])) {
-                    rex_yform_rest::sendError($status, 'no-available-filter-set');
+                    Rest::sendError($status, 'no-available-filter-set');
                 } elseif ($queryClone->getQuery() !== $query->getQuery()) {
                     // filter set -> true
                     $status = '200';
                 } elseif (0 == count($paths)) {
-                    rex_yform_rest::sendError($status, 'no-id-set');
+                    Rest::sendError($status, 'no-id-set');
                 } else {
                     $id = current($paths);
                     $query->where('id', $id);
@@ -419,7 +438,7 @@ class rex_yform_rest_route
                     $content['dataset'][] = $date;
                 }
 
-                rex_yform_rest::sendContent($status, $content);
+                Rest::sendContent($status, $content);
 
                 break;
 
@@ -430,19 +449,19 @@ class rex_yform_rest_route
                         $availableMethods[] = strtoupper($method);
                     }
                 }
-                rex_yform_rest::sendError('404', 'no-request-method-found', ['please only use: ' . implode(',', $availableMethods)]);
+                Rest::sendError('404', 'no-request-method-found', ['please only use: ' . implode(',', $availableMethods)]);
         }
     }
 
     /**
      * @throws rex_api_exception
-     * @return rex_yform_manager_field[]
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getFields(string $type = 'get', $instance = null): array
     {
         $class = $this->getTypeFromInstance($instance);
 
-        $returnFields = ['id' => new rex_yform_manager_field([
+        $returnFields = ['id' => new Field([
             'name' => 'id',
             'type_id' => 'value',
             'type_name' => 'integer',
@@ -452,8 +471,8 @@ class rex_yform_rest_route
             return $returnFields;
         }
 
-        /** @var rex_yform_manager_table $table */
-        /** @var rex_yform_manager_dataset $class */
+        /** @var Table $table */
+        /** @var Dataset $class */
         $table = $class::table();
 
         if (!is_object($table)) {
@@ -475,12 +494,12 @@ class rex_yform_rest_route
         return $returnFields;
     }
 
-    public function getFilterQuery(rex_yform_manager_query $query, array $fields, array $get): rex_yform_manager_query
+    public function getFilterQuery(Query $query, array $fields, array $get): Query
     {
         if (isset($get['filter']) && is_array($get['filter'])) {
             foreach ($get['filter'] as $filterKey => $filterValue) {
                 foreach ($fields as $fieldName => $field) {
-                    /* @var rex_yform_manager_field $field */
+                    /* @var Field $field */
                     if ($fieldName == $filterKey) {
                         if (method_exists('rex_yform_value_' . $field->getTypeName(), 'getSearchFilter')) {
                             try {
@@ -490,7 +509,7 @@ class rex_yform_rest_route
                                     'query' => $query,
                                 ]);
                             } catch (Error $e) {
-                                rex_yform_rest::sendError('400', 'field-static-method-call-failed', ['class' => 'rex_yform_value_' . $field->getTypeName(), 'field' => $fieldName]);
+                                Rest::sendError('400', 'field-static-method-call-failed', ['class' => 'rex_yform_value_' . $field->getTypeName(), 'field' => $fieldName]);
                                 exit;
                             }
                         } else {
@@ -509,7 +528,7 @@ class rex_yform_rest_route
     public function getInstanceData($instance, $paths, $onlyId = false, $parents = []): array
     {
         $links = [];
-        $links['self'] = rex_yform_rest::getLinkByPath($this, [], $paths);
+        $links['self'] = Rest::getLinkByPath($this, [], $paths);
 
         if ($onlyId) {
             return
@@ -532,7 +551,7 @@ class rex_yform_rest_route
     /**
      * @throws rex_api_exception
      */
-    public function getInstanceAttributes(rex_yform_manager_dataset $instance, $parents = []): array
+    public function getInstanceAttributes(Dataset $instance, $parents = []): array
     {
         $data = [];
 
@@ -551,7 +570,7 @@ class rex_yform_rest_route
     private function getIncludes(): array
     {
         if (null === $this->includes) {
-            $includes = @rex_request('include', 'string', '');
+            $includes = @rex_request('include', 'string');
             if ('' == $includes) {
                 $this->includes = [];
             } else {
@@ -587,7 +606,7 @@ class rex_yform_rest_route
     /**
      * @throws rex_api_exception
      */
-    public function getInstanceRelationships(rex_yform_manager_dataset $instance, $parents = []): array
+    public function getInstanceRelationships(Dataset $instance, $parents = []): array
     {
         $paths[] = $instance->getId();
 
@@ -621,13 +640,13 @@ class rex_yform_rest_route
                 ];
 
                 $links = [];
-                $links['self'] = rex_yform_rest::getLinkByPath($this, [], array_merge($paths, [$field->getName()]));
+                $links['self'] = Rest::getLinkByPath($this, [], array_merge($paths, [$field->getName()]));
 
                 if (isset($relationInstance)) {
-                    $route = rex_yform_rest::getRouteByInstance($relationInstance);
+                    $route = Rest::getRouteByInstance($relationInstance);
 
                     if ($route) {
-                        $links['absolute'] = rex_yform_rest::getLinkByPath($route, []);
+                        $links['absolute'] = Rest::getLinkByPath($route, []);
                     }
                 }
 
@@ -667,24 +686,24 @@ class rex_yform_rest_route
         return $type;
     }
 
-    public function setQuery(rex_yform_manager_query $query): self
+    public function setQuery(Query $query): self
     {
         $this->query = $query;
         return $this;
     }
 
-    public function getQuery(): rex_yform_manager_query
+    public function getQuery(): Query
     {
         return $this->query;
     }
 
-    public function setTable(rex_yform_manager_table $table): self
+    public function setTable(Table $table): self
     {
         $this->table = $table;
         return $this;
     }
 
-    public function getTable(): rex_yform_manager_table
+    public function getTable(): Table
     {
         return $this->table;
     }

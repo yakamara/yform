@@ -1,10 +1,27 @@
 <?php
 
 /**
- * @template T of rex_yform_manager_dataset
+ * @template T of \Yakamara\YForm\Manager\Dataset
  * @implements IteratorAggregate<int, T>
  */
-class rex_yform_manager_query implements IteratorAggregate, Countable
+
+namespace Yakamara\YForm\Manager;
+
+use Countable;
+use DateTimeInterface;
+use InvalidArgumentException;
+use IteratorAggregate;
+use rex_pager;
+use rex_sql;
+use Yakamara\YForm\Manager\Table\Table;
+
+use function call_user_func;
+use function in_array;
+use function is_array;
+use function is_bool;
+use function is_object;
+
+class Query implements IteratorAggregate, Countable
 {
     private const PARAM_WHERE = 'where';
     private const PARAM_HAVING = 'having';
@@ -71,9 +88,9 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return $this->table;
     }
 
-    public function getTable(): rex_yform_manager_table
+    public function getTable(): Table
     {
-        return rex_yform_manager_table::require($this->table);
+        return Table::require($this->table);
     }
 
     /**
@@ -350,7 +367,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      * Where the comma separated list column contains the given value or any of the given values.
      *
      * @param string           $column Column with comma separated list
-     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @param string|int|array<int> $value  Single value (string or int) or array of values (ints only)
      * @return $this
      */
     public function whereListContains(string $column, $value): self
@@ -373,7 +390,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @param array<string, mixed>|callable(self<T>):void $nested
+     * @param array<string, mixed>|callable(\Yakamara\YForm\Manager\Query<T>):void $nested
      * @param 'AND'|'OR' $operator
      * @return $this
      */
@@ -497,7 +514,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      * Where the comma separated list column contains the given value or any of the given values.
      *
      * @param string           $column Column with comma separated list
-     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @param string|int|array<int> $value  Single value (string or int) or array of values (ints only)
      * @return $this
      */
     public function havingListContains(string $column, $value): self
@@ -656,26 +673,26 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @return rex_yform_manager_collection<T>
+     * @return \Yakamara\YForm\Manager\Collection<T>
      */
-    public function getIterator(): rex_yform_manager_collection
+    public function getIterator(): Collection
     {
         return $this->find();
     }
 
     /**
-     * @return rex_yform_manager_collection<T>
+     * @return \Yakamara\YForm\Manager\Collection<T>
      */
-    public function find(): rex_yform_manager_collection
+    public function find(): Collection
     {
-        /** @var rex_yform_manager_collection<T> */
-        return rex_yform_manager_dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
+        /** @var Collection<T> */
+        return Dataset::queryCollection($this->getQuery(), $this->getParams(), $this->table);
     }
 
     /**
-     * @return rex_yform_manager_collection<T>
+     * @return \Yakamara\YForm\Manager\Collection<T>
      */
-    public function paginate(rex_pager $pager): rex_yform_manager_collection
+    public function paginate(rex_pager $pager): Collection
     {
         $pager->setRowCount($this->count());
         $this->limit($pager->getCursor(), $pager->getRowsPerPage());
@@ -686,28 +703,28 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /**
      * @param list<int> $ids
      *
-     * @return rex_yform_manager_collection<T>
+     * @return \Yakamara\YForm\Manager\Collection<T>
      */
-    public function findIds(array $ids): rex_yform_manager_collection
+    public function findIds(array $ids): Collection
     {
         return $this->where($this->getTableAlias() . '.id', $ids)->find();
     }
 
     /**
-     * @return null|T
+     * @return T|null
      */
-    public function findOne(): ?rex_yform_manager_dataset
+    public function findOne(): ?Dataset
     {
         $this->limit(1);
 
-        /** @var null|T */
-        return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
+        /** @var T|null */
+        return Dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
     }
 
     /**
-     * @return null|T
+     * @return T|null
      */
-    public function findId(int $id): ?rex_yform_manager_dataset
+    public function findId(int $id): ?Dataset
     {
         return $this->where($this->getTableAlias() . '.id', $id)->resetOrderBy()->findOne();
     }
@@ -872,7 +889,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /**
      * @param self::PARAM_*    $type
      * @param string           $column Column with comma separated list
-     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @param string|int|array<int> $value  Single value (string or int) or array of values (ints only)
      */
     private function buildListContains(string $type, string $column, $value): string
     {

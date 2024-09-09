@@ -1,9 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_manager $this
- * @psalm-scope-this rex_yform_manager
- */
+use Yakamara\YForm\Manager\Manager;
+
+/** @var Manager $this */
 
 $rex_yform_filter ??= [];
 $rex_yform_set ??= [];

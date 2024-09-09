@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_be_manager_relation $this
- * @psalm-scope-this rex_yform_value_be_manager_relation
- */
+use Yakamara\YForm\Value\BackendManagerRelation;
 
+/** @var BackendManagerRelation $this */
 $fieldkey ??= '';
 $forms ??= [];
 $relationKey ??= '';

@@ -8,7 +8,7 @@
 /** @var rex_yform_manager $manager */
 $manager = $this->getVar('this');
 
-/** @var rex_yform_manager_table $table */
+/** @var \Yakamara\YForm\Manager\Table\Table $table */
 $table = $this->getVar('table');
 $detailForm = $this->getVar('detailForm');
 $historyPage = $this->getVar('historyPage');

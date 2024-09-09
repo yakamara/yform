@@ -24,9 +24,9 @@ dump($items);
 
 Es stehen folgende Klassen zur Verfügung:
 
-- `rex_yform_manager_dataset`
-- `rex_yform_manager_collection`
-- `rex_yform_manager_query`
+- `Yakamara\YForm\Manager\Collection`
+- `Yakamara\YForm\Manager\Dataset`
+- `Yakamara\YForm\Manager\Query`
 
 <a name="klasse-erstellen"></a>
 
@@ -519,7 +519,7 @@ Beispiel für resetSelect()
 // resetSelect() ermöglicht es im Anschluss per select nur die Felder des Datensatzes zu erhalten, die man wirklich benötigt. 
 
 ```php
-$dataset = rex_yform_manager_query::get('rex_yf_example')
+$dataset = Yakamara\YForm\Manager\Query::get('rex_yf_example')
     ->resetSelect()
     ->select('id')
     ->select('title')
@@ -682,7 +682,7 @@ Nachteil: Man kann keine anderen Operatoren als = verwenden.
 Mit `whereNested` in der Callback-Notation arbeiten:
 
 ```
-$query->whereNested(function (rex_yform_manager_query $query) {
+$query->whereNested(function (Yakamara\YForm\Manager\Query $query) {
   $query
     ->where('foo', 1)
     ->where('bar', 2)

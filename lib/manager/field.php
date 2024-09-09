@@ -1,6 +1,19 @@
 <?php
 
-class rex_yform_manager_field implements ArrayAccess
+namespace Yakamara\YForm\Manager;
+
+use ArrayAccess;
+use Exception;
+use rex;
+use rex_i18n;
+use Yakamara\YForm\Validate\AbstractValidate;
+use Yakamara\YForm\Value\AbstractValue;
+
+use function array_key_exists;
+use function count;
+use function in_array;
+
+class Field implements ArrayAccess
 {
     protected $values = [];
     protected $definitions = [];
@@ -8,7 +21,7 @@ class rex_yform_manager_field implements ArrayAccess
     protected static $types = ['value', 'validate', 'action'];
     protected static $protected_fields = ['id', 'table_name', 'prio', 'type_id', 'type_name', 'db_type', 'list_hidden', 'search', 'name', 'label', 'not_required'];
 
-    /** @var rex_yform_value_abstract|rex_yform_validate_abstract */
+    /** @var AbstractValue|AbstractValidate */
     protected $object;
 
     /**
@@ -57,7 +70,7 @@ class rex_yform_manager_field implements ArrayAccess
     }
 
     /**
-     * @return null|mixed|rex_yform_validate_abstract|rex_yform_value_abstract
+     * @return mixed|AbstractValidate|AbstractValue|null
      */
     public function getObject()
     {

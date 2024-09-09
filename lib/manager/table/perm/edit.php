@@ -1,9 +1,14 @@
 <?php
 
-/**
- * @package redaxo\core\login
- */
-class rex_yform_manager_table_perm_edit extends rex_complex_perm
+namespace Yakamara\YForm\Manager\Table\Perm;
+
+use rex_complex_perm;
+use rex_i18n;
+use Yakamara\YForm\Manager\Table\Table;
+
+use function in_array;
+
+class Edit extends rex_complex_perm
 {
     public function hasPerm($table_name)
     {
@@ -13,7 +18,7 @@ class rex_yform_manager_table_perm_edit extends rex_complex_perm
     public static function getFieldParams()
     {
         $arrayOptions = [];
-        foreach (rex_yform_manager_table::getAll() as $table) {
+        foreach (Table::getAll() as $table) {
             $arrayOptions[$table->getTableName()] = $table->getNameLocalized() . ' [' . $table->getTableName() . ']';
         }
 

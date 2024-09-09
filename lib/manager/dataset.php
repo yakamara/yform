@@ -1,6 +1,27 @@
 <?php
 
-class rex_yform_manager_dataset
+namespace Yakamara\YForm\Manager;
+
+use Exception;
+use InvalidArgumentException;
+use rex;
+use rex_exception;
+use rex_extension;
+use rex_extension_point;
+use rex_instance_pool_trait;
+use rex_sql;
+use RuntimeException;
+use Yakamara\YForm\AbstractBase;
+use Yakamara\YForm\Action\Db;
+use Yakamara\YForm\Manager\Table\Table;
+use Yakamara\YForm\Value\BackendManagerRelation;
+use Yakamara\YForm\YForm;
+
+use function array_key_exists;
+use function call_user_func;
+use function in_array;
+
+class Dataset
 {
     use rex_instance_pool_trait;
 
@@ -10,10 +31,10 @@ class rex_yform_manager_dataset
 
     private static bool $debug = false;
 
-    /** @var array<string, class-string<self>> */
+    /** @var array<string, class-string<Dataset>> */
     private static array $tableToModel = [];
 
-    /** @var array<class-string<self>, string> */
+    /** @var array<class-string<Dataset>, string> */
     private static array $modelToTable = [];
 
     private string $table;
@@ -28,10 +49,10 @@ class rex_yform_manager_dataset
 
     private bool $dataLoaded = false;
 
-    /** @var array<string, rex_yform_manager_collection> */
+    /** @var array<string, Collection> */
     private array $relatedCollections = [];
 
-    /** @var string[] */
+    /** @var array<string> */
     private array $messages = [];
 
     /** @var bool */
@@ -59,7 +80,7 @@ class rex_yform_manager_dataset
         return $dataset;
     }
 
-    /** @return null|static */
+    /** @return static|null */
     public static function get(int $id, ?string $table = null): ?self
     {
         if ($id <= 0) {
@@ -121,15 +142,12 @@ class rex_yform_manager_dataset
         });
     }
 
-    /**
-     * @return rex_yform_manager_collection<static>
-     */
-    public static function getAll(?string $table = null): rex_yform_manager_collection
+    public static function getAll(?string $table = null): Collection
     {
         return static::query($table)->find();
     }
 
-    public static function table(): rex_yform_manager_table
+    public static function table(): Table
     {
         $class = static::class;
 
@@ -137,19 +155,19 @@ class rex_yform_manager_dataset
             throw new RuntimeException(sprintf('Method "%s()" is only callable for registered model classes.', __METHOD__));
         }
 
-        return rex_yform_manager_table::require(self::$modelToTable[$class]);
+        return Table::require(self::$modelToTable[$class]);
     }
 
     /**
-     * @return rex_yform_manager_query<static>
+     * @return \Yakamara\YForm\Manager\Query<static>
      */
-    public static function query(?string $table = null): rex_yform_manager_query
+    public static function query(?string $table = null): Query
     {
-        return rex_yform_manager_query::get($table ?: static::modelToTable());
+        return Query::get($table ?: static::modelToTable());
     }
 
     /**
-     * @return null|static
+     * @return static|null
      */
     public static function queryOne(string $query, array $params = [], ?string $table = null): ?self
     {
@@ -179,9 +197,9 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return rex_yform_manager_collection<static>
+     * @return \Yakamara\YForm\Manager\Collection<static>
      */
-    public static function queryCollection(string $query, array $params = [], ?string $table = null): rex_yform_manager_collection
+    public static function queryCollection(string $query, array $params = [], ?string $table = null): Collection
     {
         $table = $table ?: static::modelToTable();
 
@@ -201,11 +219,11 @@ class rex_yform_manager_dataset
             $datasets[] = static::fromSqlData($row, $table);
         }
 
-        return new rex_yform_manager_collection($table, $datasets);
+        return new Collection($table, $datasets);
     }
 
     /**
-     * @param class-string<self> $modelClass
+     * @param class-string<\Yakamara\YForm\Manager\Dataset> $modelClass
      */
     public static function setModelClass(string $table, string $modelClass): void
     {
@@ -214,7 +232,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return null|class-string<static>
+     * @return class-string<static>|null
      */
     public static function getModelClass(string $table): ?string
     {
@@ -226,9 +244,9 @@ class rex_yform_manager_dataset
         return $this->table;
     }
 
-    public function getTable(): rex_yform_manager_table
+    public function getTable(): Table
     {
-        return rex_yform_manager_table::require($this->table);
+        return Table::require($this->table);
     }
 
     public function getId(): int
@@ -343,7 +361,7 @@ class rex_yform_manager_dataset
         return $class::get($id, $relation['table']);
     }
 
-    public function getRelatedCollection(string $key): rex_yform_manager_collection
+    public function getRelatedCollection(string $key): Collection
     {
         if (isset($this->relatedCollections[$key])) {
             return $this->relatedCollections[$key];
@@ -359,14 +377,14 @@ class rex_yform_manager_dataset
      *
      * @internal
      */
-    public function setRelatedCollection(string $key, rex_yform_manager_collection $collection): self
+    public function setRelatedCollection(string $key, Collection $collection): self
     {
         $this->relatedCollections[$key] = $collection;
 
         return $this;
     }
 
-    public function getRelatedQuery(string $key): rex_yform_manager_query
+    public function getRelatedQuery(string $key): Query
     {
         $relation = $this->getTable()->getRelation($key);
 
@@ -446,7 +464,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return string[]
+     * @return array<string>
      */
     public function getMessages(): array
     {
@@ -485,14 +503,14 @@ class rex_yform_manager_dataset
     /**
      * Fields of yform Definitions.
      *
-     * @return rex_yform_manager_field[]
+     * @return array<\Yakamara\YForm\Manager\Field>
      */
     public function getFields(array $filter = []): array
     {
         return $this->getTable()->getFields($filter);
     }
 
-    public function getForm(): rex_yform
+    public function getForm(): YForm
     {
         $yform = $this->createForm();
         $this->setFormMainId($yform);
@@ -501,18 +519,18 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @param null|callable(rex_yform):void $afterFieldsExecuted
+     * @param callable(\Yakamara\YForm\YForm):void|null $afterFieldsExecuted
      */
-    public function executeForm(rex_yform $yform, ?callable $afterFieldsExecuted = null): string
+    public function executeForm(YForm $yform, ?callable $afterFieldsExecuted = null): string
     {
         $exists = $this->exists();
         $oldData = $this->getData();
 
         if ($exists) {
-            /** @var rex_yform $yform */
+            /** @var YForm $yform */
             $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_UPDATE', $yform, ['table' => $this->getTable(), 'data_id' => $this->id, 'data' => $this]));
         } else {
-            /** @var rex_yform $yform */
+            /** @var YForm $yform */
             $yform = rex_extension::registerPoint(new rex_extension_point('YFORM_DATA_ADD', $yform, ['table' => $this->getTable(), 'data' => $this]));
         }
 
@@ -529,7 +547,7 @@ class rex_yform_manager_dataset
                     return;
                 }
 
-                /** @var rex_yform_action_db $dbAction */
+                /** @var Db $dbAction */
                 $dbAction = $ep->getParam('form');
                 if ($dbAction->getParam('manager_dataset') !== $this) {
                     return;
@@ -538,7 +556,7 @@ class rex_yform_manager_dataset
                 $this->id = ((int) $dbAction->getParam('main_id')) ?: null;
                 if ($this->id) {
                     self::addInstance($this->id, $this);
-                    rex_yform_value_be_manager_relation::clearCache($this->table);
+                    BackendManagerRelation::clearCache($this->table);
                 }
             }, rex_extension::EARLY);
         }
@@ -672,7 +690,7 @@ class rex_yform_manager_dataset
         $this->setValue($key, $value);
     }
 
-    private function getInternalForm(): rex_yform
+    private function getInternalForm(): YForm
     {
         $dummy = new static($this->table, 0);
 
@@ -685,17 +703,17 @@ class rex_yform_manager_dataset
         return $yform;
     }
 
-    private function createForm(): rex_yform
+    private function createForm(): YForm
     {
-        $yform = new rex_yform();
+        $yform = new YForm();
         $fields = $this->getFields();
         $yform->setDebug(self::$debug);
 
         foreach ($fields as $field) {
-            /** @var class-string<rex_yform_base_abstract> $class */
+            /** @var class-string<\Yakamara\YForm\AbstractBase> $class */
             $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
-            /** @var rex_yform_base_abstract $cl */
+            /** @var AbstractBase $cl */
             $cl = new $class();
             $definitions = $cl->getDefinitions();
 
@@ -721,7 +739,7 @@ class rex_yform_manager_dataset
         return $yform;
     }
 
-    private function setFormMainId(rex_yform $yform): void
+    private function setFormMainId(YForm $yform): void
     {
         if ($this->exists()) {
             $where = 'id = ' . (int) $this->id;
@@ -733,7 +751,7 @@ class rex_yform_manager_dataset
     }
 
     /**
-     * @return class-string<self>
+     * @return class-string<\Yakamara\YForm\Manager\Dataset>
      */
     private static function tableToModel(string $table): string
     {

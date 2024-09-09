@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_upload $this
- * @psalm-scope-this rex_yform_value_upload
- */
+use Yakamara\YForm\Value\Upload;
 
+/** @var Upload $this */
 $unique ??= '';
 $filename ??= '';
 $download_link ??= '';

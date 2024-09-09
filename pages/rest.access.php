@@ -1,11 +1,7 @@
 <?php
 
-/**
- * yform.
- *
- * @author jan.kristinus[at]redaxo[dot]org Jan Kristinus
- * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
- */
+use Yakamara\YForm\Rest\AuthToken;
+use Yakamara\YForm\YForm;
 
 $_csrf_key = 'yform_rest_token_access';
 
@@ -34,7 +30,7 @@ if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     $form_data[] = 'datetime|datetime_created|translate:yform_rest_token_access_datetime_created';
     $form_data[] = 'text|url|translate:yform_rest_token_url';
 
-    $yform = rex_yform::factory();
+    $yform = YForm::factory();
     $yform->setObjectparams('form_action', 'index.php?page=yform/rest/access');
 
     $yform->setFormData(implode("\n", $form_data));
@@ -154,7 +150,7 @@ if ($show_list) {
     $list->setColumnParams('token_id', ['page' => 'yform/rest/token', 'func' => 'edit', 'data_id' => '###rest_id###']);
 
     $list->setColumnFormat('token_id', 'custom', static function ($params) {
-        $token = rex_yform_rest_auth_token::get($params['subject']);
+        $token = AuthToken::get($params['subject']);
         if ($token) {
             return '<a href="index.php?page=yform/rest/token&func=edit&data_id=' . $params['subject'] . '">' . $token['name'] . '</a>';
         }

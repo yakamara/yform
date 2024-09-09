@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_google_geocode $this
- * @psalm-scope-this rex_yform_value_google_geocode
- */
+use Yakamara\YForm\Value\GoogleGeoCode;
 
+/** @var GoogleGeoCode $this */
 $address ??= '';
 $googleapikey ??= '';
 $value ??= $this->getValue() ?? '';

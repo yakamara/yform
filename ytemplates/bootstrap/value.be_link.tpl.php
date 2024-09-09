@@ -1,10 +1,8 @@
 <?php
 
-/**
- * @var rex_yform_value_be_link $this
- * @psalm-scope-this rex_yform_value_be_link
- */
+use Yakamara\YForm\Value\BackendLink;
 
+/** @var BackendLink $this */
 $counter ??= 1;
 
 $buttonId = 'yf_' . uniqid() . '_' . $counter;
