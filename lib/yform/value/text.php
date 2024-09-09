@@ -63,7 +63,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
             'db_type' => ['varchar(191)', 'text'],
             'famous' => true,
             'hooks' => [
-                'preDefault' => static function (\Yakamara\YForm\Manager\Field $field) {
+                'preDefault' => static function (Yakamara\YForm\Manager\Field $field) {
                     return $field->getElement('default');
                 },
             ],
@@ -83,7 +83,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
         $field = $query->getTableAlias() . '.' . $params['field']->getName();
 
         if ('(empty)' == $value) {
-            return $query->whereNested(static function (\Yakamara\YForm\Manager\Query $query) use ($field) {
+            return $query->whereNested(static function (Yakamara\YForm\Manager\Query $query) use ($field) {
                 $query
                     ->where($field, '')
                     ->where($field, null)
@@ -91,7 +91,7 @@ class rex_yform_value_text extends rex_yform_value_abstract
             }, 'OR');
         }
         if ('!(empty)' == $value) {
-            return $query->whereNested(static function (\Yakamara\YForm\Manager\Query $query) use ($field) {
+            return $query->whereNested(static function (Yakamara\YForm\Manager\Query $query) use ($field) {
                 $query
                     ->where($field, '', '<>')
                     ->where($field, null, '<>')

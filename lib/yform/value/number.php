@@ -79,7 +79,7 @@ class rex_yform_value_number extends rex_yform_value_abstract
             'description' => rex_i18n::msg('yform_values_number_description'),
             'db_type' => ['DECIMAL({precision},{scale})'],
             'hooks' => [
-                'preCreate' => static function (\Yakamara\YForm\Manager\Field $field, $db_type) {
+                'preCreate' => static function (Yakamara\YForm\Manager\Field $field, $db_type) {
                     $db_type = str_replace('{precision}', (string) ($field->getElement('precision') ?? 6), $db_type);
                     $db_type = str_replace('{scale}', (string) ($field->getElement('scale') ?? 2), $db_type);
                     return $db_type;

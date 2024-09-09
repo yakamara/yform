@@ -16,8 +16,8 @@ use rex_fragment;
 use rex_i18n;
 use rex_select;
 use rex_var;
-use rex_yform_manager_table;
 use rex_yform_value_be_manager_relation;
+use Yakamara\YForm\Manager\Table\Table;
 
 use function in_array;
 
@@ -48,7 +48,7 @@ class TableData extends rex_var
                 return self::quote('[table param not defined]');
             }
 
-            $table = \Yakamara\YForm\Manager\Table\Table::get($tableName);
+            $table = Table::get($tableName);
             if (!$table) {
                 return self::quote('[table not in YForm?]');
             }
