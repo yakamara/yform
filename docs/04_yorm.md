@@ -516,14 +516,14 @@ $query->whereListContains('my_column', [3, 5, 9]);
 
 Beispiel für resetSelect()
 
-// resetSelect() ermöglicht es im Anschluss per select nur die Felder des Datensatzes zu erhalten, die man wirklich benötigt. 
+// resetSelect() ermöglicht es im Anschluss bestehende SELECTS zurückzusetzen und nur die Felder des Datensatzes zu erhalten, die man wirklich benötigt. 
 
 ```php
 $dataset = rex_yform_manager_query::get('rex_yf_example')
-    ->resetSelect()
-    ->select('id')
-    ->select('title')
-    ->select('name')
+    ->resetSelect()     // Alle bisherigen SELECT-Definitionen werden entfernt.
+    ->select('id')      // *** id muss angegeben werden ***, da auch dieses default SELECT entfernt wurde 
+    ->select('title')   
+    ->select('name')    
     ->findId($id);
 ```
 
