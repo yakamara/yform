@@ -164,6 +164,11 @@ class rex_yform_manager_field implements ArrayAccess
         return false;
     }
 
+    public function isSortable(): bool
+    {
+        return $this->getObject()->isSortable();
+    }
+
     public function isHiddenInListDisabled()
     {
         if (!isset($this->definitions['is_hiddeninlist'])) {

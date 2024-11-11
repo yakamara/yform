@@ -78,8 +78,10 @@ foreach ($this->table->getFields() as $field) {
     if ('value' == $field->getType()) {
         if ($field->isHiddenInList()) {
             $list->removeColumn($field->getName());
-        } else {
+        } elseif ($field->isSortable()) {
             $list->setColumnSortable($field->getName());
+            $list->setColumnLabel($field->getName(), $field->getLabel());
+        } else {
             $list->setColumnLabel($field->getName(), $field->getLabel());
         }
     }

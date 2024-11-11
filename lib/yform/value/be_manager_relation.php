@@ -885,4 +885,10 @@ class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 
         return ['source' => reset($source)->getName(), 'target' => reset($target)->getName()];
     }
+
+    public function isSortable(): bool
+    {
+        return false;
+    }
+
 }

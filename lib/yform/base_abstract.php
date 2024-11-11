@@ -121,5 +121,10 @@ abstract class rex_yform_base_abstract
         return false;
     }
 
+    public function isSortable(): bool
+    {
+        return true;
+    }
+
     public function init() {}
 }
