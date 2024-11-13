@@ -81,8 +81,8 @@ yform_values_number_precision = Número de dígitos (23335443.23 sería, por eje
 yform_values_number_scale = Número de dígitos después de los dígitos (23335443.23 serían 2 decimales, por ejemplo) (ESCALA)
 
 yform_search_defaults_wildcard_notice = Ejemplos: * nombre /! (Vacío) / (vacío)
-yform_search_integer_notice = Ejemplos:> 5 /!= 5 / 3-5 / 2..5 /! (Vacío) / (vacío)
-yform_search_number_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / !(vacío ) / (vacío )
+yform_search_integer_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
+yform_search_number_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
 yform_search_defaults_select_notice = Seleccione varios con CTRL o comando
 
 yform_values_checkbox_values = Valores (0,1) (sin hacer clic, hacer clic)

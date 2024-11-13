@@ -82,8 +82,8 @@ yform_values_number_precision = Number of digits (23335443.23 woud be 10 digits)
 yform_values_number_scale = Number of the digits decimal places (23335443.23 would be 2 decimal places) (SCALE)
 
 yform_search_defaults_wildcard_notice = Examples: *name / !(empty) / (empty)
-yform_search_integer_notice = Examples: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
-yform_search_number_notice = Examples: >5 / !=5 / 3-5 / 2..5 / !(empty) / (empty)
+yform_search_integer_notice = Examples: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
+yform_search_number_notice = Examples: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
 yform_search_defaults_select_notice = Please use CTRL or COMMAND to select more options
 
 yform_values_checkbox_values = Values (0,1 = unchecked, checked)
