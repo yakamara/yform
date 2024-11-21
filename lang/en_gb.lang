@@ -234,6 +234,10 @@ yform_values_choice_placeholder = Placeholder
 yform_values_choice_placeholder_notice = Use this setting to display an extra "empty" option (ex. "Choose an option") as a first select option. This setting works only, if multiple is set to false.
 yform_values_choice_preferred_choices = Preferred choices
 yform_values_choice_preferred_choices_notice = Use this setting to move certain options to the beginning of the option list. A visual delimiter will be added to separate these choices from the rest.
+yform_values_choice_search_type_label = Type of search
+yform_values_choice_search_type_notice = relates to search filters in backend tables
+yform_values_choice_search_type_AND = AND search (all selected search values must be present)
+yform_values_choice_search_type_OR = OR search (at least one of the selected search values must be present)
 
 yform_values_status_output_values = Enter output values
 yform_values_status_output_values_notice = 2 comma separated values. Ex. offline, online OR ▢,▣

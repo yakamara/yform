@@ -235,6 +235,10 @@ yform_values_choice_placeholder = Platshållare
 yform_values_choice_placeholder_notice = Det här alternativet avgör om ett speciellt "tomt" alternativ (till exempel "Välj ett alternativ") visas överst på en Select-widget. Det här alternativet gäller endast om multipelalternativet är inställt på felaktigt.
 yform_values_choice_preferred_choices = Föredragna val (preferred_choices)
 yform_values_choice_preferred_choices_notice = Det här alternativet flyttar vissa val överst i listan, placera en optisk separator mellan dem och resten av alternativen.
+yform_values_choice_search_type_label = Söktyp
+yform_values_choice_search_type_notice = avser sökfilter i tabeller i backend
+yform_values_choice_search_type_AND = OCH-sökning (alla valda sökvärden måste förekomma)
+yform_values_choice_search_type_OR = ELLER-sökning (minst ett av de valda sökvärdena måste förekomma)
 
 yform_values_status_output_values = Ange utgångsvärden
 yform_values_status_output_values_notice = 2 värden separerade med komma-tecken. t.ex. offline, online eller ▢, ▣

@@ -248,6 +248,11 @@ yform_values_choice_placeholder = Platzhalter
 yform_values_choice_placeholder_notice = Diese Option legt fest, ob eine spezielle "leere" Option (z.B. "Wählen Sie eine Option") oben in einem Select-Widget erscheint. Diese Option gilt nur, wenn die Mehrfachoption auf false gesetzt ist.
 yform_values_choice_preferred_choices = Bevorzugte Auswahlmöglichkeiten (preferred_choices)
 yform_values_choice_preferred_choices_notice = Mit dieser Option werden bestimmte Auswahlmöglichkeiten an den Anfang der Liste verschoben, wobei ein optisches Trennzeichen zwischen ihnen und dem Rest der Optionen gesetzt wird.
+yform_values_choice_search_type_label = Art der Suche
+yform_values_choice_search_type_notice = betrifft Suchfilter in Tabellen im Backend
+yform_values_choice_search_type_AND = UND-Suche (alle ausgewählten Suchwerte müssen vorkommen)
+yform_values_choice_search_type_OR = ODER-Suche (mindestens einer der ausgewählten Suchwerte muss vorkommen)
+
 
 yform_values_status_output_values = Ausgabewerte eingeben
 yform_values_status_output_values_notice = 2 Werte kommasepariert. z.B. offline,online oder ▢,▣
