@@ -350,7 +350,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      * Where the comma separated list column contains the given value or any of the given values.
      *
      * @param string           $column Column with comma separated list
-     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @param string|int|array<int> $value  Single value (string or int) or array of values (ints only)
      * @return $this
      */
     public function whereListContains(string $column, $value): self
@@ -497,7 +497,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      * Where the comma separated list column contains the given value or any of the given values.
      *
      * @param string           $column Column with comma separated list
-     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @param string|int|array<int> $value  Single value (string or int) or array of values (ints only)
      * @return $this
      */
     public function havingListContains(string $column, $value): self
@@ -694,18 +694,18 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
-     * @return null|T
+     * @return T|null
      */
     public function findOne(): ?rex_yform_manager_dataset
     {
         $this->limit(1);
 
-        /** @var null|T */
+        /** @var T|null */
         return rex_yform_manager_dataset::queryOne($this->getQuery(), $this->getParams(), $this->table);
     }
 
     /**
-     * @return null|T
+     * @return T|null
      */
     public function findId(int $id): ?rex_yform_manager_dataset
     {
@@ -837,7 +837,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
      * @param self::PARAM_* $type
      * @param mixed $value
      */
-    private function addParam(string $type, $value): string
+    public function addParam(string $type, $value): string
     {
         $this->paramCounter[$type] = ($this->paramCounter[$type] ?? 0) + 1;
 
@@ -872,7 +872,7 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     /**
      * @param self::PARAM_*    $type
      * @param string           $column Column with comma separated list
-     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @param string|int|array<int> $value  Single value (string or int) or array of values (ints only)
      */
     private function buildListContains(string $type, string $column, $value): string
     {
