@@ -59,7 +59,7 @@ class rex_yform_value_submit extends rex_yform_value_abstract
         if ($this->needsOutput() && $this->isViewable()) {
             if (!$this->isEditable()) {
             } else {
-                $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php', compact('labels'));
+                $this->params['form_output'][$this->getId()] = $this->parse('value.submit.tpl.php', compact('labels', 'values'));
             }
         }
 

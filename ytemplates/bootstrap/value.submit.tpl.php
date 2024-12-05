@@ -6,6 +6,7 @@
  */
 
 $labels ??= [];
+$values ??= [];
 
 $css_classes = [];
 if ('' != $this->getElement('css_classes')) {
@@ -35,7 +36,7 @@ foreach ($labels as $index => $label) {
     $id = $this->getFieldId() . '-' . rex_string::normalize($label);
     $label_translated = rex_i18n::translate($label, true);
 
-    echo '<button class="' . implode(' ', $classes) . '" type="submit" name="' . $this->getFieldName() . '" id="' . $id . '" value="' . rex_escape($label) . '">' . $label_translated . '</button>';
+    echo '<button class="' . implode(' ', $classes) . '" type="submit" name="' . $this->getFieldName() . '" id="' . $id . '" value="' . rex_escape($values[$index]) . '">' . $label_translated . '</button>';
 }
 
 if (count($labels) > 1) {
