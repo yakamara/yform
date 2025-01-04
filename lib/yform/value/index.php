@@ -33,6 +33,8 @@ class rex_yform_value_index extends rex_yform_value_abstract
                 if (isset($this->params['value_pool']['sql'][$name])) {
                     $value .= ' ' . $this->params['value_pool']['sql'][$name];
                     continue;
+                } else {
+                    $value .= trim($name, '"\'');
                 }
 
                 $name = explode('.', $name);
