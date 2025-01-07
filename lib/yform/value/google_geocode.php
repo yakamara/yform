@@ -80,7 +80,7 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
                 'infotext_2' => ['type' => 'text',     'label' => 'Text: Lösche Position', 'default' => 'translate:yform_geo_clear_position'],
             ],
             'description' => 'Google Maps Koordinaten',
-            'db_type' => ['text'],
+            'db_type' => ['varchar(191)'],
             'formbuilder' => false,
             'multi_edit' => false,
         ];
