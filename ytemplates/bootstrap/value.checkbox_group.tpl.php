@@ -1,10 +1,8 @@
 <?php
 
 /**
- * @var rex_yform_value_checkbox $this
- * @psalm-scope-this rex_yform_value_checkbox
+ * @var \Yakamara\YForm\Value\Checkbox $this
  */
-
 $options ??= [];
 
 $notices = [];

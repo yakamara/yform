@@ -1,10 +1,9 @@
 <?php
 
-/**
- * @var rex_yform_value_abstract|rex_yform $this
- * @psalm-scope-this rex_yform_value_abstract
- */
+use Yakamara\YForm\Value\AbstractValue;
+use Yakamara\YForm\YForm;
 
+/** @var AbstractValue|YForm $this */
 $option ??= '';
 
 switch ($option) {

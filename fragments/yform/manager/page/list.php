@@ -13,8 +13,8 @@ $rex_yform_manager_popup = $this->getVar('rex_yform_manager_popup');
 $popup = $this->getVar('popup');
 $hasDataPageFunctions = $this->getVar('hasDataPageFunctions');
 
-/** @var rex_yform_list $list */
-$list = rex_yform_list::factory($query, $table->getListAmount());
+/** @var \Yakamara\YForm\List\YList $list */
+$list = \Yakamara\YForm\List\YList::factory($query, $table->getListAmount());
 
 $list->addTableAttribute('class', 'table-striped table-hover yform-table-' . rex_string::normalize($this->table->getTableName()));
 
@@ -101,19 +101,19 @@ if (isset($rex_yform_manager_opener['id'])) {
                 if (isset($params['list']->getParams()['table_name'])) {
                     $target_table = $params['list']->getParams()['table_name'];
                     $target_field = $tablefield[0];
-                    $values = rex_yform_value_be_manager_relation::getListValues($target_table, $target_field);
+                    $values = \Yakamara\YForm\Value\BackendManagerRelation::getListValues($target_table, $target_field);
                     $value = $values[$params['list']->getValue('id')];
                 }
             } else {
                 [$table_name, $field_name] = explode('.', $params['params']['opener_field']);
-                $table = rex_yform_manager_table::get($table_name);
+                $table = \Yakamara\YForm\Manager\Table\Table::get($table_name);
                 if ($table) {
                     $fields = $table->getValueFields(['name' => $field_name]);
                     if (isset($fields[$field_name])) {
                         $target_table = $fields[$field_name]->getElement('table');
                         $target_field = $fields[$field_name]->getElement('field');
 
-                        $values = rex_yform_value_be_manager_relation::getListValues(
+                        $values = \Yakamara\YForm\Value\BackendManagerRelation::getListValues(
                             $target_table,
                             $target_field,
                         );
