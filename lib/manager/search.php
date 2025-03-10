@@ -110,7 +110,7 @@ class rex_yform_manager_search
         $yform = $this->getYForm();
         $yform->getForm();
         if ($yform->hasWarnings()) {
-            rerurn $query;
+            return $query;
         }
         
         $fieldValues = $yform->getFieldValue();
