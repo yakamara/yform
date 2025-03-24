@@ -282,7 +282,7 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         return $query;
     }
 
-    private static function createChoiceList($elements)
+    public static function createChoiceList($elements)
     {
         $self = new self();
 
