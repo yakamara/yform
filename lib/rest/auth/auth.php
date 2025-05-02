@@ -16,9 +16,10 @@ class rex_yform_rest_auth_token
      */
     public static function checkToken(rex_yform_rest_route $route): bool
     {
-        $myToken = rex_yform_rest::getHeader('token');
+        $Request = rex::getRequest();
+        $bearerToken = str_ireplace('Bearer ', '', $Request->headers->get('Authorization') ?? $Request->headers->get('token') ?? '');
 
-        $TokenAuths = rex_sql::factory()->getArray('select * from ' . rex::getTable('yform_rest_token') . ' where status=1 and token=? and FIND_IN_SET(?, paths)', [$myToken, $route->getPath()]);
+        $TokenAuths = rex_sql::factory()->getArray('select * from ' . rex::getTable('yform_rest_token') . ' where status=1 and token=? and FIND_IN_SET(?, paths)', [$bearerToken, $route->getPath()]);
 
         if (1 != count($TokenAuths)) {
             return false;
@@ -63,7 +64,7 @@ class rex_yform_rest_auth_token
 
     /**
      * @throws rex_sql_exception
-     * @return null|mixed
+     * @return mixed|null
      */
     public static function get(int $id)
     {
@@ -81,7 +82,7 @@ class rex_yform_rest_auth_token
 
     /**
      * @throws rex_sql_exception
-     * @return null|mixed
+     * @return mixed|null
      */
     public static function getCurrentIntervalAmount(string $interval, $token_id)
     {

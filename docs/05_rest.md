@@ -104,7 +104,7 @@ Beispiel
 
 ## Nutzung eines Endpoints
 
-URL (z. B. <https://domain/rest/v1/user>)
+URL (z.B. <https://domain/rest/v1/user>)
 In den Beispielen wird davon ausgegangen, dass es keine eigene Authentifizierung gibt. Um zu sehen wie die Aufrufe funktionieren bitte hier <https://jsonapi.org/format/> nachschlagen.
 
 ### GET
@@ -119,7 +119,7 @@ Header:
 
 ```
 Content-Type: application/x-www-form-urlencoded
-token: [token]
+Authorization: Bearer [token]
 ```
 
 Response:
@@ -172,7 +172,7 @@ Header:
 
 ```
 Content-Type: application/x-www-form-urlencoded
-token: [token]
+Authorization: Bearer [token]
 ```
 
 Body:
@@ -213,7 +213,7 @@ Header:
 
 ```
 Content-Type: application/x-www-form-urlencoded
-token: [token]
+Authorization: Bearer [token]
 ```
 
 Response:
@@ -242,7 +242,7 @@ Header:
 
 ```
 Content-Type: application/x-www-form-urlencoded
-token: [token]
+Authorization: Bearer [token]
 ```
 
 Response:
@@ -274,7 +274,7 @@ Response ohne Treffer:
 
 Wenn im Model folgende Authentifizerung angegeben wurde: `'\rex_yform_rest_auth_token::checkToken()'` ist das die Standardauthentifizierung mit Token aus der YForm:Rest:Tokenverwaltung.
 
-Die hier erstellen Token werden entsprechend überprüft und müssen im Header übergeben werden. `token=###meintoken###` Nur aktive Token funktionieren.
+Die hier erstellen Token werden entsprechend überprüft und müssen im Header übergeben werden. Nur aktive Token funktionieren.
 Über das REST PlugIn kann man im Backend diese Zugriffe einschränken und tracken. D.h. Es können Einschränkungen wir Zugriffe / Stunde oder ähnliches eingestellt werden.
 Jeder Zugriff auf die REST-API wird erfasst.
 

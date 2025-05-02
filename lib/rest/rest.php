@@ -125,41 +125,6 @@ class rex_yform_rest
     }
 
     /**
-     * @param string $key
-     * @param string $default
-     * @return mixed|string
-     */
-    public static function getHeader($key = '', $default = '')
-    {
-        $value = '';
-        $headers = [];
-
-        foreach ($_SERVER as $k => $v) {
-            if ('HTTP_' == mb_substr($k, 0, 5)) {
-                $headers[str_replace(' ', '-', strtolower(str_replace('_', ' ', mb_substr($k, 5))))] = $v;
-            } elseif ('CONTENT_TYPE' == $k) {
-                $headers['Content-Type'] = $v;
-            } elseif ('CONTENT_LENGTH' == $k) {
-                $headers['Content-Length'] = $v;
-            }
-        }
-
-        if (array_key_exists($key, $headers)) {
-            $value = $headers[$key];
-        }
-
-        if ('' == $value) {
-            $value = rex_get($key, 'string', '');
-        }
-
-        if ('' == $value) {
-            $value = $default;
-        }
-
-        return $value;
-    }
-
-    /**
      * @param array $params
      * @param array $additionalPaths
      */
