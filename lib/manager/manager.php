@@ -84,7 +84,7 @@ class rex_yform_manager
         $rex_yform_list['list'] = rex_request('list', 'string');
         $rex_yform_list['sort'] = rex_request('sort', 'string');
         $rex_yform_list['sorttype'] = rex_request('sorttype', 'string');
-        $rex_yform_list['start'] = rex_request('start', 'int', null) ?? rex_request($rex_yform_list['list'] . '_start', 'int', null) ?? 0;
+        $rex_yform_list['start'] = rex_request($rex_yform_list['list'] . '_start', 'int', null) ?? rex_request('start', 'int', null) ?? 0;
 
         $_csrf_key = $this->table->getCSRFKey();
         $rex_yform_list += rex_csrf_token::factory($_csrf_key)->getUrlParams();
