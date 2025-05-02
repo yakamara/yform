@@ -1,5 +1,7 @@
 <?php
 
+use Redaxo\YForm\Cronjob\HistoryDelete;
+
 /**
  * @var rex_addon $this
  * @psalm-scope-this rex_addon
@@ -176,3 +178,5 @@ rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep)
         $dataset->makeSnapshot($action);
     }
 });
+
+rex_cronjob_manager::registerType(HistoryDelete::class);
