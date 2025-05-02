@@ -144,7 +144,7 @@ class rex_yform_rest
             $url .= @$_SERVER['HTTP_HOST'];
         }
 
-        $query = http_build_query($params);
+        $query = http_build_query($params, '', '&');
         $query = ('' != $query) ? '?' . $query : $query;
 
         $path = implode('/', array_merge([$route->getPath()], $additionalPaths));

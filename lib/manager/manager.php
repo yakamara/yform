@@ -84,7 +84,7 @@ class rex_yform_manager
         $rex_yform_list['list'] = rex_request('list', 'string');
         $rex_yform_list['sort'] = rex_request('sort', 'string');
         $rex_yform_list['sorttype'] = rex_request('sorttype', 'string');
-        $rex_yform_list['start'] = rex_request('start', 'int', null) ?? rex_request($rex_yform_list['list'] . '_start', 'int', null) ?? 0;
+        $rex_yform_list['start'] = rex_request($rex_yform_list['list'] . '_start', 'int', null) ?? rex_request('start', 'int', null) ?? 0;
 
         $_csrf_key = $this->table->getCSRFKey();
         $rex_yform_list += rex_csrf_token::factory($_csrf_key)->getUrlParams();
@@ -202,7 +202,7 @@ class rex_yform_manager
                     ];
 
                     ob_start();
-                    include rex_path::plugin('yform', 'manager', 'pages/data_import.php');
+                    include rex_path::addon('yform', 'pages/manager.data_import.php');
                     $dataImport = ob_get_contents();
                     ob_end_clean();
 
@@ -218,7 +218,7 @@ class rex_yform_manager
                     ];
 
                     ob_start();
-                    include rex_path::plugin('yform', 'manager', 'pages/data_history.php');
+                    include rex_path::addon('yform', 'pages/manager.data_history.php');
                     $dataHistory = ob_get_contents();
                     ob_end_clean();
 
@@ -259,7 +259,7 @@ class rex_yform_manager
             case 'dataset_export':
                 if (!$popup && $this->hasDataPageFunction('export')) {
                     ob_end_clean();
-                    include rex_path::plugin('yform', 'manager', 'pages/data_export.php');
+                    include rex_path::addon('yform', 'pages/manager.data_export.php');
                     exit;
                 }
                 break;
