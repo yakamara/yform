@@ -18,6 +18,7 @@ class rex_yform_rest_route
     private $preFunc;
     private $postFunc;
     private $getItemFunc;
+    private $getAttributeFunc;
 
     public static $requestMethods = ['get', 'post', 'delete'];
 
@@ -36,6 +37,7 @@ class rex_yform_rest_route
         $this->preFunc = $config['preFunc'] ?? null;
         $this->postFunc = $config['postFunc'] ?? null;
         $this->getItemFunc = $config['getItemFunc'] ?? null;
+        $this->getAttributeFunc = $config['getAttributeFunc'] ?? null;
         $this->instance = $this->table->createDataset();
         $this->path = ('/' == mb_substr($this->config['path'], -1)) ? mb_substr($this->config['path'], 0, -1) : $this->config['path'];
     }
@@ -207,7 +209,6 @@ class rex_yform_rest_route
                         }
 
                         if ('be_manager_relation' == $fields[$attribute]->getTypeName()) {
-                            echo $attribute;
                             $instances = $instance->getRelatedCollection($attribute);
                             if (count($instances) > 0) {
                                 $instance = $instances->first();
@@ -221,7 +222,6 @@ class rex_yform_rest_route
                 $data = [];
                 if ($instances) {
                     foreach ($instances as $instance) {
-
                         $instance_data = $this->getInstanceData(
                             $instance,
                             array_merge($paths, [$instance->getId()]),
@@ -283,6 +283,9 @@ class rex_yform_rest_route
                 } elseif ($instance) {
                     if ($attribute) {
                         $data = $instance->getValue($attribute);
+                        if (is_callable($this->getAttributeFunc)) {
+                            $data = call_user_func($this->getAttributeFunc, $this, $instance, $attribute, $data);
+                        }
                     } else {
                         $data = $this->getInstanceData(
                             $instance,
@@ -436,7 +439,7 @@ class rex_yform_rest_route
 
     /**
      * @throws rex_api_exception
-     * @return rex_yform_manager_field[]
+     * @return array<rex_yform_manager_field>
      */
     public function getFields(string $type = 'get', $instance = null): array
     {
