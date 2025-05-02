@@ -17,7 +17,7 @@ class rex_yform_rest_auth_token
     public static function checkToken(rex_yform_rest_route $route): bool
     {
         $Request = rex::getRequest();
-        $bearerToken = str_ireplace('Bearer ', '', $Request->headers->get('Authorization'));
+        $bearerToken = str_ireplace('Bearer ', '', $Request->headers->get('Authorization') ?? $Request->headers->get('token') ?? '');
 
         $TokenAuths = rex_sql::factory()->getArray('select * from ' . rex::getTable('yform_rest_token') . ' where status=1 and token=? and FIND_IN_SET(?, paths)', [$bearerToken, $route->getPath()]);
 
