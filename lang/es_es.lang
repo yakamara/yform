@@ -231,6 +231,10 @@ yform_values_choice_placeholder = Marcador de posición
 yform_values_choice_placeholder_notice = Esta opción determina si una opción especial "en blanco" (por ejemplo, "elegir una opción") aparece en la parte superior de un widget Seleccionar. Esta opción se aplica solo si la opción múltiple está configurada en falso.
 yform_values_choice_preferred_choices = Opciones preferidas
 yform_values_choice_preferred_choices_notice = Esta opción mueve ciertas opciones a la parte superior de la lista, colocando un separador óptico entre ellas y el resto de las opciones.
+yform_values_choice_search_type_label = Tipo de búsqueda
+yform_values_choice_search_type_notice = se refiere a los filtros de búsqueda en las tablas del backend
+yform_values_choice_search_type_AND = Búsqueda AND (todos los valores seleccionados deben estar presentes)
+yform_values_choice_search_type_OR = Búsqueda OR (al menos uno de los valores seleccionados debe estar presente)
 
 yform_values_status_output_values = Ingrese valores de salida
 yform_values_status_output_values_notice = 2 valores separados por comas. p.ej. fuera de línea, en línea o ▢, ▣

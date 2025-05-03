@@ -141,6 +141,16 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                 'group_attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_group_attributes'), 'notice' => rex_i18n::msg('yform_values_choice_group_attributes_notice')],
                 'attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_attributes'), 'notice' => rex_i18n::msg('yform_values_choice_attributes_notice')],
                 'choice_attributes' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_attributes'), 'notice' => rex_i18n::msg('yform_values_choice_choice_attributes_notice')],
+                'search_type' => [
+                    'type' => 'choice',
+                    'label' => rex_i18n::msg('yform_values_choice_search_type_label'),
+                    'notice' => rex_i18n::msg('yform_values_choice_search_type_notice'),
+                    'choices' => [
+                        'AND' => rex_i18n::msg('yform_values_choice_search_type_AND'),
+                        'OR' => rex_i18n::msg('yform_values_choice_search_type_OR'),
+                    ],
+                    'default' => 'AND',
+                ],
                 'notice' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_defaults_notice')],
                 'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
                 'choice_label' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_choice_choice_label'), 'notice' => rex_i18n::msg('yform_values_choice_choice_label_notice')],
@@ -260,6 +270,8 @@ class rex_yform_value_choice extends rex_yform_value_abstract
         $self = new self();
         $values = $self->getArrayFromString($value);
         $multiple = 1 == $params['field']->getElement('multiple');
+        $searchType = $params['field']->getElement('search_type');
+        $searchOr = [];
 
         foreach ($values as $value) {
             switch ($value) {
@@ -270,13 +282,20 @@ class rex_yform_value_choice extends rex_yform_value_abstract
                     $query->where($field, '', '<>');
                     break;
                 default:
-                    if ($multiple) {
+                    if ($multiple && 'OR' !== $searchType) {
                         $query->whereListContains($field, $value);
+                    } elseif ('OR' === $searchType) {
+                        $searchOr[] = sprintf('FIND_IN_SET(%s, %s)', $query->addParam('where', $value), $query->quoteIdentifier($field));
                     } else {
                         $query->where($field, $value);
                     }
                     break;
             }
+        }
+
+        if ('OR' === $searchType && count($searchOr)) {
+            // build string
+            $query->whereRaw('(' . implode(' ' . $searchType . ' ', $searchOr) . ')');
         }
 
         return $query;
