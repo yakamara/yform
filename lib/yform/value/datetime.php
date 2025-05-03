@@ -15,6 +15,7 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
     public function preValidateAction(): void
     {
         $value = $this->getValue();
+
         if ('' == $this->getValue() && $this->params['main_id'] < 1) {
             if (1 == $this->getElement('current_date')) {
                 $value = date(rex_sql::FORMAT_DATETIME);
@@ -36,7 +37,11 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $second = (int) ($value['second'] ?? 0);
         } else {
             $value = (string) $value;
-            $value = explode(' ', $value);
+            $localTimeTest = explode(' ', $value);
+            if (2 != count($localTimeTest)) {
+                $localTimeTest = explode('T', $value);
+            }
+            $value = $localTimeTest;
             if (2 == count($value)) {
                 $date = explode('-', (string) $value[0]);
                 $year = (int) ($date[0] ?? 0);
@@ -64,7 +69,11 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             $second = (int) ($value['second'] ?? 0);
         } else {
             $value = (string) $value;
-            $value = explode(' ', $value);
+            $localTimeTest = explode(' ', $value);
+            if (2 != count($localTimeTest)) {
+                $localTimeTest = explode('T', $value);
+            }
+            $value = $localTimeTest;
             if (2 == count($value)) {
                 $date = explode('-', (string) $value[0]);
                 $year = (int) ($date[0] ?? 0);
@@ -182,7 +191,8 @@ class rex_yform_value_datetime extends rex_yform_value_abstract
             'name' => $params['field']->getName(),
             'label' => $params['field']->getLabel(),
             'notice' => rex_i18n::msg('yform_values_date_search_notice', $format),
-            'attributes' => '{"data-yform-tools-datetimerangepicker":"' . $format . '"}', ]);
+            'attributes' => '{"data-yform-tools-datetimerangepicker":"' . $format . '"}',
+        ]);
     }
 
     public static function getSearchFilter($params)
