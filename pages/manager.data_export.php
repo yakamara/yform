@@ -27,7 +27,7 @@ $exportDataset = [];
 foreach ($query->find() as $data) {
     $exportData = [];
     foreach ($fields as $fieldName => $fV) {
-        $exportData[$fieldName] = '"' . str_replace(['"', "\n", "\r"], ['""', '', ''], @$data->getValue($fieldName)) . '"';
+        $exportData[$fieldName] = '"' . str_replace(['"', "\n", "\r"], ['""', '', ''], @$data->getValue($fieldName) ?? '') . '"';
     }
     $exportDataset[] = implode(';', $exportData);
 }
