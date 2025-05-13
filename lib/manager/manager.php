@@ -1,5 +1,7 @@
 <?php
 
+use Redaxo\YForm\Manager\Export;
+
 /**
  * yform.
  *
@@ -263,7 +265,7 @@ class rex_yform_manager
                         ->query()
                         ->alias('t0');
                     $ExportQuery = $this->getDataListQuery($InitQuery, array_merge($rex_yform_filter, $rex_yform_set), $searchObject);
-                    $Export = new \Redaxo\YForm\Manager\Export($ExportQuery);
+                    $Export = new Export($ExportQuery);
                     $Export->sendExport();
                 }
                 break;
@@ -540,7 +542,7 @@ class rex_yform_manager
                     $dataset_links[] = $item;
                 }
 
-                if (1 == $this->table->isExportable() && $this->hasDataPageFunction('export')) {
+                if (rex::getUser()->isAdmin() || (1 == $this->table->isExportable() && $this->hasDataPageFunction('export'))) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_export');
                     $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'dataset_export'], $rex_link_vars));
@@ -562,7 +564,7 @@ class rex_yform_manager
             $table_links = [];
 
             if ($this->table->isGranted('EDIT', rex::getUser())) {
-                if ($this->table->isImportable() && $this->hasDataPageFunction('import')) {
+                if (rex::getUser()->isAdmin() || ($this->table->isImportable() && $this->hasDataPageFunction('import'))) {
                     $item = [];
                     $item['label'] = rex_i18n::msg('yform_import');
                     $item['url'] = 'index.php?' . http_build_query(array_merge(['func' => 'import'], $rex_link_vars));
