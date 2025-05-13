@@ -258,9 +258,13 @@ class rex_yform_manager
                 break;
             case 'dataset_export':
                 if (!$popup && $this->hasDataPageFunction('export')) {
-                    ob_end_clean();
-                    include rex_path::addon('yform', 'pages/manager.data_export.php');
-                    exit;
+                    $InitQuery = $this
+                        ->table
+                        ->query()
+                        ->alias('t0');
+                    $ExportQuery = $this->getDataListQuery($InitQuery, array_merge($rex_yform_filter, $rex_yform_set), $searchObject);
+                    $Export = new \Redaxo\YForm\Manager\Export($ExportQuery);
+                    $Export->sendExport();
                 }
                 break;
             case 'add':
