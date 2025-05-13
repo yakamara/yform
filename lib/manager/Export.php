@@ -118,8 +118,8 @@ class Export
                 $Line = [];
                 foreach ($fields as $fieldName => $fV) {
                     $Line[$fieldName] = '"' . str_replace(['"', "\n", "\r"],
-                            ['""', '', ''],
-                            @$data->getValue($fieldName) ?? '') . '"';
+                        ['""', '', ''],
+                        @$data->getValue($fieldName) ?? '') . '"';
                 }
                 echo "\n" . implode($this->getDelimiter(), $Line);
             }
