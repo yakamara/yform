@@ -1339,7 +1339,7 @@ class rex_yform_manager
                 $panel_options .= '<small class="rex-panel-option-title">' . rex_i18n::msg('yform_table') . '</small> ' . $fragment->parse('core/buttons/button_group.php');
 
                 $sql = 'select id, prio, type_id, type_name, name, label from ' . rex_yform_manager_field::table() . ' where table_name="' . $table->getTableName() . '"';
-                $list = rex_list::factory($sql, rowsPerPage: 200, defaultSort: [
+                $list = rex_list::factory($sql, rowsPerPage: 500, defaultSort: [
                     'prio' => 'asc',
                 ]);
 
