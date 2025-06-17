@@ -685,4 +685,4 @@ yform_cronjob_history_delete_interval_monthly = Löschen wenn älter als ein Mon
 yform_cronjob_history_delete_interval_three_months = Löschen wenn älter als 3 Monate
 yform_cronjob_history_delete_interval_half_yearly = Löschen wenn älter als 6 Monate
 yform_cronjob_history_delete_interval_yearly = Löschen wenn älter als ein Jahr
-yform_cronjob_history_delete_message = {0} Snapshots have been deleted
+yform_cronjob_history_delete_message = {0} YForm-History-Einträge have been deleted

@@ -51,27 +51,25 @@ class HistoryDelete extends rex_cronjob
             $Datasets = rex_sql::factory()
                 ->getArray('SELECT id FROM ' . rex::getTable('yform_history') . ' WHERE table_name = ? and timestamp < ?', [$table->getTableName(), $DateTime->format('Y-m-d H:i:s')]);
 
-            $snapshot_count = 0;
+            $item_count = 0;
             foreach ($Datasets as $Dataset) {
                 $history_id = $Dataset['id'];
-                ++$snapshot_count;
+                ++$item_count;
 
                 $sql = rex_sql::factory();
                 $sql
-                    ->setDebug(true)
                     ->setTable(rex::getTable('yform_history_field'))
                     ->setWhere('history_id = ?', [$history_id])
                     ->delete();
 
                 $sql = rex_sql::factory();
                 $sql
-                    ->setDebug(true)
                     ->setTable(rex::getTable('yform_history'))
                     ->setWhere('id = ?', [$history_id])
                     ->delete();
             }
 
-            $this->setMessage(rex_i18n::msg('yform_cronjob_history_delete_message', $snapshot_count));
+            $this->setMessage(rex_i18n::msg('yform_cronjob_history_delete_message', $item_count));
             return true;
         } catch (Exception $e) {
             $this->setMessage($e->getMessage());
