@@ -49,7 +49,7 @@ class HistoryDelete extends rex_cronjob
             $DateTime->modify('-' . $interval);
 
             $Datasets = rex_sql::factory()
-                ->getArray('SELECT id FROM ' . rex::getTable('yform_history') . ' WHERE table_name = ? and timestamp < ?', [$table->getTableName(), $DateTime->format('Y-m-d H:i:s')]);
+                ->getArray('SELECT id FROM ' . rex::getTable('yform_history') . ' WHERE table_name = ? and timestamp < ? LIMIT 10000', [$table->getTableName(), $DateTime->format('Y-m-d H:i:s')]);
 
             $item_count = 0;
             foreach ($Datasets as $Dataset) {
