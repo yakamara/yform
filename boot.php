@@ -11,20 +11,27 @@ rex_yform::addTemplatePath(rex_path::addon('yform', 'ytemplates'));
 
 if (rex::isBackend() && rex::getUser()) {
     /* @var $this rex_addon */
-    rex_view::addCssFile($this->getAssetsUrl('yform.css'));
-    rex_view::addCssFile($this->getAssetsUrl('yform-formbuilder.css'));
+    rex_view::addCssFile($this->getAssetsUrl('yform-styles.css'));
+
+    rex_view::addJsFile($this->getAssetsUrl('manager.js'));
+    rex_view::addJsFile($this->getAssetsUrl('relations.js'));
+    rex_view::addJsFile($this->getAssetsUrl('widget.js'));
+
+    // Tools
+    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/moment.min.js'));
+    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/daterangepicker.js'));
+    rex_view::addCssFile($this->getAssetsUrl('daterangepicker/daterangepicker.css'));
+    rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/jquery.inputmask.min.js'));
+    rex_view::addJsFile($this->getAssetsUrl('tools.js'));
 
     rex_extension::register('PACKAGES_INCLUDED', function () {
         if ($this->getProperty('compile')) {
             $compiler = new rex_scss_compiler();
             $compiler->setRootDir($this->getPath('scss/'));
-            $compiler->setScssFile($this->getPath('scss/yform.scss'));
-            $compiler->setCssFile($this->getPath('assets/yform.css'));
+            $compiler->setScssFile($this->getPath('scss/styles.scss'));
+            $compiler->setCssFile($this->getPath('assets/yform-styles.css'));
             $compiler->compile();
-            $compiler->setScssFile($this->getPath('scss/yform-formbuilder.scss'));
-            $compiler->setCssFile($this->getPath('assets/yform-formbuilder.css'));
-            $compiler->compile();
-            rex_dir::copy($this->getPath('assets'), $this->getAssetsPath()); // copy whole assets directory
+            rex_dir::copy($this->getPath('assets'), $this->getAssetsPath());
         }
     });
 
@@ -70,38 +77,12 @@ rex_extension::register('PACKAGES_INCLUDED', static function () {
     }
 });
 
-// Tools
-
-if (rex::isBackend() && rex::getUser()) {
-    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/moment.min.js'));
-    rex_view::addJsFile($this->getAssetsUrl('daterangepicker/daterangepicker.js'));
-    rex_view::addCssFile($this->getAssetsUrl('daterangepicker/daterangepicker.css'));
-    rex_view::addJsFile($this->getAssetsUrl('inputmask/dist/jquery.inputmask.min.js'));
-    rex_view::addJsFile($this->getAssetsUrl('tools.js'));
-}
-
 // Manager
 
 rex_complex_perm::register('yform_manager_table_edit', 'rex_yform_manager_table_perm_edit');
 rex_complex_perm::register('yform_manager_table_view', 'rex_yform_manager_table_perm_view');
 
 if (rex::isBackend() && rex::getUser()) {
-    rex_extension::register('PACKAGES_INCLUDED', function () {
-        if ($this->getProperty('compile')) {
-            $compiler = new rex_scss_compiler();
-            $compiler->setRootDir($this->getPath('scss/'));
-            $compiler->setScssFile($this->getPath('scss/manager.scss'));
-            $compiler->setCssFile($this->getPath('assets/manager.css'));
-            $compiler->compile();
-            rex_dir::copy($this->getPath('assets'), $this->getAssetsPath()); // copy whole assets directory
-        }
-    });
-
-    rex_view::addJsFile($this->getAssetsUrl('manager.js'));
-    rex_view::addJsFile($this->getAssetsUrl('relations.js'));
-    rex_view::addCssFile($this->getAssetsUrl('manager.css'));
-    rex_view::addJsFile($this->getAssetsUrl('widget.js'));
-
     if (!rex::getUser()->isAdmin()) {
         $page = $this->getProperty('page');
         $page['hidden'] = true;
