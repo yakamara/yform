@@ -8,6 +8,7 @@ $(document).on('rex:ready',function() {
         let field_name = this.dataset.field_name;
         let link = this.dataset.link;
         let widget_type = this.dataset.widget_type;
+        let csrf_token = this.dataset.csrf_token;
 
         let id = Date.now() + counter;
         this.dataset.id = id;
@@ -37,17 +38,49 @@ $(document).on('rex:ready',function() {
             // open / add
             if (this.classList.contains('yform-dataset-widget-open')) {
                 this.onclick = function () {
-                    let newWindowLink = link + '&rex_yform_manager_opener[id]='+id+'&rex_yform_manager_opener[field]='+field_name+'&rex_yform_manager_opener[multiple]='+multiple;
+                    let newWindowLink = link + '&rex_yform_manager_opener[id]=' + id + '&rex_yform_manager_opener[field]=' + field_name + '&rex_yform_manager_opener[multiple]=' + multiple;
                     return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
                 };
+            }
+
+            if (this.classList.contains('yform-dataset-widget-add')) {
+                this.onclick = function () {
+                    let newWindowLink = link + '&_csrf_token=' + csrf_token + '&func=add&rex_yform_manager_opener[id]=' + id + '&rex_yform_manager_opener[field]=' + field_name + '&rex_yform_manager_opener[multiple]=' + multiple;
+                    return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
+                }
+            }
+
+            if (this.classList.contains('yform-dataset-widget-view')) {
+                this.onclick = function () {
+
+                    let viewObject = document.querySelector('#yform-dataset-view-' + id);
+                    let realObject = document.querySelector('#yform-dataset-real-' + id);
+
+                    let selected_id = '';
+                    if (multiple === 1) {
+                        for (let position = 0; position < viewObject.options.length; position++) {
+                            if (viewObject.options[position].selected) {
+                                selected_id = viewObject.options[position].value;
+                                break;
+                            }
+                        }
+                    } else {
+                        selected_id = realObject.value;
+                    }
+
+                    if (selected_id !== '') {
+                        let newWindowLink = link + '&_csrf_token=' + csrf_token + '&func=edit&data_id=' + selected_id + '&rex_yform_manager_opener[id]=' + id + '&rex_yform_manager_opener[field]=' + field_name + '&rex_yform_manager_opener[multiple]=' + multiple;
+                        return newWindow( id, newWindowLink, 1200,800,',status=yes,resizable=yes');
+                    }
+                }
             }
 
             // delete
             if (this.classList.contains('yform-dataset-widget-delete')) {
                 this.onclick = function () {
 
-                    let viewObject = document.querySelector('#yform-dataset-view-'+id);
-                    let realObject = document.querySelector('#yform-dataset-real-'+id);
+                    let viewObject = document.querySelector('#yform-dataset-view-' + id);
+                    let realObject = document.querySelector('#yform-dataset-real-' + id);
 
                     if (multiple === 1) {
                         for (let position = 0; position < viewObject.options.length; position++) {
@@ -87,8 +120,8 @@ $(document).on('rex:ready',function() {
             if (this.classList.contains('yform-dataset-widget-move')) {
                 this.onclick = function () {
 
-                    let viewObject = document.querySelector('#yform-dataset-view-'+id);
-                    let realObject = document.querySelector('#yform-dataset-real-'+id);
+                    let viewObject = document.querySelector('#yform-dataset-view-' + id);
+                    let realObject = document.querySelector('#yform-dataset-real-' + id);
 
                     for (let position = 0; position < viewObject.options.length; position++) {
 
@@ -185,13 +218,13 @@ $(document).on('rex:ready',function() {
                     }
 
                     if(multiple === "1") {
-                        let viewObject = opener.document.getElementById('yform-dataset-view-'+opener_id);
+                        let viewObject = opener.document.getElementById('yform-dataset-view-' + opener_id);
                         let option = opener.document.createElement("OPTION");
                         option.text = value;
                         option.value = id;
                         viewObject.options.add(option, viewObject.options.length);
 
-                        let realObject = opener.document.getElementById('yform-dataset-real-'+opener_id);
+                        let realObject = opener.document.getElementById('yform-dataset-real-' + opener_id);
                         realObject.value = "";
 
                         for (let i=0; i < viewObject.options.length; i++) {
@@ -200,8 +233,8 @@ $(document).on('rex:ready',function() {
                         }
 
                     } else {
-                        opener.document.getElementById('yform-dataset-view-'+opener_id).value = value;
-                        opener.document.getElementById('yform-dataset-real-'+opener_id).value = id;
+                        opener.document.getElementById('yform-dataset-view-' + opener_id).value = value;
+                        opener.document.getElementById('yform-dataset-real-' + opener_id).value = id;
                         self.close();
                     }
 

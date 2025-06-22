@@ -112,9 +112,9 @@ class rex_var_yform_table_data extends rex_var
         }
 
         $viewButton = '<a class="btn btn-popup yform-dataset-widget-view" title="' . rex_i18n::msg('yform_relation_view_entry') . '"><i class="rex-icon rex-icon-view"></i></a>';
-        if ('' === $value) {
-            $viewButton = '<span class="btn btn-popup" title="' . rex_i18n::msg('yform_relation_no_entry') . '"><i class="rex-icon rex-icon-hide"></i></span>';
-        }
+        // if ('' === $value) {
+        //     $viewButton = '<span class="btn btn-popup" title="' . rex_i18n::msg('yform_relation_no_entry') . '"><i class="rex-icon rex-icon-hide"></i></span>';
+        // }
 
         $e = [];
         $e['field'] = $select->get() . '
@@ -129,7 +129,7 @@ class rex_var_yform_table_data extends rex_var
                 <a class="btn btn-popup yform-dataset-widget-open" title="' . rex_i18n::msg('yform_relation_choose_entry') . '"><i class="rex-icon rex-icon-view-list"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-add" title="' . rex_i18n::msg('yform_relation_add_entry') . '"><i class="rex-icon rex-icon-add"></i></a>
                 <a class="btn btn-popup yform-dataset-widget-delete" title="' . rex_i18n::msg('yform_relation_delete_entry') . '"><i class="rex-icon rex-icon-remove"></i></a>
-            ' . $viewButton;
+                ' . $viewButton;
         $e['before'] = '<div class="yform-dataset-widget"
             data-widget_type="multiple"
             data-id="' . $id . '"
@@ -152,9 +152,9 @@ class rex_var_yform_table_data extends rex_var
         }
 
         $viewButton = '<a class="btn btn-popup yform-dataset-widget-view" title="' . rex_i18n::msg('yform_relation_view_entry') . '"><i class="rex-icon rex-icon-view"></i></a>';
-        if ('' === $value) {
-            $viewButton = '<span class="btn btn-popup" title="' . rex_i18n::msg('yform_relation_no_entry') . '"><i class="rex-icon rex-icon-hide"></i></span>';
-        }
+        // if ('' === $value) {
+        //     $viewButton = '<span class="btn btn-popup" title="' . rex_i18n::msg('yform_relation_no_entry') . '"><i class="rex-icon rex-icon-hide"></i></span>';
+        // }
 
         $e['field'] = '
             <input class="form-control yform-dataset-view" type="text" value="' . $valueName . '" readonly="readonly" />
