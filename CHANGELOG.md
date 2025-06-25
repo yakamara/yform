@@ -1,6 +1,55 @@
 Changelog
 =========
 
+Version 5.0.0-beta1 - 25.06.2025
+--------------------------
+
+### Neu und Korrekturen
+
+* PlugIn frei. PlugIns sind nun im Hauptaddon integriert.
+* Anzahl der Tabellen auf der ersten Seite in YForm auf 200 erhöht (Peter Schulze)
+* i18n-Translate für die Table-Description (Christoph Boecker)
+* fixing history panel actions (links for "view" and "restore") (Peter Schulze)
+* E-Mail Template nun nur noch für Admins (Peter Schulze)
+* ConfigFormatierung angepasst (Tobias Krais)
+* JS (Widgets, Inline Relation) verbessern. Nonce-fähig gemacht
+* Diverse Texte angepasst
+* Codestyle, Fehlermeldungen besser abgewickelt
+* Widgets um Add und View Button ergänzt (Thomas Blum)
+* Sortierung der Historyliste - neueste zuerst
+* REST: getItemFunc erweitert um $instance data
+* REST: AttributeFunc ergänzt
+* REST: Bearer Auth ergänzt
+* Docs angepasst (Alexander Walther, Thomas Skerbis)
+* Tabellen und Tabellenfelderlisten auf 500 Einträge pro Seite erhöht
+* Export Tableset: Felder werden nun sortiert exportiert.
+* Feld: Signature. Nun Vanilla JS, damit auch im FE immer verwendbar
+* Custom Table Icon implemntiert (Thomas Skerbis)
+* `be_link` Datentyp `int(10) unsigned` ermöglicht (Alexander Walther)
+* Datensatz klonen: `Calling getId() on new, non-existing datasets is not allowed, check existence before by $dataset->exists()` behoben (Alexander Walther)
+* Validierungs-Ergebnis im Suchformular beachten (Christoph Boecker)
+* Cronjob: History Delete kann nun einträge nach Ablauf von x Monaten löschen
+* Export Daten nun als eigene Klasse
+* Import Daten nun als eigene Klasse
+* Tabellen: Admin kann nun immer Daten im- und exportiern
+* Tools: datetimerange kann nun auch mit dem REDAXO Darkmode umgehen
+
+Version 4.2.1 - 19.03.2024
+--------------------------
+
+### Korrekturen
+
+* Callback Aktion war nicht BC
+* XSS für Admins war möglich. Templatename wurde nicht genug escaped
+* Anpassungen JS Widget - rex:YForm_selectData
+* Permissions für E-Mail Templates nun auf Admin gelegt
+* rex_list Anpassungen, die durch REDAXO v5.16. gekommen sind, eingebaut.
+* be_table Field funktionierte nicht mehr richtig
+* Lizenzen in den PlugIns eingetragen.
+
+Dank geht an Thomas Blum und Yves Torres
+
+
 Version 4.2.0 - 22.02.2024
 --------------------------
 
