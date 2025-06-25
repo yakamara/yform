@@ -552,7 +552,7 @@ yform_manager_search = Suche
 yform_data_view = ansehen
 
 
-yform_data_select = übernehmen
+yform_data_select = auswählen
 
 # field.inc.php
 yform_tablenotexists = Diese Tabelle existiert nicht!
@@ -597,10 +597,7 @@ yform_manager_import_if_no_column = Wenn Spalte in der Datenbank nicht vorhanden
 yform_manager_import_if_no_column_ignore = dann Spalte ignorieren.
 yform_manager_import_if_no_column_addtext = dann Spalte als TEXT in der Datenbank anlegen (Zur Verwaltung müssen später diese Felder noch bestimmt werden).
 yform_manager_import_if_no_column_break = dann Import abbrechen.
-yform_manager_import_divider = Trennzeichen
-yform_manager_import_divider_semicolon = Semikolon
-yform_manager_import_divider_comma = Komma
-yform_manager_import_divider_tab = Tabulator
+yform_manager_import_delimiter = Trennzeichen
 yform_manager_import_unique_field = Wenn dieses Feld identisch ist, dann wird der Datensatz ersetzt
 yform_manager_import_start = Hinzufügen
 yform_manager_import_file = Datei
@@ -686,3 +683,7 @@ yform_cronjob_history_delete_interval_three_months = Löschen wenn älter als 3 
 yform_cronjob_history_delete_interval_half_yearly = Löschen wenn älter als 6 Monate
 yform_cronjob_history_delete_interval_yearly = Löschen wenn älter als ein Jahr
 yform_cronjob_history_delete_message = {0} YForm-History-Einträge have been deleted
+
+yform_manager_import_missing_columns_ignore = dann Spalte ignorieren
+yform_manager_import_missing_columns_add = dann Spalte als TEXT in der Datenbank anlegen (Zur Verwaltung müssen später diese Felder noch bestimmt werden).
+yform_manager_import_missing_columns_error = dann Import abbrechen.

@@ -1,6 +1,6 @@
 <?php
 
-use Redaxo\YForm\Manager\Export;
+use Redaxo\YForm\Manager\Exporter;
 
 /**
  * yform.
@@ -265,7 +265,7 @@ class rex_yform_manager
                         ->query()
                         ->alias('t0');
                     $ExportQuery = $this->getDataListQuery($InitQuery, array_merge($rex_yform_filter, $rex_yform_set), $searchObject);
-                    $Export = new Export($ExportQuery);
+                    $Export = new Exporter($ExportQuery);
                     $Export->sendExport();
                 }
                 break;
