@@ -32,8 +32,8 @@ if ($yform->objparams['actions_executed']) {
         $fileContent = rex_yform_manager_table_api::exportTablesets($table_names);
 
         $tablenames = implode('_', $table_names);
-        if (mb_strlen($tablenames) > 100) {
-            $tables = mb_substr($tablenames, 0, 100) . '_etc_';
+        if (mb_strlen($tablenames) > 80) {
+            $tablenames = mb_substr($tablenames, 0, 80) . '_etc_' . md5($tablenames) . '_';
         }
 
         $fileName = 'yform_manager_tableset_export_tables_' . $tablenames . '_' . date('YmdHis') . '.json';
