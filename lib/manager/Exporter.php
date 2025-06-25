@@ -10,7 +10,7 @@ use rex_yform_manager_query;
 use function count;
 use function in_array;
 
-class Export
+class Exporter
 {
     private ?rex_yform_manager_query $query = null;
     private $limit_interval = 1000;
