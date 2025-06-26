@@ -160,4 +160,6 @@ rex_extension::register('YFORM_SAVED', static function (rex_extension_point $ep)
     }
 });
 
-rex_cronjob_manager::registerType(HistoryDelete::class);
+if (rex_addon::get('cronjob')->isAvailable()) {
+    rex_cronjob_manager::registerType(HistoryDelete::class);
+}
