@@ -11,19 +11,23 @@ Version 5.0.0-beta1 - 25.06.2025
 * i18n-Translate für die Table-Description (Christoph Boecker)
 * fixing history panel actions (links for "view" and "restore") (Peter Schulze)
 * E-Mail Template nun nur noch für Admins (Peter Schulze)
-* ConfigFormatierung angepasst (Tobias Krais)
+* Config Formatierung angepasst (Tobias Krais)
 * JS (Widgets, Inline Relation) verbessern. Nonce-fähig gemacht
 * Diverse Texte angepasst
 * Codestyle, Fehlermeldungen besser abgewickelt
+* Fix dataset method modelToTable() (Dominik Grothaus)
 * Widgets um Add und View Button ergänzt (Thomas Blum)
 * Sortierung der Historyliste - neueste zuerst
+* Mehrseitige Listen - beim erneuten Seitenaufbau kam man immer auf Seite 1 (Christoph Boecker, Norbert Micheel)
+* Suchen mit komma-getrennter Liste in integer und number Feldern (Peter Schulze)
 * REST: getItemFunc erweitert um $instance data
 * REST: AttributeFunc ergänzt
 * REST: Bearer Auth ergänzt
 * Docs angepasst (Alexander Walther, Thomas Skerbis)
 * Tabellen und Tabellenfelderlisten auf 500 Einträge pro Seite erhöht
+* Table Manager: Feldverwaltung - 100 statt 30 Einträge zeigen (Alexander Walther)
 * Export Tableset: Felder werden nun sortiert exportiert.
-* Feld: Signature. Nun Vanilla JS, damit auch im FE immer verwendbar
+* Feld: Signature. Nun Vanilla JS, damit auch im FE immer verwendbar (Norbert Micheel)
 * Custom Table Icon implemntiert (Thomas Skerbis)
 * `be_link` Datentyp `int(10) unsigned` ermöglicht (Alexander Walther)
 * Datensatz klonen: `Calling getId() on new, non-existing datasets is not allowed, check existence before by $dataset->exists()` behoben (Alexander Walther)
