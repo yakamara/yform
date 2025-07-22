@@ -360,6 +360,13 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
         return $this;
     }
 
+    public function whereListNotContains(string $column, $value): self
+    {
+        $this->where[] = 'NOT ' . $this->buildListContains(self::PARAM_WHERE, $column, $value);
+
+        return $this;
+    }
+
     /**
      * @param array<string, int|string> $params
      * @return $this
