@@ -361,6 +361,20 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     }
 
     /**
+     * Where the comma separated list column contains NOT the given value or NONE of the given values.
+     *
+     * @param string           $column Column with comma separated list
+     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @return $this
+     */
+    public function whereNotListContains(string $column, $value): self
+    {
+        $this->where[] = 'NOT ' . $this->buildListContains(self::PARAM_WHERE, $column, $value);
+
+        return $this;
+    }
+
+    /**
      * @param array<string, int|string> $params
      * @return $this
      */
@@ -503,6 +517,20 @@ class rex_yform_manager_query implements IteratorAggregate, Countable
     public function havingListContains(string $column, $value): self
     {
         $this->having[] = $this->buildListContains(self::PARAM_HAVING, $column, $value);
+
+        return $this;
+    }
+
+    /**
+     * Where the comma separated list column contains NOT the given value or NONE of the given values.
+     *
+     * @param string           $column Column with comma separated list
+     * @param string|int|int[] $value  Single value (string or int) or array of values (ints only)
+     * @return $this
+     */
+    public function havingNotListContains(string $column, $value): self
+    {
+        $this->having[] = 'NOT ' . $this->buildListContains(self::PARAM_HAVING, $column, $value);
 
         return $this;
     }
