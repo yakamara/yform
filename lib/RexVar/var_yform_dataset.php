@@ -60,8 +60,9 @@ class rex_var_yform_table_data extends rex_var
                     }
                 }
                 $args['options'] = $options;
+                $_csrf_key = rex_yform_manager_table::get($table->getTableName())->getCSRFKey();
+                $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
                 $value = implode(',', $values);
-
                 $value = self::getMultipleWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
             } else {
                 $valueName = '';
@@ -70,6 +71,8 @@ class rex_var_yform_table_data extends rex_var
                     $valueName = rex_formatter::truncate($listValues[$value], ['length' => 50]);
                 }
                 $args['valueName'] = $valueName;
+                $_csrf_key = rex_yform_manager_table::get($table->getTableName())->getCSRFKey();
+                $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
                 $value = self::getSingleWidget($id, 'REX_INPUT_VALUE[' . $id . ']', $value, $args);
             }
         }
