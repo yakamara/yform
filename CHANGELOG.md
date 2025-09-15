@@ -1,7 +1,16 @@
 Changelog
 =========
 
-Version 5.0.0-beta1 - 25.06.2025
+Version 5.0.1 - 25.06.2025
+--------------------------
+
+### Korrekturen
+
+* PlugIns Ordner wurde nicht komplett gelöscht
+
+
+
+Version 5.0.0 - 25.06.2025
 --------------------------
 
 ### Neu und Korrekturen
