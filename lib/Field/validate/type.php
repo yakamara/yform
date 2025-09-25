@@ -110,22 +110,7 @@ class rex_yform_validate_type extends rex_yform_validate_abstract
                         $newString .= $movedCharArray[$k];
                     }
 
-                    if (function_exists('bcmod')) {
-                        $w = !(1 == bcmod($newString, '97'));
-                    } else {
-                        $x = $newString;
-                        $y = '97';
-                        $take = 5;
-                        $mod = '';
-
-                        do {
-                            $a = (int) $mod . mb_substr($x, 0, $take);
-                            $x = mb_substr($x, $take);
-                            $mod = $a % $y;
-                        } while (mb_strlen($x));
-
-                        $w = !(1 == (int) $mod);
-                    }
+                    $w = !(1 == bcmod($newString, '97'));
                 }
 
                 break;
