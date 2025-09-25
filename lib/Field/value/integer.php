@@ -101,8 +101,8 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         }
 
         // check for comma separated values
-        if (preg_match('/^(-?\d+)(?:\s*,\s*(-?\d+))*$/', $match[2])) {
-            $values = array_map('intval', explode(',', $match[2]));
+        if (preg_match('/^(-?\d+)(?:\s*,\s*(-?\d+))*$/', $value, $match)) {
+            $values = array_map('intval', explode(',', $value));
             return $query->whereListContains($field, $values);
         }
 
