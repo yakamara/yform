@@ -158,7 +158,7 @@ class Importer
                 // out of transaction, because database not always supports transactions with alter table
                 $idColumn = null;
                 while (false !== ($line_array = fgetcsv($fp, 30384, $this->getDelimiter()))) {
-                    if (0 == count($fieldarray)) {
+                    if (0 == count($fieldarray)) { /** @phpstan-ignore-line */
                         $fieldarray = $line_array;
                         $fieldarray = array_map('rex_string::normalize', $fieldarray);
 

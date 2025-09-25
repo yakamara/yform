@@ -1,5 +1,7 @@
 <?php
 
+/** @var rex_yform_manager $this */
+
 use Redaxo\YForm\Manager\Importer;
 
 $_csrf_key ??= '';
