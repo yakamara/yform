@@ -395,6 +395,43 @@ $yform = $post->getForm();
 echo $post->executeForm($yform)
 ```
 
+<a name="felder-excluden"></a>
+
+#### Felder vom Formular ausschließen
+
+Mit `setExcludeFields()` können bestimmte Felder vom generierten Formular ausgeschlossen werden. Dies ist nützlich, wenn z.B. bei einem User-Profil der Name und Vorname nicht mehr angezeigt oder bearbeitet werden sollen, oder wenn das Formular mit weniger Details benötigt wird.
+
+```php
+<?php
+$dataset = rex_yform_manager_dataset::get($id, 'rex_kontakte');
+
+// Felder 'name' und 'vorname' vom Formular ausschließen
+$dataset->setExcludeFields(['name', 'vorname']);
+
+$yform = $dataset->getForm();
+
+// Optional: Ausgeschlossene Felder als Hidden-Felder setzen, 
+// um deren Werte beim Speichern beizubehalten
+$yform->setValueField('hidden', ['name', $dataset->getValue('name'), 'REQUEST']);
+$yform->setValueField('hidden', ['vorname', $dataset->getValue('vorname'), 'REQUEST']);
+
+echo $dataset->executeForm($yform);
+```
+
+Das gleiche Prinzip funktioniert auch für neue Datensätze:
+
+```php
+<?php
+$dataset = rex_yform_manager_dataset::create('rex_kontakte');
+
+// Nur bestimmte Felder im Formular anzeigen
+$dataset->setExcludeFields(['status', 'created_at', 'updated_at']);
+
+$yform = $dataset->getForm();
+echo $dataset->executeForm($yform);
+```
+
+
 <a name="methoden-referenz"></a>
 
 ## Methoden-Referenz
@@ -535,6 +572,7 @@ $dataset = rex_yform_manager_query::get('rex_yf_example')
 - get
 - getAll
 - getData (liefert Felder als Array zurück)
+- getExcludedFields (liefert ausgeschlossene Felder als Array zurück)
 - getForm (liefert Formular zurück - EXPERIMENTELL!)
 - getId
 - getMessages
@@ -546,6 +584,7 @@ $dataset = rex_yform_manager_query::get('rex_yf_example')
 - getValue
 - hasValue
 - isValid
+- setExcludeFields (schließt Felder vom generierten Formular aus, siehe [Felder vom Formular ausschließen](#felder-excluden))
 - loadData
 
 <a name="debugging"></a>

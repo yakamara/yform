@@ -210,6 +210,39 @@ class rex_yform_yorm_test extends TestCase
                         $cat2->getId(),
                     ])
                     ->save();
+
+                // Test exclude fields functionality
+                $testDataset = rex_yform_manager_dataset::create($tableName)
+                    ->setValue($fieldName, 'Test Exclude Fields');
+                $testDataset->save();
+
+                // Get dataset and test field exclusion
+                $datasetWithExclude = rex_yform_manager_dataset::get($testDataset->getId(), $tableName);
+                
+                // Set fields to exclude
+                $datasetWithExclude->setExcludeFields([$fieldName]);
+                
+                // Verify excluded fields are stored
+                static::assertEquals(
+                    [$fieldName],
+                    $datasetWithExclude->getExcludedFields(),
+                    'excluded fields should be stored correctly',
+                );
+                
+                // Get form and verify excluded field is not in the form
+                $yform = $datasetWithExclude->getForm();
+                $formFields = [];
+                foreach ($yform->objparams['values'] as $valueField) {
+                    if (isset($valueField->params['name'])) {
+                        $formFields[] = $valueField->params['name'];
+                    }
+                }
+                
+                static::assertNotContains(
+                    $fieldName,
+                    $formFields,
+                    'excluded field should not be in form values',
+                );
             }
         }
 

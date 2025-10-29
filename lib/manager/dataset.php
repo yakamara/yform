@@ -37,6 +37,9 @@ class rex_yform_manager_dataset
     /** @var bool */
     private $historyEnabled = true;
 
+    /** @var string[] */
+    private array $excludedFields = [];
+
     final private function __construct(string $table, ?int $id = null)
     {
         $this->table = $table;
@@ -651,6 +654,28 @@ class rex_yform_manager_dataset
         $this->historyEnabled = $historyEnabled;
     }
 
+    /**
+     * Set fields to exclude from the form.
+     *
+     * @param string[] $fields Array of field names to exclude
+     * @return $this
+     */
+    public function setExcludeFields(array $fields): self
+    {
+        $this->excludedFields = $fields;
+        return $this;
+    }
+
+    /**
+     * Get fields to exclude from the form.
+     *
+     * @return string[]
+     */
+    public function getExcludedFields(): array
+    {
+        return $this->excludedFields;
+    }
+
     public function __isset(string $key): bool
     {
         return $this->hasValue($key);
@@ -692,6 +717,11 @@ class rex_yform_manager_dataset
         $yform->setDebug(self::$debug);
 
         foreach ($fields as $field) {
+            // Skip excluded fields
+            if (in_array($field->getName(), $this->excludedFields, true)) {
+                continue;
+            }
+
             /** @var class-string<rex_yform_base_abstract> $class */
             $class = 'rex_yform_' . $field->getType() . '_' . $field->getTypeName();
 
