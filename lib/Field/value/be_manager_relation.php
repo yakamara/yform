@@ -10,8 +10,7 @@
 class rex_yform_value_be_manager_relation extends rex_yform_value_abstract
 {
     public static $yform_list_values = [];
-
-    protected $relation;
+    public $relation;
 
     public function enterObject()
     {
