@@ -94,14 +94,14 @@ class rex_yform_value_integer extends rex_yform_value_abstract
         }
 
         // check for range with 'x..y' or 'x-y' patterns
-        if (preg_match('/^\s*(-?\d+)\s*\.\.\s*(-?\d+)\s*$/', $value, $match)) {
+        if (preg_match('/^\s*(-?\d+)\s*(?:\.\.|-)\s*(-?\d+)\s*$/', $value, $match)) {
             $match[1] = (int) $match[1];
             $match[2] = (int) $match[2];
             return $query->whereBetween($field, $match[1], $match[2]);
         }
 
         // check for comma separated values
-        if (preg_match('/^(-?\d+)(?:\s*,\s*(-?\d+))*$/', $value, $match)) {
+        if (preg_match('/^(-?\d+)(?:\s*,\s*(-?\d+))*$/', $value)) {
             $values = array_map('intval', explode(',', $value));
             return $query->whereListContains($field, $values);
         }
