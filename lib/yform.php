@@ -192,16 +192,10 @@ class rex_yform
         foreach ($form_elements_tmp as $form_element) {
             $form_element = trim($form_element);
             if ('' != $form_element && '#' != $form_element[0] && '/' != $form_element[0]) {
-                // 1. Replace masked pipes with placeholders
-                $placeholder = '__PIPE__';
-                $form_element = str_replace('\|', $placeholder, $form_element);
-
-                // 2. Now safely split to unmasked pipes
-                $formElementParts = explode('|', $form_element);
-
-                // 3. Convert placeholders back
-                $formElementParts = str_replace($placeholder, '|', $formElementParts);
-
+                $formElementParts = array_map(
+                    fn($v) => str_replace('\\|', '|', $v),
+                    preg_split('/(?<!\\\\)\|/', $form_element)
+                );
                 $this->objparams['form_elements'][] = $formElementParts;
             }
         }
