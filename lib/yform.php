@@ -192,7 +192,11 @@ class rex_yform
         foreach ($form_elements_tmp as $form_element) {
             $form_element = trim($form_element);
             if ('' != $form_element && '#' != $form_element[0] && '/' != $form_element[0]) {
-                $this->objparams['form_elements'][] = explode('|', trim($form_element));
+                $formElementParts = array_map(
+                    static fn ($v) => str_replace('\\|', '|', $v),
+                    preg_split('/(?<!\\\\)\|/', $form_element),
+                );
+                $this->objparams['form_elements'][] = $formElementParts;
             }
         }
         return $this;
