@@ -161,7 +161,7 @@ $userQuery = 'SELECT
         `table_name` = ' . $sql->escape($this->table->getTableName());
 
 $list = rex_list::factory($listQuery, defaultSort: [
-    'hid' => 'asc',
+    'hid' => 'desc',
     'timestamp' => 'desc',
 ]);
 
