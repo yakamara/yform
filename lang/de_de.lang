@@ -657,6 +657,8 @@ yform_values_be_link_multiple = Mehrfachauswahl
 yform_values_prio_fields = Anzeige
 yform_values_prio_scope = Beschränkung
 yform_values_prio_default = Am Anfang
+yform_values_prio_label_expression = Individuelle Anzeige (SQL)
+yform_values_prio_label_expression_notice = SQL-Ausdruck als individuelle Anzeige, z.B. CONCAT(lastname, ", ", firstname). Überschreibt "Anzeige".
 
 yform_is = ist
 yform_will_set_to = wird
