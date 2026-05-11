@@ -1,6 +1,14 @@
 Changelog
 =========
 
+Version 5.0.2 - TBD
+--------------------------
+
+### Neu
+
+* YORM: `setExcludeFields()` Methode hinzugefügt, um Felder vom generierten Formular auszuschließen - nützlich für die Erstellung von Formularen mit weniger Feldern, wie z.B. bei User-Profilen, wo bestimmte Felder nicht bearbeitet werden sollen
+
+
 Version 5.0.1 - 25.06.2025
 --------------------------
 
