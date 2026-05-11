@@ -5,31 +5,34 @@ class rex_yform_manager_table_authorization
     public const VIEW = 'VIEW';
     public const EDIT = 'EDIT';
 
-    /** @var null|array<string, mixed> */
+    /** @var null|array<int|string, array<string, array<string, int>>> */
     public static ?array $tableAuthorizations = null;
 
     public static function onAttribute(string $attribute, rex_yform_manager_table $userTable, ?rex_user $user = null): bool
     {
-        if (null !== self::$tableAuthorizations) {
-            if (array_key_exists($attribute, self::$tableAuthorizations[$userTable->getTableName()] ?? [])) {
-                return true;
-            }
-            return false;
+        $userKey = $user ? (int) $user->getId() : 'guest';
+
+        if (null !== self::$tableAuthorizations && array_key_exists($userKey, self::$tableAuthorizations)) {
+            $perms = self::$tableAuthorizations[$userKey][$userTable->getTableName()] ?? [];
+            return array_key_exists($attribute, $perms);
         }
 
-        self::$tableAuthorizations = [];
+        if (null === self::$tableAuthorizations) {
+            self::$tableAuthorizations = [];
+        }
+        self::$tableAuthorizations[$userKey] = [];
 
         foreach (rex_yform_manager_table::getAll() as $table) {
             if (self::canEdit($table, $user)) {
-                self::$tableAuthorizations[$table->getTableName()][self::VIEW] = 1;
-                self::$tableAuthorizations[$table->getTableName()][self::EDIT] = 1;
+                self::$tableAuthorizations[$userKey][$table->getTableName()][self::VIEW] = 1;
+                self::$tableAuthorizations[$userKey][$table->getTableName()][self::EDIT] = 1;
             } elseif (self::canView($table, $user)) {
-                self::$tableAuthorizations[$table->getTableName()][self::VIEW] = 1;
+                self::$tableAuthorizations[$userKey][$table->getTableName()][self::VIEW] = 1;
             }
 
             foreach ($table->getRelationTableNames() as $relationTableName) {
-                if (isset(self::$tableAuthorizations[$table->getTableName()])) {
-                    self::$tableAuthorizations[$relationTableName][self::VIEW] = 1;
+                if (isset(self::$tableAuthorizations[$userKey][$table->getTableName()])) {
+                    self::$tableAuthorizations[$userKey][$relationTableName][self::VIEW] = 1;
                 }
             }
         }
