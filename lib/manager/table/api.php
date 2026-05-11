@@ -238,6 +238,11 @@ class rex_yform_manager_table_api
 
             $field_update->setWhere($where);
 
+            // Preserve local prio on UPDATE — when re-importing a tableset
+            // onto an existing table, do not clobber the user's manual
+            // reordering of fields (#1408).
+            unset($table_field['prio']);
+
             foreach ($table_field as $field_name => $field_value) {
                 $field_update->setValue($field_name, $field_value);
             }

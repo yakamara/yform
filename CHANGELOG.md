@@ -14,6 +14,7 @@ Version 5.0.2 - 11.05.2026
 * `rex_yform_value_choice` bietet `tinyint` (ohne Display-Width) zusätzlich als db_type an — `tinyint(1)` wird von manchen MySQL-Clients als Boolean interpretiert (#1591).
 * `rex_yform_value_datestamp::preValidateAction()`: ungültige `modify_default`-Werte wie `'0'` crashen die Form-Pipeline nicht mehr (DateMalformedStringException ab PHP 8.3) (#1578).
 * `rex_yform_value_hidden::loadParams()` überspringt jetzt `setLabel($this->getElement(2))` — für `hidden` ist Element 2 der Wert, nicht ein Label. Non-string-Default-Werte (Array, …) crashen die typisierte `string $label`-Property nicht mehr (#1350).
+* Tableset-Re-Import auf bestehende Tabelle überschreibt die lokal angepasste Feld-Reihenfolge (`prio`) nicht mehr — `setTableField()`'s UPDATE-Branch lässt `prio` jetzt unberührt (#1408).
 
 ### Tests & Infrastructure
 

@@ -229,6 +229,41 @@ final class TablesSuite extends AbstractTestSuite
         );
     }
 
+    public function testReImportPreservesLocalFieldPrio(): void
+    {
+        // Issue #1408: re-importing a tableset must not clobber the user's
+        // manual reordering of fields. setTableField()'s UPDATE branch now
+        // drops 'prio' before applying the tableset values.
+        $table = $this->createTestTable('reimport_prio', [
+            ['type_id' => 'value', 'type_name' => 'text',    'name' => 'a', 'label' => 'A', 'prio' => 1],
+            ['type_id' => 'value', 'type_name' => 'integer', 'name' => 'b', 'label' => 'B', 'prio' => 2],
+            ['type_id' => 'value', 'type_name' => 'textarea', 'name' => 'c', 'label' => 'C', 'prio' => 3],
+        ]);
+        $tableName = $table->getTableName();
+
+        // User manually reorders: a=10, b=5, c=20. (Different from initial 1/2/3.)
+        $sql = rex_sql::factory();
+        $sql->setQuery(
+            'UPDATE ' . rex_yform_manager_field::table() . ' SET prio = CASE name WHEN :a THEN 10 WHEN :b THEN 5 WHEN :c THEN 20 END WHERE table_name = :t',
+            [':a' => 'a', ':b' => 'b', ':c' => 'c', ':t' => $tableName],
+        );
+        rex_yform_manager_table::deleteCache();
+
+        // Re-import the original tableset (with original prios 1/2/3).
+        $json = (string) rex_yform_manager_table_api::exportTablesets([$tableName]);
+        rex_yform_manager_table_api::importTablesets($json);
+        rex_yform_manager_table::deleteCache();
+
+        $imported = rex_yform_manager_table::require($tableName);
+        $byName = [];
+        foreach ($imported->getValueFields() as $f) {
+            $byName[$f->getName()] = (int) $f->getElement('prio');
+        }
+        $this->assertSame(10, $byName['a'] ?? null, 'a-prio must stay at user-set 10');
+        $this->assertSame(5, $byName['b'] ?? null, 'b-prio must stay at user-set 5');
+        $this->assertSame(20, $byName['c'] ?? null, 'c-prio must stay at user-set 20');
+    }
+
     public function testExportImportRoundtripPreservesFields(): void
     {
         $table = $this->createTestTable('roundtrip', [
