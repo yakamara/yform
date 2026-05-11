@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex_exception;
 use rex_sql;
 use rex_sql_table;
 use rex_yform_manager_field;
 use rex_yform_manager_table;
+
 use rex_yform_manager_table_api;
 
 use function in_array;
@@ -23,6 +25,14 @@ use function in_array;
  */
 final class TableReadSuite extends AbstractTestSuite
 {
+    public function testManagerTableClassIsExtensible(): void
+    {
+        // Issue #1548: rex_yform_manager_table is no longer final, community
+        // addons (e.g. external-DB managers via YOrm) can subclass it.
+        $reflection = new ReflectionClass(rex_yform_manager_table::class);
+        $this->assertFalse($reflection->isFinal(), 'rex_yform_manager_table must be subclassable.');
+    }
+
     public function testGetReturnsTableForExistingName(): void
     {
         $table = $this->createTestTable('read_basic', [], [
