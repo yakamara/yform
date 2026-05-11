@@ -203,12 +203,23 @@ final class TablesSuite extends AbstractTestSuite
 
     public function testImportTablesetsWithMalformedStructureThrows(): void
     {
-        // Note: importTablesets() does NOT validate the JSON string itself —
-        // pure garbage like 'not-json-at-all' is silently no-op'd (warning only).
-        // The actual validation path checks that every entry has table+fields keys.
         $this->assertThrows(
             \Throwable::class,
             static fn () => rex_yform_manager_table_api::importTablesets('[{"no_table_or_fields":1}]'),
+        );
+    }
+
+    public function testImportTablesetsWithInvalidJsonThrows(): void
+    {
+        // Plain garbage used to silently no-op (json_decode → null, foreach over null).
+        // Now it must throw — same as malformed structure.
+        $this->assertThrows(
+            \Throwable::class,
+            static fn () => rex_yform_manager_table_api::importTablesets('not-json-at-all'),
+        );
+        $this->assertThrows(
+            \Throwable::class,
+            static fn () => rex_yform_manager_table_api::importTablesets('"just-a-string"'),
         );
     }
 

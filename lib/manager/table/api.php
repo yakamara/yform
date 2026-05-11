@@ -97,6 +97,9 @@ class rex_yform_manager_table_api
     public static function importTablesets(string $tableset_content): bool
     {
         $tableset_content = json_decode($tableset_content, true);
+        if (!is_array($tableset_content)) {
+            throw new Exception('tableset content is not valid JSON');
+        }
         foreach ($tableset_content as $table) {
             if (!isset($table['table']) || !isset($table['fields'])) {
                 throw new Exception('json format wrong');
