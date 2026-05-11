@@ -394,23 +394,41 @@ final class ValidatorsSuite extends AbstractTestSuite
 
     // ---------- in_table ----------
 
-    public function testInTableValidatorKnownIssueNoDefinitions(): void
+    public function testInTableValidatorPassesWhenReferenceExists(): void
     {
-        // Finding: rex_yform_validate_in_table has NO getDefinitions() method.
-        // The validator reads its config exclusively via positional slots
-        // ($this->getElement(2), (3), (4), (5)). Without definitions, the
-        // dataset's createForm() iterates `$definitions['values']` (line 704
-        // of dataset.php) which is undefined — yielding "Undefined array key
-        // 'values'" warnings and a non-functional validator under setTableField.
-        //
-        // Workaround: use pipe-syntax (rex_yform->setFormData) directly, where
-        // positional slots ARE filled. Until in_table gains getDefinitions(),
-        // it cannot be configured via the Table Manager API.
-        $this->markSkipped(
-            'Known issue: rex_yform_validate_in_table lacks getDefinitions(); '
-          . 'cannot be configured via setTableField(). Use pipe syntax or add '
-          . 'a getDefinitions() method to the validator class.',
+        // Build a small "reference" table (the lookup target) and a "main" table
+        // whose `category` value must exist as `slug` in the reference table.
+        $refTable = $this->fixtures->reserveTableName('v_in_table_ref');
+        try { rex_yform_manager_table_api::removeTable($refTable); } catch (\Throwable) {}
+        try { rex_sql_table::get($refTable)->drop(); } catch (\Throwable) {}
+        rex_sql_table::get($refTable)
+            ->ensurePrimaryIdColumn()
+            ->ensureColumn(new rex_sql_column('slug', 'varchar(191)', false))
+            ->ensure();
+        rex_sql::factory()->setQuery('INSERT INTO ' . $refTable . ' (slug) VALUES (:s)', [':s' => 'news']);
+        $this->trackFixture($refTable);
+
+        $mainTable = $this->buildTable(
+            'v_in_table_main',
+            [['type_name' => 'text', 'name' => 'category']],
+            [[
+                'type_name' => 'in_table',
+                'name'      => 'category',
+                'table'     => $refTable,
+                'fields'    => 'slug',
+                'message'   => 'Unknown category.',
+            ]],
+            [['category', 'varchar(191)']],
         );
+
+        $ok = rex_yform_manager_dataset::create($mainTable->getTableName());
+        $ok->setValue('category', 'news');
+        $this->assertTrue($ok->save(), 'Existing reference must pass: ' . implode(' ', $ok->getMessages()));
+
+        $bad = rex_yform_manager_dataset::create($mainTable->getTableName());
+        $bad->setValue('category', 'does-not-exist');
+        $this->assertFalse($bad->save(), 'Missing reference must fail.');
+        $this->assertStringContains('Unknown category.', implode(' || ', $bad->getMessages()));
     }
 
     public function testValidatorMessageEndsUpInGetMessages(): void

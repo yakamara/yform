@@ -63,4 +63,21 @@ class rex_yform_validate_in_table extends rex_yform_validate_abstract
     {
         return 'validate|in_table|name,name2|tablename|fieldname,fieldname2|warning_message|[extras z.B. status=1';
     }
+
+    public function getDefinitions(): array
+    {
+        return [
+            'type' => 'validate',
+            'name' => 'in_table',
+            'values' => [
+                'name' => ['type' => 'text', 'label' => 'Feldnamen (komma-getrennt)'],
+                'table' => ['type' => 'text', 'label' => 'Tabelle (z.B. rex_user)'],
+                'fields' => ['type' => 'text', 'label' => 'DB-Spalten (komma-getrennt, gleiche Reihenfolge wie Feldnamen)'],
+                'message' => ['type' => 'text', 'label' => 'Fehlermeldung'],
+                'extras' => ['type' => 'text', 'label' => 'Zusätzliche WHERE-Bedingung (z.B. status=1)'],
+            ],
+            'description' => 'Prüft, ob die angegebenen Feldwerte in der genannten Tabelle existieren.',
+            'multi_edit' => false,
+        ];
+    }
 }
