@@ -1,6 +1,24 @@
 Changelog
 =========
 
+Version 5.0.2 - 11.05.2026
+--------------------------
+
+### Korrekturen
+
+* `rex_yform_manager_table_api::setTableField()` hat das `$table_name`-Argument durch ein eingebettetes Feld-Row-Property überschrieben — Tableset-Re-Import unter neuem Namen verlor dadurch alle Felder. Erkanntes Argument hat jetzt Vorrang.
+* `setTable()` propagiert jetzt die Flags `history`, `mass_deletion` und `mass_edit` (waren bisher silent no-op).
+* `importTablesets()` wirft Exception bei ungültigem JSON statt PHP-Warning durch `foreach` über `null` (#1397).
+* `rex_yform_validate_in_table` und `rex_yform_value_hidden` haben jetzt `getDefinitions()` und sind im Table Manager als reguläre Validator-/Wert-Felder konfigurierbar (vorher crash mit „Undefined array key 'values'") (#1421).
+* `rex_yform_manager_table_authorization`: statischer Cache wird pro User-ID gekeyt — vorher gab er bei User-Wechsel im selben Prozess den Stand des ersten Users zurück (Footgun in CLI-Workern und long-running Prozessen).
+* `rex_yform_value_choice` bietet `tinyint` (ohne Display-Width) zusätzlich als db_type an — `tinyint(1)` wird von manchen MySQL-Clients als Boolean interpretiert (#1591).
+* `rex_yform_value_datestamp::preValidateAction()`: ungültige `modify_default`-Werte wie `'0'` crashen die Form-Pipeline nicht mehr (DateMalformedStringException ab PHP 8.3) (#1578).
+
+### Tests & Infrastructure
+
+* Neue konsolen-basierte Test-Suite unter `lib/Test/` und `lib/Tests/Suites/` mit 11 Suiten (139 passed, 2 skipped). Aufrufbar via `php redaxo/bin/console yform:test` oder einzeln per `yform:test:<suite>` (siehe `tests/README.md`).
+* GitHub-Actions-Workflows: PHP auf 8.3 angehoben (REDAXO 5.21 verlangt es), `actions/checkout@v4`. rexstan-Static-Analysis grün.
+
 Version 5.0.1 - 25.06.2025
 --------------------------
 
