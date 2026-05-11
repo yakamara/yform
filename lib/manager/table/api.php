@@ -152,17 +152,18 @@ class rex_yform_manager_table_api
      */
     public static function removeTable(string $table_name): void
     {
-        $table = rex_yform_manager_table::get($table_name);
-
         $t = rex_sql::factory();
         $t->setDebug(self::$debug);
-        $t->setQuery('delete from ' . rex_yform_manager_table::table() . ' where table_name=:table_name ', [':table_name' => $table_name]);
+        $t->setQuery('delete from ' . rex_yform_manager_table::table() . ' where table_name=:table_name', [':table_name' => $table_name]);
 
-        if ($table) {
-            foreach ($table->getFields() as $remove_field) {
-                self::removeTablefield($table_name, $remove_field->getName());
-            }
-        }
+        // Bulk delete on table_name — getFields() ignored field rows whose
+        // type-class wasn't autoloadable (e.g. custom field type from an
+        // addon being uninstalled in parallel), leaving orphans. Re-install
+        // then upserted on top → setTableField saw count > 1 and threw
+        // „More than one field found for …" (#1575).
+        $f = rex_sql::factory();
+        $f->setDebug(self::$debug);
+        $f->setQuery('delete from ' . rex_yform_manager_field::table() . ' where table_name=:table_name', [':table_name' => $table_name]);
 
         rex_yform_manager_table::deleteCache();
     }

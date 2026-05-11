@@ -15,6 +15,7 @@ Version 5.0.2 - 11.05.2026
 * `rex_yform_value_datestamp::preValidateAction()`: ungültige `modify_default`-Werte wie `'0'` crashen die Form-Pipeline nicht mehr (DateMalformedStringException ab PHP 8.3) (#1578).
 * `rex_yform_value_hidden::loadParams()` überspringt jetzt `setLabel($this->getElement(2))` — für `hidden` ist Element 2 der Wert, nicht ein Label. Non-string-Default-Werte (Array, …) crashen die typisierte `string $label`-Property nicht mehr (#1350).
 * Tableset-Re-Import auf bestehende Tabelle überschreibt die lokal angepasste Feld-Reihenfolge (`prio`) nicht mehr — `setTableField()`'s UPDATE-Branch lässt `prio` jetzt unberührt (#1408).
+* `rex_yform_manager_table_api::removeTable()` räumt jetzt per Bulk-DELETE alle `rex_yform_field`-Zeilen für die Tabelle ab, statt sie über `getFields()` zu iterieren. `getFields()` ignoriert stillschweigend Felder mit nicht autoloadbarem Type — solche Orphans führten beim Re-Install zu Duplikaten und der Fehlermeldung „More than one field found for …" (#1575).
 
 ### Tests & Infrastructure
 

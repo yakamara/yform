@@ -229,6 +229,44 @@ final class TablesSuite extends AbstractTestSuite
         );
     }
 
+    public function testRemoveTableCleansUpOrphanFieldRows(): void
+    {
+        // Issue #1575: rex_yform_manager_table::getFields() silently skips
+        // field rows whose type-class isn't autoloadable (e.g. custom field
+        // type from an addon currently being uninstalled). removeTable() used
+        // to iterate getFields() — so orphan rows survived, and the next
+        // install upserted duplicate rows, triggering „More than one field
+        // found …" on the third install cycle.
+        //
+        // The fix: removeTable() now does a bulk DELETE on table_name.
+        $table = $this->createTestTable('orphan_cleanup', [
+            ['type_id' => 'value', 'type_name' => 'text', 'name' => 'title', 'label' => 'T', 'prio' => 1],
+        ]);
+        $tableName = $table->getTableName();
+
+        // Inject an orphan field-row with an unknown type — getFields()
+        // would ignore it (the field-class can't be instantiated).
+        rex_sql::factory()
+            ->setTable(rex_yform_manager_field::table())
+            ->setValue('table_name', $tableName)
+            ->setValue('type_id', 'value')
+            ->setValue('type_name', 'nonexistent_custom_type_xyz')
+            ->setValue('name', 'ghost_field')
+            ->setValue('label', 'Ghost')
+            ->setValue('prio', 99)
+            ->insert();
+
+        rex_yform_manager_table::deleteCache();
+
+        rex_yform_manager_table_api::removeTable($tableName);
+
+        $remaining = rex_sql::factory()->getArray(
+            'SELECT COUNT(*) AS c FROM ' . rex_yform_manager_field::table() . ' WHERE table_name = :t',
+            [':t' => $tableName],
+        );
+        $this->assertSame(0, (int) $remaining[0]['c'], 'removeTable must purge ALL field rows, including orphans.');
+    }
+
     public function testReImportPreservesLocalFieldPrio(): void
     {
         // Issue #1408: re-importing a tableset must not clobber the user's
