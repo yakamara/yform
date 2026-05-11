@@ -23,8 +23,8 @@ use rex_yform_manager_table_authorization;
  * the inserted user rows.
  *
  * Important: rex_yform_manager_table_authorization::$tableAuthorizations is a
- * static cache that is populated on first call and never auto-invalidated.
- * Every test resets it manually.
+ * static cache that is keyed per user and never auto-invalidated.
+ * Every test resets it manually to start from a clean state.
  *
  * @package redaxo\yform
  * @internal
@@ -193,24 +193,30 @@ final class AuthorizationSuite extends AbstractTestSuite
 
     // ---------- cache semantics ----------
 
-    public function testTableAuthorizationsCacheIsStickyUntilExplicitReset(): void
+    public function testTableAuthorizationsCacheIsKeyedPerUser(): void
     {
         $admin = $this->makeUser(true);
         $a = rex_yform_manager_table::require($this->tableA);
 
-        // First call: populates the cache for admin.
-        rex_yform_manager_table_authorization::onAttribute('VIEW', $a, $admin);
+        // First call: populates the cache for the admin user.
+        $this->assertTrue(rex_yform_manager_table_authorization::onAttribute('VIEW', $a, $admin));
         $this->assertNotNull(rex_yform_manager_table_authorization::$tableAuthorizations);
+        $this->assertArrayHasKey((int) $admin->getId(), rex_yform_manager_table_authorization::$tableAuthorizations);
 
-        // Second call WITH NO USER: returns the cached (admin) state because the
-        // authorization class does NOT re-evaluate. This is the documented
-        // staticness pitfall.
-        $stillTrue = rex_yform_manager_table_authorization::onAttribute('VIEW', $a, null);
-        $this->assertTrue($stillTrue, 'Cache is per-process, not per-user — second call with null re-reads cached admin state.');
+        // Second call WITH NO USER: must NOT return the admin's cached state.
+        // Pre-fix this returned true. Now it correctly evaluates as guest.
+        $this->assertFalse(
+            rex_yform_manager_table_authorization::onAttribute('VIEW', $a, null),
+            'Per-user cache: null user must be evaluated independently of admin.',
+        );
 
-        // Explicit reset clears the cache.
+        // Both entries co-exist in the cache.
+        $this->assertArrayHasKey((int) $admin->getId(), rex_yform_manager_table_authorization::$tableAuthorizations);
+        $this->assertArrayHasKey('guest', rex_yform_manager_table_authorization::$tableAuthorizations);
+
+        // Explicit reset clears everything.
         rex_yform_manager_table_authorization::$tableAuthorizations = null;
-        $this->assertFalse(rex_yform_manager_table_authorization::onAttribute('VIEW', $a, null));
+        $this->assertNull(rex_yform_manager_table_authorization::$tableAuthorizations);
     }
 
     // ---------- relations carry VIEW ----------
