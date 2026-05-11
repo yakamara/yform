@@ -19,13 +19,13 @@ jobs:
       contents: write  # for Git to git apply
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # setup PHP v8, install some extensions
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
           extensions: gd, intl, pdo_mysql
           coverage: none # disable xdebug, pcov
 
