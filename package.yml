@@ -51,5 +51,21 @@ requires:
     php:
         version: '^8.1'
 
+console_commands:
+    yform:test:            rex_command_yform_test
+    yform:test:list:       rex_command_yform_test_list
+    yform:test:doctor:     rex_command_yform_test_doctor
+    yform:test:tables:     rex_command_yform_test_tables
+    yform:test:table-read: rex_command_yform_test_table_read
+    yform:test:fields:     rex_command_yform_test_fields
+    yform:test:datasets:   rex_command_yform_test_datasets
+    yform:test:queries:    rex_command_yform_test_queries
+    yform:test:validators: rex_command_yform_test_validators
+    yform:test:actions:           rex_command_yform_test_actions
+    yform:test:extension-points:  rex_command_yform_test_extension_points
+    yform:test:authorization:     rex_command_yform_test_authorization
+    yform:test:cache:             rex_command_yform_test_cache
+    yform:test:field-types:       rex_command_yform_test_field_types
+
 installer_ignore:
     - .tools
