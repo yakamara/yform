@@ -170,13 +170,21 @@ final class DatasetsSuite extends AbstractTestSuite
         $table = $this->makeBasicTable('crud_magic');
 
         $ds = rex_yform_manager_dataset::create($table->getTableName());
+        // The dataset deliberately supports __set/__get for column access.
+        // PHPStan can't know about column names — silence per access.
+        /** @phpstan-ignore-next-line */
         $ds->title = 'Magic';
+        /** @phpstan-ignore-next-line */
         $ds->quantity = 7;
+        /** @phpstan-ignore-next-line */
         $ds->status = 1;
         $this->assertTrue($ds->save());
 
+        /** @phpstan-ignore-next-line */
         $this->assertSame('Magic', $ds->title);
+        /** @phpstan-ignore-next-line */
         $this->assertSame(7, (int) $ds->quantity);
+        /** @phpstan-ignore-next-line */
         $this->assertTrue(isset($ds->title));
     }
 

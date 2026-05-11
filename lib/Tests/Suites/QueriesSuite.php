@@ -304,7 +304,7 @@ final class QueriesSuite extends AbstractTestSuite
             ->selectRaw('`' . $this->tableName . '`.`status`')
             ->selectRaw('COUNT(*)', 'c')
             ->groupBy('status')
-            ->havingRaw('c >= ?', [2])
+            ->havingRaw('c >= :min', ['min' => 2])
             ->resetOrderBy();
 
         $rows = rex_sql::factory()->getArray($query->getQuery(), $query->getParams());

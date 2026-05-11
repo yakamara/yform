@@ -9,7 +9,7 @@ class rex_yform_manager_table_api
 
     /**
      * @param array<string, mixed> $table
-     * @param array<string, mixed> $table_fields
+     * @param list<array<string, mixed>> $table_fields
      * @throws rex_sql_exception
      */
     public static function setTable(array $table, array $table_fields = []): ?rex_yform_manager_table

@@ -44,6 +44,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
      *
      * @var array<string, list<array{subject: mixed, params: array}>>
      */
+    /** @var array<string, list<array{subject: mixed, params: array<string, mixed>}>> */
     public static array $epLog = [];
 
     /** One-shot veto flag for testYformDataDeleteCanCancel. */

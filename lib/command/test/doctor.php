@@ -23,12 +23,10 @@ class rex_command_yform_test_doctor extends rex_console_command
         $io = $this->getStyle($input, $output);
 
         $checks = [];
-        $allGreen = true;
-
         // 1. PHP version
         $phpOk = version_compare(PHP_VERSION, '8.1.0', '>=');
         $checks[] = ['PHP >= 8.1', PHP_VERSION, $phpOk ? 'OK' : 'FAIL'];
-        $allGreen = $allGreen && $phpOk;
+        $allGreen = $phpOk;
 
         // 2. DB reachable
         $dbOk = false;
