@@ -220,6 +220,27 @@ final class FieldTypesSuite extends AbstractTestSuite
         $this->assertSame('2000-01-01 00:00:00', (string) $ds->getValue('created'));
     }
 
+    public function testDatestampSurvivesInvalidModifyDefault(): void
+    {
+        // Issue #1578: a stored modify_default of '0' (or other unparseable
+        // strings) used to crash the entire form pipeline with
+        // DateMalformedStringException on PHP 8.3+ — the @-operator does NOT
+        // catch typed exceptions. preValidateAction() now wraps DateTime::modify
+        // in try/catch and falls back to "now".
+        $table = $this->buildTable('ft_ds_bad_modify', [
+            'type_name'      => 'datestamp',
+            'name'           => 'created',
+            'format'         => 'mysql',
+            'only_empty'     => 0,
+            'modify_default' => '0',
+        ], [['created', 'datetime']]);
+
+        $ds = rex_yform_manager_dataset::create($table);
+        $this->assertTrue($ds->save(), 'Invalid modify_default must not crash save().');
+        $value = (string) $ds->getValue('created');
+        $this->assertTrue(strtotime($value) > 0, 'Datestamp must fall back to a valid datetime, got: ' . $value);
+    }
+
     public function testDatestampOnlyEmpty2NeverUpdates(): void
     {
         $table = $this->buildTable('ft_ds_frozen', [

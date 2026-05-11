@@ -14,10 +14,15 @@ class rex_yform_value_datestamp extends rex_yform_value_abstract
     public function preValidateAction(): void
     {
         $default_value = date(rex_sql::FORMAT_DATETIME);
-        if ('' != $this->getElement('modify_default')) {
-            $dt = new DateTime();
-            if (false !== @$dt->modify($this->getElement('modify_default'))) {
-                $default_value = $dt->format(rex_sql::FORMAT_DATETIME);
+        $modify = (string) $this->getElement('modify_default');
+        if ('' !== $modify && '0' !== $modify) {
+            try {
+                $dt = new DateTime();
+                if (false !== @$dt->modify($modify)) {
+                    $default_value = $dt->format(rex_sql::FORMAT_DATETIME);
+                }
+            } catch (\DateMalformedStringException) {
+                // Invalid modify expression — fall back to "now".
             }
         }
 
