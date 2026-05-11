@@ -14,6 +14,9 @@ use rex_yform_manager_table;
 use rex_yform_manager_table_api;
 use Throwable;
 
+use function is_array;
+use function is_string;
+
 /**
  * Test-table lifecycle. Creates tables under a unique prefix per suite run,
  * tears them down in cleanup(). Robust against partial leftovers from
@@ -27,7 +30,9 @@ final class FixtureManager
     /** @var list<string> */
     private array $createdTables = [];
 
-    public function __construct(private readonly string $prefix) {}
+    public function __construct(
+        private readonly string $prefix,
+    ) {}
 
     public function getPrefix(): string
     {
@@ -62,10 +67,10 @@ final class FixtureManager
         // 2. YForm metadata
         rex_yform_manager_table_api::setTable(array_merge([
             'table_name' => $tableName,
-            'name'       => $shortName,
-            'status'     => 1,
-            'hidden'     => 1,
-            'prio'       => 9999,
+            'name' => $shortName,
+            'status' => 1,
+            'hidden' => 1,
+            'prio' => 9999,
         ], $tableOptions));
 
         // 3. Fields
@@ -107,7 +112,7 @@ final class FixtureManager
             }
             $newName = $this->prefix . preg_replace('/^rex_/', '', (string) $originalName);
             $def['table']['table_name'] = $newName;
-            $def['table']['hidden']     = 1;
+            $def['table']['hidden'] = 1;
             foreach ($def['fields'] as &$f) {
                 if (isset($f['table']) && is_string($f['table']) && str_starts_with($f['table'], 'rex_')) {
                     $f['table'] = $this->prefix . substr($f['table'], 4);
@@ -137,10 +142,12 @@ final class FixtureManager
         foreach ($this->createdTables as $tableName) {
             try {
                 rex_yform_manager_table_api::removeTable($tableName);
-            } catch (Throwable) {}
+            } catch (Throwable) {
+            }
             try {
                 rex_sql_table::get($tableName)->drop();
-            } catch (Throwable) {}
+            } catch (Throwable) {
+            }
         }
         $this->createdTables = [];
 
@@ -154,12 +161,15 @@ final class FixtureManager
                 $name = (string) $row['TABLE_NAME'];
                 try {
                     rex_yform_manager_table_api::removeTable($name);
-                } catch (Throwable) {}
+                } catch (Throwable) {
+                }
                 try {
                     rex_sql_table::get($name)->drop();
-                } catch (Throwable) {}
+                } catch (Throwable) {
+                }
             }
-        } catch (Throwable) {}
+        } catch (Throwable) {
+        }
 
         // Drop any orphan rows in rex_yform_field that reference our prefix.
         try {
@@ -167,7 +177,8 @@ final class FixtureManager
                 'DELETE FROM ' . rex_yform_manager_field::table() . ' WHERE table_name LIKE :p',
                 [':p' => $this->prefix . '%'],
             );
-        } catch (Throwable) {}
+        } catch (Throwable) {
+        }
 
         rex_yform_manager_table::deleteCache();
     }

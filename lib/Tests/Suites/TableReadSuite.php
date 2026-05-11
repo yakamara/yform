@@ -7,9 +7,12 @@ namespace Redaxo\YForm\Tests\Suites;
 use Redaxo\YForm\Test\AbstractTestSuite;
 use rex_exception;
 use rex_sql;
+use rex_sql_table;
 use rex_yform_manager_field;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
+
+use function in_array;
 
 /**
  * Tests for the read-only API of rex_yform_manager_table.
@@ -23,11 +26,11 @@ final class TableReadSuite extends AbstractTestSuite
     public function testGetReturnsTableForExistingName(): void
     {
         $table = $this->createTestTable('read_basic', [], [
-            'name'           => 'Basic Read',
-            'list_amount'    => 25,
+            'name' => 'Basic Read',
+            'list_amount' => 25,
             'list_sortfield' => 'id',
             'list_sortorder' => 'DESC',
-            'search'         => 1,
+            'search' => 1,
         ]);
 
         $reloaded = rex_yform_manager_table::get($table->getTableName());
@@ -72,10 +75,10 @@ final class TableReadSuite extends AbstractTestSuite
     public function testHasHistoryReflectsFlag(): void
     {
         $withHistory = $this->createTestTable('hist_on', [], ['history' => 1]);
-        $noHistory   = $this->createTestTable('hist_off', [], ['history' => 0]);
+        $noHistory = $this->createTestTable('hist_off', [], ['history' => 0]);
         rex_yform_manager_table::deleteCache();
 
-        $on  = rex_yform_manager_table::require($withHistory->getTableName());
+        $on = rex_yform_manager_table::require($withHistory->getTableName());
         $off = rex_yform_manager_table::require($noHistory->getTableName());
 
         $this->assertTrue($on->hasHistory());
@@ -87,14 +90,14 @@ final class TableReadSuite extends AbstractTestSuite
         // Regression: setTable() now propagates history/mass_deletion/mass_edit
         // (they used to be silently dropped because they weren't in $table_fields).
         $name = $this->fixtures->reserveTableName('mass_flags');
-        \rex_sql_table::get($name)->ensurePrimaryIdColumn()->ensure();
+        rex_sql_table::get($name)->ensurePrimaryIdColumn()->ensure();
         rex_yform_manager_table_api::setTable([
-            'table_name'    => $name,
-            'name'          => 'Mass Flags',
-            'status'        => 1,
-            'history'       => 1,
+            'table_name' => $name,
+            'name' => 'Mass Flags',
+            'status' => 1,
+            'history' => 1,
             'mass_deletion' => 1,
-            'mass_edit'     => 1,
+            'mass_edit' => 1,
         ]);
         rex_yform_manager_table::deleteCache();
 
@@ -111,7 +114,7 @@ final class TableReadSuite extends AbstractTestSuite
     public function testGetCustomIconReturnsTableIconOrNull(): void
     {
         $iconed = $this->createTestTable('with_icon', [], ['table_icon' => 'fa-users']);
-        $plain  = $this->createTestTable('no_icon');
+        $plain = $this->createTestTable('no_icon');
 
         $this->assertSame('fa-users', $iconed->getCustomIcon());
         // 'no_icon' table has no table_icon set; should be null or empty string.
@@ -194,13 +197,13 @@ final class TableReadSuite extends AbstractTestSuite
         $source = $this->createTestTable('rel_source', [
             ['type_id' => 'value', 'type_name' => 'text', 'name' => 'title', 'label' => 'Title'],
             [
-                'type_id'      => 'value',
-                'type_name'    => 'be_manager_relation',
-                'name'         => 'target_id',
-                'label'        => 'Target',
-                'table'        => $target->getTableName(),
-                'field'        => 'name',
-                'type'         => 0,
+                'type_id' => 'value',
+                'type_name' => 'be_manager_relation',
+                'name' => 'target_id',
+                'label' => 'Target',
+                'table' => $target->getTableName(),
+                'field' => 'name',
+                'type' => 0,
                 'empty_option' => 1,
             ],
         ]);
@@ -240,11 +243,11 @@ final class TableReadSuite extends AbstractTestSuite
         $table = $this->createTestTable('cache_bust', [], ['name' => 'V1']);
 
         // Mutate directly via API, then verify cache returns fresh data only after deleteCache.
-        \rex_yform_manager_table_api::setTable([
+        rex_yform_manager_table_api::setTable([
             'table_name' => $table->getTableName(),
-            'name'       => 'V2',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'V2',
+            'status' => 1,
+            'hidden' => 1,
         ]);
 
         // setTable() itself calls deleteCache, so this is mostly defensive.

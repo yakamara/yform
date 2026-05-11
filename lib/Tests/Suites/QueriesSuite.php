@@ -5,11 +5,22 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex_pager;
+use rex_sql;
+use rex_sql_column;
+use rex_sql_table;
 use rex_yform_manager_collection;
 use rex_yform_manager_dataset;
 use rex_yform_manager_query;
 use rex_yform_manager_table;
+use rex_yform_manager_table_api;
+use Throwable;
+
+use function array_slice;
+use function count;
+use function in_array;
+use function is_int;
 
 /**
  * Tests for rex_yform_manager_query (fluent SQL builder).
@@ -32,26 +43,28 @@ final class QueriesSuite extends AbstractTestSuite
         // Force-drop any leftover from earlier crashed runs so the schema is
         // fresh and `archived_at` is guaranteed nullable.
         try {
-            \rex_yform_manager_table_api::removeTable($this->tableName);
-        } catch (\Throwable) {}
+            rex_yform_manager_table_api::removeTable($this->tableName);
+        } catch (Throwable) {
+        }
         try {
-            \rex_sql_table::get($this->tableName)->drop();
-        } catch (\Throwable) {}
+            rex_sql_table::get($this->tableName)->drop();
+        } catch (Throwable) {
+        }
 
-        \rex_sql_table::get($this->tableName)
+        rex_sql_table::get($this->tableName)
             ->ensurePrimaryIdColumn()
-            ->ensureColumn(new \rex_sql_column('name', 'varchar(191)', true))
-            ->ensureColumn(new \rex_sql_column('age', 'int(11)', true))
-            ->ensureColumn(new \rex_sql_column('status', 'int(11)', true))
-            ->ensureColumn(new \rex_sql_column('tags', 'varchar(191)', true))
-            ->ensureColumn(new \rex_sql_column('archived_at', 'datetime', true))
+            ->ensureColumn(new rex_sql_column('name', 'varchar(191)', true))
+            ->ensureColumn(new rex_sql_column('age', 'int(11)', true))
+            ->ensureColumn(new rex_sql_column('status', 'int(11)', true))
+            ->ensureColumn(new rex_sql_column('tags', 'varchar(191)', true))
+            ->ensureColumn(new rex_sql_column('archived_at', 'datetime', true))
             ->ensure();
 
-        \rex_yform_manager_table_api::setTable([
+        rex_yform_manager_table_api::setTable([
             'table_name' => $this->tableName,
-            'name'       => 'qmain',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'qmain',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value', 'type_name' => 'text',    'name' => 'name',        'label' => 'Name',   'prio' => 1],
             ['type_id' => 'value', 'type_name' => 'integer', 'name' => 'age',         'label' => 'Age',    'prio' => 2],
@@ -66,7 +79,7 @@ final class QueriesSuite extends AbstractTestSuite
     public function setUp(): void
     {
         // Reset row state — setUp runs per-method on the same table.
-        \rex_sql::factory()->setQuery('TRUNCATE `' . $this->tableName . '`');
+        rex_sql::factory()->setQuery('TRUNCATE `' . $this->tableName . '`');
 
         // Seed 6 rows with diverse data.
         $rows = [
@@ -78,7 +91,7 @@ final class QueriesSuite extends AbstractTestSuite
             ['Frank',   60, 0, '',        '2025-02-02 12:00:00'],
         ];
         foreach ($rows as [$name, $age, $status, $tags, $archived]) {
-            $sql = \rex_sql::factory();
+            $sql = rex_sql::factory();
             $sql->setTable($this->tableName);
             $sql->setValue('name', $name);
             $sql->setValue('age', $age);
@@ -97,7 +110,7 @@ final class QueriesSuite extends AbstractTestSuite
 
     private function trackFixture(string $tableName): void
     {
-        $reflection = new \ReflectionClass($this->fixtures);
+        $reflection = new ReflectionClass($this->fixtures);
         $prop = $reflection->getProperty('createdTables');
         $list = (array) $prop->getValue($this->fixtures);
         if (!in_array($tableName, $list, true)) {
@@ -199,9 +212,9 @@ final class QueriesSuite extends AbstractTestSuite
 
     public function testOrderByAscAndDesc(): void
     {
-        $asc  = $this->q()->orderBy('age', 'ASC')->find();
+        $asc = $this->q()->orderBy('age', 'ASC')->find();
         $desc = $this->q()->orderBy('age', 'DESC')->find();
-        $this->assertSame('Alice',  $asc[0]->getValue('name'));
+        $this->assertSame('Alice', $asc[0]->getValue('name'));
         $this->assertSame('Frank', $desc[0]->getValue('name'));
     }
 
@@ -278,7 +291,7 @@ final class QueriesSuite extends AbstractTestSuite
     public function testGroupByWithHaving(): void
     {
         // Test data sanity check.
-        $sanity = \rex_sql::factory()->getArray(
+        $sanity = rex_sql::factory()->getArray(
             'SELECT status, COUNT(*) c FROM `' . $this->tableName . '` GROUP BY status HAVING c >= 2 ORDER BY status',
         );
         $this->assertSame(2, count($sanity), 'Expecting status=0 and status=1 to each have >= 2 rows.');
@@ -294,7 +307,7 @@ final class QueriesSuite extends AbstractTestSuite
             ->havingRaw('c >= ?', [2])
             ->resetOrderBy();
 
-        $rows = \rex_sql::factory()->getArray($query->getQuery(), $query->getParams());
+        $rows = rex_sql::factory()->getArray($query->getQuery(), $query->getParams());
         $this->assertSame(2, count($rows));
     }
 }

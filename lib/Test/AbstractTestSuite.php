@@ -6,6 +6,7 @@ namespace Redaxo\YForm\Test;
 
 use Countable;
 use Redaxo\YForm\Test\Exception\TestSkippedException;
+use ReflectionClass;
 use rex_yform_manager_table;
 use Throwable;
 
@@ -29,16 +30,6 @@ abstract class AbstractTestSuite
     ) {}
 
     /**
-     * Override to run setup before each test* method.
-     */
-    public function setUp(): void {}
-
-    /**
-     * Override to run teardown after each test* method.
-     */
-    public function tearDown(): void {}
-
-    /**
      * Override to run setup once before any test* method.
      */
     public function setUpBeforeClass(): void {}
@@ -48,10 +39,20 @@ abstract class AbstractTestSuite
      */
     public function tearDownAfterClass(): void {}
 
+    /**
+     * Override to run setup before each test* method.
+     */
+    public function setUp(): void {}
+
+    /**
+     * Override to run teardown after each test* method.
+     */
+    public function tearDown(): void {}
+
     /** Human-readable name. Override for custom titles. */
     public function getSuiteTitle(): string
     {
-        $short = (new \ReflectionClass(static::class))->getShortName();
+        $short = (new ReflectionClass(static::class))->getShortName();
         return preg_replace('/Suite$/', '', $short) ?: $short;
     }
 

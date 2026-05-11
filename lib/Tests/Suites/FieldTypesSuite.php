@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex_sql;
 use rex_sql_column;
 use rex_sql_table;
@@ -12,6 +13,11 @@ use rex_yform;
 use rex_yform_manager_dataset;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
+use rex_yform_value_choice;
+use Throwable;
+
+use function in_array;
+use function strlen;
 
 /**
  * Tests for type-specific behavior of YForm value fields.
@@ -39,8 +45,14 @@ final class FieldTypesSuite extends AbstractTestSuite
     private function buildTable(string $shortName, array $fieldDef, array $sqlColumns): string
     {
         $tableName = $this->fixtures->reserveTableName($shortName);
-        try { rex_yform_manager_table_api::removeTable($tableName); } catch (\Throwable) {}
-        try { rex_sql_table::get($tableName)->drop(); } catch (\Throwable) {}
+        try {
+            rex_yform_manager_table_api::removeTable($tableName);
+        } catch (Throwable) {
+        }
+        try {
+            rex_sql_table::get($tableName)->drop();
+        } catch (Throwable) {
+        }
 
         $b = rex_sql_table::get($tableName)->ensurePrimaryIdColumn();
         foreach ($sqlColumns as $col) {
@@ -48,15 +60,15 @@ final class FieldTypesSuite extends AbstractTestSuite
         }
         $b->ensure();
 
-        $fieldDef['type_id']  = 'value';
-        $fieldDef['prio']   ??= 1;
-        $fieldDef['label']  ??= ($fieldDef['name'] ?? 'X');
+        $fieldDef['type_id'] = 'value';
+        $fieldDef['prio'] ??= 1;
+        $fieldDef['label'] ??= ($fieldDef['name'] ?? 'X');
 
         rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => $shortName,
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => $shortName,
+            'status' => 1,
+            'hidden' => 1,
         ], [$fieldDef]);
 
         $this->trackFixture($tableName);
@@ -66,7 +78,7 @@ final class FieldTypesSuite extends AbstractTestSuite
 
     private function trackFixture(string $tableName): void
     {
-        $reflection = new \ReflectionClass($this->fixtures);
+        $reflection = new ReflectionClass($this->fixtures);
         $prop = $reflection->getProperty('createdTables');
         $list = (array) $prop->getValue($this->fixtures);
         if (!in_array($tableName, $list, true)) {
@@ -81,7 +93,7 @@ final class FieldTypesSuite extends AbstractTestSuite
     {
         $table = $this->buildTable('ft_checkbox', [
             'type_name' => 'checkbox',
-            'name'      => 'agreed',
+            'name' => 'agreed',
         ], [['agreed', 'tinyint(1)']]);
 
         $ds = rex_yform_manager_dataset::create($table);
@@ -94,7 +106,7 @@ final class FieldTypesSuite extends AbstractTestSuite
     {
         $table = $this->buildTable('ft_checkbox_off', [
             'type_name' => 'checkbox',
-            'name'      => 'agreed',
+            'name' => 'agreed',
         ], [['agreed', 'tinyint(1)']]);
 
         $ds = rex_yform_manager_dataset::create($table);
@@ -109,10 +121,10 @@ final class FieldTypesSuite extends AbstractTestSuite
     {
         $table = $this->buildTable('ft_choice_single', [
             'type_name' => 'choice',
-            'name'      => 'color',
-            'choices'   => '{"Red":"red","Green":"green","Blue":"blue"}',
-            'expanded'  => 0,
-            'multiple'  => 0,
+            'name' => 'color',
+            'choices' => '{"Red":"red","Green":"green","Blue":"blue"}',
+            'expanded' => 0,
+            'multiple' => 0,
         ], [['color', 'varchar(191)']]);
 
         $ds = rex_yform_manager_dataset::create($table);
@@ -125,10 +137,10 @@ final class FieldTypesSuite extends AbstractTestSuite
     {
         $table = $this->buildTable('ft_choice_multi', [
             'type_name' => 'choice',
-            'name'      => 'tags',
-            'choices'   => '{"News":"news","Blog":"blog","Foto":"foto"}',
-            'expanded'  => 1,
-            'multiple'  => 1,
+            'name' => 'tags',
+            'choices' => '{"News":"news","Blog":"blog","Foto":"foto"}',
+            'expanded' => 1,
+            'multiple' => 1,
         ], [['tags', 'text']]);
 
         $ds = rex_yform_manager_dataset::create($table);
@@ -146,7 +158,7 @@ final class FieldTypesSuite extends AbstractTestSuite
         // Issue #1591: tinyint(1) is interpreted as boolean by some MySQL clients.
         // The choice field now offers plain `tinyint` as an additional db_type
         // option so non-boolean numeric values (e.g. 0–9) can be stored cleanly.
-        $field = new \rex_yform_value_choice();
+        $field = new rex_yform_value_choice();
         $def = $field->getDefinitions();
         $this->assertArrayHasKey('db_type', $def);
         $this->assertTrue(in_array('tinyint', $def['db_type'], true), 'tinyint must be offered as choice db_type.');
@@ -159,10 +171,10 @@ final class FieldTypesSuite extends AbstractTestSuite
         // Drive rex_yform directly so we can inspect value_pool.email after fields run.
         $tableName = $this->buildTable('ft_choice_pool', [
             'type_name' => 'choice',
-            'name'      => 'color',
-            'choices'   => '{"Red":"red","Green":"green"}',
-            'expanded'  => 0,
-            'multiple'  => 0,
+            'name' => 'color',
+            'choices' => '{"Red":"red","Green":"green"}',
+            'expanded' => 0,
+            'multiple' => 0,
         ], [['color', 'varchar(191)']]);
 
         $yform = new rex_yform();
@@ -194,9 +206,9 @@ final class FieldTypesSuite extends AbstractTestSuite
     public function testDatestampOnlyEmpty1FillsOnlyOnFirstSave(): void
     {
         $table = $this->buildTable('ft_ds_created', [
-            'type_name'  => 'datestamp',
-            'name'       => 'created',
-            'format'     => 'mysql',
+            'type_name' => 'datestamp',
+            'name' => 'created',
+            'format' => 'mysql',
             'only_empty' => 1,
         ], [['created', 'datetime']]);
 
@@ -228,10 +240,10 @@ final class FieldTypesSuite extends AbstractTestSuite
         // catch typed exceptions. preValidateAction() now wraps DateTime::modify
         // in try/catch and falls back to "now".
         $table = $this->buildTable('ft_ds_bad_modify', [
-            'type_name'      => 'datestamp',
-            'name'           => 'created',
-            'format'         => 'mysql',
-            'only_empty'     => 0,
+            'type_name' => 'datestamp',
+            'name' => 'created',
+            'format' => 'mysql',
+            'only_empty' => 0,
             'modify_default' => '0',
         ], [['created', 'datetime']]);
 
@@ -244,9 +256,9 @@ final class FieldTypesSuite extends AbstractTestSuite
     public function testDatestampOnlyEmpty2NeverUpdates(): void
     {
         $table = $this->buildTable('ft_ds_frozen', [
-            'type_name'  => 'datestamp',
-            'name'       => 'frozen',
-            'format'     => 'mysql',
+            'type_name' => 'datestamp',
+            'name' => 'frozen',
+            'format' => 'mysql',
             'only_empty' => 2,
         ], [['frozen', 'datetime', true]]);
 
@@ -274,7 +286,7 @@ final class FieldTypesSuite extends AbstractTestSuite
     {
         $table = $this->buildTable('ft_uuid', [
             'type_name' => 'uuid',
-            'name'      => 'uid',
+            'name' => 'uid',
         ], [['uid', 'varchar(191)']]);
 
         $ds = rex_yform_manager_dataset::create($table);
@@ -290,7 +302,7 @@ final class FieldTypesSuite extends AbstractTestSuite
     {
         $table = $this->buildTable('ft_uuid_uniq', [
             'type_name' => 'uuid',
-            'name'      => 'uid',
+            'name' => 'uid',
         ], [['uid', 'varchar(191)']]);
 
         $a = rex_yform_manager_dataset::create($table);
@@ -306,8 +318,8 @@ final class FieldTypesSuite extends AbstractTestSuite
     public function testGenerateKeyFillsEmptyValue(): void
     {
         $table = $this->buildTable('ft_gen_key', [
-            'type_name'  => 'generate_key',
-            'name'       => 'token',
+            'type_name' => 'generate_key',
+            'name' => 'token',
             'only_empty' => 1,
         ], [['token', 'varchar(191)']]);
 
@@ -326,8 +338,8 @@ final class FieldTypesSuite extends AbstractTestSuite
         // in dataset.php:704 followed by a PDOException. Now configurable.
         $table = $this->buildTable('ft_hidden', [
             'type_name' => 'hidden',
-            'name'      => 'token',
-            'value'     => 'abc-123',
+            'name' => 'token',
+            'value' => 'abc-123',
         ], [['token', 'varchar(191)']]);
 
         $ds = rex_yform_manager_dataset::create($table);

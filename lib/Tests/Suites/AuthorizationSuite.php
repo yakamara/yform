@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex;
 use rex_sql;
 use rex_sql_column;
@@ -13,6 +14,9 @@ use rex_user;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
 use rex_yform_manager_table_authorization;
+use Throwable;
+
+use function in_array;
 
 /**
  * Tests for rex_yform_manager_table_authorization.
@@ -43,8 +47,14 @@ final class AuthorizationSuite extends AbstractTestSuite
         $this->tableB = $this->fixtures->reserveTableName('auth_b');
 
         foreach ([$this->tableA, $this->tableB] as $t) {
-            try { rex_yform_manager_table_api::removeTable($t); } catch (\Throwable) {}
-            try { rex_sql_table::get($t)->drop(); } catch (\Throwable) {}
+            try {
+                rex_yform_manager_table_api::removeTable($t);
+            } catch (Throwable) {
+            }
+            try {
+                rex_sql_table::get($t)->drop();
+            } catch (Throwable) {
+            }
         }
 
         rex_sql_table::get($this->tableA)
@@ -61,9 +71,9 @@ final class AuthorizationSuite extends AbstractTestSuite
         // Table B has no relations.
         rex_yform_manager_table_api::setTable([
             'table_name' => $this->tableB,
-            'name'       => 'auth_b',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'auth_b',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value', 'type_name' => 'text', 'name' => 'name', 'label' => 'N', 'prio' => 1],
         ]);
@@ -71,38 +81,27 @@ final class AuthorizationSuite extends AbstractTestSuite
         // Table A has a be_manager_relation pointing at B.
         rex_yform_manager_table_api::setTable([
             'table_name' => $this->tableA,
-            'name'       => 'auth_a',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'auth_a',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value', 'type_name' => 'text', 'name' => 'name', 'label' => 'N', 'prio' => 1],
             [
-                'type_id'      => 'value',
-                'type_name'    => 'be_manager_relation',
-                'name'         => 'related_id',
-                'label'        => 'Related',
-                'table'        => $this->tableB,
-                'field'        => 'name',
-                'type'         => 0,
+                'type_id' => 'value',
+                'type_name' => 'be_manager_relation',
+                'name' => 'related_id',
+                'label' => 'Related',
+                'table' => $this->tableB,
+                'field' => 'name',
+                'type' => 0,
                 'empty_option' => 1,
-                'prio'         => 2,
+                'prio' => 2,
             ],
         ]);
 
         $this->trackFixture($this->tableA);
         $this->trackFixture($this->tableB);
         rex_yform_manager_table::deleteCache();
-    }
-
-    private function trackFixture(string $tableName): void
-    {
-        $reflection = new \ReflectionClass($this->fixtures);
-        $prop = $reflection->getProperty('createdTables');
-        $list = (array) $prop->getValue($this->fixtures);
-        if (!in_array($tableName, $list, true)) {
-            $list[] = $tableName;
-            $prop->setValue($this->fixtures, $list);
-        }
     }
 
     public function tearDownAfterClass(): void
@@ -117,6 +116,17 @@ final class AuthorizationSuite extends AbstractTestSuite
     {
         // Reset the static auth cache so each test sees fresh evaluation.
         rex_yform_manager_table_authorization::$tableAuthorizations = null;
+    }
+
+    private function trackFixture(string $tableName): void
+    {
+        $reflection = new ReflectionClass($this->fixtures);
+        $prop = $reflection->getProperty('createdTables');
+        $list = (array) $prop->getValue($this->fixtures);
+        if (!in_array($tableName, $list, true)) {
+            $list[] = $tableName;
+            $prop->setValue($this->fixtures, $list);
+        }
     }
 
     /**

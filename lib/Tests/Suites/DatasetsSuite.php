@@ -6,11 +6,19 @@ namespace Redaxo\YForm\Tests\Suites;
 
 use InvalidArgumentException;
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
+use rex;
 use rex_exception;
 use rex_sql;
+use rex_sql_column;
+use rex_sql_table;
 use rex_yform_manager_collection;
 use rex_yform_manager_dataset;
 use rex_yform_manager_table;
+use rex_yform_manager_table_api;
+
+use function count;
+use function in_array;
 
 /**
  * Tests for rex_yform_manager_dataset (YOrm active-record).
@@ -33,19 +41,19 @@ final class DatasetsSuite extends AbstractTestSuite
     {
         $tableName = $this->fixtures->reserveTableName($shortName);
 
-        \rex_sql_table::get($tableName)
+        rex_sql_table::get($tableName)
             ->ensurePrimaryIdColumn()
-            ->ensureColumn(new \rex_sql_column('title', 'varchar(191)', true))
-            ->ensureColumn(new \rex_sql_column('quantity', 'int(11)', true))
-            ->ensureColumn(new \rex_sql_column('status', 'tinyint(1)', false, '1'))
+            ->ensureColumn(new rex_sql_column('title', 'varchar(191)', true))
+            ->ensureColumn(new rex_sql_column('quantity', 'int(11)', true))
+            ->ensureColumn(new rex_sql_column('status', 'tinyint(1)', false, '1'))
             ->ensure();
 
-        \rex_yform_manager_table_api::setTable([
+        rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => $shortName,
-            'status'     => 1,
-            'hidden'     => 1,
-            'prio'       => 9999,
+            'name' => $shortName,
+            'status' => 1,
+            'hidden' => 1,
+            'prio' => 9999,
         ], [
             ['type_id' => 'value', 'type_name' => 'text',     'name' => 'title',    'label' => 'Titel',   'prio' => 1],
             ['type_id' => 'value', 'type_name' => 'integer',  'name' => 'quantity', 'label' => 'Menge',   'prio' => 2],
@@ -67,7 +75,7 @@ final class DatasetsSuite extends AbstractTestSuite
      */
     private function trackFixture(string $tableName): void
     {
-        $reflection = new \ReflectionClass($this->fixtures);
+        $reflection = new ReflectionClass($this->fixtures);
         $prop = $reflection->getProperty('createdTables');
         $list = (array) $prop->getValue($this->fixtures);
         if (!in_array($tableName, $list, true)) {
@@ -162,9 +170,9 @@ final class DatasetsSuite extends AbstractTestSuite
         $table = $this->makeBasicTable('crud_magic');
 
         $ds = rex_yform_manager_dataset::create($table->getTableName());
-        $ds->title    = 'Magic';
+        $ds->title = 'Magic';
         $ds->quantity = 7;
-        $ds->status   = 1;
+        $ds->status = 1;
         $this->assertTrue($ds->save());
 
         $this->assertSame('Magic', $ds->title);
@@ -213,16 +221,16 @@ final class DatasetsSuite extends AbstractTestSuite
     {
         $tableName = $this->fixtures->reserveTableName('crud_validate');
 
-        \rex_sql_table::get($tableName)
+        rex_sql_table::get($tableName)
             ->ensurePrimaryIdColumn()
-            ->ensureColumn(new \rex_sql_column('email', 'varchar(191)', true))
+            ->ensureColumn(new rex_sql_column('email', 'varchar(191)', true))
             ->ensure();
 
-        \rex_yform_manager_table_api::setTable([
+        rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => 'validate',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'validate',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value',    'type_name' => 'text',  'name' => 'email', 'label' => 'E', 'prio' => 1],
             ['type_id' => 'validate', 'type_name' => 'empty', 'name' => 'email', 'message' => 'E-Mail darf nicht leer sein.', 'prio' => 100],
@@ -263,16 +271,16 @@ final class DatasetsSuite extends AbstractTestSuite
     {
         $tableName = $this->fixtures->reserveTableName('crud_history');
 
-        \rex_sql_table::get($tableName)
+        rex_sql_table::get($tableName)
             ->ensurePrimaryIdColumn()
-            ->ensureColumn(new \rex_sql_column('title', 'varchar(191)', true))
+            ->ensureColumn(new rex_sql_column('title', 'varchar(191)', true))
             ->ensure();
 
-        \rex_yform_manager_table_api::setTable([
+        rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => 'history',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'history',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value', 'type_name' => 'text', 'name' => 'title', 'label' => 'T', 'prio' => 1],
         ]);
@@ -296,7 +304,7 @@ final class DatasetsSuite extends AbstractTestSuite
         $this->assertTrue($ds->save());
 
         $snapshots = rex_sql::factory()->getArray(
-            'SELECT id, action FROM ' . \rex::getTable('yform_history') . ' WHERE table_name = :t AND dataset_id = :id ORDER BY id ASC',
+            'SELECT id, action FROM ' . rex::getTable('yform_history') . ' WHERE table_name = :t AND dataset_id = :id ORDER BY id ASC',
             [':t' => $tableName, ':id' => $id],
         );
 
@@ -307,11 +315,11 @@ final class DatasetsSuite extends AbstractTestSuite
 
         // Cleanup the history rows we left behind.
         rex_sql::factory()->setQuery(
-            'DELETE FROM ' . \rex::getTable('yform_history') . ' WHERE table_name = :t',
+            'DELETE FROM ' . rex::getTable('yform_history') . ' WHERE table_name = :t',
             [':t' => $tableName],
         );
         rex_sql::factory()->setQuery(
-            'DELETE FROM ' . \rex::getTable('yform_history_field') . ' WHERE history_id NOT IN (SELECT id FROM ' . \rex::getTable('yform_history') . ')',
+            'DELETE FROM ' . rex::getTable('yform_history_field') . ' WHERE history_id NOT IN (SELECT id FROM ' . rex::getTable('yform_history') . ')',
         );
     }
 
@@ -319,16 +327,16 @@ final class DatasetsSuite extends AbstractTestSuite
     {
         $tableName = $this->fixtures->reserveTableName('crud_history_off');
 
-        \rex_sql_table::get($tableName)
+        rex_sql_table::get($tableName)
             ->ensurePrimaryIdColumn()
-            ->ensureColumn(new \rex_sql_column('title', 'varchar(191)', true))
+            ->ensureColumn(new rex_sql_column('title', 'varchar(191)', true))
             ->ensure();
 
-        \rex_yform_manager_table_api::setTable([
+        rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => 'history_off',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'history_off',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value', 'type_name' => 'text', 'name' => 'title', 'label' => 'T', 'prio' => 1],
         ]);
@@ -349,7 +357,7 @@ final class DatasetsSuite extends AbstractTestSuite
         $id = $ds->getId();
 
         $count = (int) rex_sql::factory()->getArray(
-            'SELECT COUNT(*) AS c FROM ' . \rex::getTable('yform_history') . ' WHERE table_name = :t AND dataset_id = :id',
+            'SELECT COUNT(*) AS c FROM ' . rex::getTable('yform_history') . ' WHERE table_name = :t AND dataset_id = :id',
             [':t' => $tableName, ':id' => $id],
         )[0]['c'];
 

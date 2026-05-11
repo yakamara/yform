@@ -8,6 +8,14 @@ use Countable;
 use Redaxo\YForm\Test\Exception\AssertionFailedException;
 use Throwable;
 
+use function array_key_exists;
+use function count;
+use function gettype;
+use function is_array;
+use function is_bool;
+use function is_object;
+use function is_string;
+
 /**
  * In-house assertion library used by AbstractTestSuite.
  *
@@ -22,32 +30,21 @@ final class Assert
     public static function same(mixed $expected, mixed $actual, string $msg = ''): void
     {
         if ($expected !== $actual) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting two values are identical.')
-                . "\n  expected: " . self::dump($expected)
-                . "\n  actual:   " . self::dump($actual),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting two values are identical.') . "\n  expected: " . self::dump($expected) . "\n  actual:   " . self::dump($actual));
         }
     }
 
     public static function notSame(mixed $unexpected, mixed $actual, string $msg = ''): void
     {
         if ($unexpected === $actual) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting two values are not identical.')
-                . "\n  value:    " . self::dump($actual),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting two values are not identical.') . "\n  value:    " . self::dump($actual));
         }
     }
 
     public static function equals(mixed $expected, mixed $actual, string $msg = ''): void
     {
         if ($expected != $actual) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting two values are equal.')
-                . "\n  expected: " . self::dump($expected)
-                . "\n  actual:   " . self::dump($actual),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting two values are equal.') . "\n  expected: " . self::dump($expected) . "\n  actual:   " . self::dump($actual));
         }
     }
 
@@ -68,9 +65,7 @@ final class Assert
     public static function null(mixed $value, string $msg = ''): void
     {
         if (null !== $value) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting null.') . "\n  actual: " . self::dump($value),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting null.') . "\n  actual: " . self::dump($value));
         }
     }
 
@@ -85,9 +80,7 @@ final class Assert
     {
         $c = is_array($actual) ? count($actual) : $actual->count();
         if ($c !== $expected) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting count.') . " expected={$expected} actual={$c}",
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting count.') . " expected={$expected} actual={$c}");
         }
     }
 
@@ -98,9 +91,7 @@ final class Assert
     {
         if (!($actual instanceof $class)) {
             $got = is_object($actual) ? $actual::class : gettype($actual);
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting instance.') . " expected={$class} got={$got}",
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting instance.') . " expected={$class} got={$got}");
         }
     }
 
@@ -113,45 +104,31 @@ final class Assert
             $fn();
         } catch (Throwable $e) {
             if (!($e instanceof $exceptionClass)) {
-                throw new AssertionFailedException(
-                    ($msg ?: 'Wrong exception type.')
-                    . " expected={$exceptionClass} got=" . $e::class
-                    . "\n  message: " . $e->getMessage(),
-                );
+                throw new AssertionFailedException(($msg ?: 'Wrong exception type.') . " expected={$exceptionClass} got=" . $e::class . "\n  message: " . $e->getMessage());
             }
             return;
         }
-        throw new AssertionFailedException(
-            ($msg ?: 'No exception was thrown.') . " expected={$exceptionClass}",
-        );
+        throw new AssertionFailedException(($msg ?: 'No exception was thrown.') . " expected={$exceptionClass}");
     }
 
     public static function stringContains(string $needle, string $haystack, string $msg = ''): void
     {
         if (!str_contains($haystack, $needle)) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting string contains.')
-                . "\n  needle:   " . self::dump($needle)
-                . "\n  haystack: " . self::dump($haystack),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting string contains.') . "\n  needle:   " . self::dump($needle) . "\n  haystack: " . self::dump($haystack));
         }
     }
 
     public static function arrayHasKey(int|string $key, array $array, string $msg = ''): void
     {
         if (!array_key_exists($key, $array)) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting array has key.') . " key=" . self::dump($key),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting array has key.') . ' key=' . self::dump($key));
         }
     }
 
     public static function arrayNotHasKey(int|string $key, array $array, string $msg = ''): void
     {
         if (array_key_exists($key, $array)) {
-            throw new AssertionFailedException(
-                ($msg ?: 'Failed asserting array does not have key.') . " key=" . self::dump($key),
-            );
+            throw new AssertionFailedException(($msg ?: 'Failed asserting array does not have key.') . ' key=' . self::dump($key));
         }
     }
 

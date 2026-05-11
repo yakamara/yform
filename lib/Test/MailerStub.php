@@ -7,6 +7,9 @@ namespace Redaxo\YForm\Test;
 use rex_extension;
 use rex_extension_point;
 
+use function count;
+use function is_array;
+
 /**
  * Intercepts YForm email sends via the YFORM_EMAIL_BEFORE_SEND extension
  * point, so tests can assert recipient / subject / body without spinning up

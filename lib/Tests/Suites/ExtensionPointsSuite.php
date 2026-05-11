@@ -5,14 +5,21 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
+use rex;
 use rex_extension;
 use rex_extension_point;
 use rex_sql;
 use rex_sql_column;
 use rex_sql_table;
+use rex_yform;
 use rex_yform_manager_dataset;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
+use Throwable;
+
+use function count;
+use function in_array;
 
 /**
  * Tests for YForm's extension points (EPs).
@@ -33,7 +40,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
 {
     /**
      * Log of EP invocations.
-     * Shape: ['YFORM_DATA_ADD' => [ ['subject' => ..., 'params' => ...], ... ], ...]
+     * Shape: ['YFORM_DATA_ADD' => [ ['subject' => ..., 'params' => ...], ... ], ...].
      *
      * @var array<string, list<array{subject: mixed, params: array}>>
      */
@@ -50,8 +57,14 @@ final class ExtensionPointsSuite extends AbstractTestSuite
     {
         $this->tableName = $this->fixtures->reserveTableName('ep_main');
 
-        try { rex_yform_manager_table_api::removeTable($this->tableName); } catch (\Throwable) {}
-        try { rex_sql_table::get($this->tableName)->drop(); } catch (\Throwable) {}
+        try {
+            rex_yform_manager_table_api::removeTable($this->tableName);
+        } catch (Throwable) {
+        }
+        try {
+            rex_sql_table::get($this->tableName)->drop();
+        } catch (Throwable) {
+        }
 
         rex_sql_table::get($this->tableName)
             ->ensurePrimaryIdColumn()
@@ -61,9 +74,9 @@ final class ExtensionPointsSuite extends AbstractTestSuite
 
         rex_yform_manager_table_api::setTable([
             'table_name' => $this->tableName,
-            'name'       => 'ep_main',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'ep_main',
+            'status' => 1,
+            'hidden' => 1,
         ], [
             ['type_id' => 'value', 'type_name' => 'text',    'name' => 'title',  'label' => 'T', 'prio' => 1],
             ['type_id' => 'value', 'type_name' => 'integer', 'name' => 'status', 'label' => 'S', 'prio' => 2],
@@ -92,7 +105,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
             rex_extension::register($name, static function (rex_extension_point $ep) use ($name): mixed {
                 self::$epLog[$name][] = [
                     'subject' => $ep->getSubject(),
-                    'params'  => $ep->getParams(),
+                    'params' => $ep->getParams(),
                 ];
                 return $ep->getSubject();
             });
@@ -103,7 +116,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         rex_extension::register('YFORM_DATA_DELETE', static function (rex_extension_point $ep): mixed {
             self::$epLog['YFORM_DATA_DELETE'][] = [
                 'subject' => $ep->getSubject(),
-                'params'  => $ep->getParams(),
+                'params' => $ep->getParams(),
             ];
             if (self::$vetoNextDelete) {
                 self::$vetoNextDelete = false; // one-shot
@@ -113,9 +126,16 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         }, rex_extension::EARLY);
     }
 
+    public function setUp(): void
+    {
+        self::$epLog = [];
+        self::$vetoNextDelete = false;
+        rex_sql::factory()->setQuery('TRUNCATE `' . $this->tableName . '`');
+    }
+
     private function trackFixture(string $tableName): void
     {
-        $reflection = new \ReflectionClass($this->fixtures);
+        $reflection = new ReflectionClass($this->fixtures);
         $prop = $reflection->getProperty('createdTables');
         $list = (array) $prop->getValue($this->fixtures);
         if (!in_array($tableName, $list, true)) {
@@ -124,20 +144,13 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         }
     }
 
-    public function setUp(): void
-    {
-        self::$epLog = [];
-        self::$vetoNextDelete = false;
-        rex_sql::factory()->setQuery('TRUNCATE `' . $this->tableName . '`');
-    }
-
     // ---------- YFORM_INIT ----------
 
     public function testYformInitFiresOnConstruct(): void
     {
-        new \rex_yform();
+        new rex_yform();
         $this->assertTrue(count(self::$epLog['YFORM_INIT'] ?? []) >= 1);
-        $this->assertInstanceOf(\rex_yform::class, self::$epLog['YFORM_INIT'][0]['subject']);
+        $this->assertInstanceOf(rex_yform::class, self::$epLog['YFORM_INIT'][0]['subject']);
     }
 
     // ---------- YFORM_DATA_ADD / ADDED ----------
@@ -240,7 +253,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
 
         $this->assertTrue(count(self::$epLog['YFORM_SAVED'] ?? []) >= 1);
         $saved = self::$epLog['YFORM_SAVED'][0];
-        $this->assertInstanceOf(\rex_sql::class, $saved['subject']);
+        $this->assertInstanceOf(rex_sql::class, $saved['subject']);
         $this->assertSame($this->tableName, $saved['params']['table']);
         $this->assertSame('insert', $saved['params']['action']);
         $this->assertArrayHasKey('id', $saved['params']);
@@ -270,7 +283,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         // handlers — but both fire, and our probe records the call.
         $tplName = 'unittest_ep_tpl_' . substr(uniqid(), -6);
         rex_sql::factory()
-            ->setTable(\rex::getTable('yform_email_template'))
+            ->setTable(rex::getTable('yform_email_template'))
             ->setValue('name', $tplName)
             ->setValue('mail_from', 'a@example.com')
             ->setValue('mail_from_name', 'A')
@@ -281,7 +294,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
             ->insert();
 
         try {
-            $yform = new \rex_yform();
+            $yform = new rex_yform();
             $yform->setObjectparams('form_name', 'ep_email_' . substr(uniqid(), -6));
             $yform->setObjectparams('real_field_names', true);
             $yform->setObjectparams('form_needs_output', false);
@@ -296,7 +309,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
             $this->assertTrue(count(self::$epLog['YFORM_EMAIL_BEFORE_SEND'] ?? []) >= 1);
         } finally {
             rex_sql::factory()->setQuery(
-                'DELETE FROM ' . \rex::getTable('yform_email_template') . ' WHERE name = :n',
+                'DELETE FROM ' . rex::getTable('yform_email_template') . ' WHERE name = :n',
                 [':n' => $tplName],
             );
         }

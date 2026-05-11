@@ -65,8 +65,8 @@ final class TestResult
     public function toArray(): array
     {
         $out = [
-            'name'        => $this->name,
-            'status'      => $this->status,
+            'name' => $this->name,
+            'status' => $this->status,
             'duration_ms' => $this->durationMs,
         ];
         if (null !== $this->message) {

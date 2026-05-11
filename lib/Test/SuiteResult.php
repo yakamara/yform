@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Redaxo\YForm\Test;
 
+use function count;
+
 /**
  * Aggregated outcome of one test suite run.
  *
@@ -69,7 +71,7 @@ final class SuiteResult
 
     public function getFailures(): array
     {
-        return array_values(array_filter($this->results, fn (TestResult $r) => $r->isFailedOrErrored()));
+        return array_values(array_filter($this->results, static fn (TestResult $r) => $r->isFailedOrErrored()));
     }
 
     public function formatFailures(): string
@@ -87,17 +89,17 @@ final class SuiteResult
     public function toArray(): array
     {
         return [
-            'suite'                  => $this->key,
-            'class'                  => $this->class,
-            'prefix'                 => $this->prefix,
-            'left_behind_fixtures'   => $this->leftBehindFixtures,
-            'summary'                => [
-                'total'       => $this->countTotal(),
-                'passed'      => $this->countPassed(),
-                'failed'      => $this->countFailed(),
-                'skipped'     => $this->countSkipped(),
+            'suite' => $this->key,
+            'class' => $this->class,
+            'prefix' => $this->prefix,
+            'left_behind_fixtures' => $this->leftBehindFixtures,
+            'summary' => [
+                'total' => $this->countTotal(),
+                'passed' => $this->countPassed(),
+                'failed' => $this->countFailed(),
+                'skipped' => $this->countSkipped(),
                 'duration_ms' => $this->durationMs,
-                'success'     => $this->isSuccess(),
+                'success' => $this->isSuccess(),
             ],
             'results' => array_map(static fn (TestResult $r) => $r->toArray(), $this->results),
         ];

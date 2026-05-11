@@ -6,6 +6,8 @@ namespace Redaxo\YForm\Test;
 
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use function strlen;
+
 /**
  * Renders SuiteResult / TestResult for the console.
  *
@@ -14,7 +16,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 final class OutputFormatter
 {
-    public function __construct(private readonly SymfonyStyle $io) {}
+    public function __construct(
+        private readonly SymfonyStyle $io,
+    ) {}
 
     /**
      * Detailed per-test output for a single suite.
@@ -102,11 +106,11 @@ final class OutputFormatter
     private function statusIcon(string $status): string
     {
         return match ($status) {
-            TestResult::STATUS_PASSED   => '<fg=green>✓</>',
-            TestResult::STATUS_FAILED   => '<fg=red>✗</>',
-            TestResult::STATUS_ERRORED  => '<fg=red>!</>',
-            TestResult::STATUS_SKIPPED  => '<fg=yellow>⏵</>',
-            default                     => '?',
+            TestResult::STATUS_PASSED => '<fg=green>✓</>',
+            TestResult::STATUS_FAILED => '<fg=red>✗</>',
+            TestResult::STATUS_ERRORED => '<fg=red>!</>',
+            TestResult::STATUS_SKIPPED => '<fg=yellow>⏵</>',
+            default => '?',
         };
     }
 

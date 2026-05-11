@@ -31,15 +31,15 @@ final class TestRunner
     {
         $class = SuiteRegistry::get($suiteKey);
 
-        $filter   = (string) ($options['filter'] ?? '');
-        $bail     = (bool)   ($options['bail']  ?? false);
-        $keep     = (bool)   ($options['keep_fixtures'] ?? false);
-        $prefix   = (string) ($options['prefix'] ?? '') !== ''
+        $filter = (string) ($options['filter'] ?? '');
+        $bail = (bool) ($options['bail'] ?? false);
+        $keep = (bool) ($options['keep_fixtures'] ?? false);
+        $prefix = '' !== (string) ($options['prefix'] ?? '')
             ? (string) $options['prefix']
             : 'unittest_' . substr(uniqid('', true), -8) . '_';
 
         $fixtures = new FixtureManager($prefix);
-        $mailer   = new MailerStub();
+        $mailer = new MailerStub();
         $mailer->activate();
 
         /** @var AbstractTestSuite $instance */
@@ -55,7 +55,7 @@ final class TestRunner
                 if ($m->isStatic() || $m->isAbstract() || $m->getNumberOfRequiredParameters() > 0) {
                     return false;
                 }
-                if ($m->getDeclaringClass()->getName() === AbstractTestSuite::class) {
+                if (AbstractTestSuite::class === $m->getDeclaringClass()->getName()) {
                     return false;
                 }
                 return true;

@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex;
 use rex_sql;
 use rex_sql_column;
 use rex_sql_table;
 use rex_yform;
+use Throwable;
+
+use function in_array;
 
 /**
  * Tests for the YForm action types.
@@ -40,6 +44,13 @@ final class ActionsSuite extends AbstractTestSuite
     /** Counter for testCallbackActionRuns. */
     public static int $callbackCount = 0;
 
+    public function setUp(): void
+    {
+        self::$callbackFired = false;
+        self::$callbackCount = 0;
+        $this->mailer->reset();
+    }
+
     /**
      * Build a fresh rex_yform configured for headless testing.
      */
@@ -62,7 +73,10 @@ final class ActionsSuite extends AbstractTestSuite
     private function makeFixtureTable(string $shortName, array $columns): string
     {
         $tableName = $this->fixtures->reserveTableName($shortName);
-        try { rex_sql_table::get($tableName)->drop(); } catch (\Throwable) {}
+        try {
+            rex_sql_table::get($tableName)->drop();
+        } catch (Throwable) {
+        }
 
         $b = rex_sql_table::get($tableName)->ensurePrimaryIdColumn();
         foreach ($columns as $col) {
@@ -76,20 +90,13 @@ final class ActionsSuite extends AbstractTestSuite
 
     private function trackFixture(string $tableName): void
     {
-        $reflection = new \ReflectionClass($this->fixtures);
+        $reflection = new ReflectionClass($this->fixtures);
         $prop = $reflection->getProperty('createdTables');
         $list = (array) $prop->getValue($this->fixtures);
         if (!in_array($tableName, $list, true)) {
             $list[] = $tableName;
             $prop->setValue($this->fixtures, $list);
         }
-    }
-
-    public function setUp(): void
-    {
-        self::$callbackFired = false;
-        self::$callbackCount = 0;
-        $this->mailer->reset();
     }
 
     // ---------- db ----------
@@ -268,7 +275,7 @@ final class ActionsSuite extends AbstractTestSuite
         try {
             $yform = $this->freshForm('tpl');
             $yform->setObjectparams('data', ['name' => 'Tester', 'email' => 'recipient@example.com']);
-            $yform->setValueField('text',  ['name', 'Name']);
+            $yform->setValueField('text', ['name', 'Name']);
             $yform->setValueField('email', ['email', 'Email']);
             $yform->setActionField('tpl2email', [$tplName, 'email', 'name']);
             $yform->setFieldValue('send', [], '1');

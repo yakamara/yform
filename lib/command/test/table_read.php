@@ -33,10 +33,10 @@ class rex_command_yform_test_table_read extends rex_console_command
 
         $runner = new TestRunner();
         $result = $runner->run('table-read', [
-            'filter'        => (string) ($input->getOption('filter') ?: ''),
-            'bail'          => (bool) $input->getOption('bail'),
+            'filter' => (string) ($input->getOption('filter') ?: ''),
+            'bail' => (bool) $input->getOption('bail'),
             'keep_fixtures' => (bool) $input->getOption('keep-fixtures'),
-            'prefix'        => $input->getOption('prefix'),
+            'prefix' => $input->getOption('prefix'),
         ]);
 
         if ($input->getOption('json')) {

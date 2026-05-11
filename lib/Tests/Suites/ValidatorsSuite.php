@@ -5,12 +5,17 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex_sql;
 use rex_sql_column;
 use rex_sql_table;
 use rex_yform_manager_dataset;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
+use Throwable;
+
+use function count;
+use function in_array;
 
 /**
  * Tests for the YForm validator types.
@@ -40,10 +45,12 @@ final class ValidatorsSuite extends AbstractTestSuite
         // Force fresh schema — defends against leftover columns from earlier runs.
         try {
             rex_yform_manager_table_api::removeTable($tableName);
-        } catch (\Throwable) {}
+        } catch (Throwable) {
+        }
         try {
             rex_sql_table::get($tableName)->drop();
-        } catch (\Throwable) {}
+        } catch (Throwable) {
+        }
 
         $tableBuilder = rex_sql_table::get($tableName)->ensurePrimaryIdColumn();
         foreach ($sqlColumns as $col) {
@@ -57,22 +64,22 @@ final class ValidatorsSuite extends AbstractTestSuite
         $allFields = [];
         $prio = 1;
         foreach ($valueFields as $field) {
-            $field['type_id']   = 'value';
-            $field['prio']      = $prio++;
-            $field['label']    ??= $field['name'];
+            $field['type_id'] = 'value';
+            $field['prio'] = $prio++;
+            $field['label'] ??= $field['name'];
             $allFields[] = $field;
         }
         foreach ($validators as $validator) {
             $validator['type_id'] = 'validate';
-            $validator['prio']    = $prio++;
+            $validator['prio'] = $prio++;
             $allFields[] = $validator;
         }
 
         rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => $shortName,
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => $shortName,
+            'status' => 1,
+            'hidden' => 1,
         ], $allFields);
 
         $this->trackFixture($tableName);
@@ -83,7 +90,7 @@ final class ValidatorsSuite extends AbstractTestSuite
 
     private function trackFixture(string $tableName): void
     {
-        $reflection = new \ReflectionClass($this->fixtures);
+        $reflection = new ReflectionClass($this->fixtures);
         $prop = $reflection->getProperty('createdTables');
         $list = (array) $prop->getValue($this->fixtures);
         if (!in_array($tableName, $list, true)) {
@@ -399,8 +406,14 @@ final class ValidatorsSuite extends AbstractTestSuite
         // Build a small "reference" table (the lookup target) and a "main" table
         // whose `category` value must exist as `slug` in the reference table.
         $refTable = $this->fixtures->reserveTableName('v_in_table_ref');
-        try { rex_yform_manager_table_api::removeTable($refTable); } catch (\Throwable) {}
-        try { rex_sql_table::get($refTable)->drop(); } catch (\Throwable) {}
+        try {
+            rex_yform_manager_table_api::removeTable($refTable);
+        } catch (Throwable) {
+        }
+        try {
+            rex_sql_table::get($refTable)->drop();
+        } catch (Throwable) {
+        }
         rex_sql_table::get($refTable)
             ->ensurePrimaryIdColumn()
             ->ensureColumn(new rex_sql_column('slug', 'varchar(191)', false))
@@ -413,10 +426,10 @@ final class ValidatorsSuite extends AbstractTestSuite
             [['type_name' => 'text', 'name' => 'category']],
             [[
                 'type_name' => 'in_table',
-                'name'      => 'category',
-                'table'     => $refTable,
-                'fields'    => 'slug',
-                'message'   => 'Unknown category.',
+                'name' => 'category',
+                'table' => $refTable,
+                'fields' => 'slug',
+                'message' => 'Unknown category.',
             ]],
             [['category', 'varchar(191)']],
         );

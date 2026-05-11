@@ -58,10 +58,10 @@ class rex_command_yform_test extends rex_console_command
         foreach ($only as $suiteKey) {
             try {
                 $result = $runner->run($suiteKey, [
-                    'filter'        => (string) ($input->getOption('filter') ?: ''),
-                    'bail'          => (bool) $input->getOption('bail'),
+                    'filter' => (string) ($input->getOption('filter') ?: ''),
+                    'bail' => (bool) $input->getOption('bail'),
                     'keep_fixtures' => (bool) $input->getOption('keep-fixtures'),
-                    'prefix'        => $input->getOption('prefix'),
+                    'prefix' => $input->getOption('prefix'),
                 ]);
             } catch (Throwable $e) {
                 $io->error(sprintf('Suite "%s" could not run: %s', $suiteKey, $e->getMessage()));
@@ -105,10 +105,10 @@ class rex_command_yform_test extends rex_console_command
                 $r->durationMs . 'ms',
                 $r->isSuccess() ? 'OK' : 'FAIL',
             ];
-            $totalPassed  += $r->countPassed();
-            $totalFailed  += $r->countFailed();
+            $totalPassed += $r->countPassed();
+            $totalFailed += $r->countFailed();
             $totalSkipped += $r->countSkipped();
-            $totalTime    += $r->durationMs;
+            $totalTime += $r->durationMs;
         }
         $io->table(['Suite', 'Passed', 'Failed', 'Skipped', 'Time', 'Status'], $rows);
 

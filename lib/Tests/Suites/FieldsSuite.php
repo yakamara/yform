@@ -8,6 +8,8 @@ use Exception;
 use Redaxo\YForm\Test\AbstractTestSuite;
 use rex_yform_manager_field;
 
+use function is_array;
+
 /**
  * Tests for rex_yform_manager_field (one row -> one field wrapper).
  * Covers §3.U.2 from .claude/plans/02-test-strategy.md.
@@ -24,14 +26,14 @@ final class FieldsSuite extends AbstractTestSuite
     public function testConstructWithValidValueDefinition(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'title',
-            'label'     => 'Titel',
-            'prio'      => 10,
-            'db_type'   => 'varchar(191)',
+            'name' => 'title',
+            'label' => 'Titel',
+            'prio' => 10,
+            'db_type' => 'varchar(191)',
             'list_hidden' => 0,
-            'search'    => 1,
+            'search' => 1,
         ]);
 
         $this->assertSame('value', $field->getType());
@@ -45,10 +47,10 @@ final class FieldsSuite extends AbstractTestSuite
         $this->assertThrows(
             Exception::class,
             static fn () => new rex_yform_manager_field([
-                'type_id'   => 'value',
+                'type_id' => 'value',
                 'type_name' => 'this_field_type_does_not_exist_' . uniqid(),
-                'name'      => 'x',
-                'label'     => 'X',
+                'name' => 'x',
+                'label' => 'X',
             ]),
         );
     }
@@ -56,11 +58,11 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetElementReturnsNamedValueOrNull(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'foo',
-            'label'     => 'Foo',
-            'default'   => 'bar',
+            'name' => 'foo',
+            'label' => 'Foo',
+            'default' => 'bar',
         ]);
 
         $this->assertSame('foo', $field->getElement('name'));
@@ -72,11 +74,11 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetDatabaseFieldTypeUsesExplicitWhenSet(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'foo',
-            'label'     => 'Foo',
-            'db_type'   => 'varchar(80)',
+            'name' => 'foo',
+            'label' => 'Foo',
+            'db_type' => 'varchar(80)',
         ]);
 
         $this->assertSame('varchar(80)', $field->getDatabaseFieldType());
@@ -85,11 +87,11 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetDatabaseFieldTypeFallsBackToDefaultWhenEmpty(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'foo',
-            'label'     => 'Foo',
-            'db_type'   => '',
+            'name' => 'foo',
+            'label' => 'Foo',
+            'db_type' => '',
         ]);
 
         $default = $field->getDatabaseFieldDefaultType();
@@ -99,13 +101,13 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetRelationTableNamesForBeManagerRelation(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'       => 'value',
-            'type_name'     => 'be_manager_relation',
-            'name'          => 'role_id',
-            'label'         => 'Role',
-            'table'         => 'rex_some_target',
-            'field'         => 'name',
-            'type'          => 0,
+            'type_id' => 'value',
+            'type_name' => 'be_manager_relation',
+            'name' => 'role_id',
+            'label' => 'Role',
+            'table' => 'rex_some_target',
+            'field' => 'name',
+            'type' => 0,
             'relation_table' => '',
         ]);
 
@@ -117,13 +119,13 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetRelationTableNamesIncludesJunctionTable(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'        => 'value',
-            'type_name'      => 'be_manager_relation',
-            'name'           => 'tags',
-            'label'          => 'Tags',
-            'table'          => 'rex_tags',
-            'field'          => 'name',
-            'type'           => 1,
+            'type_id' => 'value',
+            'type_name' => 'be_manager_relation',
+            'name' => 'tags',
+            'label' => 'Tags',
+            'table' => 'rex_tags',
+            'field' => 'name',
+            'type' => 1,
             'relation_table' => 'rex_post_tags',
         ]);
 
@@ -136,10 +138,10 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetRelationTableNamesEmptyForNonRelation(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'plain',
-            'label'     => 'Plain',
+            'name' => 'plain',
+            'label' => 'Plain',
         ]);
 
         $this->assertCount(0, $field->getRelationTableNames());
@@ -148,18 +150,18 @@ final class FieldsSuite extends AbstractTestSuite
     public function testIsSearchableReflectsFlag(): void
     {
         $on = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 's_on',
-            'label'     => 'On',
-            'search'    => 1,
+            'name' => 's_on',
+            'label' => 'On',
+            'search' => 1,
         ]);
         $off = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 's_off',
-            'label'     => 'Off',
-            'search'    => 0,
+            'name' => 's_off',
+            'label' => 'Off',
+            'search' => 0,
         ]);
 
         $this->assertTrue($on->isSearchable());
@@ -169,17 +171,17 @@ final class FieldsSuite extends AbstractTestSuite
     public function testIsHiddenInListReflectsFlag(): void
     {
         $hidden = new rex_yform_manager_field([
-            'type_id'     => 'value',
-            'type_name'   => 'text',
-            'name'        => 'h1',
-            'label'       => 'H',
+            'type_id' => 'value',
+            'type_name' => 'text',
+            'name' => 'h1',
+            'label' => 'H',
             'list_hidden' => 1,
         ]);
         $shown = new rex_yform_manager_field([
-            'type_id'     => 'value',
-            'type_name'   => 'text',
-            'name'        => 'h2',
-            'label'       => 'S',
+            'type_id' => 'value',
+            'type_name' => 'text',
+            'name' => 'h2',
+            'label' => 'S',
             'list_hidden' => 0,
         ]);
 
@@ -193,10 +195,10 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetHooksReturnsArray(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'hk',
-            'label'     => 'HK',
+            'name' => 'hk',
+            'label' => 'HK',
         ]);
 
         // Default fields without explicit hooks return an empty array.
@@ -207,15 +209,15 @@ final class FieldsSuite extends AbstractTestSuite
     public function testToArrayReturnsFilteredValues(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'arr',
-            'label'     => 'Arr',
-            'prio'      => 5,
-            'db_type'   => 'text',
+            'name' => 'arr',
+            'label' => 'Arr',
+            'prio' => 5,
+            'db_type' => 'text',
             'list_hidden' => 0,
-            'search'    => 1,
-            'default'   => 'hello',
+            'search' => 1,
+            'default' => 'hello',
         ]);
 
         $arr = $field->toArray();
@@ -229,10 +231,10 @@ final class FieldsSuite extends AbstractTestSuite
     public function testArrayAccessReadsAndWrites(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'aa',
-            'label'     => 'AA',
+            'name' => 'aa',
+            'label' => 'AA',
         ]);
 
         $this->assertTrue(isset($field['name']));
@@ -248,10 +250,10 @@ final class FieldsSuite extends AbstractTestSuite
     public function testToStringReturnsName(): void
     {
         $field = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'stringable',
-            'label'     => 'S',
+            'name' => 'stringable',
+            'label' => 'S',
         ]);
 
         $this->assertSame('stringable', (string) $field);
@@ -260,16 +262,16 @@ final class FieldsSuite extends AbstractTestSuite
     public function testGetTypeReturnsCategoryOrFalse(): void
     {
         $value = new rex_yform_manager_field([
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'v',
-            'label'     => 'V',
+            'name' => 'v',
+            'label' => 'V',
         ]);
         $validate = new rex_yform_manager_field([
-            'type_id'   => 'validate',
+            'type_id' => 'validate',
             'type_name' => 'empty',
-            'name'      => 'v',
-            'message'   => 'm',
+            'name' => 'v',
+            'message' => 'm',
         ]);
 
         $this->assertSame('value', $value->getType());

@@ -7,9 +7,15 @@ namespace Redaxo\YForm\Tests\Suites;
 use Exception;
 use Redaxo\YForm\Test\AbstractTestSuite;
 use rex_sql;
+use rex_sql_column;
+use rex_sql_table;
 use rex_yform_manager_field;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
+use Throwable;
+
+use function is_array;
+use function is_string;
 
 /**
  * Tests for rex_yform_manager_table_api — the public write API for table
@@ -25,16 +31,16 @@ final class TablesSuite extends AbstractTestSuite
         $tableName = $this->fixtures->reserveTableName('create_new');
 
         // Underlying SQL must exist first.
-        \rex_sql_table::get($tableName)
+        rex_sql_table::get($tableName)
             ->ensurePrimaryIdColumn()
             ->ensure();
 
         rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => 'Created Table',
-            'status'     => 1,
-            'hidden'     => 1,
-            'prio'       => 100,
+            'name' => 'Created Table',
+            'status' => 1,
+            'hidden' => 1,
+            'prio' => 100,
         ]);
 
         rex_yform_manager_table::deleteCache();
@@ -52,9 +58,9 @@ final class TablesSuite extends AbstractTestSuite
 
         rex_yform_manager_table_api::setTable([
             'table_name' => $table->getTableName(),
-            'name'       => 'Renamed',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'Renamed',
+            'status' => 1,
+            'hidden' => 1,
         ]);
 
         rex_yform_manager_table::deleteCache();
@@ -77,16 +83,16 @@ final class TablesSuite extends AbstractTestSuite
     {
         $table = $this->createTestTable('field_insert');
 
-        \rex_sql_table::get($table->getTableName())
-            ->ensureColumn(new \rex_sql_column('title', 'varchar(255)', true))
+        rex_sql_table::get($table->getTableName())
+            ->ensureColumn(new rex_sql_column('title', 'varchar(255)', true))
             ->ensure();
 
         rex_yform_manager_table_api::setTableField($table->getTableName(), [
-            'type_id'    => 'value',
-            'type_name'  => 'text',
-            'name'       => 'title',
-            'label'      => 'Titel',
-            'prio'       => 10,
+            'type_id' => 'value',
+            'type_name' => 'text',
+            'name' => 'title',
+            'label' => 'Titel',
+            'prio' => 10,
         ]);
 
         rex_yform_manager_table::deleteCache();
@@ -102,21 +108,21 @@ final class TablesSuite extends AbstractTestSuite
     {
         $table = $this->createTestTable('field_update', [
             [
-                'type_id'   => 'value',
+                'type_id' => 'value',
                 'type_name' => 'text',
-                'name'      => 'subject',
-                'label'     => 'First Label',
-                'prio'      => 5,
+                'name' => 'subject',
+                'label' => 'First Label',
+                'prio' => 5,
             ],
         ]);
 
         // Same (type_id, type_name, name) tuple -> must update, not duplicate.
         rex_yform_manager_table_api::setTableField($table->getTableName(), [
-            'type_id'   => 'value',
+            'type_id' => 'value',
             'type_name' => 'text',
-            'name'      => 'subject',
-            'label'     => 'Updated Label',
-            'prio'      => 5,
+            'name' => 'subject',
+            'label' => 'Updated Label',
+            'prio' => 5,
         ]);
 
         rex_yform_manager_table::deleteCache();
@@ -131,26 +137,26 @@ final class TablesSuite extends AbstractTestSuite
     {
         $table = $this->createTestTable('two_validators', [
             [
-                'type_id'   => 'value',
+                'type_id' => 'value',
                 'type_name' => 'text',
-                'name'      => 'email',
-                'label'     => 'E-Mail',
-                'prio'      => 10,
+                'name' => 'email',
+                'label' => 'E-Mail',
+                'prio' => 10,
             ],
             [
-                'type_id'   => 'validate',
+                'type_id' => 'validate',
                 'type_name' => 'empty',
-                'name'      => 'email',
-                'message'   => 'Pflicht.',
-                'prio'      => 100,
+                'name' => 'email',
+                'message' => 'Pflicht.',
+                'prio' => 100,
             ],
             [
-                'type_id'           => 'validate',
-                'type_name'         => 'type',
-                'name'              => 'email',
+                'type_id' => 'validate',
+                'type_name' => 'type',
+                'name' => 'email',
                 'type_name_internal' => 'email',
-                'message'           => 'Format.',
-                'prio'              => 101,
+                'message' => 'Format.',
+                'prio' => 101,
             ],
         ]);
 
@@ -204,7 +210,7 @@ final class TablesSuite extends AbstractTestSuite
     public function testImportTablesetsWithMalformedStructureThrows(): void
     {
         $this->assertThrows(
-            \Throwable::class,
+            Throwable::class,
             static fn () => rex_yform_manager_table_api::importTablesets('[{"no_table_or_fields":1}]'),
         );
     }
@@ -214,11 +220,11 @@ final class TablesSuite extends AbstractTestSuite
         // Plain garbage used to silently no-op (json_decode → null, foreach over null).
         // Now it must throw — same as malformed structure.
         $this->assertThrows(
-            \Throwable::class,
+            Throwable::class,
             static fn () => rex_yform_manager_table_api::importTablesets('not-json-at-all'),
         );
         $this->assertThrows(
-            \Throwable::class,
+            Throwable::class,
             static fn () => rex_yform_manager_table_api::importTablesets('"just-a-string"'),
         );
     }

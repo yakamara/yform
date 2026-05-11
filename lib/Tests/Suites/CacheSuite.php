@@ -5,12 +5,14 @@ declare(strict_types=1);
 namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
+use ReflectionClass;
 use rex_path;
 use rex_sql;
-use rex_sql_column;
-use rex_sql_table;
 use rex_yform_manager_table;
 use rex_yform_manager_table_api;
+
+use function count;
+use function in_array;
 
 /**
  * Tests for the rex_yform_manager_table cache layer.
@@ -34,7 +36,7 @@ final class CacheSuite extends AbstractTestSuite
 
     private function getStaticCache(): mixed
     {
-        $ref = new \ReflectionClass(rex_yform_manager_table::class);
+        $ref = new ReflectionClass(rex_yform_manager_table::class);
         $prop = $ref->getProperty('cache');
         return $prop->getValue();
     }
@@ -70,9 +72,9 @@ final class CacheSuite extends AbstractTestSuite
         // Mutate via API — must bust the cache implicitly.
         rex_yform_manager_table_api::setTable([
             'table_name' => $tableName,
-            'name'       => 'NewName',
-            'status'     => 1,
-            'hidden'     => 1,
+            'name' => 'NewName',
+            'status' => 1,
+            'hidden' => 1,
         ]);
 
         $reloaded = rex_yform_manager_table::get($tableName);

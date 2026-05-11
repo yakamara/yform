@@ -34,8 +34,8 @@ class rex_command_yform_test_list extends rex_console_command
 
         $io->title('YForm Test Suites');
         $io->table(['Key', 'Class', 'Description'], $rows);
-        $io->writeln(sprintf('Run all with: <info>php redaxo/bin/console yform:test</info>'));
-        $io->writeln(sprintf('Run one with: <info>php redaxo/bin/console yform:test:<key></info>'));
+        $io->writeln('Run all with: <info>php redaxo/bin/console yform:test</info>');
+        $io->writeln('Run one with: <info>php redaxo/bin/console yform:test:<key></info>');
 
         return 0;
     }

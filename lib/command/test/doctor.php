@@ -51,7 +51,8 @@ class rex_command_yform_test_doctor extends rex_console_command
             $present = false;
             try {
                 $present = (bool) rex_sql_table::get($full)->exists();
-            } catch (Throwable) {}
+            } catch (Throwable) {
+            }
             $checks[] = ['Table ' . $full, $present ? 'present' : 'missing', $present ? 'OK' : 'FAIL'];
             $allGreen = $allGreen && $present;
         }
