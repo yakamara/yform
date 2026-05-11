@@ -9,6 +9,18 @@
 
 class rex_yform_value_hidden extends rex_yform_value_abstract
 {
+    public function loadParams(&$params, $elements = [])
+    {
+        // Bypass the abstract's setLabel($this->getElement(2)) because for
+        // `hidden`, element 2 is the VALUE — not a label. Coerce all property
+        // assignments to string so the typed parent props don't TypeError when
+        // callers pass non-string defaults (#1350).
+        rex_yform_base_abstract::loadParams($params, $elements);
+        $this->setName((string) $this->getElement(1));
+        $this->setLabel('');
+        $this->type = (string) $this->getElement(0);
+    }
+
     public function setValue($value)
     {
         if ('GET' == $this->getElement(3) && isset($_GET[$this->getElement(2)])) {

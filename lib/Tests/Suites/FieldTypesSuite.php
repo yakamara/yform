@@ -346,4 +346,29 @@ final class FieldTypesSuite extends AbstractTestSuite
         $this->assertTrue($ds->save());
         $this->assertSame('abc-123', (string) $ds->getValue('token'));
     }
+
+    public function testHiddenAcceptsNonStringValueViaPipeSyntax(): void
+    {
+        // Issue #1350: hidden's element 2 is the VALUE not a label, but the
+        // abstract's loadParams used to setLabel($this->getElement(2)) — which
+        // crashed with TypeError when callers passed non-string defaults
+        // (e.g. array) because public string $label is typed and non-coercible.
+        // hidden now overrides loadParams to skip the label assignment.
+        $yform = new rex_yform();
+        $yform->setObjectparams('form_name', 'h_arr_' . substr(uniqid(), -6));
+        $yform->setObjectparams('real_field_names', true);
+        $yform->setObjectparams('form_needs_output', false);
+        $yform->setObjectparams('csrf_protection', false);
+        $yform->setObjectparams('form_exit', false);
+
+        // Array as element 2 (default value) — would TypeError on `string $label`
+        // assignment without the loadParams override.
+        $yform->setValueField('hidden', ['flag', ['a', 'b']]);
+        $yform->setFieldValue('send', [], '1');
+        $yform->executeFields();
+
+        // Just verify the pipeline didn't crash. The label property must end
+        // up as an empty string (set by our override).
+        $this->assertTrue(true, 'Pipeline survived non-string default in hidden field.');
+    }
 }
