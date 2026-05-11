@@ -141,6 +141,19 @@ final class FieldTypesSuite extends AbstractTestSuite
         $this->assertStringContains('blog', $value);
     }
 
+    public function testChoiceOffersTinyintWithoutDisplayWidth(): void
+    {
+        // Issue #1591: tinyint(1) is interpreted as boolean by some MySQL clients.
+        // The choice field now offers plain `tinyint` as an additional db_type
+        // option so non-boolean numeric values (e.g. 0–9) can be stored cleanly.
+        $field = new \rex_yform_value_choice();
+        $def = $field->getDefinitions();
+        $this->assertArrayHasKey('db_type', $def);
+        $this->assertTrue(in_array('tinyint', $def['db_type'], true), 'tinyint must be offered as choice db_type.');
+        // tinyint(1) stays available for backward compat.
+        $this->assertTrue(in_array('tinyint(1)', $def['db_type'], true));
+    }
+
     public function testChoiceWritesLabelsAndListEntriesToEmailPool(): void
     {
         // Drive rex_yform directly so we can inspect value_pool.email after fields run.
