@@ -236,22 +236,33 @@ final class TablesSuite extends AbstractTestSuite
         $this->assertCount(1, $imported->getFields(['type_id' => 'validate']), 'Validators must survive too.');
     }
 
-    public function testImportTablesetsKnownIssueRenameLosesFields(): void
+    public function testImportTablesetsUnderRenamedTablePreservesFields(): void
     {
-        // Known issue uncovered while writing this suite:
-        // rex_yform_manager_table_api::setTableField()'s INSERT branch first
-        // calls $sql->setValue('table_name', $table_name) with the explicit
-        // argument, then unconditionally loops `foreach ($table_field as $k => $v)`
-        // and overwrites every value including 'table_name'. Since exportTablesets()
-        // embeds the original 'table_name' inside each field row, importing under
-        // a different name causes the field rows to be inserted with the OLD
-        // table_name. The renamed table ends up with zero fields.
-        //
-        // Fix-Vorschlag: in setTableField() vor dem foreach
-        // `unset($table_field['table_name']);` aufrufen, ODER in importTablesets()
-        // die field-table_name explizit auf den neuen Namen umsetzen.
-        //
-        // Until that gets fixed, this test stays skipped to document the gap.
-        $this->markSkipped('Known issue: importTablesets() under a different name drops fields. See test comment.');
+        // Regression: setTableField() used to overwrite the explicit $table_name
+        // arg via the foreach loop, so importing an export under a new name lost
+        // every field. setTableField() now drops table_name from the field row.
+        $source = $this->createTestTable('rt_source', [
+            ['type_id' => 'value', 'type_name' => 'text',    'name' => 'name', 'label' => 'Name', 'prio' => 1],
+            ['type_id' => 'value', 'type_name' => 'integer', 'name' => 'age',  'label' => 'Alter', 'prio' => 2],
+            ['type_id' => 'validate', 'type_name' => 'empty', 'name' => 'name', 'message' => 'Pflicht.'],
+        ]);
+        $sourceName = $source->getTableName();
+
+        $json = (string) rex_yform_manager_table_api::exportTablesets([$sourceName]);
+        $this->assertNotSame('', $json);
+
+        $renamed = $this->fixtures->reserveTableName('rt_target');
+        // Rewrite the top-level table_name key in the JSON to the new name.
+        $decoded = json_decode($json, true);
+        $entry = $decoded[$sourceName];
+        $entry['table']['table_name'] = $renamed;
+        $rewritten = json_encode([$renamed => $entry]);
+
+        rex_yform_manager_table_api::importTablesets((string) $rewritten);
+        rex_yform_manager_table::deleteCache();
+
+        $imported = rex_yform_manager_table::require($renamed);
+        $this->assertCount(2, $imported->getValueFields(), 'Value fields must survive renamed import.');
+        $this->assertCount(1, $imported->getFields(['type_id' => 'validate']), 'Validators too.');
     }
 }

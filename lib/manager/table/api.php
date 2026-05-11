@@ -173,6 +173,9 @@ class rex_yform_manager_table_api
     public static function setTableField(string $table_name, array $table_field)
     {
         unset($table_field['id']);
+        // $table_name argument always wins; if the field-row embeds a (possibly stale)
+        // table_name (e.g. from exportTablesets), drop it so the explicit arg is used.
+        unset($table_field['table_name']);
 
         if ('' == $table_name) {
             throw new Exception('table_name must be set');
