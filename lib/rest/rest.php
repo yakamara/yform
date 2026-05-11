@@ -120,7 +120,26 @@ class rex_yform_rest
         }
 
         rex_response::setStatus(self::$status[$status]);
-        rex_response::sendContent(json_encode($content), $contentType);
+        // JSON_INVALID_UTF8_SUBSTITUTE: ersetzt invalide UTF-8-Sequenzen durch
+        // U+FFFD (Replacement Character). Ohne den Flag returnt json_encode bei
+        // einem einzigen kaputten Byte `false`, was rex_response als 0-Byte-Body
+        // mit Status 200 + ETag md5('') ans Client schickt — dort i. d. R.
+        // unentdeckt, weil der HTTP-Status ok ist.
+        $encoded = json_encode($content, JSON_INVALID_UTF8_SUBSTITUTE);
+        if (false === $encoded) {
+            // Fallback: auch JSON_INVALID_UTF8_SUBSTITUTE konnte nicht encoden
+            // (z. B. resource/closure im Payload) — explizit als 500 melden,
+            // damit Clients den Fehler sehen statt einen leeren 200 zu kriegen.
+            $encoded = json_encode([
+                'errors' => [
+                    'message' => 'json-encode-failed',
+                    'status' => '500',
+                    'descriptions' => [json_last_error_msg()],
+                ],
+            ]);
+            rex_response::setStatus(self::$status[500]);
+        }
+        rex_response::sendContent($encoded, $contentType);
         exit;
     }
 
