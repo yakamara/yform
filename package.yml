@@ -66,6 +66,7 @@ console_commands:
     yform:test:authorization:     rex_command_yform_test_authorization
     yform:test:cache:             rex_command_yform_test_cache
     yform:test:field-types:       rex_command_yform_test_field_types
+    yform:test:e2e:               rex_command_yform_test_e2e
 
 installer_ignore:
     - .tools

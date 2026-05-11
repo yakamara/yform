@@ -9,6 +9,7 @@ use Redaxo\YForm\Tests\Suites\ActionsSuite;
 use Redaxo\YForm\Tests\Suites\AuthorizationSuite;
 use Redaxo\YForm\Tests\Suites\CacheSuite;
 use Redaxo\YForm\Tests\Suites\DatasetsSuite;
+use Redaxo\YForm\Tests\Suites\E2ESuite;
 use Redaxo\YForm\Tests\Suites\ExtensionPointsSuite;
 use Redaxo\YForm\Tests\Suites\FieldsSuite;
 use Redaxo\YForm\Tests\Suites\FieldTypesSuite;
@@ -81,9 +82,12 @@ final class SuiteRegistry
                 'class' => FieldTypesSuite::class,
                 'description' => 'Type-specific behavior datestamp/choice/uuid/checkbox/etc (3.U.4)',
             ],
+            'e2e' => [
+                'class' => E2ESuite::class,
+                'description' => 'End-to-end install lifecycle + multi-field form submit (3.E2E)',
+            ],
             // Add further suites here as they get implemented:
             // 'tablesets'        => [...]
-            // 'e2e'              => [...]
         ];
     }
 
