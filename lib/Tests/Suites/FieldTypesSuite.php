@@ -285,18 +285,19 @@ final class FieldTypesSuite extends AbstractTestSuite
 
     // ---------- hidden ----------
 
-    public function testHiddenViaSetTableFieldKnownIssue(): void
+    public function testHiddenViaSetTableFieldPersistsValue(): void
     {
-        // Finding: rex_yform_value_hidden has no getDefinitions() method (same
-        // pattern as the in_table validator). Going through setTableField +
-        // dataset->save() triggers "Undefined array key 'values'" in
-        // dataset.php:704, then PDOStatement::bindValue() is called with an
-        // empty parameter name → PDOException. The hidden field only works via
-        // pipe-syntax / rex_yform PHP API, never via the Table Manager.
-        $this->markSkipped(
-            'Known issue: rex_yform_value_hidden lacks getDefinitions(), so '
-          . 'setTableField() + dataset->save() crash with an empty bindValue '
-          . 'param. Use pipe-syntax or rex_yform PHP API for hidden fields.',
-        );
+        // Regression: rex_yform_value_hidden used to lack getDefinitions(),
+        // causing dataset->save() to crash on "Undefined array key 'values'"
+        // in dataset.php:704 followed by a PDOException. Now configurable.
+        $table = $this->buildTable('ft_hidden', [
+            'type_name' => 'hidden',
+            'name'      => 'token',
+            'value'     => 'abc-123',
+        ], [['token', 'varchar(191)']]);
+
+        $ds = rex_yform_manager_dataset::create($table);
+        $this->assertTrue($ds->save());
+        $this->assertSame('abc-123', (string) $ds->getValue('token'));
     }
 }

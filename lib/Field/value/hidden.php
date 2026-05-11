@@ -41,4 +41,21 @@ class rex_yform_value_hidden extends rex_yform_value_abstract
     {
         return 'hidden|fieldname|value||[no_db]' . "\n" . 'hidden|fieldname|key|REQUEST/GET/POST/SESSION|[no_db]';
     }
+
+    public function getDefinitions(): array
+    {
+        return [
+            'type' => 'value',
+            'name' => 'hidden',
+            'values' => [
+                'name' => ['type' => 'name', 'label' => rex_i18n::msg('yform_values_defaults_name')],
+                'value' => ['type' => 'text', 'label' => 'Default-Wert oder Request-/Session-Key'],
+                'source' => ['type' => 'choice', 'label' => 'Quelle', 'choices' => '=,GET=GET,POST=POST,REQUEST=REQUEST,SESSION=SESSION', 'default' => ''],
+                'no_db' => ['type' => 'no_db', 'label' => rex_i18n::msg('yform_values_defaults_table'), 'default' => 0],
+            ],
+            'description' => 'Verstecktes Feld mit Default-Wert oder Wert aus GET/POST/REQUEST/SESSION.',
+            'db_type' => ['varchar(191)', 'text'],
+            'famous' => false,
+        ];
+    }
 }
