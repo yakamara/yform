@@ -42,9 +42,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
      * Log of EP invocations.
      * Shape: ['YFORM_DATA_ADD' => [ ['subject' => ..., 'params' => ...], ... ], ...].
      *
-     * @var array<string, list<array{subject: mixed, params: array}>>
+     * @var array<string, list<array{subject: mixed, params: array<string, mixed>}>>
      */
-    /** @var array<string, list<array{subject: mixed, params: array<string, mixed>}>> */
     public static array $epLog = [];
 
     /** One-shot veto flag for testYformDataDeleteCanCancel. */
@@ -134,6 +133,18 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         rex_sql::factory()->setQuery('TRUNCATE `' . $this->tableName . '`');
     }
 
+    /**
+     * Typed accessor — PHPStan ignores the @var on $epLog because of the
+     * inline `= []` initializer, so we expose a typed helper instead.
+     *
+     * @return list<array{subject: mixed, params: array<string, mixed>}>
+     */
+    private static function log(string $ep): array
+    {
+        /** @phpstan-ignore-next-line */
+        return self::$epLog[$ep] ?? [];
+    }
+
     private function trackFixture(string $tableName): void
     {
         $reflection = new ReflectionClass($this->fixtures);
@@ -150,8 +161,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
     public function testYformInitFiresOnConstruct(): void
     {
         new rex_yform();
-        $this->assertTrue(count(self::$epLog['YFORM_INIT'] ?? []) >= 1);
-        $this->assertInstanceOf(rex_yform::class, self::$epLog['YFORM_INIT'][0]['subject']);
+        $this->assertTrue(count(self::log('YFORM_INIT')) >= 1);
+        $this->assertInstanceOf(rex_yform::class, self::log('YFORM_INIT')[0]['subject']);
     }
 
     // ---------- YFORM_DATA_ADD / ADDED ----------
@@ -164,10 +175,10 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         $this->assertTrue($ds->save());
 
         // ADD fires before save with the rex_yform; ADDED fires after.
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_ADD'] ?? []) >= 1);
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_ADDED'] ?? []) >= 1);
+        $this->assertTrue(count(self::log('YFORM_DATA_ADD')) >= 1);
+        $this->assertTrue(count(self::log('YFORM_DATA_ADDED')) >= 1);
 
-        $added = self::$epLog['YFORM_DATA_ADDED'][0];
+        $added = self::log('YFORM_DATA_ADDED')[0];
         $this->assertSame($this->tableName, $added['params']['table']->getTableName());
         $this->assertTrue(($added['params']['data_id'] ?? 0) > 0);
     }
@@ -187,8 +198,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         $ds->setValue('title', 'after');
         $this->assertTrue($ds->save());
 
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_UPDATE'] ?? []) >= 1);
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_UPDATED'] ?? []) >= 1);
+        $this->assertTrue(count(self::log('YFORM_DATA_UPDATE')) >= 1);
+        $this->assertTrue(count(self::log('YFORM_DATA_UPDATED')) >= 1);
 
         // Finding: YFORM_DATA_UPDATED's 'old_data' param is misleadingly named.
         // dataset->executeForm() captures it as `$this->getData()` right before
@@ -196,7 +207,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         // by then. So 'old_data' is the in-memory state AT-SAVE-TIME, not the
         // pre-update DB state. To get the real "old" state, a handler would need
         // to load a fresh dataset from DB inside YFORM_DATA_UPDATE.
-        $updated = self::$epLog['YFORM_DATA_UPDATED'][0];
+        $updated = self::log('YFORM_DATA_UPDATED')[0];
         $this->assertArrayHasKey('old_data', $updated['params']);
         $this->assertSame(
             'after',
@@ -217,8 +228,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
 
         $this->assertTrue($ds->delete());
 
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_DELETE'] ?? []) >= 1);
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_DELETED'] ?? []) >= 1);
+        $this->assertTrue(count(self::log('YFORM_DATA_DELETE')) >= 1);
+        $this->assertTrue(count(self::log('YFORM_DATA_DELETED')) >= 1);
     }
 
     public function testYformDataDeleteCanCancel(): void
@@ -234,8 +245,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         $this->assertFalse($ds->delete(), 'A YFORM_DATA_DELETE handler returning false must veto the delete.');
 
         // DELETE fired (probe + veto handler both ran), DELETED did NOT fire.
-        $this->assertTrue(count(self::$epLog['YFORM_DATA_DELETE'] ?? []) >= 1);
-        $this->assertSame(0, count(self::$epLog['YFORM_DATA_DELETED'] ?? []));
+        $this->assertTrue(count(self::log('YFORM_DATA_DELETE')) >= 1);
+        $this->assertSame(0, count(self::log('YFORM_DATA_DELETED')));
 
         // Row should still exist.
         rex_yform_manager_dataset::clearInstance([$this->tableName, $id]);
@@ -252,8 +263,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         $ds->setValue('status', 1);
         $this->assertTrue($ds->save());
 
-        $this->assertTrue(count(self::$epLog['YFORM_SAVED'] ?? []) >= 1);
-        $saved = self::$epLog['YFORM_SAVED'][0];
+        $this->assertTrue(count(self::log('YFORM_SAVED')) >= 1);
+        $saved = self::log('YFORM_SAVED')[0];
         $this->assertInstanceOf(rex_sql::class, $saved['subject']);
         $this->assertSame($this->tableName, $saved['params']['table']);
         $this->assertSame('insert', $saved['params']['action']);
@@ -271,8 +282,8 @@ final class ExtensionPointsSuite extends AbstractTestSuite
         $ds->setValue('title', 'second');
         $this->assertTrue($ds->save());
 
-        $this->assertTrue(count(self::$epLog['YFORM_SAVED'] ?? []) >= 1);
-        $this->assertSame('update', self::$epLog['YFORM_SAVED'][0]['params']['action']);
+        $this->assertTrue(count(self::log('YFORM_SAVED')) >= 1);
+        $this->assertSame('update', self::log('YFORM_SAVED')[0]['params']['action']);
     }
 
     // ---------- YFORM_EMAIL_BEFORE_SEND ----------
@@ -307,7 +318,7 @@ final class ExtensionPointsSuite extends AbstractTestSuite
             $yform->setFieldValue('send', [], '1');
             $yform->getForm();
 
-            $this->assertTrue(count(self::$epLog['YFORM_EMAIL_BEFORE_SEND'] ?? []) >= 1);
+            $this->assertTrue(count(self::log('YFORM_EMAIL_BEFORE_SEND')) >= 1);
         } finally {
             rex_sql::factory()->setQuery(
                 'DELETE FROM ' . rex::getTable('yform_email_template') . ' WHERE name = :n',

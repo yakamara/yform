@@ -37,4 +37,4 @@ $addon = ['../../../../redaxo/src/addons/' . getenv('ADDON_KEY') . '/'];
  * @param array $extensions the extensions to use
  * @param int $phpVersion the php version to use
  */
-\rexstan\RexStanUserConfig::save(5, $addon, $extensions, 80203);
+\rexstan\RexStanUserConfig::save(5, $addon, $extensions, 80300);
