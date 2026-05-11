@@ -6,8 +6,10 @@ namespace Redaxo\YForm\Tests\Suites;
 
 use Redaxo\YForm\Test\AbstractTestSuite;
 use rex_exception;
+use rex_sql;
 use rex_yform_manager_field;
 use rex_yform_manager_table;
+use rex_yform_manager_table_api;
 
 /**
  * Tests for the read-only API of rex_yform_manager_table.
@@ -69,23 +71,8 @@ final class TableReadSuite extends AbstractTestSuite
 
     public function testHasHistoryReflectsFlag(): void
     {
-        $withHistory = $this->createTestTable('hist_on');
-        $noHistory   = $this->createTestTable('hist_off');
-
-        // rex_yform_manager_table_api::setTable() whitelists $table_fields which
-        // does NOT include 'history' / 'mass_deletion' / 'mass_edit' even though
-        // these are real columns on rex_yform_table. They get set to defaults at
-        // install time only. Patch directly to exercise hasHistory().
-        \rex_sql::factory()
-            ->setTable(\rex_yform_manager_table::table())
-            ->setWhere(['table_name' => $withHistory->getTableName()])
-            ->setValue('history', 1)
-            ->update();
-        \rex_sql::factory()
-            ->setTable(\rex_yform_manager_table::table())
-            ->setWhere(['table_name' => $noHistory->getTableName()])
-            ->setValue('history', 0)
-            ->update();
+        $withHistory = $this->createTestTable('hist_on', [], ['history' => 1]);
+        $noHistory   = $this->createTestTable('hist_off', [], ['history' => 0]);
         rex_yform_manager_table::deleteCache();
 
         $on  = rex_yform_manager_table::require($withHistory->getTableName());
@@ -95,16 +82,30 @@ final class TableReadSuite extends AbstractTestSuite
         $this->assertFalse($off->hasHistory());
     }
 
-    public function testSetTableApiKnownIssueDoesNotPropagateHistoryFlag(): void
+    public function testSetTableApiPropagatesHistoryMassFlags(): void
     {
-        // rex_yform_manager_table_api::$table_fields lacks 'history',
-        // 'mass_deletion', 'mass_edit'. Passing them via setTable() is silently
-        // dropped. Document this as a known issue; the production code that
-        // needs these flags must currently set them via direct SQL.
-        $this->markSkipped(
-            'Known issue: setTable() does not propagate history / mass_deletion / mass_edit. '
-          . 'Fix: add these keys to rex_yform_manager_table_api::$table_fields.',
+        // Regression: setTable() now propagates history/mass_deletion/mass_edit
+        // (they used to be silently dropped because they weren't in $table_fields).
+        $name = $this->fixtures->reserveTableName('mass_flags');
+        \rex_sql_table::get($name)->ensurePrimaryIdColumn()->ensure();
+        rex_yform_manager_table_api::setTable([
+            'table_name'    => $name,
+            'name'          => 'Mass Flags',
+            'status'        => 1,
+            'history'       => 1,
+            'mass_deletion' => 1,
+            'mass_edit'     => 1,
+        ]);
+        rex_yform_manager_table::deleteCache();
+
+        $row = rex_sql::factory();
+        $row->setQuery(
+            'SELECT history, mass_deletion, mass_edit FROM ' . rex_yform_manager_table::table() . ' WHERE table_name = :n',
+            [':n' => $name],
         );
+        $this->assertSame(1, (int) $row->getValue('history'));
+        $this->assertSame(1, (int) $row->getValue('mass_deletion'));
+        $this->assertSame(1, (int) $row->getValue('mass_edit'));
     }
 
     public function testGetCustomIconReturnsTableIconOrNull(): void
