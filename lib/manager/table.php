@@ -7,7 +7,7 @@
  * @author <a href="http://www.yakamara.de">www.yakamara.de</a>
  */
 
-final class rex_yform_manager_table implements ArrayAccess
+class rex_yform_manager_table implements ArrayAccess
 {
     public static array $tableLayouts = [];
     public static string $defaultTableLayout = 'yform/manager/page/layout.php';
