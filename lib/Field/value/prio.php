@@ -25,35 +25,57 @@ class rex_yform_value_prio extends rex_yform_value_abstract
             if ($this->debug) {
                 $sql->setDebug();
             }
-            $fields = $this->getElement('fields');
-            if (!is_array($fields)) {
-                $fields = array_filter(explode(',', $fields));
-            }
-            if (empty($fields)) {
-                $fields = ['id'];
-            }
-            $selectFields = [];
-            foreach ($fields as $field) {
-                $selectFields[] = $field;
-            }
-            $sql->setQuery(sprintf(
-                'SELECT id, %s, %s as prio FROM %s%s ORDER BY %2$s',
-                implode(', ', $selectFields),
-                $this->getElement('name'),
-                $this->params['main_table'],
-                $scopeWhere,
-            ));
-            $prio = 1;
-            while ($sql->hasNext()) {
-                if ($sql->getValue('id') != $this->params['main_id']) {
-                    $prio = $sql->getValue('prio') + 1;
-                    $label = [];
-                    foreach ($fields as $field) {
-                        $label[] = rex_i18n::translate((string) $sql->getValue($field), false);
+            $rawLabelExpression = $this->getElement('label_expression');
+            $labelExpression = is_array($rawLabelExpression) ? '' : trim((string) $rawLabelExpression);
+
+            if ('' !== $labelExpression) {
+                $sql->setQuery(sprintf(
+                    'SELECT id, (%s) AS _prio_label, %s as prio FROM %s%s ORDER BY %2$s',
+                    $labelExpression,
+                    $this->getElement('name'),
+                    $this->params['main_table'],
+                    $scopeWhere,
+                ));
+                $prio = 1;
+                while ($sql->hasNext()) {
+                    if ($sql->getValue('id') != $this->params['main_id']) {
+                        $prio = $sql->getValue('prio') + 1;
+                        $label = rex_i18n::translate((string) $sql->getValue('_prio_label'), false);
+                        $options[$prio] = rex_i18n::msg('yform_prio_after', $label);
                     }
-                    $options[$prio] = rex_i18n::msg('yform_prio_after', implode(' | ', $label));
+                    $sql->next();
                 }
-                $sql->next();
+            } else {
+                $fields = $this->getElement('fields');
+                if (!is_array($fields)) {
+                    $fields = array_filter(explode(',', $fields));
+                }
+                if (empty($fields)) {
+                    $fields = ['id'];
+                }
+                $selectFields = [];
+                foreach ($fields as $field) {
+                    $selectFields[] = $field;
+                }
+                $sql->setQuery(sprintf(
+                    'SELECT id, %s, %s as prio FROM %s%s ORDER BY %2$s',
+                    implode(', ', $selectFields),
+                    $this->getElement('name'),
+                    $this->params['main_table'],
+                    $scopeWhere,
+                ));
+                $prio = 1;
+                while ($sql->hasNext()) {
+                    if ($sql->getValue('id') != $this->params['main_id']) {
+                        $prio = $sql->getValue('prio') + 1;
+                        $label = [];
+                        foreach ($fields as $field) {
+                            $label[] = rex_i18n::translate((string) $sql->getValue($field), false);
+                        }
+                        $options[$prio] = rex_i18n::msg('yform_prio_after', implode(' | ', $label));
+                    }
+                    $sql->next();
+                }
             }
         }
 
@@ -88,7 +110,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
 
     public function getDescription(): string
     {
-        return 'prio|name|label|fields|scope|defaultwert';
+        return 'prio|name|label|fields|scope|defaultwert|label_expression';
     }
 
     public function getDefinitions(): array
@@ -102,6 +124,7 @@ class rex_yform_value_prio extends rex_yform_value_abstract
                 'fields' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_values_prio_fields')],
                 'scope' => ['type' => 'select_names', 'label' => rex_i18n::msg('yform_values_prio_scope')],
                 'default' => ['type' => 'choice',       'label' => rex_i18n::msg('yform_values_prio_default'), 'choices' => [1 => 'Am Anfang', '' => 'Am Ende']],
+                'label_expression' => ['type' => 'text', 'label' => rex_i18n::msg('yform_values_prio_label_expression'), 'notice' => rex_i18n::msg('yform_values_prio_label_expression_notice')],
                 'attributes' => ['type' => 'text',    'label' => rex_i18n::msg('yform_values_defaults_attributes'), 'notice' => rex_i18n::msg('yform_values_defaults_attributes_notice')],
                 'notice' => ['type' => 'text',        'label' => rex_i18n::msg('yform_values_defaults_notice')],
             ],
