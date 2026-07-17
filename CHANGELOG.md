@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 5.0.3 - 17.07.2026
+--------------------------
+
+### Korrekturen
+
+* `rex_yform_value_date` und `rex_yform_value_datetime`: leere/`NULL`-Werte (nullable Spalten ohne Wert) werden in der Listenansicht jetzt als leer gerendert, statt `DateTime::createFromFormat()` mit `null` aufzurufen — das löste seit PHP 8.1 „Passing null to parameter #2 (\$datetime) of type string is deprecated" aus und ließ die Datensatz-Liste im Debug-Modus abbrechen.
+
 Version 5.0.2 - 12.05.2026
 --------------------------
 
