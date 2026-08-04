@@ -1,0 +1,652 @@
+yform = YForm
+yform_format_datetime = m-d-Y H:i:s
+yform_format_date = m-d-Y
+yform_format_time = H:i
+
+yform_overview = Översikt
+yform_description = Beskrivning
+yform_back_to_overview = Tillbaka till översikten
+yform_table_name = MySQL tabellnamn
+
+yform_description_all = <P> Viktigast i en modul är fältdefinitionerna, som är uppdelade i 3 separata kategorier. </ P> <div class = "list-group"> <div class = "list-group-item"> <h3 class = "List-group-item-heading"> Value-fält </ h3> <p class = "list-group-item-text"> Dessa är de fält som normalt visas i formuläret. Dessa kan vara enkla text-fält, select-fält och checkboxar men också dolda fält, datumselect-fält, dynamiska databasvalfält etc. </ Div> <div class = "list-group-item"> <h3 class = "listgruppsobjekt -heading "> Validera fält </ h3> <p class =" list-group-item-text "> Kort sagt utför dessa fält kontroller för server-sidor på värdena på värdefält. De kan användas för att kontrollera om ett fält innehåller ett värde, om värdet är en sträng, ett heltal eller något annat. Dessutom kan de utföra databasförfrågningar, till exempel för att kontrollera om ett värde redan finns i en specifik post, eller att starta någon PHP-funktion och utföra anpassade valideringsmetoder. </ P> </ div> <div class = "list-group- Objekt "> <h3 class =" list-group-item-heading "> Aktionsfält </ h3> <p class =" list-group-item-text "> Dessa fält definierar vad som ska hända efter att formuläret skickats in och validering har gått. Det finns några fördefinierade åtgärder som tillhandahålls som att skicka ett e-postmeddelande, spara en post i databasen eller både och, men precis som med validate fields finns det även anpassade åtgärder som kan åberopas. </ P> </ div> </ div>
+yform_description_type_heading = Typ-översikt
+list_message = {0} till {1} av {2} inlägg
+
+yform_value = Values
+yform_validate = Valideringar
+yform_action = Aktioner
+
+yform_install_modul = Setup
+yform_install_modul_description = För att dra nytta av formulärsystemet YForm måste det skapas en modul.
+yform_install_yform_modul = Installera "{0}" modul
+yform_install_update_module = Aktualisera "{0}" modul
+
+yform_validate_compare_description = Jämför två värden <b> med varandra </ b>.
+yform_validate_compare_value_description = Jämför ett värde <b> med ett fördefinerat värde </ b>.
+yform_validate_customfunction_description = Starta en anpassad <b> PHP-funktion </ b> för att utföra en validering.
+yform_validate_email_description = Kontrollerar om det inlämnade värdet är en <b> giltig e-postadress </ b>.
+yform_validate_empty_description = Kontrollera om det <b>finns</b> ett värde.
+yform_validate_intfromto_description = Kontrollera om värdet ligger <b>mellan två siffror</b>.
+yform_validate_size_description = Kontrollera om värdet innehåller <b>ett bestämt antal tecken</b>.
+yform_validate_size_range_description = Kontrollera om värdets <b>längd</b> ligger <b>mellan två siffror</b>.
+yform_validate_type_description = Kontrollera om värdets <b>typ</b> är korrekt [int, float, numeric, string, email, url, date, hex]
+yform_validate_unique_description = Kontrollera om värdet <b>inte finns än i andra datasatser</b>.
+
+yform_validate_empty_notices_name = Om flera fält väljs måste minst ett fält fyllas i.
+
+
+yform_values_checkbox_description = 			En <b>Checkbox</b> med fördefinerade värden.
+yform_values_checkbox_sql_description =			En <b>Checkbox</b>  med värden som kommer från en <b>SQL query</b>.
+yform_values_date_description =					Tre select fält för ange ett <b>datum</b> (månad, dag, år).
+yform_values_datestamp_description =			Ett dolt fält för spara en <b> tidsstämpel </ b> när en datasats läggs till eller redigeras.
+yform_values_datestamp_notice =                 Formatering enligt PHP-date() -funktionen (http://php.net/manual/en/function.date.php)
+yform_values_datetime_description =				En rad select fält för ange <b>datum och tid</b> (månad, dag, år, timmar, minuter, sekunder).
+yform_values_email_description =				Ett enkelt inmatningsfält för <b> e-postadresser </ b>.
+yform_values_emptyname_description =			Ett vält <b>utan</b> inmatningsmöjlighet.
+yform_values_fieldset_description =				Ett fieldset gruppera formulärfält.
+yform_values_float_description =				Ett enkelt inmatningsfält för  <b>floating-point numbers</b>.
+yform_values_generate_key_description =			Ett osynligt fält som lagrar en <b> slumpmässig 32-siffrig nyckel som består av siffror och små bokstäver </ b> när posten läggs till eller redigeras.
+yform_values_hashvalue_description =			Ett fält som genererar ett  <b>hashvärde</b> från värdet av ett annat fält.
+yform_values_html_description =					Utmatar rå <b> HTML-kod </ b> på en viss plats i formuläret.
+yform_values_index_description =				Ett fält som skapar en <b> index nyckel </ b> över flera fält.
+yform_values_integer_description =				Ett enkelt inmatningsfält för <b>heltal</b>.
+yform_values_number_description =               Ett inmatningsfält för <b> siffror med eller utan decimaler. (DECIMAL) </ b>
+yform_values_php_description =					Kör <b>PHP-kod</b> vid ett specifik ställe i formuläret.
+yform_values_radio_description =				En eller flera urvalsfält som <b>radio buttons</b>.
+yform_values_select_description =				Ett <b>urvalsfält</b> med fördefinierade värden.
+yform_values_select_sql_description =			Ett <b>urvalsfält</b> med värden som kommer från en <b>SQL-förfrågning</b>
+yform_values_submit_description =				En eller flera <b>submit buttons</b> för att skicka formuläret.
+yform_values_text_description =					Ett <b>enkelt inmatningsfält</b> för textinmatning.
+yform_values_password_description =             Ett <b> inmatningsfält </b> för lösenord
+yform_values_textarea_description =				Ett enkelt <b>inmatningsfält med flera rader</b> för textinmatning.
+yform_values_time_description =					Ett antal urvalsfält i vilken <b>tiden </ b> (timmar, minuter, sekunder) kan bestämmas.
+yform_values_upload_description =				Ett <b> filöverföringsfält </ b> för att ladda upp en enstaka fil till en <b> databas eller katalog </ b>.
+yform_values_uuid_description =         Ett fält där det skapas universella <b> unika UUID / GUID </b>.
+yform_values_ip_description =                   Ett <b> IP-fält </ b>, som lagras här
+yform_values_showvalue_description =            Ett fält som bara visar fältets värde men inte kan ändras.
+
+yform_values_checked = utvald
+yform_values_not_checked = inte utvald
+
+yform_values_defaults_name = Namn
+yform_values_defaults_label = Beteckning
+yform_values_defaults_table = Databas
+yform_values_defaults_notice = Notis
+yform_values_defaults_attributes = Individuella attribut
+yform_values_defaults_attributes_notice = Var god skriv i JSON format.  T.ex. {"readonly":"readonly","placeholder":"My placeholder"}
+yform_values_defaults_widgets = Widget
+yform_values_defaults_showvalue = Visa värde
+yform_validate_defaults_message = Felmeddelande
+yform_values_defaults_unit = Måttenhet (t.ex. € $ m mm %)
+
+yform_values_number_precision = Antal siffror (23335443.23 skulle till exempel vara 10 siffror) (PRECISION)
+yform_values_number_scale = Antal decimaler (23335443.23 skulle exempelvis vara 2 decimaler) (SCALE)
+
+yform_search_defaults_wildcard_notice = Exempel: * namn /! (empty) / (empty)
+yform_search_integer_notice = Exempel: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
+yform_search_number_notice = Exempel: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
+yform_search_defaults_select_notice = Använd CTRL eller COMMAND för att välja fler alternativ
+
+yform_values_checkbox_values = Värden (0,1 = unchecked, checked)
+yform_values_checkbox_default = Default status
+yform_values_checkbox_sql_query = Query med "SELECT id, name FROM ..."
+yform_values_date_year_start = Startår
+yform_values_date_year_end = Slutår
+yform_values_date_format = Display format
+yform_values_date_current_date = Aktuellt datum förinställt
+yform_values_date_search_notice = Format: {0} - {0}
+yform_values_datestamp_format = Format
+yform_values_datestamp_only_empty = När ska värdet bör sättas
+yform_values_datetime_year_start = Startår
+yform_values_datetime_year_end = Slutår
+yform_values_datetime_minutes = Minuter format
+yform_values_datetime_format = Display format
+yform_values_datetime_current_date = Aktuellt datum förinställt
+yform_values_email_default = Default status
+yform_values_email_classname = Klassnamn
+yform_values_float_scale = Decimal
+yform_values_float_default = Default värde
+yform_values_generate_key_only_empty = När ska värdet ställas in
+yform_values_hashvalue_field = Input-fält
+yform_values_hashvalue_function = Algoritm
+yform_values_hashvalue_salt = Salt
+yform_values_html_HTML = HTML
+yform_values_index_names = Fält
+yform_values_index_names_notice = Kommaseparerat. Fält från relaterade tabeller möjliga, ex .: title, description, category_id.name
+yform_values_index_function = Optional coding function
+yform_values_index_function_notice = Exempel: md5, sha1
+yform_values_index_add_this_param = Skicka fältobjekt som 2. parametern till funktionen?
+yform_values_integer_default = Default värde
+yform_values_number_default = Default värde
+yform_values_php_code = PHP code
+yform_values_radio_options = Radio buttons definition, komma separerat.
+yform_values_radio_default = Default värde
+yform_values_select_options = Select definition, komma separerat.
+yform_values_select_default = Default värde
+yform_values_select_multiple = Flertalsurval möjligt
+yform_values_select_size = Höjd av select field
+yform_values_select_sql_query = Query with "SELECT id, name FROM ...". id and name are required. If necessary, use "SELECT id, client AS name ..."
+yform_values_select_sql_default = Default värde (optional)
+yform_values_select_sql_empty_option = Add empty option
+yform_values_select_sql_empty_value = Text till empty option (t.ex. "Vänligen välj en option")
+yform_values_select_sql_multiple = Flertalsurval möjligt
+yform_values_select_sql_size = Höjd av select field
+yform_values_submit_labels = Beteckning (optional, kommaseparerat)
+yform_values_submit_values = Värden (optional, kommaseparerat)
+yform_values_submit_default = Default värde
+yform_values_submit_css_classes = CSS class name (kommaseparerat)
+yform_values_text_default = Default value
+yform_values_text_css_class = CSS class name
+yform_values_defaults_prepend = Visa sträng före den. t.ex. EUR
+yform_values_defaults_append = Visa sträng före den. t.ex. .00
+yform_values_textarea_default = Default value
+yform_values_textarea_classes = Classes
+yform_values_time_hours = Timmar
+yform_values_time_minutes = Minuter
+yform_values_time_format = Display format
+yform_values_time_format_notice = Default: HH:ii
+yform_values_upload_sizes = Maximal storlek i kilobytes eller ett intervall, ex .: 100, 500
+yform_values_upload_types = Tillåtna filtyper, kommaseparerat lista. Ex. ".gif, .png" eller "*"
+yform_values_upload_required = Obligatorisk fält
+yform_values_upload_messages = min_err,max_err,type_err,empty_err,delete_file_msg
+yform_values_upload_modus = Upload modus
+yform_values_upload_database_filename_field = Vid 'database': Filnamn sparas i databasfält
+yform_values_upload_upload_folder = Vid 'upload': bestämma upload-mapp
+yform_values_upload_upload_folder_notice = Ange relativ sökväg till "{0}"
+yform_values_upload_file_prefix = Dataprefix
+yform_values_ip_server_var = Servervariable (optional)
+yform_values_ip_server_var_notice = default: REMOTE_ADDR
+
+yform_validate_compare_firstname = 1. fältnamn
+yform_validate_compare_secondname = 2. fältnamn
+yform_validate_compare_type = Typ av jämförelse
+yform_validate_compare_message = Felmeddelande
+yform_validate_compare_value_name = Fältnamn
+yform_validate_compare_value_compare_value = Värde att jämföra
+yform_validate_compare_value_compare_type = Typ av jämförelse
+yform_validate_compare_value_message = Felmeddelande
+yform_validate_customfunction_name = Namn
+yform_validate_customfunction_function = Funktionens namn
+yform_validate_customfunction_params = Ytterligare parametrar
+yform_validate_customfunction_message = Felmeddelande
+yform_validate_customfunction_type = Valideringstidspunkt
+yform_validate_email_name = Namn
+yform_validate_email_message = Felmeddelande
+yform_validate_empty_name = Namn
+yform_validate_empty_message = Felmeddelande
+yform_validate_intfromto_name = Namn
+yform_validate_intfromto_from = Från
+yform_validate_intfromto_to = Till
+yform_validate_intfromto_message = Felmeddelande
+yform_validate_size_name = Namn
+yform_validate_size_size = Antal tecken
+yform_validate_size_message = Felmeddelande
+yform_validate_type_name = Namn
+yform_validate_type_type = Kolla efter
+yform_validate_type_message = Felmeddelande
+yform_validate_type_not_required = Fältet är inte obligatorisk
+yform_validate_unique_name = Namn
+yform_validate_unique_message = Felmeddelande
+yform_validate_unique_table = Tabell
+yform_validate_unique_notice = Ange fältnamn i en kommaseparerad lista. Ex: namn, email
+yform_validate_unique_empty_option = Värdet kan också vara tomt. (Fungerar bara om det är ett fält)
+
+yform_validate_preg_match_pattern = Ange sökmönster
+yform_validate_preg_match_pattern_info = T.ex.: /^start/
+
+yform_validate_password_policy_description = Med detta kan du validera ett fält enligt <b> lösenordsregler </ b>
+yform_validate_preg_match_description = PREG_MATCH validerung
+yform_validate_password_policy_rules = Regelkonfiguration
+yform_validate_password_policy_rules_notice = Standardregler om det är tomt: {0}
+
+yform_values_options_name = 	Namn
+yform_values_options_label = 	Beskrivning
+yform_values_options_boolvalues	= 	Värden (0,1 = unchecked, checked)
+
+yform_values_be_user_description = Spara backend-användaren
+yform_values_csrf_description = CSRF skydd
+
+yform_geo_get_position = Hämta position
+yform_geo_clear_position = Radera position
+
+
+yform_values_choice_attributes = Attribut för elementet (attributes)
+yform_values_choice_attributes_notice = Med det här alternativet kan HTML-attribut läggas till i någon <code> div </ code> eller <code> select </ code>. Callable: <code> foo ($ attribut) </ code>; <code> foo :: bar ($ attribut) </ code> eller JSON: <code> {"class": "group-item"} </ code> eller <code> {"size": "5"} < / code>
+yform_values_choice_choice_attributes = Attribut för varje urval (choice_attributes)
+yform_values_choice_choice_attributes_notice = Med det här alternativet kan ytterligare HTML-attribut läggas till för varje urval. Callable: <code> foo ($attributes, $value, $label) </ code>; <code> foo :: bar ($attributes, $value, $label) </ code> eller JSON: <code> {"class": "choicable", "DE": {"data-language": "de-de"}} </ code>
+yform_values_choice_choice_label = Påverka label via Callable (choice_label)
+yform_values_choice_choice_label_notice = Urvalsmöjligheter
+yform_values_choice_choices = Val (choices)
+yform_values_choice_choices_notice = Det här är det enklaste sättet att ange vilka alternativ som ska användas av det här fältet. Alternativet är antingen en kommaseparerad sträng (label = value), en JSON-array, där matrisnyckeln är elementets etikett och arrayvärdet är elementets värde eller en fråga "SELECT id, namn FROM table"
+yform_values_choice_choices_table = <table class="table"><colgroup><col width="32%" /><col width="69%" /></colgroup><thead valign="bottom"><tr><th>Beskrivning</th><th>Exempel</th></tr></thead><tbody valign="top"><tr><td>kommaseparerad string</td><td><code>Danmark=DK,Tyskland=DE,Österrike=AT,Schweiz=CH</code></td></tr><tr><td>JSON-Array</td><td><code>{"Danmark": "DK", "Tyskland": "DE", "Österrike": "AT", "Schweiz": "CH"}</code></td></tr><tr><td>JSON-Array med <code>optgroup</code> för select tag</td><td><code>{"Europa": {"Danmark": "DK", "Tyskland": "DE", "Österrike": "AT", "Schweiz": "CH"}, "Sydamerika": {"Bolivia": "BO"}}</code></td></tr><tr><td>Query</td><td><code>SELECT id AS value, name AS label FROM country</code></td></tr><tr><td>Query med <code>optgroup</code> för select tag<br /> (I optionen <code>group_by</code> måste <code>group_label</code> noteras)</td><td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td></tr></tbody></table>
+yform_values_choice_default = Standardvärden (default)
+yform_values_choice_default_notice = Om värden anges här på ett kommaseparerat sätt, är dessa redan förinställda
+yform_values_choice_description = Ett multifunktionsfält som låter användaren "välja" ett eller flera alternativ. Det kan visas som välj select-tag, radio eller kryssrutor (alternativ till <code> checkbox_sql </ code>, <code> radio </ code>, <code> radio_sql </ code>, <code> select </ code> , <code> select_sql </ code>)
+yform_values_choice_expanded = Utökat (expanded)
+yform_values_choice_expanded_notice = Om den är satt till true, görs radios eller kryssrutor (beroende på multiple). Om det är fale, görs ett Select-element.
+yform_values_choice_expanded_multiple_table = <table class = "table"> <colgroup> <col width = "69%" /> <col width = "16%" /> <col width = "16%" /> </ colgroup> <thead valign = " botten "> <tr> <th>Element </th><th>Utökat</th><th> flera val</th></tr></ thead><tbody valign ="top"><tr><td>select tag </td><td><code>false </ code></td><td><code>false </code></td> </tr><tr><td>select tag (with <code>multiple</code> attributes)</td><td><code>false </code></td><td><code>true</code></td></tr><tr><td> radio buttons</td><td> <code>true </code></td><td><code>false</code></td></tr><tr> <td>checkboxes</td><td><code>true</code></td><td><code>true</code></td></tr></tbody></table>
+yform_values_choice_group_attributes = Attribut för gruppen (group_attributes)
+yform_values_choice_group_attributes_notice = Det här alternativet lägger till ytterligare HTML-attribut för objektet. Callable: <code> foo ($attributes) </ code>; <code> foo :: bar ($attributes) </ code> eller JSON: <code> {"class": "group", "data-yform": "awesome"} </ code>
+yform_values_choice_group_by = Grupperingar (group_by)
+yform_values_choice_group_by_notice = Detta alternativ gör det möjligt att "gruppera" val i valet. (För närvarande endast möjligt via sökfråga, ange fältnamn)
+yform_values_choice_multiple = Multipelval (multiple)
+yform_values_choice_multiple_notice = Om det är sant kan användaren välja flera alternativ (i motsats till bara ett alternativ). Beroende på värdet på det expanderade alternativet visas antingen en välj Select-Tag eller checkboxes (true) eller en välj Select-Tag eller radio-buttons (false).
+yform_values_choice_placeholder = Platshållare
+yform_values_choice_placeholder_notice = Det här alternativet avgör om ett speciellt "tomt" alternativ (till exempel "Välj ett alternativ") visas överst på en Select-widget. Det här alternativet gäller endast om multipelalternativet är inställt på felaktigt.
+yform_values_choice_preferred_choices = Föredragna val (preferred_choices)
+yform_values_choice_preferred_choices_notice = Det här alternativet flyttar vissa val överst i listan, placera en optisk separator mellan dem och resten av alternativen.
+
+yform_values_status_output_values = Ange utgångsvärden
+yform_values_status_output_values_notice = 2 värden separerade med komma-tecken. t.ex. offline, online eller ▢, ▣
+
+yform_values_message_is_missing = [Varningsmeddelande för fältet `{1}` saknas]
+
+yform_validate_object_is_missing = Objektet `{1}` för validering `{0}` saknas
+
+yform_values_deprecated_checkbox_sql = Deprecated; Använd Choice value
+yform_values_deprecated_radio = Deprecated; Använd Choice value
+yform_values_deprecated_radio_sql = Deprecated; Använd Choice value
+yform_values_deprecated_select = Deprecated; Använd Choice value
+yform_values_deprecated_select_sql = Deprecated; Använd Choice value
+yform_values_deprecated_float = Borttagen ! Använd nummerfältet
+
+yform_always = alltid
+yform_onlyifempty = bara om tom
+yform_never = aldrig
+
+yform_values_number_error_precision = Ange ett tal mellan {0} och {1} för antalet siffror (PRECISION)
+yform_values_number_error_scale = Ange ett tal mellan {0} och {1} i antal decimaler (SCALE)
+yform_values_number_error_compare = Decimalerna får inte vara högre än antalet siffror
+
+yform_docs = Dokumentation
+yform_docs_intro = Intro
+yform_docs_table_manager = Manager
+yform_docs_formbuilder = Formbuilder
+yform_docs_demos = Demon
+yform_docs_yorm = Yorm
+yform_docs_email = E-Mail mallar
+yform_docs_rest = REST-API
+yform_docs_tools = Verktyg
+
+yform_email_templates = E-post maller
+
+yform_email_key = Key - var god ändra inte
+yform_email_from = Avsändare e-post (t.ex. info@redaxo.de)
+yform_email_from_name = Avsändarens namn (t.ex. REDAXO server)
+yform_email_reply_to = Reply-To-E-Mail [t.ex. yform@redaxo.de]
+yform_email_reply_to_name = Reply-To-Name [t.ex. YForm Server]
+yform_email_header_template_mail_reply_to = Svar till
+yform_email_subject = Ämne
+yform_email_body = Body
+yform_email_body_html = Body (HTML)
+yform_email_create = Skapa e-post mall
+yform_email_update = Aktualisera e-post mallen
+yform_email_header_template_description = Description
+yform_email_header_template_mail_from = från
+yform_email_header_template_mail_from_name = Namn
+yform_email_header_template_subject = Ämne
+yform_email_create_template = Skapa mall
+yform_email_header_template_functions = Funktioner
+yform_email_templates_not_found = Ingenmall hittades
+yform_email_delete_template = Radera
+
+yform_email_info_template_added = Mallen tillfogades
+yform_email_info_template_updated = Mallen aktualiserades
+yform_email_info_template_deleted = Mallen raderades
+
+yform_email_attachments = Bilagor
+
+yform_delete_template = Radera mall
+
+yform_email_caption = Lista över alla mallar
+
+yform_email_info_text = <p> Fält som används i formulär kan visas och redigeras i mallarna. <mark> PHP är också principiellt tillåten </ marke>, så att man kan gå in individuellt på enskilda fall. Den normala visningen av ett fält sker enligt följande sätt: <br /> <br /> REX_YFORM_DATA [field = "name"] <br /> REX_YFORM_DATA [field = "email" instead = "E-post har fyllts in"] <br /> REX_YFORM_DATA [field = "name" instead = "standardvärde "] <br /> REX_YFORM_DATA [field = "name" prefix = "Mitt namn:" suffix = ""] </ p>
+
+// REST
+
+yform_rest = REST-API
+
+yform_rest_token = Token
+
+yform_rest_token_header = REST: Token
+
+yform_rest_token_name = Namn
+yform_rest_token_token = Token
+yform_rest_token_token_notice = Önslas ny token ? [{0}]
+yform_rest_token_status = Aktiv
+
+yform_rest_token_deleted = Token raderades!
+yform_rest_token_info_text =
+yform_rest_token_update = Aktualisera token-data
+yform_rest_token_info_updated
+yform_rest_token_create = Skapa token
+yform_rest_token_info_added
+
+yform_rest_token_updated = Token aktualiserades
+yform_rest_token_added = Token skapades
+
+yform_rest_token_header_summary
+
+yform_rest_token_header_description
+yform_rest_token_not_found = Kunde inte hitta några token
+yform_rest_token_caption = List av alla token
+
+yform_rest_token_name_validate = Vänligen ange en beteckning/ett namn
+yform_rest_token_token_validate = Vänligen skapa en token
+
+yform_rest_token_amount = Tillåtet antal åtkomster
+
+yform_rest_token_interval = Intervall
+yform_rest_token_none = Utan beskränkning
+yform_rest_token_per_hour = Maximala visningar per timme
+yform_rest_token_per_day = Maximala visningar per dag
+yform_rest_token_per_month = Maximala visningar per månad
+yform_rest_token_overall = Maximala visningar
+
+yform_rest_token_access = Visningar
+yform_rest_token_access_header = REST: Visningar
+yform_rest_token_access_caption = List av alla visningar
+yform_rest_token_access_update = Bearbeta inlägg
+yform_rest_token_access_deleted = Inlägg raderades
+yform_rest_token_access_updated = Inlägg aktualiserades
+yform_rest_token_access_datetime_created = Visning den
+yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Tillåtna slutpunkter
+
+// Manager
+
+yform_manager = Table Manager
+
+navigation_manager = Tabeller
+yform_manager_fields = Fält
+
+# yform manager
+yform_alltables = Alla tabeller
+yform_back_to_overview = Tillbaa till översikten
+yform_updatetable = aktualisera tabell/er
+yform_tablesupdated = Tabell/er aktualiserades
+yform_errors_occurred = Fel uppstod
+yform_help_empty = Tomma inmatningar kan sökas med (empty)
+yform_help_multipleselect = Välj flera samtidigt genom att håller ned CTRL eller CMD
+yform_updatetable_with_delete = med fältradering
+yform_updatetable_with_delete_confirm = Vill du verkligen aktualisera med att fältradering?
+
+yform_relation_move_first_data = Flytta utvald datasats till början
+yform_relation_move_up_data = Flytta utvald datasats uppåt
+yform_relation_move_down_data = Flytta utvald datasats neråt
+yform_relation_move_last_data = Flytta utvald datasats till slutet
+yform_relation_choose_entry = Välj datasats
+yform_relation_delete_entry = Radera utvald datasats
+yform_relation_first_create_data = Var god skapa denna datasats först
+yform_relation_edit_relations = Förvalta förbindelsenar
+
+yform_prio_top = Vid början
+yform_prio_after = Efter "{0}"
+yform_prio_bottom = längs ner
+
+yform_truncate_table = tömma
+yform_table_truncated = Tabellen tömdes
+yform_table_not_found = Tabellen kunde inte hittas
+yform_truncate_table_confirm = Vll verkligen radera hela tabellen?
+yform_table_overview = Tabellöversikt
+
+yform_manager_edit_table = Redigera tabell
+yform_manager_add_table = Tillfoga tabell
+
+yform_update_table = Uppdatera tabellen
+yform_add_table = Tillfoga tabell
+yform_add_row = Tillfoga rad
+
+yform_edit_datatable = Hantera data
+
+# tables.inc.php
+yform_importcsv = Importera CSV
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_tbl_active = aktiv
+yform_tbl_inactive = inaktiv
+
+yform_manager_table_updated = Tack för aktualiseringen
+yform_manager_table_entry_saved = Tack för  registreringen
+yform_manager_table_enter_name = Var god ange tabellnamnet
+yform_manager_table_enter_specialchars = Var god ange endast bokstäver och siffror vid tabellnamnet. Första tecknet måste vara en bokstav.
+yform_manager_table_exists = Tabellnamnet finns redan
+
+yform_manager_table_prio = Prioritet
+yform_manager_table_prio_short = Prio
+yform_manager_table_name = Namn
+yform_manager_table_status = Status
+yform_manager_name = Beteckning
+yform_manager_table_description = Beskrivning
+yform_manager_entries_per_page = Datasatser per sida
+yform_manager_sortfield = Standardsortering: fält
+yform_manager_sortorder = Standardsortering: riktning
+yform_manager_sortorder_asc = uppstigande
+yform_manager_sortorder_desc = nerstigande
+yform_manager_search_active = Sök aktiverad
+yform_manager_enter_number = Var god ange antalet datasatser per sida
+yform_manager_table_hide = Dölj i navigationen
+yform_manager_table_allow_export = Tillåt export från data
+yform_manager_table_allow_import = Tillåt import från data
+yform_manager_table_allow_mass_deletion = Tillåt mass radering
+yform_manager_table_allow_mass_edit = Tillåta massbearbetning
+yform_manager_table_history = Skapa historik
+yform_manager_tablefield_overview = Fältöversikt
+yform_manager_table_schema_overwrite = Skriv ALLTID databasfält med schemadefinition
+yform_manager_table_basic_info = Basinfo
+yform_manager_table_func = Tabellfuntkion
+yform_manager_table_user_func = Användarkomfortfunktioner
+
+yform_manager_table_updated = Tack för aktualiseringen
+yform_manager_table_added = Tack för inlägget.
+yform_manager_table_deleted = Tabell raderades [Table definitions deleted, not table]
+yform_manager_table_add = Skapa tabell
+yform_manager_table_update = Aktualisera tabeller och fält
+yform_manager_table_import = Importera tabellen
+yform_manager_table_features = Aktiverade optioner
+
+yform_manager_type_id = Typ
+yform_manager_type_name = Typnamn
+
+yform_manager_tableset = Tabellset
+yform_manager_table = Tabell
+yform_manager_tables = Tabeller
+
+yform_manager_import = importera
+yform_manager_export = exportera
+yform_manager_create = skapa
+yform_manager_migrate = migrera
+
+yform_manager_table_migrate = Migrera tabellen
+yform_manager_table_migrated_failed = Migrationen för {0} misslyckades. Fel: {1}
+yform_manager_table_migrate_info = Migrationsmanagern skapar från en befintlig tabell en tabell som kan förvaltas med tabellmanagern. För detta är i tabellen ett AUTOINCREMENT-fält med namnet 'id' nödvändigt. Utan detta fältet fungerar tabellmanagern inte. <br /> <br /> Optional kan ett befintligt AUTOINCREMENT-fält konverteras. Till exempel "Event_id" till "id".
+yform_manager_migrate_table_id_convert = Konvertera 'id'-fältet om det inte finns
+yform_manager_table_migrated_success = Tabellen migrerades.
+
+yform_manager_tableset_import = Importera tabellset
+yform_manager_tableset_import_jsonimportfile = Importera JSON fil
+yform_manager_tableset_import_info = Info
+yform_manager_tableset_import_warning_selectfile = Ingen .json fil användes eller filen var felaktig.
+yform_manager_tableset_import_warning_type = Fel typ av fil. Det måste vara en JSON fil.
+yform_manager_tableset_import_success = Tabell/er importerades
+yform_manager_tableset_import_failed = Import av tabellsetet misslyckades: <br/>{0}
+
+yform_manager_table_edit = Redigera tabeller
+
+yform_manager_tableset_export = Exportera tabellset
+yform_manager_tableset_export_info = Info
+yform_manager_export_error_empty = Var god välja ut minst en tabell till exporten
+
+yform_manager_table_hidden = Synlighet
+yform_hidden = Dold
+yform_visible = Synligt
+
+
+# edit.inc.php
+yform_thankyouforupdate = Datasatsen aktualiserades.
+yform_thankyouforupdates = Datasatser aktualiserades.
+yform_thankyouforentry = Datasatsen tillfogades.
+yform_editdata = Redigera datasats
+yform_editdata_collection = Redigera {0} datasatser
+yform_editdata_collection_error_abort = Transaktionen misslyckades på grund av fel: {0}
+yform_adddata = Skapa datasats
+yform_searchtext = Sökbegrepp
+yform_searchfields = Fälten som ska sökas igenom
+yform_id = ID
+yform_function = Funktion
+yform_function_button = Handling
+yform_add = tillfoga
+yform_add_apply = ta över
+yform_edit = redigera
+yform_view = visa
+yform_save = spara
+yform_save_apply = ta över
+yform_delete = radera
+yform_delete_definitions = Radera definitioner
+yform_delete_definitions_info = Databas tabellen behålls
+yform_search = sök
+yform_export = exportera
+yform_import = importera
+yform_datadeleted = Datasatsen readerades
+yform_openerinfo = Opener info
+
+yform_table_info = Info
+yform_dataset = Dataresultat
+
+yform_dataset_delete = Radera dataresultatet
+yform_dataset_deleted = Dataresultatet raderades
+yform_dataset_delete_confirm = Radera dataresultatet?
+
+yform_data = Datasats
+yform_datas = Dataset
+yform_manager_search = Sök
+
+yform_data_view = visa
+
+
+yform_data_select = ta över
+
+# field.inc.php
+yform_tablenotexists = Denna tabell finns inte!
+yform_tablefield = Tabellfält
+yform_values = Värden
+yform_validates = Validering
+yform_actions = Aktioner
+yform_validatenamenotempty = Var god ange namnet
+yform_validatenamepregmatch = Var god och mata endast in bokstävar och "_"
+yform_validatenamecheck = Detta namnet finns redan
+yform_donotsaveindb = Spara inte i databasen
+yform_hideinlist = Dölj i lista
+yform_useassearchfieldalidatenamenotempty = Tillfoga till sökfält
+yform_tablefielddeleted = Tabellfält raderades
+yform_tablefieldnotfound = Tabellfält kunde inte hittas
+yform_addtablefield = Skapa tabellfält
+yform_table = Tabell
+yform_editfield = Redigera fält
+yform_choosenadd = Välj ut fält
+yform_choosenadd_description = Var god välj det fält som ska användas för din administration. Det finns värdefält som vanligtvis används för användarinmatning, men också validate-fält som används för att validera data som matas in i värdefält.
+yform_addfield = Tillfoga fält
+yform_editfields = Redigera fält
+
+yform_id_is_missing = ID saknas
+yform_id_missing_info = Tabellen har tyvärr inget ID-fält med AUTOINCREMENT. Således kan yform inte arbeta med det. Var god uppdatera tabellen och placera den nödvändiga ID:n manuellt.
+
+# import
+yform_manager_import_error_missingfile = Var god och ladda upp  importfilen
+yform_manager_import_error_missingfields = Det saknas följande fält: {0}
+yform_manager_import_error_min_missingfields = Det saknas minst ett fält: {0}
+yform_manager_import_error_field = Fält "{0}" kunde inte skapas: "{1}"
+yform_manager_import_field_added = Fält "{0}" har skapats
+yform_manager_import_error_import_abort = Importen utfördes inte på grund av följande fel: {0}
+yform_manager_import_error_import_stopped = Importen avbröts eftersom det uppstod fel.
+yform_manager_import_error_dataimport = Datasatts ({0}) kunde inte importeras: {1}
+yform_manager_import_error_import = {0} datasatser har importerats. Av det var {1} nya datasatser och {2} datasatser har ersätts.
+yform_manager_import_info_data_imported = {0} datasatser har INTE importerats.
+yform_manager_import_error_not_started = Import har inte startats
+yform_manager_import_csv = Importera CSV-fil
+yform_manager_import_csv_info = Detta kan användas för att importera data i denna tabell. Observera att du endast kan importera textfiler och att de måste finnas i </ b> första raden av fältdefinitionerna<b>. Vidare bör <b> kodningen av importfilen vara UTF-8 </ b>. Det kan betyda att du måste konvertera dem först.
+yform_manager_import_if_no_column = Om kolumen inte finns i tabellen
+yform_manager_import_if_no_column_ignore = Ignorera kolumnen
+yform_manager_import_if_no_column_addtext = Skapa sedan en textkolumn med samma namn (för att hantera detta senare måste dessa fält anges senare).
+yform_manager_import_if_no_column_break = avbryta importen.
+yform_manager_import_divider = Separator
+yform_manager_import_divider_semicolon = Semikolon
+yform_manager_import_divider_comma = Komma
+yform_manager_import_divider_tab = Tabulator
+yform_manager_import_unique_field = Om fältet är identisk kommer datasatsen att ersättas
+yform_manager_import_start = Tillfoga
+yform_manager_import_file = Fil
+yform_manager_import_error_missingfielddefinition = Det finns fält som är tomma och som därför inte kan tilldelas. Kontrollera först importens första rad.
+yform_manager_import_error_duplicatefielddefinition = Det finns fält som är identiska. Kontrollera först importens första rad.
+
+# history
+yform_history = Historik
+yform_history_dataset_id = Datasats-ID
+yform_history_dataset = Datasats
+yform_history_action = Aktion
+yform_history_action_create = skapat
+yform_history_action_update = redigerat
+yform_history_action_delete = raderat
+yform_history_user = Användare
+yform_history_timestamp = Tidstämpel
+yform_history_view = visa
+yform_history_restore = återgå
+yform_history_restore_this = återställ datasatsen till den här versionen
+yform_history_restore_success = Data återställdes
+yform_history_restore_error = Data kunde inte återställas
+yform_history_delete = Radera historiken
+yform_history_delete_all = totalt
+yform_history_delete_older_3_months = äldre än 3 månader
+yform_history_delete_confirm = Vill du verkligen radera historiken?
+yform_history_delete_success = Poster från historiken raderades.
+
+yform_manager_show_form_notation = Formularkod
+
+navigation_yform_tables = Tabeller
+yform_tabledata_overview = Datatabell
+
+yform_manager_multi_edit_field = Redigera fält  "{0}"
+
+yform_values_be_link_description = 				Ett select-fält för att välja ut en <b>REDAXO-artikel</b>
+yform_values_be_manager_relation_description = 	Ett select-fält / popup till <b> länka flera poster </ b> med poster från en annan tabell.
+yform_values_be_media_description = 			Ett fält att välja på eller fler <b> filer från mediapoolen (filhanteraren) </ b>.
+yform_values_be_table_description = 			En uppsättning inmatningsfält för att mata in <b> tabelldata</ b>.
+yform_values_prio_description =					Ett select-fält som används för att <b> sortera poster i en viss order </ b>.
+
+yform_values_defaults_prio = Prioritet
+yform_values_be_manager_relation_table = Måltabell
+yform_values_be_manager_relation_field = Mål kolumner för visning eller målfält
+yform_values_be_manager_relation_type = Multiselect
+yform_values_be_manager_relation_empty_option = Med "tom-option"
+yform_values_be_manager_relation_empty_value = Felmeddelande när "tom-option" är inte aktiv.
+yform_values_be_manager_relation_size = Höjd av select box
+yform_values_be_manager_relation_filter = Filter
+yform_values_be_manager_relation_relation_table = Relationstabell
+yform_values_be_media_preview = Preview
+yform_values_be_media_category = Medienpool (filhanterare) kategori
+yform_values_be_media_types = Types
+yform_values_be_media_types_notice = Format: jpg,gif
+yform_values_be_media_multiple = Multiselect
+yform_values_be_table_columns = Beteckning av kolumnerna (kvantitet, pris, någoting)
+yform_values_be_link_multiple = Multiselect
+yform_values_prio_fields = Display
+yform_values_prio_scope = Begränsning
+yform_values_prio_default = Till början
+
+yform_is = är
+yform_will_set_to = kommer att bli
+
+yform_field_add = Tillfoga fält
+yform_field_update = Updatera fält
+yform_field_db_type = Databas fälttyp
+
+yform_manager_table_data_view_roles = Datavy begränsad till
+yform_manager_table_data_edit_roles = Databehandling begränsad till
+
+yform_manager_table_nopermission = Ingen behörighet till den här tabellen
+
+yform_manager_tables_edit = Tabeller med redigeringsrättigheter
+yform_manager_tables_view = Tabeller med påsiktsrättigheter
+

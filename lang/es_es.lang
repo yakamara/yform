@@ -1,0 +1,634 @@
+yform = YForm
+yform_format_datetime = d.m.Y H:i:s
+yform_format_date = d.m.Y
+yform_format_time = H:i
+
+yform_overview = Vista general
+yform_description = Descripción
+yform_back_to_overview = Volver al resumen
+yform_table_name = Nombre de la tabla MySQL
+
+yform_description_all = <p>En el módulo, las definiciones de campo son particularmente importantes, que se dividen en 3 secciones.</p><div class="list-group"><div class="list-group-item"><h3 class="list-group-item-heading">Campos de valor</h3><p class ="list-group-item-text">son los campos que generalmente aparecen directamente en el formulario. Por un lado, esto puede ser campos de texto simples, campos de selección, casillas de verificación ... - pero también campos ocultos, fechas de nacimiento, campos de selección de bases de datos.</p></div><div class="list-group-item"><h3 class="list-group-item-heading">Validar-campos</h3><p class ="list-group-item-text">Son campos para verificar los valores en los campos de valor. Que para que pueda, por ejemplo, Compruebe si se ha ingresado un valor (vacío) o si es una cadena, un entero u otro campo. Pero también se puede verificar si ya existe un campo de base de datos con este valor ...</p></div><div class="list-group-item"><h3 class="list-group-item-heading">Los campos de acción</h3><p class="list-group-item-text">Son importantes para su uso posterior. ¿Debe enviarse un correo electrónico y/o una entrada realizada en la base de datos...</p></div></div>
+yform_description_type_heading = Resumen de modelos
+list_message = {0} a {1} de {2} entradas
+
+yform_value = Valores
+yform_validate = Validaciones
+yform_action = Acciones
+
+yform_install_modul = Disposición
+yform_install_modul_description = Para hacer un buen uso de YForm como un sistema de formularios, se debe crear un módulo.
+yform_install_yform_modul = Instalar el módulo "{0}"
+yform_install_update_module = Actualizar módulo "{0}"
+
+yform_validate_compare_description = Compara dos valores de entrada <b>entre sí</b>.
+yform_validate_compare_value_description = Compara un valor de entrada con un <b>valor fijo</b>.
+yform_validate_customfunction_description = Invoca su propia <b>función de PHP</b> para comparar.
+yform_validate_email_description = Comprueba si el tipo de entrada es una <b>dirección de correo electrónico</b>.
+yform_validate_empty_description = Comprueba si existe un valor de entrada <b></b>.
+yform_validate_intfromto_description = Comprueba si el valor de entrada <b>está entre dos números</b>.
+yform_validate_size_description = Comprueba si el valor de entrada tiene un <b>número de caracteres especificado</b>.
+yform_validate_size_range_description = Comprueba si la <b>longitud</b> del valor de entrada <b>está entre dos números</b>.
+yform_validate_type_description = Comprueba si <b>el tipo</b> del valor de entrada es correcto [int, float, numeric, string, email, url, date, hex]
+yform_validate_unique_description = Comprueba si el valor de entrada <b>aún no está disponible en otros conjuntos de datos</b>.
+
+yform_validate_empty_notices_name = Si se seleccionan varios campos, se debe completar al menos un campo.
+
+
+yform_values_checkbox_description = 			Una <b>casilla de verificación</b> con valores predefinidos.
+yform_values_checkbox_sql_description =			Una <b>casilla de verificación</b> con valores provenientes de una <b>consulta SQL</b>.
+yform_values_date_description =					Una serie de cuadros de selección en los que se selecciona una <b>fecha</b> (día, mes, año).
+yform_values_datestamp_description =			Un campo invisible que almacena una <b>marca de tiempo</b> cuando se agrega o edita el registro.
+yform_values_datestamp_notice =                 Formateo de acuerdo con la función de date() de PHP (http://php.net/manual/en/function.date.php)
+yform_values_datetime_description =				Una serie de cuadros de selección en los que se selecciona <b>fecha y hora</b> (día, mes, año, horas, minutos, segundos).
+yform_values_email_description =				Un campo de entrada simple para <b>direcciones de correo electrónico.</B>
+yform_values_emptyname_description =			Una opción de entrada de campo <b>sin</b>.
+yform_values_fieldset_description =				Un fieldset agrupa los campos.
+yform_values_float_description =				Un campo de entrada simple para <b>números de coma flotante.</B>
+yform_values_generate_key_description =			Un campo invisible que almacena una <b>clave aleatoria de 32 dígitos que consta de números y minúscula</b> cuando se agrega o edita el registro.
+yform_values_hashvalue_description =			Un campo que genera un <b>valor hash</b> del valor de otro campo.
+yform_values_html_description =					Imprima <b>código HTML</b> en la ubicación deseada del formulario de entrada.
+yform_values_index_description =				Un campo que genera una clave <b>index</b> en varios campos.
+yform_values_integer_description =				Un campo de entrada simple para <b>enteros.</B>
+yform_values_number_description =               Un campo de entrada para <b>números con o sin lugares decimales. (Decimal)</b>
+yform_values_php_description =					Ejecuta <b>código PHP</b> en la ubicación deseada del formulario de entrada.
+yform_values_radio_description =				Uno o más campos de selección como <b>botones de radio</b>.
+yform_values_select_description =				Un <b>cuadro de selección</b> con valores predefinidos.
+yform_values_select_sql_description =			Un <b>cuadro de selección</b> con valores provenientes de una <b>consulta SQL</b>.
+yform_values_submit_description =				Uno o más <b>Enviar botones</b> para enviar el formulario.
+yform_values_text_description =					Un <b>campo de entrada simple</b> para el texto.
+yform_values_textarea_description =				Un <b>campo de entrada de varias líneas</b> para texto.
+yform_values_time_description =					Una serie de cuadros de selección en los que se selecciona <b>tiempo</b> (horas, minutos, segundos).
+yform_values_upload_description =				Un <b>campo de carga</b> que carga un archivo a <b>la base de datos o un directorio</b>.
+yform_values_ip_description =                   Un <b>campo IP</b>, que se almacena aquí
+yform_values_showvalue_description =            Un campo que solo muestra el valor del campo pero no se puede cambiar.
+
+yform_values_checked = seleccionado
+yform_values_not_checked = no seleccionado
+
+yform_values_defaults_name = Nombre
+yform_values_defaults_label = Designación
+yform_values_defaults_table = Base de datos
+yform_values_defaults_notice = Nota
+yform_values_defaults_attributes = Atributos individuales
+yform_values_defaults_attributes_notice = Por favor escribe como JSON. por ejemplo {"readonly": "readonly", "placeholder": "mi marcador de posición"}
+yform_values_defaults_widgets = Reproductor
+yform_values_defaults_showvalue = Mostrar valor
+yform_validate_defaults_message = Mensaje de error
+yform_values_defaults_unit = Unidad de medida (por ejemplo, € $ m mm%)
+
+yform_values_number_precision = Número de dígitos (23335443.23 sería, por ejemplo, 10 dígitos) (PRECISIÓN)
+yform_values_number_scale = Número de dígitos después de los dígitos (23335443.23 serían 2 decimales, por ejemplo) (ESCALA)
+
+yform_search_defaults_wildcard_notice = Ejemplos: * nombre /! (Vacío) / (vacío)
+yform_search_integer_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
+yform_search_number_notice = Ejemplos: >5 / !=5 / 3-5 / 2..5 / 1,3,8 / !(empty) / (empty)
+yform_search_defaults_select_notice = Seleccione varios con CTRL o comando
+
+yform_values_checkbox_values = Valores (0,1) (sin hacer clic, hacer clic)
+yform_values_checkbox_default = Estado por defecto
+yform_values_checkbox_sql_query = Consulta con "seleccionar id, nombre de ...""
+yform_values_date_year_start = Empezar el año
+yform_values_date_year_end = Fin de año
+yform_values_date_format = Formato de visualización
+yform_values_date_current_date = Preset de fecha actual
+yform_values_date_search_notice = Formato: {0} - {0}
+yform_values_datestamp_format = Formato
+yform_values_datestamp_only_empty = Cuándo se debe establecer el valor
+yform_values_datetime_year_start = Empezar el año
+yform_values_datetime_year_end = Fin de año
+yform_values_datetime_minutes = Formatos minutos
+yform_values_datetime_format = Formato de visualización
+yform_values_datetime_current_date = Preset de fecha actual
+yform_values_email_default = estado por defecto
+yform_values_email_classname = nombre de la clase
+yform_values_float_scale = decimal
+yform_values_float_default = El valor por defecto
+yform_values_generate_key_only_empty = ¿Cuándo debería establecerse el valor?
+yform_values_hashvalue_field = Campo de entrada
+yform_values_hashvalue_function = Algoritmo
+yform_values_hashvalue_salt = Sal
+yform_values_html_HTML = HTML
+yform_values_index_names = Campos
+yform_values_index_names_notice = Separados por comas, también campos de relaciones posibles, z. Por ejemplo: título, descripción, category_id.name
+yform_values_index_function = Función de codificación opcional
+yform_values_index_function_notice = por ejemplo md5, sha1
+yform_values_index_add_this_param = ¿Pasar objeto de campo como el segundo parámetro a la función?
+yform_values_integer_default = El valor por defecto
+yform_values_number_default = El valor por defecto
+yform_values_php_code = Código PHP
+yform_values_radio_options = Seleccione definición, coma separada
+yform_values_radio_default = El valor por defecto
+yform_values_select_options = Seleccione definición, coma separada
+yform_values_select_default = El valor por defecto
+yform_values_select_multiple = Varios campos posibles
+yform_values_select_size = Altura del cuadro de selección
+yform_values_select_sql_query = Se debe pasar una consulta con el ID y el nombre "select id, name from ...", si es necesario "seleccionar id, cliente como nombre ..."
+yform_values_select_sql_default = Valor predeterminado (opt)
+yform_values_select_sql_empty_option = Opción vacía
+yform_values_select_sql_empty_value = Texto con la opción vacía (seleccione)
+yform_values_select_sql_multiple = Varios campos posibles
+yform_values_select_sql_size = Altura del cuadro de selección
+yform_values_submit_labels = Nombre (opcional, separado por comas)
+yform_values_submit_values = Valores (opcional, separados por comas)
+yform_values_submit_default = El valor por defecto
+yform_values_submit_css_classes = Clases de CSS (separadas por comas)
+yform_values_text_default = El valor por defecto
+yform_values_text_css_class = cssclassname
+yform_values_defaults_prepend = Mostrar cadena antes de eso. por ejemplo EUR
+yform_values_defaults_append = Mostrar cadena antes de eso. por ejemplo 0.00
+yform_values_textarea_default = El valor por defecto
+yform_values_textarea_classes = Clases
+yform_values_time_hours = Rejilla hora
+yform_values_time_minutes = Intervalos de un minuto
+yform_values_time_format = Formato de visualización
+yform_values_time_format_notice = Valor predeterminado: HH: ii: ss
+yform_values_upload_sizes = Tamaño máximo en Kb o Rango 100,500
+yform_values_upload_types = Qué archivos deben permitirse, lista separada por comas. ".gif, .png" o "*"
+yform_values_upload_required = Campo obligatorio
+yform_values_upload_messages = min_err, MAX ERR, type_err, empty_err, delete_file_msg
+yform_values_upload_modus = El modo de memoria
+yform_values_upload_database_filename_field = en `base de datos`: El nombre del archivo se almacena en los nombres de los campos
+yform_values_upload_upload_folder = con `subir`: Especificar la carpeta de carga
+yform_values_upload_upload_folder_notice = Ingrese la ruta relativa a "{0}"
+yform_values_upload_file_prefix = Prefijo de archivo
+yform_values_ip_server_var = Variable de servidor (opcional)
+yform_values_ip_server_var_notice = por defecto: REMOTE_ADDR
+
+yform_validate_compare_firstname = 1. Nombre de campo
+yform_validate_compare_secondname = 2. Nombre del campo
+yform_validate_compare_type = de la comparación
+yform_validate_compare_message = Mensaje de error
+yform_validate_compare_value_name = Nombre del campo
+yform_validate_compare_value_compare_value = Valor de comparación
+yform_validate_compare_value_compare_type = De la comparación
+yform_validate_compare_value_message = Mensaje de error
+yform_validate_customfunction_name = Nombre
+yform_validate_customfunction_function = Nombre de la función
+yform_validate_customfunction_params = Otros parámetros
+yform_validate_customfunction_message = Mensaje de error
+yform_validate_customfunction_type = Tiempo de validación
+yform_validate_email_name = Nombre
+yform_validate_email_message = Mensaje de error
+yform_validate_empty_name = Nombre
+yform_validate_empty_message = Mensaje de error
+yform_validate_intfromto_name = Nombre
+yform_validate_intfromto_from = De
+yform_validate_intfromto_to = Para
+yform_validate_intfromto_message = Mensaje de error
+yform_validate_size_name = Nombre
+yform_validate_size_size = Numero de personajes
+yform_validate_size_message = Mensaje de error
+yform_validate_type_name = Nombre
+yform_validate_type_type = Verifique después
+yform_validate_type_message = Mensaje de error
+yform_validate_type_not_required = El campo no tiene que ser completado
+yform_validate_unique_name = Nombre
+yform_validate_unique_message = Mensaje de error
+yform_validate_unique_table = Mesa
+yform_validate_unique_notice = Ingrese la lista de campos en forma separada por comas. por ejemplo nombre, email
+yform_validate_unique_empty_option = El valor también puede estar vacío. (Solo funciona si es un campo)
+
+yform_validate_preg_match_pattern = Ingrese el patrón de búsqueda.
+yform_validate_preg_match_pattern_info = Por ejemplo /^start/
+
+yform_validate_password_policy_description = Con esto puedes validar un campo de acuerdo con <b> reglas de contraseña </ b>
+yform_validate_preg_match_description = Validación PREG_MATCH
+yform_validate_password_policy_rules = Configuración de la regla
+yform_validate_password_policy_rules_notice = Reglas predeterminadas si están vacías: {0}
+
+yform_values_options_name = 	Nombre
+yform_values_options_label = 	Designación
+yform_values_options_boolvalues	= 	Valores (0,1) (sin hacer clic, hacer clic)
+
+yform_values_be_user_description = Guarde el usuario de back-end
+yform_values_csrf_description = Protección CSRF
+
+yform_geo_get_position = Obtener posición
+yform_geo_clear_position = Eliminar posición
+
+
+yform_values_choice_attributes = Atributos para el elemento (atributos)
+yform_values_choice_attributes_notice = Con esta opción, los atributos HTML se pueden agregar a cualquier <cod>div</code> o <code>select</code>. Llamable: <code>foo($attributes)</code>; <code>foo::bar($attributes)</code> o JSON: <code>{"class": "group-item"}</code> o <code>{"size": "5"} </code>
+yform_values_choice_choice_attributes = Atributos para cada selección (selección de atributos)
+yform_values_choice_choice_attributes_notice = Con esta opción, se pueden agregar atributos HTML adicionales a cada selección. Llamable: <code>foo ($ attributes, $ value, $ label)</code>; <code> foo :: bar ($ attributes, $ value, $ label)</code> o JSON: <code>{"class": "choicable", "DE": {"data-language": " de "}}</code>
+yform_values_choice_choices = Opciones
+yform_values_choice_choices_notice = Esta es la forma más fácil de especificar las opciones que debe usar este campo. La opción de opciones es una cadena separada por comas (etiqueta = valor), una matriz JSON, donde la clave del arreglo es la etiqueta del elemento, y el valor del arreglo es el valor del elemento, o una consulta "SELECT id, name FROM table"
+yform_values_choice_choices_table = <table class="table">   <colgroup>     <col width="32%" />   <col width="69%" /></colgroup>   <thead valign="bottom"><tr><th>Descripción</th><th>Ejemplo</th></tr></thead>   <tbody valign="top">     <tr>       <td>Cadena separada por comas</td>       <td><code>Dänemark=DK,Deutschland=DE,Österreich=AT,Schweiz=CH</code></td>     </tr>     <tr>       <td>JSON-Array</td>       <td><code>{"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}</code></td>     </tr>     <tr>       <td>JSON-Array con <code>optgroup</code> para la etiqueta de selección</td>       <td><code>{"Europa": {"Dänemark": "DK", "Deutschland": "DE", "Österreich": "AT", "Schweiz": "CH"}, "Südamerika": {"Bolivien": "BO"}}</code></td>     </tr>     <tr>       <td>Query</td>       <td><code>SELECT id AS value, name AS label FROM country</code></td>     </tr>     <tr>       <td>Query con <code>optgroup</code> para la etiqueta de selección<br/> (En la opción <code>group_by</code> necesario <code>group_label</code> ser notado)</td>       <td><code>SELECT a.id AS value, a.name AS label, b.name AS group_label FROM country AS a LEFT JOIN continent AS b ON a.continent_id = b.id</code></td>     </tr>   </tbody> </table>
+yform_values_choice_default = Valores por defecto
+yform_values_choice_default_notice = Si los valores se especifican aquí en una forma separada por comas, estos ya están preseleccionados
+yform_values_choice_description = Un campo multipropósito que permite al usuario "seleccionar" una o más opciones. Se puede mostrar como etiqueta de selección, radios o casillas de verificación (alternativa a <code>checkbox_sql</code>, <code>radio</code>, <code>radio_sql</code>, <code>select</code>, <code>select_sql</code>)
+yform_values_choice_expanded = Extendido
+yform_values_choice_expanded_notice = Si se establece en verdadero, se emiten radios o casillas de verificación (dependiendo de múltiples). Si es falso, se representa un elemento Seleccionar.
+yform_values_choice_expanded_multiple_table = <table class="table"><colgroup><col width="69%" /><col width="16%" /><col width="16%" /></colgroup><thead valign="bottom"><tr><th>Elemento</th><th>Extendido</th><th>Selección múltiple</th></tr></thead><tbody valign="top"><tr><td>select tag</td><td><code>false</code></td><td><code>false</code></td></tr><tr><td>select tag (with <code>multiple</code> attribute)</td><td><code>false</code></td><td><code>true</code></td></tr><tr><td>radio buttons</td><td><code>true</code></td><td><code>false</code></td></tr><tr><td>checkboxes</td><td><code>true</code></td><td><code>true</code></td></tr></tbody></table>
+yform_values_choice_group_attributes = Atributos para el grupo (group_attributes)
+yform_values_choice_group_attributes_notice = Esta opción agrega atributos HTML adicionales al artículo. Llamable: <code>foo($attributes)</code>; <code>foo::bar($attributes)</code> oder JSON: <code>{"class": "group", "data-yform": "awesome"}</code>
+yform_values_choice_group_by = Grupos
+yform_values_choice_group_by_notice = Esta opción permite que las opciones se "agrupen" en una selección. (Actualmente solo es posible mediante consulta, especifique el nombre del campo)
+yform_values_choice_multiple = Selección múltiple
+yform_values_choice_multiple_notice = Si es verdadero, el usuario puede seleccionar múltiples opciones (a diferencia de una sola opción). Dependiendo del valor de la opción expandida, se muestran una etiqueta de selección o casillas de verificación (verdadero) o una etiqueta de selección o radios (falso).
+yform_values_choice_placeholder = Marcador de posición
+yform_values_choice_placeholder_notice = Esta opción determina si una opción especial "en blanco" (por ejemplo, "elegir una opción") aparece en la parte superior de un widget Seleccionar. Esta opción se aplica solo si la opción múltiple está configurada en falso.
+yform_values_choice_preferred_choices = Opciones preferidas
+yform_values_choice_preferred_choices_notice = Esta opción mueve ciertas opciones a la parte superior de la lista, colocando un separador óptico entre ellas y el resto de las opciones.
+
+yform_values_status_output_values = Ingrese valores de salida
+yform_values_status_output_values_notice = 2 valores separados por comas. p.ej. fuera de línea, en línea o ▢, ▣
+
+yform_values_message_is_missing = [Falta un mensaje de advertencia para el campo `{1}`]
+
+yform_validate_object_is_missing = El objeto `{1}` para la validación `{0}` falta
+
+yform_values_deprecated_checkbox_sql = Obsoleta; Usa el valor de elección
+yform_values_deprecated_radio = Obsoleta; Usa el valor de elección
+yform_values_deprecated_radio_sql = Obsoleta; Usa el valor de elección
+yform_values_deprecated_select = Obsoleta; Usa el valor de elección
+yform_values_deprecated_select_sql = Obsoleta; Usa el valor de elección
+yform_values_deprecated_float = Obsoleta! Usa el campo numérico
+
+yform_always = siempre
+yform_onlyifempty = solo cuando está vacío
+yform_never = Nunca
+
+yform_values_number_error_precision = Ingrese un número entre {0} y {1} en la cantidad de dígitos (PRECISION)
+yform_values_number_error_scale = Ingrese un número entre {0} y {1} en el número de decimales (ESCALA)
+yform_values_number_error_compare = Los lugares decimales no deben ser más altos que el número de dígitos.
+
+
+yform_docs_intro = Introducción
+yform_docs_table_manager = Gerente
+yform_docs_formbuilder = Formbuilder
+yform_docs_demos = Demos
+yform_docs_yorm = Yorm
+yform_docs_plugins = PlugIns
+
+yform_email_templates = Plantillas de E-mail
+
+yform_email_key = Clave - por favor no cambie
+yform_email_from = E-mail del remitente [z.b.info@redaxo.de]
+yform_email_from_name = Nombre del remitente [ej. Servidor REDAXO]
+yform_email_reply_to = Respuesta-a-E-Mail [z.B. yform@redaxo.de]
+yform_email_reply_to_name = Responder a nombre [z.B. Servidor YForm]
+yform_email_subject = Respecto
+yform_email_body = Cuerpo
+yform_email_body_html = Cuerpo (Html)
+yform_email_create = Añadir plantilla de correo electrónico
+yform_email_update = Actualizar la plantilla de correo electrónico
+yform_email_header_template_description = Clave
+yform_email_header_template_mail_from = De
+yform_email_header_template_mail_from_name = Nombre
+yform_email_header_template_subject = Respecto
+yform_email_create_template = Crear plantilla
+yform_email_header_template_functions = Características
+yform_email_templates_not_found = No se encontraron plantillas
+yform_email_delete_template = Borrar
+
+yform_email_info_template_added = Plantilla fue agregada
+yform_email_info_template_updated = Plantilla ha sido actualizada
+yform_email_info_template_deleted = Plantilla ha sido eliminada
+
+yform_email_attachments = Adjuntos
+
+yform_delete_template = Eliminar plantilla
+
+yform_email_caption = Lista de plantillas
+
+yform_email_info_text = <p>Los campos utilizados en los formularios se pueden ver y procesar en las plantillas. <mark>Básicamente, PHP también está permitido</mark>, por lo que puede responder individualmente a casos individuales. La salida normal de un campo es la siguiente:<br/><br/>REX_YFORM_DATA[field="name"]<br/>REX_YFORM_DATA[field="email" instead="El email se completó"]<br/>REX_YFORM_DATA[field="name" instead="Valor predeterminado"]<br/>REX_YFORM_DATA[field="name" prefix="Mein name:" suffix=""]</p>
+
+// REST
+
+yform_rest = REST-API
+
+yform_rest_token = Token
+
+yform_rest_token_header = REST: Token
+
+yform_rest_token_name = Nombre
+yform_rest_token_token = Token
+yform_rest_token_token_notice = ¿Se necesita una nueva ficha? [{0}]
+yform_rest_token_status = Activo
+
+yform_rest_token_deleted = El token ha sido eliminado
+yform_rest_token_info_text =
+yform_rest_token_update = Actualizar datos de token
+yform_rest_token_info_updated
+yform_rest_token_create = Crear token
+yform_rest_token_info_added
+
+yform_rest_token_updated = Datos de token se han actualizado.
+yform_rest_token_added = Token fue agregado
+
+yform_rest_token_header_summary
+
+yform_rest_token_header_description
+yform_rest_token_not_found = No se encontraron fichas
+yform_rest_token_caption = Lista de fichas
+
+yform_rest_token_name_validate = Por favor ingrese una descripción/nombre
+yform_rest_token_token_validate = Por favor ingrese un token
+
+yform_rest_token_amount = Número permitido de acceso
+
+yform_rest_token_interval = Intervalo
+yform_rest_token_none = Sin limitación
+yform_rest_token_per_hour = Máximas vistas por hora.
+yform_rest_token_per_day = Máximas vistas por día.
+yform_rest_token_per_month = Máximas vistas al mes.
+yform_rest_token_overall = Tráfico máximo
+
+yform_rest_token_access = Token de acceso
+yform_rest_token_access_header = REST:peticiones
+yform_rest_token_access_caption = Listado de accesos
+yform_rest_token_access_update = Editar entrada
+yform_rest_token_access_deleted = Se ha eliminado la entrada.
+yform_rest_token_access_updated = La entrada ha sido actualizada.
+yform_rest_token_access_datetime_created = Acceso en
+yform_rest_token_url = URL
+
+yform_rest_token_token_paths = Endpoints permitidos
+
+// Manager
+
+yform_manager = Gestor de tabla
+
+navigation_manager = Tablas
+yform_manager_fields = Campos
+
+# yform manager
+yform_alltables = Todas las tablas
+yform_back_to_overview = Volver al resumen
+yform_updatetable = Actualizar tabla (s)
+yform_tablesupdated = Table/n ha sido actualizado
+
+yform_help_empty = Las entradas vacías se pueden buscar con <br/> "(vacío)"
+yform_help_multipleselect = Selección múltiple con tecla CTRL/CMD presionada
+yform_updatetable_with_delete = con eliminación de campo
+yform_updatetable_with_delete_confirm = Esta seguro de actualizar con eliminación de campo?
+
+yform_relation_move_first_data = Mueva el registro seleccionado al principio
+yform_relation_move_up_data = Mover el registro seleccionado hacia arriba
+yform_relation_move_down_data = Mover el registro seleccionado hacia abajo
+yform_relation_move_last_data = Mover el registro seleccionado al final
+yform_relation_choose_entry = Seleccionar registro
+yform_relation_delete_entry = Eliminar el registro seleccionado
+yform_relation_first_create_data = Por favor crea este registro primero
+yform_relation_edit_relations = Administrar accesos directos
+
+yform_prio_top = En el comienzo
+yform_prio_after = Después de "{0}"
+yform_prio_bottom = Al final
+
+yform_truncate_table = Vacía
+yform_table_truncated = La tabla fue vaciada
+yform_table_not_found = La tabla no fue encontrada
+yform_truncate_table_confirm = ¿De verdad vaciar la tabla completa?
+yform_table_overview = Tabla de resumen
+
+yform_manager_edit_table = Editar tabla
+yform_manager_add_table = Agrega una tabla
+
+yform_update_table = Actualizar tabla
+yform_add_table = Agrega una tabla
+yform_add_row = Agregar fila
+
+yform_edit_datatable = Administrar datos
+
+# tables.inc.php
+yform_importcsv = Importar CSV
+yform_tbl_active = Activamente
+yform_tbl_inactive = Inactivo
+
+yform_tbl_active = Activamente
+yform_tbl_inactive = Inactivo
+
+yform_manager_table_updated = Gracias por la actualización.
+yform_manager_table_entry_saved = Gracias por el registro
+yform_manager_table_enter_name = Por favor ingrese el nombre de la tabla
+yform_manager_table_enter_specialchars = Por favor ingrese solo letras y números para el nombre de la tabla. El primer personaje debe ser una letra
+yform_manager_table_exists = Este nombre de tabla ya existe
+
+yform_manager_table_prio = Prioridad
+yform_manager_table_prio_short = Prio
+yform_manager_table_name = Nombre
+yform_manager_table_status = Estado
+yform_manager_name = Designación
+yform_manager_table_description = Descripción
+yform_manager_entries_per_page = Registros por página
+yform_manager_sortfield = Clasificación estándar: campo
+yform_manager_sortorder = Clasificación estándar: dirección
+yform_manager_sortorder_asc = Ascendente
+yform_manager_sortorder_desc = Descendente
+yform_manager_search_active = Búsqueda activa
+yform_manager_enter_number = Por favor ingrese un número para los registros por página
+yform_manager_table_hide = Escondido en la navegación
+yform_manager_table_allow_export = Permitir la exportación de datos
+yform_manager_table_allow_import = Permitir la importación de datos
+yform_manager_table_allow_mass_deletion = Permitir eliminación masiva
+yform_manager_table_allow_mass_edit = Permitir procesamiento masivo
+yform_manager_table_history = Crear historial
+yform_manager_tablefield_overview = Resumen campo
+yform_manager_table_schema_overwrite = SIEMPRE sobrescriba los campos de la base de datos con definición de esquema
+yform_manager_table_basic_info = Información básica
+yform_manager_table_func = Las funciones de tabla
+yform_manager_table_user_func = funciones de confort del usuario
+
+yform_manager_table_updated = Gracias por la actualización.
+yform_manager_table_added = Gracias por la entrada.
+yform_manager_table_deleted = Se eliminaron las definiciones de la tabla [la tabla no se eliminó]
+yform_manager_table_add = Crea una tabla
+yform_manager_table_update = Actualizar tablas y campos
+yform_manager_table_import = Tabla de importación
+yform_manager_table_features = Opciones activadas
+
+yform_manager_type_id = Tipo
+yform_manager_type_name = Nombre tipo
+
+yform_manager_tableset = Tableset
+yform_manager_table = Tabla
+yform_manager_tables = Tablas
+
+yform_manager_import = Importación
+yform_manager_export = Exportación
+yform_manager_create = Invertir
+yform_manager_migrate = Emigrar
+
+yform_manager_table_migrate = Migrar una tabla
+yform_manager_table_migrated_failed = La migración de `{0}` falló. Error: {1}
+yform_manager_table_migrate_info = El administrador de migración crea a partir de una tabla existente, una que se puede gestionar a través del gestor de tablas. Esto requiere un campo de autoincremento llamado `id` en la tabla. El administrador de tablas no funciona sin este campo. <br /> <br /> Opcionalmente, la decisión es convertir un campo de autoincrecimiento existente. Por ejemplo, "event_id" a "id".
+yform_manager_migrate_table_id_convert = Convierte el campo 'id' si no está disponible
+yform_manager_table_migrated_success = La tabla ha sido migrada con éxito.
+
+yform_manager_tableset_import = Importar grupo de tabla
+yform_manager_tableset_import_jsonimportfile = Importar archivo JSON
+yform_manager_tableset_import_info = Info
+yform_manager_tableset_import_warning_selectfile = No se utilizó ningún archivo .json o el archivo estaba dañado.
+yform_manager_tableset_import_warning_type = El tipo de archivo es incorrecto. Debe ser un archivo JSON.
+yform_manager_tableset_import_success = Tabla/s se importó con éxito
+yform_manager_tableset_import_failed = La importación de tablas falló: <br /> {0}
+
+yform_manager_table_edit = Editar tablas
+
+yform_manager_tableset_export = Exportar grupo de tabla
+yform_manager_tableset_export_info = Info
+yform_manager_export_error_empty = Seleccione al menos una tabla para exportar
+
+yform_manager_table_hidden = Visibilidad
+yform_hidden = Oculto
+yform_visible = Visible
+
+
+# edit.inc.php
+yform_thankyouforupdate = Record ha sido actualizado.
+yform_thankyouforentry = Registro fue ingresado
+yform_editdata = Editar registro [id: {0}]
+yform_editdata_collection = {0} editar registros
+yform_editdata_collection_error_abort = La transacción falló debido a un error: {0}
+yform_adddata = Crear registro de datos
+yform_searchtext = Palabra clave
+yform_searchfields = Campos de tabla para buscar
+yform_id = Id
+yform_function = Función
+yform_function_button = Accion
+yform_add = Añadir
+yform_add_apply = Tomar el relevo
+yform_edit = Editar
+yform_save = Guardar
+yform_save_apply = Tomar el relevo
+yform_delete = Borrar
+yform_delete_definitions = Eliminar definiciones
+yform_delete_definitions_info = Tabla de base de datos se conserva
+yform_search = Búsqueda
+yform_export = Exportación
+yform_import = Importación
+yform_datadeleted = El registro ha sido eliminado
+yform_openerinfo = Abridor de Información
+
+yform_table_info = Info
+yform_dataset = Resultado de datos
+
+yform_dataset_delete = Eliminar resultado de datos
+yform_dataset_deleted = El resultado de los datos fue vaciado
+yform_dataset_delete_confirm = ¿Realmente vaciar el resultado de los datos?
+
+yform_data = Registro
+yform_datas = Archivos
+yform_manager_search = Búsqueda
+
+yform_data_view = Vista
+
+
+yform_data_select = Tomar el relevo
+
+# field.inc.php
+yform_tablenotexists = ¡Esta tabla no existe!
+yform_tablefield = Campo de tabla
+yform_values = Valores
+yform_validates = Validación/verificación
+yform_actions = Acciones
+yform_validatenamenotempty = Por favor ingrese el nombre
+yform_validatenamepregmatch = Ingrese solo letras y "_" en el nombre
+yform_validatenamecheck = Este nombre ya existe
+yform_donotsaveindb = No guardar en la base de datos
+yform_hideinlist = Ocultar en la lista
+yform_useassearchfieldalidatenamenotempty = Grabar como campo de búsqueda
+yform_tablefielddeleted = El campo de tabla fue eliminado
+yform_tablefieldnotfound = No se encontró el campo de tabla
+yform_addtablefield = Crear campo de tabla
+yform_table = Tabla
+yform_editfield = Campo de edición
+yform_choosenadd = Seleccionar campos
+yform_choosenadd_description = Seleccione el campo que desea usar en su administración. Hay campos de valor, con los que generalmente se realizan las entradas, así como también campos de validación, con los cuales se pueden examinar los campos de valor según diversos criterios.
+yform_addfield = Agregar campo
+yform_editfields = Editar campos
+
+yform_id_is_missing = ID falta
+yform_id_missing_info = Desafortunadamente, la tabla no tiene campo ID con autoincrement. Por lo tanto, yform no puede trabajar con eso. Actualice la tabla y cree la ID manualmente si es necesario.
+
+# import
+yform_manager_import_error_missingfile = Por favor cargue un archivo de importación
+yform_manager_import_error_missingfields = Faltan los siguientes campos: {0}
+yform_manager_import_error_min_missingfields = Al menos falta un campo: {0}
+yform_manager_import_error_field = No se pudo crear el campo "{0}": "{1}"
+yform_manager_import_field_added = El campo "{0}" ha sido creado
+yform_manager_import_error_import_abort = La importación no se ejecutó debido al siguiente error: {0}
+yform_manager_import_error_import_stopped = La importación fue abortada porque aparecieron errores.
+yform_manager_import_error_dataimport = El registro ({0}) no se pudo importar: {1}
+yform_manager_import_error_import = {0} registros fueron importados De estos, {1} nuevos registros y {2} registros fueron reemplazados.
+yform_manager_import_info_data_imported = {0} registros no fueron importados
+yform_manager_import_error_not_started = La importación no se inició.
+yform_manager_import_csv = Importar archivo CSV
+yform_manager_import_csv_info = Con esto puedes importar datos en esta tabla. Tenga en cuenta que solo puede importar archivos de texto y que la <b>primera línea debe contener las definiciones de campo</b>. A continuación debería estar la codificación <b>del archivo de importación UTF-8</b>. que puede ser que tengas que convertirlos antes.
+yform_manager_import_if_no_column = Si la columna no existe en la base de datos,
+yform_manager_import_if_no_column_ignore = luego ignora la columna.
+yform_manager_import_if_no_column_addtext = luego crea una columna como TEXTO en la base de datos (estos campos deben determinarse más tarde para gestionarlos).
+yform_manager_import_if_no_column_break = luego cancela la importación.
+yform_manager_import_divider = Separador
+yform_manager_import_divider_semicolon = Punto y coma
+yform_manager_import_divider_comma = Coma
+yform_manager_import_divider_tab = Tabulador
+yform_manager_import_unique_field = Si este campo es idéntico, el registro será reemplazado
+yform_manager_import_start = Añadir
+yform_manager_import_file = Expediente
+yform_manager_import_error_missingfielddefinition = Hay campos que están vacíos y, por lo tanto, no se pueden asignar. Por favor, compruebe la primera línea de la importación.
+yform_manager_import_error_duplicatefielddefinition = Hay campos que son idénticos. Por favor, compruebe la primera línea de la importación.
+
+# history
+yform_history = historia
+yform_history_dataset_id = Identificación del registro
+yform_history_dataset = registro
+yform_history_action = Acción
+yform_history_action_create = Creado
+yform_history_action_update = Editado
+yform_history_action_delete = Suprimido
+yform_history_user = Usuario
+yform_history_timestamp = Fecha y hora
+yform_history_view = Vista
+yform_history_restore = Regreso
+yform_history_restore_this = Restablecer registro a esta versión
+yform_history_restore_success = El registro ha sido reiniciado.
+yform_history_restore_error = El registro no se pudo restablecer.
+yform_history_delete = Eliminar historial
+yform_history_delete_all = Completo
+yform_history_delete_older_3_months = Más de 3 meses
+yform_history_delete_confirm = ¿Realmente borras la historia?
+yform_history_delete_success = Los registros de historial han sido eliminados.
+
+yform_manager_show_form_notation = Código del formulario
+
+navigation_yform_tables = Tablas
+yform_tabledata_overview = Tabla de datos
+
+yform_manager_multi_edit_field = Editar campo "{0}"
+
+yform_values_be_link_description = 				Un campo de Redaxo para seleccionar un <b>artículo de Redaxo</b>.
+yform_values_be_manager_relation_description = 	Una casilla de verificación / ventana emergente para <b>vincular</b> uno o más <b>registros</b> a una hoja de cálculo extranjera.
+yform_values_be_media_description = 			Un campo Redaxo para seleccionar uno o varios <b>archivos de grupo de medios</b>.
+yform_values_be_table_description = 			Una serie de campos de entrada para ingresar <b>datos tabulares</b>.
+yform_values_prio_description =					Un <b>cuadro de selección</b> para ordenar registros en un <b>orden específico</b>.
+
+yform_values_defaults_prio = Prioridad
+yform_values_be_manager_relation_table = Tabla de objetivos
+yform_values_be_manager_relation_field = Campo(s) de tabla de destino para mostrar o campo que contiene la relación ID.
+yform_values_be_manager_relation_type = La selección múltiple
+yform_values_be_manager_relation_empty_option = Con "opción vacía"
+yform_values_be_manager_relation_empty_value = Mensaje de error si la "opción vacía" no está activada.
+yform_values_be_manager_relation_size = Altura del cuadro de selección
+yform_values_be_manager_relation_filter = Filtro
+yform_values_be_manager_relation_relation_table = Tabla de relaciones
+yform_values_be_media_preview = Preestreno
+yform_values_be_media_category = Categoría de grupo de medios
+yform_values_be_media_types = Tipos
+yform_values_be_media_types_notice = Formato: jpg, gif
+yform_values_be_media_multiple = La selección múltiple
+yform_values_be_table_columns = Nombre de las columnas (cantidad, precio, cualquier cosa)
+yform_values_be_link_multiple = La selección múltiple
+yform_values_prio_fields = Visualización
+yform_values_prio_scope = Restricción
+yform_values_prio_default = En el comienzo
+
+yform_is = Es
+yform_will_set_to = Deberá
+
+yform_field_add = Añadir campo
+yform_field_update = Campo de actualización
+yform_field_db_type = Tipo de campo de base de datos

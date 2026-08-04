@@ -1,0 +1,45 @@
+{
+    "name": "yakamara/yform",
+    "description": "Formulare und Tabellen-Verwaltung für REDAXO 6",
+    "license": "MIT",
+    "type": "redaxo-addon",
+    "authors": [
+        {
+            "name": "Jan Kristinus",
+            "homepage": "https://www.yakamara.de"
+        },
+        {
+            "name": "Gregor Harlan"
+        }
+    ],
+    "homepage": "https://github.com/yakamara/yform",
+    "support": {
+        "issues": "https://github.com/yakamara/yform/issues"
+    },
+    "require": {
+        "php": "^8.5",
+        "redaxo/core": "^6.0@dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.5 || ^13.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yakamara\\YForm\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yakamara\\YForm\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "redaxo": {
+            "addon-class": "Yakamara\\YForm\\YFormAddon"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "prefer-stable": true
+}
