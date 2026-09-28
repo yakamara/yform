@@ -1,161 +1,232 @@
-# YForm für REDAXO 6
+# YForm für REDAXO 6 (Neubau)
 
-YForm hat zwei Seiten: es erzeugt **Formulare** – im Frontend wie im Backend – und es verwaltet
-**Tabellen samt Datensätzen**. Beides greift ineinander: aus einer im Table Manager angelegten
-Tabelle lässt sich der Code für das passende Formular direkt erzeugen.
-
-Das ist YForm für REDAXO 6 (Composer-Paket `yakamara/yform`, Namespace `Yakamara\YForm`,
-Branch `6.x`). Die REDAXO-5-Version liegt auf `master` und wird nicht an Ort und Stelle
-aktualisiert – siehe [Unterschiede zu REDAXO 5](#unterschiede-zu-redaxo-5).
-
-## Funktionen
-
-- Formulare in kompakter Pipe-Notation oder in PHP-Schreibweise
-- 37 Feldtypen (Values), 13 Validierungen und 16 Aktionen, erweiterbar um eigene
-- Table Manager: Datenbanktabellen im Backend zusammenstellen, Schema pflegen, Relationen definieren
-- Vollständige Datenverwaltung je Tabelle mit Liste, Suche, Historie, Import und Export
-- ORM (`Dataset`, `Collection`, `Query`) für den Zugriff im Code
-- E-Mail-Templates mit Platzhaltern aus den Formulardaten
-- Tablesets zum Ex- und Importieren kompletter Tabellendefinitionen
-- HTML-Ausgabe über Core-Fragmente, pro Projekt überschreibbar
+YForm verwaltet **Tabellen samt Datensätzen** im Backend und erzeugt **Formulare** fürs Frontend. Dieser Branch
+ist ein Neubau: Tabellen, Felder, Layouts und Formulare sind **PHP-Klassen im Projekt**. In der Datenbank liegen
+nur noch die Daten selbst. Es gibt keine `yform_table`- oder `yform_field`-Tabellen mehr, keine Pipe-Notation und
+keine `objparams`.
 
 ## Voraussetzungen
 
 - REDAXO 6
 - PHP 8.5 oder neuer
 
-## Installation
-
-```bash
-composer require yakamara/yform
-php bin/console addon:install yform
-```
-
-## Ein Formular
-
-```
-text|vorname|Vorname|
-text|name|Name|
-email|email|E-Mail|
-validate|empty|vorname|Bitte Vornamen angeben
-submit|submit|Absenden
-```
-
-Jede Zeile ist ein Feld. Es gibt drei Sorten:
-
-| Sorte | Zweck | Beispiele |
-| --- | --- | --- |
-| **Value** | Eingabefelder und Ausgaben | `text`, `email`, `choice`, `upload` |
-| **Validate** | prüft Values, bevor gespeichert oder gesendet wird | `empty`, `type`, `unique` |
-| **Action** | läuft nach erfolgreicher Validierung | `db`, `email`, `redirect` |
-
-In PHP-Schreibweise:
+## Eine Tabelle definieren
 
 ```php
-use Yakamara\YForm\YForm;
+namespace Project\Table;
 
-$yform = new YForm();
-$yform->setObjectparams('form_showformafterupdate', 1);
-$yform->setValueField('text', ['name', 'Name']);
-$yform->setValidateField('empty', ['name', 'Bitte Namen angeben']);
-$yform->setActionField('db', ['rex_yf_contact']);
+use Yakamara\YForm\Attribute\AsTable;
+use Yakamara\YForm\Field\{Checkbox, Choice, CreatedAt, Decimal, Media, Text, Textarea, UpdatedAt};
+use Yakamara\YForm\Field\Relation\{BelongsTo, ManyToMany, OnDelete};
+use Yakamara\YForm\Form\Layout\{Cell, Layout, Tab};
+use Yakamara\YForm\Table\{ListConfig, Table};
 
-echo $yform->getForm();
-```
-
-Eine immer aktuelle Kurzliste aller installierten Feldtypen steht im Backend unter
-**YForm → Setup** – auch dann, wenn ein Projekt eigene Typen mitbringt. Die vollständige Referenz
-liegt in der mitgelieferten Dokumentation unter **YForm → Dokumentation**.
-
-## Datensätze im Code
-
-```php
-use Yakamara\YForm\Manager\Dataset;
-
-$news = Dataset::query('rex_yf_news')
-    ->where('online', 1)
-    ->orderBy('createdate', 'DESC')
-    ->limit(10)
-    ->find();
-
-foreach ($news as $item) {
-    echo $item->getValue('title');
-}
-```
-
-## Eigene Feldtypen
-
-Ein eigener Value-, Validate- oder Action-Typ ist eine Klasse mit dem passenden Attribut. YForm
-findet sie über die Klassen-Discovery, eine Registrierung von Hand ist nicht nötig.
-
-```php
-namespace App\YForm\Value;
-
-use Yakamara\YForm\Attribute\AsValue;
-use Yakamara\YForm\Value\AbstractValue;
-
-#[AsValue('mycolor')]
-class MyColor extends AbstractValue
+#[AsTable('rex_product', label: 'Produkte', icon: 'fa-cube')]
+final class ProductTable extends Table
 {
-    public function enterObject()
+    public function fields(): iterable
     {
-        // …
+        yield Text::new('name')->label('Name')->required()->maxLength(120);
+        yield Text::new('sku')->label('Artikelnummer')->unique();
+        yield Choice::new('status')->label('Status')->options(ProductStatus::class)->default(ProductStatus::Draft);
+        yield BelongsTo::new('category_id')->label('Kategorie')->target(CategoryTable::class)->onDelete(OnDelete::Restrict);
+        yield ManyToMany::new('labels')->label('Siegel')->target(LabelTable::class)->expanded();
+        yield Decimal::new('price')->label('Preis')->precision(10, 2)->min(0);
+        yield Checkbox::new('featured')->label('Startseite');
+        yield Textarea::new('description')->label('Beschreibung');
+        yield Media::new('image')->label('Bild')->types('jpg', 'png', 'webp');
+        yield CreatedAt::create();
+        yield UpdatedAt::create();
+    }
+
+    public function layout(Layout $layout): Layout
+    {
+        return $layout
+            ->tab('Produkt', fn (Tab $t) => $t->row(Cell::field('name', 8), Cell::field('sku', 4))->row('status', 'category_id', 'price'))
+            ->tab('Medien', fn (Tab $t) => $t->row('image'));
+    }
+
+    public function list(ListConfig $list): ListConfig
+    {
+        return $list->columns('id', 'name', 'status', 'price')->sortBy('name');
     }
 }
 ```
 
-Das Markup kommt aus Core-Fragmenten unter `fragments/yform/value/{backend,frontend}/`. Eigene
-Fragmente im Projekt überschreiben die von YForm gelieferten; ein AddOn kann mit
-`Yakamara\YForm\View\Fragment::addSearchPath()` einen eigenen Fragment-Pfad ergänzen.
+Was dann automatisch passiert:
 
-## Unterschiede zu REDAXO 5
+- **Datenbank:** `console migrate` legt die Tabelle an und ergänzt Spalten, Indizes und Pivot-Tabellen. Die
+  Spaltenreihenfolge folgt der Feldreihenfolge. Spalten ohne Feld werden **nie** stillschweigend gelöscht,
+  siehe [Schema](#schema).
+- **Backend:** Jede Tabelle bekommt einen Navigationseintrag mit Liste (Suche, Sortierung, Seiten),
+  Anlegen/Bearbeiten/Löschen und Rechten pro Tabelle.
+- **Code:** `ProductTable::query()`, `::find()`, `::create()` usw., siehe [Daten](#daten).
 
-- **Kein `REX_YFORM_DATA` / `REX_YFORM_DATASET` in Templates und Modulen.** REDAXO 6 hat das
-  REX_VAR-System entfernt; in einer Modulklasse fragt man die Daten direkt über das ORM ab. Einzige
-  Ausnahme: in **E-Mail-Templates** funktioniert `REX_YFORM_DATA[field="…"]` unverändert weiter.
-- **Kein Formbuilder-Modul.** REDAXO 6 hat keine Modultabelle und keine Modulverwaltung im Backend –
-  Module sind PHP-Klassen im Projekt. Das Doku-Kapitel *Modul erstellen* zeigt ein lauffähiges
-  Beispiel.
-- **Keine REST-API.**
-- **Klassennamen haben Namespaces.** Aus `rex_yform_manager_dataset` wird
-  `Yakamara\YForm\Manager\Dataset`, aus `rex_yform` wird `Yakamara\YForm\YForm` und so weiter.
-- **Eigene Feldtypen brauchen ein Attribut** (`#[AsValue('xyz')]`) statt der Namenskonvention
-  `rex_yform_value_xyz`. Die *Typnamen* bleiben unverändert, bestehende Tabellen und
-  Formular-Definitionen funktionieren also weiter.
-- **`ytemplates` sind Core-Fragmente.** Projekteigene Templates müssen als Fragment neu angelegt
-  werden.
-- **MySQL läuft im Strict Mode.** REDAXO 5 verband sich mit `SQL_MODE=""`, REDAXO 6 nicht. Spalten,
-  die YForm anlegt, sind deshalb `NULL`-fähig, und ein leeres Datum wird als `NULL` statt
-  `0000-00-00` gespeichert. Daraus folgen drei Verhaltensänderungen:
-    - **`number` akzeptiert das deutsche Dezimalkomma.** „2,50" wird zu `2.50` normalisiert. Unter
-      REDAXO 5 hat MySQL „2,50" stillschweigend zu `2.00` abgeschnitten; im Strict Mode würde die
-      ganze Zeile abgelehnt. Was auch nach der Normalisierung keine Zahl ist, wird `NULL` – wer das
-      gemeldet haben will, ergänzt `validate|type|feldname|numeric`.
-    - **Ein leeres `prio`-Feld heißt weiter „ans Ende".** Es landet aber nicht als `''` in der
-      `INT`-Spalte, sondern als berechnete Position.
-    - **Die Suchoption `(leer)` findet auch `NULL`.** Bisher verglich sie nur gegen `''`, was bei
-      `NULL`-fähigen Spalten nie zutraf.
+Neue Klassen findet REDAXO über die Class Discovery. Im Dev-Modus (`REX_MODE=dev`) sofort, sonst nach
+`console cache:clear`.
 
-Aus REDAXO 5 übernommene Projekte bleiben unterstützt: eigene `rex_yform_value_*`-Klassen werden
-weiterhin aufgelöst, R5-Templatenamen werden als Fragment-Kandidaten mitgeprüft, und `NOT NULL`
-gesetzte Einstellungsspalten einer bestehenden Installation werden bei der Installation repariert.
+## Feldtypen
 
-## Dokumentation
+Die Klasse *ist* der Feldtyp. Konfiguriert wird fluent, der Konstruktor ist für alle gleich:
+`Text::new('name')->label('Name')`.
 
-Die vollständige Dokumentation liegt im AddOn unter **YForm → Dokumentation** und als Markdown in `docs/`.
+| Klasse | Spalte | PHP-Wert | Hinweise |
+|---|---|---|---|
+| `Text` | `varchar(n)` | `?string` | `maxLength()`, `placeholder()` |
+| `Textarea` | `text`/`mediumtext` | `?string` | `rows()`, `large()` |
+| `Email`, `Url` | `varchar`/`text` | `?string` | Formatprüfung |
+| `Password` | `varchar(255)` | Hash | `hashed()` (Standard), leere Eingabe behält den Wert |
+| `Integer` | `int`/`bigint` | `?int` | `min()`, `max()`, `unsigned()`, `big()` |
+| `Decimal` | `decimal(p,s)` | numerischer String | Dezimalkomma wird akzeptiert |
+| `Checkbox` | `tinyint(1)` | `bool` | nie `NULL` |
+| `Choice` | `varchar` / JSON in `text` | `?string` / `list<string>` | Optionen als Array, Enum oder Closure; `multiple()`, `expanded()` |
+| `Date`, `DateTime` | `date`/`datetime` | `?DateTimeImmutable` | native Picker, strikte Prüfung (kein 31.02.) |
+| `Time` | `time` | `?string` (`HH:MM`) | |
+| `Hidden` | `varchar` | `?string` | Frontend |
+| `Media` | `varchar` / JSON | Dateiname(n) | Medienpool-Widget; Löschen verwendeter Dateien wird verhindert |
+| `Article` | `int` / JSON | Artikel-ID(s) | Linkmap-Widget |
+| `Uuid` | `varchar(36)` | `string` | wird beim ersten Speichern erzeugt, eindeutig |
+| `CreatedAt`, `UpdatedAt` | `datetime` | `DateTimeImmutable` | automatisch |
+| `CreatedBy`, `UpdatedBy` | `varchar` | Login | automatisch |
+| `Markup` | – | – | statischer Inhalt zwischen Feldern |
+| `Relation\BelongsTo` | `int unsigned` + Index | `?int` | `target()`, `filter()`, `onDelete()` |
+| `Relation\ManyToMany` | Pivot-Tabelle | `list<int>` | `pivot()`, `expanded()` |
+| `Relation\HasMany` | – | `list<int>` | Gegenstück zu `BelongsTo`; mit `inline()` werden die Datensätze direkt in der Maske bearbeitet |
 
-## Tests
+Diese Optionen haben alle Felder: `label()`, `notice()`, `required()`, `default()`, `readonly()`, `listed()`,
+`searchable()`, `sortable()`, `unique()`, `rule()` und `attributes()`.
 
-YForm bringt eine Test-Suite als Konsolenbefehle mit, die gegen die laufende Installation arbeitet:
+**Eigene Feldtypen** sind Unterklassen im Projekt. Überschrieben wird, was abweicht: `columnType()`, `fromInput()`,
+`fromDb()`, `toDb()`, `validate()`, `listValue()` usw. Das Markup liegt in einer View-Datei neben der Klasse
+(`MyField.view.php`, gibt eine Closure zurück). Ohne eigene View wird die der Elternklasse verwendet.
 
-```bash
-php bin/console yform:test
+## Validierung
+
+- Pflicht und Format prüft das Feld selbst (`required()`, E-Mail, Zahl, Datum, Relation existiert).
+- Weitere Regeln hängen als Objekte am Feld: `->rule(new Length(max: 20), new Regex('/^[A-Z]/'))`. Mitgeliefert
+  sind `Length`, `Range`, `Regex`, `SameAs`, `Unique`, `PasswordPolicy` und `Callback`.
+- Feldübergreifende Prüfungen gehören in `Table::validate(Record $record, Errors $errors)` bzw.
+  `FormDefinition::validate(array $values, Errors $errors)`.
+
+## Daten
+
+```php
+$products = ProductTable::query()
+    ->where('status', 'active')
+    ->where('price', '>=', 10)
+    ->whereAny(fn (Query $q) => $q->whereLike('name', '%Tee%')->whereJsonContains('tags', 'bio'))
+    ->orderBy('name')
+    ->paginate(page: 1, perPage: 20);
+
+$product = ProductTable::create(['name' => 'Mate', 'category_id' => 3]);
+$product->save();                       // wirft ValidationException mit $e->errors
+$product->related('category_id');       // ?Record
+$product->related('labels');            // Collection
 ```
 
-Einzelne Bereiche lassen sich gezielt prüfen, etwa `yform:test:field-types`, `yform:test:relations`,
-`yform:test:backend-pages` oder `yform:test:e2e`. `yform:test:doctor` prüft die Installation auf
-Schema- und Konfigurationsprobleme.
+- Spaltennamen werden gegen die Definition geprüft, Werte immer gebunden. Relationswerte ohne eigene Spalte
+  werden erst beim Zugriff geladen.
+- Hooks an der Tabelle: `beforeSave`, `afterSave`, `beforeDelete` (Exception verhindert das Löschen) und
+  `afterDelete`.
+- Extension Points: `YFORM_RECORD_VALIDATE`, `YFORM_RECORD_SAVE`, `YFORM_RECORD_SAVED`, `YFORM_RECORD_DELETE`
+  und `YFORM_RECORD_DELETED`.
+- Eine eigene Model-Klasse wird mit `#[AsTable(model: Product::class)]` registriert. Sie erbt von `Record` und kann
+  typisierte Property Hooks anbieten.
 
-## Lizenz
+## Layout und Designer
 
-MIT
+Das Layout einer Maske besteht aus Tabs, Abschnitten (optional mit Überschrift) und Zeilen mit Zellen (Breite
+1–12). Es kann auf zwei Wegen entstehen:
+
+1. **Im Code** über `layout()` an der Tabelle bzw. am Formular.
+2. **Im Designer** (YForm → Tabellen/Formulare → Designer), per Drag & Drop. Das Ergebnis wird als
+   `ProductTable.layout.json` **neben der Klasse** gespeichert und mit ihr versioniert und deployt. Die Datei hat
+   Vorrang vor dem Code-Layout. „Auf Code-Layout zurücksetzen“ löscht sie wieder.
+
+Felder, die in keinem Layout vorkommen, werden automatisch angehängt, ein neues Feld geht also nie verloren.
+
+## Frontend-Formulare
+
+```php
+#[AsForm('contact', label: 'Kontaktformular')]
+final class ContactForm extends FormDefinition
+{
+    public function fields(): iterable
+    {
+        yield Text::new('name')->label('Name')->required();
+        yield Email::new('email')->label('E-Mail')->required();
+        yield Textarea::new('message')->label('Nachricht')->required();
+    }
+
+    public function handlers(): iterable
+    {
+        yield new SaveRecord(ContactTable::class);
+        yield new SendMail(to: 'info@example.org', subject: 'Anfrage von {name}', replyTo: '{email}');
+        yield new Redirect(12);   // Artikel-ID oder URL
+    }
+}
+
+echo Forms::get('contact')->run();   // z. B. in einem Modul
+```
+
+- Die Handler ersetzen die bisherigen Actions: `SaveRecord`, `SendMail`, `Redirect` und `Callback`. Eigene Handler
+  implementieren `Handler`.
+- CSRF-Schutz und ein Honeypot gegen Bots sind eingebaut.
+- Fehler aus der Tabelle, etwa bei der Eindeutigkeit, erscheinen am passenden Formularfeld.
+
+## Themes
+
+Im Backend wird immer Bootstrap 3 verwendet. Frontend-Formulare nutzen standardmäßig `Theme::bootstrap5()`. Das
+lässt sich im Projekt-Boot mit `Forms::$defaultTheme = Theme::plain();` ändern oder pro Formular über `theme()`.
+Für eigenes Markup überschreibst du einzelne Views, ohne die Klassen anzufassen:
+
+```php
+ViewResolver::override(FieldGroup::class, __DIR__ . '/views/field-group.php');
+ViewResolver::override(Text::class, __DIR__ . '/views/text.php');
+```
+
+## Rechte
+
+Admins dürfen alles. Für Redakteure gibt es zwei Rollenrechte mit Tabellenauswahl: **Tabellen ansehen** und
+**Tabellen bearbeiten**. `ListConfig::filter()` schränkt ein, welche Datensätze eine Liste zeigt und welche
+bearbeitet werden dürfen.
+
+## Schema
+
+- `console migrate` gleicht alle Tabellen an, ohne etwas zu löschen.
+- `console yform:schema` zeigt die Unterschiede. Mit `--apply` werden sie angewendet, mit
+  `--drop=rex_product.alte_spalte` wird zusätzlich eine Spalte ohne Feld gelöscht.
+- Dieselben Informationen samt Schaltfläche zeigt die Backend-Seite YForm → Tabellen.
+
+## Bewusst weggelassen
+
+| Früher | Stattdessen |
+|---|---|
+| `yform_table`/`yform_field`, Table- und Field-Editor | Klassen im Projekt |
+| Pipe-/PHP-Notation, `objparams` | `FormDefinition`-Klassen |
+| Value `php`, Action `php`/`html` (`eval`) | eigene Klassen, `Callback`-Handler |
+| `emptyname`, `hashvalue`, `encrypt_value`, `generate_key`, `index` | `Password`, `Uuid`, Queries |
+| `createdb`, `create_table`, `manage_db` | Schema-Sync |
+| CSV-IDs in Relationsspalten, Relationstypen 0–5 | `BelongsTo`, `ManyToMany` (Pivot), `HasMany` |
+| `google_geocode`, `signature`, `be_table` | bei Bedarf als eigene Feldklassen oder Addon |
+| Tablesets (JSON) | die Klassen sind die Definition |
+| jQuery-Plugins (daterangepicker, inputmask) | native Eingabefelder |
+| eigenes Testframework | PHPUnit (`vendor/bin/phpunit`) |
+
+## Noch offen
+
+- Upload-Feld (Dateien außerhalb des Medienpools)
+- Sortierfeld mit Drag & Drop in der Liste (Ersatz für `prio`)
+- Filter für Redakteure (gespeicherte Filter pro Rolle/Liste)
+- Historie, CSV-Import/-Export, Mehrfachbearbeitung
+- Popup-Auswahl für große Relationstabellen, Sortierung von Inline-Zeilen
+- E-Mail-Vorlagen als Klassen/Views
+- Anpassung von ycom an die neue API
+
+## Entwicklung
+
+```bash
+composer install
+vendor/bin/phpunit
+vendor/bin/php-cs-fixer fix
+```
