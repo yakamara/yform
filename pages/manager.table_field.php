@@ -17,6 +17,10 @@ if ($table) {
         $page = new rex_yform_manager();
         $page->setTable($table);
         $page->setLinkVars(['page' => 'yform/manager/table_field']);
+        $return_page = rex_request('return_page', 'string');
+        if ('' !== $return_page && null !== rex_be_controller::getPageObject($return_page)) {
+            $page->setLinkVars(['return_page' => $return_page]);
+        }
         echo $page->getFieldPage();
     } catch (Exception $e) {
         $message = nl2br($e->getMessage() . "\n" . $e->getTraceAsString());

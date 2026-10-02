@@ -601,6 +601,10 @@ class rex_yform_manager
                 $item = [];
                 $item['label'] = rex_i18n::msg('yform_edit');
                 $item['url'] = 'index.php?page=yform/manager/table_field&table_name=' . $this->table->getTableName();
+                $currentPage = rex_be_controller::getCurrentPage();
+                if ('yform/manager/data_edit' !== $currentPage) {
+                    $item['url'] .= '&return_page=' . urlencode($currentPage);
+                }
                 $item['attributes']['class'][] = 'btn-default';
                 $field_links[] = $item;
             }
@@ -1283,7 +1287,9 @@ class rex_yform_manager
                 $fragment->setVar('buttons', [
                     [
                         'label' => rex_i18n::msg('yform_data_view'),
-                        'url' => 'index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName(),
+                        'url' => isset($this->linkvars['return_page'])
+                            ? rex_url::backendPage($this->linkvars['return_page'], ['table_name' => $table->getTableName()], false)
+                            : 'index.php?page=yform/manager/data_edit&table_name=' . $table->getTableName(),
                         'attributes' => [
                             'class' => [
                                 'btn-default',
