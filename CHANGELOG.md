@@ -1,6 +1,13 @@
 Changelog
 =========
 
+Version 5.0.3 - XX.XX.2026
+--------------------------
+
+### Korrekturen
+
+* `rex_yform_value_google_geocode` crasht beim Speichern eines neuen Datensatzes nicht mehr: `explode()` bekam ohne Wert `null` (deprecated seit PHP 8.1) — im Debug-Modus wurde daraus eine Exception und die Transaktion brach ab. Wert und Default werden jetzt als String behandelt.
+
 Version 5.0.2 - 12.05.2026
 --------------------------
 
