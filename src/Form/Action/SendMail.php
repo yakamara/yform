@@ -3,10 +3,13 @@
 namespace Yakamara\YForm\Form\Action;
 
 use Closure;
+use Redaxo\Core\Core;
 use Redaxo\Core\Filesystem\Path;
-use Redaxo\Core\Mailer\Mailer;
 use Redaxo\Core\MediaPool\Media;
 use RuntimeException;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\Mime\Email;
 use Yakamara\YForm\View\TemplateRenderer;
 
 use function is_file;
@@ -57,24 +60,24 @@ final class SendMail extends Action
 
     public function execute(Submission $submission): void
     {
-        $mailer = new Mailer(true);
+        $email = new Email();
         if (null !== $this->from) {
-            $mailer->setFrom($submission->interpolate($this->from), $submission->interpolate((string) $this->fromName));
+            $email->from(new Address($submission->interpolate($this->from), $submission->interpolate((string) $this->fromName)));
         }
         foreach ((array) $this->to as $address) {
-            $mailer->addAddress($submission->interpolate($address));
+            $email->addTo($submission->interpolate($address));
         }
         foreach ((array) $this->cc as $address) {
-            $mailer->addCC($submission->interpolate($address));
+            $email->addCc($submission->interpolate($address));
         }
         foreach ((array) $this->bcc as $address) {
-            $mailer->addBCC($submission->interpolate($address));
+            $email->addBcc($submission->interpolate($address));
         }
         if (null !== $this->replyTo && '' !== $replyTo = $submission->interpolate($this->replyTo)) {
-            $mailer->addReplyTo($replyTo);
+            $email->addReplyTo($replyTo);
         }
 
-        $mailer->Subject = is_string($this->subject) ? $submission->interpolate($this->subject) : ($this->subject)($submission);
+        $email->subject(is_string($this->subject) ? $submission->interpolate($this->subject) : ($this->subject)($submission));
 
         $html = $this->html || null !== $this->template;
         $body = match (true) {
@@ -84,11 +87,9 @@ final class SendMail extends Action
             default => ($this->body)($submission),
         };
         if ($html) {
-            $mailer->isHTML();
-            $mailer->Body = $body;
-            $mailer->AltBody = self::plainText($body);
+            $email->html($body)->text(self::plainText($body));
         } else {
-            $mailer->Body = $body;
+            $email->text($body);
         }
 
         foreach ($this->attachments instanceof Closure ? ($this->attachments)($submission) : $this->attachments as $file) {
@@ -96,11 +97,13 @@ final class SendMail extends Action
             if (null === $path) {
                 throw new RuntimeException('Mail attachment "' . $file . '" not found.');
             }
-            $mailer->addAttachment($path);
+            $email->attachFromPath($path);
         }
 
-        if (!$mailer->send()) {
-            throw new RuntimeException('Mail could not be sent: ' . $mailer->ErrorInfo);
+        try {
+            Core::getMailer()->send($email);
+        } catch (TransportExceptionInterface $e) {
+            throw new RuntimeException('Mail could not be sent: ' . $e->getMessage(), 0, $e);
         }
     }
 
