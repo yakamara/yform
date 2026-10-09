@@ -44,6 +44,14 @@ final class Forms
         return self::$forms = $forms;
     }
 
+    /** @return array<string, FormDefinition> forms registered for the module (`#[AsForm(module: true)]`), by label */
+    public static function forModule(): array
+    {
+        $forms = array_filter(self::all(), static fn (FormDefinition $form): bool => $form->definition->module);
+        uasort($forms, static fn (FormDefinition $a, FormDefinition $b): int => strnatcasecmp($a->label(), $b->label()));
+        return $forms;
+    }
+
     /** @param string|class-string<FormDefinition> $nameOrClass */
     public static function find(string $nameOrClass): ?FormDefinition
     {

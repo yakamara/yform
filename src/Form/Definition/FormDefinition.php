@@ -12,9 +12,9 @@ use Redaxo\Core\Translation\I18n;
 use Throwable;
 use Yakamara\YForm\Attribute\AsForm;
 use Yakamara\YForm\Field\Field;
+use Yakamara\YForm\Form\Action\Action;
+use Yakamara\YForm\Form\Action\Submission;
 use Yakamara\YForm\Form\Form;
-use Yakamara\YForm\Form\Handler\Handler;
-use Yakamara\YForm\Form\Handler\Submission;
 use Yakamara\YForm\Form\Layout\Layout;
 use Yakamara\YForm\Form\Layout\LayoutStore;
 use Yakamara\YForm\Form\Theme\Theme;
@@ -28,7 +28,7 @@ use function sprintf;
  * A form defined as class — the replacement for pipe/PHP notation and objparams.
  *
  * ```php
- * #[AsForm('contact', label: 'Kontakt')]
+ * #[AsForm('contact', label: 'Kontakt', module: true)]
  * final class ContactForm extends FormDefinition
  * {
  *     public function fields(): iterable
@@ -38,10 +38,11 @@ use function sprintf;
  *         yield Textarea::new('message')->label('Nachricht')->required();
  *     }
  *
- *     public function handlers(): iterable
+ *     public function actions(): iterable
  *     {
  *         yield new SaveRecord(ContactTable::class);
- *         yield new SendMail(to: 'info@example.org', subject: 'Neue Anfrage von {name}');
+ *         yield new SendMail(to: 'info@example.org', subject: 'Neue Anfrage von {name}', replyTo: '{email}');
+ *         yield new SendMail(to: '{email}', subject: 'Danke für deine Nachricht');
  *     }
  * }
  * ```
@@ -65,11 +66,12 @@ abstract class FormDefinition
     }
 
     /**
-     * What happens after a valid submission, in order.
+     * What happens after a valid submission, in order (see {@see Action}). Each action may be attached several
+     * times and restricted with `->when()`.
      *
-     * @return iterable<Handler>
+     * @return iterable<Action>
      */
-    public function handlers(): iterable
+    public function actions(): iterable
     {
         return [];
     }
@@ -88,7 +90,7 @@ abstract class FormDefinition
         return I18n::msg('yform_submit');
     }
 
-    /** Shown instead of the form after a successful submission (unless a handler redirects). */
+    /** Shown instead of the form after a successful submission (unless an action redirects or sets its own message). */
     public function successMessage(): string
     {
         return I18n::msg('yform_form_success');
@@ -151,15 +153,17 @@ abstract class FormDefinition
         if ($submitted) {
             $submission = new Submission($this, $form);
             try {
-                foreach ($this->handlers() as $handler) {
-                    $handler->handle($submission);
+                foreach ($this->actions() as $action) {
+                    if ($action->shouldRun($submission)) {
+                        $action->execute($submission);
+                    }
                 }
                 Extension::dispatch(new ExtensionPoint('YFORM_FORM_SUBMITTED', $submission, ['form' => $this], true));
             } catch (ValidationException) {
-                // A handler (e.g. SaveRecord) reported field errors on the form.
+                // An action (e.g. SaveRecord) reported field errors on the form.
                 return $this->renderForm($form, $honeypotName);
             } catch (Throwable $e) {
-                $form->errors->addGlobal(I18n::rawMsg('yform_form_handler_error'));
+                $form->errors->addGlobal(I18n::rawMsg('yform_form_action_error'));
                 Logger::logException($e);
                 return $this->renderForm($form, $honeypotName);
             }

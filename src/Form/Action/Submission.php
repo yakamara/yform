@@ -1,25 +1,26 @@
 <?php
 
-namespace Yakamara\YForm\Form\Handler;
+namespace Yakamara\YForm\Form\Action;
 
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Form\Definition\FormDefinition;
 use Yakamara\YForm\Form\Form;
 
 use function preg_replace_callback;
+use function Redaxo\Core\View\escape;
 
 /**
- * State shared by the handlers of one submission.
+ * State shared by the actions of one submission.
  */
 final class Submission
 {
-    /** Record written by {@see SaveRecord}, available to later handlers. */
+    /** Record written by {@see SaveRecord}, available to later actions. */
     public ?Record $record = null;
 
-    /** Set by {@see Redirect}; the redirect happens after all handlers ran. */
+    /** Set by {@see Redirect}; the redirect happens after all actions ran. */
     public ?string $redirectUrl = null;
 
-    /** Replaces the success message of the form (trusted HTML). */
+    /** Replaces the success message of the form (trusted HTML), see {@see ShowMessage}. */
     public ?string $message = null;
 
     public function __construct(
@@ -52,14 +53,21 @@ final class Submission
     }
 
     /** Replaces `{field}` placeholders with the plain text values; `{id}` with the saved record id. */
-    public function interpolate(string $template): string
+    public function interpolate(string $template, bool $escape = false): string
     {
         $texts = $this->texts();
-        return (string) preg_replace_callback('/\{([a-z][a-z0-9_]*)\}/i', function (array $match) use ($texts): string {
+        return (string) preg_replace_callback('/\{([a-z][a-z0-9_]*)\}/i', function (array $match) use ($texts, $escape): string {
             if ('id' === $match[1]) {
                 return (string) $this->record?->id;
             }
-            return $texts[$match[1]] ?? $match[0];
+            $text = $texts[$match[1]] ?? $match[0];
+            return $escape ? escape($text) : $text;
         }, $template);
+    }
+
+    /** Like {@see interpolate()}, but escapes the values for use in trusted HTML templates. */
+    public function interpolateHtml(string $template): string
+    {
+        return $this->interpolate($template, true);
     }
 }

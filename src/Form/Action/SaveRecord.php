@@ -1,6 +1,6 @@
 <?php
 
-namespace Yakamara\YForm\Form\Handler;
+namespace Yakamara\YForm\Form\Action;
 
 use Closure;
 use Yakamara\YForm\Data\Record;
@@ -9,25 +9,25 @@ use Yakamara\YForm\Table\Tables;
 use Yakamara\YForm\Validation\ValidationException;
 
 /**
- * Writes the submission into a table: every form field with a same-named table field is copied.
+ * Writes the submission into a table: every form field with a same-named table field is copied. The saved record
+ * is available to later actions as `$submission->record` and `{id}` placeholder.
  *
  * `new SaveRecord(ContactTable::class, fn (Record $r, Submission $s) => $r->set('source', 'web'))`
  */
-final readonly class SaveRecord implements Handler
+final class SaveRecord extends Action
 {
     /**
      * @param class-string<Table>|string $table
      * @param (Closure(Record, Submission): void)|null $prepare adjusts the record before saving
      */
     public function __construct(
-        public string $table,
-        public ?Closure $prepare = null,
+        public readonly string $table,
+        public readonly ?Closure $prepare = null,
     ) {}
 
-    public function handle(Submission $submission): void
+    public function execute(Submission $submission): void
     {
-        $table = Tables::get($this->table);
-        $record = $table->newRecord();
+        $record = Tables::get($this->table)->newRecord();
         foreach ($submission->form->fields as $name => $field) {
             if ($field->storesValue() && $record->has($name)) {
                 $record->set($name, $submission->value($name));

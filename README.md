@@ -148,7 +148,7 @@ Felder, die in keinem Layout vorkommen, werden automatisch angehängt, ein neues
 ## Frontend-Formulare
 
 ```php
-#[AsForm('contact', label: 'Kontaktformular')]
+#[AsForm('contact', label: 'Kontaktformular', module: true)]
 final class ContactForm extends FormDefinition
 {
     public function fields(): iterable
@@ -156,23 +156,48 @@ final class ContactForm extends FormDefinition
         yield Text::new('name')->label('Name')->required();
         yield Email::new('email')->label('E-Mail')->required();
         yield Textarea::new('message')->label('Nachricht')->required();
+        yield Checkbox::new('copy')->label('Kopie an mich');
     }
 
-    public function handlers(): iterable
+    public function actions(): iterable
     {
         yield new SaveRecord(ContactTable::class);
-        yield new SendMail(to: 'info@example.org', subject: 'Anfrage von {name}', replyTo: '{email}');
-        yield new Redirect(12);   // Artikel-ID oder URL
+        yield new SendMail(to: 'team@example.org', subject: 'Anfrage #{id} von {name}', replyTo: '{email}');
+        yield new SendMail(to: '{email}', subject: 'Danke!', template: __DIR__ . '/mail/confirmation.php')
+            ->when(fn (Submission $s) => $s->value('copy'));
+        yield new ShowMessage('<strong>Danke, {name}!</strong>');
     }
 }
-
-echo Forms::get('contact')->run();   // z. B. in einem Modul
 ```
 
-- Die Handler ersetzen die bisherigen Actions: `SaveRecord`, `SendMail`, `Redirect` und `Callback`. Eigene Handler
-  implementieren `Handler`.
-- CSRF-Schutz und ein Honeypot gegen Bots sind eingebaut.
-- Fehler aus der Tabelle, etwa bei der Eindeutigkeit, erscheinen am passenden Formularfeld.
+**Einbinden:**
+
+- **Modul:** YForm bringt das Modul **„YForm: Formular“** mit. Dort erscheinen alle Formulare, die mit
+  `module: true` angemeldet sind; der Redakteur wählt nur das Formular aus. Im Backend zeigt der Block einen
+  Platzhalter, ausgeführt wird das Formular nur im Frontend.
+- **Code:** In Templates und eigenen Modulen genügt `echo Forms::get('contact')->run();`.
+
+**Aktionen** laufen nach einem gültigen Absenden in der angegebenen Reihenfolge. Jede Aktion lässt sich mehrfach
+anhängen und mit `->when(fn (Submission $s) => …)` an eine Bedingung knüpfen.
+
+| Aktion | YForm 5 | Zweck |
+|---|---|---|
+| `SaveRecord` | `db` | schreibt in eine Tabelle, danach `{id}` und `$submission->record` verfügbar |
+| `SendMail` | `email`, `tpl2email` | Mail mit Platzhaltern, `template:`-Datei, `cc`, `bcc`, `replyTo`, Anhänge |
+| `ShowMessage` | `showtext` | eigene Danke-Meldung (HTML, Werte werden escaped) |
+| `Redirect` | `redirect` | Weiterleitung auf Artikel-ID oder URL |
+| `Log` | `logger` | Eintrag im Systemlog |
+| `Callback` | `callback` | beliebiger Code, z. B. Newsletter-Anmeldung |
+
+- **Platzhalter:** `{feld}` wird durch den Textwert des Feldes ersetzt (Choice-Label, formatiertes Datum usw.),
+  `{id}` durch die ID des gespeicherten Datensatzes.
+- **Mail-Templates** sind PHP-Dateien, die eine Closure zurückgeben:
+  `return static function (Submission $s): void { ?>…<?php };`. Ihre Ausgabe wird der HTML-Body, der
+  Text-Teil der Mail entsteht automatisch.
+- **Eigene Aktionen** erben von `Action` und implementieren `execute(Submission $submission)`.
+- **Schutz:** CSRF-Schutz und ein Honeypot gegen Bots sind eingebaut.
+- **Fehler:** Scheitert eine Aktion, wird das Formular mit Fehlermeldung erneut angezeigt. Fehler aus der Tabelle,
+  etwa bei der Eindeutigkeit, erscheinen am passenden Feld.
 
 ## Themes
 
@@ -204,7 +229,7 @@ bearbeitet werden dürfen.
 |---|---|
 | `yform_table`/`yform_field`, Table- und Field-Editor | Klassen im Projekt |
 | Pipe-/PHP-Notation, `objparams` | `FormDefinition`-Klassen |
-| Value `php`, Action `php`/`html` (`eval`) | eigene Klassen, `Callback`-Handler |
+| Value `php`, Action `php`/`html` (`eval`) | eigene Klassen, `Callback`-Aktion |
 | `emptyname`, `hashvalue`, `encrypt_value`, `generate_key`, `index` | `Password`, `Uuid`, Queries |
 | `createdb`, `create_table`, `manage_db` | Schema-Sync |
 | CSV-IDs in Relationsspalten, Relationstypen 0–5 | `BelongsTo`, `ManyToMany` (Pivot), `HasMany` |
@@ -220,7 +245,6 @@ bearbeitet werden dürfen.
 - Filter für Redakteure (gespeicherte Filter pro Rolle/Liste)
 - Historie, CSV-Import/-Export, Mehrfachbearbeitung
 - Popup-Auswahl für große Relationstabellen, Sortierung von Inline-Zeilen
-- E-Mail-Vorlagen als Klassen/Views
 - Anpassung von ycom an die neue API
 
 ## Entwicklung

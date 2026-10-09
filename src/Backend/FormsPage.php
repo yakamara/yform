@@ -8,6 +8,7 @@ use Redaxo\Core\Http\Request;
 use Redaxo\Core\Translation\I18n;
 use Redaxo\Core\View\Message;
 use ReflectionClass;
+use Yakamara\YForm\Form\Definition\FormDefinition;
 use Yakamara\YForm\Form\Definition\Forms;
 use Yakamara\YForm\Form\Form;
 use Yakamara\YForm\Form\Layout\LayoutStore;
@@ -36,7 +37,7 @@ final class FormsPage
             $form = $definition->build();
             $form->csrf = false;
             $form->readonly = false;
-            // The preview must not trigger handlers (mails, records): it only renders.
+            // The preview must not trigger actions (mails, records): it only renders.
             $form->actionUrl = '#';
             $html = new Form($form->name, $form->fields, $form->layout, Theme::bootstrap3())->render();
             $preview = '<section class="rex-page-section"><div class="panel panel-default">'
@@ -52,6 +53,8 @@ final class FormsPage
                 . '<td><strong>' . escape($definition->label()) . '</strong><br><code>' . escape($name) . '</code></td>'
                 . '<td><code>' . escape($definition::class) . '</code><br><small class="text-muted">' . escape(Path::relative($file, Path::base())) . '</small></td>'
                 . '<td>' . count($definition->getFields()) . '</td>'
+                . '<td>' . self::actionList($definition) . '</td>'
+                . '<td>' . ($definition->definition->module ? '<i class="rex-icon fa-check" title="' . escape(I18n::msg('yform_module')) . '"></i>' : '') . '</td>'
                 . '<td><code>Forms::get(\'' . escape($name) . '\')-&gt;run()</code></td>'
                 . '<td class="rex-table-action"><a href="' . escape(Url::currentBackendPage(['preview' => $name])) . '"><i class="rex-icon fa-eye"></i> ' . escape(I18n::msg('yform_preview')) . '</a></td>'
                 . '<td class="rex-table-action"><a href="' . escape(Url::backendPage('yform/designer', ['form' => $name])) . '"><i class="rex-icon fa-th-large"></i> ' . escape(I18n::msg('yform_designer')) . '</a>'
@@ -63,8 +66,18 @@ final class FormsPage
             . '<header class="panel-heading"><div class="panel-title">' . escape(I18n::msg('yform_forms')) . '</div></header>'
             . '<table class="table table-hover"><thead><tr><th class="rex-table-icon"></th>'
             . '<th>' . escape(I18n::msg('yform_form')) . '</th><th>' . escape(I18n::msg('yform_definition')) . '</th>'
-            . '<th>' . escape(I18n::msg('yform_fields')) . '</th><th>' . escape(I18n::msg('yform_usage')) . '</th>'
+            . '<th>' . escape(I18n::msg('yform_fields')) . '</th><th>' . escape(I18n::msg('yform_actions_list')) . '</th>'
+            . '<th>' . escape(I18n::msg('yform_module')) . '</th><th>' . escape(I18n::msg('yform_usage')) . '</th>'
             . '<th class="rex-table-action" colspan="2">' . escape(I18n::msg('yform_actions')) . '</th></tr></thead>'
             . '<tbody>' . $rows . '</tbody></table></div></section>';
+    }
+
+    private static function actionList(FormDefinition $definition): string
+    {
+        $names = [];
+        foreach ($definition->actions() as $action) {
+            $names[] = '<code>' . escape(new ReflectionClass($action)->getShortName()) . '</code>';
+        }
+        return [] === $names ? '–' : implode(' ', $names);
     }
 }
