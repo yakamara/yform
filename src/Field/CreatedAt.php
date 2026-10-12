@@ -18,6 +18,7 @@ class CreatedAt extends DateTime
     protected function init(): void
     {
         $this->readonly();
+        $this->cloneable = false;
     }
 
     #[Override]

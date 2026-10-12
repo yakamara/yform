@@ -21,6 +21,7 @@ class CreatedBy extends Text
     protected function init(): void
     {
         $this->readonly();
+        $this->cloneable = false;
         $this->listed = false;
     }
 

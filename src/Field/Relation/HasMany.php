@@ -39,8 +39,12 @@ use const FILTER_VALIDATE_INT;
  * directly in the form of the parent record — added, changed and removed — and saved in the same transaction.
  *
  * ```php
- * yield HasMany::new('items')->label('Positionen')->target(OrderItemTable::class, 'order_id')->inline();
+ * yield HasMany::new('items')->label('Positionen')->target(OrderItemTable::class, 'order_id')->inline()->sortField('prio');
  * ```
+ *
+ * With {@see sortField()} the order of the inline rows can be changed in the form and is stored in that integer
+ * field of the target table. Inline relations can be nested: a target table may itself edit a has-many relation
+ * inline (order items with their own sub items).
  *
  * The value is the list of ids; while an inline form is processed it is the list of submitted rows
  * (`list<array{id: ?int, values: array<string, mixed>}>`).
@@ -51,6 +55,7 @@ class HasMany extends Field implements Relation
     public protected(set) string $target = '';
     public protected(set) string $foreignKey = '';
     public protected(set) bool $inline = false;
+    public protected(set) ?string $sortField = null;
 
     #[Override]
     protected function init(): void
@@ -74,6 +79,16 @@ class HasMany extends Field implements Relation
         return $this;
     }
 
+    /**
+     * Integer field of the target table that stores the position (1, 2, …) of each related record. Inline rows can
+     * then be moved up and down; related records are always read in this order.
+     */
+    public function sortField(?string $field): static
+    {
+        $this->sortField = $field;
+        return $this;
+    }
+
     public function targetTable(): Table
     {
         if ('' === $this->target) {
@@ -83,16 +98,20 @@ class HasMany extends Field implements Relation
     }
 
     /**
-     * Fields of the target table that are edited inline: all editable ones except the back reference and
-     * nested has-many relations.
+     * Fields of the target table that are edited inline: all editable ones except the back reference and the sort
+     * field. Nested inline relations are included, unless they point back to the same table (endless nesting).
      *
      * @return array<string, Field>
      */
     public function inlineFields(): array
     {
+        $target = $this->targetTable();
         $fields = [];
-        foreach ($this->targetTable()->getFields() as $name => $field) {
-            if ($name === $this->foreignKey || $field instanceof self || ($field->storesValue() && !$field->isEditable())) {
+        foreach ($target->getFields() as $name => $field) {
+            if ($name === $this->foreignKey || $name === $this->sortField || ($field->storesValue() && !$field->isEditable())) {
+                continue;
+            }
+            if ($field instanceof self && $field->targetTable() === $target) {
                 continue;
             }
             $fields[$name] = $field;
@@ -136,6 +155,25 @@ class HasMany extends Field implements Relation
         return [] === $value || null === $value;
     }
 
+    /** Inline rows are copied as new records of the clone; plain has-many records stay with the original. */
+    #[Override]
+    public function cloneValue(mixed $value, Record $source): mixed
+    {
+        if (!$this->inline) {
+            return [];
+        }
+        $fields = $this->inlineFields();
+        $rows = [];
+        foreach ($this->rows($value) as $row) {
+            $values = [];
+            foreach ($row['values'] as $name => $fieldValue) {
+                $values[$name] = isset($fields[$name]) ? $fields[$name]->cloneValue($fieldValue, $source) : $fieldValue;
+            }
+            $rows[] = ['id' => null, 'values' => $values];
+        }
+        return $rows;
+    }
+
     // ---------------------------------------------------------------- inline editing
 
     /**
@@ -152,7 +190,8 @@ class HasMany extends Field implements Relation
         $fields = $this->inlineFields();
         $rows = [];
         foreach ($input as $key => $raw) {
-            if ('__index__' === $key || !is_array($raw) || !empty($raw['_delete'])) {
+            // Keys like `__i2__` belong to the empty-list marker and the row template.
+            if (str_starts_with((string) $key, '__') || !is_array($raw) || !empty($raw['_delete'])) {
                 continue;
             }
             $id = filter_var($raw['_id'] ?? null, FILTER_VALIDATE_INT);
@@ -168,20 +207,22 @@ class HasMany extends Field implements Relation
     }
 
     /**
-     * Rows for the inline editor: from submitted rows (after a failed submission) or loaded from the records.
+     * Rows for the inline editor: the submitted rows (after a failed submission) or the related records of the id
+     * list, in their stored order.
      *
      * @return list<array{id: ?int, values: array<string, mixed>}>
      */
-    public function rows(mixed $value, ?Record $parent): array
+    public function rows(mixed $value): array
     {
         if (self::isRowList($value)) {
             return $value;
         }
-        if (null === $parent?->id) {
+        $ids = self::ids($value);
+        if ([] === $ids) {
             return [];
         }
         $rows = [];
-        foreach ($this->query($parent)->orderBy('id')->find() as $record) {
+        foreach ($this->ordered($this->targetTable()->query()->whereIn('id', $ids))->find() as $record) {
             $values = [];
             foreach ($this->inlineFields() as $name => $field) {
                 if ($field->storesValue()) {
@@ -238,12 +279,15 @@ class HasMany extends Field implements Relation
 
         $target = $this->targetTable();
         $keep = [];
-        foreach ((array) $value as $row) {
+        foreach (array_values((array) $value) as $position => $row) {
             $child = $this->existingRecord($row['id'], $record) ?? $target->newRecord();
             foreach ($row['values'] as $name => $fieldValue) {
                 $child->set($name, $fieldValue);
             }
             $child->set($this->foreignKey, $record->id);
+            if (null !== $this->sortField) {
+                $child->set($this->sortField, $position + 1);
+            }
             $child->save();
             $keep[] = (int) $child->id;
         }
@@ -271,7 +315,12 @@ class HasMany extends Field implements Relation
 
     private function query(Record $record): Query
     {
-        return $this->targetTable()->query()->where($this->foreignKey, $record->id);
+        return $this->ordered($this->targetTable()->query()->where($this->foreignKey, $record->id));
+    }
+
+    private function ordered(Query $query): Query
+    {
+        return null === $this->sortField ? $query->orderBy('id') : $query->orderBy($this->sortField)->orderBy('id');
     }
 
     /** @return Collection<Record> */
@@ -306,7 +355,7 @@ class HasMany extends Field implements Relation
     public function render(FieldContext $context): string
     {
         if ($this->inline) {
-            return ViewRenderer::render(self::class, $this, $context, $this->rows($context->value, $context->record));
+            return ViewRenderer::render(self::class, $this, $context, $this->rows($context->value));
         }
 
         $target = $this->targetTable();
@@ -323,7 +372,16 @@ class HasMany extends Field implements Relation
         return '<ul class="yform-has-many">' . $items . '</ul>';
     }
 
-    /** Context for a sub field of one inline row; `$index` may be the template placeholder `__index__`. */
+    /**
+     * Placeholder for the row index in the row template. It differs per nesting level, so that adding an outer row
+     * does not replace the placeholder of a nested editor inside it.
+     */
+    public function indexPlaceholder(FieldContext $context): string
+    {
+        return '__i' . substr_count($context->formName, '[') . '__';
+    }
+
+    /** Context for a sub field of one inline row; `$index` may be the template placeholder ({@see indexPlaceholder()}). */
     public function rowContext(FieldContext $parent, Field $field, int|string $index, mixed $value): FieldContext
     {
         return new FieldContext($parent->formName . '[' . $this->name . '][' . $index . ']', $field, $value, $parent->theme);

@@ -28,6 +28,7 @@ class Password extends Text
         $this->setInputType('password');
         $this->maxLength(255);
         $this->listed = false;
+        $this->cloneable = false;
         $this->sortable = false;
         $this->attributes(['autocomplete' => 'new-password']);
     }

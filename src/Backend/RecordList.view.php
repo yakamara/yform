@@ -86,6 +86,7 @@ return static function (RecordList $list, Paginated $result): void {
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li><a href="<?= escape($editUrl) ?>"><i class="rex-icon <?= $list->canEdit ? 'rex-icon-editmode' : 'fa-eye' ?>"></i> <?= I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') ?></a></li>
                                         <?php if ($list->canEdit): ?>
+                                            <li><a href="<?= escape($list->url(['func' => 'clone', 'id' => (int) $record->id])) ?>"><i class="rex-icon rex-icon-duplicate"></i> <?= I18n::msg('yform_clone') ?></a></li>
                                             <li>
                                                 <form method="post" action="<?= escape($list->url(['func' => 'delete', 'id' => (int) $record->id])) ?>">
                                                     <?= $deleteToken->getHiddenField() ?>

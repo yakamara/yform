@@ -53,6 +53,7 @@ abstract class Field
     public protected(set) bool $listed = true;
     public protected(set) bool $filterable = false;
     public protected(set) bool $sortable = true;
+    public protected(set) bool $cloneable = true;
 
     /** @var list<string>|null columns forming a unique key together with this field, `null` = not unique */
     public protected(set) ?array $unique = null;
@@ -131,6 +132,13 @@ abstract class Field
     public function sortable(bool $sortable = true): static
     {
         $this->sortable = $sortable;
+        return $this;
+    }
+
+    /** Whether a cloned record takes over the value; otherwise the copy starts with the default value. */
+    public function cloneable(bool $cloneable = true): static
+    {
+        $this->cloneable = $cloneable;
         return $this;
     }
 
@@ -268,6 +276,12 @@ abstract class Field
 
     /** Called right before a record is validated and saved (auto values like timestamps, uuids). */
     public function beforeSave(Record $record, bool $isNew): void {}
+
+    /** Value a clone of `$source` starts with ({@see Record::replicate()}). */
+    public function cloneValue(mixed $value, Record $source): mixed
+    {
+        return $this->cloneable ? $value : $this->defaultValue();
+    }
 
     /** Called inside the save transaction after the row has been written (e.g. pivot tables). */
     public function afterSave(Record $record, bool $isNew): void {}

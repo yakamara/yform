@@ -38,6 +38,9 @@
 .yform-inline-row { border: 1px solid #dfe3e9; border-radius: 4px; padding: 10px 15px 0; margin-bottom: 10px; background: rgba(255, 255, 255, .6); }
 .yform-inline-row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
 .yform-inline-row-title { font-weight: 600; color: #6c757d; }
+.yform-inline-row-actions { display: flex; gap: 4px; }
+/* nested inline relation inside a row */
+.yform-inline-row .yform-inline-row { background: #f7f9fb; }
 
 /* Bootstrap 3 floats misalign cells of different height */
 .yform .row { display: flex; flex-wrap: wrap; }

@@ -91,10 +91,25 @@ Die Klasse *ist* der Feldtyp. Konfiguriert wird fluent, der Konstruktor ist für
 | `Markup` | – | – | statischer Inhalt zwischen Feldern |
 | `Relation\BelongsTo` | `int unsigned` + Index | `?int` | `target()`, `filter()`, `onDelete()` |
 | `Relation\ManyToMany` | Pivot-Tabelle | `list<int>` | `pivot()`, `expanded()` |
-| `Relation\HasMany` | – | `list<int>` | Gegenstück zu `BelongsTo`; mit `inline()` werden die Datensätze direkt in der Maske bearbeitet |
+| `Relation\HasMany` | – | `list<int>` | Gegenstück zu `BelongsTo`; mit `inline()` werden die Datensätze direkt in der Maske bearbeitet, `sortField()` macht sie sortierbar |
 
 Diese Optionen haben alle Felder: `label()`, `notice()`, `required()`, `default()`, `readonly()`, `listed()`,
-`filterable()`, `sortable()`, `unique()`, `rule()` und `attributes()`.
+`filterable()`, `sortable()`, `cloneable()`, `unique()`, `rule()` und `attributes()`.
+
+**Inline-Relationen** (`HasMany` mit `inline()`) bearbeiten die verknüpften Datensätze direkt in der Maske. Mit
+`sortField('prio')` bekommt jede Zeile Buttons zum Verschieben; die Position wird in diesem Integer-Feld der
+Zieltabelle gespeichert (1, 2, …) und gilt auch beim Lesen über `related()`. Inline-Relationen lassen sich
+verschachteln, etwa Links eines Beitrags mit Kommentaren je Link:
+
+```php
+// PostTable
+yield HasMany::new('links')->target(PostLinkTable::class, 'post_id')->inline()->sortField('prio');
+// PostLinkTable
+yield Integer::new('prio')->readonly()->listed(false);
+yield HasMany::new('comments')->target(PostLinkCommentTable::class, 'link_id')->inline()->sortField('prio');
+```
+
+Ausgenommen ist eine Relation, die auf die eigene Tabelle zeigt (das wäre eine endlose Verschachtelung).
 
 **Eigene Feldtypen** sind Unterklassen im Projekt. Überschrieben wird, was abweicht: `columnType()`, `fromInput()`,
 `fromDb()`, `toDb()`, `validate()`, `listValue()` usw. Das Markup liegt in einer View-Datei neben der Klasse
@@ -169,6 +184,12 @@ $product->related('labels');            // Collection
   `afterDelete`.
 - Extension Points: `YFORM_RECORD_VALIDATE`, `YFORM_RECORD_SAVE`, `YFORM_RECORD_SAVED`, `YFORM_RECORD_DELETE`
   und `YFORM_RECORD_DELETED`.
+- **Klonen:** `$record->replicate()` liefert eine ungespeicherte Kopie; im Backend steht dafür „Klonen“ im
+  Aktionsmenü der Liste und öffnet die Maske für einen neuen Datensatz mit den kopierten Werten. Zeitstempel,
+  `CreatedBy`/`UpdatedBy`, `Uuid` und Passwörter starten leer, Inline-`HasMany`-Zeilen werden als neue Datensätze
+  kopiert, `ManyToMany` übernimmt die Zuordnungen. Felder mit `cloneable(false)` starten mit ihrem Default; eigene
+  Feldtypen können `cloneValue()` überschreiben. Eindeutige Felder (`unique()`) werden kopiert und müssen vor dem
+  Speichern geändert werden.
 - Eine eigene Model-Klasse wird mit `#[AsTable(model: Product::class)]` registriert. Sie erbt von `Record` und kann
   typisierte Property Hooks anbieten.
 
@@ -283,7 +304,7 @@ bearbeitet werden dürfen.
 - Sortierfeld mit Drag & Drop in der Liste (Ersatz für `prio`)
 - Filter für Redakteure (gespeicherte Filter pro Rolle/Liste)
 - Historie, CSV-Import/-Export, Mehrfachbearbeitung
-- Popup-Auswahl für große Relationstabellen, Sortierung von Inline-Zeilen
+- Popup-Auswahl für große Relationstabellen
 - Anpassung von ycom an die neue API
 
 ## Entwicklung

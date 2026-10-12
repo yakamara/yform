@@ -19,6 +19,7 @@ class Uuid extends Text
     {
         $this->maxLength(36);
         $this->readonly();
+        $this->cloneable = false;
         $this->unique();
         $this->listed = false;
     }

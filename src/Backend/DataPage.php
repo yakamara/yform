@@ -19,7 +19,7 @@ use Yakamara\YForm\Table\Tables;
 use function Redaxo\Core\View\escape;
 
 /**
- * Controller of the backend data page (`yform/data&table=…`): list, add, edit, delete.
+ * Controller of the backend data page (`yform/data&table=…`): list, add, edit, clone, delete.
  *
  * @internal
  */
@@ -53,6 +53,7 @@ final class DataPage
         return $title . $this->flash() . match ($func) {
             'add' => $this->canEdit ? $this->edit($this->table->newRecord()) : $this->denied(),
             'edit' => $this->editExisting(),
+            'clone' => $this->canEdit ? $this->cloneExisting() : $this->denied(),
             'delete' => $this->delete(),
             default => $this->list->render(),
         };
@@ -67,11 +68,23 @@ final class DataPage
         return $this->edit($record);
     }
 
-    private function edit(Record $record): string
+    /** Add form prefilled with a copy of the record; the submission is posted back to `func=clone`. */
+    private function cloneExisting(): string
+    {
+        $source = $this->list->baseQuery()->where('id', Request::request('id', 'int', 0))->first();
+        if (null === $source) {
+            return Message::error(I18n::msg('yform_record_not_found')) . $this->list->render();
+        }
+        return $this->edit($source->replicate(), $source);
+    }
+
+    private function edit(Record $record, ?Record $source = null): string
     {
         $isNew = $record->isNew();
         $form = Form::forRecord($record, Theme::backend());
-        $form->actionUrl = $this->list->url(['func' => $isNew ? 'add' : 'edit', 'id' => $record->id]);
+        $form->actionUrl = null !== $source
+            ? $this->list->url(['func' => 'clone', 'id' => $source->id])
+            : $this->list->url(['func' => $isNew ? 'add' : 'edit', 'id' => $record->id]);
         $form->readonly = !$this->canEdit;
 
         if ($this->canEdit) {
@@ -86,17 +99,19 @@ final class DataPage
                 Response::sendRedirect($url);
             }
         } catch (Throwable $e) {
-            return Message::error(escape($e->getMessage())) . $this->panel($record, $form);
+            return Message::error(escape($e->getMessage())) . $this->panel($record, $form, $source);
         }
 
-        return $this->panel($record, $form);
+        return $this->panel($record, $form, $source);
     }
 
-    private function panel(Record $record, Form $form): string
+    private function panel(Record $record, Form $form, ?Record $source = null): string
     {
-        $heading = $record->isNew()
-            ? I18n::msg('yform_add_record')
-            : I18n::rawMsg($this->canEdit ? 'yform_edit_record' : 'yform_view_record', escape($record->label()), (int) $record->id);
+        $heading = match (true) {
+            null !== $source => I18n::rawMsg('yform_clone_record', escape($source->label()), (int) $source->id),
+            $record->isNew() => I18n::msg('yform_add_record'),
+            default => I18n::rawMsg($this->canEdit ? 'yform_edit_record' : 'yform_view_record', escape($record->label()), (int) $record->id),
+        };
 
         $panel = '<section class="rex-page-section"><div class="panel panel-edit yform-edit">'
             . '<header class="panel-heading"><div class="panel-title">' . $heading . '</div></header>'

@@ -6,6 +6,7 @@ use ArrayAccess;
 use InvalidArgumentException;
 use JsonSerializable;
 use LogicException;
+use Yakamara\YForm\Field\Field;
 use Yakamara\YForm\Field\Relation\Relation;
 use Yakamara\YForm\Table\Table;
 use Yakamara\YForm\Validation\Errors;
@@ -111,6 +112,19 @@ class Record implements ArrayAccess, JsonSerializable
             $values[$field] = $this->get($field);
         }
         return $values;
+    }
+
+    /**
+     * Unsaved copy of the record. Each field decides what the copy takes over ({@see Field::cloneValue()}):
+     * timestamps, UUIDs and passwords start empty, inline has-many rows are copied as new records.
+     */
+    public function replicate(): self
+    {
+        $copy = $this->table->newRecord();
+        foreach ($this->values as $name => $value) {
+            $copy->set($name, $this->table->getField($name)->cloneValue($this->get($name), $this));
+        }
+        return $copy;
     }
 
     public function isNew(): bool
