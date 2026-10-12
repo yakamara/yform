@@ -21,6 +21,7 @@ und API stehen in der `README.md`.
 - Views liegen als `Klasse.view.php` neben der Klasse und geben eine Closure zurück. `ViewRenderer` sucht entlang
   der Elternklassen, Projekte überschreiben per `ViewResolver::override()`.
 - `HtmlAttributes` liefert keinen führenden Leerraum: `'<input ', $attributes, '>'`, nicht `'<input', …`.
-- Validierungsmeldungen mit `I18n::rawMsg()` erzeugen; escaped wird erst bei der Ausgabe.
+- `I18n::msg()` escaped bereits: direkt ausgeben, nicht in `escape()` packen. Texte, die erst später escaped
+  werden (Validierungsmeldungen, Button-Labels, `HtmlAttributes`-Werte), mit `I18n::rawMsg()` erzeugen.
 - Assets in `YFormAddon::boot()` registrieren — in einer Seiten-Datei ist der Seitenkopf schon gerendert.
 - Der Schema-Sync löscht nie implizit Spalten; Löschen nur über `yform:schema --drop` oder die Tabellenseite.

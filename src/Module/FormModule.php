@@ -40,9 +40,9 @@ final class FormModule extends Module
             : '';
 
         return $warning . '<div class="form-group">'
-            . '<label for="yform-module-form">' . escape(I18n::msg('yform_form')) . '</label>'
+            . '<label for="yform-module-form">' . I18n::msg('yform_form') . '</label>'
             . '<select class="form-control" id="yform-module-form" name="REX_INPUT_VALUE[1]">' . $options . '</select>'
-            . '<p class="help-block">' . escape(I18n::msg('yform_module_help')) . '</p>'
+            . '<p class="help-block">' . I18n::msg('yform_module_help') . '</p>'
             . '</div>';
     }
 

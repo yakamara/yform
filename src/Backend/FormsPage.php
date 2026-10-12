@@ -41,7 +41,7 @@ final class FormsPage
             $form->actionUrl = '#';
             $html = new Form($form->name, $form->fields, $form->layout, Theme::bootstrap3())->render();
             $preview = '<section class="rex-page-section"><div class="panel panel-default">'
-                . '<header class="panel-heading"><div class="panel-title">' . escape(I18n::msg('yform_preview')) . ': ' . escape($definition->label()) . '</div></header>'
+                . '<header class="panel-heading"><div class="panel-title">' . I18n::msg('yform_preview') . ': ' . escape($definition->label()) . '</div></header>'
                 . '<div class="panel-body">' . Message::info(I18n::msg('yform_preview_hint')) . $html . '</div></div></section>';
         }
 
@@ -54,21 +54,21 @@ final class FormsPage
                 . '<td><code>' . escape($definition::class) . '</code><br><small class="text-muted">' . escape(Path::relative($file, Path::base())) . '</small></td>'
                 . '<td>' . count($definition->getFields()) . '</td>'
                 . '<td>' . self::actionList($definition) . '</td>'
-                . '<td>' . ($definition->definition->module ? '<i class="rex-icon fa-check" title="' . escape(I18n::msg('yform_module')) . '"></i>' : '') . '</td>'
+                . '<td>' . ($definition->definition->module ? '<i class="rex-icon fa-check" title="' . I18n::msg('yform_module') . '"></i>' : '') . '</td>'
                 . '<td><code>Forms::get(\'' . escape($name) . '\')-&gt;run()</code></td>'
-                . '<td class="rex-table-action"><a href="' . escape(Url::currentBackendPage(['preview' => $name])) . '"><i class="rex-icon fa-eye"></i> ' . escape(I18n::msg('yform_preview')) . '</a></td>'
-                . '<td class="rex-table-action"><a href="' . escape(Url::backendPage('yform/designer', ['form' => $name])) . '"><i class="rex-icon fa-th-large"></i> ' . escape(I18n::msg('yform_designer')) . '</a>'
+                . '<td class="rex-table-action"><a href="' . escape(Url::currentBackendPage(['preview' => $name])) . '"><i class="rex-icon fa-eye"></i> ' . I18n::msg('yform_preview') . '</a></td>'
+                . '<td class="rex-table-action"><a href="' . escape(Url::backendPage('yform/designer', ['form' => $name])) . '"><i class="rex-icon fa-th-large"></i> ' . I18n::msg('yform_designer') . '</a>'
                 . (LayoutStore::exists($definition::class) ? ' <span class="label label-info">JSON</span>' : '') . '</td>'
                 . '</tr>';
         }
 
         return $preview . '<section class="rex-page-section"><div class="panel panel-default">'
-            . '<header class="panel-heading"><div class="panel-title">' . escape(I18n::msg('yform_forms')) . '</div></header>'
+            . '<header class="panel-heading"><div class="panel-title">' . I18n::msg('yform_forms') . '</div></header>'
             . '<table class="table table-hover"><thead><tr><th class="rex-table-icon"></th>'
-            . '<th>' . escape(I18n::msg('yform_form')) . '</th><th>' . escape(I18n::msg('yform_definition')) . '</th>'
-            . '<th>' . escape(I18n::msg('yform_fields')) . '</th><th>' . escape(I18n::msg('yform_actions_list')) . '</th>'
-            . '<th>' . escape(I18n::msg('yform_module')) . '</th><th>' . escape(I18n::msg('yform_usage')) . '</th>'
-            . '<th class="rex-table-action" colspan="2">' . escape(I18n::msg('yform_actions')) . '</th></tr></thead>'
+            . '<th>' . I18n::msg('yform_form') . '</th><th>' . I18n::msg('yform_definition') . '</th>'
+            . '<th>' . I18n::msg('yform_fields') . '</th><th>' . I18n::msg('yform_actions_list') . '</th>'
+            . '<th>' . I18n::msg('yform_module') . '</th><th>' . I18n::msg('yform_usage') . '</th>'
+            . '<th class="rex-table-action" colspan="2">' . I18n::msg('yform_actions') . '</th></tr></thead>'
             . '<tbody>' . $rows . '</tbody></table></div></section>';
     }
 

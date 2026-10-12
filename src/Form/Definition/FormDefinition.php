@@ -87,7 +87,7 @@ abstract class FormDefinition
 
     public function submitLabel(): string
     {
-        return I18n::msg('yform_submit');
+        return I18n::rawMsg('yform_submit');
     }
 
     /** Shown instead of the form after a successful submission (unless an action redirects or sets its own message). */

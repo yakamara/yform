@@ -101,7 +101,7 @@ final class Form
             $this->values[$name] = null !== $record && $record->has($name) ? $record->get($name) : $field->defaultValue();
         }
 
-        $this->addButton('save', I18n::msg('yform_save'), primary: true);
+        $this->addButton('save', I18n::rawMsg('yform_save'), primary: true);
     }
 
     /** Form over all fields of the record's table, arranged by the table's layout. */
@@ -174,7 +174,7 @@ final class Form
         $this->action = is_string($action) && isset($this->buttons[$action]) ? $action : array_key_first($this->buttons);
 
         if ($this->csrf && !$this->csrfToken()->isValid()) {
-            $this->errors->addGlobal(I18n::msg('csrf_token_invalid'));
+            $this->errors->addGlobal(I18n::rawMsg('csrf_token_invalid'));
             return false;
         }
 

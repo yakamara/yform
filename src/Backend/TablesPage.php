@@ -47,18 +47,18 @@ final class TablesPage
                 . '<td>' . ($plan->create ? '–' : (string) $table->query()->count()) . '</td>'
                 . '<td>' . self::planSummary($plan) . '</td>'
                 . '<td class="rex-table-action">' . self::syncForm($table, $plan, $csrf) . '</td>'
-                . '<td class="rex-table-action"><a href="' . escape(Url::backendPage('yform/designer', ['table' => $key])) . '"><i class="rex-icon fa-th-large"></i> ' . escape(I18n::msg('yform_designer')) . '</a>'
-                . (LayoutStore::exists($table::class) ? ' <span class="label label-info" title="' . escape(I18n::msg('yform_layout_file_exists')) . '">JSON</span>' : '')
+                . '<td class="rex-table-action"><a href="' . escape(Url::backendPage('yform/designer', ['table' => $key])) . '"><i class="rex-icon fa-th-large"></i> ' . I18n::msg('yform_designer') . '</a>'
+                . (LayoutStore::exists($table::class) ? ' <span class="label label-info" title="' . I18n::msg('yform_layout_file_exists') . '">JSON</span>' : '')
                 . '</td>'
                 . '</tr>';
         }
 
         return $message . '<section class="rex-page-section"><div class="panel panel-default">'
-            . '<header class="panel-heading"><div class="panel-title">' . escape(I18n::msg('yform_tables')) . '</div></header>'
+            . '<header class="panel-heading"><div class="panel-title">' . I18n::msg('yform_tables') . '</div></header>'
             . '<table class="table table-hover"><thead><tr>'
-            . '<th class="rex-table-icon"></th><th>' . escape(I18n::msg('yform_table')) . '</th><th>' . escape(I18n::msg('yform_definition')) . '</th>'
-            . '<th>' . escape(I18n::msg('yform_fields')) . '</th><th>' . escape(I18n::msg('yform_records')) . '</th>'
-            . '<th>' . escape(I18n::msg('yform_schema')) . '</th><th class="rex-table-action" colspan="2">' . escape(I18n::msg('yform_actions')) . '</th>'
+            . '<th class="rex-table-icon"></th><th>' . I18n::msg('yform_table') . '</th><th>' . I18n::msg('yform_definition') . '</th>'
+            . '<th>' . I18n::msg('yform_fields') . '</th><th>' . I18n::msg('yform_records') . '</th>'
+            . '<th>' . I18n::msg('yform_schema') . '</th><th class="rex-table-action" colspan="2">' . I18n::msg('yform_actions') . '</th>'
             . '</tr></thead><tbody>' . $rows . '</tbody></table></div></section>';
     }
 
@@ -88,7 +88,7 @@ final class TablesPage
     private static function planSummary(SchemaPlan $plan): string
     {
         if ($plan->create) {
-            return '<span class="label label-warning">' . escape(I18n::msg('yform_schema_create')) . '</span>';
+            return '<span class="label label-warning">' . I18n::msg('yform_schema_create') . '</span>';
         }
 
         $parts = [];
@@ -99,15 +99,15 @@ final class TablesPage
             $parts[] = '<span class="label label-warning">~ ' . escape(implode(', ', $plan->modify)) . '</span>';
         }
         if ([] !== $plan->indexes) {
-            $parts[] = '<span class="label label-warning">' . escape(I18n::msg('yform_schema_indexes')) . ': ' . escape(implode(', ', $plan->indexes)) . '</span>';
+            $parts[] = '<span class="label label-warning">' . I18n::msg('yform_schema_indexes') . ': ' . escape(implode(', ', $plan->indexes)) . '</span>';
         }
         if ([] !== $plan->additional) {
-            $parts[] = '<span class="label label-warning">' . escape(I18n::msg('yform_schema_additional')) . ': ' . escape(implode(', ', $plan->additional)) . '</span>';
+            $parts[] = '<span class="label label-warning">' . I18n::msg('yform_schema_additional') . ': ' . escape(implode(', ', $plan->additional)) . '</span>';
         }
         if ([] !== $plan->obsolete) {
-            $parts[] = '<span class="label label-default" title="' . escape(I18n::msg('yform_schema_obsolete_hint')) . '">' . escape(I18n::msg('yform_schema_obsolete')) . ': ' . escape(implode(', ', $plan->obsolete)) . '</span>';
+            $parts[] = '<span class="label label-default" title="' . I18n::msg('yform_schema_obsolete_hint') . '">' . I18n::msg('yform_schema_obsolete') . ': ' . escape(implode(', ', $plan->obsolete)) . '</span>';
         }
-        return [] === $parts ? '<span class="label label-success">' . escape(I18n::msg('yform_schema_ok')) . '</span>' : implode(' ', $parts);
+        return [] === $parts ? '<span class="label label-success">' . I18n::msg('yform_schema_ok') . '</span>' : implode(' ', $parts);
     }
 
     private static function syncForm(Table $table, SchemaPlan $plan, CsrfToken $csrf): string
@@ -117,11 +117,11 @@ final class TablesPage
         }
         $drop = '';
         foreach ($plan->obsolete as $column) {
-            $drop .= '<label class="yform-drop"><input type="checkbox" name="drop[]" value="' . escape($column) . '"> ' . escape(I18n::msg('yform_schema_drop', $column)) . '</label>';
+            $drop .= '<label class="yform-drop"><input type="checkbox" name="drop[]" value="' . escape($column) . '"> ' . I18n::msg('yform_schema_drop', $column) . '</label>';
         }
         return '<form method="post" action="' . escape(Url::currentBackendPage()) . '">' . $csrf->getHiddenField()
             . '<input type="hidden" name="sync" value="' . escape($table->name) . '">' . $drop
-            . '<button class="btn btn-primary btn-xs" type="submit" data-confirm="' . escape(I18n::msg('yform_schema_sync_confirm')) . '">' . escape(I18n::msg('yform_schema_sync')) . '</button></form>';
+            . '<button class="btn btn-primary btn-xs" type="submit" data-confirm="' . I18n::msg('yform_schema_sync_confirm') . '">' . I18n::msg('yform_schema_sync') . '</button></form>';
     }
 
     private static function relativePath(Table $table): string

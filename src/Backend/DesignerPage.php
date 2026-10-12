@@ -140,10 +140,10 @@ final class DesignerPage
         ];
 
         return '<section class="rex-page-section"><div class="panel panel-default">'
-            . '<header class="panel-heading"><div class="panel-title">' . escape(I18n::msg('yform_designer')) . ': ' . escape($this->title)
+            . '<header class="panel-heading"><div class="panel-title">' . I18n::msg('yform_designer') . ': ' . escape($this->title)
             . ' <small><code>' . escape($this->class) . '</code></small></div></header>'
             . '<div class="panel-body"><div id="yform-designer" data-config="' . escape(json_encode($config, JSON_THROW_ON_ERROR)) . '"></div></div>'
-            . '<footer class="panel-footer"><a href="' . escape($this->backUrl) . '">&larr; ' . escape(I18n::msg('yform_back')) . '</a></footer>'
+            . '<footer class="panel-footer"><a href="' . escape($this->backUrl) . '">&larr; ' . I18n::msg('yform_back') . '</a></footer>'
             . '</div></section>';
     }
 

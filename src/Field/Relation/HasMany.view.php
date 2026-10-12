@@ -33,7 +33,7 @@ return static function (HasMany $field, FieldContext $context, array $rows): voi
             . '<span class="yform-inline-row-title">' . escape(null === $id ? I18n::msg('yform_inline_new') : '#' . $id) . '</span>'
             . '<input type="hidden" name="' . escape($prefix) . '[_id]" value="' . escape((string) $id) . '">'
             . '<input type="hidden" name="' . escape($prefix) . '[_delete]" value="" data-yform-inline-delete-flag>'
-            . '<button type="button" class="' . escape($theme->secondary) . ' btn-xs btn-sm" data-yform-inline-remove>' . escape(I18n::msg('yform_inline_remove')) . '</button>'
+            . '<button type="button" class="' . escape($theme->secondary) . ' btn-xs btn-sm" data-yform-inline-remove>' . I18n::msg('yform_inline_remove') . '</button>'
             . '</div>'
             . '<div class="' . escape($theme->row) . '">' . $cells . '</div>'
             . '</div>';
@@ -49,7 +49,7 @@ return static function (HasMany $field, FieldContext $context, array $rows): voi
         <div class="yform-inline-rows" data-yform-inline-rows><?= $html ?></div>
         <template data-yform-inline-template><?= $renderRow('__index__', null, []) ?></template>
         <button type="button" class="<?= escape($theme->secondary) ?>" data-yform-inline-add>
-            + <?= escape(I18n::msg('yform_inline_add', $field->targetTable()->label())) ?>
+            + <?= I18n::msg('yform_inline_add', $field->targetTable()->label()) ?>
         </button>
     </div>
     <?php
