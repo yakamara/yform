@@ -11,6 +11,7 @@ use Redaxo\Core\View\View;
 use Throwable;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Form\Form;
+use Yakamara\YForm\Form\Theme\Theme;
 use Yakamara\YForm\Permission\Access;
 use Yakamara\YForm\Table\Table;
 use Yakamara\YForm\Table\Tables;
@@ -69,12 +70,12 @@ final class DataPage
     private function edit(Record $record): string
     {
         $isNew = $record->isNew();
-        $form = Form::forRecord($record);
+        $form = Form::forRecord($record, Theme::backend());
         $form->actionUrl = $this->list->url(['func' => $isNew ? 'add' : 'edit', 'id' => $record->id]);
         $form->readonly = !$this->canEdit;
 
         if ($this->canEdit) {
-            $form->addButton('apply', I18n::msg('yform_apply'));
+            $form->addButton('apply', I18n::rawMsg('yform_apply'));
         }
 
         try {
@@ -97,11 +98,13 @@ final class DataPage
             ? I18n::msg('yform_add_record')
             : I18n::rawMsg($this->canEdit ? 'yform_edit_record' : 'yform_view_record', escape($record->label()), (int) $record->id);
 
-        return '<section class="rex-page-section"><div class="panel panel-edit">'
+        $panel = '<section class="rex-page-section"><div class="panel panel-edit yform-edit">'
             . '<header class="panel-heading"><div class="panel-title">' . $heading . '</div></header>'
-            . '<div class="panel-body">' . $form->render()
-            . '<p><a class="btn btn-link" href="' . escape($this->list->url()) . '">&larr; ' . escape(I18n::msg('yform_back_to_list')) . '</a></p>'
-            . '</div></div></section>';
+            . '<div class="panel-body">' . $form->render() . '</div>'
+            . '</div></section>';
+
+        return Message::info('<a href="' . escape($this->list->url()) . '">' . I18n::msg('yform_back_to_list') . '</a>')
+            . new SearchPanel($this->list)->wrap($panel);
     }
 
     private function delete(): string

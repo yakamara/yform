@@ -6,8 +6,8 @@ use Override;
 use Redaxo\Core\Content\Article as CoreArticle;
 use Redaxo\Core\Core;
 use Redaxo\Core\Translation\I18n;
-use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Validation\ValidationContext;
 
 use function array_filter;
@@ -125,11 +125,14 @@ class Article extends Field
     }
 
     #[Override]
-    public function applySearch(Query $query, string $term): void {}
-
-    #[Override]
     public function isEditable(): bool
     {
         return parent::isEditable() && Core::isBackend();
+    }
+
+    #[Override]
+    public function searchFilter(): ?Filter
+    {
+        return null;
     }
 }

@@ -8,6 +8,8 @@ use Override;
 use Redaxo\Core\Translation\I18n;
 use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\ChoiceFilter;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Validation\ValidationContext;
 
 use function array_filter;
@@ -207,21 +209,20 @@ class Choice extends Field
         return \Redaxo\Core\View\escape($this->textValue($value));
     }
 
+    /** Multiple choices match records containing any of the selected options. */
     #[Override]
-    public function applySearch(Query $query, string $term): void
+    public function searchFilter(): ?Filter
     {
-        $matches = [];
-        foreach ($this->flatOptions() as $value => $label) {
-            if (false !== mb_stripos(I18n::translate($label, false), $term)) {
-                $matches[] = (string) $value;
-            }
+        $options = array_map(static fn (string $label): string => I18n::translate($label, false), $this->flatOptions());
+        if (!$this->multiple) {
+            return new ChoiceFilter($this, $options);
         }
-        foreach ($matches as $match) {
-            if ($this->multiple) {
-                $query->whereJsonContains($this->name, $match);
-            } else {
-                $query->where($this->name, $match);
-            }
-        }
+        return new ChoiceFilter($this, $options, function (Query $query, array $values): void {
+            $query->whereAny(function (Query $q) use ($values): void {
+                foreach ($values as $value) {
+                    $q->whereJsonContains($this->name, $value);
+                }
+            });
+        });
     }
 }

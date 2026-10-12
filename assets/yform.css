@@ -1,11 +1,7 @@
 .yform-required-mark { color: #c0392b; }
-.yform-list-toolbar .form-inline .input-group { width: 320px; max-width: 100%; }
-.yform-inline-form { display: inline; margin: 0; }
-.yform-inline-form .btn-link { padding: 0; vertical-align: baseline; }
 .yform label.yform-drop, .yform-drop { display: block; font-weight: normal; margin-bottom: 4px; }
 .yform fieldset legend { font-size: 16px; margin-bottom: 12px; }
 .yform .tab-content { padding-top: 15px; }
-.yform-inline-form .btn-link { font-size: inherit; }
 
 /* designer */
 .yform-designer-toolbar { display: flex; gap: 10px; align-items: center; margin-bottom: 15px; flex-wrap: wrap; }
@@ -46,3 +42,28 @@
 /* Bootstrap 3 floats misalign cells of different height */
 .yform .row { display: flex; flex-wrap: wrap; }
 .yform .row > [class*="col-"] { float: none; }
+
+/* search column (as in YForm 5: green edit panel left of the list) */
+.yform-filter .form-group.is-active > .control-label::after { content: ""; display: inline-block; width: 6px; height: 6px; margin-left: 6px; border-radius: 50%; background: #3c8b64; vertical-align: middle; }
+.yform-filter .bootstrap-select { width: 100% !important; }
+.yform-filter .help-block.small { margin-bottom: 0; }
+.yform-filter-buttons { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.yform-filter-buttons .btn { padding-left: 8px; padding-right: 8px; }
+.yform-filter-range { display: flex; flex-wrap: wrap; gap: 6px; }
+.yform-filter-range .form-control { flex: 1 1 100px; min-width: 0; padding-left: 6px; padding-right: 6px; }
+@media (min-width: 768px) {
+    .yform-list-layout { display: flex; }
+    .yform-list-layout > [class*="col-"] { float: none; }
+    /* below the fixed REDAXO top navigation; the body scrolls so the search button stays reachable */
+    .yform-list-layout .yform-filter { position: sticky; top: 75px; display: flex; flex-direction: column; max-height: calc(100vh - 90px); }
+    .yform-list-layout .yform-filter .panel-body { overflow-y: auto; }
+}
+
+/* list: pagination above and below, actions dropdown */
+.yform-list .rex-nav-pagination { margin-bottom: 0; }
+.yform-dropdown .dropdown-menu form { margin: 0; }
+.yform-dropdown .dropdown-menu button { display: block; width: 100%; padding: 3px 20px; border: 0; background: none; text-align: left; white-space: nowrap; color: inherit; line-height: 1.42857143; }
+.yform-dropdown .dropdown-menu button:hover, .yform-dropdown .dropdown-menu button:focus { background-color: #f5f5f5; }
+
+/* record form: buttons in the panel footer like core forms */
+.yform-edit > .panel-body > form > .rex-form-panel-footer { margin: 15px -15px -15px; }

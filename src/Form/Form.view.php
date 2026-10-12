@@ -59,7 +59,7 @@ return static function (Form $form): void {
         <?php if ($errors = $form->globalErrors()): ?>
             <div class="<?= escape($theme->alertError) ?>"><?php foreach ($errors as $error): ?><div><?= escape($error) ?></div><?php endforeach ?></div>
         <?php elseif (!$form->errors->isEmpty()): ?>
-            <div class="<?= escape($theme->alertError) ?>"><?= escape(I18n::msg('yform_form_has_errors')) ?></div>
+            <div class="<?= escape($theme->alertError) ?>"><?= I18n::msg('yform_form_has_errors') ?></div>
         <?php endif ?>
 
         <?php if ($useTabs): ?>
@@ -96,9 +96,11 @@ return static function (Form $form): void {
 
         <?php if ($form->buttons): ?>
             <div class="<?= escape($theme->buttons) ?>">
+                <?php if ('' !== $theme->buttonToolbar): ?><div class="<?= escape($theme->buttonToolbar) ?>"><?php endif ?>
                 <?php foreach ($form->buttons as $action => $button): ?>
                     <button type="submit" name="<?= escape($form->name) ?>[_action]" value="<?= escape($action) ?>" class="<?= escape($button['primary'] ? $theme->submit : $theme->secondary) ?>"><?= escape($button['label']) ?></button>
                 <?php endforeach ?>
+                <?php if ('' !== $theme->buttonToolbar): ?></div><?php endif ?>
             </div>
         <?php endif ?>
     </form>

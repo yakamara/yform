@@ -4,6 +4,7 @@ namespace Yakamara\YForm\Field;
 
 use Override;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Validation\ValidationContext;
 
 use function password_get_info;
@@ -72,5 +73,11 @@ class Password extends Text
     public function textValue(mixed $value): string
     {
         return '';
+    }
+
+    #[Override]
+    public function searchFilter(): ?Filter
+    {
+        return null;
     }
 }

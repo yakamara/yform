@@ -7,7 +7,7 @@ use function sprintf;
 /**
  * CSS class vocabulary used by field and form views.
  *
- * The backend always uses {@see bootstrap3()} (the REDAXO backend is Bootstrap 3). For the frontend pick one of the
+ * The backend uses {@see backend()} (Bootstrap 3 plus the REDAXO panel footer). For the frontend pick one of the
  * presets or construct your own with named arguments; for markup changes beyond class names override the views
  * with `ViewResolver::override()`.
  */
@@ -42,6 +42,7 @@ final readonly class Theme
         public string $tabPaneActive = 'active',
         public string $tabContent = 'tab-content',
         public string $buttons = 'form-group',
+        public string $buttonToolbar = '',
         public string $submit = 'btn btn-primary',
         public string $secondary = 'btn btn-default',
         public string $alertError = 'alert alert-danger',
@@ -53,6 +54,17 @@ final readonly class Theme
     public static function bootstrap3(): self
     {
         return new self();
+    }
+
+    /** REDAXO backend: Bootstrap 3 with the backend's panel footer and save/apply buttons. */
+    public static function backend(): self
+    {
+        return new self(
+            buttons: 'rex-form-panel-footer',
+            buttonToolbar: 'btn-toolbar',
+            submit: 'btn btn-save',
+            secondary: 'btn btn-apply',
+        );
     }
 
     public static function bootstrap5(): self

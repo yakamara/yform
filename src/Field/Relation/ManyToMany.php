@@ -11,6 +11,8 @@ use Yakamara\YForm\Data\Collection;
 use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Schema\TableSchema;
+use Yakamara\YForm\Search\ChoiceFilter;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Table\Table;
 use Yakamara\YForm\Validation\ValidationContext;
 
@@ -19,6 +21,7 @@ use function array_filter;
 use function array_map;
 use function array_unique;
 use function array_values;
+use function count;
 use function implode;
 use function is_array;
 use function Redaxo\Core\View\escape;
@@ -168,6 +171,14 @@ class ManyToMany extends TargetRelation
         return escape($this->textValue($value));
     }
 
+    /** Matches records related to any of the selected targets. */
     #[Override]
-    public function applySearch(Query $query, string $term): void {}
+    public function searchFilter(): ?Filter
+    {
+        return new ChoiceFilter($this, $this->searchOptions(), function (Query $query, array $ids): void {
+            $pivot = Sql::factory()->escapeIdentifier($this->pivotName($query->table));
+            $placeholders = implode(', ', array_fill(0, count($ids), '?'));
+            $query->whereRaw($query->column('id') . ' IN (SELECT source_id FROM ' . $pivot . ' WHERE target_id IN (' . $placeholders . '))', $ids);
+        });
+    }
 }

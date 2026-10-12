@@ -58,7 +58,7 @@ Was dann automatisch passiert:
 - **Datenbank:** `console migrate` legt die Tabelle an und ergänzt Spalten, Indizes und Pivot-Tabellen. Die
   Spaltenreihenfolge folgt der Feldreihenfolge. Spalten ohne Feld werden **nie** stillschweigend gelöscht,
   siehe [Schema](#schema).
-- **Backend:** Jede Tabelle bekommt einen Navigationseintrag mit Liste (Suche, Sortierung, Seiten),
+- **Backend:** Jede Tabelle bekommt einen Navigationseintrag mit Liste ([Suche](#suche), Sortierung, Seiten),
   Anlegen/Bearbeiten/Löschen und Rechten pro Tabelle.
 - **Code:** `ProductTable::query()`, `::find()`, `::create()` usw., siehe [Daten](#daten).
 
@@ -94,11 +94,50 @@ Die Klasse *ist* der Feldtyp. Konfiguriert wird fluent, der Konstruktor ist für
 | `Relation\HasMany` | – | `list<int>` | Gegenstück zu `BelongsTo`; mit `inline()` werden die Datensätze direkt in der Maske bearbeitet |
 
 Diese Optionen haben alle Felder: `label()`, `notice()`, `required()`, `default()`, `readonly()`, `listed()`,
-`searchable()`, `sortable()`, `unique()`, `rule()` und `attributes()`.
+`filterable()`, `sortable()`, `unique()`, `rule()` und `attributes()`.
 
 **Eigene Feldtypen** sind Unterklassen im Projekt. Überschrieben wird, was abweicht: `columnType()`, `fromInput()`,
 `fromDb()`, `toDb()`, `validate()`, `listValue()` usw. Das Markup liegt in einer View-Datei neben der Klasse
 (`MyField.view.php`, gibt eine Closure zurück). Ohne eigene View wird die der Elternklasse verwendet.
+
+## Suche
+
+Die Suche wird pro Feld mit `filterable()` eingeschaltet und ist standardmäßig aus. Jedes freigeschaltete Feld
+bekommt ein eigenes, zum Typ passendes Suchfeld; mehrere Felder werden mit UND verknüpft. Die Suchfelder stehen
+als Spalte links neben der Liste und laufen beim Scrollen mit. Hat eine Tabelle kein solches Feld, gibt es keine
+Suche.
+
+```php
+yield Text::new('title')->label('Titel')->filterable();
+yield BelongsTo::new('author_id')->label('Autor')->target(AuthorTable::class)->filterable();
+yield CreatedAt::create()->label('Erstellt')->filterable();
+```
+
+| Feldtyp | Suchfeld |
+|---|---|
+| Text, Textarea, E-Mail, URL, UUID, Media, `CreatedBy`/`UpdatedBy` | Text: Teilbegriff, `*` als Platzhalter (`tee*`), `"…"` exakt, `""` leer, `!` davor verneint |
+| Integer, Decimal | Bereich von–bis, Decimal auch mit Dezimalkomma |
+| Date, DateTime, `CreatedAt`/`UpdatedAt` | Datumsbereich; bei DateTime zählt jeweils der ganze Tag |
+| Time | Uhrzeitbereich |
+| Checkbox | alle / ja / nein |
+| Choice | Mehrfachauswahl; bei `multiple()` trifft jede gewählte Option |
+| BelongsTo, ManyToMany | Mehrfachauswahl der Zieldatensätze, auch solcher, die `filter()` bei der Eingabe ausblendet |
+| Password, Article, HasMany | keine Detailsuche |
+
+Die Filter stehen als `filter[feld]` in der URL. Sortierung, Seitenwechsel und der Rückweg aus der Maske
+behalten sie.
+
+**Eigene Suchfelder:** `searchFilter()` überschreiben und eine Unterklasse von `Search\Filter` zurückgeben
+(`parse()` normalisiert die Eingabe, `apply()` schränkt die Query ein, das Markup liegt in
+`MyFilter.view.php`). Für die üblichen Fälle reichen `TextFilter`, `RangeFilter`, `ChoiceFilter` und
+`BooleanFilter`:
+
+```php
+public function searchFilter(): ?Filter
+{
+    return new ChoiceFilter($this, ['de' => 'Deutschland', 'at' => 'Österreich']);
+}
+```
 
 ## Validierung
 

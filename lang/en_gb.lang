@@ -50,8 +50,14 @@ yform_permission_denied = You are not allowed to do this.
 yform_media_in_use = The file is used in the field "{0}":
 
 yform_records_count = {0} records
-yform_search_placeholder = Search …
-yform_search_reset = Reset search
+yform_search = Search
+yform_actions_toggle = Action
+yform_filter_apply = Search
+yform_filter_reset = reset
+yform_filter_any = any
+yform_filter_from = from
+yform_filter_to = to
+yform_filter_text_help = Examples: tea / tea* / "tea" / "" (empty) / !tea
 yform_no_records = No records found.
 yform_table_not_found = The table was not found or you have no access.
 yform_record_not_found = The record was not found.

@@ -5,8 +5,9 @@ namespace Yakamara\YForm\Field;
 use Override;
 use Redaxo\Core\Database\Column;
 use Redaxo\Core\Translation\I18n;
-use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\BooleanFilter;
+use Yakamara\YForm\Search\Filter;
 
 /** Boolean, stored as `tinyint(1)` (0/1, never NULL). */
 class Checkbox extends Field
@@ -66,5 +67,8 @@ class Checkbox extends Field
     }
 
     #[Override]
-    public function applySearch(Query $query, string $term): void {}
+    public function searchFilter(): ?Filter
+    {
+        return new BooleanFilter($this);
+    }
 }

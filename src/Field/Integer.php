@@ -4,7 +4,8 @@ namespace Yakamara\YForm\Field;
 
 use Override;
 use Redaxo\Core\Translation\I18n;
-use Yakamara\YForm\Data\Query;
+use Yakamara\YForm\Search\Filter;
+use Yakamara\YForm\Search\RangeFilter;
 use Yakamara\YForm\Validation\Rule\Range;
 use Yakamara\YForm\Validation\ValidationContext;
 
@@ -98,10 +99,11 @@ class Integer extends Field
     }
 
     #[Override]
-    public function applySearch(Query $query, string $term): void
+    public function searchFilter(): ?Filter
     {
-        if (false !== filter_var($term, FILTER_VALIDATE_INT)) {
-            $query->where($this->name, (int) $term);
-        }
+        return new RangeFilter($this, 'number', static function (string $input): ?int {
+            $value = filter_var($input, FILTER_VALIDATE_INT);
+            return false === $value ? null : $value;
+        });
     }
 }

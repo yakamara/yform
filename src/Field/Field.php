@@ -8,10 +8,11 @@ use Redaxo\Core\Database\Column;
 use Redaxo\Core\Database\Index;
 use Redaxo\Core\Translation\I18n;
 use Redaxo\Core\View\HtmlAttributes;
-use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Form\FieldContext;
 use Yakamara\YForm\Schema\TableSchema;
+use Yakamara\YForm\Search\Filter;
+use Yakamara\YForm\Search\TextFilter;
 use Yakamara\YForm\Table\Table;
 use Yakamara\YForm\Validation\Rule;
 use Yakamara\YForm\Validation\Rule\Unique;
@@ -37,7 +38,7 @@ use const JSON_UNESCAPED_UNICODE;
  *  - input:   {@see render()}, {@see fromInput()}
  *  - rules:   {@see validate()}
  *  - output:  {@see listValue()}, {@see textValue()}
- *  - search:  {@see applySearch()}
+ *  - search:  {@see searchFilter()}
  *
  * Configuration happens through fluent setters, so the constructor stays identical for all types:
  * `Text::new('title')->label('Titel')->required()`.
@@ -50,7 +51,7 @@ abstract class Field
     public protected(set) mixed $default = null;
     public protected(set) bool $readonly = false;
     public protected(set) bool $listed = true;
-    public protected(set) bool $searchable = false;
+    public protected(set) bool $filterable = false;
     public protected(set) bool $sortable = true;
 
     /** @var list<string>|null columns forming a unique key together with this field, `null` = not unique */
@@ -120,10 +121,10 @@ abstract class Field
         return $this;
     }
 
-    /** Whether the backend quick search looks into this field. */
-    public function searchable(bool $searchable = true): static
+    /** Whether the detailed search of the backend list offers a control for this field ({@see searchFilter()}). */
+    public function filterable(bool $filterable = true): static
     {
-        $this->searchable = $searchable;
+        $this->filterable = $filterable;
         return $this;
     }
 
@@ -379,9 +380,9 @@ abstract class Field
 
     // ---------------------------------------------------------------- search
 
-    /** Applies the backend quick search term to the query (called inside an OR group). */
-    public function applySearch(Query $query, string $term): void
+    /** Control of the detailed search, `null` when the type cannot be searched this way. */
+    public function searchFilter(): ?Filter
     {
-        $query->whereRaw($query->column($this->name) . ' LIKE ?', ['%' . $term . '%']);
+        return new TextFilter($this);
     }
 }

@@ -12,6 +12,7 @@ use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Field\Field;
 use Yakamara\YForm\Form\FieldContext;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Table\Table;
 use Yakamara\YForm\Table\Tables;
 use Yakamara\YForm\Validation\ValidationContext;
@@ -302,9 +303,6 @@ class HasMany extends Field implements Relation
     }
 
     #[Override]
-    public function applySearch(Query $query, string $term): void {}
-
-    #[Override]
     public function render(FieldContext $context): string
     {
         if ($this->inline) {
@@ -335,5 +333,11 @@ class HasMany extends Field implements Relation
     public static function rowValue(array $values, string $name, Field $field): mixed
     {
         return array_key_exists($name, $values) ? $values[$name] : $field->defaultValue();
+    }
+
+    #[Override]
+    public function searchFilter(): ?Filter
+    {
+        return null;
     }
 }

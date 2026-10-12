@@ -50,8 +50,14 @@ yform_permission_denied = Dafür fehlt dir die Berechtigung.
 yform_media_in_use = Die Datei wird im Feld „{0}“ verwendet:
 
 yform_records_count = {0} Datensätze
-yform_search_placeholder = Suchen …
-yform_search_reset = Suche zurücksetzen
+yform_search = Suche
+yform_actions_toggle = Aktion
+yform_filter_apply = suchen
+yform_filter_reset = zurücksetzen
+yform_filter_any = alle
+yform_filter_from = von
+yform_filter_to = bis
+yform_filter_text_help = Beispiele: tee / tee* / "tee" / "" (leer) / !tee
 yform_no_records = Keine Datensätze gefunden.
 yform_table_not_found = Die Tabelle wurde nicht gefunden oder du hast keinen Zugriff.
 yform_record_not_found = Der Datensatz wurde nicht gefunden.

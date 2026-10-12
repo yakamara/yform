@@ -5,8 +5,9 @@ namespace Yakamara\YForm\Field\Relation;
 use Override;
 use Redaxo\Core\Database\Index;
 use Redaxo\Core\Translation\I18n;
-use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\ChoiceFilter;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Validation\ValidationContext;
 
 use function filter_var;
@@ -99,17 +100,8 @@ class BelongsTo extends TargetRelation
     }
 
     #[Override]
-    public function applySearch(Query $query, string $term): void
+    public function searchFilter(): ?Filter
     {
-        $target = $this->targetTable();
-        $ids = [];
-        foreach (Labels::get($target, $target->query()->ids()) as $id => $label) {
-            if (false !== mb_stripos($label, $term)) {
-                $ids[] = $id;
-            }
-        }
-        if ([] !== $ids) {
-            $query->whereIn($this->name, $ids);
-        }
+        return new ChoiceFilter($this, $this->searchOptions());
     }
 }

@@ -75,4 +75,15 @@ abstract class TargetRelation extends Field implements Relation
         asort($options, SORT_NATURAL | SORT_FLAG_CASE);
         return $options;
     }
+
+    /** @return array<int, string> id → label of all target records, including those {@see filter()} hides from selection */
+    public function searchOptions(): array
+    {
+        $options = [];
+        foreach ($this->targetTable()->query()->find() as $record) {
+            $options[(int) $record->id] = $record->label();
+        }
+        asort($options, SORT_NATURAL | SORT_FLAG_CASE);
+        return $options;
+    }
 }

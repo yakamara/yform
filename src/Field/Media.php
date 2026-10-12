@@ -5,7 +5,6 @@ namespace Yakamara\YForm\Field;
 use Override;
 use Redaxo\Core\Core;
 use Redaxo\Core\Translation\I18n;
-use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Validation\ValidationContext;
 
@@ -141,12 +140,6 @@ class Media extends Field
     public function listValue(mixed $value, Record $record): string
     {
         return escape($this->textValue($value));
-    }
-
-    #[Override]
-    public function applySearch(Query $query, string $term): void
-    {
-        $query->whereRaw($query->column($this->name) . ' LIKE ?', ['%' . $term . '%']);
     }
 
     /** Only the backend has the media pool; in frontend forms the field is not editable. */

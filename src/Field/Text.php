@@ -14,12 +14,6 @@ class Text extends Field
     public protected(set) int $maxLength = 191;
     public protected(set) string $inputType = 'text';
 
-    #[Override]
-    protected function init(): void
-    {
-        $this->searchable = true;
-    }
-
     public function maxLength(int $maxLength): static
     {
         $this->maxLength = $maxLength;

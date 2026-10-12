@@ -8,6 +8,7 @@ use Yakamara\YForm\Data\Paginated;
 use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Field\Field;
+use Yakamara\YForm\Search\Filter;
 use Yakamara\YForm\Table\ListConfig;
 use Yakamara\YForm\Table\Table;
 use Yakamara\YForm\View\ViewRenderer;
@@ -15,22 +16,32 @@ use Yakamara\YForm\View\ViewRenderer;
 use function array_key_exists;
 use function count;
 use function in_array;
+use function is_array;
+use function is_string;
 
 /**
- * Backend list of the records of a table: quick search, sorting and pagination from the request.
+ * Backend list of the records of a table: detailed search, sorting and pagination from the request.
  *
  * @internal
  */
 final class RecordList
 {
     public readonly ListConfig $config;
-    public readonly string $search;
     public readonly string $sort;
     public readonly string $direction;
     public readonly int $page;
 
     /** @var array<string, array{label: string, sortable: bool}> */
     public readonly array $columns;
+
+    /** @var array<string, Filter> detailed search controls of the filterable fields */
+    public readonly array $filters;
+
+    /** @var array<string, string|array<string, string>> submitted input of the active filters (kept in URLs) */
+    public readonly array $filterInput;
+
+    /** @var array<string, mixed> parsed values of the active filters */
+    private readonly array $filterValues;
 
     public function __construct(
         public readonly Table $table,
@@ -39,7 +50,7 @@ final class RecordList
         $this->config = $table->list(new ListConfig());
         $this->columns = $this->resolveColumns();
 
-        $this->search = trim(Request::get('search', 'string', ''));
+        $this->resolveFilters(Request::get('filter', 'array', []));
         $sort = Request::get('sort', 'string', '');
         $sortable = 'id' === $sort || (isset($this->columns[$sort]) && $this->columns[$sort]['sortable']);
         $this->sort = $sortable ? $sort : $this->config->sortBy;
@@ -63,22 +74,8 @@ final class RecordList
     {
         $query = $this->baseQuery();
 
-        if ('' !== $this->search) {
-            $term = $this->search;
-            $fields = [];
-            foreach ($this->table->storedFields() as $field) {
-                if ($field->searchable) {
-                    $fields[] = $field;
-                }
-            }
-            $query->whereAny(static function (Query $q) use ($fields, $term): void {
-                if (ctype_digit($term)) {
-                    $q->where('id', (int) $term);
-                }
-                foreach ($fields as $field) {
-                    $field->applySearch($q, $term);
-                }
-            });
+        foreach ($this->filterValues as $name => $value) {
+            $this->filters[$name]->apply($query, $value);
         }
 
         $query->orderBy($this->sort, $this->direction);
@@ -104,12 +101,12 @@ final class RecordList
         return $this->table->getField($column)->listValue($value, $record);
     }
 
-    /** @param array<string, string|int|null> $params `null` removes a parameter */
+    /** @param array<string, string|int|array<string, mixed>|null> $params `null` removes a parameter */
     public function url(array $params = []): string
     {
         $params = [
             'table' => $this->table->name,
-            'search' => '' === $this->search ? null : $this->search,
+            'filter' => [] === $this->filterInput ? null : $this->filterInput,
             'sort' => $this->sort,
             'direction' => $this->direction,
             'p' => $this->page > 1 ? $this->page : null,
@@ -126,7 +123,59 @@ final class RecordList
 
     public function render(): string
     {
-        return ViewRenderer::render(self::class, $this, $this->result());
+        return new SearchPanel($this)->wrap(ViewRenderer::render(self::class, $this, $this->result()));
+    }
+
+    /** Whether a filter restricts the list. */
+    public function isSearching(): bool
+    {
+        return [] !== $this->filterInput;
+    }
+
+    /** @param array<mixed> $input */
+    private function resolveFilters(array $input): void
+    {
+        $filters = [];
+        $filterInput = [];
+        $filterValues = [];
+        foreach ($this->table->storedFields() as $name => $field) {
+            $filter = $field->filterable ? $field->searchFilter() : null;
+            if (null === $filter) {
+                continue;
+            }
+            $filters[$name] = $filter;
+            $raw = self::sanitizeInput($input[$name] ?? null);
+            $value = null === $raw ? null : $filter->parse($raw);
+            if (null !== $value) {
+                $filterInput[$name] = $raw;
+                $filterValues[$name] = $value;
+            }
+        }
+        $this->filters = $filters;
+        $this->filterInput = $filterInput;
+        $this->filterValues = $filterValues;
+    }
+
+    /**
+     * Keeps strings and one level of string lists, the shapes filter controls submit.
+     *
+     * @return string|array<string, string>|null
+     */
+    private static function sanitizeInput(mixed $input): string|array|null
+    {
+        if (is_string($input)) {
+            return $input;
+        }
+        if (!is_array($input)) {
+            return null;
+        }
+        $clean = [];
+        foreach ($input as $key => $value) {
+            if (is_string($value) && '' !== $value) {
+                $clean[(string) $key] = $value;
+            }
+        }
+        return [] === $clean ? null : $clean;
     }
 
     /** @return array<string, array{label: string, sortable: bool}> */

@@ -5,6 +5,8 @@ namespace Yakamara\YForm\Field;
 use Override;
 use Redaxo\Core\Translation\I18n;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\Filter;
+use Yakamara\YForm\Search\RangeFilter;
 use Yakamara\YForm\Validation\Rule\Range;
 use Yakamara\YForm\Validation\ValidationContext;
 
@@ -99,5 +101,14 @@ class Decimal extends Field
     public function listValue(mixed $value, Record $record): string
     {
         return $this->isEmpty($value) ? '' : number_format((float) $value, $this->scale, ',', '.');
+    }
+
+    #[Override]
+    public function searchFilter(): ?Filter
+    {
+        return new RangeFilter($this, 'decimal', function (string $input): ?string {
+            $value = $this->fromInput($input);
+            return is_numeric($value) ? $value : null;
+        });
     }
 }

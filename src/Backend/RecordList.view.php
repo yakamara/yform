@@ -10,31 +10,49 @@ use function Redaxo\Core\View\escape;
 return static function (RecordList $list, Paginated $result): void {
     $table = $list->table;
     $deleteToken = CsrfToken::factory('yform_delete_' . $table->name);
+
+    // Same markup as the core list pagination (`rex-nav-pagination`), shown above and below the table.
+    $pagination = static function () use ($list, $result): void {
+        $current = $result->page;
+        $last = $result->pages;
+        $from = max(2, min($current - 3, $last - 7));
+        $to = min($last - 1, $from + 6);
+        ?>
+        <nav class="rex-nav-pagination">
+            <?php if ($last > 1): ?>
+                <ul class="pagination">
+                    <li class="rex-prev<?= $result->hasPrevious() ? '' : ' disabled' ?>">
+                        <a href="<?= escape($list->url(['p' => max(1, $current - 1)])) ?>" title="<?= I18n::msg('list_previous') ?>"><i class="rex-icon rex-icon-previous"></i><span class="sr-only"><?= I18n::msg('list_previous') ?></span></a>
+                    </li>
+                    <li class="rex-page<?= 1 === $current ? ' active' : '' ?>"><a href="<?= escape($list->url(['p' => 1])) ?>">1</a></li>
+                    <?php if ($from > 2): ?><li class="disabled"><span>…</span></li><?php endif ?>
+                    <?php for ($p = $from; $p <= $to; ++$p): ?>
+                        <li class="rex-page<?= $p === $current ? ' active' : '' ?>"><a href="<?= escape($list->url(['p' => $p])) ?>"><?= $p ?></a></li>
+                    <?php endfor ?>
+                    <?php if ($to < $last - 1): ?><li class="disabled"><span>…</span></li><?php endif ?>
+                    <li class="rex-page<?= $last === $current ? ' active' : '' ?>"><a href="<?= escape($list->url(['p' => $last])) ?>"><?= $last ?></a></li>
+                    <li class="rex-next<?= $result->hasNext() ? '' : ' disabled' ?>">
+                        <a href="<?= escape($list->url(['p' => min($last, $current + 1)])) ?>" title="<?= I18n::msg('list_next') ?>"><span class="sr-only"><?= I18n::msg('list_next') ?></span><i class="rex-icon rex-icon-next"></i></a>
+                    </li>
+                </ul>
+            <?php endif ?>
+            <div class="rex-pagination-count"><?= I18n::msg('list_rows_found', $result->total) ?></div>
+        </nav>
+        <?php
+    };
     ?>
     <section class="rex-page-section yform-list">
         <div class="panel panel-default">
             <header class="panel-heading">
-                <div class="panel-title"><?= escape($table->label()) ?> <small><?= escape(I18n::msg('yform_records_count', $result->total)) ?></small></div>
+                <div class="panel-title"><?= escape($table->label()) ?></div>
             </header>
-            <div class="panel-body yform-list-toolbar">
-                <form class="form-inline" method="get" action="">
-                    <input type="hidden" name="page" value="yform/data">
-                    <input type="hidden" name="table" value="<?= escape($table->name) ?>">
-                    <div class="input-group">
-                        <input class="form-control" type="search" name="search" value="<?= escape($list->search) ?>" placeholder="<?= escape(I18n::msg('yform_search_placeholder')) ?>">
-                        <span class="input-group-btn"><button class="btn btn-default" type="submit"><i class="rex-icon fa-search"></i></button></span>
-                    </div>
-                    <?php if ('' !== $list->search): ?>
-                        <a class="btn btn-link" href="<?= escape($list->url(['search' => null, 'p' => null])) ?>"><?= escape(I18n::msg('yform_search_reset')) ?></a>
-                    <?php endif ?>
-                </form>
-            </div>
+            <?php $pagination() ?>
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th class="rex-table-icon">
                             <?php if ($list->canEdit): ?>
-                                <a class="rex-link-expanded" href="<?= escape($list->url(['func' => 'add'])) ?>" title="<?= escape(I18n::msg('yform_add')) ?>"><i class="rex-icon rex-icon-add"></i></a>
+                                <a class="rex-link-expanded" href="<?= escape($list->url(['func' => 'add'])) ?>" title="<?= I18n::msg('yform_add') ?>"><i class="rex-icon rex-icon-add"></i></a>
                             <?php endif ?>
                         </th>
                         <?php foreach ($list->columns as $name => $column): ?>
@@ -46,46 +64,45 @@ return static function (RecordList $list, Paginated $result): void {
                                 <?php endif ?>
                             </th>
                         <?php endforeach ?>
-                        <th class="rex-table-action" colspan="2"><?= escape(I18n::msg('yform_actions')) ?></th>
+                        <th class="rex-table-action"><?= I18n::msg('yform_actions') ?></th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if ($result->items->isEmpty()): ?>
-                        <tr><td colspan="<?= count($list->columns) + 3 ?>" class="text-muted"><?= escape(I18n::msg('yform_no_records')) ?></td></tr>
+                        <tr><td colspan="<?= count($list->columns) + 2 ?>" class="text-muted"><?= I18n::msg('yform_no_records') ?></td></tr>
                     <?php endif ?>
                     <?php foreach ($result->items as $record):
                         $editUrl = $list->url(['func' => 'edit', 'id' => (int) $record->id]) ?>
                         <tr>
-                            <td class="rex-table-icon"><a class="rex-link-expanded" href="<?= escape($editUrl) ?>"><i class="rex-icon <?= escape($table->icon()) ?>"></i></a></td>
+                            <td class="rex-table-icon">
+                                <a class="rex-link-expanded" href="<?= escape($editUrl) ?>" title="<?= I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') ?>"><i class="rex-icon <?= $list->canEdit ? 'rex-icon-editmode' : 'fa-eye' ?>"></i></a>
+                            </td>
                             <?php foreach ($list->columns as $name => $column): ?>
                                 <td class="yform-col-<?= escape($name) ?>" data-title="<?= escape($column['label']) ?>"><?= $list->cell($name, $record) ?></td>
                             <?php endforeach ?>
                             <td class="rex-table-action">
-                                <a href="<?= escape($editUrl) ?>"><i class="rex-icon <?= $list->canEdit ? 'rex-icon-edit' : 'fa-eye' ?>"></i> <?= escape(I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view')) ?></a>
-                            </td>
-                            <td class="rex-table-action">
-                                <?php if ($list->canEdit): ?>
-                                    <form method="post" action="<?= escape($list->url(['func' => 'delete', 'id' => (int) $record->id])) ?>" class="yform-inline-form">
-                                        <?= $deleteToken->getHiddenField() ?>
-                                        <button type="submit" class="btn btn-link btn-xs yform-delete" data-confirm="<?= escape(I18n::msg('yform_delete_confirm')) ?>"><i class="rex-icon rex-icon-delete"></i> <?= escape(I18n::msg('yform_delete')) ?></button>
-                                    </form>
-                                <?php endif ?>
+                                <div class="dropdown yform-dropdown">
+                                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= I18n::msg('yform_actions_toggle') ?> <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li><a href="<?= escape($editUrl) ?>"><i class="rex-icon <?= $list->canEdit ? 'rex-icon-editmode' : 'fa-eye' ?>"></i> <?= I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') ?></a></li>
+                                        <?php if ($list->canEdit): ?>
+                                            <li>
+                                                <form method="post" action="<?= escape($list->url(['func' => 'delete', 'id' => (int) $record->id])) ?>">
+                                                    <?= $deleteToken->getHiddenField() ?>
+                                                    <button type="submit" data-confirm="<?= I18n::msg('yform_delete_confirm') ?>"><i class="rex-icon rex-icon-delete"></i> <?= I18n::msg('yform_delete') ?></button>
+                                                </form>
+                                            </li>
+                                        <?php endif ?>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
             </table>
-            <?php if ($result->pages > 1): ?>
-                <footer class="panel-footer">
-                    <nav><ul class="pagination">
-                        <li class="<?= $result->hasPrevious() ? '' : 'disabled' ?>"><a href="<?= escape($list->url(['p' => max(1, $result->page - 1)])) ?>">&laquo;</a></li>
-                        <?php for ($p = max(1, $result->page - 4); $p <= min($result->pages, $result->page + 4); ++$p): ?>
-                            <li class="<?= $p === $result->page ? 'active' : '' ?>"><a href="<?= escape($list->url(['p' => $p])) ?>"><?= $p ?></a></li>
-                        <?php endfor ?>
-                        <li class="<?= $result->hasNext() ? '' : 'disabled' ?>"><a href="<?= escape($list->url(['p' => min($result->pages, $result->page + 1)])) ?>">&raquo;</a></li>
-                    </ul></nav>
-                </footer>
-            <?php endif ?>
+            <?php if ($result->pages > 1) {
+                $pagination();
+            } ?>
         </div>
     </section>
     <?php

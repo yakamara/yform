@@ -34,4 +34,10 @@ class DateTime extends Date
     {
         return 'datetime-local';
     }
+
+    #[Override]
+    protected function searchBound(DateTimeImmutable $day, bool $upper): string
+    {
+        return $day->format('Y-m-d') . ($upper ? ' 23:59:59' : ' 00:00:00');
+    }
 }

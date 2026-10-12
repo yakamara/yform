@@ -6,15 +6,14 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use Override;
 use Redaxo\Core\Translation\I18n;
-use Yakamara\YForm\Data\Query;
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Search\Filter;
+use Yakamara\YForm\Search\RangeFilter;
 use Yakamara\YForm\Validation\Rule\Range;
 use Yakamara\YForm\Validation\ValidationContext;
 
 use function is_string;
 use function preg_match;
-
-use const STR_PAD_LEFT;
 
 /**
  * Calendar date, stored as `date`, PHP value `DateTimeImmutable` (time 00:00).
@@ -148,14 +147,26 @@ class Date extends Field
         return \Redaxo\Core\View\escape($this->textValue($value));
     }
 
+    /** Searches whole days, also for datetime columns. */
     #[Override]
-    public function applySearch(Query $query, string $term): void
+    public function searchFilter(): ?Filter
     {
-        // "24.12.2026", "12.2026" or "2026"
-        if (preg_match('/^(?:(\d{1,2})\.)?(?:(\d{1,2})\.)?(\d{4})$/', $term, $m)) {
-            $parts = array_values(array_filter([$m[3], $m[2] ?? '', $m[1] ?? ''], static fn (string $p): bool => '' !== $p));
-            $pattern = implode('-', array_map(static fn (string $p): string => str_pad($p, 2, '0', STR_PAD_LEFT), $parts));
-            $query->whereRaw($query->column($this->name) . ' LIKE ?', [$pattern . '%']);
-        }
+        return new RangeFilter($this, 'date', function (string $input, bool $upper): ?string {
+            if (1 !== preg_match('/^\d{4}-\d{2}-\d{2}$/', $input)) {
+                return null;
+            }
+            $day = DateTimeImmutable::createFromFormat('!Y-m-d', $input);
+            $errors = DateTimeImmutable::getLastErrors();
+            if (false === $day || (false !== $errors && ($errors['warning_count'] > 0 || $errors['error_count'] > 0))) {
+                return null;
+            }
+            return $this->searchBound($day, $upper);
+        });
+    }
+
+    /** Column value a searched day starts (`$upper = false`) or ends with. */
+    protected function searchBound(DateTimeImmutable $day, bool $upper): string
+    {
+        return $day->format('Y-m-d');
     }
 }

@@ -17,7 +17,6 @@ class Textarea extends Field
     protected function init(): void
     {
         $this->listed = false;
-        $this->searchable = true;
     }
 
     public function rows(int $rows): static

@@ -4,6 +4,8 @@ namespace Yakamara\YForm\Field;
 
 use Override;
 use Redaxo\Core\Translation\I18n;
+use Yakamara\YForm\Search\Filter;
+use Yakamara\YForm\Search\RangeFilter;
 use Yakamara\YForm\Validation\ValidationContext;
 
 use function preg_match;
@@ -44,5 +46,14 @@ class Time extends Field
             return [I18n::rawMsg('yform_validation_time', $this->translatedLabel())];
         }
         return parent::validate($value, $context);
+    }
+
+    #[Override]
+    public function searchFilter(): ?Filter
+    {
+        return new RangeFilter($this, 'time', static function (string $input, bool $upper): ?string {
+            $time = substr($input, 0, 5);
+            return 1 === preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $time) ? $time . ($upper ? ':59' : ':00') : null;
+        });
     }
 }
