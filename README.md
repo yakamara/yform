@@ -201,7 +201,14 @@ Das Layout einer Maske besteht aus Tabs, Abschnitten (optional mit Überschrift)
 1. **Im Code** über `layout()` an der Tabelle bzw. am Formular.
 2. **Im Designer** (YForm → Tabellen/Formulare → Designer), per Drag & Drop. Das Ergebnis wird als
    `ProductTable.layout.json` **neben der Klasse** gespeichert und mit ihr versioniert und deployt. Die Datei hat
-   Vorrang vor dem Code-Layout. „Auf Code-Layout zurücksetzen“ löscht sie wieder.
+   Vorrang vor dem Code-Layout; der Designer weist darauf hin, wenn sie ein `layout()` im Code überdeckt. „Auf
+   Code-Layout zurücksetzen“ löscht sie wieder.
+
+Gespeichert wird nur im Dev-Modus (`REX_MODE=dev`). Auf Stage- und Live-Systemen zeigt der Designer das Layout
+schreibgeschützt an: Eine Änderung dort würde beim nächsten Deployment überschrieben.
+
+Das Layout enthält keine CSS-Klassen, nur Tabs, Abschnitte, Zeilen und Breiten in Zwölfteln. Erst das Theme macht
+daraus Klassen, dasselbe Layout funktioniert also mit jedem Frontend-Framework (siehe [Themes](#themes)).
 
 Felder, die in keinem Layout vorkommen, werden automatisch angehängt, ein neues Feld geht also nie verloren.
 
@@ -263,6 +270,46 @@ anhängen und mit `->when(fn (Submission $s) => …)` an eine Bedingung knüpfen
 
 Im Backend wird immer Bootstrap 3 verwendet. Frontend-Formulare nutzen standardmäßig `Theme::bootstrap5()`. Das
 lässt sich im Projekt-Boot mit `Forms::$defaultTheme = Theme::plain();` ändern oder pro Formular über `theme()`.
+
+Ein Theme ist nur ein Satz CSS-Klassen, das HTML entsteht in den Views (`Form.view.php`, `FieldGroup.view.php` und
+je Feldtyp eine View). Mitgeliefert sind:
+
+| Preset | Raster | Tabs |
+|---|---|---|
+| `Theme::bootstrap3()`, `Theme::bootstrap5()` | `col-sm-6` bzw. `col-md-6` | Bootstrap-JavaScript |
+| `Theme::tailwind()` | `grid-cols-12`, `md:col-span-6` | `yform-frontend.js` |
+| `Theme::plain()` | `yform-col--6` aus `yform-frontend.css` | `yform-frontend.js` |
+
+Für `plain` und `tailwind` bindet das Projekt die Assets selbst ein:
+
+```php
+$yform = Addon::get('yform');
+echo '<link rel="stylesheet" href="' . $yform->getAssetsUrl('yform-frontend.css') . '">'; // nur für plain
+echo '<script src="' . $yform->getAssetsUrl('yform-frontend.js') . '" defer></script>';
+```
+
+Ohne das Script stehen die Tabs untereinander, es bleibt also jedes Feld erreichbar. Bei Tailwind muss
+`vendor/yakamara/yform/src/Form/Theme` zu den gescannten Quellen gehören (`@source` in Tailwind 4), sonst fehlen
+die Rasterklassen im Build.
+
+Eigene Themes entstehen mit benannten Argumenten. Die Spaltenklasse ist ein `sprintf`-Muster oder eine Closure,
+damit lassen sich auch Raster abbilden, die nicht in Zwölfteln rechnen, oder mehrere Breakpoints:
+
+```php
+Forms::$defaultTheme = new Theme(
+    group: 'uk-margin',
+    label: 'uk-form-label',
+    control: 'uk-input',
+    row: 'uk-grid uk-grid-small',
+    // UIkit rechnet in Brüchen; Breiten ohne passenden Bruch teilen sich den Rest der Zeile.
+    column: fn (int $width) => 'uk-width-1-1 uk-width-' . match ($width) {
+        12 => '1-1', 10 => '5-6', 9 => '3-4', 8 => '2-3', 6 => '1-2', 4 => '1-3', 3 => '1-4', 2 => '1-6',
+        default => 'expand',
+    } . '@m',
+    tabToggle: '', // Tabs über yform-frontend.js statt über ein Framework-Plugin
+);
+```
+
 Für eigenes Markup überschreibst du einzelne Views, ohne die Klassen anzufassen:
 
 ```php

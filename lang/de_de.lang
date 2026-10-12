@@ -99,6 +99,8 @@ yform_designer_tab_add = Tab hinzufügen
 yform_designer_tab_remove = Tab entfernen
 yform_designer_section_add = Abschnitt
 yform_designer_section_remove = Abschnitt entfernen
+yform_designer_section_up = Abschnitt nach oben
+yform_designer_section_down = Abschnitt nach unten
 yform_designer_legend_placeholder = Abschnitt ohne Überschrift
 yform_designer_new_row = Feld hierher ziehen für eine neue Zeile
 yform_designer_palette = Nicht platzierte Felder
@@ -112,6 +114,8 @@ yform_designer_saved = Gespeichert in {0}. Bitte die Datei mit ins Repository ü
 yform_designer_source_file = Layout aus {0}
 yform_designer_source_code = Layout aus dem Code (noch keine Layout-Datei)
 yform_designer_not_writable = {0} ist nicht beschreibbar. Das Layout lässt sich hier nur ansehen – gestalte es in der Entwicklungsumgebung.
+yform_designer_not_dev = Layouts lassen sich nur im Dev-Modus (REX_MODE=dev) speichern. Die Layout-Datei gehört ins Repository und wird mit dem Code deployt; eine Änderung hier würde beim nächsten Deployment überschrieben.
+yform_designer_overrides_code = {0} überdeckt das Layout aus layout() im Code. Änderungen am Code-Layout wirken erst, wenn die Datei zurückgesetzt wird.
 yform_designer_unsaved = ungespeicherte Änderungen
 yform_designer_row_overflow = Die Breiten dieser Zeile ergeben mehr als 12; die Felder brechen um.
 yform_validation_relation = „{0}“ verweist auf einen Datensatz, der nicht (mehr) auswählbar ist.

@@ -1,0 +1,179 @@
+/*
+ * Neutral base style for Theme::plain(): 12-column grid, tabs and form controls without a CSS framework.
+ * All rules are scoped to `.yform`; colours and spacing can be adjusted with the custom properties below.
+ */
+.yform {
+    --yform-gap: 1rem;
+    --yform-border: #c8ccd0;
+    --yform-focus: #2563eb;
+    --yform-error: #b91c1c;
+    --yform-muted: #6b7280;
+    --yform-radius: 4px;
+}
+
+.yform-row {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 0 var(--yform-gap);
+}
+
+.yform-col {
+    grid-column: span 12;
+    min-width: 0;
+}
+
+@media (min-width: 768px) {
+    .yform-col--1 { grid-column: span 1; }
+    .yform-col--2 { grid-column: span 2; }
+    .yform-col--3 { grid-column: span 3; }
+    .yform-col--4 { grid-column: span 4; }
+    .yform-col--5 { grid-column: span 5; }
+    .yform-col--6 { grid-column: span 6; }
+    .yform-col--7 { grid-column: span 7; }
+    .yform-col--8 { grid-column: span 8; }
+    .yform-col--9 { grid-column: span 9; }
+    .yform-col--10 { grid-column: span 10; }
+    .yform-col--11 { grid-column: span 11; }
+}
+
+.yform-group {
+    margin-bottom: var(--yform-gap);
+}
+
+.yform-label {
+    display: block;
+    margin-bottom: .25rem;
+    font-weight: 600;
+}
+
+.yform-control {
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: .5rem .75rem;
+    border: 1px solid var(--yform-border);
+    border-radius: var(--yform-radius);
+    font: inherit;
+    background: #fff;
+}
+
+.yform-control:focus {
+    outline: 2px solid var(--yform-focus);
+    outline-offset: -1px;
+}
+
+.yform-group--invalid .yform-control {
+    border-color: var(--yform-error);
+}
+
+.yform-check {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.yform-help {
+    margin: .25rem 0 0;
+    color: var(--yform-muted);
+    font-size: .875em;
+}
+
+.yform-error {
+    margin: .25rem 0 0;
+    color: var(--yform-error);
+    font-size: .875em;
+}
+
+.yform-input-group {
+    display: flex;
+}
+
+.yform-input-group-addon {
+    display: flex;
+    align-items: center;
+    padding: 0 .75rem;
+    border: 1px solid var(--yform-border);
+    border-left: 0;
+    border-radius: 0 var(--yform-radius) var(--yform-radius) 0;
+}
+
+.yform fieldset {
+    margin: 0 0 var(--yform-gap);
+    padding: 0;
+    border: 0;
+}
+
+.yform legend {
+    margin-bottom: .5rem;
+    padding: 0;
+    font-size: 1.125em;
+    font-weight: 600;
+}
+
+.yform-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 0 0 var(--yform-gap);
+    padding: 0;
+    border-bottom: 1px solid var(--yform-border);
+    list-style: none;
+}
+
+.yform-tabs[hidden] {
+    display: none;
+}
+
+.yform-tabs-link {
+    display: block;
+    margin-bottom: -1px;
+    padding: .5rem 0;
+    border-bottom: 2px solid transparent;
+    color: var(--yform-muted);
+    text-decoration: none;
+}
+
+.yform-tabs-link.is-active {
+    border-bottom-color: var(--yform-focus);
+    color: inherit;
+}
+
+.yform-buttons {
+    display: flex;
+    gap: .5rem;
+    margin-top: var(--yform-gap);
+}
+
+.yform-submit,
+.yform-button {
+    padding: .5rem 1rem;
+    border: 1px solid var(--yform-border);
+    border-radius: var(--yform-radius);
+    font: inherit;
+    background: #fff;
+    cursor: pointer;
+}
+
+.yform-submit {
+    border-color: var(--yform-focus);
+    color: #fff;
+    background: var(--yform-focus);
+}
+
+.yform-alert {
+    margin-bottom: var(--yform-gap);
+    padding: .75rem 1rem;
+    border-radius: var(--yform-radius);
+}
+
+.yform-alert--error {
+    border: 1px solid #fecaca;
+    color: var(--yform-error);
+    background: #fef2f2;
+}
+
+.yform-alert--success {
+    border: 1px solid #bbf7d0;
+    color: #166534;
+    background: #f0fdf4;
+}

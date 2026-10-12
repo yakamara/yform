@@ -10,6 +10,8 @@ return static function (Form $form): void {
     $theme = $form->theme;
     $layout = $form->layout;
     $useTabs = $layout->hasTabs() && $theme->supportsTabs();
+    // Own tabs (no framework plugin): the navigation stays hidden and all panes visible until yform-frontend.js takes over.
+    $ownTabs = $theme->usesOwnTabs();
     $activeTab = $form->activeTab();
 
     $renderSection = static function ($section) use ($form, $theme): void {
@@ -63,22 +65,35 @@ return static function (Form $form): void {
         <?php endif ?>
 
         <?php if ($useTabs): ?>
-            <ul class="<?= escape($theme->tabs) ?>" role="tablist">
+            <ul <?= new HtmlAttributes(['class' => $theme->tabs, 'role' => 'tablist', 'data-yform-tabs' => $ownTabs, 'hidden' => $ownTabs]) ?>>
                 <?php foreach ($layout->tabs as $index => $tab):
                     $active = $index === $activeTab;
-                    $item = new HtmlAttributes(['class' => [$theme->tabItem => '' !== $theme->tabItem, $theme->tabActive => $active && $theme->tabActiveOnItem], 'role' => 'presentation']);
+                    $activeOnItem = $theme->tabActiveOnItem && '' !== $theme->tabActive;
+                    $item = new HtmlAttributes([
+                        'class' => [$theme->tabItem => '' !== $theme->tabItem, $theme->tabActive => $active && $activeOnItem],
+                        'role' => 'presentation',
+                        'data-yform-tab-active' => $ownTabs && $activeOnItem ? $theme->tabActive : null,
+                    ]);
                     $link = new HtmlAttributes([
-                        'class' => [$theme->tabLink => '' !== $theme->tabLink, $theme->tabActive => $active && !$theme->tabActiveOnItem],
+                        'class' => [$theme->tabLink => '' !== $theme->tabLink, $theme->tabActive => $active && !$theme->tabActiveOnItem && '' !== $theme->tabActive],
                         'href' => '#' . $form->name . '-tab-' . $index,
-                        $theme->tabToggle => 'tab',
+                        ...($ownTabs ? ['data-yform-tab' => true, 'data-yform-tab-active' => $theme->tabActiveOnItem ? null : $theme->tabActive] : [$theme->tabToggle => 'tab']),
                         'role' => 'tab',
+                        'aria-selected' => $active ? 'true' : 'false',
                     ]) ?>
                     <li <?= $item ?>><a <?= $link ?>><?= escape($tab->label ?? '') ?></a></li>
                 <?php endforeach ?>
             </ul>
-            <div class="<?= escape($theme->tabContent) ?>">
-                <?php foreach ($layout->tabs as $index => $tab): ?>
-                    <div class="<?= escape($theme->tabPane) ?><?= $index === $activeTab ? ' ' . escape($theme->tabPaneActive) : '' ?>" id="<?= escape($form->name . '-tab-' . $index) ?>" role="tabpanel">
+            <div <?= new HtmlAttributes(['class' => [$theme->tabContent => '' !== $theme->tabContent]]) ?>>
+                <?php foreach ($layout->tabs as $index => $tab):
+                    $pane = new HtmlAttributes([
+                        'class' => [$theme->tabPane => '' !== $theme->tabPane, $theme->tabPaneActive => $index === $activeTab && '' !== $theme->tabPaneActive],
+                        'id' => $form->name . '-tab-' . $index,
+                        'role' => 'tabpanel',
+                        'data-yform-tab-pane-active' => $ownTabs && '' !== $theme->tabPaneActive ? $theme->tabPaneActive : null,
+                    ]) ?>
+                    <div <?= $pane ?>>
+                        <?php if ($ownTabs && null !== $tab->label): ?><h3 class="yform-tab-heading"><?= escape($tab->label) ?></h3><?php endif ?>
                         <?php foreach ($tab->sections as $section) {
                             $renderSection($section);
                         } ?>

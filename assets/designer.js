@@ -86,36 +86,62 @@
             }
         }
 
-        /** Moves the dragged field into an existing row at position `index`, or into a new row when `row` is null. */
+        /** Moves the dragged field into a new row that is inserted above row `rowIndex` (`null` or past the end = at the end). */
+        function dropNewRow(tabIndex, sectionIndex, rowIndex) {
+            if (!dragged) {
+                return;
+            }
+            var section = state.tabs[tabIndex].sections[sectionIndex];
+            var before = null === rowIndex ? null : (section.rows[rowIndex] || null);
+            var f = dragged.from;
+            var cell = {field: dragged.field, width: 12};
+            removeDragged();
+
+            var position = section.rows.length;
+            if (null !== before) {
+                position = section.rows.indexOf(before);
+                if (-1 === position) {
+                    // The row below was the source row and is gone now: take its place.
+                    position = f.row;
+                }
+            }
+            section.rows.splice(position, 0, [cell]);
+            dragged = null;
+            changed();
+        }
+
+        /** Moves the dragged field into an existing row at position `index`. */
         function drop(tabIndex, sectionIndex, rowIndex, index) {
             if (!dragged) {
                 return;
             }
             var section = state.tabs[tabIndex].sections[sectionIndex];
-            var target = null === rowIndex ? null : section.rows[rowIndex];
+            var target = section.rows[rowIndex];
             var f = dragged.from;
 
             // Adjust the target position when removing the source shifts it.
             if (f && f.tab === tabIndex && f.section === sectionIndex) {
-                if (null !== rowIndex && f.row === rowIndex && f.cell < index) {
+                if (f.row === rowIndex && f.cell < index) {
                     index--;
                 }
             }
             var cell = {field: dragged.field, width: 12};
             removeDragged();
 
-            if (null === target) {
-                section.rows.push([cell]);
+            // The target row may have been removed when it only held the dragged cell.
+            if (section.rows.indexOf(target) === -1) {
+                section.rows.splice(f.row, 0, [cell]);
             } else {
-                // The target row may have been removed when it only held the dragged cell.
-                if (section.rows.indexOf(target) === -1) {
-                    section.rows.push([cell]);
-                } else {
-                    target.splice(Math.min(index, target.length), 0, cell);
-                    distribute(target);
-                }
+                target.splice(Math.min(index, target.length), 0, cell);
+                distribute(target);
             }
             dragged = null;
+            changed();
+        }
+
+        function moveSection(tab, index, offset) {
+            var moved = tab.sections.splice(index, 1)[0];
+            tab.sections.splice(index + offset, 0, moved);
             changed();
         }
 
@@ -155,6 +181,51 @@
                 onDrop();
             });
             return zone;
+        }
+
+        /**
+         * Upper and lower third of a row: the field becomes a new row above or below it. The middle is left to the
+         * gaps between the cells, which add the field to the row itself.
+         */
+        function rowEdgeDrop(rowNode, tabIndex, sectionIndex, rowIndex) {
+            function edge(event) {
+                var box = rowNode.getBoundingClientRect();
+                var ratio = (event.clientY - box.top) / box.height;
+                return ratio < 1 / 3 ? 'before' : (ratio > 2 / 3 ? 'after' : null);
+            }
+            function clear() {
+                rowNode.classList.remove('is-insert-before', 'is-insert-after');
+            }
+            function over(event) {
+                if (!dragged || event.target.closest('.yform-designer-gap')) {
+                    clear();
+                    return;
+                }
+                var position = edge(event);
+                rowNode.classList.toggle('is-insert-before', 'before' === position);
+                rowNode.classList.toggle('is-insert-after', 'after' === position);
+                if (position) {
+                    event.preventDefault();
+                }
+            }
+            rowNode.addEventListener('dragenter', over);
+            rowNode.addEventListener('dragover', over);
+            rowNode.addEventListener('dragleave', function (event) {
+                if (!rowNode.contains(event.relatedTarget)) {
+                    clear();
+                }
+            });
+            rowNode.addEventListener('drop', function (event) {
+                if (event.target.closest('.yform-designer-gap')) {
+                    return;
+                }
+                var position = edge(event);
+                clear();
+                if (position) {
+                    event.preventDefault();
+                    dropNewRow(tabIndex, sectionIndex, 'before' === position ? rowIndex : rowIndex + 1);
+                }
+            });
         }
 
         function fieldChip(fieldName, position, width) {
@@ -212,8 +283,10 @@
         function renderSection(tabIndex, section, sectionIndex, tab) {
             var rows = el('div', {'class': 'yform-designer-rows'});
             section.rows.forEach(function (row, rowIndex) {
+                rows.appendChild(dropZone('yform-designer-between', function () { dropNewRow(tabIndex, sectionIndex, rowIndex); }));
                 var total = row.reduce(function (sum, cell) { return sum + cell.width; }, 0);
                 var rowNode = el('div', {'class': 'yform-designer-row' + (total > 12 ? ' is-overflow' : ''), title: total > 12 ? t.row_overflow : null});
+                rowEdgeDrop(rowNode, tabIndex, sectionIndex, rowIndex);
                 row.forEach(function (cell, cellIndex) {
                     rowNode.appendChild(dropZone('yform-designer-gap', function () { drop(tabIndex, sectionIndex, rowIndex, cellIndex); }));
                     rowNode.appendChild(fieldChip(cell.field, {tab: tabIndex, section: sectionIndex, row: rowIndex, cell: cellIndex}, cell.width));
@@ -221,7 +294,7 @@
                 rowNode.appendChild(dropZone('yform-designer-gap yform-designer-gap-end', function () { drop(tabIndex, sectionIndex, rowIndex, row.length); }));
                 rows.appendChild(rowNode);
             });
-            rows.appendChild(dropZone('yform-designer-newrow', function () { drop(tabIndex, sectionIndex, null, 0); }));
+            rows.appendChild(dropZone('yform-designer-newrow', function () { dropNewRow(tabIndex, sectionIndex, null); }));
             rows.lastChild.textContent = t.new_row;
 
             var legend = el('input', {
@@ -235,6 +308,18 @@
             return el('div', {'class': 'yform-designer-section'}, [
                 el('div', {'class': 'yform-designer-section-head'}, [
                     legend,
+                    sectionIndex > 0 ? el('button', {
+                        type: 'button',
+                        'class': 'btn btn-link btn-xs',
+                        title: t.section_up,
+                        onclick: function () { moveSection(tab, sectionIndex, -1); },
+                    }, [el('i', {'class': 'rex-icon fa-arrow-up'})]) : null,
+                    sectionIndex < tab.sections.length - 1 ? el('button', {
+                        type: 'button',
+                        'class': 'btn btn-link btn-xs',
+                        title: t.section_down,
+                        onclick: function () { moveSection(tab, sectionIndex, 1); },
+                    }, [el('i', {'class': 'rex-icon fa-arrow-down'})]) : null,
                     tab.sections.length > 1 ? el('button', {
                         type: 'button',
                         'class': 'btn btn-link btn-xs',
@@ -374,7 +459,7 @@
 
             var toolbar = el('div', {'class': 'yform-designer-toolbar'}, [
                 saveButton,
-                'file' === source ? el('button', {type: 'button', 'class': 'btn btn-default', onclick: function () {
+                'file' === source && config.writable ? el('button', {type: 'button', 'class': 'btn btn-default', onclick: function () {
                     if (!window.confirm(t.reset_confirm)) {
                         return;
                     }
@@ -393,8 +478,11 @@
             var message = root.querySelector('.yform-designer-message');
             root.innerHTML = '';
             root.appendChild(message || el('div', {'class': 'yform-designer-message'}));
-            if (!config.writable) {
-                root.appendChild(el('div', {'class': 'alert alert-warning', text: t.not_writable}));
+            if (config.readonly) {
+                root.appendChild(el('div', {'class': 'alert alert-warning', text: config.readonly}));
+            }
+            if ('file' === source && config.overrides_code) {
+                root.appendChild(el('div', {'class': 'alert alert-info', text: t.overrides_code}));
             }
             root.appendChild(toolbar);
             root.appendChild(el('div', {'class': 'yform-designer-body'}, [
@@ -403,6 +491,14 @@
             ]));
             updateStatus();
         }
+
+        // A chip removed by a re-render never receives dragend, so reset the drag state on the document as well.
+        document.addEventListener('dragend', function () {
+            dragged = null;
+            root.querySelectorAll('.is-over, .is-insert-before, .is-insert-after').forEach(function (node) {
+                node.classList.remove('is-over', 'is-insert-before', 'is-insert-after');
+            });
+        });
 
         window.addEventListener('beforeunload', function (event) {
             if (dirty) {

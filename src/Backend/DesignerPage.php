@@ -3,6 +3,7 @@
 namespace Yakamara\YForm\Backend;
 
 use JsonException;
+use Redaxo\Core\Core;
 use Redaxo\Core\Filesystem\Path;
 use Redaxo\Core\Filesystem\Url;
 use Redaxo\Core\Http\Request;
@@ -27,6 +28,10 @@ use const JSON_THROW_ON_ERROR;
 
 /**
  * Visual layout editor for tables and forms. The result is written to `ClassName.layout.json` next to the class.
+ *
+ * Saving is only possible in dev mode (`REX_MODE=dev`): the file belongs into the repository and is deployed with
+ * the class, a change on a live system would be overwritten by the next deployment. Elsewhere the designer shows
+ * the layout read-only.
  *
  * @internal
  */
@@ -77,6 +82,11 @@ final class DesignerPage
             Response::sendJson(['error' => I18n::rawMsg('csrf_token_invalid')]);
             exit;
         }
+        if (null !== $reason = $this->readonlyReason()) {
+            Response::setStatus(Response::HTTP_FORBIDDEN);
+            Response::sendJson(['error' => $reason]);
+            exit;
+        }
         try {
             if ('reset' === Request::post('action', 'string', '')) {
                 LayoutStore::delete($this->class);
@@ -110,7 +120,9 @@ final class DesignerPage
             'fields' => $fields,
             'layout' => $this->effectiveLayout()->toArray(),
             'source' => LayoutStore::exists($this->class) ? 'file' : 'code',
-            'writable' => LayoutStore::isWritable($this->class),
+            'writable' => null === $this->readonlyReason(),
+            'readonly' => $this->readonlyReason(),
+            'overrides_code' => !$this->codeLayout->isEmpty(),
             'csrf' => CsrfToken::factory('yform_designer')->getValue(),
             'url' => Url::currentBackendPage([
                 'table' => Request::request('table', 'string', '') ?: null,
@@ -122,6 +134,8 @@ final class DesignerPage
                 'tab_remove' => I18n::rawMsg('yform_designer_tab_remove'),
                 'section_add' => I18n::rawMsg('yform_designer_section_add'),
                 'section_remove' => I18n::rawMsg('yform_designer_section_remove'),
+                'section_up' => I18n::rawMsg('yform_designer_section_up'),
+                'section_down' => I18n::rawMsg('yform_designer_section_down'),
                 'legend_placeholder' => I18n::rawMsg('yform_designer_legend_placeholder'),
                 'new_row' => I18n::rawMsg('yform_designer_new_row'),
                 'palette' => I18n::rawMsg('yform_designer_palette'),
@@ -133,7 +147,7 @@ final class DesignerPage
                 'reset_confirm' => I18n::rawMsg('yform_designer_reset_confirm'),
                 'source_file' => I18n::rawMsg('yform_designer_source_file', $this->relativePath()),
                 'source_code' => I18n::rawMsg('yform_designer_source_code'),
-                'not_writable' => I18n::rawMsg('yform_designer_not_writable', $this->relativePath()),
+                'overrides_code' => I18n::rawMsg('yform_designer_overrides_code', $this->relativePath()),
                 'unsaved' => I18n::rawMsg('yform_designer_unsaved'),
                 'row_overflow' => I18n::rawMsg('yform_designer_row_overflow'),
             ],
@@ -145,6 +159,18 @@ final class DesignerPage
             . '<div class="panel-body"><div id="yform-designer" data-config="' . escape(json_encode($config, JSON_THROW_ON_ERROR)) . '"></div></div>'
             . '<footer class="panel-footer"><a href="' . escape($this->backUrl) . '">&larr; ' . I18n::msg('yform_back') . '</a></footer>'
             . '</div></section>';
+    }
+
+    /** Why the layout can not be saved here, `null` when it can. */
+    private function readonlyReason(): ?string
+    {
+        if (!Core::isDevMode()) {
+            return I18n::rawMsg('yform_designer_not_dev');
+        }
+        if (!LayoutStore::isWritable($this->class)) {
+            return I18n::rawMsg('yform_designer_not_writable', $this->relativePath());
+        }
+        return null;
     }
 
     /** Fields that can be placed (all fields; stored and layout-only ones). */

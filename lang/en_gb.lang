@@ -99,6 +99,8 @@ yform_designer_tab_add = Add tab
 yform_designer_tab_remove = Remove tab
 yform_designer_section_add = Section
 yform_designer_section_remove = Remove section
+yform_designer_section_up = Move section up
+yform_designer_section_down = Move section down
 yform_designer_legend_placeholder = Section without heading
 yform_designer_new_row = Drop a field here for a new row
 yform_designer_palette = Unplaced fields
@@ -112,6 +114,8 @@ yform_designer_saved = Saved to {0}. Please commit the file.
 yform_designer_source_file = Layout from {0}
 yform_designer_source_code = Layout from the code (no layout file yet)
 yform_designer_not_writable = {0} is not writable. The layout can only be viewed here – design it in the development environment.
+yform_designer_not_dev = Layouts can only be saved in dev mode (REX_MODE=dev). The layout file belongs into the repository and is deployed with the code; a change here would be overwritten by the next deployment.
+yform_designer_overrides_code = {0} overrides the layout() defined in code. Changes to the code layout take effect only after resetting the file.
 yform_designer_unsaved = unsaved changes
 yform_designer_row_overflow = The widths of this row add up to more than 12; the fields wrap.
 yform_validation_relation = "{0}" refers to a record that is not (or no longer) selectable.

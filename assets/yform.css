@@ -17,7 +17,12 @@
 .yform-designer-section { border: 1px solid #e3e7ec; border-radius: 4px; padding: 10px; margin-bottom: 15px; background: #fafbfc; }
 .yform-designer-section-head { display: flex; gap: 8px; margin-bottom: 8px; }
 .yform-designer-legend { font-weight: 600; }
-.yform-designer-row { display: flex; align-items: stretch; margin-bottom: 6px; flex-wrap: wrap; row-gap: 6px; }
+.yform-designer-row { display: flex; align-items: stretch; flex-wrap: wrap; row-gap: 6px; }
+/* New row above/below: dropping on the gap between two rows or on the upper/lower third of a row. */
+.yform-designer-between { height: 6px; border-radius: 3px; }
+.yform-designer-between.is-over { background: #4799d7; }
+.yform-designer-row.is-insert-before { box-shadow: 0 -4px 0 #4799d7; }
+.yform-designer-row.is-insert-after { box-shadow: 0 4px 0 #4799d7; }
 .yform-designer-row.is-overflow { outline: 2px solid #f0ad4e; outline-offset: 2px; }
 .yform-designer-cell { display: flex; align-items: center; gap: 6px; padding: 6px 8px; background: #fff; border: 1px solid #c9d1db; border-radius: 4px; cursor: grab; min-width: 0; }
 .yform-designer-cell.is-dragging { opacity: .4; }
@@ -29,7 +34,7 @@
 .yform-designer-gap { flex: 0 0 8px; border-radius: 3px; }
 .yform-designer-gap-end { flex: 1 0 8px; }
 .yform-designer-gap.is-over { background: #4799d7; flex-basis: 16px; }
-.yform-designer-newrow { border: 1px dashed #c1c9d4; border-radius: 4px; padding: 8px; text-align: center; color: #8a96a3; font-size: 12px; }
+.yform-designer-newrow { margin-top: 6px; border: 1px dashed #c1c9d4; border-radius: 4px; padding: 8px; text-align: center; color: #8a96a3; font-size: 12px; }
 .yform-designer-newrow.is-over { background: rgba(71, 153, 215, .1); border-color: #4799d7; color: #4799d7; }
 @media (max-width: 991px) { .yform-designer-body { flex-direction: column; } .yform-designer-palette { position: static; flex-basis: auto; width: 100%; } }
 
