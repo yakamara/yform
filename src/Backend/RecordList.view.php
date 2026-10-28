@@ -2,8 +2,18 @@
 
 use Redaxo\Core\Security\CsrfToken;
 use Redaxo\Core\Translation\I18n;
+use Redaxo\Core\View\Component\ColumnType;
+use Redaxo\Core\View\Component\Dropdown;
+use Redaxo\Core\View\Component\Section;
+use Redaxo\Core\View\Component\Table as TableComponent;
+use Redaxo\Core\View\Component\TableCell;
+use Redaxo\Core\View\Component\TableColumn;
+use Redaxo\Core\View\Component\TableRow;
+use Redaxo\Core\View\Html;
+use Redaxo\Core\View\HtmlAttributes;
 use Yakamara\YForm\Backend\RecordList;
 use Yakamara\YForm\Data\Paginated;
+use Yakamara\YForm\Data\Record;
 
 use function Redaxo\Core\View\escape;
 
@@ -11,100 +21,82 @@ return static function (RecordList $list, Paginated $result): void {
     $table = $list->table;
     $deleteToken = CsrfToken::factory('yform_delete_' . $table->name);
 
-    // Same markup as the core list pagination (`rex-nav-pagination`), shown above and below the table.
+    // Same markup as the core pagination (`Pagination` component), which counts by offset instead of page.
     $pagination = static function () use ($list, $result): void {
         $current = $result->page;
         $last = $result->pages;
         $from = max(2, min($current - 3, $last - 7));
         $to = min($last - 1, $from + 6);
+        $page = static fn (int $p): string => '<li><a class="rex-pagination-link" href="' . escape($list->url(['p' => $p])) . '"' . ($p === $current ? ' aria-current="page"' : '') . '>' . $p . '</a></li>';
+        $step = static fn (bool $enabled, int $p, string $label, string $icon): string => '<li>'
+            . ($enabled ? '<a class="rex-pagination-link" href="' . escape($list->url(['p' => $p])) . '">' : '<span class="rex-pagination-link" aria-disabled="true">')
+            . '<i class="rex-icon ' . $icon . '" aria-hidden="true"></i><span class="rex-u-visually-hidden">' . I18n::msg($label) . '</span>'
+            . ($enabled ? '</a>' : '</span>')
+            . '</li>';
+        $gap = '<li><span class="rex-pagination-link" aria-hidden="true">…</span></li>';
         ?>
-        <nav class="rex-nav-pagination">
+        <nav class="rex-pagination" aria-label="<?= I18n::msg('navigation_pagination') ?>">
             <?php if ($last > 1): ?>
-                <ul class="pagination">
-                    <li class="rex-prev<?= $result->hasPrevious() ? '' : ' disabled' ?>">
-                        <a href="<?= escape($list->url(['p' => max(1, $current - 1)])) ?>" title="<?= I18n::msg('list_previous') ?>"><i class="rex-icon rex-icon-previous"></i><span class="sr-only"><?= I18n::msg('list_previous') ?></span></a>
-                    </li>
-                    <li class="rex-page<?= 1 === $current ? ' active' : '' ?>"><a href="<?= escape($list->url(['p' => 1])) ?>">1</a></li>
-                    <?php if ($from > 2): ?><li class="disabled"><span>…</span></li><?php endif ?>
+                <ul class="rex-pagination-list" role="list">
+                    <?= $step($result->hasPrevious(), max(1, $current - 1), 'list_previous', 'rex-icon-previous') ?>
+                    <?= $page(1) ?>
+                    <?= $from > 2 ? $gap : '' ?>
                     <?php for ($p = $from; $p <= $to; ++$p): ?>
-                        <li class="rex-page<?= $p === $current ? ' active' : '' ?>"><a href="<?= escape($list->url(['p' => $p])) ?>"><?= $p ?></a></li>
+                        <?= $page($p) ?>
                     <?php endfor ?>
-                    <?php if ($to < $last - 1): ?><li class="disabled"><span>…</span></li><?php endif ?>
-                    <li class="rex-page<?= $last === $current ? ' active' : '' ?>"><a href="<?= escape($list->url(['p' => $last])) ?>"><?= $last ?></a></li>
-                    <li class="rex-next<?= $result->hasNext() ? '' : ' disabled' ?>">
-                        <a href="<?= escape($list->url(['p' => min($last, $current + 1)])) ?>" title="<?= I18n::msg('list_next') ?>"><span class="sr-only"><?= I18n::msg('list_next') ?></span><i class="rex-icon rex-icon-next"></i></a>
-                    </li>
+                    <?= $to < $last - 1 ? $gap : '' ?>
+                    <?= $page($last) ?>
+                    <?= $step($result->hasNext(), min($last, $current + 1), 'list_next', 'rex-icon-next') ?>
                 </ul>
             <?php endif ?>
-            <div class="rex-pagination-count"><?= I18n::msg('list_rows_found', $result->total) ?></div>
+            <p class="rex-pagination-count"><?= I18n::msg('list_rows_found', $result->total) ?></p>
         </nav>
         <?php
     };
-    ?>
-    <section class="rex-page-section yform-list">
-        <div class="panel panel-default">
-            <header class="panel-heading">
-                <div class="panel-title"><?= escape($table->label()) ?></div>
-            </header>
-            <?php $pagination() ?>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th class="rex-table-icon">
-                            <?php if ($list->canEdit): ?>
-                                <a class="rex-link-expanded" href="<?= escape($list->url(['func' => 'add'])) ?>" title="<?= I18n::msg('yform_add') ?>"><i class="rex-icon rex-icon-add"></i></a>
-                            <?php endif ?>
-                        </th>
-                        <?php foreach ($list->columns as $name => $column): ?>
-                            <th class="yform-col-<?= escape($name) ?>">
-                                <?php if ($column['sortable']): ?>
-                                    <a href="<?= escape($list->sortUrl($name)) ?>"><?= escape($column['label']) ?><?php if ($list->sort === $name): ?> <i class="rex-icon fa-sort-<?= 'ASC' === $list->direction ? 'asc' : 'desc' ?>"></i><?php endif ?></a>
-                                <?php else: ?>
-                                    <?= escape($column['label']) ?>
-                                <?php endif ?>
-                            </th>
-                        <?php endforeach ?>
-                        <th class="rex-table-action"><?= I18n::msg('yform_actions') ?></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($result->items->isEmpty()): ?>
-                        <tr><td colspan="<?= count($list->columns) + 2 ?>" class="text-muted"><?= I18n::msg('yform_no_records') ?></td></tr>
-                    <?php endif ?>
-                    <?php foreach ($result->items as $record):
-                        $editUrl = $list->url(['func' => 'edit', 'id' => (int) $record->id]) ?>
-                        <tr>
-                            <td class="rex-table-icon">
-                                <a class="rex-link-expanded" href="<?= escape($editUrl) ?>" title="<?= I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') ?>"><i class="rex-icon <?= $list->canEdit ? 'rex-icon-editmode' : 'fa-eye' ?>"></i></a>
-                            </td>
-                            <?php foreach ($list->columns as $name => $column): ?>
-                                <td class="yform-col-<?= escape($name) ?>" data-title="<?= escape($column['label']) ?>"><?= $list->cell($name, $record) ?></td>
-                            <?php endforeach ?>
-                            <td class="rex-table-action">
-                                <div class="dropdown yform-dropdown">
-                                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?= I18n::msg('yform_actions_toggle') ?> <span class="caret"></span></button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li><a href="<?= escape($editUrl) ?>"><i class="rex-icon <?= $list->canEdit ? 'rex-icon-editmode' : 'fa-eye' ?>"></i> <?= I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') ?></a></li>
-                                        <?php if ($list->canEdit): ?>
-                                            <li><a href="<?= escape($list->url(['func' => 'clone', 'id' => (int) $record->id])) ?>"><i class="rex-icon rex-icon-duplicate"></i> <?= I18n::msg('yform_clone') ?></a></li>
-                                            <li>
-                                                <form method="post" action="<?= escape($list->url(['func' => 'delete', 'id' => (int) $record->id])) ?>">
-                                                    <?= $deleteToken->getHiddenField() ?>
-                                                    <button type="submit" data-confirm="<?= I18n::msg('yform_delete_confirm') ?>"><i class="rex-icon rex-icon-delete"></i> <?= I18n::msg('yform_delete') ?></button>
-                                                </form>
-                                            </li>
-                                        <?php endif ?>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
-            <?php if ($result->pages > 1) {
-                $pagination();
-            } ?>
-        </div>
-    </section>
-    <?php
+    $columns = [
+        new TableColumn(
+            $list->canEdit ? Html::raw('<a class="rex-u-link-expanded" href="' . escape($list->url(['func' => 'add'])) . '" title="' . I18n::msg('yform_add') . '"><i class="rex-icon rex-icon-add" aria-hidden="true"></i><span class="rex-u-visually-hidden">' . I18n::msg('yform_add') . '</span></a>') : '',
+            static fn (Record $record): Html => Html::raw('<a class="rex-u-link-expanded" href="' . escape($list->url(['func' => 'edit', 'id' => (int) $record->id])) . '" title="' . I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') . '"><i class="rex-icon ' . ($list->canEdit ? 'rex-icon-editmode' : 'fa-regular fa-eye') . '" aria-hidden="true"></i><span class="rex-u-visually-hidden">' . I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') . '</span></a>'),
+            ColumnType::Icon,
+        ),
+    ];
+    foreach ($list->columns as $name => $column) {
+        $columns[] = new TableColumn(
+            $column['label'],
+            static fn (Record $record): Html => Html::raw($list->cell($name, $record)),
+            sortUrl: $column['sortable'] ? $list->sortUrl($name) : null,
+            sorted: $list->sort === $name ? ('ASC' === $list->direction ? 'asc' : 'desc') : null,
+            attributes: new HtmlAttributes(['class' => ['yform-col-' . $name]]),
+        );
+    }
+    $columns[] = new TableColumn(I18n::msg('yform_actions'), static function (Record $record) use ($list, $deleteToken): Html {
+        $icon = static fn (string $class): string => '<i class="rex-icon ' . $class . '" aria-hidden="true"></i> ';
+        $items = [[
+            'title' => Html::raw($icon($list->canEdit ? 'rex-icon-editmode' : 'fa-regular fa-eye') . I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view')),
+            'href' => $list->url(['func' => 'edit', 'id' => (int) $record->id]),
+        ]];
+        if ($list->canEdit) {
+            $items[] = ['title' => Html::raw($icon('rex-icon-duplicate') . I18n::msg('yform_clone')), 'href' => $list->url(['func' => 'clone', 'id' => (int) $record->id])];
+            $items[] = ['title' => Html::raw(
+                '<form method="post" action="' . escape($list->url(['func' => 'delete', 'id' => (int) $record->id])) . '">' . $deleteToken->getHiddenField()
+                . '<button type="submit" data-confirm="' . I18n::msg('yform_delete_confirm') . '">' . $icon('rex-icon-delete') . I18n::msg('yform_delete') . '</button></form>',
+            )];
+        }
+
+        return Html::raw((string) new Dropdown($items, prefix: I18n::rawMsg('yform_actions_toggle'), alignEnd: true, link: true, attributes: new HtmlAttributes(['class' => ['yform-dropdown']]))->render());
+    }, ColumnType::Action);
+
+    $rows = $result->items->isEmpty()
+        ? [new TableRow([new TableCell(I18n::rawMsg('yform_no_records'), count($columns), new HtmlAttributes(['class' => ['rex-u-text-muted']]))])]
+        : $result->items;
+
+    $content = Html::capture(static function () use ($columns, $rows, $result, $pagination): void {
+        $pagination();
+        echo new TableComponent($columns, $rows, attributes: new HtmlAttributes(['data-hover' => true]))->render();
+        if ($result->pages > 1) {
+            $pagination();
+        }
+    });
+
+    echo new Section($table->label(), content: $content, attributes: new HtmlAttributes(['class' => ['yform-list']]))->render();
 };

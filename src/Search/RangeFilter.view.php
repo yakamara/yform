@@ -11,7 +11,7 @@ return static function (RangeFilter $filter, string $name, string $id, mixed $in
     foreach (['from', 'to'] as $bound) {
         $value = $input[$bound] ?? '';
         echo '<input ', new HtmlAttributes([
-            'class' => 'form-control',
+            'class' => 'rex-input',
             'type' => $type,
             'inputmode' => 'decimal' === $filter->inputType ? 'decimal' : null,
             'step' => 'number' === $type ? 'any' : null,

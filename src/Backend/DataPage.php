@@ -6,6 +6,10 @@ use Redaxo\Core\Http\Request;
 use Redaxo\Core\Http\Response;
 use Redaxo\Core\Security\CsrfToken;
 use Redaxo\Core\Translation\I18n;
+use Redaxo\Core\View\Component\Section;
+use Redaxo\Core\View\Component\SectionVariant;
+use Redaxo\Core\View\Html;
+use Redaxo\Core\View\HtmlAttributes;
 use Redaxo\Core\View\Message;
 use Redaxo\Core\View\View;
 use Throwable;
@@ -113,10 +117,7 @@ final class DataPage
             default => I18n::rawMsg($this->canEdit ? 'yform_edit_record' : 'yform_view_record', escape($record->label()), (int) $record->id),
         };
 
-        $panel = '<section class="rex-page-section"><div class="panel panel-edit yform-edit">'
-            . '<header class="panel-heading"><div class="panel-title">' . $heading . '</div></header>'
-            . '<div class="panel-body">' . $form->render() . '</div>'
-            . '</div></section>';
+        $panel = (string) new Section(Html::raw($heading), Html::raw((string) $form->render()), variant: SectionVariant::Edit, attributes: new HtmlAttributes(['class' => ['yform-edit']]))->render();
 
         return Message::info('<a href="' . escape($this->list->url()) . '">' . I18n::msg('yform_back_to_list') . '</a>')
             . new SearchPanel($this->list)->wrap($panel);

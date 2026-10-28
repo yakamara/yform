@@ -7,10 +7,8 @@
     var counter = 0;
 
     function refresh(node) {
-        // Let REDAXO initialise widgets (selectpicker, media/link widgets) inside added rows.
-        if (window.jQuery) {
-            window.jQuery(node).trigger('rex:ready', [window.jQuery(node)]);
-        }
+        // Let REDAXO initialise widgets (e.g. selects) inside added rows.
+        window.rex.ready(node);
     }
 
     /** Direct child of `parent` matching `selector`; nested editors have the same markup and must be skipped. */

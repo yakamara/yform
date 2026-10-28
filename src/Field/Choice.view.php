@@ -53,9 +53,10 @@ return static function (Choice $field, FieldContext $context): void {
 
     // The select class replaces the generic control class (they differ in Bootstrap 5).
     $attributes = $field->controlAttributes($context, [
-        'class' => [$theme->select => true, 'selectpicker' => $field->multiple && Core::isBackend(), $theme->controlInvalid => '' !== $theme->controlInvalid && $context->hasErrors()],
+        'class' => [$theme->select => true, $theme->controlInvalid => '' !== $theme->controlInvalid && $context->hasErrors()],
         'name' => $context->inputName($field->multiple ? '[]' : ''),
         'multiple' => $field->multiple,
+        'data-rex-select' => $field->multiple && Core::isBackend(),
         'readonly' => null,
         'disabled' => $field->readonly,
     ], themeClass: false);

@@ -10,31 +10,31 @@ return static function (SearchPanel $panel): void {
     $list = $panel->list;
     $table = $list->table;
     ?>
-    <form class="panel panel-edit yform-filter" method="get" action="">
-        <header class="panel-heading">
-            <div class="panel-title"><?= I18n::msg('yform_search') ?></div>
+    <section class="rex-section yform-filter" data-variant="edit">
+        <header class="rex-section-header">
+            <h2 class="rex-section-title"><?= I18n::msg('yform_search') ?></h2>
         </header>
-        <div class="panel-body">
+        <form class="rex-section-body" method="get" action="">
             <?php foreach (['page' => 'yform/data', 'table' => $table->name, 'sort' => $list->sort, 'direction' => $list->direction] as $param => $value): ?>
                 <input type="hidden" name="<?= escape($param) ?>" value="<?= escape($value) ?>">
             <?php endforeach ?>
             <?php foreach ($list->filters as $name => $filter):
                 $id = 'yform-filter-' . $table->name . '-' . $name ?>
-                <div class="form-group<?= isset($list->filterInput[$name]) ? ' is-active' : '' ?>">
-                    <label class="control-label" for="<?= escape($id) ?>"><?= escape($filter->field->translatedLabel()) ?></label>
+                <div class="rex-field" data-layout="vertical"<?= isset($list->filterInput[$name]) ? ' data-yform-filter-active' : '' ?>>
+                    <label class="rex-field-label" for="<?= escape($id) ?>"><?= escape($filter->field->translatedLabel()) ?></label>
                     <?= $filter->render('filter[' . $name . ']', $id, $list->filterInput[$name] ?? null) ?>
                     <?php if ($filter instanceof TextFilter): ?>
-                        <p class="help-block small"><?= I18n::msg('yform_filter_text_help') ?></p>
+                        <p class="rex-field-note rex-u-small"><?= I18n::msg('yform_filter_text_help') ?></p>
                     <?php endif ?>
                 </div>
             <?php endforeach ?>
             <div class="yform-filter-buttons">
-                <button class="btn btn-primary" type="submit"><?= I18n::msg('yform_filter_apply') ?></button>
+                <button class="rex-button" data-variant="primary" type="submit"><?= I18n::msg('yform_filter_apply') ?></button>
                 <?php if ($list->isSearching()): ?>
-                    <a class="btn btn-default" href="<?= escape($list->url(['filter' => null, 'p' => null, 'func' => null, 'id' => null])) ?>"><?= I18n::msg('yform_filter_reset') ?></a>
+                    <a class="rex-button" href="<?= escape($list->url(['filter' => null, 'p' => null, 'func' => null, 'id' => null])) ?>"><?= I18n::msg('yform_filter_reset') ?></a>
                 <?php endif ?>
             </div>
-        </div>
-    </form>
+        </form>
+    </section>
     <?php
 };

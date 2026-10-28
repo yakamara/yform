@@ -152,6 +152,9 @@
                     node.textContent = attrs[key];
                 } else if (0 === key.indexOf('on')) {
                     node.addEventListener(key.substring(2), attrs[key]);
+                } else if ('style' === key) {
+                    // via CSSOM, a style attribute would need `'unsafe-inline'` in the Content-Security-Policy
+                    node.style.cssText = attrs[key] || '';
                 } else if (null !== attrs[key] && false !== attrs[key]) {
                     node.setAttribute(key, true === attrs[key] ? '' : attrs[key]);
                 }
@@ -254,7 +257,8 @@
 
             if (position) {
                 var select = el('select', {
-                    'class': 'form-control input-sm',
+                    'class': 'rex-input',
+                'data-size': 'sm',
                     title: t.width,
                     onchange: function () {
                         state.tabs[position.tab].sections[position.section].rows[position.row][position.cell].width = parseInt(select.value, 10);
@@ -267,7 +271,9 @@
                 chip.appendChild(select);
                 chip.appendChild(el('button', {
                     type: 'button',
-                    'class': 'btn btn-link btn-xs',
+                    'class': 'rex-button',
+                    'data-variant': 'link',
+                    'data-size': 'xs',
                     title: t.remove,
                     onclick: function () {
                         dragged = {field: fieldName, from: position};
@@ -298,7 +304,8 @@
             rows.lastChild.textContent = t.new_row;
 
             var legend = el('input', {
-                'class': 'form-control input-sm yform-designer-legend',
+                'class': 'rex-input yform-designer-legend',
+                'data-size': 'sm',
                 type: 'text',
                 value: section.legend,
                 placeholder: t.legend_placeholder,
@@ -310,19 +317,25 @@
                     legend,
                     sectionIndex > 0 ? el('button', {
                         type: 'button',
-                        'class': 'btn btn-link btn-xs',
+                        'class': 'rex-button',
+                    'data-variant': 'link',
+                    'data-size': 'xs',
                         title: t.section_up,
                         onclick: function () { moveSection(tab, sectionIndex, -1); },
                     }, [el('i', {'class': 'rex-icon fa-arrow-up'})]) : null,
                     sectionIndex < tab.sections.length - 1 ? el('button', {
                         type: 'button',
-                        'class': 'btn btn-link btn-xs',
+                        'class': 'rex-button',
+                    'data-variant': 'link',
+                    'data-size': 'xs',
                         title: t.section_down,
                         onclick: function () { moveSection(tab, sectionIndex, 1); },
                     }, [el('i', {'class': 'rex-icon fa-arrow-down'})]) : null,
                     tab.sections.length > 1 ? el('button', {
                         type: 'button',
-                        'class': 'btn btn-link btn-xs',
+                        'class': 'rex-button',
+                    'data-variant': 'link',
+                    'data-size': 'xs',
                         title: t.section_remove,
                         onclick: function () {
                             tab.sections.splice(sectionIndex, 1);
@@ -366,7 +379,8 @@
 
         function notify(message, type) {
             var box = root.querySelector('.yform-designer-message');
-            box.className = 'yform-designer-message alert alert-' + type;
+            box.className = 'yform-designer-message rex-alert';
+            box.dataset.variant = type;
             box.textContent = message;
         }
 
@@ -374,9 +388,9 @@
             var placed = placedFields();
             var tab = state.tabs[activeTab] || state.tabs[0];
 
-            var tabNav = el('ul', {'class': 'nav nav-tabs yform-designer-tabs'});
+            var tabNav = el('ul', {'class': 'rex-tabs yform-designer-tabs', role: 'tablist'});
             state.tabs.forEach(function (item, index) {
-                var link = el('a', {href: '#', onclick: function (event) { event.preventDefault(); activeTab = index; render(); }}, [item.label || (t.tab + ' ' + (index + 1))]);
+                var link = el('a', {href: '#', 'class': 'rex-tabs-link', role: 'tab', 'aria-selected': String(index === activeTab), onclick: function (event) { event.preventDefault(); activeTab = index; render(); }}, [item.label || (t.tab + ' ' + (index + 1))]);
                 link.addEventListener('dragover', function (event) {
                     if (dragged && index !== activeTab) {
                         event.preventDefault();
@@ -384,9 +398,9 @@
                         render();
                     }
                 });
-                tabNav.appendChild(el('li', {'class': index === activeTab ? 'active' : null}, [link]));
+                tabNav.appendChild(el('li', {'class': 'rex-tabs-item', role: 'presentation'}, [link]));
             });
-            tabNav.appendChild(el('li', {}, [el('a', {href: '#', title: t.tab_add, onclick: function (event) {
+            tabNav.appendChild(el('li', {'class': 'rex-tabs-item', role: 'presentation'}, [el('a', {href: '#', 'class': 'rex-tabs-link', title: t.tab_add, onclick: function (event) {
                 event.preventDefault();
                 state.tabs.push({label: t.tab + ' ' + (state.tabs.length + 1), sections: [{legend: '', rows: []}]});
                 activeTab = state.tabs.length - 1;
@@ -394,7 +408,8 @@
             }}, ['+'])]));
 
             var tabLabel = el('input', {
-                'class': 'form-control input-sm',
+                'class': 'rex-input',
+                'data-size': 'sm',
                 type: 'text',
                 value: tab.label,
                 placeholder: t.tab,
@@ -409,7 +424,7 @@
             var canvas = el('div', {'class': 'yform-designer-canvas'}, [
                 el('div', {'class': 'yform-designer-tabhead'}, [
                     tabLabel,
-                    state.tabs.length > 1 ? el('button', {type: 'button', 'class': 'btn btn-default btn-sm', onclick: function () {
+                    state.tabs.length > 1 ? el('button', {type: 'button', 'class': 'rex-button', 'data-size': 'sm', onclick: function () {
                         state.tabs.splice(activeTab, 1);
                         activeTab = Math.max(0, activeTab - 1);
                         changed();
@@ -419,7 +434,7 @@
             tab.sections.forEach(function (section, sectionIndex) {
                 canvas.appendChild(renderSection(activeTab, section, sectionIndex, tab));
             });
-            canvas.appendChild(el('button', {type: 'button', 'class': 'btn btn-default btn-sm', onclick: function () {
+            canvas.appendChild(el('button', {type: 'button', 'class': 'rex-button', 'data-size': 'sm', onclick: function () {
                 tab.sections.push({legend: '', rows: []});
                 changed();
             }}, ['+ ' + t.section_add]));
@@ -430,7 +445,7 @@
                 palette.appendChild(fieldChip(field.name, null, 12));
             });
             if (!unplaced.length) {
-                palette.appendChild(el('p', {'class': 'text-muted', text: t.palette_empty}));
+                palette.appendChild(el('p', {'class': 'rex-u-text-muted', text: t.palette_empty}));
             }
             palette.addEventListener('dragover', function (event) {
                 if (dragged && dragged.from) {
@@ -447,7 +462,7 @@
                 changed();
             });
 
-            saveButton = el('button', {type: 'button', 'class': 'btn btn-save', onclick: function () {
+            saveButton = el('button', {type: 'button', 'class': 'rex-button', 'data-variant': 'success', onclick: function () {
                 post({layout: JSON.stringify(state)}).then(function (json) {
                     state = normalize(json.layout);
                     source = json.source;
@@ -459,7 +474,7 @@
 
             var toolbar = el('div', {'class': 'yform-designer-toolbar'}, [
                 saveButton,
-                'file' === source && config.writable ? el('button', {type: 'button', 'class': 'btn btn-default', onclick: function () {
+                'file' === source && config.writable ? el('button', {type: 'button', 'class': 'rex-button', onclick: function () {
                     if (!window.confirm(t.reset_confirm)) {
                         return;
                     }
@@ -479,10 +494,10 @@
             root.innerHTML = '';
             root.appendChild(message || el('div', {'class': 'yform-designer-message'}));
             if (config.readonly) {
-                root.appendChild(el('div', {'class': 'alert alert-warning', text: config.readonly}));
+                root.appendChild(el('div', {'class': 'rex-alert', 'data-variant': 'warning', text: config.readonly}));
             }
             if ('file' === source && config.overrides_code) {
-                root.appendChild(el('div', {'class': 'alert alert-info', text: t.overrides_code}));
+                root.appendChild(el('div', {'class': 'rex-alert', text: t.overrides_code}));
             }
             root.appendChild(toolbar);
             root.appendChild(el('div', {'class': 'yform-designer-body'}, [
@@ -517,9 +532,6 @@
         }
     }
 
-    if (window.jQuery) {
-        // REDAXO loads backend pages via pjax and fires rex:ready afterwards.
-        window.jQuery(document).on('rex:ready', boot);
-    }
-    document.addEventListener('DOMContentLoaded', boot);
+    // REDAXO fires rex:ready for the initial page and for markup loaded later on.
+    document.addEventListener('rex:ready', boot);
 })();

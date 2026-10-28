@@ -3,13 +3,15 @@
 namespace Yakamara\YForm\Form\Theme;
 
 use Closure;
+use Redaxo\Core\View\HtmlAttributes;
 
+use function is_string;
 use function sprintf;
 
 /**
  * CSS class vocabulary used by field and form views.
  *
- * The backend uses {@see backend()} (Bootstrap 3 plus the REDAXO panel footer). For the frontend pick one of the
+ * The backend uses {@see backend()} (the REDAXO components). For the frontend pick one of the
  * presets or construct your own with named arguments; for markup changes beyond class names override the views
  * with `ViewResolver::override()`.
  *
@@ -19,6 +21,10 @@ use function sprintf;
  * ```php
  * new Theme(column: fn (int $width) => 'col-12 col-lg-' . $width);
  * ```
+ *
+ * Frameworks that express layout and variants by attributes get them with `$columnAttribute` (the attribute the
+ * column value is written to instead of `class`) and `$attributes` (further attributes per part, keyed by the name
+ * of the property, e.g. `['submit' => ['data-variant' => 'success']]`).
  *
  * With `$tabToggle = ''` tabs are switched by the YForm frontend script (`assets/yform-frontend.js`) instead of
  * a framework plugin; without JavaScript all tabs stay visible one below the other.
@@ -58,10 +64,15 @@ final readonly class Theme
         public string $buttonToolbar = '',
         public string $submit = 'btn btn-primary',
         public string $secondary = 'btn btn-default',
+        /** Added to buttons within a field, e.g. the buttons of the inline relation rows */
+        public string $buttonSmall = 'btn-xs',
         public string $alertError = 'alert alert-danger',
         public string $alertSuccess = 'alert alert-success',
         public string $inputGroup = 'input-group',
         public string $inputGroupAddon = 'input-group-addon',
+        public string $columnAttribute = 'class',
+        /** @var array<string, array<literal-string, string>> */
+        public array $attributes = [],
     ) {}
 
     public static function bootstrap3(): self
@@ -69,14 +80,48 @@ final readonly class Theme
         return new self();
     }
 
-    /** REDAXO backend: Bootstrap 3 with the backend's panel footer and save/apply buttons. */
+    /** REDAXO backend: the components of the core, with the labels above the fields as the columns are narrow. */
     public static function backend(): self
     {
         return new self(
+            group: 'rex-field',
+            groupInvalid: '',
+            label: 'rex-field-label',
+            control: 'rex-input',
+            staticControl: 'rex-field-value',
+            select: 'rex-input',
+            checkWrapper: 'rex-check',
+            radioWrapper: 'rex-check',
+            help: 'rex-field-note',
+            error: 'rex-field-error',
+            row: 'rex-grid',
+            column: 'sm:%d',
+            tabs: 'rex-tabs',
+            tabToggle: '',
+            tabItem: 'rex-tabs-item',
+            tabLink: 'rex-tabs-link',
+            tabActive: '',
+            tabActiveOnItem: false,
+            tabPane: '',
+            tabPaneActive: '',
+            tabContent: 'yform-tab-content',
             buttons: 'rex-form-panel-footer',
-            buttonToolbar: 'btn-toolbar',
-            submit: 'btn btn-save',
-            secondary: 'btn btn-apply',
+            buttonToolbar: 'rex-button-toolbar',
+            submit: 'rex-button',
+            secondary: 'rex-button',
+            buttonSmall: '',
+            alertError: 'rex-alert',
+            alertSuccess: 'rex-alert',
+            inputGroup: 'rex-input-group',
+            inputGroupAddon: 'rex-input-group-text',
+            columnAttribute: 'data-span',
+            attributes: [
+                'group' => ['data-layout' => 'vertical'],
+                'submit' => ['data-variant' => 'success'],
+                'buttonSmall' => ['data-size' => 'xs'],
+                'alertError' => ['data-variant' => 'danger'],
+                'alertSuccess' => ['data-variant' => 'success'],
+            ],
         );
     }
 
@@ -105,6 +150,7 @@ final readonly class Theme
             tabPaneActive: 'active show',
             buttons: 'mt-3',
             secondary: 'btn btn-secondary',
+            buttonSmall: 'btn-sm',
             inputGroupAddon: 'input-group-text',
         );
     }
@@ -160,6 +206,7 @@ final readonly class Theme
             buttons: 'flex gap-3',
             submit: 'rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700',
             secondary: 'rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50',
+            buttonSmall: '',
             alertError: 'rounded-md border border-red-200 bg-red-50 p-4 text-sm text-red-800',
             alertSuccess: 'rounded-md border border-green-200 bg-green-50 p-4 text-sm text-green-800',
             inputGroup: 'flex',
@@ -199,6 +246,7 @@ final readonly class Theme
             buttons: 'yform-buttons',
             submit: 'yform-submit',
             secondary: 'yform-button',
+            buttonSmall: '',
             alertError: 'yform-alert yform-alert--error',
             alertSuccess: 'yform-alert yform-alert--success',
             inputGroup: 'yform-input-group',
@@ -215,6 +263,40 @@ final readonly class Theme
     public function columnClass(int $width): string
     {
         return $this->column instanceof Closure ? ($this->column)($width) : sprintf($this->column, $width);
+    }
+
+    /** Attributes of a layout column of the given width (1–12). */
+    public function columnAttributes(int $width): HtmlAttributes
+    {
+        $value = $this->columnClass($width);
+
+        return new HtmlAttributes('class' === $this->columnAttribute ? ['class' => [$value]] : [$this->columnAttribute => $value]);
+    }
+
+    /**
+     * Attributes of the given parts (names of the properties, e.g. `secondary`, `buttonSmall`): their classes and
+     * further attributes, merged with the attributes of the view.
+     *
+     * @param list<string> $parts
+     * @param array<literal-string, mixed> $attributes
+     */
+    public function attributes(array $parts, array $attributes = []): HtmlAttributes
+    {
+        $classes = [];
+        $further = [];
+        foreach ($parts as $part) {
+            $class = $this->{$part} ?? '';
+            if (is_string($class) && '' !== $class) {
+                $classes[] = $class;
+            }
+            $further = [...$further, ...$this->attributes[$part] ?? []];
+        }
+
+        // the classes of the theme come first, other attributes of the view win over the theme's
+        $viewClasses = $attributes['class'] ?? [];
+        unset($attributes['class']);
+
+        return new HtmlAttributes([...$further, ...$attributes, 'class' => [...$classes, ...(array) $viewClasses]]);
     }
 
     /** Whether tabs are switched by the YForm frontend script instead of a framework plugin. */

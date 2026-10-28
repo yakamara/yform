@@ -53,6 +53,29 @@ final class ThemeTest extends TestCase
         self::assertStringNotContainsString('data-toggle', $html);
     }
 
+    public function testBackendUsesTheCoreComponents(): void
+    {
+        $html = self::render(Theme::backend());
+
+        // the columns are narrow, so the labels stay above the fields
+        self::assertStringContainsString('<div data-layout="vertical" class="rex-field yform-field-a">', $html);
+        self::assertStringContainsString('<div class="rex-grid"><div data-span="sm:8">', $html);
+        self::assertStringContainsString('<button data-variant="success" type="submit" name="t[_action]" value="save" class="rex-button">', $html);
+        self::assertStringContainsString('class="rex-tabs-link" href="#t-tab-0" data-yform-tab role="tab" aria-selected="true"', $html);
+        self::assertDoesNotMatchRegularExpression('/class="(?:[^"]* )?(?:form-|col-|btn|row[ "])/', $html);
+    }
+
+    public function testAttributesMergeThePartsWithTheView(): void
+    {
+        $theme = Theme::backend();
+
+        self::assertSame(
+            'data-size="xs" type="button" class="rex-button yform-x"',
+            $theme->attributes(['secondary', 'buttonSmall'], ['type' => 'button', 'class' => ['yform-x']])->toString(),
+        );
+        self::assertSame('class="col-sm-4"', Theme::bootstrap3()->columnAttributes(4)->toString());
+    }
+
     private static function render(Theme $theme): string
     {
         $layout = new Layout()

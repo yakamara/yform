@@ -24,10 +24,10 @@ return static function (Form $form): void {
                     continue;
                 }
                 ++$visible;
-                $cells .= '<div class="' . escape($theme->columnClass($cell->width)) . '">' . $form->renderField($cell->field) . '</div>';
+                $cells .= '<div ' . $theme->columnAttributes($cell->width) . '>' . $form->renderField($cell->field) . '</div>';
             }
             if ($visible > 0) {
-                $rows .= '<div class="' . escape($theme->row) . '">' . $cells . '</div>';
+                $rows .= '<div ' . $theme->attributes(['row']) . '>' . $cells . '</div>';
             }
         }
         if ('' === $rows && null === $section->legend) {
@@ -59,9 +59,9 @@ return static function (Form $form): void {
         <?php endforeach ?>
 
         <?php if ($errors = $form->globalErrors()): ?>
-            <div class="<?= escape($theme->alertError) ?>"><?php foreach ($errors as $error): ?><div><?= escape($error) ?></div><?php endforeach ?></div>
+            <div <?= $theme->attributes(['alertError']) ?>><?php foreach ($errors as $error): ?><div><?= escape($error) ?></div><?php endforeach ?></div>
         <?php elseif (!$form->errors->isEmpty()): ?>
-            <div class="<?= escape($theme->alertError) ?>"><?= I18n::msg('yform_form_has_errors') ?></div>
+            <div <?= $theme->attributes(['alertError']) ?>><?= I18n::msg('yform_form_has_errors') ?></div>
         <?php endif ?>
 
         <?php if ($useTabs): ?>
@@ -77,7 +77,7 @@ return static function (Form $form): void {
                     $link = new HtmlAttributes([
                         'class' => [$theme->tabLink => '' !== $theme->tabLink, $theme->tabActive => $active && !$theme->tabActiveOnItem && '' !== $theme->tabActive],
                         'href' => '#' . $form->name . '-tab-' . $index,
-                        ...($ownTabs ? ['data-yform-tab' => true, 'data-yform-tab-active' => $theme->tabActiveOnItem ? null : $theme->tabActive] : [$theme->tabToggle => 'tab']),
+                        ...($ownTabs ? ['data-yform-tab' => true, 'data-yform-tab-active' => $theme->tabActiveOnItem || '' === $theme->tabActive ? null : $theme->tabActive] : [$theme->tabToggle => 'tab']),
                         'role' => 'tab',
                         'aria-selected' => $active ? 'true' : 'false',
                     ]) ?>
@@ -87,7 +87,7 @@ return static function (Form $form): void {
             <div <?= new HtmlAttributes(['class' => [$theme->tabContent => '' !== $theme->tabContent]]) ?>>
                 <?php foreach ($layout->tabs as $index => $tab):
                     $pane = new HtmlAttributes([
-                        'class' => [$theme->tabPane => '' !== $theme->tabPane, $theme->tabPaneActive => $index === $activeTab && '' !== $theme->tabPaneActive],
+                        'class' => '' === $theme->tabPane && '' === $theme->tabPaneActive ? null : [$theme->tabPane => '' !== $theme->tabPane, $theme->tabPaneActive => $index === $activeTab && '' !== $theme->tabPaneActive],
                         'id' => $form->name . '-tab-' . $index,
                         'role' => 'tabpanel',
                         'data-yform-tab-pane-active' => $ownTabs && '' !== $theme->tabPaneActive ? $theme->tabPaneActive : null,
@@ -110,10 +110,10 @@ return static function (Form $form): void {
         <?php endif ?>
 
         <?php if ($form->buttons): ?>
-            <div class="<?= escape($theme->buttons) ?>">
-                <?php if ('' !== $theme->buttonToolbar): ?><div class="<?= escape($theme->buttonToolbar) ?>"><?php endif ?>
+            <div <?= $theme->attributes(['buttons']) ?>>
+                <?php if ('' !== $theme->buttonToolbar): ?><div <?= $theme->attributes(['buttonToolbar']) ?>><?php endif ?>
                 <?php foreach ($form->buttons as $action => $button): ?>
-                    <button type="submit" name="<?= escape($form->name) ?>[_action]" value="<?= escape($action) ?>" class="<?= escape($button['primary'] ? $theme->submit : $theme->secondary) ?>"><?= escape($button['label']) ?></button>
+                    <button <?= $theme->attributes([$button['primary'] ? 'submit' : 'secondary'], ['type' => 'submit', 'name' => $form->name . '[_action]', 'value' => $action]) ?>><?= escape($button['label']) ?></button>
                 <?php endforeach ?>
                 <?php if ('' !== $theme->buttonToolbar): ?></div><?php endif ?>
             </div>

@@ -28,6 +28,8 @@ final class YFormAddon extends Addon
         if (Core::isBackend() && null !== Core::getUser()) {
             Asset::addCssFile($this->getAssetsUrl('yform.css'));
             Asset::addJsFile($this->getAssetsUrl('yform.js'));
+            // switches the tabs of the backend theme
+            Asset::addJsFile($this->getAssetsUrl('yform-frontend.js'));
             // Assets must be registered before the page renders, so this can not live in the designer page itself.
             if ('yform/designer' === Request::get('page', 'string', '')) {
                 Asset::addJsFile($this->getAssetsUrl('designer.js'));
@@ -53,7 +55,7 @@ final class YFormAddon extends Addon
         $isAdmin = $user?->admin ?? false;
 
         $main = new MainPage('addons', 'yform', $this->i18n('yform'));
-        $main->setIcon('rex-icon fa-wpforms');
+        $main->setIcon('rex-icon fa-brands fa-wpforms');
 
         $main->addSubpage(new Page('tables', $this->i18n('tables'))->setRequiredPermissions('admin'));
         $main->addSubpage(new Page('forms', $this->i18n('forms'))->setRequiredPermissions('admin'));

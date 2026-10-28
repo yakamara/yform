@@ -39,10 +39,11 @@ return static function (ManyToMany $field, FieldContext $context): void {
     }
 
     $attributes = $field->controlAttributes($context, [
-        'class' => [$theme->select => true, 'selectpicker' => Core::isBackend(), $theme->controlInvalid => '' !== $theme->controlInvalid && $context->hasErrors()],
+        'class' => [$theme->select => true, $theme->controlInvalid => '' !== $theme->controlInvalid && $context->hasErrors()],
         'name' => $context->inputName('[]'),
         'multiple' => true,
-        'data-live-search' => Core::isBackend() && count($options) > 10 ? 'true' : null,
+        'data-rex-select' => Core::isBackend(),
+        'data-rex-select-search' => Core::isBackend() && count($options) > 10,
         'readonly' => null,
         'disabled' => $field->readonly,
     ], themeClass: false);

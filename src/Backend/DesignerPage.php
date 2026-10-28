@@ -10,6 +10,8 @@ use Redaxo\Core\Http\Request;
 use Redaxo\Core\Http\Response;
 use Redaxo\Core\Security\CsrfToken;
 use Redaxo\Core\Translation\I18n;
+use Redaxo\Core\View\Component\Section;
+use Redaxo\Core\View\Html;
 use Redaxo\Core\View\Message;
 use ReflectionClass;
 use Throwable;
@@ -153,12 +155,11 @@ final class DesignerPage
             ],
         ];
 
-        return '<section class="rex-page-section"><div class="panel panel-default">'
-            . '<header class="panel-heading"><div class="panel-title">' . I18n::msg('yform_designer') . ': ' . escape($this->title)
-            . ' <small><code>' . escape($this->class) . '</code></small></div></header>'
-            . '<div class="panel-body"><div id="yform-designer" data-config="' . escape(json_encode($config, JSON_THROW_ON_ERROR)) . '"></div></div>'
-            . '<footer class="panel-footer"><a href="' . escape($this->backUrl) . '">&larr; ' . I18n::msg('yform_back') . '</a></footer>'
-            . '</div></section>';
+        return (string) new Section(
+            Html::raw(I18n::msg('yform_designer') . ': ' . escape($this->title) . ' <small><code>' . escape($this->class) . '</code></small>'),
+            Html::raw('<div id="yform-designer" data-config="' . escape(json_encode($config, JSON_THROW_ON_ERROR)) . '"></div>'),
+            footer: Html::raw('<a href="' . escape($this->backUrl) . '">&larr; ' . I18n::msg('yform_back') . '</a>'),
+        )->render();
     }
 
     /** Why the layout can not be saved here, `null` when it can. */

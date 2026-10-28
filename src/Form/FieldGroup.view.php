@@ -1,6 +1,5 @@
 <?php
 
-use Redaxo\Core\View\HtmlAttributes;
 use Yakamara\YForm\Field\Field;
 use Yakamara\YForm\Form\FieldContext;
 
@@ -11,7 +10,7 @@ return static function (Field $field, FieldContext $context, bool $editable): vo
 
     if (!$editable && $field->storesValue()) {
         ?>
-        <div class="<?= escape($theme->group) ?>">
+        <div <?= $theme->attributes(['group']) ?>>
             <label class="<?= escape($theme->label) ?>"><?= escape($field->translatedLabel()) ?></label>
             <p class="<?= escape($theme->staticControl) ?>"><?= escape($field->textValue($context->value)) ?></p>
         </div>
@@ -24,8 +23,7 @@ return static function (Field $field, FieldContext $context, bool $editable): vo
         return;
     }
 
-    $group = new HtmlAttributes(['class' => [
-        $theme->group,
+    $group = $theme->attributes(['group'], ['class' => [
         $theme->groupInvalid => '' !== $theme->groupInvalid && $context->hasErrors(),
         'yform-field-' . $field->name,
         'yform-required' => $field->required,

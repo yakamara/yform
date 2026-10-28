@@ -21,9 +21,9 @@ final readonly class SearchPanel
         if ([] === $this->list->filters) {
             return $content;
         }
-        return '<div class="row yform-list-layout">'
-            . '<div class="col-sm-4 col-md-3 col-lg-2">' . ViewRenderer::render(self::class, $this) . '</div>'
-            . '<div class="col-sm-8 col-md-9 col-lg-10">' . $content . '</div>'
+        return '<div class="rex-grid yform-list-layout">'
+            . '<div data-span="sm:4 md:3 lg:2">' . ViewRenderer::render(self::class, $this) . '</div>'
+            . '<div data-span="sm:8 md:9 lg:10">' . $content . '</div>'
             . '</div>';
     }
 }

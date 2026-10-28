@@ -347,6 +347,7 @@ abstract class Field
             'name' => $context->inputName(),
             'required' => $this->required && !$this->readonly,
             'readonly' => $this->readonly,
+            'aria-invalid' => $context->hasErrors() ? 'true' : null,
             ...$attributes,
         ]);
     }

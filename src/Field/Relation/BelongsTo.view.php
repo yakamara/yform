@@ -11,8 +11,9 @@ return static function (BelongsTo $field, FieldContext $context): void {
     $theme = $context->theme;
     $options = $field->options();
     $attributes = $field->controlAttributes($context, [
-        'class' => [$theme->select => true, 'selectpicker' => Core::isBackend(), $theme->controlInvalid => '' !== $theme->controlInvalid && $context->hasErrors()],
-        'data-live-search' => Core::isBackend() && count($options) > 10 ? 'true' : null,
+        'class' => [$theme->select => true, $theme->controlInvalid => '' !== $theme->controlInvalid && $context->hasErrors()],
+        'data-rex-select' => Core::isBackend() && count($options) > 10,
+        'data-rex-select-search' => Core::isBackend() && count($options) > 10,
         'readonly' => null,
         'disabled' => $field->readonly,
     ], themeClass: false);

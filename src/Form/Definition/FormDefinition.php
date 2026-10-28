@@ -180,7 +180,7 @@ abstract class FormDefinition
     {
         $html = $form->render();
         if ($this->honeypot()) {
-            $trap = '<div style="position:absolute;left:-10000px" aria-hidden="true"><label>Website <input type="text" name="' . escape($honeypotName) . '" tabindex="-1" autocomplete="off"></label></div>';
+            $trap = '<div hidden><label>Website <input type="text" name="' . escape($honeypotName) . '" tabindex="-1" autocomplete="off"></label></div>';
             $html = str_replace('</form>', $trap . '</form>', $html);
         }
         return $html;
@@ -188,6 +188,6 @@ abstract class FormDefinition
 
     private function renderSuccess(Form $form, ?string $message = null): string
     {
-        return '<div class="' . escape($form->theme->alertSuccess) . '">' . ($message ?? $this->successMessage()) . '</div>';
+        return '<div ' . $form->theme->attributes(['alertSuccess']) . '>' . ($message ?? $this->successMessage()) . '</div>';
     }
 }

@@ -4,7 +4,8 @@ namespace Yakamara\YForm\Permission;
 
 use Override;
 use Redaxo\Core\Security\ComplexPermission;
-use Redaxo\Core\Translation\I18n;
+use Redaxo\Core\Security\PermissionChoices;
+use Redaxo\Core\Translation\Translatable;
 use Yakamara\YForm\Table\Tables;
 
 use function in_array;
@@ -22,18 +23,14 @@ abstract class TablePermission extends ComplexPermission
     }
 
     #[Override]
-    public static function getFieldParams(): ?array
+    public static function getChoices(): PermissionChoices
     {
         $options = [];
         foreach (Tables::all() as $key => $table) {
             $options[$key] = $table->label() . ' [' . $table->name . ']';
         }
 
-        return [
-            'label' => I18n::msg(static::labelKey()),
-            'all_label' => I18n::msg(static::allLabelKey()),
-            'options' => $options,
-        ];
+        return new PermissionChoices(new Translatable(static::labelKey()), new Translatable(static::allLabelKey()), $options);
     }
 
     abstract protected static function labelKey(): string;
