@@ -3,6 +3,7 @@
 namespace Yakamara\YForm\Form\Action;
 
 use Yakamara\YForm\Data\Record;
+use Yakamara\YForm\Field\Upload;
 use Yakamara\YForm\Form\Definition\FormDefinition;
 use Yakamara\YForm\Form\Form;
 
@@ -31,6 +32,32 @@ final class Submission
     public function value(string $field): mixed
     {
         return $this->form->value($field);
+    }
+
+    /**
+     * Absolute paths of the files of an {@see Upload} field — for mail attachments:
+     * `new SendMail(…, attachments: fn (Submission $s) => $s->files('cv'))`.
+     *
+     * Before {@see SaveRecord} ran, these are the waiting uploads; afterwards the stored files of the record.
+     *
+     * @return list<string>
+     */
+    public function files(string $field): array
+    {
+        $upload = $this->record?->table->getFields()[$field] ?? $this->form->fields[$field] ?? null;
+        if (!$upload instanceof Upload) {
+            return [];
+        }
+        $record = $this->record ?? $this->form->record;
+        $value = null !== $this->record && $this->record->has($field) ? $this->record->get($field) : $this->form->value($field);
+        $paths = [];
+        foreach ($upload->entries($value) as $entry) {
+            $path = $upload->path($record, $entry);
+            if (null !== $path) {
+                $paths[] = $path;
+            }
+        }
+        return $paths;
     }
 
     /** Plain text representation of a field value (labels of choices, formatted dates, …). */

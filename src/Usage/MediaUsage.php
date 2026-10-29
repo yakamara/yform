@@ -6,10 +6,12 @@ use Redaxo\Core\ExtensionPoint\AsExtension;
 use Redaxo\Core\Filesystem\Url;
 use Redaxo\Core\MediaPool\ExtensionPoint\MediaUsageCheck;
 use Yakamara\YForm\Field\Media;
+use Yakamara\YForm\Field\Upload;
 use Yakamara\YForm\Table\Tables;
 
 /**
- * Prevents deleting media pool files that are referenced by a {@see Media} field.
+ * Prevents deleting media pool files that are referenced by a {@see Media} field or an {@see Upload} field with
+ * `toMediaPool()`.
  *
  * @internal
  */
@@ -22,7 +24,7 @@ final class MediaUsage
 
         foreach (Tables::all() as $table) {
             foreach ($table->getFields() as $field) {
-                if (!$field instanceof Media) {
+                if (!$field instanceof Media && !($field instanceof Upload && $field->mediaPool)) {
                     continue;
                 }
                 $query = $table->query();

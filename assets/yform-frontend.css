@@ -177,3 +177,29 @@
     color: #166534;
     background: #f0fdf4;
 }
+
+.yform-upload-files {
+    margin: 0 0 .5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.yform-upload-files li {
+    padding: .125rem 0;
+    overflow-wrap: anywhere;
+}
+
+.yform-upload-remove {
+    margin-left: .5rem;
+}
+
+.yform-upload-pending,
+.yform-upload-hint {
+    color: var(--yform-muted);
+    font-size: .875em;
+}
+
+.yform-upload-hint {
+    display: block;
+    margin-top: .25rem;
+}

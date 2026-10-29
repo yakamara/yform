@@ -40,6 +40,10 @@ yform_validation_date = „{0}“ ist kein gültiges Datum.
 yform_validation_time = „{0}“ ist keine gültige Uhrzeit.
 yform_validation_media_missing = „{0}“: Die Datei „{1}“ existiert nicht im Medienpool.
 yform_validation_media_type = „{0}“: Erlaubt sind nur {1}.
+yform_validation_upload_size = „{0}“: Die Datei „{1}“ ist größer als {2}.
+yform_validation_upload_failed = „{0}“: Die Datei „{1}“ konnte nicht hochgeladen werden.
+yform_validation_upload_missing = „{0}“: Die Datei „{1}“ existiert nicht (mehr).
+yform_validation_upload_media_pool = „{0}“: Der Medienpool nimmt die Datei „{1}“ nicht an (Dateityp gesperrt oder passt nicht zur Endung).
 yform_validation_article_missing = „{0}“: Der Artikel {1} existiert nicht.
 
 yform_perm_table_edit = YForm: Tabellen bearbeiten
@@ -127,6 +131,11 @@ yform_inline_up = Nach oben
 yform_inline_down = Nach unten
 yform_inline_add = {0} hinzufügen
 yform_inline_row_error = Eintrag {0}: {1}
+
+yform_upload_remove = entfernen
+yform_upload_pending = wird beim Speichern übernommen
+yform_upload_max_size = max. {0}
+yform_upload_download_invalid = Der Download-Link ist ungültig oder abgelaufen, oder die Datei existiert nicht mehr.
 
 yform_form_action_error = Beim Verarbeiten ist ein Fehler aufgetreten. Bitte versuche es später noch einmal.
 yform_module_no_forms = Es sind keine Formulare für das Modul angemeldet. Formulare erscheinen hier mit #[AsForm('name', label: '…', module: true)].

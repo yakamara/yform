@@ -41,6 +41,12 @@ final class DataPage
 
     public static function run(): string
     {
+        if ('download' === Request::get('func', 'string', '')) {
+            UploadDownload::send();
+            Response::setStatus(Response::HTTP_NOT_FOUND);
+            return View::title(I18n::msg('yform')) . Message::error(I18n::msg('yform_upload_download_invalid'));
+        }
+
         $table = Tables::find(Request::request('table', 'string', ''));
         if (null === $table || !Access::canView($table)) {
             return View::title(I18n::msg('yform')) . Message::error(I18n::msg('yform_table_not_found'));

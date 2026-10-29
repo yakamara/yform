@@ -40,6 +40,10 @@ yform_validation_date = "{0}" is not a valid date.
 yform_validation_time = "{0}" is not a valid time.
 yform_validation_media_missing = "{0}": the file "{1}" does not exist in the media pool.
 yform_validation_media_type = "{0}": only {1} are allowed.
+yform_validation_upload_size = "{0}": the file "{1}" is larger than {2}.
+yform_validation_upload_failed = "{0}": the file "{1}" could not be uploaded.
+yform_validation_upload_missing = "{0}": the file "{1}" does not exist (anymore).
+yform_validation_upload_media_pool = "{0}": the media pool does not accept the file "{1}" (blocked type or not matching its extension).
 yform_validation_article_missing = "{0}": the article {1} does not exist.
 
 yform_perm_table_edit = YForm: edit tables
@@ -127,6 +131,11 @@ yform_inline_up = Move up
 yform_inline_down = Move down
 yform_inline_add = Add {0}
 yform_inline_row_error = Entry {0}: {1}
+
+yform_upload_remove = remove
+yform_upload_pending = stored on save
+yform_upload_max_size = max. {0}
+yform_upload_download_invalid = The download link is invalid or expired, or the file does not exist anymore.
 
 yform_form_action_error = An error occurred while processing. Please try again later.
 yform_module_no_forms = No forms are registered for the module. Forms appear here with #[AsForm('name', label: '…', module: true)].

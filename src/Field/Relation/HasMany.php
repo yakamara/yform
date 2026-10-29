@@ -165,9 +165,11 @@ class HasMany extends Field implements Relation
         $fields = $this->inlineFields();
         $rows = [];
         foreach ($this->rows($value) as $row) {
+            // Fields copy their data from the related record itself (e.g. the files of an upload field).
+            $rowSource = null === $row['id'] ? null : $this->targetTable()->query()->where('id', $row['id'])->first();
             $values = [];
             foreach ($row['values'] as $name => $fieldValue) {
-                $values[$name] = isset($fields[$name]) ? $fields[$name]->cloneValue($fieldValue, $source) : $fieldValue;
+                $values[$name] = isset($fields[$name]) ? $fields[$name]->cloneValue($fieldValue, $rowSource ?? $source) : $fieldValue;
             }
             $rows[] = ['id' => null, 'values' => $values];
         }
@@ -382,9 +384,9 @@ class HasMany extends Field implements Relation
     }
 
     /** Context for a sub field of one inline row; `$index` may be the template placeholder ({@see indexPlaceholder()}). */
-    public function rowContext(FieldContext $parent, Field $field, int|string $index, mixed $value): FieldContext
+    public function rowContext(FieldContext $parent, Field $field, int|string $index, mixed $value, ?Record $record = null): FieldContext
     {
-        return new FieldContext($parent->formName . '[' . $this->name . '][' . $index . ']', $field, $value, $parent->theme);
+        return new FieldContext($parent->formName . '[' . $this->name . '][' . $index . ']', $field, $value, $parent->theme, record: $record);
     }
 
     /** @param array<string, mixed> $values */

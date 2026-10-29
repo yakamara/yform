@@ -3,6 +3,7 @@
 use Redaxo\Core\Translation\I18n;
 use Yakamara\YForm\Field\Relation\HasMany;
 use Yakamara\YForm\Field\Textarea;
+use Yakamara\YForm\Field\Upload;
 use Yakamara\YForm\Form\FieldContext;
 use Yakamara\YForm\Form\FieldGroup;
 use Yakamara\YForm\View\ViewRenderer;
@@ -23,11 +24,15 @@ return static function (HasMany $field, FieldContext $context, array $rows): voi
     $sortable = null !== $field->sortField;
     $placeholder = $field->indexPlaceholder($context);
 
-    $renderRow = static function (int|string $index, ?int $id, array $values) use ($field, $context, $fields, $theme, $wide, $inlineCount, $sortable): string {
+    // Upload fields link their files, which needs the stored record of the row.
+    $needsRecord = [] !== array_filter($fields, static fn ($f): bool => $f instanceof Upload);
+
+    $renderRow = static function (int|string $index, ?int $id, array $values) use ($field, $context, $fields, $theme, $wide, $inlineCount, $sortable, $needsRecord): string {
+        $rowRecord = $needsRecord && null !== $id ? $field->targetTable()->query()->where('id', $id)->first() : null;
         $cells = '';
         foreach ($fields as $name => $subField) {
             $width = $subField instanceof Textarea || $subField instanceof HasMany ? 12 : ($wide ? 6 : intdiv(12, max(1, $inlineCount)));
-            $subContext = $field->rowContext($context, $subField, $index, HasMany::rowValue($values, $name, $subField));
+            $subContext = $field->rowContext($context, $subField, $index, HasMany::rowValue($values, $name, $subField), $rowRecord);
             $cells .= '<div ' . $theme->columnAttributes($width) . '>' . ViewRenderer::render(FieldGroup::class, $subField, $subContext, true) . '</div>';
         }
         $prefix = $context->formName . '[' . $field->name . '][' . $index . ']';

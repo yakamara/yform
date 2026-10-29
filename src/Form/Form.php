@@ -9,6 +9,7 @@ use Redaxo\Core\Security\CsrfToken;
 use Redaxo\Core\Translation\I18n;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Field\Field;
+use Yakamara\YForm\Field\Upload\UploadedFile;
 use Yakamara\YForm\Form\Layout\Layout;
 use Yakamara\YForm\Form\Layout\Layouts;
 use Yakamara\YForm\Form\Theme\Theme;
@@ -19,6 +20,7 @@ use Yakamara\YForm\Validation\ValidationException;
 use Yakamara\YForm\View\ViewRenderer;
 
 use function array_key_exists;
+use function array_replace_recursive;
 use function assert;
 use function in_array;
 use function is_array;
@@ -167,6 +169,11 @@ final class Form
         $data = 'get' === $this->method ? Request::get($this->name, 'array', []) : Request::post($this->name, 'array', []);
         if ($this->readonly || !is_array($data) || !array_key_exists('_yform', $data)) {
             return false;
+        }
+        // Uploaded files join the posted values at the same position (`form[cv][upload]`), also inside inline rows.
+        $files = Request::files($this->name, 'array', []);
+        if ('post' === $this->method && is_array($files) && [] !== $files) {
+            $data = array_replace_recursive($data, UploadedFile::tree($files));
         }
 
         $this->submitted = true;

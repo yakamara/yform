@@ -64,3 +64,9 @@
 .yform-dropdown .rex-dropdown-menu button { display: block; width: 100%; padding: 3px 20px; border: 0; background: none; text-align: left; white-space: nowrap; color: var(--rex-color-text); line-height: var(--rex-line-height); }
 .yform-dropdown .rex-dropdown-menu button:is(:hover, :focus-visible) { background: var(--rex-color-surface-subtle); }
 
+/* upload field */
+.yform-upload-files { margin: 0 0 6px; padding: 0; list-style: none; }
+.yform-upload-files li { padding: 2px 0; overflow-wrap: anywhere; }
+.yform-upload-remove { margin-left: 8px; font-weight: normal; }
+.yform-upload-pending, .yform-upload-hint { color: var(--rex-color-text-muted); }
+.yform-upload-hint { display: block; margin-top: 4px; }
