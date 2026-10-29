@@ -7,10 +7,10 @@ use Redaxo\Core\Filesystem\Url;
 use Redaxo\Core\Http\Request;
 use Redaxo\Core\Security\CsrfToken;
 use Redaxo\Core\Translation\I18n;
-use Redaxo\Core\View\Component\ColumnType;
 use Redaxo\Core\View\Component\Section;
 use Redaxo\Core\View\Component\Table as TableComponent;
 use Redaxo\Core\View\Component\TableColumn;
+use Redaxo\Core\View\Component\TableColumnType;
 use Redaxo\Core\View\Html;
 use Redaxo\Core\View\HtmlAttributes;
 use Redaxo\Core\View\Message;
@@ -59,14 +59,14 @@ final class TablesPage
         }
 
         return $message . new Section(I18n::msg('yform_tables'), content: new TableComponent([
-            TableColumn::forKey('', 'icon', ColumnType::Icon),
+            TableColumn::forKey('', 'icon', TableColumnType::Icon),
             TableColumn::forKey(I18n::msg('yform_table'), 'table'),
             TableColumn::forKey(I18n::msg('yform_definition'), 'definition'),
             TableColumn::forKey(I18n::msg('yform_fields'), 'fields'),
             TableColumn::forKey(I18n::msg('yform_records'), 'records'),
             TableColumn::forKey(I18n::msg('yform_schema'), 'schema'),
-            TableColumn::forKey(I18n::msg('yform_actions'), 'sync', ColumnType::Action),
-            TableColumn::forKey(null, 'designer', ColumnType::Action),
+            TableColumn::forKey(I18n::msg('yform_actions'), 'sync', TableColumnType::Action),
+            TableColumn::forKey(null, 'designer', TableColumnType::Action),
         ], $rows, attributes: new HtmlAttributes(['data-hover' => true])))->render();
     }
 

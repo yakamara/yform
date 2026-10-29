@@ -59,7 +59,7 @@ final class ThemeTest extends TestCase
 
         // the columns are narrow, so the labels stay above the fields
         self::assertStringContainsString('<div data-layout="vertical" class="rex-field yform-field-a">', $html);
-        self::assertStringContainsString('<div class="rex-grid"><div data-span="sm:8">', $html);
+        self::assertStringContainsString('<div class="rex-grid yform-grid"><div data-span="sm:8">', $html);
         self::assertStringContainsString('<button data-variant="success" type="submit" name="t[_action]" value="save" class="rex-button">', $html);
         self::assertStringContainsString('class="rex-tabs-link" href="#t-tab-0" data-yform-tab role="tab" aria-selected="true"', $html);
         self::assertDoesNotMatchRegularExpression('/class="(?:[^"]* )?(?:form-|col-|btn|row[ "])/', $html);

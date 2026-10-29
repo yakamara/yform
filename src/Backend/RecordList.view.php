@@ -2,12 +2,12 @@
 
 use Redaxo\Core\Security\CsrfToken;
 use Redaxo\Core\Translation\I18n;
-use Redaxo\Core\View\Component\ColumnType;
 use Redaxo\Core\View\Component\Dropdown;
 use Redaxo\Core\View\Component\Section;
 use Redaxo\Core\View\Component\Table as TableComponent;
 use Redaxo\Core\View\Component\TableCell;
 use Redaxo\Core\View\Component\TableColumn;
+use Redaxo\Core\View\Component\TableColumnType;
 use Redaxo\Core\View\Component\TableRow;
 use Redaxo\Core\View\Html;
 use Redaxo\Core\View\HtmlAttributes;
@@ -57,7 +57,7 @@ return static function (RecordList $list, Paginated $result): void {
         new TableColumn(
             $list->canEdit ? Html::raw('<a class="rex-u-link-expanded" href="' . escape($list->url(['func' => 'add'])) . '" title="' . I18n::msg('yform_add') . '"><i class="rex-icon rex-icon-add" aria-hidden="true"></i><span class="rex-u-visually-hidden">' . I18n::msg('yform_add') . '</span></a>') : '',
             static fn (Record $record): Html => Html::raw('<a class="rex-u-link-expanded" href="' . escape($list->url(['func' => 'edit', 'id' => (int) $record->id])) . '" title="' . I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') . '"><i class="rex-icon ' . ($list->canEdit ? 'rex-icon-editmode' : 'fa-regular fa-eye') . '" aria-hidden="true"></i><span class="rex-u-visually-hidden">' . I18n::msg($list->canEdit ? 'yform_edit' : 'yform_view') . '</span></a>'),
-            ColumnType::Icon,
+            TableColumnType::Icon,
         ),
     ];
     foreach ($list->columns as $name => $column) {
@@ -84,7 +84,7 @@ return static function (RecordList $list, Paginated $result): void {
         }
 
         return Html::raw((string) new Dropdown($items, prefix: I18n::rawMsg('yform_actions_toggle'), alignEnd: true, link: true, attributes: new HtmlAttributes(['class' => ['yform-dropdown']]))->render());
-    }, ColumnType::Action);
+    }, TableColumnType::Action);
 
     $rows = $result->items->isEmpty()
         ? [new TableRow([new TableCell(I18n::rawMsg('yform_no_records'), count($columns), new HtmlAttributes(['class' => ['rex-u-text-muted']]))])]

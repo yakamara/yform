@@ -94,7 +94,7 @@ final readonly class Theme
             radioWrapper: 'rex-check',
             help: 'rex-field-note',
             error: 'rex-field-error',
-            row: 'rex-grid',
+            row: 'rex-grid yform-grid',
             column: 'sm:%d',
             tabs: 'rex-tabs',
             tabToggle: '',
