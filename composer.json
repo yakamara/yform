@@ -1,5 +1,6 @@
 {
     "name": "yakamara/yform",
+    "license": "MIT",
     "replace": {
         "psr/container": "*",
         "psr/http-message": "*",
