@@ -35,7 +35,38 @@ if ($template) {
 $content = '';
 $show_list = true;
 
-if ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
+// Im Live-Modus sind die Templates schreibgeschützt: Body und HTML-Body werden beim Versand als PHP
+// ausgeführt, wer sie bearbeiten kann, kann damit beliebigen Code auf dem Server ausführen.
+$readonly = rex::isLiveMode();
+
+if ($readonly && in_array($func, ['add', 'delete'], true)) {
+    echo rex_view::error(rex_i18n::msg('yform_email_live_mode_readonly'));
+} elseif ($readonly && 'edit' == $func && $template) {
+    echo rex_view::info(rex_i18n::msg('yform_email_live_mode_readonly'));
+
+    $fields = [
+        'yform_email_key' => $template['name'],
+        'yform_email_from' => $template['mail_from'],
+        'yform_email_from_name' => $template['mail_from_name'],
+        'yform_email_reply_to' => $template['mail_reply_to'],
+        'yform_email_reply_to_name' => $template['mail_reply_to_name'],
+        'yform_email_subject' => $template['subject'],
+        'yform_email_body' => $template['body'],
+        'yform_email_body_html' => $template['body_html'],
+        'yform_email_attachments' => $template['attachments'],
+    ];
+    $body = '<dl class="dl-horizontal">';
+    foreach ($fields as $label => $value) {
+        $body .= '<dt>' . rex_i18n::msg($label) . '</dt>';
+        $body .= '<dd><pre>' . rex_escape((string) $value) . '</pre></dd>';
+    }
+    $body .= '</dl>';
+
+    $fragment = new rex_fragment();
+    $fragment->setVar('title', rex_escape((string) $template['name']), false);
+    $fragment->setVar('body', $body, false);
+    echo $fragment->parse('core/page/section.php');
+} elseif ('delete' == $func && !rex_csrf_token::factory($_csrf_key)->isValid()) {
     echo rex_view::error(rex_i18n::msg('csrf_token_invalid'));
 } elseif ('delete' == $func && $template_id) {
     rex_sql::factory()->setQuery('delete from ' . $table . ' where id=:template_id', ['template_id' => $template_id]);
@@ -177,6 +208,9 @@ if ($show_list) {
 
     $tdIcon = '<i class="rex-icon rex-icon-template"></i>';
     $thIcon = '<a class="rex-link-expanded" href="' . $list->getUrl(['func' => 'add']) . '"' . rex::getAccesskey(rex_i18n::msg('create_template'), 'add') . ' title="' . rex_i18n::msg('create_template') . '"><i class="rex-icon rex-icon-add-template"></i></a>';
+    if ($readonly) {
+        $thIcon = '';
+    }
     $list->addColumn($thIcon, $tdIcon, 0, [
         '<th class="rex-table-icon">###VALUE###</th>',
         '<td class="rex-table-icon">###VALUE###</td>',
@@ -211,9 +245,11 @@ if ($show_list) {
     $list->removeColumn('attachments');
     $list->removeColumn('updatedate');
 
-    $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
-    $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'template_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
-    $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
+    if (!$readonly) {
+        $list->addColumn(rex_i18n::msg('yform_delete'), rex_i18n::msg('yform_delete'));
+        $list->setColumnParams(rex_i18n::msg('yform_delete'), ['page' => $page, 'func' => 'delete', 'template_id' => '###id###'] + rex_csrf_token::factory($_csrf_key)->getUrlParams());
+        $list->addLinkAttribute(rex_i18n::msg('yform_delete'), 'onclick', 'return confirm(\' id=###id### ' . rex_i18n::msg('yform_delete') . ' ?\')');
+    }
 
     $list->setNoRowsMessage(rex_i18n::msg('yform_email_templates_not_found'));
 
