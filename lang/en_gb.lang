@@ -284,6 +284,7 @@ yform_email_header_template_subject = Subject
 yform_email_create_template = Create template
 yform_email_header_template_functions = Functions
 yform_email_templates_not_found = No templates found
+yform_email_live_mode_readonly = In live mode, e-mail templates can only be viewed, not created, edited or deleted.
 yform_email_delete_template = Delete
 
 yform_email_info_template_added = Template added
