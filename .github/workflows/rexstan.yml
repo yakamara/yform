@@ -15,6 +15,20 @@ jobs:
       ADDON_KEY: ${{ github.event.repository.name }}
 
     runs-on: ubuntu-latest
+    # MySQL als Service-Container: ab ubuntu-26.04 ist MySQL nicht mehr im Runner-Image vorinstalliert
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: redaxo5
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
     permissions:
       contents: write  # for Git to git apply
 
@@ -39,12 +53,6 @@ jobs:
           curl -Ls -o redaxo.zip https://github.com/redaxo/redaxo/releases/download/$REDAXO_VERSION/redaxo_$REDAXO_VERSION.zip
           unzip -oq redaxo.zip -d redaxo_cms
           rm redaxo.zip
-
-      # start mysql service, create a database called redaxo5, apply config patch
-      - name: Init database
-        run: |
-          sudo /etc/init.d/mysql start
-          mysql -uroot -h127.0.0.1 -proot -e 'create database redaxo5;'
 
       # run REDAXO setup with the following parameters
       # Language: de
