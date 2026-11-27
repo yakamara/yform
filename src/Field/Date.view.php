@@ -7,7 +7,7 @@ return static function (Date $field, FieldContext $context): void {
     echo '<input ', $field->controlAttributes($context, [
         'type' => $field->inputType(),
         'value' => $field->inputValue($context->value),
-        'min' => null === $field->min ? null : $field->inputValue($field->min),
-        'max' => null === $field->max ? null : $field->inputValue($field->max),
+        'min' => $field->inputBound($field->min),
+        'max' => $field->inputBound($field->max),
     ]), '>';
 };
