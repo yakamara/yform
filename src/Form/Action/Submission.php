@@ -2,6 +2,7 @@
 
 namespace Yakamara\YForm\Form\Action;
 
+use Throwable;
 use Yakamara\YForm\Data\Record;
 use Yakamara\YForm\Field\Upload;
 use Yakamara\YForm\Form\Definition\FormDefinition;
@@ -23,6 +24,13 @@ final class Submission
 
     /** Replaces the success message of the form (trusted HTML), see {@see ShowMessage}. */
     public ?string $message = null;
+
+    /**
+     * Failures of actions that did not abort the submission (optional actions, actions after the record was stored).
+     *
+     * @var list<Throwable>
+     */
+    public array $failures = [];
 
     public function __construct(
         public readonly FormDefinition $definition,
