@@ -36,6 +36,7 @@ $(document).on('rex:ready',function() {
     });
 
     $("input[data-yform-tools-datepicker]").each(function () {
+        if (/^0{4}-0{2}-0{2}/.test($(this).val())) $(this).val('');
         var format = $(this).attr('data-yform-tools-datepicker');
         if (format !== "") {
             $(this).daterangepicker({
@@ -78,6 +79,7 @@ $(document).on('rex:ready',function() {
     });
 
     $("input[data-yform-tools-datetimepicker]").each(function () {
+        if (/^0{4}-0{2}-0{2}/.test($(this).val())) $(this).val('');
         var format = $(this).attr('data-yform-tools-datetimepicker');
         if (format !== "") {
             format = format.replace("ii", "mm"); // ii -> mm
@@ -112,6 +114,7 @@ $(document).on('rex:ready',function() {
     });
 
     $("input[data-yform-tools-datetimerangepicker]").each(function () {
+        if (/^0{4}-0{2}-0{2}/.test($(this).val())) $(this).val('');
         var format = $(this).attr('data-yform-tools-datetimerangepicker');
         if (format !== "") {
             format = format.replace("ii", "mm");
@@ -157,6 +160,7 @@ $(document).on('rex:ready',function() {
     });
 
     $("input[data-yform-tools-daterangepicker]").each(function () {
+        if (/^0{4}-0{2}-0{2}/.test($(this).val())) $(this).val('');
         var format = $(this).attr('data-yform-tools-daterangepicker');
         if (format !== "") {
             $(this).daterangepicker({
