@@ -80,7 +80,7 @@ class rex_yform_value_integer extends rex_yform_value_abstract
             return $query->whereNested(static function (rex_yform_manager_query $query) use ($field) {
                 $query
                     ->where($field, '')
-                    ->where($field, null)
+                    ->whereNull($field)
                 ;
             }, 'OR');
         }
