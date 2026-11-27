@@ -437,7 +437,7 @@ class rex_yform_manager_collection extends \SplFixedArray
 
         $send = $yform->getFieldValue('send');
 
-        $i = 0;
+        $i = 1;
         $validations = [];
         $useValidations = [];
         foreach ($this->getTable()->getFields() as $field) {
