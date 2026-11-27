@@ -625,6 +625,8 @@ yform_values_be_link_multiple = La selección múltiple
 yform_values_prio_fields = Visualización
 yform_values_prio_scope = Restricción
 yform_values_prio_default = En el comienzo
+yform_values_prio_label_expression = Visualización personalizada (SQL)
+yform_values_prio_label_expression_notice = Expresión SQL como visualización personalizada, p.ej. CONCAT(lastname, ", ", firstname). Reemplaza "Visualización".
 
 yform_is = Es
 yform_will_set_to = Deberá
