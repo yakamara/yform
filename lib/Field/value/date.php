@@ -127,6 +127,11 @@ class rex_yform_value_date extends rex_yform_value_abstract
 
     public static function date_getFormattedDate($format, $date)
     {
+        // Empty/NULL values (nullable columns without a value) must not reach
+        // DateTime::createFromFormat() — passing null is deprecated since PHP 8.1.
+        if (null === $date || '' === $date) {
+            return '';
+        }
         $format = (in_array($format, self::VALUE_DATE_FORMATS, true)) ? $format : self::VALUE_DATE_DEFAULT_FORMAT;
         $DTdate = DateTime::createFromFormat('Y-m-d', $date);
         return (!$DTdate || $date != $DTdate->format('Y-m-d')) ? '[' . $date . ']' : $DTdate->format($format);
