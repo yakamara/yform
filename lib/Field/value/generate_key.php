@@ -13,7 +13,7 @@ class rex_yform_value_generate_key extends rex_yform_value_abstract
     {
         $generated_key = md5($this->params['form_name'] . uniqid((string) random_int(0, getrandmax()), true));
 
-        if (1 != $this->getElement('only_empty')) {
+        if (1 != $this->getElement('only_empty') || 'clone' == rex_get('func', 'string')) {
             // wird immer neu gesetzt
             $this->setValue($generated_key);
         } elseif ('' != $this->getValue()) {
