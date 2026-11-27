@@ -45,6 +45,8 @@ class rex_var_yform_table_data extends rex_var
                 'table' => $table,
                 'fieldName' => $fieldName,
             ];
+            $_csrf_key = $table->getCSRFKey();
+            $args += rex_csrf_token::factory($_csrf_key)->getUrlParams();
 
             if ($this->hasArg('multiple') && $this->getArg('multiple')) {
                 $options = [];
