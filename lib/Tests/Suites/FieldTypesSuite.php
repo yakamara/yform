@@ -253,6 +253,24 @@ final class FieldTypesSuite extends AbstractTestSuite
         $this->assertTrue(strtotime($value) > 0, 'Datestamp must fall back to a valid datetime, got: ' . $value);
     }
 
+    // ---------- google_geocode ----------
+
+    public function testGoogleGeocodeSavesNewDatasetWithoutValue(): void
+    {
+        // A new dataset carries no geocode value (null). explode() on null is
+        // deprecated since PHP 8.1 — with debug mode the error handler turns
+        // that into an exception and the whole save is rolled back.
+        $table = $this->buildTable('ft_geocode', [
+            'type_name' => 'google_geocode',
+            'name' => 'geo',
+            'address' => '',
+        ], [['geo', 'text']]);
+
+        $ds = rex_yform_manager_dataset::create($table);
+        $this->assertTrue($ds->save(), 'A missing geocode value must not crash save().');
+        $this->assertSame('0,0', (string) $ds->getValue('geo'));
+    }
+
     public function testDatestampOnlyEmpty2NeverUpdates(): void
     {
         $table = $this->buildTable('ft_ds_frozen', [

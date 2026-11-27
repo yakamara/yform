@@ -4,8 +4,9 @@ class rex_yform_value_google_geocode extends rex_yform_value_abstract
 {
     public function enterObject()
     {
-        $values = explode(',', $this->getValue());
-        $default = explode(',', $this->getElement('default'));
+        // A new dataset has no value yet (null), a field row may lack a default.
+        $values = explode(',', (string) $this->getValue());
+        $default = explode(',', (string) $this->getElement('default'));
 
         if (2 == count($values)) {
             $valueLat = $this->google_geocode_floattostr($values[0]);
