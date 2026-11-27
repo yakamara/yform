@@ -2,6 +2,7 @@
 
 namespace Yakamara\YForm\Form\Definition;
 
+use Closure;
 use LogicException;
 use Redaxo\Core\ExtensionPoint\Extension;
 use Redaxo\Core\ExtensionPoint\ExtensionPoint;
@@ -153,11 +154,7 @@ abstract class FormDefinition
         if ($submitted) {
             $submission = new Submission($this, $form);
             try {
-                foreach ($this->actions() as $action) {
-                    if ($action->shouldRun($submission)) {
-                        $action->execute($submission);
-                    }
-                }
+                self::runActions($this->actions(), $submission);
                 Extension::dispatch(new ExtensionPoint('YFORM_FORM_SUBMITTED', $submission, ['form' => $this], true));
             } catch (ValidationException) {
                 // An action (e.g. SaveRecord) reported field errors on the form.
@@ -174,6 +171,36 @@ abstract class FormDefinition
         }
 
         return $this->renderForm($form, $honeypotName);
+    }
+
+    /**
+     * Runs the actions in order. A failure aborts – unless the action is optional or the submission is already stored
+     * (`$submission->record`): showing the form again would let the visitor submit and store it a second time. Such
+     * failures are reported (default: system log) and collected in `$submission->failures`.
+     *
+     * @param iterable<Action> $actions
+     * @param (Closure(Throwable): void)|null $report
+     * @internal
+     */
+    public static function runActions(iterable $actions, Submission $submission, ?Closure $report = null): void
+    {
+        $report ??= static fn (Throwable $e) => Logger::logException($e);
+        foreach ($actions as $action) {
+            if (!$action->shouldRun($submission)) {
+                continue;
+            }
+            try {
+                $action->execute($submission);
+            } catch (ValidationException $e) {
+                throw $e;
+            } catch (Throwable $e) {
+                if (!$action->isOptional() && null === $submission->record) {
+                    throw $e;
+                }
+                $submission->failures[] = $e;
+                $report($e);
+            }
+        }
     }
 
     private function renderForm(Form $form, string $honeypotName): string

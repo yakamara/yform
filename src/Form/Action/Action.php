@@ -20,12 +20,16 @@ use Yakamara\YForm\Form\Definition\FormDefinition;
  * }
  * ```
  *
- * Throwing aborts the remaining actions; the form is shown again with an error message.
+ * Throwing aborts the remaining actions; the form is shown again with an error message – unless the submission is
+ * already stored ({@see SaveRecord}) or the action is {@see optional()}: then the error is logged, the remaining actions
+ * run and the visitor sees the success message (no second submission that would store the record twice).
  */
 abstract class Action
 {
     /** @var (Closure(Submission): bool)|null */
     private ?Closure $condition = null;
+
+    private bool $optional = false;
 
     abstract public function execute(Submission $submission): void;
 
@@ -34,6 +38,18 @@ abstract class Action
     {
         $this->condition = $condition;
         return $this;
+    }
+
+    /** A failure of this action does not abort the submission (e.g. a confirmation mail); it is logged. */
+    public function optional(bool $optional = true): static
+    {
+        $this->optional = $optional;
+        return $this;
+    }
+
+    public function isOptional(): bool
+    {
+        return $this->optional;
     }
 
     public function shouldRun(Submission $submission): bool
