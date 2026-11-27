@@ -157,7 +157,7 @@ class Importer
 
                 // out of transaction, because database not always supports transactions with alter table
                 $idColumn = null;
-                while (false !== ($line_array = fgetcsv($fp, 30384, $this->getDelimiter()))) {
+                while (false !== ($line_array = fgetcsv($fp, 30384, $this->getDelimiter(), '"', '\\'))) {
                     if (0 == count($fieldarray)) { /** @phpstan-ignore-line */
                         $fieldarray = $line_array;
                         $fieldarray = array_map('rex_string::normalize', $fieldarray);
@@ -255,7 +255,7 @@ class Importer
 
                 $sql_db = rex_sql::factory();
                 $sql_db->transactional(function () use ($fp, $idColumn, $fieldarray, &$counter, &$dcounter, &$ecounter, &$rcounter, &$icounter, &$errorcounter) {
-                    while (false !== ($line_array = fgetcsv($fp, 30384, $this->getDelimiter()))) {
+                    while (false !== ($line_array = fgetcsv($fp, 30384, $this->getDelimiter(), '"', '\\'))) {
                         if (!$line_array) {
                             break;
                         }
