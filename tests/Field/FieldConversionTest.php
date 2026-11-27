@@ -110,6 +110,15 @@ final class FieldConversionTest extends TestCase
         self::assertNull($field->fromDb('0000-00-00'));
     }
 
+    public function testDateBoundsResolveRelativeStrings(): void
+    {
+        $field = Date::new('day')->min('today')->max(new DateTimeImmutable('2030-12-31'));
+        self::assertSame(new DateTimeImmutable('today')->format('Y-m-d'), $field->inputBound($field->min));
+        self::assertSame('2030-12-31', $field->inputBound($field->max));
+        self::assertNull($field->inputBound(null));
+        self::assertSame('2030-01-01T10:00', DateTime::new('at')->inputBound('2030-01-01 10:00'));
+    }
+
     public function testDateTimeAcceptsSeconds(): void
     {
         $value = DateTime::new('at')->fromInput('2026-09-28T10:15:30');

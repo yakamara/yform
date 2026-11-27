@@ -120,7 +120,16 @@ class Date extends Field
         return is_string($bound) ? new DateTimeImmutable($bound) : $bound;
     }
 
-    /** Value for the `value`/`min`/`max` attributes of the native input. */
+    /**
+     * Value of a bound for the `min`/`max` attributes of the native input. Relative strings like `'today'` are
+     * resolved here — the browser only understands concrete values.
+     */
+    public function inputBound(DateTimeInterface|string|null $bound): ?string
+    {
+        return $this->bound($bound)?->format($this->inputFormat);
+    }
+
+    /** Value for the `value` attribute of the native input. */
     public function inputValue(mixed $value): string
     {
         if (is_string($value)) {
